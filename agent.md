@@ -27,7 +27,7 @@ Codex interacts with this agent via:
 
 Codex does **not** use GitHub runners or CI pipelines. It communicates entirely through Git clones and semantic feedback.
 
-Codex does **not** push directly to GitHub. All feedback is local — Codex may submit improvements as `.json` files or, optionally, as PRs.
+Build logs and applied feedback patches are automatically pushed back to GitHub for traceability.
 
 ---
 
