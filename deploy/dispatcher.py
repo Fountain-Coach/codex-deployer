@@ -2,8 +2,13 @@ import subprocess, os, time, datetime
 
 from repo_config import REPOS, ALIASES
 
-LOG_FILE = "/srv/deploy/logs/build.log"
-FEEDBACK_DIR = "/srv/deploy/feedback/"
+LOG_DIR = "/srv/deploy/logs"
+FEEDBACK_DIR = "/srv/deploy/feedback"
+LOG_FILE = os.path.join(LOG_DIR, "build.log")
+
+def ensure_dirs():
+    os.makedirs(LOG_DIR, exist_ok=True)
+    os.makedirs(FEEDBACK_DIR, exist_ok=True)
 
 def timestamp():
     return datetime.datetime.now().isoformat()
@@ -36,6 +41,7 @@ def apply_codex_feedback():
             os.rename(FEEDBACK_DIR + fname, FEEDBACK_DIR + f".applied-{fname}")
 
 def loop():
+    ensure_dirs()
     while True:
         log("=== New Cycle ===")
         pull_repos()
