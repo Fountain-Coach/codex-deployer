@@ -1,10 +1,6 @@
 import subprocess, os, time, datetime
 
-REPOS = {
-    "fountainai": "https://github.com/fountain-coach/fountainai.git",
-    "kong-codex": "https://github.com/fountain-coach/kong-codex.git",
-    "typesense-codex": "https://github.com/fountain-coach/typesense-codex.git"
-}
+from repo_config import REPOS, ALIASES
 
 LOG_FILE = "/srv/deploy/logs/build.log"
 FEEDBACK_DIR = "/srv/deploy/feedback/"
@@ -17,14 +13,15 @@ def log(msg):
         f.write(f"[{timestamp()}] {msg}\n")
 
 def pull_repos():
-    for name, url in REPOS.items():
-        path = f"/srv/{name}"
+    for alias, url in REPOS.items():
+        path = f"/srv/{alias}"
+        canonical = ALIASES.get(alias, alias)
         if not os.path.exists(path):
             subprocess.run(["git", "clone", url, path])
-            log(f"Cloned {name}")
+            log(f"Cloned {alias} -> {canonical}")
         else:
             subprocess.run(["git", "-C", path, "pull"])
-            log(f"Pulled latest {name}")
+            log(f"Pulled latest {alias} -> {canonical}")
 
 def build_swift():
     with open(LOG_FILE, "a") as f:
