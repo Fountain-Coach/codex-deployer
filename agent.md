@@ -95,10 +95,11 @@ Accepted values for `"repo"`:
 
 ## 🛡️ Security Notes
 
-- Agent expects secure SSH access to the VPS
-- All Git operations are pull-only unless explicitly patched by Codex
-- Feedback files must be vetted and logged
-- `agent.md` is the source of truth for Codex behavior understanding
+- Initial bootstrap requires SSH access so the server can clone repos and install dependencies.
+- Once running, the dispatcher operates autonomously via `systemd` and interacts with GitHub over HTTPS.
+- All Git operations are pull-only unless Codex submits a feedback patch.
+- Feedback files must be vetted and logged.
+- `agent.md` defines the expected behavior and should remain under version control.
 
 ---
 
