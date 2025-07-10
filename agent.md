@@ -25,7 +25,46 @@ Codex interacts with this agent via:
 - `feedback/*.json` → structured patch proposals
 - `commands/restart-services.sh` → optional service restart trigger
 
-The agent never pushes to GitHub directly. Codex submits improvements via PR or local patch.
+Codex does **not** use GitHub runners or CI pipelines. It communicates entirely through Git clones and semantic feedback.
+
+Codex does **not** push directly to GitHub. All feedback is local — Codex may submit improvements as `.json` files or, optionally, as PRs.
+
+---
+
+## 📁 Repositories Managed
+
+The agent pulls and manages the following GitHub repositories:
+
+| Repo               | Purpose                                 |
+|--------------------|------------------------------------------|
+| `fountainai`        | Swift + Python services (main logic layer) |
+| `kong-codex`        | Gateway configuration and plugin definitions |
+| `typesense-codex`   | Typesense indexing schemas and bootstrapping logic |
+| `codex-deployer`    | This repo — hosts the dispatcher, feedback, and loop logic |
+
+These repos are cloned directly — they are **not submodules**. Paths and build logic are mapped semantically in `repo_config.py`.
+
+---
+
+## 📄 Feedback Format
+
+Codex submits semantic fixes using structured JSON, like:
+
+```json
+{
+  "repo": "fountainai",
+  "target": "bootstrap",
+  "file": "services/bootstrap-service/Sources/Init.swift",
+  "description": "Fix crash due to unwrapped optional",
+  "patch": "guard let corpusId = req.body.corpusId else { return .badRequest }"
+}
+```
+
+Accepted values for `"repo"`:
+- `"fountainai"` → application logic (Swift services)
+- `"kong-codex"` → API routes and plugins
+- `"typesense-codex"` → schema or search logic
+- `"codex-deployer"` → dispatcher logic or system config
 
 ---
 
@@ -36,10 +75,17 @@ The agent never pushes to GitHub directly. Codex submits improvements via PR or 
 | `/srv/fountainai/` | FountainAI services cloned from Git |
 | `/srv/kong-codex/` | Kong gateway config + plugins |
 | `/srv/typesense-codex/` | Typesense indexing definitions |
-| `/srv/deploy/` | Contains `dispatcher.py` and runtime folders |
-| `/srv/deploy/logs/` | Build logs from `swift build` |
+| `/srv/deploy/` | Contains `dispatcher.py`, `repo_config.py`, and runtime control logic |
+| `/srv/deploy/logs/` | Build logs from `swift build` and other commands |
 | `/srv/deploy/feedback/` | Codex-pushed semantic patches |
 | `/srv/deploy/commands/` | Optional system hooks (restart, reindex, etc) |
+
+---
+
+## 🔄 Loop Duration
+
+- Default loop cycle: every 60 seconds
+- Can be lowered for faster feedback, or increased under heavy load
 
 ---
 
@@ -48,13 +94,7 @@ The agent never pushes to GitHub directly. Codex submits improvements via PR or 
 - Agent expects secure SSH access to the VPS
 - All Git operations are pull-only unless explicitly patched by Codex
 - Feedback files must be vetted and logged
-
----
-
-## 🔄 Loop Duration
-
-- Default loop cycle: every 60 seconds
-- Can be lowered for faster feedback, or increased under heavy load
+- `agent.md` is the source of truth for Codex behavior understanding
 
 ---
 
