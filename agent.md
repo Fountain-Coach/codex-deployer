@@ -37,10 +37,14 @@ The agent pulls and manages the following GitHub repositories:
 
 | Repo               | Purpose                                 |
 |--------------------|------------------------------------------|
-| `fountainai`        | Swift + Python services (main logic layer) |
+| `fountainai` (alias for `swift-codex-openapi-kernel`) | Swift + Python services (main logic layer) |
 | `kong-codex`        | Gateway configuration and plugin definitions |
 | `typesense-codex`   | Typesense indexing schemas and bootstrapping logic |
 | `codex-deployer`    | This repo — hosts the dispatcher, feedback, and loop logic |
+
+> **Note**: `fountainai` refers to the GitHub repo
+> [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).
+> The agent clones it under `/srv/fountainai/` until the rename is finalized.
 
 These repos are cloned directly — they are **not submodules**. Paths and build logic are mapped semantically in `repo_config.py`.
 
