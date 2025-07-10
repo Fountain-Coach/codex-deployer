@@ -71,6 +71,7 @@ At its heart is a single principle:
 | ✅ Daemon architecture | One Python loop drives the whole system |
 | ✅ Multi-repo awareness | Supports FountainAI, Kong, Typesense clones in one loop |
 | ✅ Developer-agnostic | Works whether code was committed by a human or Codex |
+| ✅ GitHub sync | Build logs and applied patches automatically pushed |
 
 ---
 
@@ -117,7 +118,7 @@ Codex can:
 ```
 
 - On next loop, the dispatcher reads and applies it
-- Optional: patches are committed back via `git`
+- Applied patches and the latest build log are committed and pushed to GitHub
 
 ---
 
