@@ -141,7 +141,7 @@ You write one that understands itself.
 
 - Add webhook triggers or file watchers to speed up feedback cycles
 - Build a visual dashboard for log + feedback inspection
-- Auto-patch feedback via Codex with commit+push
+- Improve the auto-patch workflow with better conflict handling
 
 ---
 
