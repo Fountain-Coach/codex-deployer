@@ -47,7 +47,44 @@ def pull_repos():
 def build_swift():
     with open(LOG_FILE, "a") as f:
         f.write(f"\n[{timestamp()}] Starting swift build...\n")
-        subprocess.run(["swift", "build"], cwd="/srv/fountainai", stdout=f, stderr=subprocess.STDOUT)
+        result = subprocess.run(
+            ["swift", "build"],
+            cwd="/srv/fountainai",
+            stdout=f,
+            stderr=subprocess.STDOUT,
+        )
+        if result.returncode != 0:
+            f.write(
+                f"[{timestamp()}] swift build failed with exit code {result.returncode}\n"
+            )
+
+def run_swift_tests():
+    with open(LOG_FILE, "a") as f:
+        f.write(f"\n[{timestamp()}] Starting swift test...\n")
+        result = subprocess.run(
+            ["swift", "test"],
+            cwd="/srv/fountainai",
+            stdout=f,
+            stderr=subprocess.STDOUT,
+        )
+        if result.returncode != 0:
+            f.write(
+                f"[{timestamp()}] swift test failed with exit code {result.returncode}\n"
+            )
+
+def run_swift_executable(target="bootstrap-service"):
+    with open(LOG_FILE, "a") as f:
+        f.write(f"\n[{timestamp()}] Starting swift run {target}...\n")
+        result = subprocess.run(
+            ["swift", "run", target],
+            cwd="/srv/fountainai",
+            stdout=f,
+            stderr=subprocess.STDOUT,
+        )
+        if result.returncode != 0:
+            f.write(
+                f"[{timestamp()}] swift run {target} exited with {result.returncode}\n"
+            )
 
 def commit_applied_patch(fname):
     patch_path = os.path.join(FEEDBACK_DIR, fname)
@@ -77,9 +114,11 @@ def loop():
     while True:
         log("=== New Cycle ===")
         pull_repos()
-        build_swift()
-        push_logs_to_github()
         apply_codex_feedback()
+        build_swift()
+        run_swift_tests()
+        run_swift_executable()
+        push_logs_to_github()
         time.sleep(60)
 
 if __name__ == "__main__":
