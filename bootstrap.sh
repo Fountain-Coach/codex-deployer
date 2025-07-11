@@ -11,6 +11,7 @@ git clone https://github.com/fountain-coach/codex-deployer.git deploy || echo "R
 
 echo "[BOOTSTRAP] Setting permissions..."
 chmod +x /srv/deploy/commands/restart-services.sh
+chmod +x /srv/deploy/commands/restart-target.sh
 
 echo "[BOOTSTRAP] Copying systemd unit file..."
 cp /srv/deploy/systemd/fountain-dispatcher.service /etc/systemd/system/
