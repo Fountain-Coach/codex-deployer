@@ -55,7 +55,8 @@ At its heart is a single principle:
          ├── feedback/
          │    └── codex-001.json  ← Structured GPT feedback
          └── commands/
-              └── restart-services.sh (optional)
+              ├── restart-services.sh (optional legacy script)
+              └── restart-target.sh  ← restart a specific service
 ```
 
 ---
@@ -65,13 +66,14 @@ At its heart is a single principle:
 | Capability | Description |
 |------------|-------------|
 | ✅ Git-native | Codex pulls from `main` and reads current state |
-| ✅ Swift compiler integration | Full `swift build` output is captured and reasoned over |
+| ✅ Swift compiler integration | Full `swift build` and `swift test` output is captured |
 | ✅ No runners required | Runs 100% on your VPS |
-| ✅ Semantic feedback loop | Codex writes JSON to `/feedback/`, gets acted on |
+| ✅ Semantic feedback loop | Codex writes JSON to `/feedback/`, patches are applied |
 | ✅ Daemon architecture | One Python loop drives the whole system |
 | ✅ Multi-repo awareness | Supports FountainAI, Kong, Typesense clones in one loop |
 | ✅ Developer-agnostic | Works whether code was committed by a human or Codex |
 | ✅ GitHub sync | Build logs and applied patches automatically pushed |
+| ✅ Log rotation | Each cycle writes `build-YYYYMMDD-HHMMSS.log` for history |
 
 ---
 
@@ -80,9 +82,11 @@ At its heart is a single principle:
 | File | Purpose |
 |------|---------|
 | `dispatcher_v2.py` | The daemon loop: pulls repos, builds services, checks for Codex feedback |
-| `logs/build.log` | Canonical Swift compiler output for semantic introspection |
+| `logs/latest.log` | Most recent Swift build/test output |
+| `logs/build-*.log` | Historical logs for each dispatcher cycle |
 | `feedback/` | Codex inbox – write here to apply changes or fix builds |
-| `commands/restart-services.sh` | Optional system command triggered by semantic feedback |
+| `commands/restart-services.sh` | Optional legacy restart script |
+| `commands/restart-target.sh` | Restart a service specified in feedback |
 | `systemd/fountain-dispatcher.service` | Autostarts dispatcher on VPS boot |
 | `docs/dispatcher_v2.md` | Detailed dispatcher v2 documentation |
 

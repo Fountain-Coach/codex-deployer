@@ -1,8 +1,8 @@
-# Dispatcher v2.0
+# Dispatcher v2.1
 
 `dispatcher_v2.py` is the second major iteration of the Codex deployment loop.
-It extends the original `dispatcher.py` with clearer documentation and a few
-quality of life improvements.
+Version 2.1 extends the previous release with build result checks, log rotation,
+and automatic patch application.
 
 ## Key Changes
 
@@ -10,6 +10,9 @@ quality of life improvements.
   variable.
 - **Structured logging** that timestamps every action.
 - **Explicit version tag** accessible via the `__version__` attribute.
+- **Log rotation** with timestamped files (`build-YYYYMMDD-HHMMSS.log`).
+- **Build/test result reporting** logged to disk.
+- **Automatic patch application** and per-repo service restarts.
 
 The overall workflow remains the same: repositories are pulled, the FountainAI
 service is built, logs are pushed to GitHub and feedback JSON files are applied.
