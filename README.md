@@ -66,7 +66,7 @@ At its heart is a single principle:
 | Capability | Description |
 |------------|-------------|
 | ✅ Git-native | Codex pulls from `main` and reads current state |
-| ✅ Swift compiler integration | Full `swift build` and `swift test` output is captured |
+| ✅ Swift compiler integration | Full `swift build`, `swift test`, and `swift run` output is captured |
 | ✅ No runners required | Runs 100% on your VPS |
 | ✅ Semantic feedback loop | Codex writes JSON to `/feedback/`, patches are applied |
 | ✅ Daemon architecture | One Python loop drives the whole system |
