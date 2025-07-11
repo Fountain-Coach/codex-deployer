@@ -49,7 +49,7 @@ At its heart is a single principle:
     ├── kong-codex/          ← Gateway config & plugins
     ├── typesense-codex/     ← Schema definitions + indexing logic
     └── deploy/
-         ├── dispatcher.py   ← Daemonized build + feedback loop
+         ├── dispatcher_v2.py   ← Daemonized build + feedback loop
          ├── logs/
          │    └── build.log  ← Swift compiler output
          ├── feedback/
@@ -79,11 +79,12 @@ At its heart is a single principle:
 
 | File | Purpose |
 |------|---------|
-| `dispatcher.py` | The daemon loop: pulls repos, builds services, checks for Codex feedback |
+| `dispatcher_v2.py` | The daemon loop: pulls repos, builds services, checks for Codex feedback |
 | `logs/build.log` | Canonical Swift compiler output for semantic introspection |
 | `feedback/` | Codex inbox – write here to apply changes or fix builds |
 | `commands/restart-services.sh` | Optional system command triggered by semantic feedback |
 | `systemd/fountain-dispatcher.service` | Autostarts dispatcher on VPS boot |
+| `docs/dispatcher_v2.md` | Detailed dispatcher v2 documentation |
 
 ---
 

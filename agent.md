@@ -79,7 +79,7 @@ Accepted values for `"repo"`:
 | `/srv/fountainai/` | FountainAI services cloned from Git |
 | `/srv/kong-codex/` | Kong gateway config + plugins |
 | `/srv/typesense-codex/` | Typesense indexing definitions |
-| `/srv/deploy/` | Contains `dispatcher.py`, `repo_config.py`, and runtime control logic |
+| `/srv/deploy/` | Contains `dispatcher_v2.py`, `repo_config.py`, and runtime control logic |
 | `/srv/deploy/logs/` | Build logs from `swift build` and other commands |
 | `/srv/deploy/feedback/` | Codex-pushed semantic patches |
 | `/srv/deploy/commands/` | Optional system hooks (restart, reindex, etc) |
