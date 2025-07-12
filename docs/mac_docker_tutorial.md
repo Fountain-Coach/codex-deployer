@@ -1,0 +1,63 @@
+# Running codex-deployer locally on macOS with Docker
+
+This tutorial demonstrates how to start the deployment loop on a Mac using Docker Desktop. It mirrors the expected `/srv/deploy` layout without installing dependencies directly on your host.
+
+## Prerequisites
+
+- macOS with [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed
+- Git command line tools
+
+## 1. Clone the repository
+
+Open Terminal and clone the repository somewhere on your machine:
+
+```bash
+git clone https://github.com/fountain-coach/codex-deployer.git
+cd codex-deployer
+```
+
+## 2. Build the Docker image
+
+Create a small Docker image that includes Python, Git and Swift:
+
+```bash
+cat > Dockerfile <<'DOCKER'
+FROM swift:5.8
+RUN apt-get update && apt-get install -y git python3 python3-pip
+WORKDIR /srv/deploy
+COPY . /srv/deploy
+DOCKER
+
+docker build -t codex-deployer-local .
+```
+
+The image copies the repository into `/srv/deploy` so the dispatcher can run as it would on a server.
+
+## 3. Start the dispatcher
+
+Launch the container and run `dispatcher_v2.py`:
+
+```bash
+docker run --rm -it -v $(pwd):/srv/deploy codex-deployer-local \
+  python3 /srv/deploy/deploy/dispatcher_v2.py
+```
+
+The first run will clone the other repositories defined in `repo_config.py` and write logs under `/srv/deploy/logs` inside the container.
+
+## 4. Inspect logs
+
+Build logs appear under `deploy/logs/` in your repository directory. Because the directory is mounted, you can view them on your host machine:
+
+```bash
+ls deploy/logs
+cat deploy/logs/build.log
+```
+
+## 5. Stopping
+
+Press `Ctrl-C` in the terminal running the container to stop the dispatcher.
+
+## Tips
+
+- Map additional volumes if you want the cloned service repositories (like `fountainai`) to persist outside the container.
+- Edit files on your host; the container sees changes immediately because the project directory is mounted.

@@ -90,6 +90,7 @@ At its heart is a single principle:
 | `commands/restart-target.sh` | Restart a service specified in feedback |
 | `systemd/fountain-dispatcher.service` | Autostarts dispatcher on VPS boot |
 | `docs/dispatcher_v2.md` | Detailed dispatcher v2 documentation |
+| `docs/mac_docker_tutorial.md` | Run the dispatcher locally on macOS with Docker |
 
 ---
 
