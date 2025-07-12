@@ -77,6 +77,7 @@ At its heart is a single principle:
 | ✅ Log rotation | Each cycle writes `build-YYYYMMDD-HHMMSS.log` for history |
 | ✅ Platform-aware compilation | Uses `xcrun` on macOS, open source Swift elsewhere |
 | ✅ Codex-generated commits | Set `OPENAI_API_KEY` for semantic commit messages |
+| ✅ Docker builds & e2e tests | Set `DISPATCHER_BUILD_DOCKER=1` and `DISPATCHER_RUN_E2E=1` to build containers and run integration tests |
 
 ---
 
