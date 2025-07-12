@@ -1,7 +1,7 @@
-# Dispatcher v2.2
+# Dispatcher v2.3
 
 `dispatcher_v2.py` is the second major iteration of the Codex deployment loop.
-Version 2.2 extends the previous release with build result checks, log rotation,
+Version 2.3 extends the previous release with build result checks, log rotation,
 automatic patch application, and platform-aware compilation.
 
 ## Key Changes
@@ -28,3 +28,4 @@ ExecStart=/usr/bin/python3 /srv/deploy/dispatcher_v2.py
 
 See the repository [README](../README.md) for setup details and an overview of
 the dispatcher's role in the deployment architecture.
+\nFor teams that prefer code review via pull requests, see [pull_request_workflow.md](pull_request_workflow.md) for a conceptual guide on extending the dispatcher.
