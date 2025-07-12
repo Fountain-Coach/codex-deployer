@@ -61,3 +61,24 @@ Press `Ctrl-C` in the terminal running the container to stop the dispatcher.
 
 - Map additional volumes if you want the cloned service repositories (like `fountainai`) to persist outside the container.
 - Edit files on your host; the container sees changes immediately because the project directory is mounted.
+
+## 6. Cross-platform compilation
+
+Version 2.2 of the dispatcher detects when it is running on macOS and invokes
+`xcrun swift` so that the Apple SDKs are available. On Linux or other
+environments the open source `swift` toolchain is used. You can experiment with
+cross compiling by mounting additional volumes that contain the target SDKs and
+passing environment variables such as `SDKROOT` to the container:
+
+```bash
+docker run --rm -it \
+  -v $(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs:/AppleSDKs \
+  -e SDKROOT=/AppleSDKs/MacOSX.sdk \
+  -v $(pwd):/srv/deploy codex-deployer-local \
+  python3 /srv/deploy/deploy/dispatcher_v2.py
+```
+
+This lets the dispatcher build Swift packages that rely on Apple-provided
+frameworks while still running inside a container. Prefer the open source Swift
+toolchain whenever possible, but branch out into vendor-specific builds only
+when necessary.

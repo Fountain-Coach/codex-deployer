@@ -75,6 +75,7 @@ At its heart is a single principle:
 | ✅ Developer-agnostic | Works whether code was committed by a human or Codex |
 | ✅ GitHub sync | Build logs and applied patches automatically pushed |
 | ✅ Log rotation | Each cycle writes `build-YYYYMMDD-HHMMSS.log` for history |
+| ✅ Platform-aware compilation | Uses `xcrun` on macOS, open source Swift elsewhere |
 
 ---
 
@@ -82,7 +83,7 @@ At its heart is a single principle:
 
 | File | Purpose |
 |------|---------|
-| `dispatcher_v2.py` | The daemon loop: pulls repos, builds services, checks for Codex feedback |
+| `dispatcher_v2.py` | The daemon loop (v2.2): pulls repos, builds services, checks for Codex feedback |
 | `logs/latest.log` | Most recent Swift build/test output |
 | `logs/build-*.log` | Historical logs for each dispatcher cycle |
 | `feedback/` | Codex inbox – write here to apply changes or fix builds |

@@ -1,7 +1,7 @@
-"""Dispatcher v2.1
+"""Dispatcher v2.2
 ===================
 
-An improved deployment dispatcher for Codex. Version 2.1 adds
+An improved deployment dispatcher for Codex. Version 2.2 adds
 basic build result checking, log rotation, automatic patch
 application, and granular service restarts. It remains backward
 compatible with the original :mod:`dispatcher` but exposes a new
@@ -14,10 +14,11 @@ import time
 import json
 from datetime import datetime
 from typing import Dict
+import sys
 
 from repo_config import REPOS, ALIASES
 
-__version__ = "2.1"
+__version__ = "2.2"
 
 LOG_DIR = "/srv/deploy/logs"
 FEEDBACK_DIR = "/srv/deploy/feedback"
@@ -97,8 +98,12 @@ def build_swift() -> None:
     """Run ``swift build`` and ``swift test`` for the FountainAI repository."""
     with open(LOG_FILE, "a") as fh:
         fh.write(f"\n[{timestamp()}] Starting swift build...\n")
+        build_cmd = ["swift", "build"]
+        if sys.platform == "darwin":
+            # Prefer the local Xcode toolchain when available
+            build_cmd = ["xcrun", "swift", "build"]
         build_result = subprocess.run(
-            ["swift", "build"],
+            build_cmd,
             cwd="/srv/fountainai",
             stdout=fh,
             stderr=subprocess.STDOUT,
@@ -107,8 +112,11 @@ def build_swift() -> None:
             fh.write(f"[{timestamp()}] swift build succeeded\n")
             if os.path.exists(os.path.join("/srv/fountainai", "Tests")):
                 fh.write(f"[{timestamp()}] running swift test...\n")
+                test_cmd = ["swift", "test"]
+                if sys.platform == "darwin":
+                    test_cmd = ["xcrun", "swift", "test"]
                 test_result = subprocess.run(
-                    ["swift", "test"],
+                    test_cmd,
                     cwd="/srv/fountainai",
                     stdout=fh,
                     stderr=subprocess.STDOUT,
