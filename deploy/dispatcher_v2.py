@@ -18,6 +18,7 @@ from typing import Dict
 import sys
 
 from repo_config import REPOS, ALIASES
+from codex_changelog import generate_commit_message, append_changelog
 
 __version__ = "2.4"
 
@@ -163,6 +164,8 @@ def _wait_for_merge(slug: str, pr_number: int, interval: int = 30) -> None:
 def commit_and_push(repo_path: str, message: str, base: str = "main") -> None:
     """Commit staged changes and push, optionally via a PR."""
     subprocess.run(["git", "-C", repo_path, "add", "-A"], check=False)
+    message = generate_commit_message(repo_path, message)
+    append_changelog(repo_path, message)
     current_branch = (
         subprocess.run(
             ["git", "-C", repo_path, "rev-parse", "--abbrev-ref", "HEAD"],
