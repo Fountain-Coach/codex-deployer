@@ -92,6 +92,7 @@ At its heart is a single principle:
 | `commands/restart-target.sh` | Restart a service specified in feedback |
 | `systemd/fountain-dispatcher.service` | Autostarts dispatcher on VPS boot |
 | `docs/dispatcher_v2.md` | Detailed dispatcher v2 documentation |
+| `docs/environment_variables.md` | Reference for all environment variables |
 | `docs/mac_docker_tutorial.md` | Run the dispatcher locally on macOS with Docker |
 
 ---
@@ -108,6 +109,8 @@ sudo systemctl start fountain-dispatcher
 ```
 
 Make sure `/srv/` is writable and owned by the system user running the daemon.
+See [docs/environment_variables.md](docs/environment_variables.md) for required
+environment variables and GitHub secret configuration.
 
 ---
 
