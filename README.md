@@ -76,6 +76,7 @@ At its heart is a single principle:
 | ✅ GitHub sync | Build logs and applied patches automatically pushed |
 | ✅ Log rotation | Each cycle writes `build-YYYYMMDD-HHMMSS.log` for history |
 | ✅ Platform-aware compilation | Uses `xcrun` on macOS, open source Swift elsewhere |
+| ✅ Codex-generated commits | Set `OPENAI_API_KEY` for semantic commit messages |
 
 ---
 

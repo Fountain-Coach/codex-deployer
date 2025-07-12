@@ -14,6 +14,7 @@ automatic patch application, a pull request workflow, and platform-aware compila
 - **Build/test result reporting** logged to disk.
 - **Automatic patch application** and per-repo service restarts.
 - **Platform-aware compilation** using the local Xcode toolchain on macOS.
+- **Codex-generated commit messages** when `OPENAI_API_KEY` is set.
 
 The overall workflow remains the same: repositories are pulled, the FountainAI
 service is built, logs are pushed to GitHub and feedback JSON files are applied.
