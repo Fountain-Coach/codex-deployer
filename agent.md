@@ -41,7 +41,7 @@ The agent pulls and manages the following GitHub repositories:
 | `kong-codex`        | Gateway configuration and plugin definitions |
 | `typesense-codex`   | Typesense indexing schemas and bootstrapping logic |
 | `codex-deployer`    | This repo — hosts the dispatcher, feedback, and loop logic |
-| `view-factory`      | Shared SwiftUI views and composition helpers |
+| `teatro`            | Teatro view engine and rendering framework |
 
 > **Note**: `fountainai` refers to the GitHub repo
 > [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).
@@ -70,7 +70,7 @@ Accepted values for `"repo"`:
 - `"kong-codex"` → API routes and plugins
 - `"typesense-codex"` → schema or search logic
 - `"codex-deployer"` → dispatcher logic or system config
-- `"view-factory"` → shared SwiftUI components
+- `"teatro"` → Teatro components
 
 ---
 
@@ -81,7 +81,7 @@ Accepted values for `"repo"`:
 | `/srv/fountainai/` | FountainAI services cloned from Git |
 | `/srv/kong-codex/` | Kong gateway config + plugins |
 | `/srv/typesense-codex/` | Typesense indexing definitions |
-| `/srv/view-factory/` | Shared SwiftUI views |
+| `/srv/teatro/` | Teatro view engine |
 | `/srv/deploy/` | Contains `dispatcher_v2.py`, `repo_config.py`, and runtime control logic |
 | `/srv/deploy/logs/` | Build logs from `swift build` and other commands |
 | `/srv/deploy/feedback/` | Codex-pushed semantic patches |

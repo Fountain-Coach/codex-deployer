@@ -48,7 +48,7 @@ At its heart is a single principle:
     ├── fountainai/          ← Swift + Python services
     ├── kong-codex/          ← Gateway config & plugins
     ├── typesense-codex/     ← Schema definitions + indexing logic
-    ├── view-factory/        ← SwiftUI view templates
+    ├── teatro/              ← Teatro view engine
     └── deploy/
          ├── dispatcher_v2.py   ← Daemonized build + feedback loop
          ├── logs/
@@ -71,7 +71,7 @@ At its heart is a single principle:
 | ✅ No runners required | Runs 100% on your VPS |
 | ✅ Semantic feedback loop | Codex writes JSON to `/feedback/`, patches are applied |
 | ✅ Daemon architecture | One Python loop drives the whole system |
-| ✅ Multi-repo awareness | Supports FountainAI, Kong, Typesense, ViewFactory clones in one loop |
+| ✅ Multi-repo awareness | Supports FountainAI, Kong, Typesense, Teatro clones in one loop |
 | ✅ Developer-agnostic | Works whether code was committed by a human or Codex |
 | ✅ GitHub sync | Build logs and applied patches automatically pushed |
 | ✅ Log rotation | Each cycle writes `build-YYYYMMDD-HHMMSS.log` for history |
