@@ -34,6 +34,8 @@ LOG_FILE = LOG_LATEST
 # See docs/environment_variables.md for details on these variables
 LOOP_INTERVAL = int(os.environ.get("DISPATCHER_INTERVAL", "60"))
 USE_PRS = os.environ.get("DISPATCHER_USE_PRS", "1").lower() not in {"0", "false", "no"}
+BUILD_DOCKER = os.environ.get("DISPATCHER_BUILD_DOCKER", "0").lower() not in {"0", "false", "no"}
+RUN_E2E = os.environ.get("DISPATCHER_RUN_E2E", "0").lower() not in {"0", "false", "no"}
 
 
 def check_env() -> None:
@@ -46,6 +48,10 @@ def check_env() -> None:
         log("GITHUB_TOKEN not set; PR creation will be skipped")
     if "OPENAI_API_KEY" not in os.environ:
         log("OPENAI_API_KEY not set; commit messages will be generic")
+    if "DISPATCHER_BUILD_DOCKER" not in os.environ:
+        log("DISPATCHER_BUILD_DOCKER not set; docker builds disabled")
+    if "DISPATCHER_RUN_E2E" not in os.environ:
+        log("DISPATCHER_RUN_E2E not set; integration tests disabled")
 
 
 def ensure_dirs() -> None:
@@ -274,6 +280,60 @@ def build_swift() -> None:
             fh.write(f"[{timestamp()}] swift build failed with exit code {build_result.returncode}\n")
 
 
+def build_docker_images() -> None:
+    """Build Docker images for any repository containing a Dockerfile."""
+    if not BUILD_DOCKER:
+        return
+    with open(LOG_FILE, "a") as fh:
+        for alias in REPOS.keys():
+            repo_path = f"/srv/{alias}"
+            dockerfile = os.path.join(repo_path, "Dockerfile")
+            if os.path.exists(dockerfile):
+                fh.write(f"\n[{timestamp()}] Building Docker image for {alias}...\n")
+                tag = f"{alias}:latest"
+                result = subprocess.run(
+                    ["docker", "build", "-t", tag, "."],
+                    cwd=repo_path,
+                    stdout=fh,
+                    stderr=subprocess.STDOUT,
+                )
+                if result.returncode == 0:
+                    fh.write(f"[{timestamp()}] Docker build for {alias} succeeded\n")
+                else:
+                    fh.write(
+                        f"[{timestamp()}] Docker build for {alias} failed with exit code {result.returncode}\n"
+                    )
+
+
+def run_e2e_tests() -> None:
+    """Run docker-compose integration tests if a compose file is present."""
+    if not RUN_E2E:
+        return
+    with open(LOG_FILE, "a") as fh:
+        for alias in REPOS.keys():
+            repo_path = f"/srv/{alias}"
+            compose_file = os.path.join(repo_path, "docker-compose.yml")
+            if os.path.exists(compose_file):
+                fh.write(f"\n[{timestamp()}] Running integration tests for {alias}...\n")
+                result = subprocess.run(
+                    ["docker-compose", "up", "--build", "--abort-on-container-exit"],
+                    cwd=repo_path,
+                    stdout=fh,
+                    stderr=subprocess.STDOUT,
+                )
+                subprocess.run([
+                    "docker-compose",
+                    "down",
+                    "--remove-orphans",
+                ], cwd=repo_path, stdout=fh, stderr=subprocess.STDOUT)
+                if result.returncode == 0:
+                    fh.write(f"[{timestamp()}] Integration tests for {alias} succeeded\n")
+                else:
+                    fh.write(
+                        f"[{timestamp()}] Integration tests for {alias} failed with exit code {result.returncode}\n"
+                    )
+
+
 def commit_applied_patch(fname: str) -> None:
     """Mark a feedback JSON file as applied and push it upstream."""
     patch_path = os.path.join(FEEDBACK_DIR, fname)
@@ -340,6 +400,8 @@ def loop() -> None:
     while True:
         log("=== New Cycle ===")
         pull_repos(REPOS)
+        build_docker_images()
+        run_e2e_tests()
         build_swift()
         push_logs_to_github()
         apply_codex_feedback()
