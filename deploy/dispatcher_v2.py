@@ -2,6 +2,7 @@
 ===================
 
 An improved deployment dispatcher for Codex. Version 2.4 adds
+
 basic build result checking, log rotation, automatic patch
 application, and granular service restarts. It remains backward
 compatible with the original :mod:`dispatcher` but exposes a new
@@ -19,6 +20,7 @@ import sys
 from repo_config import REPOS, ALIASES
 
 __version__ = "2.4"
+
 
 LOG_DIR = "/srv/deploy/logs"
 FEEDBACK_DIR = "/srv/deploy/feedback"

@@ -65,6 +65,7 @@ Press `Ctrl-C` in the terminal running the container to stop the dispatcher.
 ## 6. Cross-platform compilation
 
 Version 2.4 of the dispatcher detects when it is running on macOS and invokes
+
 `xcrun swift` so that the Apple SDKs are available. On Linux or other
 environments the open source `swift` toolchain is used. You can experiment with
 cross compiling by mounting additional volumes that contain the target SDKs and
