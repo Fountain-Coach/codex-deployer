@@ -1,7 +1,8 @@
-"""Dispatcher v2.3
+"""Dispatcher v2.4
 ===================
 
-An improved deployment dispatcher for Codex. Version 2.3 adds
+An improved deployment dispatcher for Codex. Version 2.4 adds
+
 basic build result checking, log rotation, automatic patch
 application, and granular service restarts. It remains backward
 compatible with the original :mod:`dispatcher` but exposes a new
@@ -18,7 +19,8 @@ import sys
 
 from repo_config import REPOS, ALIASES
 
-__version__ = "2.3"
+__version__ = "2.4"
+
 
 LOG_DIR = "/srv/deploy/logs"
 FEEDBACK_DIR = "/srv/deploy/feedback"
@@ -29,6 +31,7 @@ FEEDBACK_DIR = "/srv/deploy/feedback"
 LOG_LATEST = os.path.join(LOG_DIR, "build.log")
 LOG_FILE = LOG_LATEST
 LOOP_INTERVAL = int(os.environ.get("DISPATCHER_INTERVAL", "60"))
+USE_PRS = os.environ.get("DISPATCHER_USE_PRS", "1").lower() not in {"0", "false", "no"}
 
 
 def ensure_dirs() -> None:
@@ -61,24 +64,150 @@ def log(msg: str) -> None:
         fh.write(f"[{timestamp()}] {msg}\n")
 
 
+def _repo_slug(repo_path: str) -> str:
+    """Return the ``owner/repo`` slug for the given repository path."""
+    result = subprocess.run(
+        ["git", "-C", repo_path, "config", "--get", "remote.origin.url"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    url = result.stdout.strip()
+    if not url:
+        return ""
+    if url.startswith("git@"):
+        slug = url.split(":", 1)[1]
+    else:
+        slug = url.split("github.com/")[-1]
+    if slug.endswith(".git"):
+        slug = slug[:-4]
+    return slug
+
+
+def _create_pr(slug: str, branch: str, title: str, base: str = "main") -> int:
+    """Open a pull request and return its number, or -1 on failure."""
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        log("GITHUB_TOKEN not set; skipping PR creation")
+        return -1
+    data = json.dumps({"title": title, "head": branch, "base": base})
+    result = subprocess.run(
+        [
+            "curl",
+            "-s",
+            "-H",
+            f"Authorization: token {token}",
+            "-H",
+            "Accept: application/vnd.github+json",
+            "-d",
+            data,
+            f"https://api.github.com/repos/{slug}/pulls",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.stdout:
+        try:
+            pr_number = json.loads(result.stdout).get("number", -1)
+            if pr_number != -1:
+                log(f"Opened PR #{pr_number} for {slug}")
+            else:
+                log(f"Failed to parse PR creation response: {result.stdout}")
+            return pr_number
+        except Exception:
+            log(f"Failed to parse PR creation response: {result.stdout}")
+    else:
+        log(f"Failed to create PR for {slug}: {result.stderr.strip()}")
+    return -1
+
+
+def _wait_for_merge(slug: str, pr_number: int, interval: int = 30) -> None:
+    """Poll the PR until it has been merged."""
+    token = os.environ.get("GITHUB_TOKEN")
+    if pr_number < 0 or not token:
+        log("Skipping merge wait; missing PR number or token")
+        return
+    while True:
+        result = subprocess.run(
+            [
+                "curl",
+                "-s",
+                "-H",
+                f"Authorization: token {token}",
+                f"https://api.github.com/repos/{slug}/pulls/{pr_number}",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if not result.stdout:
+            log(f"Failed to fetch PR status: {result.stderr.strip()}")
+            time.sleep(interval)
+            continue
+        try:
+            data = json.loads(result.stdout)
+        except Exception:
+            log(f"Invalid PR status response: {result.stdout}")
+            time.sleep(interval)
+            continue
+        if data.get("merged"):
+            log(f"PR #{pr_number} merged")
+            break
+        if data.get("state") == "closed" and not data.get("merged"):
+            log(f"PR #{pr_number} closed without merge")
+            break
+        time.sleep(interval)
+
+
+def commit_and_push(repo_path: str, message: str, base: str = "main") -> None:
+    """Commit staged changes and push, optionally via a PR."""
+    subprocess.run(["git", "-C", repo_path, "add", "-A"], check=False)
+    current_branch = (
+        subprocess.run(
+            ["git", "-C", repo_path, "rev-parse", "--abbrev-ref", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=False,
+        ).stdout.strip()
+        or base
+    )
+    branch = current_branch
+    if USE_PRS:
+        branch = f"codex-{int(time.time())}"
+        subprocess.run(["git", "-C", repo_path, "checkout", "-b", branch], check=False)
+    subprocess.run(["git", "-C", repo_path, "commit", "-m", message], check=False)
+    if USE_PRS:
+        subprocess.run(["git", "-C", repo_path, "push", "-u", "origin", branch], check=False)
+        slug = _repo_slug(repo_path)
+        pr = _create_pr(slug, branch, message, base)
+        _wait_for_merge(slug, pr)
+        subprocess.run(["git", "-C", repo_path, "checkout", base], check=False)
+        subprocess.run(["git", "-C", repo_path, "pull"], check=False)
+    else:
+        subprocess.run(["git", "-C", repo_path, "push"], check=False)
+
+
 def push_logs_to_github() -> None:
     """Commit and push the latest build log to the ``codex-deployer`` repo."""
     latest_log = os.path.join("/srv/deploy", "logs", "latest.log")
     os.makedirs(os.path.dirname(latest_log), exist_ok=True)
     subprocess.run(["cp", LOG_FILE, latest_log], check=False)
-    subprocess.run(["git", "-C", "/srv/deploy", "add", f"logs/{os.path.basename(LOG_FILE)}", "logs/latest.log"], check=False)
     subprocess.run(
         [
             "git",
             "-C",
             "/srv/deploy",
-            "commit",
-            "-m",
-            f"Update build log {os.path.basename(LOG_FILE)}: {timestamp()}",
+            "add",
+            f"logs/{os.path.basename(LOG_FILE)}",
+            "logs/latest.log",
         ],
         check=False,
     )
-    subprocess.run(["git", "-C", "/srv/deploy", "push"], check=False)
+    commit_and_push(
+        "/srv/deploy",
+        f"Update build log {os.path.basename(LOG_FILE)}: {timestamp()}",
+    )
 
 
 def pull_repos(repos: Dict[str, str]) -> None:
@@ -136,10 +265,7 @@ def commit_applied_patch(fname: str) -> None:
     new_path = os.path.join(FEEDBACK_DIR, new_name)
     os.rename(patch_path, new_path)
     subprocess.run(["git", "-C", "/srv/deploy", "add", f"feedback/{new_name}"], check=False)
-    subprocess.run(
-        ["git", "-C", "/srv/deploy", "commit", "-m", f"Applied patch: {fname}"], check=False
-    )
-    subprocess.run(["git", "-C", "/srv/deploy", "push"], check=False)
+    commit_and_push("/srv/deploy", f"Applied patch: {fname}")
 
 
 def apply_codex_feedback() -> None:
@@ -172,15 +298,7 @@ def apply_codex_feedback() -> None:
             )
             if result.returncode == 0:
                 subprocess.run(["git", "-C", repo_path, "add", "-A"], check=False)
-                subprocess.run([
-                    "git",
-                    "-C",
-                    repo_path,
-                    "commit",
-                    "-m",
-                    desc,
-                ], check=False)
-                subprocess.run(["git", "-C", repo_path, "push"], check=False)
+                commit_and_push(repo_path, desc)
                 log(f"Patch applied to {repo}: {desc}")
             else:
                 log(

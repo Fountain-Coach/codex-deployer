@@ -83,7 +83,7 @@ At its heart is a single principle:
 
 | File | Purpose |
 |------|---------|
-| `dispatcher_v2.py` | The daemon loop (v2.3): pulls repos, builds services, checks for Codex feedback |
+| `dispatcher_v2.py` | The daemon loop (v2.4): pulls repos, builds services, opens PRs by default |
 | `logs/latest.log` | Most recent Swift build/test output |
 | `logs/build-*.log` | Historical logs for each dispatcher cycle |
 | `feedback/` | Codex inbox – write here to apply changes or fix builds |

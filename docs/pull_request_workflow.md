@@ -1,8 +1,8 @@
-# Pull Request Workflow Concept
+# Pull Request Workflow
 
-The default dispatcher pushes commits directly to the repository branch it manages. This keeps the deployment loop simple but may be too permissive for some teams.
+Dispatcher v2.4 enables a pull request workflow by default. Set the environment variable `DISPATCHER_USE_PRS=0` if you prefer direct pushes.
 
-If you would rather have Codex propose changes through pull requests, modify `dispatcher_v2.py` so that it:
+When PR mode is active the dispatcher:
 
 1. **Creates a branch** when applying patches or log updates.
 2. **Pushes that branch** to GitHub instead of committing to `main`.
@@ -10,4 +10,5 @@ If you would rather have Codex propose changes through pull requests, modify `di
 4. **Waits for merge**. The dispatcher should poll for the PR status and only continue once it has been merged.
 5. **Pulls the updated branch** and resumes its normal build cycle.
 
-This approach allows human code review while still keeping the automation centralized. The dispatcher does not implement this behavior by default—it's an optional extension you can layer on top of version 2.3.
+This approach allows human review while keeping automation centralized. Direct push mode remains available by disabling `DISPATCHER_USE_PRS`.
+
