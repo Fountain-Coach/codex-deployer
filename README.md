@@ -103,6 +103,8 @@ At its heart is a single principle:
 git clone https://github.com/fountain-coach/codex-deployer /srv/deploy
 cd /srv/deploy
 sudo cp systemd/fountain-dispatcher.service /etc/systemd/system/
+sudo cp systemd/dispatcher.env /srv/deploy/dispatcher.env
+sudo nano /srv/deploy/dispatcher.env  # edit values or source secrets
 sudo systemctl daemon-reexec
 sudo systemctl enable fountain-dispatcher
 sudo systemctl start fountain-dispatcher
@@ -110,7 +112,8 @@ sudo systemctl start fountain-dispatcher
 
 Make sure `/srv/` is writable and owned by the system user running the daemon.
 See [docs/environment_variables.md](docs/environment_variables.md) for required
-environment variables and GitHub secret configuration.
+environment variables and GitHub secret configuration. Update
+`/srv/deploy/dispatcher.env` with those values before starting the service.
 
 ---
 

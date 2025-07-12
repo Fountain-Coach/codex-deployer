@@ -15,6 +15,9 @@ chmod +x /srv/deploy/commands/restart-target.sh
 
 echo "[BOOTSTRAP] Copying systemd unit file..."
 cp /srv/deploy/systemd/fountain-dispatcher.service /etc/systemd/system/
+cp /srv/deploy/systemd/dispatcher.env /srv/deploy/dispatcher.env
+
+echo "[BOOTSTRAP] Reminder: edit /srv/deploy/dispatcher.env with your secrets"
 
 echo "[BOOTSTRAP] Enabling and starting dispatcher service..."
 systemctl daemon-reexec
