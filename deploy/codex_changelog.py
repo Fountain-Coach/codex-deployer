@@ -1,4 +1,5 @@
 import os
+# OPENAI_API_KEY is documented in docs/environment_variables.md
 import subprocess
 from datetime import datetime
 

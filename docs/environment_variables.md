@@ -26,3 +26,9 @@ export OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
 
 The dispatcher reads these variables at startup, so ensure they are exported
 before launching the service (e.g. inside your systemd unit file).
+
+## dispatcher.env
+
+The systemd unit loads variables from `/srv/deploy/dispatcher.env`. Copy the
+sample from `systemd/dispatcher.env` and edit the values or source your GitHub
+secrets there.

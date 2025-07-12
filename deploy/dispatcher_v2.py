@@ -31,6 +31,7 @@ FEEDBACK_DIR = "/srv/deploy/feedback"
 # to ``LOG_LATEST`` for backwards compatibility.
 LOG_LATEST = os.path.join(LOG_DIR, "build.log")
 LOG_FILE = LOG_LATEST
+# See docs/environment_variables.md for details on these variables
 LOOP_INTERVAL = int(os.environ.get("DISPATCHER_INTERVAL", "60"))
 USE_PRS = os.environ.get("DISPATCHER_USE_PRS", "1").lower() not in {"0", "false", "no"}
 

@@ -3,6 +3,7 @@ Description=Codex FountainAI Deployment Dispatcher
 After=network.target
 
 [Service]
+EnvironmentFile=/srv/deploy/dispatcher.env
 ExecStart=/usr/bin/python3 /srv/deploy/dispatcher_v2.py
 WorkingDirectory=/srv/deploy
 Restart=always
