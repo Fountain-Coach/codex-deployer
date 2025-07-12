@@ -35,6 +35,18 @@ LOOP_INTERVAL = int(os.environ.get("DISPATCHER_INTERVAL", "60"))
 USE_PRS = os.environ.get("DISPATCHER_USE_PRS", "1").lower() not in {"0", "false", "no"}
 
 
+def check_env() -> None:
+    """Log the availability of environment variables."""
+    if "DISPATCHER_INTERVAL" not in os.environ:
+        log("DISPATCHER_INTERVAL not set; using default 60")
+    if "DISPATCHER_USE_PRS" not in os.environ:
+        log("DISPATCHER_USE_PRS not set; pull request workflow enabled")
+    if "GITHUB_TOKEN" not in os.environ:
+        log("GITHUB_TOKEN not set; PR creation will be skipped")
+    if "OPENAI_API_KEY" not in os.environ:
+        log("OPENAI_API_KEY not set; commit messages will be generic")
+
+
 def ensure_dirs() -> None:
     """Create required directories if they do not exist."""
     os.makedirs(LOG_DIR, exist_ok=True)
@@ -322,14 +334,16 @@ def apply_codex_feedback() -> None:
 def loop() -> None:
     """Main dispatcher loop."""
     ensure_dirs()
+    start_new_log()
+    check_env()
     while True:
-        start_new_log()
         log("=== New Cycle ===")
         pull_repos(REPOS)
         build_swift()
         push_logs_to_github()
         apply_codex_feedback()
         time.sleep(LOOP_INTERVAL)
+        start_new_log()
 
 
 if __name__ == "__main__":

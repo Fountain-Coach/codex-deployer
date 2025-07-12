@@ -31,4 +31,6 @@ See the repository [README](../README.md) for setup details and an overview of
 the dispatcher's role in the deployment architecture.
 
 The pull request process is documented in [pull_request_workflow.md](pull_request_workflow.md). Set `DISPATCHER_USE_PRS=0` to revert to direct push mode.
+Refer to [environment_variables.md](environment_variables.md) for details on
+required environment variables and how to set them using GitHub secrets.
 
