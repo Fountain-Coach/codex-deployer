@@ -1,7 +1,7 @@
-"""Dispatcher v2.2
+"""Dispatcher v2.3
 ===================
 
-An improved deployment dispatcher for Codex. Version 2.2 adds
+An improved deployment dispatcher for Codex. Version 2.3 adds
 basic build result checking, log rotation, automatic patch
 application, and granular service restarts. It remains backward
 compatible with the original :mod:`dispatcher` but exposes a new
@@ -18,7 +18,7 @@ import sys
 
 from repo_config import REPOS, ALIASES
 
-__version__ = "2.2"
+__version__ = "2.3"
 
 LOG_DIR = "/srv/deploy/logs"
 FEEDBACK_DIR = "/srv/deploy/feedback"
