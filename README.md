@@ -96,6 +96,7 @@ At its heart is a single principle:
 | `docs/environment_variables.md` | Reference for all environment variables |
 | `docs/mac_docker_tutorial.md` | Run the dispatcher locally on macOS with Docker |
 | `docs/what_is_git.md` | Intro to Git with history and flow |
+| `docs/design_patterns.md` | Evaluation of client/server, plugin, and declarative patterns |
 
 ---
 
