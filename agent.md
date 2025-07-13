@@ -25,7 +25,7 @@ Codex interacts with this agent via:
 - `feedback/*.json` → structured patch proposals
 - `commands/restart-services.sh` → optional service restart trigger
 
-Codex does **not** use GitHub runners or CI pipelines. It communicates entirely through Git clones and semantic feedback.
+Codex communicates entirely through Git clones and semantic feedback, removing the need for GitHub runners or CI pipelines.
 
 Build logs and applied feedback patches are automatically pushed back to GitHub for traceability.
 
@@ -47,7 +47,7 @@ The agent pulls and manages the following GitHub repositories:
 > [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).
 > The agent clones it under `/srv/fountainai/` until the rename is finalized.
 
-These repos are cloned directly — they are **not submodules**. Paths and build logic are mapped semantically in `repo_config.py`.
+These repos are cloned directly rather than as submodules. Paths and build logic are mapped semantically in `repo_config.py`.
 
 ---
 

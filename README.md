@@ -8,7 +8,7 @@
 
 ### 🏷️ Description
 
-A daemonized, Git-native deployment loop designed for FountainAI infrastructure — controlled by Codex, not GitHub Actions.
+A daemonized, Git-native deployment loop designed for FountainAI infrastructure — controlled directly by Codex.
 
 This repo defines a fully autonomous deployment system where Codex:
 - Pulls repositories directly via `git`
@@ -17,7 +17,7 @@ This repo defines a fully autonomous deployment system where Codex:
 - Writes structured feedback into a semantic inbox
 - Iterates on patches based on the build outcome
 
-No CI runners. No pipelines. Just an always-on deployment brain powered by Codex.
+An always-on deployment brain powered by Codex.
 
 > **Repo Alias**: References to `fountainai` actually point to
 > [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).
@@ -28,7 +28,7 @@ No CI runners. No pipelines. Just an always-on deployment brain powered by Codex
 
 ## 🧠 What is the Codex-Powered Operating System?
 
-This is a **Git-based semantic OS** that lets Codex orchestrate software evolution across services, machines, and configurations — using reasoning, not imperative scripts.
+This is a **Git-based semantic OS** that lets Codex orchestrate software evolution across services, machines, and configurations by applying reasoning and semantic rules instead of imperative scripts.
 
 At its heart is a single principle:
 
@@ -68,7 +68,7 @@ At its heart is a single principle:
 |------------|-------------|
 | ✅ Git-native | Codex pulls from `main` and reads current state |
 | ✅ Swift compiler integration | Full `swift build`, `swift test`, and `swift run` output is captured |
-| ✅ No runners required | Runs 100% on your VPS |
+| ✅ Runs entirely on your VPS | No external runners are required |
 | ✅ Semantic feedback loop | Codex writes JSON to `/feedback/`, patches are applied |
 | ✅ Daemon architecture | One Python loop drives the whole system |
 | ✅ Multi-repo awareness | Supports FountainAI, Kong, Typesense, Teatro clones in one loop |
@@ -141,11 +141,15 @@ Codex can:
 
 ## 🧠 Codex + Git = Compiler
 
-This repo is not just a deploy tool.  
-It is the **Codex compiler runtime** — where reasoning and code meet in the repo as source-of-truth.
+This repo is the **Codex compiler runtime** — a deploy tool that unifies reasoning and code in the repository as the source of truth.
 
-You don’t deploy a system.  
-You write one that understands itself.
+You deploy a system that understands itself.
+
+---
+
+## 🗺️ History & Motivation
+
+Codex-deployer began as an experiment to remove brittle CI pipelines and GitHub Actions from the deployment process. It evolved into an always-on, Git-native compiler loop. While it isn't a conventional CI tool, that difference is intentional: the project focuses on reasoning-driven deployments where Codex continually patches and rebuilds services without external runners.
 
 ---
 
