@@ -1,0 +1,9 @@
+schema_version: 1
+name: Teatro View Engine
+description: |
+  Specification for a declarative Swift 6 rendering framework that produces HTML, SVG, PNG, animations, LilyPond scores, MIDI files, and Fountain screenplay views.
+languages:
+  - Swift
+  - LilyPond
+  - Fountain
+  - MIDI
