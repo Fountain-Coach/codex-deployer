@@ -98,9 +98,11 @@ def timestamp() -> str:
 
 
 def log(msg: str) -> None:
-    """Append a log message to ``LOG_FILE`` with a timestamp."""
+    """Append a log message to ``LOG_FILE`` and echo to the console."""
+    line = f"[{timestamp()}] {msg}"
     with open(LOG_FILE, "a") as fh:
-        fh.write(f"[{timestamp()}] {msg}\n")
+        fh.write(line + "\n")
+    print(line, flush=True)
 
 
 def _repo_slug(repo_path: str) -> str:
