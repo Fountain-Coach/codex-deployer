@@ -8,12 +8,17 @@ This document lists the environment variables used by the Codex deployer.
 | `DISPATCHER_USE_PRS` | `1` | When set to `0` disables the pull request workflow and pushes directly to `main`. |
 | `GITHUB_TOKEN` | _(none)_ | Personal access token used to clone private repositories and open pull requests when PR mode is active. |
 | `OPENAI_API_KEY` | _(none)_ | Enables AI-generated commit messages when set. |
+| `GIT_USER_NAME` | _(none)_ | Used to configure `git config --global user.name`. |
+| `GIT_USER_EMAIL` | _(none)_ | Used to configure `git config --global user.email`. |
 | `DISPATCHER_BUILD_DOCKER` | `0` | Set to `1` to build Docker images for repos containing a `Dockerfile`. |
 | `DISPATCHER_RUN_E2E` | `0` | Set to `1` to run `docker-compose` integration tests when available. |
 
 Variables without defaults are optional but enable additional functionality.
 The dispatcher logs a warning at startup if any variable is missing, allowing
 you to verify configuration before the main loop begins.
+
+Set `GIT_USER_NAME` and `GIT_USER_EMAIL` to configure the commit identity used
+by `git`. This prevents interactive prompts when the dispatcher performs commits.
 
 `GITHUB_TOKEN` should be a personal access token with `repo` and `workflow`
 permissions. See GitHub's
