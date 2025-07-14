@@ -21,8 +21,7 @@ An always-on deployment brain powered by Codex.
 
 > **Repo Alias**: References to `fountainai` actually point to
 > [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).
-> The dispatcher clones it under `/srv/fountainai/` for compatibility until the
-> rename is complete.
+> The sources now reside in `repos/fountainai/`, so no additional clone is required.
 
 ---
 
@@ -41,23 +40,23 @@ At its heart is a single principle:
 ```
 [ GitHub ]
     ▲
-    |   (codex clones repos directly)
+    |   (codex pulls the self-contained repo)
     ▼
 [ VPS: FountainAI Node ]
-    /srv/
-    ├── fountainai/          ← Swift + Python services
-    ├── kong-codex/          ← Gateway config & plugins
-    ├── typesense-codex/     ← Schema definitions + indexing logic
-    ├── teatro/              ← Teatro view engine
-    └── deploy/
-         ├── dispatcher_v2.py   ← Daemonized build + feedback loop
-         ├── logs/
-         │    └── build.log  ← Swift compiler output
-         ├── feedback/
-         │    └── codex-001.json  ← Structured GPT feedback
-         └── commands/
-              ├── restart-services.sh (optional legacy script)
-              └── restart-target.sh  ← restart a specific service
+    /srv/deploy/
+    ├── repos/
+    │   ├── fountainai/       ← Swift + Python services
+    │   ├── kong-codex/       ← Gateway config & plugins
+    │   ├── typesense-codex/  ← Schema definitions + indexing logic
+    │   └── teatro/           ← Teatro view engine
+    ├── dispatcher_v2.py   ← Daemonized build + feedback loop
+    ├── logs/
+    │    └── build.log  ← Swift compiler output
+    ├── feedback/
+    │    └── codex-001.json  ← Structured GPT feedback
+    └── commands/
+         ├── restart-services.sh (optional legacy script)
+         └── restart-target.sh  ← restart a specific service
 ```
 
 ---
@@ -71,7 +70,7 @@ At its heart is a single principle:
 | ✅ Runs entirely on your VPS | No external runners are required |
 | ✅ Semantic feedback loop | Codex writes JSON to `/feedback/`, patches are applied |
 | ✅ Daemon architecture | One Python loop drives the whole system |
-| ✅ Multi-repo awareness | Supports FountainAI, Kong, Typesense, Teatro clones in one loop |
+| ✅ Multi-repo awareness | Includes FountainAI, Kong, Typesense and Teatro sources in one repository |
 | ✅ Developer-agnostic | Works whether code was committed by a human or Codex |
 | ✅ GitHub sync | Build logs and applied patches automatically pushed |
 | ✅ Log rotation | Each cycle writes `build-YYYYMMDD-HHMMSS.log` for history |

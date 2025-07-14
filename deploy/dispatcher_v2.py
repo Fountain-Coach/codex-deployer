@@ -14,12 +14,13 @@ import subprocess
 import time
 import json
 from datetime import datetime
-from typing import Dict
 import sys
 import urllib.request
 import urllib.error
 
-from repo_config import REPOS, ALIASES
+# Managed repositories now live directly under ``repos/`` in this repository.
+REPO_NAMES = ["fountainai", "kong-codex", "typesense-codex", "teatro"]
+REPOS_DIR = "/srv/deploy/repos"
 from codex_changelog import generate_commit_message, append_changelog
 
 __version__ = "2.4"
@@ -38,7 +39,6 @@ LOOP_INTERVAL = int(os.environ.get("DISPATCHER_INTERVAL", "60"))
 USE_PRS = os.environ.get("DISPATCHER_USE_PRS", "1").lower() not in {"0", "false", "no"}
 BUILD_DOCKER = os.environ.get("DISPATCHER_BUILD_DOCKER", "0").lower() not in {"0", "false", "no"}
 RUN_E2E = os.environ.get("DISPATCHER_RUN_E2E", "0").lower() not in {"0", "false", "no"}
-ALLOW_REPO_WRITES = os.environ.get("DISPATCHER_ALLOW_REPO_WRITES", "0").lower() not in {"0", "false", "no"}
 
 # Defaults for git identity when environment variables are missing.
 # See docs/environment_variables.md for details.
@@ -72,8 +72,6 @@ def check_env() -> None:
         log("DISPATCHER_BUILD_DOCKER not set; docker builds disabled")
     if "DISPATCHER_RUN_E2E" not in os.environ:
         log("DISPATCHER_RUN_E2E not set; integration tests disabled")
-    if "DISPATCHER_ALLOW_REPO_WRITES" not in os.environ:
-        log("DISPATCHER_ALLOW_REPO_WRITES not set; external repositories are read-only")
 
 
 def ensure_dirs() -> None:
@@ -195,11 +193,9 @@ def _wait_for_merge(slug: str, pr_number: int, interval: int = 30) -> None:
         time.sleep(interval)
 
 
-def commit_and_push(repo_path: str, message: str, base: str = "main") -> None:
-    """Commit staged changes and push, optionally via a PR."""
-    if os.path.realpath(repo_path) != "/srv/deploy" and not ALLOW_REPO_WRITES:
-        log(f"Skipping commit to {repo_path}; dispatcher is in read-only mode")
-        return
+def commit_and_push(message: str, base: str = "main") -> None:
+    """Commit staged changes to the ``codex-deployer`` repo and push upstream."""
+    repo_path = "/srv/deploy"
     subprocess.run(["git", "-C", repo_path, "add", "-A"], check=False)
     message = generate_commit_message(repo_path, message)
     append_changelog(repo_path, message)
@@ -259,32 +255,9 @@ def push_logs_to_github() -> None:
         ],
         check=False,
     )
-    commit_and_push(
-        "/srv/deploy",
-        f"Update build log {os.path.basename(LOG_FILE)}: {timestamp()}",
-    )
+    commit_and_push(f"Update build log {os.path.basename(LOG_FILE)}: {timestamp()}")
 
 
-def pull_repos(repos: Dict[str, str]) -> None:
-    """Clone or update all configured repositories."""
-    token = os.environ.get("GITHUB_TOKEN")
-    for alias, url in repos.items():
-        path = f"/srv/{alias}"
-        canonical = ALIASES.get(alias, alias)
-        if not os.path.exists(path):
-            clone_url = url
-            if token and url.startswith("https://"):
-                clone_url = url.replace("https://", f"https://x-access-token:{token}@")
-            subprocess.run(["git", "clone", clone_url, path], check=False)
-            if clone_url != url:
-                subprocess.run(["git", "-C", path, "remote", "set-url", "origin", url], check=False)
-            log(f"Cloned {alias} -> {canonical}")
-        else:
-            pull_cmd = ["git", "-C", path, "pull"]
-            if token and url.startswith("https://"):
-                pull_cmd.append(url.replace("https://", f"https://x-access-token:{token}@"))
-            subprocess.run(pull_cmd, check=False)
-            log(f"Pulled latest {alias} -> {canonical}")
 
 
 def build_swift() -> None:
@@ -295,22 +268,23 @@ def build_swift() -> None:
         if sys.platform == "darwin":
             # Prefer the local Xcode toolchain when available
             build_cmd = ["xcrun", "swift", "build"]
+        repo_path = os.path.join(REPOS_DIR, "fountainai")
         build_result = subprocess.run(
             build_cmd,
-            cwd="/srv/fountainai",
+            cwd=repo_path,
             stdout=fh,
             stderr=subprocess.STDOUT,
         )
         if build_result.returncode == 0:
             fh.write(f"[{timestamp()}] swift build succeeded\n")
-            if os.path.exists(os.path.join("/srv/fountainai", "Tests")):
+            if os.path.exists(os.path.join(repo_path, "Tests")):
                 fh.write(f"[{timestamp()}] running swift test...\n")
                 test_cmd = ["swift", "test"]
                 if sys.platform == "darwin":
                     test_cmd = ["xcrun", "swift", "test"]
                 test_result = subprocess.run(
                     test_cmd,
-                    cwd="/srv/fountainai",
+                    cwd=repo_path,
                     stdout=fh,
                     stderr=subprocess.STDOUT,
                 )
@@ -327,8 +301,8 @@ def build_docker_images() -> None:
     if not BUILD_DOCKER:
         return
     with open(LOG_FILE, "a") as fh:
-        for alias in REPOS.keys():
-            repo_path = f"/srv/{alias}"
+        for alias in REPO_NAMES:
+            repo_path = os.path.join(REPOS_DIR, alias)
             dockerfile = os.path.join(repo_path, "Dockerfile")
             if os.path.exists(dockerfile):
                 fh.write(f"\n[{timestamp()}] Building Docker image for {alias}...\n")
@@ -352,8 +326,8 @@ def run_e2e_tests() -> None:
     if not RUN_E2E:
         return
     with open(LOG_FILE, "a") as fh:
-        for alias in REPOS.keys():
-            repo_path = f"/srv/{alias}"
+        for alias in REPO_NAMES:
+            repo_path = os.path.join(REPOS_DIR, alias)
             compose_file = os.path.join(repo_path, "docker-compose.yml")
             if os.path.exists(compose_file):
                 fh.write(f"\n[{timestamp()}] Running integration tests for {alias}...\n")
@@ -383,7 +357,7 @@ def commit_applied_patch(fname: str) -> None:
     new_path = os.path.join(FEEDBACK_DIR, new_name)
     os.rename(patch_path, new_path)
     subprocess.run(["git", "-C", "/srv/deploy", "add", f"feedback/{new_name}"], check=False)
-    commit_and_push("/srv/deploy", f"Applied patch: {fname}")
+    commit_and_push(f"Applied patch: {fname}")
 
 
 def apply_codex_feedback() -> None:
@@ -405,12 +379,7 @@ def apply_codex_feedback() -> None:
         repo = data.get("repo", "fountainai")
         patch = data.get("patch", "")
         desc = data.get("description", f"Apply patch {fname}")
-        repo_path = f"/srv/{repo}"
-
-        if os.path.realpath(repo_path) != "/srv/deploy" and not ALLOW_REPO_WRITES:
-            log(f"Read-only mode; skipping patch for {repo}")
-            commit_applied_patch(fname)
-            continue
+        repo_path = os.path.join(REPOS_DIR, repo)
 
         if patch:
             result = subprocess.run(
@@ -421,7 +390,7 @@ def apply_codex_feedback() -> None:
             )
             if result.returncode == 0:
                 subprocess.run(["git", "-C", repo_path, "add", "-A"], check=False)
-                commit_and_push(repo_path, desc)
+                commit_and_push(desc)
                 log(f"Patch applied to {repo}: {desc}")
             else:
                 log(
@@ -448,7 +417,6 @@ def loop() -> None:
     log("Dispatcher started successfully \U0001F7E2")
     while True:
         log("=== New Cycle ===")
-        pull_repos(REPOS)
         build_docker_images()
         run_e2e_tests()
         build_swift()

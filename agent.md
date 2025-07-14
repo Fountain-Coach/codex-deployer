@@ -8,7 +8,7 @@
 
 This agent runs as a semantic deployment compiler. Its role is to:
 
-- Pull latest GitHub repos (FountainAI, Kong, Typesense)
+- Build the services from the sources under `repos/`
 - Compile services using `swift build` and log output
 - Capture build failures and surface them semantically
 - Apply feedback patches written by Codex or human developers
@@ -45,9 +45,8 @@ The agent pulls and manages the following GitHub repositories:
 
 > **Note**: `fountainai` refers to the GitHub repo
 > [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).
-> The agent clones it under `/srv/fountainai/` until the rename is finalized.
-
-These repos are cloned directly rather than as submodules. Paths and build logic are mapped semantically in `repo_config.py`.
+> The code is vendored under `repos/fountainai/`.
+The repositories are included directly rather than as submodules.
 
 ---
 
@@ -78,11 +77,11 @@ Accepted values for `"repo"`:
 
 | Path | Purpose |
 |------|---------|
-| `/srv/fountainai/` | FountainAI services cloned from Git |
-| `/srv/kong-codex/` | Kong gateway config + plugins |
-| `/srv/typesense-codex/` | Typesense indexing definitions |
-| `/srv/teatro/` | Teatro view engine |
-| `/srv/deploy/` | Contains `dispatcher_v2.py`, `repo_config.py`, and runtime control logic |
+| `/srv/deploy/repos/fountainai/` | FountainAI services |
+| `/srv/deploy/repos/kong-codex/` | Kong gateway config + plugins |
+| `/srv/deploy/repos/typesense-codex/` | Typesense indexing definitions |
+| `/srv/deploy/repos/teatro/` | Teatro view engine |
+| `/srv/deploy/` | Contains `dispatcher_v2.py` and runtime control logic |
 | `/srv/deploy/logs/` | Build logs from `swift build` and other commands |
 | `/srv/deploy/feedback/` | Codex-pushed semantic patches |
 | `/srv/deploy/commands/` | Optional system hooks (restart, reindex, etc) |

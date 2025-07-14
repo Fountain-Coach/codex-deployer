@@ -56,7 +56,7 @@ docker run --rm -it -v $(pwd):/srv/deploy \
 repositories. See [managing_environment_variables.md](managing_environment_variables.md)
 for instructions and links to GitHub's token documentation.
 
-The first run will clone the other repositories defined in `repo_config.py` and write logs under `/srv/deploy/logs` inside the container. Once initialization completes, the dispatcher prints `Dispatcher started successfully` followed by a green circle so you know it is running correctly.
+The dispatcher starts immediately because all repositories are already present under `/srv/deploy/repos`. After initialization you should see `Dispatcher started successfully` followed by a green circle.
 
 ## 4. Inspect logs
 
