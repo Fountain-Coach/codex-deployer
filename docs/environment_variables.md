@@ -30,6 +30,8 @@ permissions. See GitHub's
 for instructions and follow
 [managing_environment_variables.md](managing_environment_variables.md) for a
 step-by-step walk-through of adding it to `dispatcher.env`.
+The token is used for cloning repositories, pushing commits, and pulling
+updates after pull requests merge so that Git never prompts for a username.
 
 ## Using GitHub Secrets
 

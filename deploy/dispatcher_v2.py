@@ -226,7 +226,10 @@ def commit_and_push(repo_path: str, message: str, base: str = "main") -> None:
         pr = _create_pr(slug, branch, message, base)
         _wait_for_merge(slug, pr)
         subprocess.run(["git", "-C", repo_path, "checkout", base], check=False)
-        subprocess.run(["git", "-C", repo_path, "pull"], check=False)
+        pull_cmd = ["git", "-C", repo_path, "pull"]
+        if token:
+            pull_cmd.append(f"https://x-access-token:{token}@github.com/{slug}.git")
+        subprocess.run(pull_cmd, check=False)
     else:
         push_cmd = ["git", "-C", repo_path, "push"]
         if token:
@@ -271,7 +274,10 @@ def pull_repos(repos: Dict[str, str]) -> None:
                 subprocess.run(["git", "-C", path, "remote", "set-url", "origin", url], check=False)
             log(f"Cloned {alias} -> {canonical}")
         else:
-            subprocess.run(["git", "-C", path, "pull"], check=False)
+            pull_cmd = ["git", "-C", path, "pull"]
+            if token and url.startswith("https://"):
+                pull_cmd.append(url.replace("https://", f"https://x-access-token:{token}@"))
+            subprocess.run(pull_cmd, check=False)
             log(f"Pulled latest {alias} -> {canonical}")
 
 
