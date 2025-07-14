@@ -216,15 +216,27 @@ def commit_and_push(repo_path: str, message: str, base: str = "main") -> None:
         branch = f"codex-{int(time.time())}"
         subprocess.run(["git", "-C", repo_path, "checkout", "-b", branch], check=False)
     subprocess.run(["git", "-C", repo_path, "commit", "-m", message], check=False)
+    token = os.environ.get("GITHUB_TOKEN")
+    slug = _repo_slug(repo_path)
     if USE_PRS:
-        subprocess.run(["git", "-C", repo_path, "push", "-u", "origin", branch], check=False)
-        slug = _repo_slug(repo_path)
+        push_cmd = ["git", "-C", repo_path, "push", "-u"]
+        if token:
+            # Use a tokenized URL for pushes to avoid interactive prompts.
+            # See docs/environment_variables.md for details on GITHUB_TOKEN.
+            push_cmd.append(f"https://x-access-token:{token}@github.com/{slug}.git")
+        else:
+            push_cmd.append("origin")
+        push_cmd.append(branch)
+        subprocess.run(push_cmd, check=False)
         pr = _create_pr(slug, branch, message, base)
         _wait_for_merge(slug, pr)
         subprocess.run(["git", "-C", repo_path, "checkout", base], check=False)
         subprocess.run(["git", "-C", repo_path, "pull"], check=False)
     else:
-        subprocess.run(["git", "-C", repo_path, "push"], check=False)
+        push_cmd = ["git", "-C", repo_path, "push"]
+        if token:
+            push_cmd.append(f"https://x-access-token:{token}@github.com/{slug}.git")
+        subprocess.run(push_cmd, check=False)
 
 
 def push_logs_to_github() -> None:
