@@ -38,7 +38,7 @@ let package = Package(
         .target(name: "BaselineAwarenessClient", path: "Generated/Client/baseline-awareness"),
         .target(
             name: "BootstrapService",
-            dependencies: ["ServiceShared"],
+            dependencies: ["ServiceShared", "BaselineAwarenessService"],
             path: "Generated/Server",
             sources: [
                 "bootstrap/HTTPKernel.swift",

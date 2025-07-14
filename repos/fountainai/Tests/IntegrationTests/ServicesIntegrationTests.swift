@@ -72,7 +72,19 @@ final class ServicesIntegrationTests: XCTestCase {
 
         let client = BootstrapClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
         let data = try await client.sendRaw(BootstrapClient.seedRoles())
-        XCTAssertEqual(data.count, 0)
+        let defaults = try JSONDecoder().decode(BootstrapService.RoleDefaults.self, from: data)
+        XCTAssertEqual(defaults.drift, "Analyze drift")
+    }
+
+    func testBootstrapInitializeCorpus() async throws {
+        let kernel = BootstrapService.HTTPKernel()
+        let body = try JSONEncoder().encode(BootstrapService.InitIn(corpusId: "b1"))
+        let req = BootstrapService.HTTPRequest(method: "POST", path: "/bootstrap/corpus/init", body: body)
+        let resp = try await kernel.handle(req)
+        let out = try JSONDecoder().decode(BootstrapService.InitOut.self, from: resp.body)
+        XCTAssertEqual(out.message, "created")
+        let ids = await TypesenseClient.shared.listCorpora()
+        XCTAssertTrue(ids.contains("b1"))
     }
 
     func testPersistListCorpora() async throws {
