@@ -94,6 +94,7 @@ At its heart is a single principle:
 | `systemd/fountain-dispatcher.service` | Autostarts dispatcher on VPS boot |
 | `docs/dispatcher_v2.md` | Detailed dispatcher v2 documentation |
 | `docs/environment_variables.md` | Reference for all environment variables |
+| `docs/managing_environment_variables.md` | Step-by-step variable setup |
 | `docs/mac_docker_tutorial.md` | Run the dispatcher locally on macOS with Docker |
 | `docs/what_is_git.md` | Intro to Git with history and flow |
 | `docs/design_patterns.md` | Evaluation of client/server, plugin, and declarative patterns |
@@ -115,8 +116,11 @@ sudo systemctl start fountain-dispatcher
 
 Make sure `/srv/` is writable and owned by the system user running the daemon.
 See [docs/environment_variables.md](docs/environment_variables.md) for required
-environment variables and GitHub secret configuration. Update
-`/srv/deploy/dispatcher.env` with those values before starting the service.
+environment variables and GitHub secret configuration. For a detailed token
+setup walk-through, including how to create `GITHUB_TOKEN`, consult
+[docs/managing_environment_variables.md](docs/managing_environment_variables.md).
+Update `/srv/deploy/dispatcher.env` with those values before starting the
+service.
 
 ---
 

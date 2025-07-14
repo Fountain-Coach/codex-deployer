@@ -32,9 +32,11 @@ See the repository [README](../README.md) for setup details and an overview of
 the dispatcher's role in the deployment architecture.
 
 The pull request process is documented in [pull_request_workflow.md](pull_request_workflow.md). Set `DISPATCHER_USE_PRS=0` to revert to direct push mode.
-Refer to [environment_variables.md](environment_variables.md) for details on
-required environment variables and how to set them using GitHub secrets. The
-systemd unit reads values from `/srv/deploy/dispatcher.env`. Set
+Refer to [environment_variables.md](environment_variables.md) for a list of
+variables and see
+[managing_environment_variables.md](managing_environment_variables.md) for a
+step-by-step setup guide, including GitHub token creation. The systemd unit reads values from
+`/srv/deploy/dispatcher.env`. Set
 `DISPATCHER_BUILD_DOCKER=1` and `DISPATCHER_RUN_E2E=1` to enable cross-repo
 container builds and integration tests.
 

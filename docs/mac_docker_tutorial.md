@@ -6,8 +6,9 @@ This tutorial demonstrates how to start the deployment loop on a Mac using Docke
 
 - macOS with [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed
 - Git command line tools
-- Review [environment_variables.md](environment_variables.md) for required
-  variables like `GITHUB_TOKEN`.
+- Review [environment_variables.md](environment_variables.md) and
+  [managing_environment_variables.md](managing_environment_variables.md)
+  for required variables like `GITHUB_TOKEN`.
 
 ## 1. Clone the repository
 
@@ -47,6 +48,10 @@ docker run --rm -it -v $(pwd):/srv/deploy \
   codex-deployer-local \
   python3 /srv/deploy/deploy/dispatcher_v2.py
 ```
+
+`GITHUB_TOKEN` must be a personal access token with access to your private
+repositories. See [managing_environment_variables.md](managing_environment_variables.md)
+for instructions and links to GitHub's token documentation.
 
 The first run will clone the other repositories defined in `repo_config.py` and write logs under `/srv/deploy/logs` inside the container.
 
