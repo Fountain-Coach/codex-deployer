@@ -61,3 +61,15 @@ public struct Reflection: Codable, Sendable {
         self.reflectionId = reflectionId
     }
 }
+
+public struct Role: Codable, Sendable {
+    public let name: String
+    public let prompt: String
+    public let corpusId: String
+
+    public init(name: String, prompt: String, corpusId: String) {
+        self.name = name
+        self.prompt = prompt
+        self.corpusId = corpusId
+    }
+}

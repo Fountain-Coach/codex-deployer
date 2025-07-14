@@ -228,4 +228,17 @@ final class ServicesIntegrationTests: XCTestCase {
         let data = try await client.sendRaw(LLMGatewayClientSDK.metrics_metrics_get())
         XCTAssertEqual(data.count, 0)
     }
+
+    func testBootstrapPromoteReflection() async throws {
+        _ = await TypesenseClient.shared.createCorpus(id: "bp1")
+        let reflection = Reflection(content: "new role", corpusId: "bp1", question: "q", reflectionId: "r1")
+        await TypesenseClient.shared.addReflection(reflection)
+        let kernel = BootstrapService.HTTPKernel()
+        let reqPath = "/bootstrap/roles/promote?corpusId=bp1&roleName=test"
+        let resp = try await kernel.handle(.init(method: "POST", path: reqPath))
+        let info = try JSONDecoder().decode(BootstrapService.RoleInfo.self, from: resp.body)
+        XCTAssertEqual(info.name, "test")
+        let roles = await TypesenseClient.shared.listRoles(for: "bp1")
+        XCTAssertEqual(roles.first?.name, "test")
+    }
 }

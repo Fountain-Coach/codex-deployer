@@ -24,6 +24,7 @@ public actor TypesenseClient {
     private var drifts: [String: [String: Drift]] = [:]
     private var patterns: [String: [String: Patterns]] = [:]
     private var reflections: [String: [String: Reflection]] = [:]
+    private var roles: [String: [String: Role]] = [:]
 
     private init() {
         if let url = ProcessInfo.processInfo.environment["TYPESENSE_URL"] {
@@ -135,6 +136,29 @@ public actor TypesenseClient {
             items[patternsReq.patternsId] = patternsReq
             patterns[patternsReq.corpusId] = items
         }
+    }
+
+    // MARK: - Roles
+    public func addRole(_ role: Role) async {
+        if let _ = baseURL {
+            let body = try? JSONEncoder().encode(role)
+            _ = try? await request(path: "corpora/\(role.corpusId)/roles", method: "POST", body: body)
+        } else {
+            var items = roles[role.corpusId] ?? [:]
+            items[role.name] = role
+            roles[role.corpusId] = items
+        }
+    }
+
+    public func listRoles(for corpusId: String) async -> [Role] {
+        if let _ = baseURL {
+            if let data = try? await request(path: "corpora/\(corpusId)/roles", method: "GET", body: nil),
+               let resp = try? JSONDecoder().decode([Role].self, from: data) {
+                return resp
+            }
+            return []
+        }
+        return Array(roles[corpusId]?.values ?? [])
     }
 
     public func addReflection(_ reflection: Reflection) async {
