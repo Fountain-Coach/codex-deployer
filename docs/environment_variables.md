@@ -6,7 +6,7 @@ This document lists the environment variables used by the Codex deployer.
 |----------|---------|---------|
 | `DISPATCHER_INTERVAL` | `60` | Interval in seconds between dispatcher loops. |
 | `DISPATCHER_USE_PRS` | `1` | When set to `0` disables the pull request workflow and pushes directly to `main`. |
-| `GITHUB_TOKEN` | _(none)_ | Personal access token used to clone private repositories and open pull requests when PR mode is active. |
+| `GITHUB_TOKEN` | _(none)_ | Personal access token used to clone private repositories, push commits, and open pull requests when PR mode is active. |
 | `OPENAI_API_KEY` | _(none)_ | Enables AI-generated commit messages when set. |
 | `GIT_USER_NAME` | `Contexter` | Used to configure `git config --global user.name`. |
 | `GIT_USER_EMAIL` | `mail@benedikt-eickhoff.de` | Used to configure `git config --global user.email`. |
