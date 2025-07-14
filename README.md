@@ -123,6 +123,9 @@ Update `/srv/deploy/dispatcher.env` with those values before starting the
 service.
 Set `GIT_USER_NAME` and `GIT_USER_EMAIL` there to configure the identity used
 for commits and avoid interactive Git prompts.
+Set `GITHUB_TOKEN` as well to authenticate `git pull` and `git push` commands
+without manual prompts. See [docs/environment_variables.md](docs/environment_variables.md)
+for details.
 
 The repository's `.gitignore` excludes `dispatcher.env` and other `*.env` files
 to keep secrets out of version control. When building images, `.dockerignore`
