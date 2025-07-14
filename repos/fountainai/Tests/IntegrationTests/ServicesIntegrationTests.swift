@@ -77,6 +77,19 @@ final class ServicesIntegrationTests: XCTestCase {
         XCTAssertEqual(analytics.baselines, 1)
     }
 
+    func testBaselineAnalyticsStream() async throws {
+        let kernel = BaselineAwarenessService.HTTPKernel()
+        let initBody = try JSONEncoder().encode(BaselineAwarenessService.InitIn(corpusId: "s1"))
+        _ = try await kernel.handle(.init(method: "POST", path: "/corpus/init", body: initBody))
+        let baseline = BaselineAwarenessService.BaselineRequest(baselineId: "b1", content: "x", corpusId: "s1")
+        let bdata = try JSONEncoder().encode(baseline)
+        _ = try await kernel.handle(.init(method: "POST", path: "/corpus/baseline", body: bdata))
+        let resp = try await kernel.handle(.init(method: "GET", path: "/corpus/history/stream?corpus_id=s1"))
+        XCTAssertEqual(resp.headers["Content-Type"], "text/event-stream")
+        let text = String(data: resp.body, encoding: .utf8) ?? ""
+        XCTAssertTrue(text.contains("event: analytics"))
+    }
+
     func testBaselineAuthMiddleware() async throws {
         setenv("BASELINE_AUTH_TOKEN", "secret", 1)
         let serviceKernel = BaselineAwarenessService.HTTPKernel()

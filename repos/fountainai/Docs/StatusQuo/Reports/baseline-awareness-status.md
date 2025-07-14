@@ -19,5 +19,8 @@ Spec path: `FountainAi/openAPI/v1/baseline-awareness.yml` (version 1.0.0).
 - Integration tests run the NIO-based server on both Linux and macOS for cross-platform coverage
 - Production analytics compute corpus history breakdown via `TypesenseClient`
 - Authentication middleware checks the `BASELINE_AUTH_TOKEN` environment variable
-## Next Steps toward Production
-- Monitor performance metrics and add streaming analytics
+- Prometheus metrics track request counts and durations
+- Analytics can also be streamed via SSE at `/corpus/history/stream`
+## Recent Updates
+- `/corpus/history/stream` streams analytics via Server-Sent Events
+- Prometheus metrics now record request durations for performance insights
