@@ -29,7 +29,18 @@ public struct Handlers {
         guard let id = request.path.split(separator: "/").dropLast().last else {
             return HTTPResponse(status: 404)
         }
-        let result = try await dispatcher.invoke(functionId: String(id), payload: request.body)
-        return HTTPResponse(body: result)
+        do {
+            let result = try await dispatcher.invoke(functionId: String(id), payload: request.body)
+            return HTTPResponse(body: result)
+        } catch FunctionDispatcher.DispatchError.notFound {
+            let data = try JSONEncoder().encode(ErrorResponse(error_code: "not_found", message: "Function not found"))
+            return HTTPResponse(status: 404, body: data)
+        } catch FunctionDispatcher.DispatchError.server(let code) {
+            let data = try JSONEncoder().encode(ErrorResponse(error_code: "dispatch_error", message: "Remote error"))
+            return HTTPResponse(status: code, body: data)
+        } catch {
+            let data = try JSONEncoder().encode(ErrorResponse(error_code: "internal_error", message: error.localizedDescription))
+            return HTTPResponse(status: 500, body: data)
+        }
     }
 }

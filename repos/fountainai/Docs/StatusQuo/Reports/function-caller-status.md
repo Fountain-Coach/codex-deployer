@@ -12,9 +12,12 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Client decodes typed models for all endpoints
 - When `TYPESENSE_URL` is set the dispatcher looks up functions from the external Typesense service
 - See [environment_variables.md](../../../../../../docs/environment_variables.md) for required configuration.
-- Integration tests verify the `list_functions` endpoint
+- Authentication middleware checks the `FUNCTION_CALLER_AUTH_TOKEN` environment variable
+- Integration tests verify the `list_functions` endpoint and invocation flows
+- Tools Factory integration allows dynamic registration via `/tools/register`
+- Dispatcher reports errors with structured JSON responses
 
 ## Next Steps toward Production
-- Integrate with the Tools Factory for dynamic function registration
-- Expand integration tests to cover invocation flows and error cases
-- Add authentication and robust error handling
+- Validate invocation parameters against the stored JSON schemas
+- Add structured logging and per-endpoint metrics
+- Provide a Docker Compose example wiring the Tools Factory and Function Caller
