@@ -1,5 +1,5 @@
-# macOS files
-.DS_Store
+# Ignore version control
+.git
 
 # Python cache and build artifacts
 __pycache__/
@@ -8,22 +8,16 @@ __pycache__/
 build/
 dist/
 
-# Virtual environments
-.venv/
-venv/
-ENV/
-
 # Logs and feedback
-*.log
 logs/
 feedback/
 deploy/logs/
 deploy/feedback/
+*.log
 
 # Environment files
 dispatcher.env
 *.env
 
-# Editor swap files
-*.swp
-*.swo
+# macOS
+.DS_Store
