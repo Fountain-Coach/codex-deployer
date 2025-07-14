@@ -38,6 +38,7 @@ LOOP_INTERVAL = int(os.environ.get("DISPATCHER_INTERVAL", "60"))
 USE_PRS = os.environ.get("DISPATCHER_USE_PRS", "1").lower() not in {"0", "false", "no"}
 BUILD_DOCKER = os.environ.get("DISPATCHER_BUILD_DOCKER", "0").lower() not in {"0", "false", "no"}
 RUN_E2E = os.environ.get("DISPATCHER_RUN_E2E", "0").lower() not in {"0", "false", "no"}
+ALLOW_REPO_WRITES = os.environ.get("DISPATCHER_ALLOW_REPO_WRITES", "0").lower() not in {"0", "false", "no"}
 
 # Defaults for git identity when environment variables are missing.
 # See docs/environment_variables.md for details.
@@ -71,6 +72,8 @@ def check_env() -> None:
         log("DISPATCHER_BUILD_DOCKER not set; docker builds disabled")
     if "DISPATCHER_RUN_E2E" not in os.environ:
         log("DISPATCHER_RUN_E2E not set; integration tests disabled")
+    if "DISPATCHER_ALLOW_REPO_WRITES" not in os.environ:
+        log("DISPATCHER_ALLOW_REPO_WRITES not set; external repositories are read-only")
 
 
 def ensure_dirs() -> None:
@@ -194,6 +197,9 @@ def _wait_for_merge(slug: str, pr_number: int, interval: int = 30) -> None:
 
 def commit_and_push(repo_path: str, message: str, base: str = "main") -> None:
     """Commit staged changes and push, optionally via a PR."""
+    if os.path.realpath(repo_path) != "/srv/deploy" and not ALLOW_REPO_WRITES:
+        log(f"Skipping commit to {repo_path}; dispatcher is in read-only mode")
+        return
     subprocess.run(["git", "-C", repo_path, "add", "-A"], check=False)
     message = generate_commit_message(repo_path, message)
     append_changelog(repo_path, message)
@@ -400,6 +406,11 @@ def apply_codex_feedback() -> None:
         patch = data.get("patch", "")
         desc = data.get("description", f"Apply patch {fname}")
         repo_path = f"/srv/{repo}"
+
+        if os.path.realpath(repo_path) != "/srv/deploy" and not ALLOW_REPO_WRITES:
+            log(f"Read-only mode; skipping patch for {repo}")
+            commit_applied_patch(fname)
+            continue
 
         if patch:
             result = subprocess.run(
