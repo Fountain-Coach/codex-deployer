@@ -426,6 +426,7 @@ def loop() -> None:
     start_new_log()
     check_env()
     configure_git()
+    log("Dispatcher started successfully \U0001F7E2")
     while True:
         log("=== New Cycle ===")
         pull_repos(REPOS)
