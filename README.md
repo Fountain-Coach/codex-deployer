@@ -46,7 +46,7 @@ At its heart is a single principle:
     /srv/deploy/
     ├── repos/
     │   ├── fountainai/       ← Swift + Python services
-    │   ├── kong-codex/       ← Gateway config & plugins
+    │   ├── kong-codex/       ← Gateway config + local Typesense
     │   ├── typesense-codex/  ← Schema definitions + indexing logic
     │   └── teatro/           ← Teatro view engine
     ├── dispatcher_v2.py   ← Daemonized build + feedback loop
