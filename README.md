@@ -122,6 +122,10 @@ setup walk-through, including how to create `GITHUB_TOKEN`, consult
 Update `/srv/deploy/dispatcher.env` with those values before starting the
 service.
 
+The repository's `.gitignore` excludes `dispatcher.env` and other `*.env` files
+to keep secrets out of version control. When building images, `.dockerignore`
+likewise prevents these files from entering the Docker context.
+
 ---
 
 ## 🧠 How Codex Uses This

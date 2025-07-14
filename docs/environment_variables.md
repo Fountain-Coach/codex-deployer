@@ -43,3 +43,10 @@ sample from `systemd/dispatcher.env` and edit the values or source your GitHub
 secrets there. See
 [managing_environment_variables.md](managing_environment_variables.md) for a
 step-by-step walkthrough of the setup process.
+
+## Security Tips
+
+Secrets such as `GITHUB_TOKEN` should never be committed to the repository.
+`dispatcher.env` and other `*.env` files are excluded by `.gitignore` so your
+tokens remain private. The accompanying `.dockerignore` file ensures these
+values are not copied into Docker build contexts.
