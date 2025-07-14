@@ -12,6 +12,8 @@ This document lists the environment variables used by the Codex deployer.
 | `GIT_USER_EMAIL` | _(none)_ | Used to configure `git config --global user.email`. |
 | `DISPATCHER_BUILD_DOCKER` | `0` | Set to `1` to build Docker images for repos containing a `Dockerfile`. |
 | `DISPATCHER_RUN_E2E` | `0` | Set to `1` to run `docker-compose` integration tests when available. |
+| `SECRETS_API_URL` | _(none)_ | Endpoint for retrieving secrets at startup. |
+| `SECRETS_API_TOKEN` | _(none)_ | Authentication token for the secrets service. |
 
 Variables without defaults are optional but enable additional functionality.
 The dispatcher logs a warning at startup if any variable is missing, allowing
