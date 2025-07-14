@@ -43,8 +43,8 @@ Launch the container and run `dispatcher_v2.py`:
 ```bash
 export GITHUB_TOKEN=yourtoken
 export OPENAI_API_KEY=yourapikey  # optional
-export GIT_USER_NAME="Codex Bot"
-export GIT_USER_EMAIL=codex@example.com
+export GIT_USER_NAME="Contexter"
+export GIT_USER_EMAIL=mail@benedikt-eickhoff.de
 docker run --rm -it -v $(pwd):/srv/deploy \
   -e GITHUB_TOKEN -e OPENAI_API_KEY -e GIT_USER_NAME -e GIT_USER_EMAIL \
   codex-deployer-local \
