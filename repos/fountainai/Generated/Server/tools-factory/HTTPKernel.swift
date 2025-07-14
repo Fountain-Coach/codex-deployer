@@ -9,6 +9,10 @@ public struct HTTPKernel {
     }
 
     public func handle(_ request: HTTPRequest) async throws -> HTTPResponse {
+        if let token = ProcessInfo.processInfo.environment["TOOLS_FACTORY_AUTH_TOKEN"] {
+            let expected = "Bearer \(token)"
+            if request.headers["Authorization"] != expected { return HTTPResponse(status: 401) }
+        }
         let resp = try await router.route(request)
         await PrometheusAdapter.shared.record(service: "tools-factory", path: request.path)
         return resp

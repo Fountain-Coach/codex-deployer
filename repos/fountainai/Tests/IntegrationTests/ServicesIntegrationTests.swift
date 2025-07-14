@@ -119,6 +119,18 @@ final class ServicesIntegrationTests: XCTestCase {
         XCTAssertEqual(status["status"], "ok")
     }
 
+    func testFunctionCallerAuthMiddleware() async throws {
+        setenv("FUNCTION_CALLER_AUTH_TOKEN", "secret", 1)
+        let kernel = FunctionCallerService.HTTPKernel()
+        addTeardownBlock { unsetenv("FUNCTION_CALLER_AUTH_TOKEN") }
+
+        let unauthorized = try await kernel.handle(.init(method: "GET", path: "/functions"))
+        XCTAssertEqual(unauthorized.status, 401)
+
+        let authorized = try await kernel.handle(.init(method: "GET", path: "/functions", headers: ["Authorization": "Bearer secret"]))
+        XCTAssertEqual(authorized.status, 200)
+    }
+
     func testBootstrapSeedRoles() async throws {
         let serviceKernel = BootstrapService.HTTPKernel()
         let kernel = IntegrationRuntime.HTTPKernel { req in
@@ -212,6 +224,55 @@ final class ServicesIntegrationTests: XCTestCase {
         let client = ToolsFactoryClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
         let data = try await client.sendRaw(ToolsFactoryClient.list_tools())
         XCTAssertEqual(data.count, 0)
+    }
+
+    func testFunctionCallerInvokeFlow() async throws {
+        // start echo service
+        let echoKernel = IntegrationRuntime.HTTPKernel { _ in
+            IntegrationRuntime.HTTPResponse(status: 200, body: Data("{}".utf8))
+        }
+        let echoServer = NIOHTTPServer(kernel: echoKernel)
+        let echoPort = try await echoServer.start(port: 0)
+        addTeardownBlock { try? await echoServer.stop() }
+
+        // register function via Tools Factory
+        let tfKernel = ToolsFactoryService.HTTPKernel()
+        let fn = ServiceShared.Function(description: "echo", functionId: "echo", httpMethod: "GET", httpPath: "http://127.0.0.1:\(echoPort)", name: "echo")
+        let body = try JSONEncoder().encode([fn])
+        _ = try await tfKernel.handle(.init(method: "POST", path: "/tools/register", headers: ["Content-Type": "application/json"], body: body))
+
+        // start function caller
+        let fcKernel = FunctionCallerService.HTTPKernel()
+        let kernel = IntegrationRuntime.HTTPKernel { req in
+            let sreq = FunctionCallerService.HTTPRequest(method: req.method, path: req.path, headers: req.headers, body: req.body)
+            let sresp = try await fcKernel.handle(sreq)
+            return IntegrationRuntime.HTTPResponse(status: sresp.status, body: sresp.body)
+        }
+        let (server, port) = try await startServer(with: kernel)
+        addTeardownBlock { try? await server.stop() }
+
+        // invoke function
+        let client = AsyncHTTPClientDriver()
+        addTeardownBlock { try? await client.shutdown() }
+        let (buffer, _) = try await client.execute(method: .POST, url: "http://127.0.0.1:\(port)/functions/echo/invoke", headers: HTTPHeaders(), body: nil)
+        XCTAssertEqual(buffer.readableBytes, 2)
+    }
+
+    func testFunctionCallerInvokeNotFound() async throws {
+        let serviceKernel = FunctionCallerService.HTTPKernel()
+        let kernel = IntegrationRuntime.HTTPKernel { req in
+            let sreq = FunctionCallerService.HTTPRequest(method: req.method, path: req.path, headers: req.headers, body: req.body)
+            let sresp = try await serviceKernel.handle(sreq)
+            return IntegrationRuntime.HTTPResponse(status: sresp.status, body: sresp.body)
+        }
+        let (server, port) = try await startServer(with: kernel)
+        addTeardownBlock { try? await server.stop() }
+
+        let client = AsyncHTTPClientDriver()
+        addTeardownBlock { try? await client.shutdown() }
+        let (buffer, _) = try await client.execute(method: .POST, url: "http://127.0.0.1:\(port)/functions/missing/invoke", headers: HTTPHeaders(), body: nil)
+        XCTAssertEqual(buffer.readableBytes, 0)
+        // expecting 404 response
     }
 
     func testLLMGatewayMetrics() async throws {
