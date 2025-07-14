@@ -11,6 +11,7 @@ Spec path: `FountainAi/openAPI/v2/llm-gateway.yml` (version 2.0.0).
 - Minimal socket runtime handles requests; metrics endpoint returns Prometheus data
 - Client decodes typed models
 - Requests to OpenAI use `OPENAI_API_KEY` for authentication and can be routed through `OPENAI_API_BASE`
+- Environment variables are documented in [environment_variables.md](../../../../../../docs/environment_variables.md)
 - Integration tests verify the `/metrics` endpoint
 
 ## Next Steps toward Production

@@ -10,5 +10,6 @@ To move the project toward a stable production release:
 4. **Add authentication** – secure all services with token-based auth and validate inputs.
 5. **Harden testing** – grow the integration tests to cover more scenarios and enable CI metrics.
 6. **Finalize deployment assets** – refine the Docker images, document environment variables, and provide examples for Kubernetes.
+   See [environment_variables.md](../../../../../../docs/environment_variables.md) for the latest list.
 
 Following these steps will transition the FountainAI suite from generated stubs to fully functional, deployable microservices.

@@ -11,6 +11,7 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Handlers dispatch registered functions via ``FunctionDispatcher`` using ``TypesenseClient``
 - Client decodes typed models for all endpoints
 - When `TYPESENSE_URL` is set the dispatcher looks up functions from the external Typesense service
+- See [environment_variables.md](../../../../../../docs/environment_variables.md) for required configuration.
 - Integration tests verify the `list_functions` endpoint
 
 ## Next Steps toward Production

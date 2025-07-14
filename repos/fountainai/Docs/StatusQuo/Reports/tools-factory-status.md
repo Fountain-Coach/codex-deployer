@@ -11,6 +11,7 @@ Spec path: `FountainAi/openAPI/v1/tools-factory.yml` (version 1.0.0).
 - Server stubs do not persist tools yet
 - Client decodes typed models
 - When `TYPESENSE_URL` is configured the service will persist tool definitions remotely
+- See [environment_variables.md](../../../../../../docs/environment_variables.md) for configuration options
 - Integration tests cover the `list_tools` endpoint
 
 ## Next Steps toward Production
