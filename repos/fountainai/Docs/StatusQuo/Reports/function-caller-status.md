@@ -10,9 +10,10 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Generated server kernel at `Generated/Server/function-caller`
 - Handlers dispatch registered functions via ``FunctionDispatcher`` using ``TypesenseClient``
 - Client decodes typed models for all endpoints
+- When `TYPESENSE_URL` is set the dispatcher looks up functions from the external Typesense service
 - Integration tests verify the `list_functions` endpoint
 
 ## Next Steps toward Production
 - Integrate with the Tools Factory for dynamic function registration
-- Expand integration tests to cover function invocation flows
+- Expand integration tests to cover invocation flows and error cases
 - Add authentication and robust error handling

@@ -8,6 +8,7 @@ This document lists the environment variables used by the Codex deployer.
 | `DISPATCHER_USE_PRS` | `1` | When set to `0` disables the pull request workflow and pushes directly to `main`. |
 | `GITHUB_TOKEN` | _(none)_ | Personal access token used to clone private repositories, push commits, and open pull requests when PR mode is active. |
 | `OPENAI_API_KEY` | _(none)_ | Enables AI-generated commit messages and allows the LLM Gateway to access OpenAI's API. |
+| `OPENAI_API_BASE` | `https://api.openai.com/v1/chat/completions` | Optional override for the OpenAI API endpoint used by the LLM Gateway. |
 | `TYPESENSE_URL` | _(none)_ | Base URL for a running Typesense instance used by FountainAI services. |
 | `TYPESENSE_API_KEY` | _(none)_ | Optional API key for authenticating with Typesense. |
 | `GIT_USER_NAME` | `Contexter` | Used to configure `git config --global user.name`. |
@@ -45,6 +46,7 @@ repository settings and reference it when running the deployer:
 export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
 export OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
 ```
+export OPENAI_API_BASE="${OPENAI_API_BASE:-https://api.openai.com/v1/chat/completions}"
 
 The dispatcher reads these variables at startup, so ensure they are exported
 before launching the service (e.g. inside your systemd unit file).

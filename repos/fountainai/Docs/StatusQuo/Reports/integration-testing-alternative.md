@@ -34,4 +34,4 @@ This document describes the cross-platform runtime now used for integration test
 - **Async by default**: both client and server use structured concurrency, so tests and production code share the same async foundation.
 - **Composable**: the protocol allows swapping in different HTTP backends as needed.
 
-This approach keeps the project fully open while enabling the integration tests called for in the [Next Steps](next-steps.md) report.
+All current integration tests use this runtime and run in CI on Linux and macOS.
