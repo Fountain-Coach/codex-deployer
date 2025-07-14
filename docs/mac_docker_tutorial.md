@@ -26,8 +26,7 @@ Create a small Docker image that includes Python, Git and Swift:
 ```bash
 cat > Dockerfile <<'DOCKER'
 FROM swift:5.8
-RUN apt-get update && apt-get install -y git python3 python3-pip curl \
-    # curl is required for GitHub API calls made by dispatcher_v2.py
+RUN apt-get update && apt-get install -y git python3 python3-pip \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /srv/deploy
 COPY . /srv/deploy
