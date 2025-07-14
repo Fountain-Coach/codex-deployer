@@ -1,6 +1,6 @@
 # Kong Pitch
 
-The repository treats **`kong-codex`** as one of the core managed repositories. Its purpose is to host gateway configuration and plugin definitions under `/srv/kong-codex/`.
+The repository treats **`kong-codex`** as one of the core managed repositories. Its purpose is to host gateway configuration and plugin definitions under `/srv/deploy/repos/kong-codex/`.
 
 By choosing Kong as our API gateway, we benefit from the following features without building them from scratch:
 

@@ -19,7 +19,6 @@ GITHUB_TOKEN=ghp_xxx              # Personal access token for private repos and 
 OPENAI_API_KEY=sk-xxx             # Optional, enables AI commit messages
 DISPATCHER_INTERVAL=60            # Seconds between loops
 DISPATCHER_USE_PRS=1              # Set to 0 for direct pushes
-DISPATCHER_ALLOW_REPO_WRITES=0    # Set to 1 to enable commits to other repositories
 GIT_USER_NAME="Contexter"         # Name used for git commits
 GIT_USER_EMAIL=mail@benedikt-eickhoff.de  # Email used for git commits
 ```

@@ -14,7 +14,6 @@ This document lists the environment variables used by the Codex deployer.
 | `DISPATCHER_RUN_E2E` | `0` | Set to `1` to run `docker-compose` integration tests when available. |
 | `SECRETS_API_URL` | _(none)_ | Endpoint for retrieving secrets at startup. |
 | `SECRETS_API_TOKEN` | _(none)_ | Authentication token for the secrets service. |
-| `DISPATCHER_ALLOW_REPO_WRITES` | `0` | Set to `1` to allow commits to repositories other than `codex-deployer`. |
 
 Variables without defaults are optional but enable additional functionality.
 The dispatcher logs a warning at startup if any variable is missing, allowing

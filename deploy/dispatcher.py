@@ -1,6 +1,7 @@
 import subprocess, os, time, datetime
 
-from repo_config import REPOS, ALIASES
+REPO_NAMES = ["fountainai", "kong-codex", "typesense-codex", "teatro"]
+REPOS_DIR = "/srv/deploy/repos"
 
 LOG_DIR = "/srv/deploy/logs"
 FEEDBACK_DIR = "/srv/deploy/feedback"
@@ -33,23 +34,14 @@ def push_logs_to_github():
     ])
     subprocess.run(["git", "-C", "/srv/deploy", "push"])
 
-def pull_repos():
-    for alias, url in REPOS.items():
-        path = f"/srv/{alias}"
-        canonical = ALIASES.get(alias, alias)
-        if not os.path.exists(path):
-            subprocess.run(["git", "clone", url, path])
-            log(f"Cloned {alias} -> {canonical}")
-        else:
-            subprocess.run(["git", "-C", path, "pull"])
-            log(f"Pulled latest {alias} -> {canonical}")
 
 def build_swift():
     with open(LOG_FILE, "a") as f:
         f.write(f"\n[{timestamp()}] Starting swift build...\n")
+        repo_path = os.path.join(REPOS_DIR, "fountainai")
         result = subprocess.run(
             ["swift", "build"],
-            cwd="/srv/fountainai",
+            cwd=repo_path,
             stdout=f,
             stderr=subprocess.STDOUT,
         )
@@ -61,9 +53,10 @@ def build_swift():
 def run_swift_tests():
     with open(LOG_FILE, "a") as f:
         f.write(f"\n[{timestamp()}] Starting swift test...\n")
+        repo_path = os.path.join(REPOS_DIR, "fountainai")
         result = subprocess.run(
             ["swift", "test"],
-            cwd="/srv/fountainai",
+            cwd=repo_path,
             stdout=f,
             stderr=subprocess.STDOUT,
         )
@@ -75,9 +68,10 @@ def run_swift_tests():
 def run_swift_executable(target="bootstrap-service"):
     with open(LOG_FILE, "a") as f:
         f.write(f"\n[{timestamp()}] Starting swift run {target}...\n")
+        repo_path = os.path.join(REPOS_DIR, "fountainai")
         result = subprocess.run(
             ["swift", "run", target],
-            cwd="/srv/fountainai",
+            cwd=repo_path,
             stdout=f,
             stderr=subprocess.STDOUT,
         )
@@ -113,7 +107,6 @@ def loop():
     ensure_dirs()
     while True:
         log("=== New Cycle ===")
-        pull_repos()
         apply_codex_feedback()
         build_swift()
         run_swift_tests()
