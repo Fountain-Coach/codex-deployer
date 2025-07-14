@@ -59,6 +59,19 @@ public struct Handlers {
         return HTTPResponse(body: data)
     }
 
+    public func streamhistoryanalytics(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
+        let comps = URLComponents(string: request.path)
+        let corpusId = comps?.queryItems?.first(where: { $0.name == "corpus_id" })?.value
+        guard let id = corpusId else {
+            return HTTPResponse(status: 400)
+        }
+        let analytics = await store.historyAnalytics(for: id)
+        let data = try JSONEncoder().encode(analytics)
+        let json = String(data: data, encoding: .utf8) ?? "{}"
+        let bodyText = "event: analytics\ndata: \(json)\n\n"
+        return HTTPResponse(status: 200, headers: ["Content-Type": "text/event-stream"], body: Data(bodyText.utf8))
+    }
+
     public func addpatterns(_ request: HTTPRequest, body: PatternsRequest?) async throws -> HTTPResponse {
         guard let patterns = body else { return HTTPResponse(status: 400) }
         await store.addPatterns(patterns)
