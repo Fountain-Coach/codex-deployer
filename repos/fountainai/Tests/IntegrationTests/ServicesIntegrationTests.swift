@@ -60,6 +60,52 @@ final class ServicesIntegrationTests: XCTestCase {
         _ = try await client.send(BaselineAwarenessClient.addBaseline(body: baselineBody))
     }
 
+    func testBaselineHistoryAnalytics() async throws {
+        let serviceKernel = BaselineAwarenessService.HTTPKernel()
+        let kernel = IntegrationRuntime.HTTPKernel { req in
+            let sreq = BaselineAwarenessService.HTTPRequest(method: req.method, path: req.path, headers: req.headers, body: req.body)
+            let sresp = try await serviceKernel.handle(sreq)
+            return IntegrationRuntime.HTTPResponse(status: sresp.status, body: sresp.body)
+        }
+        let (server, port) = try await startServer(with: kernel)
+        addTeardownBlock { try? await server.stop() }
+
+        let client = BaselineAwarenessClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
+        _ = try await client.send(BaselineAwarenessClient.initializeCorpus(body: .init(corpusId: "a1")))
+        _ = try await client.send(BaselineAwarenessClient.addBaseline(body: .init(baselineId: "b1", content: "x", corpusId: "a1")))
+        let analytics = try await client.send(BaselineAwarenessClient.listHistoryAnalytics(parameters: .init(corpusId: "a1")))
+        XCTAssertEqual(analytics.baselines, 1)
+    }
+
+    func testBaselineAuthMiddleware() async throws {
+        setenv("BASELINE_AUTH_TOKEN", "secret", 1)
+        let serviceKernel = BaselineAwarenessService.HTTPKernel()
+        let kernel = IntegrationRuntime.HTTPKernel { req in
+            let sreq = BaselineAwarenessService.HTTPRequest(method: req.method, path: req.path, headers: req.headers, body: req.body)
+            let sresp = try await serviceKernel.handle(sreq)
+            return IntegrationRuntime.HTTPResponse(status: sresp.status, body: sresp.body)
+        }
+        let (server, port) = try await startServer(with: kernel)
+        addTeardownBlock {
+            unsetenv("BASELINE_AUTH_TOKEN")
+            try? await server.stop()
+        }
+
+        let client = BaselineAwarenessClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
+        var failed = false
+        do {
+            _ = try await client.sendRaw(BaselineAwarenessClient.health_health_get())
+        } catch {
+            failed = true
+        }
+        XCTAssertTrue(failed)
+
+        let authedClient = BaselineAwarenessClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!, bearerToken: "secret")
+        let data = try await authedClient.sendRaw(BaselineAwarenessClient.health_health_get())
+        let status = try JSONDecoder().decode([String: String].self, from: data)
+        XCTAssertEqual(status["status"], "ok")
+    }
+
     func testBootstrapSeedRoles() async throws {
         let serviceKernel = BootstrapService.HTTPKernel()
         let kernel = IntegrationRuntime.HTTPKernel { req in

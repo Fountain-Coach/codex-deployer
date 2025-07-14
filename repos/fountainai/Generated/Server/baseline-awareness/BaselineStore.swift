@@ -52,5 +52,13 @@ public actor BaselineStore {
     public func latestReflection(for corpusId: String) async -> Reflection? {
         await typesense.latestReflection(for: corpusId)
     }
+
+    public func historyAnalytics(for corpusId: String) async -> HistoryAnalyticsResponse {
+        async let b = typesense.baselineCount(for: corpusId)
+        async let d = typesense.driftCount(for: corpusId)
+        async let p = typesense.patternsCount(for: corpusId)
+        async let r = typesense.reflectionCount(for: corpusId)
+        return await HistoryAnalyticsResponse(baselines: b, drifts: d, patterns: p, reflections: r)
+    }
 }
 

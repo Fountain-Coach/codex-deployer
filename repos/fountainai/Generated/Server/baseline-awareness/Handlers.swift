@@ -54,7 +54,8 @@ public struct Handlers {
         guard let id = corpusId else {
             return HTTPResponse(status: 400)
         }
-        let data = Data("analytics for \(id)".utf8)
+        let analytics = await store.historyAnalytics(for: id)
+        let data = try JSONEncoder().encode(analytics)
         return HTTPResponse(body: data)
     }
 

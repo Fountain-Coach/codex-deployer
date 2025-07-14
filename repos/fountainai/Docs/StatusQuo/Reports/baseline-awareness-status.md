@@ -17,5 +17,7 @@ Spec path: `FountainAi/openAPI/v1/baseline-awareness.yml` (version 1.0.0).
 - Expanded documentation describes building and running the service container and verifying `/health`
 - CI workflow runs integration tests on both Linux and macOS using `AsyncHTTPClient` and the NIO server
 - Integration tests run the NIO-based server on both Linux and macOS for cross-platform coverage
+- Production analytics compute corpus history breakdown via `TypesenseClient`
+- Authentication middleware checks the `BASELINE_AUTH_TOKEN` environment variable
 ## Next Steps toward Production
-- Implement production analytics on top of the persistence layer and add authentication middleware
+- Monitor performance metrics and add streaming analytics

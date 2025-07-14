@@ -41,13 +41,20 @@ public struct ReflectionSummaryResponse: Codable {
     public let message: String
 }
 
+public struct HistoryAnalyticsResponse: Codable {
+    public let baselines: Int
+    public let drifts: Int
+    public let patterns: Int
+    public let reflections: Int
+}
+
 public typealias readSemanticArcResponse = String
 
 public typealias addReflectionResponse = String
 
 public typealias addDriftResponse = String
 
-public typealias listHistoryAnalyticsResponse = String
+public typealias listHistoryAnalyticsResponse = HistoryAnalyticsResponse
 
 public typealias addPatternsResponse = String
 
