@@ -21,6 +21,7 @@ from pathlib import Path
 
 from repo_config import REPOS, REPO_ORDER
 
+
 # Local directory that will mirror the `/srv` tree described in README.md.
 REPOS_DIR = Path("repos")
 
@@ -43,7 +44,6 @@ def clone_repo(url: str, target: Path) -> None:
     else:
         auth_url = url
     run(["git", "clone", "--depth", "1", auth_url, str(target)])
-
 
 
 def copy_contents(src: Path, dest: Path) -> None:
