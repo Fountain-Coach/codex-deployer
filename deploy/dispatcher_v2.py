@@ -37,25 +37,22 @@ USE_PRS = os.environ.get("DISPATCHER_USE_PRS", "1").lower() not in {"0", "false"
 BUILD_DOCKER = os.environ.get("DISPATCHER_BUILD_DOCKER", "0").lower() not in {"0", "false", "no"}
 RUN_E2E = os.environ.get("DISPATCHER_RUN_E2E", "0").lower() not in {"0", "false", "no"}
 
+# Defaults for git identity when environment variables are missing.
+# See docs/environment_variables.md for details.
+DEFAULT_GIT_NAME = "Contexter"
+DEFAULT_GIT_EMAIL = "mail@benedikt-eickhoff.de"
+
 
 def configure_git() -> None:
-    """Set global git identity from environment variables."""
-    name = os.environ.get("GIT_USER_NAME")
-    email = os.environ.get("GIT_USER_EMAIL")
-    if name:
-        subprocess.run(["git", "config", "--global", "user.name", name], check=False)
-    else:
-        log("GIT_USER_NAME not set; using existing git user.name")
-    if email:
-        subprocess.run([
-            "git",
-            "config",
-            "--global",
-            "user.email",
-            email,
-        ], check=False)
-    else:
-        log("GIT_USER_EMAIL not set; using existing git user.email")
+    """Set global git identity, falling back to defaults."""
+    name = os.environ.get("GIT_USER_NAME", DEFAULT_GIT_NAME)
+    email = os.environ.get("GIT_USER_EMAIL", DEFAULT_GIT_EMAIL)
+    subprocess.run(["git", "config", "--global", "user.name", name], check=False)
+    subprocess.run(["git", "config", "--global", "user.email", email], check=False)
+    if os.environ.get("GIT_USER_NAME") is None:
+        log(f"GIT_USER_NAME not set; defaulting to {name}")
+    if os.environ.get("GIT_USER_EMAIL") is None:
+        log(f"GIT_USER_EMAIL not set; defaulting to {email}")
 
 
 def check_env() -> None:

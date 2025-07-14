@@ -19,8 +19,8 @@ GITHUB_TOKEN=ghp_xxx              # Personal access token for private repos and 
 OPENAI_API_KEY=sk-xxx             # Optional, enables AI commit messages
 DISPATCHER_INTERVAL=60            # Seconds between loops
 DISPATCHER_USE_PRS=1              # Set to 0 for direct pushes
-GIT_USER_NAME="Codex Bot"         # Name used for git commits
-GIT_USER_EMAIL=codex@example.com  # Email used for git commits
+GIT_USER_NAME="Contexter"         # Name used for git commits
+GIT_USER_EMAIL=mail@benedikt-eickhoff.de  # Email used for git commits
 ```
 
 Refer to [environment_variables.md](environment_variables.md) for all available variables and their meanings.
