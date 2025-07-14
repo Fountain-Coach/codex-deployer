@@ -18,6 +18,7 @@ This document lists the environment variables used by the Codex deployer.
 | `SECRETS_API_URL` | _(none)_ | Endpoint for retrieving secrets at startup. |
 | `SECRETS_API_TOKEN` | _(none)_ | Authentication token for the secrets service. |
 | `BOOTSTRAP_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Bootstrap service. |
+| `BASELINE_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Baseline Awareness service. |
 
 Variables without defaults are optional but enable additional functionality.
 The dispatcher logs a warning at startup if any variable is missing, allowing

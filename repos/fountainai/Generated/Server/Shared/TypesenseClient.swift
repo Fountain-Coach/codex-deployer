@@ -160,6 +160,42 @@ public actor TypesenseClient {
         return reflections[corpusId]?.count ?? 0
     }
 
+    public func baselineCount(for corpusId: String) async -> Int {
+        if let _ = baseURL {
+            if let data = try? await request(path: "corpora/\(corpusId)/baselines", method: "GET", body: nil),
+               let resp = try? JSONDecoder().decode([String: Int].self, from: data),
+               let count = resp["total"] {
+                return count
+            }
+            return 0
+        }
+        return baselines[corpusId]?.count ?? 0
+    }
+
+    public func driftCount(for corpusId: String) async -> Int {
+        if let _ = baseURL {
+            if let data = try? await request(path: "corpora/\(corpusId)/drifts", method: "GET", body: nil),
+               let resp = try? JSONDecoder().decode([String: Int].self, from: data),
+               let count = resp["total"] {
+                return count
+            }
+            return 0
+        }
+        return drifts[corpusId]?.count ?? 0
+    }
+
+    public func patternsCount(for corpusId: String) async -> Int {
+        if let _ = baseURL {
+            if let data = try? await request(path: "corpora/\(corpusId)/patterns", method: "GET", body: nil),
+               let resp = try? JSONDecoder().decode([String: Int].self, from: data),
+               let count = resp["total"] {
+                return count
+            }
+            return 0
+        }
+        return patterns[corpusId]?.count ?? 0
+    }
+
     public func latestReflection(for corpusId: String) async -> Reflection? {
         if let _ = baseURL {
             if let data = try? await request(path: "corpora/\(corpusId)/reflections", method: "GET", body: nil),
