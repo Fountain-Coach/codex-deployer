@@ -12,9 +12,10 @@ Spec path: `FountainAi/openAPI/v1/baseline-awareness.yml` (version 1.0.0).
 - All operations are implemented and `/health` returns a structured JSON status
 - A `Dockerfile` builds the service binary, and build/run instructions appear in the repository README
 - Integration tests verify `/health`, corpus initialization and baseline ingestion
+- When `TYPESENSE_URL` and `TYPESENSE_API_KEY` are set the service persists data in an external Typesense instance; otherwise it falls back to the in-memory store.
 - The `BaselineStore` persists via `TypesenseClient`, sharing the persistence service infrastructure
 - Expanded documentation describes building and running the service container and verifying `/health`
 - CI workflow runs integration tests on both Linux and macOS using `AsyncHTTPClient` and the NIO server
-
+- Integration tests run the NIO-based server on both Linux and macOS for cross-platform coverage
 ## Next Steps toward Production
-- Implement production analytics logic on top of the new persistence layer
+- Implement production analytics on top of the persistence layer and add authentication middleware

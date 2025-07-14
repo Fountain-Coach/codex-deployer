@@ -10,6 +10,7 @@ Spec path: `FountainAi/openAPI/v1/tools-factory.yml` (version 1.0.0).
 - Generated server kernel at `Generated/Server/tools-factory`
 - Server stubs do not persist tools yet
 - Client decodes typed models
+- When `TYPESENSE_URL` is configured the service will persist tool definitions remotely
 - Integration tests cover the `list_tools` endpoint
 
 ## Next Steps toward Production

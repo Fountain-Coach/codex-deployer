@@ -10,9 +10,11 @@ Spec path: `FountainAi/openAPI/v1/persist.yml` (version 1.0.0).
 - Generated server kernel at `Generated/Server/persist`
 - Server uses an in-memory ``TypesenseClient`` for persistence during tests
 - Client decodes typed models for all endpoints
+- When `TYPESENSE_URL` and `TYPESENSE_API_KEY` are provided the service persists data to a remote Typesense instance
 - Integration tests verify corpus listing and basic storage
 
 ## Next Steps toward Production
 - Implement database adapters and connection configuration
 - Add integration tests verifying CRUD operations
 - Provide containerization instructions for deploying with Typesense
+- Document required environment variables

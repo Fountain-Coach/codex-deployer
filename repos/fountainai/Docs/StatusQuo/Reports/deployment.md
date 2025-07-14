@@ -23,6 +23,7 @@ docker-compose up
 ```
 
 The services start minimal Swift HTTP servers that handle simple JSON requests. Persistence uses an in-memory `TypesenseClient`.
+Set environment variables like `TYPESENSE_URL`, `TYPESENSE_API_KEY`, `OPENAI_API_KEY` and optionally `OPENAI_API_BASE` before starting containers so services can connect to external dependencies.
 
 ### Running a Single Service
 

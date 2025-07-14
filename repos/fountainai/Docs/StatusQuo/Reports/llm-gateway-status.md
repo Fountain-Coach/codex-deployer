@@ -10,9 +10,11 @@ Spec path: `FountainAi/openAPI/v2/llm-gateway.yml` (version 2.0.0).
 - Generated server kernel at `Generated/Server/llm-gateway`
 - Minimal socket runtime handles requests; metrics endpoint returns Prometheus data
 - Client decodes typed models
+- Requests to OpenAI use `OPENAI_API_KEY` for authentication and can be routed through `OPENAI_API_BASE`
 - Integration tests verify the `/metrics` endpoint
 
 ## Next Steps toward Production
 - Implement connection handling to underlying LLM APIs
 - Expand metrics collection and monitoring
 - Provide Docker build and deployment instructions
+- Document `OPENAI_API_KEY` and `OPENAI_API_BASE` usage
