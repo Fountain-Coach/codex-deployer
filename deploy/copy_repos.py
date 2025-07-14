@@ -2,21 +2,24 @@
 
 This script clones each repository defined in :mod:`deploy.repo_config` and
 copies its working tree (without ``.git``) into a ``repos/`` directory at the
+
 root of ``codex-deployer``. The layout follows the repository order in
 ``deploy.repo_config.REPO_ORDER``, mirroring the ``/srv`` tree shown in
 ``README.md`` so that Codex and humans can navigate sources semantically.
+
 
 Set ``GITHUB_TOKEN`` if any repositories require authentication.  See
 ``docs/environment_variables.md`` for details on authentication variables.
 """
 
+
 import os
+
 import shutil
 import subprocess
 from pathlib import Path
 
 from repo_config import REPOS, REPO_ORDER
-
 
 # Local directory that will mirror the `/srv` tree described in README.md.
 REPOS_DIR = Path("repos")
@@ -28,6 +31,7 @@ def run(cmd: list[str]) -> None:
 
 
 def clone_repo(url: str, target: Path) -> None:
+
     """Clone ``url`` to ``target`` using a shallow clone.
 
     If ``GITHUB_TOKEN`` is set, embed it in the clone URL to authenticate
@@ -39,6 +43,7 @@ def clone_repo(url: str, target: Path) -> None:
     else:
         auth_url = url
     run(["git", "clone", "--depth", "1", auth_url, str(target)])
+
 
 
 def copy_contents(src: Path, dest: Path) -> None:
