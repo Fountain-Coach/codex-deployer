@@ -234,11 +234,17 @@ def push_logs_to_github() -> None:
 
 def pull_repos(repos: Dict[str, str]) -> None:
     """Clone or update all configured repositories."""
+    token = os.environ.get("GITHUB_TOKEN")
     for alias, url in repos.items():
         path = f"/srv/{alias}"
         canonical = ALIASES.get(alias, alias)
         if not os.path.exists(path):
-            subprocess.run(["git", "clone", url, path], check=False)
+            clone_url = url
+            if token and url.startswith("https://"):
+                clone_url = url.replace("https://", f"https://x-access-token:{token}@")
+            subprocess.run(["git", "clone", clone_url, path], check=False)
+            if clone_url != url:
+                subprocess.run(["git", "-C", path, "remote", "set-url", "origin", url], check=False)
             log(f"Cloned {alias} -> {canonical}")
         else:
             subprocess.run(["git", "-C", path, "pull"], check=False)
