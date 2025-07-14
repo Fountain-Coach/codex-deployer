@@ -26,7 +26,8 @@ Create a small Docker image that includes Python, Git and Swift:
 ```bash
 cat > Dockerfile <<'DOCKER'
 FROM swift:5.8
-RUN apt-get update && apt-get install -y git python3 python3-pip
+RUN apt-get update && apt-get install -y git python3 python3-pip \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /srv/deploy
 COPY . /srv/deploy
 DOCKER
@@ -55,7 +56,7 @@ docker run --rm -it -v $(pwd):/srv/deploy \
 repositories. See [managing_environment_variables.md](managing_environment_variables.md)
 for instructions and links to GitHub's token documentation.
 
-The first run will clone the other repositories defined in `repo_config.py` and write logs under `/srv/deploy/logs` inside the container.
+The first run will clone the other repositories defined in `repo_config.py` and write logs under `/srv/deploy/logs` inside the container. Once initialization completes, the dispatcher prints `Dispatcher started successfully` followed by a green circle so you know it is running correctly.
 
 ## 4. Inspect logs
 

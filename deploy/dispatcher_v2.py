@@ -16,6 +16,8 @@ import json
 from datetime import datetime
 from typing import Dict
 import sys
+import urllib.request
+import urllib.error
 
 from repo_config import REPOS, ALIASES
 from codex_changelog import generate_commit_message, append_changelog
@@ -96,9 +98,11 @@ def timestamp() -> str:
 
 
 def log(msg: str) -> None:
-    """Append a log message to ``LOG_FILE`` with a timestamp."""
+    """Append a log message to ``LOG_FILE`` and echo to the console."""
+    line = f"[{timestamp()}] {msg}"
     with open(LOG_FILE, "a") as fh:
-        fh.write(f"[{timestamp()}] {msg}\n")
+        fh.write(line + "\n")
+    print(line, flush=True)
 
 
 def _repo_slug(repo_path: str) -> str:
@@ -127,35 +131,29 @@ def _create_pr(slug: str, branch: str, title: str, base: str = "main") -> int:
     if not token:
         log("GITHUB_TOKEN not set; skipping PR creation")
         return -1
-    data = json.dumps({"title": title, "head": branch, "base": base})
-    result = subprocess.run(
-        [
-            "curl",
-            "-s",
-            "-H",
-            f"Authorization: token {token}",
-            "-H",
-            "Accept: application/vnd.github+json",
-            "-d",
-            data,
-            f"https://api.github.com/repos/{slug}/pulls",
-        ],
-        capture_output=True,
-        text=True,
-        check=False,
+    data = json.dumps({"title": title, "head": branch, "base": base}).encode()
+    req = urllib.request.Request(
+        f"https://api.github.com/repos/{slug}/pulls",
+        data=data,
+        headers={
+            "Authorization": f"token {token}",
+            "Accept": "application/vnd.github+json",
+        },
+        method="POST",
     )
-    if result.stdout:
-        try:
-            pr_number = json.loads(result.stdout).get("number", -1)
-            if pr_number != -1:
-                log(f"Opened PR #{pr_number} for {slug}")
-            else:
-                log(f"Failed to parse PR creation response: {result.stdout}")
-            return pr_number
-        except Exception:
-            log(f"Failed to parse PR creation response: {result.stdout}")
-    else:
-        log(f"Failed to create PR for {slug}: {result.stderr.strip()}")
+    try:
+        with urllib.request.urlopen(req) as resp:
+            body = resp.read().decode()
+        pr_number = json.loads(body).get("number", -1)
+        if pr_number != -1:
+            log(f"Opened PR #{pr_number} for {slug}")
+        else:
+            log(f"Failed to parse PR creation response: {body}")
+        return pr_number
+    except urllib.error.HTTPError as e:
+        log(f"Failed to create PR for {slug}: {e.reason}")
+    except Exception as e:
+        log(f"Failed to create PR for {slug}: {str(e)}")
     return -1
 
 
@@ -165,27 +163,24 @@ def _wait_for_merge(slug: str, pr_number: int, interval: int = 30) -> None:
     if pr_number < 0 or not token:
         log("Skipping merge wait; missing PR number or token")
         return
+    url = f"https://api.github.com/repos/{slug}/pulls/{pr_number}"
+    req = urllib.request.Request(
+        url,
+        headers={
+            "Authorization": f"token {token}",
+            "Accept": "application/vnd.github+json",
+        },
+    )
     while True:
-        result = subprocess.run(
-            [
-                "curl",
-                "-s",
-                "-H",
-                f"Authorization: token {token}",
-                f"https://api.github.com/repos/{slug}/pulls/{pr_number}",
-            ],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        if not result.stdout:
-            log(f"Failed to fetch PR status: {result.stderr.strip()}")
+        try:
+            with urllib.request.urlopen(req) as resp:
+                data = json.loads(resp.read().decode())
+        except urllib.error.HTTPError as e:
+            log(f"Failed to fetch PR status: {e.reason}")
             time.sleep(interval)
             continue
-        try:
-            data = json.loads(result.stdout)
-        except Exception:
-            log(f"Invalid PR status response: {result.stdout}")
+        except Exception as e:
+            log(f"Invalid PR status response: {str(e)}")
             time.sleep(interval)
             continue
         if data.get("merged"):
@@ -433,6 +428,7 @@ def loop() -> None:
     start_new_log()
     check_env()
     configure_git()
+    log("Dispatcher started successfully \U0001F7E2")
     while True:
         log("=== New Cycle ===")
         pull_repos(REPOS)
