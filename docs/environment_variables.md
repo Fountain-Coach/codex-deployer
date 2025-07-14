@@ -15,6 +15,13 @@ Variables without defaults are optional but enable additional functionality.
 The dispatcher logs a warning at startup if any variable is missing, allowing
 you to verify configuration before the main loop begins.
 
+`GITHUB_TOKEN` should be a personal access token with `repo` and `workflow`
+permissions. See GitHub's
+[official guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+for instructions and follow
+[managing_environment_variables.md](managing_environment_variables.md) for a
+step-by-step walk-through of adding it to `dispatcher.env`.
+
 ## Using GitHub Secrets
 
 Environment variables can be managed using **GitHub Secrets** so that sensitive
@@ -33,4 +40,6 @@ before launching the service (e.g. inside your systemd unit file).
 
 The systemd unit loads variables from `/srv/deploy/dispatcher.env`. Copy the
 sample from `systemd/dispatcher.env` and edit the values or source your GitHub
-secrets there.
+secrets there. See
+[managing_environment_variables.md](managing_environment_variables.md) for a
+step-by-step walkthrough of the setup process.
