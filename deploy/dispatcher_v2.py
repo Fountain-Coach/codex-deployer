@@ -38,6 +38,26 @@ BUILD_DOCKER = os.environ.get("DISPATCHER_BUILD_DOCKER", "0").lower() not in {"0
 RUN_E2E = os.environ.get("DISPATCHER_RUN_E2E", "0").lower() not in {"0", "false", "no"}
 
 
+def configure_git() -> None:
+    """Set global git identity from environment variables."""
+    name = os.environ.get("GIT_USER_NAME")
+    email = os.environ.get("GIT_USER_EMAIL")
+    if name:
+        subprocess.run(["git", "config", "--global", "user.name", name], check=False)
+    else:
+        log("GIT_USER_NAME not set; using existing git user.name")
+    if email:
+        subprocess.run([
+            "git",
+            "config",
+            "--global",
+            "user.email",
+            email,
+        ], check=False)
+    else:
+        log("GIT_USER_EMAIL not set; using existing git user.email")
+
+
 def check_env() -> None:
     """Log the availability of environment variables."""
     if "DISPATCHER_INTERVAL" not in os.environ:
@@ -403,6 +423,7 @@ def loop() -> None:
     ensure_dirs()
     start_new_log()
     check_env()
+    configure_git()
     while True:
         log("=== New Cycle ===")
         pull_repos(REPOS)
