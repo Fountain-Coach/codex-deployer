@@ -7,10 +7,14 @@ Spec path: `FountainAi/openAPI/v1/bootstrap.yml` (version 1.0.0).
 ## Implementation State
 - OpenAPI operations defined: 6
 - Generated client SDK at `Generated/Client/bootstrap` with typed models
-- Generated server kernel at `Generated/Server/bootstrap` now persists via `BaselineStore`
-- Integration tests cover `seedRoles` and corpus initialization flows
+- Generated server kernel at `Generated/Server/bootstrap` persists via `BaselineStore`
+- Reflection promotion registers new GPT roles via `BaselineStore`
+- `/bootstrap/baseline` streams drift and patterns analytics using SSE
+- Token-based auth checks `BOOTSTRAP_AUTH_TOKEN`; see [environment_variables.md](../../../../docs/environment_variables.md)
+- Prometheus metrics available at `/metrics`
+- Integration tests cover role seeding, corpus initialization and promotion
 - A `Dockerfile` exists for building the service container
 
-## Next Steps toward Production
-- Implement reflection promotion logic and streaming baseline analytics
-- Add authentication middleware and production monitoring
+## Recent Updates
+- Added authentication middleware and Prometheus monitoring
+- Implemented reflection promotion logic and streaming analytics

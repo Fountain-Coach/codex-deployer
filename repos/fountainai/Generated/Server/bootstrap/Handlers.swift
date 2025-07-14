@@ -46,6 +46,8 @@ public struct Handlers {
             return HTTPResponse(status: 404)
         }
         let info = RoleInfo(name: name, prompt: reflection.content)
+        let role = Role(name: name, prompt: reflection.content, corpusId: cid)
+        await store.addRole(role)
         let data = try JSONEncoder().encode(info)
         return HTTPResponse(body: data)
     }

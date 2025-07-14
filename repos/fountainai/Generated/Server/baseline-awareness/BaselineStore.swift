@@ -38,6 +38,14 @@ public actor BaselineStore {
         await typesense.addReflection(item)
     }
 
+    public func addRole(_ role: Role) async {
+        await typesense.addRole(role)
+    }
+
+    public func listRoles(for corpusId: String) async -> [Role] {
+        await typesense.listRoles(for: corpusId)
+    }
+
     // MARK: - Query
     public func reflectionSummary(for corpusId: String) async -> ReflectionSummaryResponse {
         let count = await typesense.reflectionCount(for: corpusId)
