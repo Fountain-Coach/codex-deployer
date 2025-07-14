@@ -36,7 +36,18 @@ public struct Handlers {
     }
 
     public func bootstrappromotereflection(_ request: HTTPRequest) async throws -> HTTPResponse {
-        return HTTPResponse()
+        let comps = URLComponents(string: request.path)
+        let corpusId = comps?.queryItems?.first(where: { $0.name == "corpusId" })?.value
+        let roleName = comps?.queryItems?.first(where: { $0.name == "roleName" })?.value
+        guard let cid = corpusId, let name = roleName else {
+            return HTTPResponse(status: 400)
+        }
+        guard let reflection = await store.latestReflection(for: cid) else {
+            return HTTPResponse(status: 404)
+        }
+        let info = RoleInfo(name: name, prompt: reflection.content)
+        let data = try JSONEncoder().encode(info)
+        return HTTPResponse(body: data)
     }
 
     /// Seed default GPT role prompts.
@@ -64,7 +75,13 @@ public struct Handlers {
         }
         let req = BaselineRequest(baselineId: baseline.baselineId, content: baseline.content, corpusId: baseline.corpusId)
         await store.addBaseline(req)
-        return HTTPResponse(status: 200)
+        let drift = DriftRequest(content: "drift for \(baseline.baselineId)", corpusId: baseline.corpusId, driftId: "\(baseline.baselineId)-drift")
+        await store.addDrift(drift)
+        let patterns = PatternsRequest(content: "patterns for \(baseline.baselineId)", corpusId: baseline.corpusId, patternsId: "\(baseline.baselineId)-patterns")
+        await store.addPatterns(patterns)
+        let bodyText = "event: drift\ndata: \(drift.content)\n\nevent: patterns\ndata: \(patterns.content)\n\n"
+        let data = Data(bodyText.utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "text/event-stream"], body: data)
     }
 
     private func defaultRoles() -> RoleDefaults {

@@ -48,5 +48,9 @@ public actor BaselineStore {
         let count = await typesense.historyCount(for: corpusId)
         return HistorySummaryResponse(summary: "items: \(count)")
     }
+
+    public func latestReflection(for corpusId: String) async -> Reflection? {
+        await typesense.latestReflection(for: corpusId)
+    }
 }
 

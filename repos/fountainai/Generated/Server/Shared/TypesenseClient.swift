@@ -160,6 +160,17 @@ public actor TypesenseClient {
         return reflections[corpusId]?.count ?? 0
     }
 
+    public func latestReflection(for corpusId: String) async -> Reflection? {
+        if let _ = baseURL {
+            if let data = try? await request(path: "corpora/\(corpusId)/reflections", method: "GET", body: nil),
+               let items = try? JSONDecoder().decode([Reflection].self, from: data) {
+                return items.last
+            }
+            return nil
+        }
+        return reflections[corpusId]?.values.last
+    }
+
     public func historyCount(for corpusId: String) async -> Int {
         if let _ = baseURL {
             var total = 0
