@@ -877,3 +877,287 @@ error: fatalError
 [2025-07-15T17:15:34.920120] swift test failed with exit code 1
 [2025-07-15T17:15:35.001225] [dispatcher] Updated git remote to use token-based authentication.
 [2025-07-15T17:15:37.273915] Opened PR #107 for Fountain-Coach/codex-deployer
+[2025-07-15T17:19:12.570995] PR #107 merged
+[2025-07-15T17:19:14.254436] [dispatcher] Running Docker build...
+[2025-07-15T17:19:14.255213] [dispatcher] Running tests...
+time="2025-07-15T17:19:14Z" level=warning msg="/srv/deploy/repos/fountainai/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [function-caller internal] load build definition from Dockerfile
+#1 transferring dockerfile: 466B 0.0s done
+#1 DONE 0.0s
+
+#2 [tools-factory internal] load build definition from Dockerfile
+#2 transferring dockerfile: 462B 0.0s done
+#2 DONE 0.0s
+
+#3 [planner internal] load build definition from Dockerfile
+#3 transferring dockerfile: 450B 0.0s done
+#3 DONE 0.0s
+
+#4 [bootstrap internal] load build definition from Dockerfile
+#4 transferring dockerfile: 454B 0.0s done
+#4 DONE 0.1s
+
+#5 [llm-gateway internal] load build definition from Dockerfile
+#5 transferring dockerfile: 458B 0.0s done
+#5 DONE 0.1s
+
+#6 [persist internal] load build definition from Dockerfile
+#6 transferring dockerfile: 450B 0.0s done
+#6 DONE 0.1s
+
+#7 [baseline-awareness internal] load build definition from Dockerfile
+#7 transferring dockerfile: 472B 0.0s done
+#7 DONE 0.1s
+
+#8 [persist internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 ...
+
+#9 [persist internal] load metadata for docker.io/library/ubuntu:22.04
+#9 DONE 0.6s
+
+#8 [persist internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 DONE 1.2s
+
+#10 [tools-factory internal] load .dockerignore
+#10 transferring context: 2B done
+#10 DONE 0.0s
+
+#11 [persist internal] load .dockerignore
+#11 transferring context: 2B 0.0s done
+#11 DONE 0.0s
+
+#12 [function-caller internal] load .dockerignore
+#12 transferring context: 2B done
+#12 DONE 0.0s
+
+#13 [bootstrap internal] load .dockerignore
+#13 transferring context: 2B done
+#13 DONE 0.0s
+
+#14 [baseline-awareness internal] load .dockerignore
+#14 transferring context: 2B 0.0s done
+#14 DONE 0.0s
+
+#15 [planner internal] load .dockerignore
+#15 transferring context: 2B done
+#15 DONE 0.0s
+
+#16 [function-caller build 1/6] FROM docker.io/library/swift:6.1-jammy@sha256:74fce669eb8620bce0607b9942c8f3b1a1933e7702b4784d7c2cc282715178f8
+#16 DONE 0.0s
+
+#17 [llm-gateway internal] load .dockerignore
+#17 transferring context: 2B done
+#17 DONE 0.0s
+
+#18 [function-caller stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:3c61d3759c2639d4b836d32a2d3c83fa0214e36f195a3421018dbaaf79cbe37f
+#18 CACHED
+
+#19 [tools-factory internal] load build context
+#19 transferring context: 865B 0.0s done
+#19 DONE 0.0s
+
+#20 [bootstrap internal] load build context
+#20 transferring context: 13.14kB 0.0s done
+#20 DONE 0.0s
+
+#21 [persist internal] load build context
+#21 transferring context: 11.40kB 0.0s done
+#21 DONE 0.0s
+
+#22 [llm-gateway internal] load build context
+#22 transferring context: 847B 0.0s done
+#22 DONE 0.0s
+
+#23 [tools-factory build 4/6] COPY Generated/Server/tools-factory ./app
+#23 CACHED
+
+#24 [tools-factory build 3/6] COPY Generated/Server/Shared ./Shared
+#24 CACHED
+
+#25 [function-caller internal] load build context
+#25 transferring context: 12.68kB 0.0s done
+#25 DONE 0.0s
+
+#26 [tools-factory build 5/6] WORKDIR /src/app
+#26 CACHED
+
+#27 [planner internal] load build context
+#27 transferring context: 15.21kB 0.0s done
+#27 DONE 0.0s
+
+#28 [baseline-awareness internal] load build context
+#28 transferring context: 21.83kB 0.0s done
+#28 DONE 0.0s
+
+#29 [bootstrap build 4/6] COPY Generated/Server/bootstrap ./app
+#29 CACHED
+
+#30 [bootstrap build 3/6] COPY Generated/Server/Shared ./Shared
+#30 CACHED
+
+#31 [function-caller build 4/6] COPY Generated/Server/function-caller ./app
+#31 CACHED
+
+#32 [function-caller build 3/6] COPY Generated/Server/Shared ./Shared
+#32 CACHED
+
+#33 [llm-gateway build 4/6] COPY Generated/Server/llm-gateway ./app
+#33 CACHED
+
+#34 [llm-gateway build 3/6] COPY Generated/Server/Shared ./Shared
+#34 CACHED
+
+#35 [llm-gateway build 5/6] WORKDIR /src/app
+#35 CACHED
+
+#36 [bootstrap build 5/6] WORKDIR /src/app
+#36 CACHED
+
+#37 [persist build 4/6] COPY Generated/Server/persist ./app
+#37 CACHED
+
+#38 [persist build 3/6] COPY Generated/Server/Shared ./Shared
+#38 CACHED
+
+#39 [persist build 5/6] WORKDIR /src/app
+#39 CACHED
+
+#40 [function-caller build 5/6] WORKDIR /src/app
+#40 CACHED
+
+#41 [planner build 3/6] COPY Generated/Server/Shared ./Shared
+#41 CACHED
+
+#42 [planner build 4/6] COPY Generated/Server/planner ./app
+#42 CACHED
+
+#43 [baseline-awareness build 4/6] COPY Generated/Server/baseline-awareness ./app
+#43 CACHED
+
+#44 [baseline-awareness build 3/6] COPY Generated/Server/Shared ./Shared
+#44 CACHED
+
+#45 [function-caller build 2/6] WORKDIR /src
+#45 CACHED
+
+#46 [baseline-awareness build 5/6] WORKDIR /src/app
+#46 CACHED
+
+#47 [planner build 5/6] WORKDIR /src/app
+#47 CACHED
+
+#48 [bootstrap build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server
+#48 6.030 Handlers.swift:2:8: error: no such module 'BaselineAwarenessService'
+#48 6.030   1 | import Foundation
+#48 6.030   2 | import BaselineAwarenessService
+#48 6.030     |        `- error: no such module 'BaselineAwarenessService'
+#48 6.030   3 | import ServiceShared
+#48 6.030   4 | 
+#48 ...
+
+#49 [tools-factory build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server
+#49 6.064 Handlers.swift:3:8: error: no such module 'Parser'
+#49 6.064  1 | import Foundation
+#49 6.064  2 | import ServiceShared
+#49 6.064  3 | import Parser
+#49 6.064    |        `- error: no such module 'Parser'
+#49 6.064  4 | import Yams
+#49 6.064  5 | 
+#49 ERROR: process "/bin/sh -c swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server" did not complete successfully: exit code: 1
+
+#50 [function-caller build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server
+#50 6.082 Dispatcher.swift:4:8: error: no such module 'Parser'
+#50 6.082  2 | import FoundationNetworking
+#50 6.082  3 | import ServiceShared
+#50 6.082  4 | import Parser
+#50 6.082    |        `- error: no such module 'Parser'
+#50 6.082  5 | 
+#50 6.082  6 | /// Dispatches registered functions by looking them up from the shared
+#50 ERROR: process "/bin/sh -c swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server" did not complete successfully: exit code: 1
+
+#48 [bootstrap build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server
+#48 ERROR: process "/bin/sh -c swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server" did not complete successfully: exit code: 1
+
+#51 [planner build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server
+#51 ...
+
+#52 [baseline-awareness build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server
+#52 CANCELED
+
+#53 [persist build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server
+#53 CANCELED
+
+#51 [planner build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server
+#51 CANCELED
+
+#54 [llm-gateway build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server
+#54 CANCELED
+------
+ > [tools-factory build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server:
+6.064 Handlers.swift:3:8: error: no such module 'Parser'
+6.064  1 | import Foundation
+6.064  2 | import ServiceShared
+6.064  3 | import Parser
+6.064    |        `- error: no such module 'Parser'
+6.064  4 | import Yams
+6.064  5 | 
+------
+------
+ > [function-caller build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server:
+6.082 Dispatcher.swift:4:8: error: no such module 'Parser'
+6.082  2 | import FoundationNetworking
+6.082  3 | import ServiceShared
+6.082  4 | import Parser
+6.082    |        `- error: no such module 'Parser'
+6.082  5 | 
+6.082  6 | /// Dispatches registered functions by looking them up from the shared
+------
+------
+ > [bootstrap build 6/6] RUN swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server:
+6.030 Handlers.swift:2:8: error: no such module 'BaselineAwarenessService'
+6.030   1 | import Foundation
+6.030   2 | import BaselineAwarenessService
+6.030     |        `- error: no such module 'BaselineAwarenessService'
+6.030   3 | import ServiceShared
+6.030   4 | 
+------
+failed to solve: process "/bin/sh -c swiftc -emit-library -emit-module -module-name ServiceShared ../Shared/*.swift -o ../libServiceShared.so &&     swiftc -O -I .. -L .. -lServiceShared *.swift -o /server" did not complete successfully: exit code: 1
+time="2025-07-15T17:19:23Z" level=warning msg="/srv/deploy/repos/fountainai/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2025-07-15T17:19:23Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T17:19:23Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T17:19:23Z" level=warning msg="/srv/deploy/repos/kong-codex/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Network kong-codex_default  Creating
+ Network kong-codex_default  Created
+ Container kong-codex-typesense-1  Creating
+ Container kong-codex-kong-1  Creating
+ Container kong-codex-kong-1  Created
+ Container kong-codex-typesense-1  Created
+Attaching to kong-1, typesense-1
+Gracefully stopping... (press Ctrl+C again to force)
+Error response from daemon: mounts denied: 
+The path /srv/deploy/repos/kong-codex/kong.conf is not shared from the host and is not known to Docker.
+You can configure shared paths from Docker -> Preferences... -> Resources -> File Sharing.
+See https://docs.docker.com/desktop/settings/mac/#file-sharing for more info.
+time="2025-07-15T17:19:23Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T17:19:23Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T17:19:23Z" level=warning msg="/srv/deploy/repos/kong-codex/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Container kong-codex-typesense-1  Stopping
+ Container kong-codex-kong-1  Stopping
+ Container kong-codex-kong-1  Stopped
+ Container kong-codex-kong-1  Removing
+ Container kong-codex-kong-1  Removed
+ Container kong-codex-typesense-1  Stopped
+ Container kong-codex-typesense-1  Removing
+ Container kong-codex-typesense-1  Removed
+ Network kong-codex_default  Removing
+ Network kong-codex_default  Removed
+
+[2025-07-15T17:19:14.255635] Running integration tests for fountainai...
+[2025-07-15T17:19:23.127745] Integration tests for fountainai failed with exit code 1
+
+[2025-07-15T17:19:23.128023] Running integration tests for kong-codex...
+[2025-07-15T17:19:24.035313] Integration tests for kong-codex failed with exit code 1
