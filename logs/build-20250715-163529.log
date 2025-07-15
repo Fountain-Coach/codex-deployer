@@ -1,2 +1,1987 @@
 [2025-07-15T16:35:30.016740] Dispatcher started successfully 🟢
 [2025-07-15T16:35:30.017912] === New Cycle ===
+warning: 'fountainai': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+warning: 'fountainai': found 57 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+warning: 'fountainai': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+warning: 'fountainai': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+warning: 'fountainai': found 57 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+warning: 'fountainai': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+warning: 'fountainai': found 58 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+[0/1] Planning build
+Building for debugging...
+[0/392] Compiling handshake_server.cc
+[0/392] Compiling s3_lib.cc
+[1/392] Compiling handoff.cc
+[1/392] Write sources
+[1/392] Compiling handshake.cc
+[1/392] Compiling s3_pkt.cc
+[1/392] Compiling s3_both.cc
+[7/392] Compiling handshake_client.cc
+[8/392] Compiling extensions.cc
+[9/392] Compiling d1_srtp.cc
+[10/392] Compiling d1_pkt.cc
+[11/392] Compiling dtls_record.cc
+[12/392] Compiling dtls_method.cc
+[13/392] Compiling md5-x86_64-linux.S
+[14/392] Compiling md5-x86_64-apple.S
+[15/392] Compiling md5-586-linux.S
+[16/392] Compiling md5-586-apple.S
+[17/392] Compiling d1_lib.cc
+[18/392] Write swift-version-24593BA9C3E375BF.txt
+[18/392] Compiling chacha20_poly1305_armv8-win.S
+[20/393] Compiling chacha20_poly1305_x86_64-linux.S
+[20/392] Compiling encrypted_client_hello.cc
+[20/392] Compiling chacha20_poly1305_x86_64-apple.S
+[23/392] Compiling chacha-x86_64-linux.S
+[24/392] Compiling chacha20_poly1305_armv8-apple.S
+[24/392] Compiling chacha-x86_64-apple.S
+[26/392] Compiling chacha-x86-linux.S
+[27/392] Compiling chacha20_poly1305_armv8-linux.S
+[28/392] Compiling d1_both.cc
+[29/392] Compiling err_data.cc
+[30/392] Compiling chacha-x86-apple.S
+[31/392] Compiling chacha-armv8-win.S
+[32/429] Compiling chacha-armv8-apple.S
+[33/429] Compiling chacha-armv4-linux.S
+[34/429] Compiling chacha-armv8-linux.S
+[35/429] Compiling aes128gcmsiv-x86_64-apple.S
+[36/429] Compiling aes128gcmsiv-x86_64-linux.S
+[37/429] Compiling x86_64-mont5-linux.S
+[38/429] Compiling x86_64-mont-linux.S
+[39/429] Compiling x86_64-mont5-apple.S
+[41/429] Compiling DequeModule _DequeBufferHeader.swift
+[41/430] Compiling x86_64-mont-apple.S
+[42/430] Compiling x86-mont-linux.S
+[43/430] Compiling x86-mont-apple.S
+[45/430] Compiling Atomics OptionalRawRepresentable.swift
+[46/430] Compiling Atomics RawRepresentable.swift
+[46/430] Compiling vpaes-x86_64-linux.S
+[46/430] Compiling vpaes-x86_64-apple.S
+[48/430] Compiling vpaes-x86-linux.S
+[49/430] Compiling vpaes-x86-apple.S
+[50/430] Compiling vpaes-armv8-win.S
+[51/430] Compiling vpaes-armv8-linux.S
+[53/430] Compiling Atomics ManagedAtomicLazyReference.swift
+[54/430] Emitting module PlannerService
+[55/430] Compiling Atomics IntegerOperations.swift
+[55/431] Compiling vpaes-armv7-linux.S
+[56/431] Compiling vpaes-armv8-apple.S
+[58/432] Compiling Atomics AtomicInteger.swift
+[59/432] Compiling Atomics AtomicOptionalWrappable.swift
+[59/433] Compiling sha512-x86_64-linux.S
+[61/433] Compiling sha512-x86_64-apple.S
+[61/433] Compiling bio_ssl.cc
+[64/433] Compiling sha512-armv8-win.S
+[65/433] Compiling sha512-armv8-apple.S
+[66/433] Compiling PlannerService LLMGatewayClient.swift
+[68/436] Compiling DequeModule _UnsafeWrappedBuffer.swift
+[68/436] Compiling sha512-armv4-linux.S
+[69/436] Compiling sha512-586-linux.S
+[70/436] Compiling sha512-armv8-linux.S
+[71/436] Compiling sha512-586-apple.S
+[73/436] Compiling Atomics AtomicStorage.swift
+[74/437] Compiling Atomics UnsafeAtomic.swift
+[75/438] Compiling Atomics Unmanaged extensions.swift
+[75/439] Compiling sha256-x86_64-linux.S
+[76/439] Compiling sha256-x86_64-apple.S
+[77/439] Compiling sha256-armv8-win.S
+[78/439] Compiling sha256-armv8-linux.S
+[79/439] Compiling sha256-armv8-apple.S
+[80/439] Compiling sha256-armv4-linux.S
+[81/439] Compiling sha256-586-linux.S
+[82/439] Compiling sha256-586-apple.S
+[84/439] Compiling Atomics AtomicReference.swift
+[85/439] Compiling Atomics ManagedAtomic.swift
+[86/439] Compiling Yams RedundancyAliasingStrategy.swift
+[86/439] Compiling sha1-x86_64-linux.S
+[88/440] Compiling Atomics PointerConformances.swift
+[89/440] Compiling Atomics Primitives.native.swift
+[90/440] Compiling DequeModule Deque._UnsafeHandle.swift
+[91/440] Compiling DequeModule _DequeBuffer.swift
+[94/440] Compiling Atomics AtomicMemoryOrderings.swift
+[94/440] Compiling sha1-x86_64-apple.S
+[95/442] Compiling sha1-armv8-win.S
+[97/442] Compiling Atomics DoubleWord.swift
+[98/442] Compiling Atomics UnsafeAtomicLazyReference.swift
+[99/442] Compiling Yams Representer.swift
+[100/442] Compiling Yams YamlError.swift
+[100/444] Compiling sha1-armv8-apple.S
+[102/444] Compiling PlannerService Router.swift
+[103/444] Compiling Yams Encoder.swift
+[103/444] Compiling sha1-armv8-linux.S
+[105/444] Compiling Yams Parser.swift
+[106/444] Emitting module DequeModule
+[107/446] Compiling Atomics AtomicBool.swift
+[108/446] Compiling Atomics IntegerConformances.swift
+[108/448] Compiling sha1-armv4-large-linux.S
+[110/448] Emitting module Yams
+[111/448] Compiling Yams Decoder.swift
+[111/448] Compiling sha1-586-linux.S
+[112/448] Compiling Yams Emitter.swift
+[113/452] Compiling sha1-586-apple.S
+[115/452] Compiling Yams Node.Alias.swift
+[116/452] Compiling Yams Node.Mapping.swift
+[116/452] Compiling rsaz-avx2-linux.S
+[117/452] Compiling rsaz-avx2-apple.S
+[118/452] Compiling PlannerService Handlers.swift
+[119/452] Compiling PlannerService HTTPKernel.swift
+[120/452] Compiling rdrand-x86_64-linux.S
+[121/453] Compiling p256_beeu-x86_64-asm-linux.S
+[122/453] Compiling rdrand-x86_64-apple.S
+[123/453] Compiling p256_beeu-x86_64-asm-apple.S
+[124/453] Compiling p256_beeu-armv8-asm-win.S
+[126/453] Compiling p256_beeu-armv8-asm-linux.S
+[128/453] Compiling DequeModule Deque.swift
+[129/453] Compiling DequeModule _DequeSlot.swift
+[129/453] Compiling p256_beeu-armv8-asm-apple.S
+[130/454] Compiling p256-x86_64-asm-apple.S
+[132/454] Compiling Yams YamlTagProviding.swift
+[132/455] Compiling p256-x86_64-asm-linux.S
+[132/455] Compiling p256-armv8-asm-win.S
+[135/455] Compiling p256-armv8-asm-apple.S
+[136/455] Compiling p256-armv8-asm-linux.S
+[137/455] Compiling ghashv8-armv8-win.S
+[138/455] Compiling ghashv8-armv8-apple.S
+[139/455] Compiling ghashv8-armv8-linux.S
+[141/455] Compiling Yams Anchor.swift
+[142/455] Compiling Yams Mark.swift
+[144/455] Compiling ghash-x86_64-linux.S
+[145/455] Compiling ghash-x86-linux.S
+[146/455] Compiling ghash-x86_64-apple.S
+[149/455] Compiling ghashv8-armv7-linux.S
+[150/456] Compiling ghash-x86-apple.S
+[151/456] Compiling ghash-ssse3-x86_64-linux.S
+[153/456] Emitting module Atomics
+[153/457] Compiling ghash-ssse3-x86_64-apple.S
+[154/457] Compiling ghash-ssse3-x86-apple.S
+[155/457] Compiling ghash-ssse3-x86-linux.S
+[157/457] Compiling Yams Resolver.swift
+[157/458] Compiling ghash-neon-armv8-win.S
+[157/458] Compiling ghash-neon-armv8-linux.S
+[159/458] Compiling ghash-neon-armv8-apple.S
+[161/458] Compiling ghash-armv4-linux.S
+[163/458] Compiling Yams String+Yams.swift
+[163/458] Compiling co-586-apple.S
+[164/458] Compiling bn-armv8-win.S
+[165/458] Compiling co-586-linux.S
+[168/458] Compiling bsaes-armv7-linux.S
+[169/458] Compiling Yams Node.swift
+[170/458] Compiling Yams Node.Scalar.swift
+[171/458] Compiling Yams Node.Sequence.swift
+[172/458] Compiling bn-armv8-linux.S
+[174/458] Compiling Yams Constructor.swift
+[175/458] Compiling Yams AliasDereferencingStrategy.swift
+[175/458] Compiling bn-586-linux.S
+[176/458] Compiling bn-armv8-apple.S
+[177/458] Compiling armv8-mont-win.S
+[178/458] Compiling bn-586-apple.S
+[178/458] Compiling armv4-mont-linux.S
+[180/458] Compiling armv8-mont-linux.S
+[181/458] Compiling aesv8-gcm-armv8-win.S
+[181/458] Compiling armv8-mont-apple.S
+[183/458] Compiling aesv8-gcm-armv8-linux.S
+[184/458] Compiling aesv8-gcm-armv8-apple.S
+[185/458] Compiling aesv8-armv8-win.S
+[186/458] Compiling aesv8-armv8-linux.S
+[187/458] Compiling aesv8-armv8-apple.S
+[188/458] Compiling aesv8-armv7-linux.S
+[188/458] Compiling aesni-x86_64-linux.S
+[190/458] Compiling aesni-x86_64-apple.S
+[191/458] Compiling aesni-x86-apple.S
+[193/458] Compiling Yams YamlAnchorProviding.swift
+[193/458] Compiling aesni-x86-linux.S
+[194/458] Compiling aesni-gcm-x86_64-apple.S
+[195/458] Compiling aesni-gcm-x86_64-linux.S
+[197/458] Compiling Yams Tag.swift
+[197/458] Compiling aes-gcm-avx2-x86_64-apple.S
+[197/458] Compiling aes-gcm-avx2-x86_64-linux.S
+[199/459] Compiling aes-gcm-avx10-x86_64-linux.S
+[200/459] Compiling aes-gcm-avx10-x86_64-apple.S
+[202/459] Compiling x_sig.cc
+[203/459] Compiling x_val.cc
+[204/459] Compiling x_req.cc
+[205/459] Compiling x_spki.cc
+[206/459] Compiling x_x509a.cc
+[207/459] Compiling x_pubkey.cc
+[208/459] Wrapping AST for Yams for debugging
+[209/459] Compiling x_x509.cc
+[210/463] Compiling x_name.cc
+[212/463] Compiling Parser SpecLoader.swift
+/srv/deploy/repos/fountainai/Sources/Parser/SpecLoader.swift:31:67: warning: expression implicitly coerced from 'Any?' to 'Any'
+29 |         }
+30 | 
+31 |         let jsonData = try JSONSerialization.data(withJSONObject: yamlObject, options: [])
+   |                                                                   |- warning: expression implicitly coerced from 'Any?' to 'Any'
+   |                                                                   |- note: provide a default value to avoid this warning
+   |                                                                   |- note: force-unwrap the value to avoid this warning
+   |                                                                   `- note: explicitly cast to 'Any' with 'as Any' to silence this warning
+32 |         let spec = try JSONDecoder().decode(OpenAPISpec.self, from: jsonData)
+33 |         try SpecValidator.validate(spec)
+[213/463] Compiling Parser SpecValidator.swift
+[213/463] Compiling x_algor.cc
+[214/463] Compiling x_attrib.cc
+[215/463] Compiling x_exten.cc
+[216/463] Compiling x509spki.cc
+[218/463] Emitting module Parser
+[219/463] Compiling Parser OpenAPISpec.swift
+[219/464] Compiling x_crl.cc
+[220/464] Compiling x_all.cc
+[222/464] Compiling x509rset.cc
+[223/471] Compiling x509_txt.cc
+[225/471] Compiling ToolsFactoryService HTTPResponse.swift
+[226/471] Compiling ToolsFactoryService HTTPRequest.swift
+[227/471] Compiling ToolsFactoryService Router.swift
+[228/471] Compiling ToolsFactoryService Models.swift
+[229/471] Compiling ToolsFactoryService HTTPKernel.swift
+[230/471] Emitting module ToolsFactoryService
+[231/471] Compiling ToolsFactoryService Handlers.swift
+[231/471] Compiling x509_v3.cc
+[232/471] Compiling x509name.cc
+[233/472] Compiling x509_vpm.cc
+[234/472] Compiling x509cset.cc
+[235/476] Compiling x509_vfy.cc
+[237/476] Wrapping AST for Parser for debugging
+[238/476] Compiling x509_trs.cc
+[240/486] Compiling FunctionCallerService HTTPResponse.swift
+[241/487] Compiling FunctionCallerService Models.swift
+[242/487] Compiling FunctionCallerService Logger.swift
+[243/487] Compiling ModelEmitter ModelEmitter.swift
+/srv/deploy/repos/fountainai/Sources/ModelEmitter/ModelEmitter.swift:36:20: warning: value 'type' was defined but never used; consider replacing with boolean test
+34 |             }
+35 | 
+36 |             if let type = schema.type {
+   |                    `- warning: value 'type' was defined but never used; consider replacing with boolean test
+37 |                 output += "public typealias \(name) = \(schema.swiftType)\n\n"
+38 |             }
+[244/487] Emitting module ModelEmitter
+[245/487] Compiling ServerGenerator ServerGenerator.swift
+[246/487] Emitting module ServerGenerator
+[248/489] Emitting module FunctionCallerService
+[249/489] Compiling FunctionCallerService HTTPKernel.swift
+[251/489] Compiling FunctionCallerService HTTPRequest.swift
+[252/489] Compiling FunctionCallerService Handlers.swift
+[253/489] Compiling FunctionCallerService Dispatcher.swift
+[254/489] Emitting module ClientGenerator
+[254/489] Wrapping AST for ModelEmitter for debugging
+[256/489] Compiling ClientGenerator ClientGenerator.swift
+[257/490] Compiling FunctionCallerService Router.swift
+[257/491] Wrapping AST for ServerGenerator for debugging
+[258/491] Compiling x509_set.cc
+[261/491] Compiling x509_lu.cc
+[262/491] Wrapping AST for ClientGenerator for debugging
+[263/491] Compiling x509_obj.cc
+[264/491] Compiling x509_req.cc
+[266/493] Emitting module Generator
+[267/493] Compiling Generator main.swift
+[267/494] Compiling x509_ext.cc
+[269/494] Compiling x509_d2.cc
+[270/494] Wrapping AST for Generator for debugging
+[271/494] Compiling x509_def.cc
+[272/494] Write Objects.LinkFileList
+[273/494] Compiling x509_cmp.cc
+[274/494] Compiling x509.cc
+[275/494] Compiling x509_att.cc
+[276/494] Compiling v3_utl.cc
+[277/494] Linking generator
+[278/494] Compiling v3_skey.cc
+[279/494] Compiling v3_prn.cc
+[280/494] Compiling v3_pmaps.cc
+[281/494] Compiling v3_purp.cc
+[282/494] Compiling v3_pcons.cc
+[283/494] Compiling v3_ocsp.cc
+[284/494] Compiling v3_ncons.cc
+[285/494] Compiling v3_lib.cc
+[286/494] Compiling v3_int.cc
+[287/494] Compiling v3_ia5.cc
+[288/494] Compiling v3_genn.cc
+[289/494] Compiling v3_info.cc
+[290/494] Compiling v3_extku.cc
+[291/494] Compiling v3_enum.cc
+[292/494] Compiling v3_crld.cc
+[293/494] Compiling v3_cpols.cc
+[294/494] Compiling v3_conf.cc
+[295/494] Compiling v3_bitst.cc
+[296/494] Compiling v3_bcons.cc
+[297/494] Compiling v3_alt.cc
+[298/494] Compiling v3_akeya.cc
+[299/494] Compiling v3_akey.cc
+[300/494] Compiling t_x509a.cc
+[301/494] Compiling i2d_pr.cc
+[302/494] Compiling t_x509.cc
+[303/494] Compiling t_req.cc
+[304/494] Compiling t_crl.cc
+[305/494] Compiling rsa_pss.cc
+[306/494] Compiling policy.cc
+[307/494] Compiling name_print.cc
+[308/494] Compiling by_file.cc
+[309/494] Compiling asn1_gen.cc
+[310/494] Compiling by_dir.cc
+[311/494] Compiling a_digest.cc
+[312/494] Compiling algorithm.cc
+[313/494] Compiling a_sign.cc
+[314/494] Compiling voprf.cc
+[315/494] Compiling a_verify.cc
+[316/494] Compiling thread_win.cc
+[317/494] Compiling thread.cc
+[318/494] Compiling thread_none.cc
+[319/494] Compiling trust_token.cc
+[320/494] Compiling thread_pthread.cc
+[321/494] Compiling stack.cc
+[322/494] Compiling pmbtoken.cc
+[323/494] Compiling siphash.cc
+[324/494] Compiling sha512.cc
+[324/494] Compiling sha256.cc
+[326/494] Compiling slhdsa.cc
+[326/494] Compiling sha1.cc
+[328/494] Compiling spake2plus.cc
+[329/494] Compiling rsa_print.cc
+[330/494] Compiling rsa_extra.cc
+[331/494] Compiling rc4.cc
+[332/494] Compiling windows.cc
+[333/494] Compiling refcount.cc
+[334/494] Compiling rsa_crypt.cc
+[335/494] Compiling trusty.cc
+[335/494] Compiling rand.cc
+[337/494] Compiling rsa_asn1.cc
+[338/494] Compiling urandom.cc
+[339/494] Compiling passive.cc
+[340/494] Compiling ios.cc
+[341/494] Compiling getentropy.cc
+[342/494] Compiling poly1305_arm_asm.S
+[343/494] Compiling deterministic.cc
+[344/494] Compiling forkunsafe.cc
+[345/494] Compiling fork_detect.cc
+[346/494] Compiling poly1305_vec.cc
+[347/494] Compiling poly1305_arm.cc
+[348/494] Compiling poly1305.cc
+[349/494] Compiling pool.cc
+[350/494] Compiling pkcs7.cc
+[351/494] Compiling pkcs8_x509.cc
+[352/494] Compiling pkcs8.cc
+[353/494] Compiling pkcs7_x509.cc
+[354/494] Compiling pem_xaux.cc
+[355/494] Compiling p5_pbev2.cc
+[356/494] Compiling pem_x509.cc
+[357/494] Compiling pem_pkey.cc
+[358/494] Compiling obj_xref.cc
+[359/494] Compiling pem_pk8.cc
+[360/494] Compiling mlkem.cc
+[361/494] Compiling pem_oth.cc
+[362/494] Compiling pem_all.cc
+[363/494] Compiling obj.cc
+[364/494] Compiling pem_info.cc
+[365/494] Compiling mldsa.cc
+[366/494] Compiling poly_rq_mul.S
+[367/494] Compiling pem_lib.cc
+[368/494] Compiling md5.cc
+[369/494] Compiling fips_shared_support.cc
+[370/494] Compiling mem.cc
+[371/494] Compiling md4.cc
+[372/494] Compiling lhash.cc
+[373/494] Compiling sign.cc
+[374/494] Compiling ex_data.cc
+[375/494] Compiling kyber.cc
+[376/494] Compiling scrypt.cc
+[377/494] Compiling hpke.cc
+[378/494] Compiling hrss.cc
+[379/494] Compiling print.cc
+[380/494] Compiling pbkdf.cc
+[381/494] Compiling p_x25519.cc
+[382/494] Compiling p_x25519_asn1.cc
+[383/494] Compiling p_rsa_asn1.cc
+[384/494] Compiling p_ed25519.cc
+[385/494] Compiling p_rsa.cc
+[386/494] Compiling p_hkdf.cc
+[387/494] Compiling p_ed25519_asn1.cc
+[388/494] Compiling p_ec_asn1.cc
+[389/494] Compiling p_ec.cc
+[390/494] Compiling p_dh.cc
+[391/494] Compiling p_dh_asn1.cc
+[392/494] Compiling evp_ctx.cc
+[393/494] Compiling evp.cc
+[394/494] Compiling p_dsa_asn1.cc
+[395/494] Compiling engine.cc
+[396/494] Compiling err.cc
+[397/494] Compiling ecdh.cc
+[398/494] Compiling evp_asn1.cc
+[399/494] Compiling ecdsa_asn1.cc
+[400/494] Compiling ec_derive.cc
+[401/494] Compiling hash_to_curve.cc
+[402/494] Compiling dsa.cc
+[403/494] Compiling ec_asn1.cc
+[404/494] Compiling params.cc
+[405/494] Compiling dsa_asn1.cc
+[406/494] Compiling digest_extra.cc
+[407/494] Compiling x25519-asm-arm.S
+[408/494] Compiling des.cc
+[409/494] Compiling dh_asn1.cc
+[410/494] Compiling curve25519_64_adx.cc
+[411/494] Compiling cpu_intel.cc
+[412/494] Compiling crypto.cc
+[413/494] Compiling cpu_arm_linux.cc
+[414/494] Compiling spake25519.cc
+[415/494] Compiling cpu_arm_freebsd.cc
+[416/494] Compiling curve25519.cc
+[417/494] Compiling cpu_aarch64_win.cc
+[418/494] Compiling cpu_aarch64_openbsd.cc
+[419/494] Compiling cpu_aarch64_sysreg.cc
+[420/494] Compiling cpu_aarch64_linux.cc
+[421/494] Compiling cpu_aarch64_fuchsia.cc
+[422/494] Compiling cpu_aarch64_apple.cc
+[423/494] Compiling tls_cbc.cc
+[424/494] Compiling conf.cc
+[425/494] Compiling get_cipher.cc
+[426/494] Compiling bcm.cc
+[427/494] Compiling e_tls.cc
+[428/494] Compiling e_rc4.cc
+[429/494] Compiling e_rc2.cc
+[430/494] Compiling e_null.cc
+[431/494] Compiling e_des.cc
+[432/494] Compiling e_aesgcmsiv.cc
+[433/494] Compiling e_chacha20poly1305.cc
+[433/494] Compiling derive_key.cc
+[435/494] Compiling e_aesctrhmac.cc
+[436/494] Compiling chacha.cc
+[437/494] Compiling unicode.cc
+[438/494] Compiling buf.cc
+[439/494] Compiling cbs.cc
+[440/494] Compiling cbb.cc
+[441/494] Compiling asn1_compat.cc
+[442/494] Compiling ber.cc
+[443/494] Compiling blake2.cc
+[444/494] Compiling bn_asn1.cc
+[445/494] Compiling convert.cc
+[446/494] Compiling socket_helper.cc
+[447/494] Compiling socket.cc
+[448/494] Compiling printf.cc
+[449/494] Compiling hexdump.cc
+[450/494] Compiling pair.cc
+[451/494] Compiling errno.cc
+[452/494] Compiling fd.cc
+[453/494] Compiling file.cc
+[454/494] Compiling bio_mem.cc
+[455/494] Compiling base64.cc
+[456/494] Compiling connect.cc
+[457/494] Compiling bio.cc
+[458/494] Compiling tasn_typ.cc
+[459/494] Compiling tasn_fre.cc
+[460/494] Compiling tasn_utl.cc
+[461/494] Compiling posix_time.cc
+[462/494] Compiling tasn_new.cc
+[463/494] Compiling tasn_enc.cc
+[464/494] Compiling f_string.cc
+[465/494] Compiling f_int.cc
+[466/494] Compiling asn_pack.cc
+[467/494] Compiling asn1_par.cc
+[468/494] Compiling tasn_dec.cc
+[469/494] Compiling a_type.cc
+[469/494] Compiling asn1_lib.cc
+[471/494] Compiling a_utctm.cc
+[471/494] Compiling a_time.cc
+[473/494] Compiling a_octet.cc
+[474/494] Compiling a_strnid.cc
+[475/494] Compiling a_strex.cc
+[476/494] Compiling a_object.cc
+[477/494] Compiling a_i2d_fp.cc
+[478/494] Compiling a_dup.cc
+[479/494] Compiling a_mbstr.cc
+[480/494] Compiling a_d2i_fp.cc
+[481/494] Write sources
+[482/494] Compiling a_int.cc
+[483/494] Write sources
+[483/494] Compiling CAsyncHTTPClient CAsyncHTTPClient.c
+[485/494] Write sources
+[487/494] Compiling a_gentm.cc
+[488/494] Write sources
+[490/500] Compiling a_bitstr.cc
+[490/508] Compiling a_bool.cc
+[493/550] Compiling BootstrapClient bootstrapInitializeCorpus.swift
+[494/550] Compiling BootstrapClient bootstrapAddBaseline.swift
+[495/551] Compiling BootstrapClient bootstrapPromoteReflection.swift
+[496/551] Compiling BootstrapClient bootstrapEnqueueReflection.swift
+[497/551] Compiling BootstrapClient bootstrapSeedRoles.swift
+[498/551] Emitting module BootstrapClient
+[499/551] Compiling Algorithms Compacted.swift
+[500/551] Compiling Algorithms Cycle.swift
+[501/551] Compiling BaselineAwarenessClient readSemanticArc.swift
+[502/551] Emitting module BaselineAwarenessService
+[503/552] Compiling BaselineAwarenessService HTTPKernel.swift
+[504/552] Compiling BootstrapClient seedRoles.swift
+[507/552] Compiling BootstrapClient Models.swift
+[508/553] Compiling BaselineAwarenessService Models.swift
+[509/553] Compiling BaselineAwarenessService Router.swift
+[510/553] Compiling BaselineAwarenessService HTTPRequest.swift
+[511/553] Compiling BaselineAwarenessService HTTPResponse.swift
+[512/553] Compiling BaselineAwarenessService Handlers.swift
+[513/553] Compiling BaselineAwarenessService BaselineStore.swift
+[515/554] Compiling Algorithms Intersperse.swift
+/srv/deploy/repos/fountainai/Generated/Client/baseline-awareness/Requests/listHistory.swift:14:13: warning: variable 'query' was never mutated; consider changing to 'let' constant
+12 |     public var path: String {
+13 |         var path = "/corpus/history/{corpus_id}"
+14 |         var query: [String] = []
+   |             `- warning: variable 'query' was never mutated; consider changing to 'let' constant
+15 |         path = path.replacingOccurrences(of: "{corpus_id}", with: String(parameters.corpusId))
+16 |         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
+[516/554] Compiling Algorithms Partition.swift
+/srv/deploy/repos/fountainai/Generated/Client/baseline-awareness/Requests/listHistory.swift:14:13: warning: variable 'query' was never mutated; consider changing to 'let' constant
+12 |     public var path: String {
+13 |         var path = "/corpus/history/{corpus_id}"
+14 |         var query: [String] = []
+   |             `- warning: variable 'query' was never mutated; consider changing to 'let' constant
+15 |         path = path.replacingOccurrences(of: "{corpus_id}", with: String(parameters.corpusId))
+16 |         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
+[517/554] Compiling Algorithms MinMax.swift
+/srv/deploy/repos/fountainai/Generated/Client/baseline-awareness/Requests/listReflections.swift:14:13: warning: variable 'query' was never mutated; consider changing to 'let' constant
+12 |     public var path: String {
+13 |         var path = "/corpus/reflections/{corpus_id}"
+14 |         var query: [String] = []
+   |             `- warning: variable 'query' was never mutated; consider changing to 'let' constant
+15 |         path = path.replacingOccurrences(of: "{corpus_id}", with: String(parameters.corpusId))
+16 |         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
+[518/554] Compiling Algorithms FlattenCollection.swift
+/srv/deploy/repos/fountainai/Generated/Client/baseline-awareness/Requests/listReflections.swift:14:13: warning: variable 'query' was never mutated; consider changing to 'let' constant
+12 |     public var path: String {
+13 |         var path = "/corpus/reflections/{corpus_id}"
+14 |         var query: [String] = []
+   |             `- warning: variable 'query' was never mutated; consider changing to 'let' constant
+15 |         path = path.replacingOccurrences(of: "{corpus_id}", with: String(parameters.corpusId))
+16 |         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
+[519/554] Compiling Algorithms Grouped.swift
+[520/554] Compiling Algorithms Indexed.swift
+[522/554] Compiling BaselineAwarenessClient summarizeHistory.swift
+/srv/deploy/repos/fountainai/Generated/Client/baseline-awareness/Requests/summarizeHistory.swift:14:13: warning: variable 'query' was never mutated; consider changing to 'let' constant
+12 |     public var path: String {
+13 |         var path = "/corpus/summary/{corpus_id}"
+14 |         var query: [String] = []
+   |             `- warning: variable 'query' was never mutated; consider changing to 'let' constant
+15 |         path = path.replacingOccurrences(of: "{corpus_id}", with: String(parameters.corpusId))
+16 |         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
+[523/554] Compiling Algorithms Joined.swift
+[524/554] Compiling Algorithms Keyed.swift
+[525/554] Emitting module BaselineAwarenessClient
+[526/554] Compiling Algorithms EitherSequence.swift
+[527/554] Compiling Algorithms FirstNonNil.swift
+[527/555] Compiling c-nioatomics.c
+[529/562] Compiling Algorithms Split.swift
+[530/562] Compiling Algorithms Stride.swift
+[531/562] Compiling Algorithms Suffix.swift
+[533/565] Compiling Algorithms RandomSample.swift
+[534/565] Compiling Algorithms Reductions.swift
+[535/565] Compiling Algorithms Rotate.swift
+[537/565] Compiling Algorithms Permutations.swift
+[538/565] Compiling Algorithms Product.swift
+[550/565] Compiling BootstrapService HTTPRequest.swift
+[551/565] Compiling BootstrapService HTTPResponse.swift
+[552/565] Compiling BootstrapService HTTPKernel.swift
+[553/565] Emitting module BootstrapService
+[554/565] Compiling BootstrapService Router.swift
+[555/565] Compiling BootstrapService Handlers.swift
+[556/565] Compiling BootstrapService Models.swift
+[557/566] Compiling Algorithms AdjacentPairs.swift
+[558/566] Compiling Algorithms Chain.swift
+[559/566] Compiling Algorithms Chunked.swift
+[560/566] Compiling Algorithms Combinations.swift
+[561/566] Compiling c-atomics.c
+[563/566] Compiling Algorithms Trim.swift
+[564/566] Compiling Algorithms Unique.swift
+[565/566] Compiling Algorithms Windows.swift
+[566/572] Emitting module Algorithms
+[568/573] Compiling NIOConcurrencyHelpers NIOLock.swift
+[569/573] Compiling NIOConcurrencyHelpers lock.swift
+[570/573] Emitting module NIOConcurrencyHelpers
+[571/573] Compiling NIOConcurrencyHelpers NIOAtomic.swift
+[572/573] Compiling NIOConcurrencyHelpers NIOLockedValueBox.swift
+[573/573] Compiling NIOConcurrencyHelpers atomics.swift
+[575/635] Compiling NIOCore NIOAny.swift
+[576/635] Compiling NIOCore NIOCloseOnErrorHandler.swift
+[577/635] Compiling NIOCore NIOCoreSendableMetatype.swift
+[578/635] Compiling NIOCore NIOLoopBound.swift
+[579/635] Compiling NIOCore NIOPooledRecvBufferAllocator.swift
+[580/635] Compiling NIOCore NIOScheduledCallback.swift
+[581/635] Compiling NIOCore NIOSendable.swift
+[582/635] Compiling NIOCore RecvByteBufferAllocator.swift
+[583/643] Compiling NIOCore IOData.swift
+[584/643] Compiling NIOCore IPProtocol.swift
+[585/643] Compiling NIOCore IntegerBitPacking.swift
+[586/643] Compiling NIOCore IntegerTypes.swift
+[587/643] Compiling NIOCore Interfaces.swift
+[588/643] Compiling NIOCore Linux.swift
+[589/643] Compiling NIOCore MarkedCircularBuffer.swift
+[590/643] Compiling NIOCore MulticastChannel.swift
+[591/643] Compiling NIOCore EventLoopFuture+Deprecated.swift
+[592/643] Compiling NIOCore EventLoopFuture+WithEventLoop.swift
+[593/643] Compiling NIOCore EventLoopFuture.swift
+[594/643] Compiling NIOCore FileDescriptor.swift
+[595/643] Compiling NIOCore FileHandle.swift
+[596/643] Compiling NIOCore FileRegion.swift
+[597/643] Compiling NIOCore GlobalSingletons.swift
+[598/643] Compiling NIOCore IO.swift
+[599/643] Compiling NIOCore CircularBuffer.swift
+[600/643] Compiling NIOCore Codec.swift
+[601/643] Compiling NIOCore ConvenienceOptionSupport.swift
+[602/643] Compiling NIOCore DeadChannel.swift
+[603/643] Compiling NIOCore DispatchQueue+WithFuture.swift
+[604/643] Compiling NIOCore EventLoop+Deprecated.swift
+[605/643] Compiling NIOCore EventLoop+SerialExecutor.swift
+[606/643] Compiling NIOCore EventLoop.swift
+[607/643] Compiling NIOCore EventLoopFuture+AssumeIsolated.swift
+[608/643] Compiling NIOCore AddressedEnvelope.swift
+[609/643] Compiling NIOCore AsyncAwaitSupport.swift
+[610/643] Compiling NIOCore AsyncChannel.swift
+[611/643] Compiling NIOCore AsyncChannelHandler.swift
+[612/643] Compiling NIOCore AsyncChannelInboundStream.swift
+[613/643] Compiling NIOCore AsyncChannelOutboundWriter.swift
+[614/643] Compiling NIOCore NIOAsyncSequenceProducer.swift
+[615/643] Compiling NIOCore NIOAsyncSequenceProducerStrategies.swift
+[616/643] Compiling NIOCore NIOAsyncWriter.swift
+[617/643] Compiling NIOCore SingleStepByteToMessageDecoder.swift
+[618/643] Compiling NIOCore SocketAddresses.swift
+[619/643] Compiling NIOCore SocketOptionProvider.swift
+[620/643] Compiling NIOCore SystemCallHelpers.swift
+[621/643] Compiling NIOCore TimeAmount+Duration.swift
+[622/643] Compiling NIOCore TypeAssistedChannelHandler.swift
+[623/643] Compiling NIOCore UniversalBootstrapSupport.swift
+[624/643] Compiling NIOCore Utilities.swift
+[625/643] Compiling NIOCore NIOThrowingAsyncSequenceProducer.swift
+[626/643] Compiling NIOCore BSDSocketAPI.swift
+[627/643] Compiling NIOCore ByteBuffer-aux.swift
+[628/643] Compiling NIOCore ByteBuffer-binaryEncodedLengthPrefix.swift
+[629/643] Compiling NIOCore ByteBuffer-conversions.swift
+[630/643] Compiling NIOCore ByteBuffer-core.swift
+[631/643] Compiling NIOCore ByteBuffer-hex.swift
+[632/643] Compiling NIOCore ByteBuffer-int.swift
+[633/643] Compiling NIOCore ByteBuffer-lengthPrefix.swift
+[634/643] Compiling NIOCore ByteBuffer-multi-int.swift
+[635/643] Compiling NIOCore ByteBuffer-quicBinaryEncodingStrategy.swift
+[636/643] Compiling NIOCore ByteBuffer-views.swift
+[637/643] Compiling NIOCore Channel.swift
+[638/643] Compiling NIOCore ChannelHandler.swift
+[639/643] Compiling NIOCore ChannelHandlers.swift
+[640/643] Compiling NIOCore ChannelInvoker.swift
+[641/643] Compiling NIOCore ChannelOption.swift
+[642/643] Compiling NIOCore ChannelPipeline.swift
+[643/643] Emitting module NIOCore
+[645/695] Compiling NIOEmbedded Embedded.swift
+[646/695] Compiling NIOEmbedded AsyncTestingEventLoop.swift
+[647/695] Compiling NIOEmbedded AsyncTestingChannel.swift
+[648/695] Emitting module NIOEmbedded
+[650/696] Compiling NIOPosix Pool.swift
+[651/696] Compiling NIOPosix PosixSingletons+ConcurrencyTakeOver.swift
+[652/696] Compiling NIOPosix PosixSingletons.swift
+[653/696] Compiling NIOPosix RawSocketBootstrap.swift
+[654/696] Compiling NIOPosix Resolver.swift
+[655/696] Compiling NIOPosix Selectable.swift
+[656/702] Compiling NIOPosix IO.swift
+[657/702] Compiling NIOPosix IntegerBitPacking.swift
+[658/702] Compiling NIOPosix IntegerTypes.swift
+[659/702] Compiling NIOPosix Linux.swift
+[660/702] Compiling NIOPosix LinuxCPUSet.swift
+[661/702] Compiling NIOPosix LinuxUring.swift
+[662/702] Compiling NIOPosix MultiThreadedEventLoopGroup.swift
+[663/702] Compiling NIOPosix ServerSocket.swift
+[664/702] Compiling NIOPosix Socket.swift
+[665/702] Compiling NIOPosix SocketChannel.swift
+[666/702] Compiling NIOPosix SocketProtocols.swift
+[667/702] Compiling NIOPosix System.swift
+[668/702] Compiling NIOPosix Thread.swift
+[669/702] Compiling NIOPosix SelectableChannel.swift
+[670/702] Compiling NIOPosix SelectableEventLoop.swift
+[671/702] Compiling NIOPosix SelectorEpoll.swift
+[672/702] Compiling NIOPosix SelectorGeneric.swift
+[673/702] Compiling NIOPosix SelectorKqueue.swift
+[674/702] Compiling NIOPosix SelectorUring.swift
+[675/702] Emitting module NIOPosix
+[676/702] Compiling NIOPosix BSDSocketAPICommon.swift
+[677/702] Compiling NIOPosix BSDSocketAPIPosix.swift
+[678/702] Compiling NIOPosix BSDSocketAPIWindows.swift
+[679/702] Compiling NIOPosix BaseSocket.swift
+[680/702] Compiling NIOPosix BaseSocketChannel+SocketOptionProvider.swift
+[681/702] Compiling NIOPosix BaseSocketChannel.swift
+[682/702] Compiling NIOPosix BaseStreamSocketChannel.swift
+[683/702] Compiling NIOPosix ThreadPosix.swift
+[684/702] Compiling NIOPosix ThreadWindows.swift
+[685/702] Compiling NIOPosix UnsafeTransfer.swift
+[686/702] Compiling NIOPosix Utilities.swift
+[687/702] Compiling NIOPosix VsockAddress.swift
+[688/702] Compiling NIOPosix VsockChannelEvents.swift
+[689/702] Compiling NIOPosix NIOPosixSendableMetatype.swift
+[690/702] Compiling NIOPosix NIOThreadPool.swift
+[691/702] Compiling NIOPosix NonBlockingFileIO.swift
+[692/702] Compiling NIOPosix PendingDatagramWritesManager.swift
+[693/702] Compiling NIOPosix PendingWritesManager.swift
+[694/702] Compiling NIOPosix PipeChannel.swift
+[695/702] Compiling NIOPosix PipePair.swift
+[696/702] Compiling NIOPosix Bootstrap.swift
+[697/702] Compiling NIOPosix ControlMessage.swift
+[698/702] Compiling NIOPosix DatagramVectorReadManager.swift
+[699/702] Compiling NIOPosix Errors+Any.swift
+[700/702] Compiling NIOPosix FileDescriptor.swift
+[701/702] Compiling NIOPosix GetaddrinfoResolver.swift
+[702/702] Compiling NIOPosix HappyEyeballs.swift
+[704/705] Emitting module NIO
+[705/705] Compiling NIO Exports.swift
+[707/745] Compiling NIOTLS TLSEvents.swift
+[708/745] Compiling NIOTLS ProtocolNegotiationHandlerStateMachine.swift
+[709/745] Compiling NIOTLS SNIHandler.swift
+[710/745] Compiling NIOTLS NIOTypedApplicationProtocolNegotiationHandler.swift
+[711/745] Compiling NIOTLS ApplicationProtocolNegotiationHandler.swift
+[712/745] Emitting module NIOTLS
+[713/746] Compiling NIOSOCKS SelectedAuthenticationMethod.swift
+[714/746] Compiling NIOSOCKS SOCKSResponse.swift
+[715/746] Compiling NIOSOCKS ClientStateMachine.swift
+[717/747] Compiling NIOHTTP1 HTTPServerProtocolErrorHandler.swift
+[718/747] Compiling NIOHTTP1 HTTPServerUpgradeHandler.swift
+[719/747] Compiling NIOHTTP1 HTTPHeaderValidator.swift
+[720/747] Compiling NIOHTTP1 HTTPHeaders+Validation.swift
+[721/747] Compiling NIOSOCKS Messages.swift
+[722/747] Compiling NIOSOCKS SOCKSRequest.swift
+[723/747] Compiling NIOHTTP1 HTTPPipelineSetup.swift
+[724/747] Compiling NIOHTTP1 HTTPServerPipelineHandler.swift
+[725/747] Emitting module NIOSOCKS
+[726/776] Compiling NIOSOCKS ServerStateMachine.swift
+[727/777] Compiling NIOSSL SSLInit.swift
+[728/777] Compiling NIOSSL SSLPKCS12Bundle.swift
+[730/779] Compiling NIOSSL SSLContext.swift
+[731/779] Compiling NIOSSL SSLErrors.swift
+[732/779] Compiling NIOSSL NIOSSLServerHandler.swift
+[733/779] Compiling NIOSSL ObjectIdentifier.swift
+[734/779] Compiling NIOSSL CustomPrivateKey.swift
+[735/779] Compiling NIOSSL IdentityVerification.swift
+[736/779] Compiling NIOSSL AndroidCABundle.swift
+[737/779] Compiling NIOSSL ByteBufferBIO.swift
+[738/779] Compiling NIOSSL PosixPort.swift
+[739/779] Compiling NIOSSL SSLCallbacks.swift
+[740/779] Compiling NIOSSL SSLCertificate.swift
+[741/779] Compiling NIOSSL SSLCertificateExtensions.swift
+[742/779] Compiling NIOSSL SSLCertificateName.swift
+[743/779] Emitting module NIOHTTP1
+[744/779] Compiling NIOFoundationCompat WaitSpinningRunLoop.swift
+[745/779] Compiling NIOFoundationCompat JSONSerialization+ByteBuffer.swift
+[746/779] Compiling NIOFoundationCompat Codable+ByteBuffer.swift
+[747/779] Compiling NIOFoundationCompat ByteBuffer-foundation.swift
+[748/779] Compiling NIOHTTP1 NIOTypedHTTPServerUpgradeHandler.swift
+[749/779] Compiling NIOHTTP1 NIOTypedHTTPServerUpgraderStateMachine.swift
+[751/780] Emitting module NIOFoundationCompat
+[753/821] Emitting module NIOSSL
+[754/825] Compiling NIOHPACK IntegerCoding.swift
+[755/826] Compiling NIOHPACK IndexedHeaderTable.swift
+[756/826] Compiling NIOTransportServices NIOTSBootstraps.swift
+[757/826] Compiling NIOTransportServices NIOTSChannelOptions.swift
+[758/826] Compiling NIOTransportServices NIOTSConnectionBootstrap.swift
+[759/826] Compiling NIOTransportServices NIOTSConnectionChannel.swift
+[760/826] Compiling NIOTransportServices NIOTSErrors.swift
+[761/826] Compiling NIOTransportServices NIOTSEventLoop.swift
+[762/828] Compiling NIOTransportServices NIOTSEventLoopGroup.swift
+[763/828] Compiling NIOTransportServices NIOTSListenerBootstrap.swift
+[764/828] Compiling NIOTransportServices NIOTSListenerChannel.swift
+[765/828] Compiling NIOTransportServices StateManagedChannel.swift
+[766/828] Compiling NIOTransportServices StateManagedListenerChannel.swift
+[767/828] Compiling NIOTransportServices StateManagedNWConnectionChannel.swift
+[768/828] Compiling NIOTransportServices NIOTSNetworkEvents.swift
+[769/828] Compiling NIOTransportServices NIOTSSingletons.swift
+[770/828] Compiling NIOTransportServices SocketAddress+NWEndpoint.swift
+[771/828] Compiling NIOHPACK HuffmanTables.swift
+[772/828] Compiling NIOTransportServices NIOTSDatagramListenerBootstrap.swift
+[773/828] Compiling NIOTransportServices NIOTSDatagramListenerChannel.swift
+[774/828] Compiling NIOHPACK HuffmanCoding.swift
+[775/828] Emitting module NIOTransportServices
+[776/828] Compiling NIOTransportServices AcceptHandler.swift
+[777/828] Compiling NIOTransportServices NIOTSDatagramConnectionBootstrap.swift
+[778/828] Compiling NIOTransportServices NIOTSDatagramConnectionChannel.swift
+[781/828] Compiling NIOTransportServices NIOFilterEmptyWritesHandler.swift
+[782/828] Emitting module NIOHPACK
+[783/828] Compiling NIOHTTPCompression HTTPResponseDecompressor.swift
+[784/828] Emitting module NIOHTTPCompression
+[789/828] Compiling NIOTransportServices TCPOptions+SocketChannelOption.swift
+[790/828] Compiling NIOTransportServices UDPOptions+SocketChannelOption.swift
+[791/829] Compiling NIOHPACK StaticHeaderTable.swift
+[792/830] Compiling NIOHTTPCompression HTTPRequestCompressor.swift
+[793/830] Compiling NIOHTTPCompression HTTPDecompression.swift
+[807/830] Compiling NIOSSL SafeCompare.swift
+[812/830] Compiling NIOSSL LinuxCABundle.swift
+[813/830] Compiling NIOSSL NIOSSLClientHandler.swift
+[814/830] Compiling NIOSSL NIOSSLHandler+Configuration.swift
+[815/830] Compiling NIOSSL NIOSSLHandler.swift
+[824/830] Compiling NIOHTTPCompression HTTPRequestDecompressor.swift
+[825/830] Compiling NIOHTTPCompression HTTPResponseCompressor.swift
+[826/830] Compiling NIOHTTPCompression HTTPCompression.swift
+[828/889] Compiling NIOHTTP2 HTTP2ChannelHandler.swift
+[829/889] Compiling NIOHTTP2 HTTP2CommonInboundStreamMultiplexer.swift
+[830/889] Compiling NIOHTTP2 HTTP2ConnectionStateChange.swift
+[831/889] Compiling NIOHTTP2 HTTP2Error.swift
+[833/890] Compiling NIOHTTP2 HasExtendedConnectSettings.swift
+[834/890] Compiling NIOHTTP2 HasFlowControlWindows.swift
+[835/890] Compiling NIOHTTP2 HasLocalSettings.swift
+[836/890] Compiling NIOHTTP2 HasRemoteSettings.swift
+[837/890] Compiling NIOHTTP2 LocallyQuiescingState.swift
+[838/890] Compiling NIOHTTP2 QuiescingState.swift
+[839/890] Compiling NIOHTTP2 RemotelyQuiescingState.swift
+[840/890] Compiling NIOHTTP2 SendAndReceiveGoawayState.swift
+[841/898] Compiling NIOHTTP2 MaySendFrames.swift
+[842/898] Compiling NIOHTTP2 SendingDataState.swift
+[843/898] Compiling NIOHTTP2 SendingGoawayState.swift
+[844/898] Compiling NIOHTTP2 SendingHeadersState.swift
+[845/898] Compiling NIOHTTP2 SendingPushPromiseState.swift
+[846/898] Compiling NIOHTTP2 SendingRstStreamState.swift
+[847/898] Compiling NIOHTTP2 SendingWindowUpdateState.swift
+[848/898] Compiling NIOHTTP2 HTTP2SettingsState.swift
+[849/898] Emitting module NIOHTTP2
+[850/898] Compiling NIOHTTP2 StateMachineResult.swift
+[851/898] Compiling NIOHTTP2 ContentLengthVerifier.swift
+[852/898] Compiling NIOHTTP2 DOSHeuristics.swift
+[853/898] Compiling NIOHTTP2 Error+Any.swift
+[854/898] Compiling NIOHTTP2 ConcurrentStreamBuffer.swift
+[855/898] Compiling NIOHTTP2 ControlFrameBuffer.swift
+[856/898] Compiling NIOHTTP2 OutboundFlowControlBuffer.swift
+[857/898] Compiling NIOHTTP2 OutboundFrameBuffer.swift
+[858/898] Compiling NIOHTTP2 ConnectionStateMachine.swift
+[859/898] Compiling NIOHTTP2 ConnectionStreamsState.swift
+[860/898] Compiling NIOHTTP2 MayReceiveFrames.swift
+[861/898] Compiling NIOHTTP2 ReceivingDataState.swift
+[862/898] Compiling NIOHTTP2 ReceivingGoAwayState.swift
+[863/898] Compiling NIOHTTP2 ReceivingHeadersState.swift
+[864/898] Compiling NIOHTTP2 ReceivingPushPromiseState.swift
+[865/898] Compiling NIOHTTP2 ReceivingRstStreamState.swift
+[866/898] Compiling NIOHTTP2 ReceivingWindowUpdateState.swift
+[867/898] Compiling NIOHTTP2 HTTP2StreamChannel+OutboundStreamMultiplexer.swift
+[868/898] Compiling NIOHTTP2 HTTP2StreamChannel.swift
+[869/898] Compiling NIOHTTP2 HTTP2StreamDelegate.swift
+[870/898] Compiling NIOHTTP2 HTTP2StreamID.swift
+[871/898] Compiling NIOHTTP2 HTTP2StreamMultiplexer.swift
+[872/898] Compiling NIOHTTP2 HTTP2ToHTTP1Codec.swift
+[873/898] Compiling NIOHTTP2 HTTP2UserEvents.swift
+[874/898] Compiling NIOHTTP2 InboundEventBuffer.swift
+[875/898] Compiling NIOHTTP2 InboundWindowManager.swift
+[876/898] Compiling NIOHTTP2 MultiplexerAbstractChannel.swift
+[877/898] Compiling NIOHTTP2 StreamChannelFlowController.swift
+[878/898] Compiling NIOHTTP2 StreamChannelList.swift
+[879/898] Compiling NIOHTTP2 StreamMap.swift
+[880/898] Compiling NIOHTTP2 StreamStateMachine.swift
+[881/898] Compiling NIOHTTP2 UnsafeTransfer.swift
+[882/898] Compiling NIOHTTP2 WatermarkedFlowController.swift
+[883/898] Compiling NIOHTTP2 HTTP2FlowControlWindow.swift
+[884/898] Compiling NIOHTTP2 HTTP2Frame.swift
+[885/898] Compiling NIOHTTP2 HTTP2FrameEncoder.swift
+[886/898] Compiling NIOHTTP2 HTTP2FrameParser.swift
+[887/898] Compiling NIOHTTP2 HTTP2PingData.swift
+[888/898] Compiling NIOHTTP2 HTTP2PipelineHelpers.swift
+[889/898] Compiling NIOHTTP2 HTTP2Settings.swift
+[890/898] Compiling NIOHTTP2 HTTP2Stream.swift
+[891/898] Compiling NIOHTTP2 HPACKHeaders+Validation.swift
+[892/898] Compiling NIOHTTP2 HTTP2ChannelHandler+InboundStreamMultiplexer.swift
+[893/898] Compiling NIOHTTP2 HTTP2ChannelHandler+InlineStreamMultiplexer.swift
+[898/898] Compiling NIOHTTP2 HTTP2ErrorCode.swift
+[900/959] Emitting module AsyncHTTPClient
+[901/967] Compiling AsyncHTTPClient AnyAsyncSequence.swift
+[902/967] Compiling AsyncHTTPClient AnyAsyncSequenceProucerDelete.swift
+[903/967] Compiling AsyncHTTPClient AsyncLazySequence.swift
+[904/967] Compiling AsyncHTTPClient HTTPClient+execute.swift
+[905/967] Compiling AsyncHTTPClient HTTPClient+shutdown.swift
+[906/967] Compiling AsyncHTTPClient HTTPClientRequest+Prepared.swift
+[907/967] Compiling AsyncHTTPClient HTTPClientRequest+auth.swift
+[908/967] Compiling AsyncHTTPClient HTTPClientRequest.swift
+[909/967] Compiling AsyncHTTPClient HTTPClientResponse.swift
+[910/967] Compiling AsyncHTTPClient SingleIteratorPrecondition.swift
+[911/967] Compiling AsyncHTTPClient Transaction+StateMachine.swift
+[912/967] Compiling AsyncHTTPClient Transaction.swift
+[913/967] Compiling AsyncHTTPClient Base64.swift
+[914/967] Compiling AsyncHTTPClient BasicAuth.swift
+[915/967] Compiling AsyncHTTPClient BestEffortHashableTLSConfiguration.swift
+[916/967] Compiling AsyncHTTPClient Configuration+BrowserLike.swift
+[917/967] Compiling AsyncHTTPClient ConnectionPool.swift
+[918/967] Compiling AsyncHTTPClient HTTP1ProxyConnectHandler.swift
+[919/967] Compiling AsyncHTTPClient ConnectionTarget.swift
+[920/967] Compiling AsyncHTTPClient DeconstructedURL.swift
+[921/967] Compiling AsyncHTTPClient FileDownloadDelegate.swift
+[922/967] Compiling AsyncHTTPClient FoundationExtensions.swift
+[923/967] Compiling AsyncHTTPClient HTTPClient+HTTPCookie.swift
+[924/967] Compiling AsyncHTTPClient HTTPClient+Proxy.swift
+[925/967] Compiling AsyncHTTPClient HTTPClient+StructuredConcurrency.swift
+[926/967] Compiling AsyncHTTPClient HTTPClient.swift
+[927/967] Compiling AsyncHTTPClient SOCKSEventsHandler.swift
+[928/967] Compiling AsyncHTTPClient TLSEventsHandler.swift
+[929/967] Compiling AsyncHTTPClient HTTP1ClientChannelHandler.swift
+[930/967] Compiling AsyncHTTPClient HTTP1Connection.swift
+[931/967] Compiling AsyncHTTPClient HTTP1ConnectionStateMachine.swift
+[932/967] Compiling AsyncHTTPClient HTTP2ClientRequestHandler.swift
+[933/967] Compiling AsyncHTTPClient HTTP2Connection.swift
+[934/967] Compiling AsyncHTTPClient HTTP2IdleHandler.swift
+[935/967] Compiling AsyncHTTPClient HTTPConnectionEvent.swift
+[936/967] Compiling AsyncHTTPClient RequestBag.swift
+[937/967] Compiling AsyncHTTPClient RequestValidation.swift
+[938/967] Compiling AsyncHTTPClient SSLContextCache.swift
+[939/967] Compiling AsyncHTTPClient Scheme.swift
+[940/967] Compiling AsyncHTTPClient Singleton.swift
+[941/967] Compiling AsyncHTTPClient StringConvertibleInstances.swift
+[942/967] Compiling AsyncHTTPClient StructuredConcurrencyHelpers.swift
+[943/967] Compiling AsyncHTTPClient Utils.swift
+[944/967] Compiling AsyncHTTPClient HTTPConnectionPool+Factory.swift
+[945/967] Compiling AsyncHTTPClient HTTPConnectionPool+Manager.swift
+[946/967] Compiling AsyncHTTPClient HTTPConnectionPool.swift
+[947/967] Compiling AsyncHTTPClient HTTPExecutableRequest.swift
+[948/967] Compiling AsyncHTTPClient HTTPRequestStateMachine+Demand.swift
+[949/967] Compiling AsyncHTTPClient HTTPRequestStateMachine.swift
+[950/967] Compiling AsyncHTTPClient RequestBodyLength.swift
+[951/967] Compiling AsyncHTTPClient RequestFramingMetadata.swift
+[952/967] Compiling AsyncHTTPClient HTTPHandler.swift
+[953/967] Compiling AsyncHTTPClient LRUCache.swift
+[954/967] Compiling AsyncHTTPClient NIOLoopBound+Execute.swift
+[955/967] Compiling AsyncHTTPClient NWErrorHandler.swift
+[956/967] Compiling AsyncHTTPClient NWWaitingHandler.swift
+[957/967] Compiling AsyncHTTPClient TLSConfiguration.swift
+[958/967] Compiling AsyncHTTPClient RedirectState.swift
+[959/967] Compiling AsyncHTTPClient RequestBag+StateMachine.swift
+[960/967] Compiling AsyncHTTPClient RequestOptions.swift
+[961/967] Compiling AsyncHTTPClient HTTPConnectionPool+Backoff.swift
+[962/967] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP1Connections.swift
+[963/967] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP1StateMachine.swift
+[964/967] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP2Connections.swift
+[965/967] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP2StateMachine.swift
+[966/967] Compiling AsyncHTTPClient HTTPConnectionPool+RequestQueue.swift
+[967/967] Compiling AsyncHTTPClient HTTPConnectionPool+StateMachine.swift
+[969/976] Compiling IntegrationRuntime NIOHTTPServer.swift
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:68:25: warning: variable 'buffer' was never mutated; consider changing to 'let' constant
+66 |                     responseHead.headers = headers
+67 |                     context.write(self.wrapOutboundOut(.head(responseHead)), promise: nil)
+68 |                     var buffer = context.channel.allocator.buffer(bytes: resp.body)
+   |                         `- warning: variable 'buffer' was never mutated; consider changing to 'let' constant
+69 |                     context.write(self.wrapOutboundOut(.body(.byteBuffer(buffer))), promise: nil)
+70 |                     context.writeAndFlush(self.wrapOutboundOut(.end(nil)), promise: nil)
+
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:61:22: warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+59 |                     body: Data(body?.readableBytesView ?? [])
+60 |                 )
+61 |                 Task {
+   |                      `- warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+62 |                     let resp = try await self.kernel.handle(req)
+   |                                                             `- note: closure captures non-Sendable 'req'
+63 |                     var headers = HTTPHeaders()
+64 |                     for (k, v) in resp.headers { headers.add(name: k, value: v) }
+65 |                     var responseHead = HTTPResponseHead(version: head.version, status: .init(statusCode: resp.status))
+66 |                     responseHead.headers = headers
+67 |                     context.write(self.wrapOutboundOut(.head(responseHead)), promise: nil)
+   |                     `- note: closure captures non-Sendable 'context'
+68 |                     var buffer = context.channel.allocator.buffer(bytes: resp.body)
+69 |                     context.write(self.wrapOutboundOut(.body(.byteBuffer(buffer))), promise: nil)
+[970/976] Compiling IntegrationRuntime URLSessionHTTPClient.swift
+[971/976] Compiling IntegrationRuntime HTTPClientProtocol.swift
+[972/976] Compiling IntegrationRuntime AsyncHTTPClientDriver.swift
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/AsyncHTTPClientDriver.swift:8:78: warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
+ 6 |     let client: HTTPClient
+ 7 | 
+ 8 |     public init(eventLoopGroupProvider: HTTPClient.EventLoopGroupProvider = .createNew) {
+   |                                                                              |- warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
+   |                                                                              `- note: use 'singleton' instead
+ 9 |         self.client = HTTPClient(eventLoopGroupProvider: eventLoopGroupProvider)
+10 |     }
+[973/976] Emitting module IntegrationRuntime
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/AsyncHTTPClientDriver.swift:8:78: warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
+ 6 |     let client: HTTPClient
+ 7 | 
+ 8 |     public init(eventLoopGroupProvider: HTTPClient.EventLoopGroupProvider = .createNew) {
+   |                                                                              |- warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
+   |                                                                              `- note: use 'singleton' instead
+ 9 |         self.client = HTTPClient(eventLoopGroupProvider: eventLoopGroupProvider)
+10 |     }
+[974/976] Compiling IntegrationRuntime HTTPRequest.swift
+[975/976] Compiling IntegrationRuntime HTTPKernel.swift
+[976/976] Compiling IntegrationRuntime HTTPResponse.swift
+Build complete! (59.07s)
+warning: 'fountainai': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+warning: 'fountainai': found 57 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+warning: 'fountainai': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+warning: 'fountainai': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+warning: 'fountainai': found 57 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+warning: 'fountainai': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/BaselineStore.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+warning: 'fountainai': found 58 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/TypesenseClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/HTTPResponse.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/HTTPServer.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Logger.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/baseline-awareness/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Dispatcher.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/FunctionCallerClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Handlers.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/main.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPKernel.swift
+    /srv/deploy/repos/fountainai/Generated/Server/persist/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/function-caller/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/Shared/PrometheusAdapter.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/Router.swift
+    /srv/deploy/repos/fountainai/Generated/Server/planner/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Dockerfile
+    /srv/deploy/repos/fountainai/Generated/Server/tools-factory/HTTPRequest.swift
+    /srv/deploy/repos/fountainai/Generated/Server/bootstrap/Models.swift
+    /srv/deploy/repos/fountainai/Generated/Server/llm-gateway/HTTPResponse.swift
+[0/1] Planning build
+Building for debugging...
+[0/73] Copying Models.swift
+[1/73] Copying api.json
+[2/73] Copying Handlers.swift
+[2/73] Copying ServerModels.swift
+[2/73] Copying Router.swift
+[2/73] Copying HTTPResponse.swift
+[2/73] Copying HTTPServer.swift
+[2/74] Copying RootModels.swift
+[2/75] Copying HTTPRequest.swift
+[2/75] Write sources
+[2/75] Copying GetTodos.swift
+[2/75] Write sources
+[2/75] Copying APIRequest.swift
+[2/75] Copying HTTPKernel.swift
+[2/80] Copying APIClient.swift
+[2/80] Copying ClientModels.swift
+[3/81] Write sources
+[20/81] Write swift-version-24593BA9C3E375BF.txt
+[21/74] Wrapping AST for NIOTransportServices for debugging
+[22/74] Wrapping AST for PlannerService for debugging
+[22/74] Wrapping AST for NIOSSL for debugging
+[22/74] Wrapping AST for ToolsFactoryService for debugging
+[25/74] Wrapping AST for LLMGatewayService for debugging
+[26/74] Wrapping AST for PersistService for debugging
+[27/74] Wrapping AST for ServiceShared for debugging
+[28/74] Wrapping AST for NIOHTTP2 for debugging
+[29/84] Wrapping AST for _NIODataStructures for debugging
+[30/98] Wrapping AST for _NIOBase64 for debugging
+[31/98] Wrapping AST for ToolsFactoryClient for debugging
+[32/98] Wrapping AST for RealModule for debugging
+[33/98] Wrapping AST for PersistClient for debugging
+[34/98] Wrapping AST for PlannerClient for debugging
+[35/98] Wrapping AST for NIOTLS for debugging
+[36/98] Wrapping AST for NIOSOCKS for debugging
+[37/98] Wrapping AST for NIOPosix for debugging
+[39/98] Compiling ModelEmitterTests resource_bundle_accessor.swift
+[40/98] Compiling ServerTests HTTPResponse.swift
+[40/98] Wrapping AST for NIOHTTPCompression for debugging
+[41/98] Wrapping AST for NIOHTTP1 for debugging
+[43/98] Compiling ServerTests HTTPRequest.swift
+[43/98] Wrapping AST for NIOHPACK for debugging
+[45/98] Compiling ModelEmitterTests ModelEmitterTests.swift
+/srv/deploy/repos/fountainai/Tests/ModelEmitterTests/ModelEmitterTests.swift:33:29: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+31 | 
+32 |         let generatedURL = outDir.appendingPathComponent("Models.swift")
+33 |         let generated = try String(contentsOf: generatedURL)
+   |                             `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+34 | 
+35 |         let fixtureURL = Bundle.module.url(forResource: "Models", withExtension: "swift")!
+
+/srv/deploy/repos/fountainai/Tests/ModelEmitterTests/ModelEmitterTests.swift:36:28: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+34 | 
+35 |         let fixtureURL = Bundle.module.url(forResource: "Models", withExtension: "swift")!
+36 |         let expected = try String(contentsOf: fixtureURL)
+   |                            `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+37 | 
+38 |         XCTAssertEqual(generated, expected)
+[45/98] Wrapping AST for NIOFoundationCompat for debugging
+[47/98] Emitting module ParserTests
+[48/98] Compiling ParserTests ParserTests.swift
+[49/98] Compiling ServerTests HTTPKernel.swift
+[50/98] Compiling ClientGeneratorTests ClientGeneratorTests.swift
+[51/98] Emitting module ClientGeneratorTests
+[52/98] Emitting module ModelEmitterTests
+[53/99] Emitting module ServerTests
+[53/101] Wrapping AST for NIOEmbedded for debugging
+[55/101] Compiling GeneratorTests resource_bundle_accessor.swift
+[58/101] Emitting module GeneratorTests
+[59/101] Compiling GeneratorTests GeneratorTests.swift
+/srv/deploy/repos/fountainai/Tests/GeneratorTests/GeneratorTests.swift:21:33: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+19 |                 .appendingPathComponent("Generated")
+20 |                 .appendingPathComponent(fixtureName ?? relative)
+21 |             let generated = try String(contentsOf: generatedURL)
+   |                                 `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+22 |             let expected = try String(contentsOf: fixtureURL)
+23 |             XCTAssertEqual(generated, expected, "Mismatch for \(relative)")
+
+/srv/deploy/repos/fountainai/Tests/GeneratorTests/GeneratorTests.swift:22:32: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+20 |                 .appendingPathComponent(fixtureName ?? relative)
+21 |             let generated = try String(contentsOf: generatedURL)
+22 |             let expected = try String(contentsOf: fixtureURL)
+   |                                `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+23 |             XCTAssertEqual(generated, expected, "Mismatch for \(relative)")
+24 |         }
+[59/101] Wrapping AST for NIOCore for debugging
+[61/102] Compiling ServerTests Handlers.swift
+[62/102] Compiling ServerTests HTTPServer.swift
+/srv/deploy/repos/fountainai/Tests/ServerTests/HTTPServer.swift:9:21: warning: result of call to 'registerClass' is unused
+ 7 |     public static func register(kernel: HTTPKernel) {
+ 8 |         self.kernel = kernel
+ 9 |         URLProtocol.registerClass(HTTPServer.self)
+   |                     `- warning: result of call to 'registerClass' is unused
+10 |     }
+11 | 
+
+/srv/deploy/repos/fountainai/Tests/ServerTests/HTTPServer.swift:25:14: warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+23 |         let req = HTTPRequest(method: self.request.httpMethod ?? "GET", path: url.path, headers: self.request.allHTTPHeaderFields ?? [:], body: self.request.httpBody ?? Data())
+24 |         let client = self.client
+25 |         Task { [client] in
+   |              `- warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+26 |             do {
+27 |                 let resp = try await kernel.handle(req)
+28 |                 let httpResponse = HTTPURLResponse(url: url, statusCode: resp.status, httpVersion: "HTTP/1.1", headerFields: resp.headers)!
+29 |                 client?.urlProtocol(self, didReceive: httpResponse, cacheStoragePolicy: .notAllowed)
+   |                                     `- note: closure captures 'self' which is accessible to code in the current task
+30 |                 client?.urlProtocol(self, didLoad: resp.body)
+31 |                 client?.urlProtocolDidFinishLoading(self)
+[63/102] Compiling ServerTests Router.swift
+[64/102] Compiling ServerTests ServerTests.swift
+[65/103] Wrapping AST for NIOConcurrencyHelpers for debugging
+[66/103] Wrapping AST for ModelEmitterTests for debugging
+[67/103] Wrapping AST for NIO for debugging
+[68/103] Wrapping AST for Logging for debugging
+[69/103] Wrapping AST for ParserTests for debugging
+[72/103] Wrapping AST for LLMGatewayClientSDK for debugging
+[73/103] Wrapping AST for IntegrationRuntime for debugging
+[74/103] Wrapping AST for FunctionCallerService for debugging
+[75/103] Wrapping AST for InternalCollectionsUtilities for debugging
+[76/103] Wrapping AST for FunctionCallerClient for debugging
+[77/103] Wrapping AST for GeneratorTests for debugging
+[77/103] Wrapping AST for DequeModule for debugging
+[79/103] Wrapping AST for BootstrapService for debugging
+[80/103] Wrapping AST for ClientGeneratorTests for debugging
+[81/103] Wrapping AST for BootstrapClient for debugging
+[82/103] Wrapping AST for BaselineAwarenessService for debugging
+[83/103] Wrapping AST for ServerTests for debugging
+[84/103] Wrapping AST for BaselineAwarenessClient for debugging
+[85/103] Wrapping AST for Atomics for debugging
+[86/103] Wrapping AST for AsyncHTTPClient for debugging
+[87/103] Wrapping AST for Algorithms for debugging
+[89/103] Compiling IntegrationTests APIClient+Raw.swift
+[90/103] Compiling IntegrationTests Handlers.swift
+[91/103] Emitting module IntegrationTests
+[92/103] Compiling IntegrationTests Router.swift
+[93/103] Compiling IntegrationTests IntegrationTests.swift
+[94/103] Compiling IntegrationTests ServicesIntegrationTests.swift
+/srv/deploy/repos/fountainai/Tests/IntegrationTests/ServicesIntegrationTests.swift:191:43: error: type 'FunctionCallerClient' has no member 'APIClient'
+189 |         addTeardownBlock { try? await server.stop() }
+190 | 
+191 |         let client = FunctionCallerClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
+    |                                           `- error: type 'FunctionCallerClient' has no member 'APIClient'
+192 |         let data = try await client.sendRaw(FunctionCallerClient.list_functions())
+193 |         let items = try JSONDecoder().decode([FunctionCallerClient.FunctionInfo].self, from: data)
+
+/srv/deploy/repos/fountainai/Tests/IntegrationTests/ServicesIntegrationTests.swift:192:66: error: type 'FunctionCallerClient' has no member 'list_functions'
+190 | 
+191 |         let client = FunctionCallerClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
+192 |         let data = try await client.sendRaw(FunctionCallerClient.list_functions())
+    |                                                                  `- error: type 'FunctionCallerClient' has no member 'list_functions'
+193 |         let items = try JSONDecoder().decode([FunctionCallerClient.FunctionInfo].self, from: data)
+194 |         XCTAssertEqual(items.first?.function_id, "f1")
+
+/srv/deploy/repos/fountainai/Tests/IntegrationTests/ServicesIntegrationTests.swift:193:39: error: type of expression is ambiguous without a type annotation
+191 |         let client = FunctionCallerClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
+192 |         let data = try await client.sendRaw(FunctionCallerClient.list_functions())
+193 |         let items = try JSONDecoder().decode([FunctionCallerClient.FunctionInfo].self, from: data)
+    |                                       `- error: type of expression is ambiguous without a type annotation
+194 |         XCTAssertEqual(items.first?.function_id, "f1")
+195 |     }
+
+/srv/deploy/repos/fountainai/Tests/IntegrationTests/ServicesIntegrationTests.swift:352:53: warning: left side of nil coalescing operator '??' has non-optional type 'String', so the right side is never used
+350 | 
+351 |         let (metricsBuffer, _) = try await client.execute(method: .GET, url: "http://127.0.0.1:\(port)/metrics", headers: HTTPHeaders(), body: nil)
+352 |         let metrics = String(buffer: metricsBuffer) ?? ""
+    |                                                     `- warning: left side of nil coalescing operator '??' has non-optional type 'String', so the right side is never used
+353 |         XCTAssertTrue(metrics.contains("invocation_success_total"))
+354 |         XCTAssertTrue(metrics.contains("invocation_failure_total"))
+error: fatalError
+
+[2025-07-15T16:35:30.018826] Starting swift build...
+[2025-07-15T16:36:41.955066] swift build succeeded
+[2025-07-15T16:36:41.957280] running swift test...
+[2025-07-15T16:36:47.106803] swift test failed with exit code 1
