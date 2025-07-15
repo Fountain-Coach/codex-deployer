@@ -12,7 +12,7 @@ All FountainAI services now run using a shared Swift concurrency runtime. Integr
 - **Persistence** – stores corpora and tool data in Typesense.
 
 ## Path to Production
-1. **Finalize APIs and versioning** – upgrade the Planner to stable v1 and lock request/response models across services.
+1. **Finalize APIs and versioning** – Planner upgraded to stable v1 and request/response models are locked across services.
 2. **Expand integration tests** – exercise complete workflows via Docker Compose and CI.
 3. **Containerize and deploy** – publish images and create Kubernetes manifests for every service.
 4. **Monitor and log** – standardize Prometheus metrics and aggregate logs across the suite.

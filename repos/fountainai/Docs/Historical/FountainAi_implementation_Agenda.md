@@ -20,7 +20,7 @@ Each service has its own OpenAPI file in `FountainAi/openAPI/<version>/`:
 - `v1/bootstrap.yml` – initializes corpora and seeds default roles.
 - `v1/function-caller.yml` – maps OpenAI function-calling plans to HTTP operations.
 - `v1/persist.yml` – persistence and semantic indexing via Typesense.
-- `v0/planner.yml` – orchestrates planning workflows for the LLM.
+- `v1/planner.yml` – orchestrates planning workflows for the LLM.
 - `v2/llm-gateway.yml` – proxies requests to any LLM with function-calling support.
 - `v1/tools-factory.yml` – registers and manages tool definitions.
 
