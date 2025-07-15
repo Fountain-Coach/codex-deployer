@@ -13,6 +13,7 @@ Spec path: `FountainAi/openAPI/v1/persist.yml` (version 1.0.0).
 - When `TYPESENSE_URL` and `TYPESENSE_API_KEY` are provided the service persists data to a remote Typesense instance
 - Configuration variables are listed in [environment_variables.md](../../../../../../docs/environment_variables.md)
 - Integration tests verify corpus listing and basic storage
+- Prometheus metrics exposed at `/metrics` for monitoring
 
 ## Next Steps toward Production
 - Implement database adapters and connection configuration

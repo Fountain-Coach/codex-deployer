@@ -6,8 +6,8 @@ To move the project toward a stable production release:
 
 1. **Connect services to real infrastructure** – ✅ Persistence now talks to a running Typesense instance and the LLM Gateway proxies to OpenAI.
 2. **Expand service logic** – complete the Function Caller and Planner implementations so workflows execute end‑to‑end.
-3. **Persist tool definitions** – implement storage in the Tools Factory and expose registration APIs.
-4. **Add authentication** – secure all services with token-based auth and validate inputs.
+3. **Persist tool definitions** – ✅ Tools Factory stores OpenAPI documents and exposes registration APIs.
+4. **Add authentication** – ✅ All services enforce bearer tokens and validate inputs.
 5. **Harden testing** – grow the integration tests to cover more scenarios and enable CI metrics.
 6. **Finalize deployment assets** – refine the Docker images, document environment variables, and provide examples for Kubernetes.
    See [environment_variables.md](../../../../../../docs/environment_variables.md) for the latest list.
