@@ -23,7 +23,9 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Function definitions cached to disk via `FUNCTIONS_CACHE_PATH`
 - Docker Compose example at `Docs/Compose/function-caller-tools.yml`
 
+## Recent Updates
+- Log aggregation setup documented in [log_aggregation.md](../../../../../../docs/log_aggregation.md)
+
 ## Next Steps toward Production
 - Harden cache invalidation and error handling
-- Document log aggregation setup
 - Expand integration tests for the Compose workflow
