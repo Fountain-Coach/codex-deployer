@@ -1,4 +1,6 @@
 import Foundation
+import FoundationNetworking
+import BaselineAwarenessService
 
 public class HTTPServer: URLProtocol {
     static var kernel: HTTPKernel?
