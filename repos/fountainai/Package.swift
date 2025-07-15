@@ -66,7 +66,7 @@ let package = Package(
         .target(name: "PersistClient", path: "Generated/Client/persist"),
         .target(
             name: "FunctionCallerService",
-            dependencies: ["ServiceShared"],
+            dependencies: ["ServiceShared", "Parser"],
             path: "Generated/Server",
             sources: [
                 "function-caller/HTTPKernel.swift",
