@@ -22,6 +22,7 @@ This document lists the environment variables used by the Codex deployer.
 | `BASELINE_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Baseline Awareness service. |
 | `FUNCTION_CALLER_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Function Caller service. |
 | `TOOLS_FACTORY_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Tools Factory service. |
+| `PLANNER_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Planner service. |
 
 Variables without defaults are optional but enable additional functionality.
 The dispatcher logs a warning at startup if any variable is missing, allowing
