@@ -14,7 +14,10 @@ Spec path: `FountainAi/openAPI/v1/bootstrap.yml` (version 1.0.0).
 - Prometheus metrics available at `/metrics`
 - Integration tests cover role seeding, corpus initialization and promotion
 - A `Dockerfile` exists for building the service container
+- Structured logging outputs JSON events
+- Docker Compose examples show the service running with Awareness and Persistence
 
 ## Recent Updates
 - Added authentication middleware and Prometheus monitoring
 - Implemented reflection promotion logic and streaming analytics
+- Added structured logging and a Compose workflow example

@@ -13,6 +13,8 @@ Spec path: `FountainAi/openAPI/v2/llm-gateway.yml` (version 2.0.0).
 - The `/chat` endpoint forwards requests to OpenAI's Chat Completions API
 - Requests to OpenAI use `OPENAI_API_KEY` for authentication and can be routed through `OPENAI_API_BASE`
 - Environment variables are documented in [environment_variables.md](../../../../../docs/environment_variables.md)
+- Structured logging outputs JSON records
+- Docker Compose example runs the gateway with the Planner and Function Caller
 
 ## Recent Updates
 - Initial chat proxy implemented using `URLSession`

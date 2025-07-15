@@ -14,6 +14,8 @@ docker-compose build
 
 This compiles each service into a minimal Swift container.
 
+Before running the containers configure the environment variables described in [environment_variables.md](../../../../../docs/environment_variables.md). At minimum set `TYPESENSE_URL`, `TYPESENSE_API_KEY` and `OPENAI_API_KEY` so the services can reach external dependencies.
+
 ## Starting the Services
 
 To start all containers:
@@ -50,3 +52,4 @@ docker-compose down
 ```
 
 This workflow lets you run the microservices locally. Future updates will add full networking and durable persistence.
+All containers emit JSON logs which can be aggregated by your logging stack.

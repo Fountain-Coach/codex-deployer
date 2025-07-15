@@ -16,6 +16,8 @@ Spec path: `FountainAi/openAPI/v1/tools-factory.yml` (version 1.0.0).
 - Authentication middleware checks the `TOOLS_FACTORY_AUTH_TOKEN` environment variable
 - Production Typesense collections can be bootstrapped using `typesense-codex/scripts/bootstrap_typesense.py`
 - Prometheus metrics available at `/metrics`
+- Structured logging outputs JSON events
+- Docker Compose example pairs the service with Function Caller
 
 ### Example Usage
 
@@ -33,3 +35,4 @@ Invalid documents return `422` with an `ErrorResponse`.
 ## Next Steps toward Production
 - **Completed**: Validation rules now detect duplicate `operationId` values and missing path parameters, returning detailed `ErrorResponse` messages.
 - **Completed**: `typesense-codex/scripts/bootstrap_typesense.py` creates required collections for production Typesense instances.
+- Structured logging and Docker Compose example added for local testing

@@ -35,3 +35,4 @@ This document describes the cross-platform runtime now used for integration test
 - **Composable**: the protocol allows swapping in different HTTP backends as needed.
 
 All current integration tests use this runtime and run in CI on Linux and macOS.
+Developers run `swift test -v` locally to reproduce the same cross-platform flow.

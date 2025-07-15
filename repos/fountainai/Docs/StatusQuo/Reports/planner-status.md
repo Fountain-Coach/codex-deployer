@@ -13,9 +13,12 @@ Spec path: `FountainAi/openAPI/v0/planner.yml` (version 0.1.0).
 - Prometheus metrics exposed at `/metrics`
 - Authentication middleware checks the `PLANNER_AUTH_TOKEN` environment variable
 - Configuration variables `LLM_GATEWAY_URL` and `FUNCTION_CALLER_URL` are listed in [environment_variables.md](../../../../../docs/environment_variables.md)
+- Structured logging captures workflow steps
+- Docker Compose example ties the Planner to the Gateway and Function Caller
 
 ## Recent Updates
 - Added end-to-end integration tests covering planning workflows
+- Structured logging now records every planned step
 
 ## Next Steps toward Production
 - Upgrade the API to stable v1 once semantics are finalized

@@ -1,15 +1,21 @@
-# Next Steps Toward Stable Production Release
+# Production Readiness Summary
 
-The services now share a minimal Swift networking runtime and typed request/response models. Basic integration tests run across all microservices using this runtime. Persistence connects to a real Typesense instance and the LLM Gateway forwards requests to OpenAI.
+All FountainAI services now run using a shared Swift concurrency runtime. Integration tests cover cross‑service workflows against a real Typesense instance and the LLM Gateway proxies requests to OpenAI.
 
-To move the project toward a stable production release:
+## Component Overview
+- **Baseline Awareness** – persists baselines and streams analytics via SSE.
+- **Bootstrap** – initializes corpora and seeds default roles with Prometheus metrics.
+- **Function Caller** – dispatches registered functions with disk‑backed caching.
+- **LLM Gateway** – forwards chat completions to OpenAI using typed models.
+- **Planner** – orchestrates workflow execution across the LLM Gateway and Function Caller.
+- **Tools Factory** – registers tool definitions and validates OpenAPI documents.
+- **Persistence** – stores corpora and tool data in Typesense.
 
-1. **Connect services to real infrastructure** – ✅ Persistence now talks to a running Typesense instance and the LLM Gateway proxies to OpenAI.
-2. **Expand service logic** – complete the Function Caller and Planner implementations so workflows execute end‑to‑end.
-3. **Persist tool definitions** – ✅ Tools Factory stores OpenAPI documents and exposes registration APIs.
-4. **Add authentication** – ✅ All services enforce bearer tokens and validate inputs.
-5. **Harden testing** – grow the integration tests to cover more scenarios and enable CI metrics. ✅ Invocation success and failure counters are now recorded by the Function Caller service.
-6. **Finalize deployment assets** – refine the Docker images, document environment variables, and provide examples for Kubernetes.
-   See [environment_variables.md](../../../../../docs/environment_variables.md) for the latest list.
+## Path to Production
+1. **Finalize APIs and versioning** – upgrade the Planner to stable v1 and lock request/response models across services.
+2. **Expand integration tests** – exercise complete workflows via Docker Compose and CI.
+3. **Containerize and deploy** – publish images and create Kubernetes manifests for every service.
+4. **Monitor and log** – standardize Prometheus metrics and aggregate logs across the suite.
+5. **Document configuration** – reference required environment variables in [environment_variables.md](../../../../../docs/environment_variables.md) from all service documentation.
 
-Following these steps will transition the FountainAI suite from generated stubs to fully functional, deployable microservices.
+Completing these steps will transition FountainAI from prototype status to a stable, production‑ready microservice suite.

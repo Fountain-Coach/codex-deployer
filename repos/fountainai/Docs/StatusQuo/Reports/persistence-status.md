@@ -14,9 +14,12 @@ Spec path: `FountainAi/openAPI/v1/persist.yml` (version 1.0.0).
 - Configuration variables are listed in [environment_variables.md](../../../../../docs/environment_variables.md)
 - Integration tests verify corpus listing and basic storage
 - Prometheus metrics exposed at `/metrics` for monitoring
+- Structured logging outputs JSON events
+- Docker Compose example runs the service with Typesense
 
 ## Next Steps toward Production
 - Implement database adapters and connection configuration
 - Add integration tests verifying CRUD operations
 - Provide containerization instructions for deploying with Typesense
 - Document required environment variables
+- Add backup and restore procedures
