@@ -14,10 +14,9 @@ venv/
 ENV/
 
 # Logs and feedback
-*.log
-logs/
+!**/logs/
+!**/logs/**
 feedback/
-deploy/logs/
 deploy/feedback/
 
 # Environment files
