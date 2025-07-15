@@ -106,4 +106,37 @@ final class ParserTests: XCTestCase {
             XCTAssertEqual(validationError, SpecValidator.ValidationError("unresolved reference #/components/schemas/Missing"))
         }
     }
+
+    func testValidationRejectsDuplicateOperationId() throws {
+        let json = """
+        {
+          "title": "API",
+          "paths": {
+            "/a": {"get": {"operationId": "dup"}},
+            "/b": {"get": {"operationId": "dup"}}
+          }
+        }
+        """
+        let tmp = FileManager.default.temporaryDirectory.appendingPathComponent("dup.json")
+        try json.write(to: tmp, atomically: true, encoding: .utf8)
+        XCTAssertThrowsError(try SpecLoader.load(from: tmp)) { error in
+            XCTAssertEqual(error as? SpecValidator.ValidationError, SpecValidator.ValidationError("duplicate operationId dup"))
+        }
+    }
+
+    func testValidationRejectsMissingPathParameter() throws {
+        let json = """
+        {
+          "title": "API",
+          "paths": {
+            "/items/{id}": {"get": {"operationId": "list"}}
+          }
+        }
+        """
+        let tmp = FileManager.default.temporaryDirectory.appendingPathComponent("param.json")
+        try json.write(to: tmp, atomically: true, encoding: .utf8)
+        XCTAssertThrowsError(try SpecLoader.load(from: tmp)) { error in
+            XCTAssertEqual(error as? SpecValidator.ValidationError, SpecValidator.ValidationError("missing parameter id for path /items/{id}"))
+        }
+    }
 }

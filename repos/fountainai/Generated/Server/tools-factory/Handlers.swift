@@ -17,19 +17,26 @@ public struct Handlers {
     public func registerOpenapi(_ request: HTTPRequest) async throws -> HTTPResponse {
         let data = request.body
 
-        // Attempt JSON decoding first
-        var spec: OpenAPISpec?
-        if let decoded = try? JSONDecoder().decode(OpenAPISpec.self, from: data) {
-            spec = decoded
-        } else if let string = String(data: data, encoding: .utf8),
-                  let yaml = try? Yams.load(yaml: string),
-                  let json = try? JSONSerialization.data(withJSONObject: yaml),
-                  let decoded = try? JSONDecoder().decode(OpenAPISpec.self, from: json) {
-            spec = decoded
+        let spec: OpenAPISpec
+        do {
+            if let decoded = try? JSONDecoder().decode(OpenAPISpec.self, from: data) {
+                spec = decoded
+            } else if let string = String(data: data, encoding: .utf8),
+                      let yaml = try? Yams.load(yaml: string),
+                      let json = try? JSONSerialization.data(withJSONObject: yaml),
+                      let decoded = try? JSONDecoder().decode(OpenAPISpec.self, from: json) {
+                spec = decoded
+            } else {
+                throw SpecValidator.ValidationError("invalid document")
+            }
+            try SpecValidator.validate(spec)
+        } catch let error as SpecValidator.ValidationError {
+            let payload = try JSONEncoder().encode(ErrorResponse(error_code: "validation_error", message: error.message))
+            return HTTPResponse(status: 422, body: payload)
+        } catch {
+            let payload = try JSONEncoder().encode(ErrorResponse(error_code: "parse_error", message: "Unable to parse document"))
+            return HTTPResponse(status: 422, body: payload)
         }
-
-        guard let spec else { return HTTPResponse(status: 400) }
-        try SpecValidator.validate(spec)
 
         var functions: [Function] = []
         if let paths = spec.paths {
