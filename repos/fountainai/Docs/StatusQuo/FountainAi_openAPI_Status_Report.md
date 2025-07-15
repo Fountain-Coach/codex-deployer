@@ -12,7 +12,7 @@ The generator is invoked via `regenerate.sh`, which iterates over every YAML spe
 | Bootstrap | v1 | 6 |
 | Function Caller | v1 | 5 |
 | Persistence | v1 | 8 |
-| Planner | v0 | 6 |
+| Planner | v1 | 6 |
 | LLM Gateway | v2 | 2 |
 | Tools Factory | v1 | 4 |
 

@@ -2,7 +2,7 @@
 
 ## Overview
 The Planner orchestrates LLM-driven workflows across the LLM Gateway and Function Caller.
-Spec path: `FountainAi/openAPI/v0/planner.yml` (version 0.1.0).
+Spec path: `FountainAi/openAPI/v1/planner.yml` (version 1.0.0).
 
 ## Implementation State
 - OpenAPI operations defined: 6
@@ -21,7 +21,7 @@ Spec path: `FountainAi/openAPI/v0/planner.yml` (version 0.1.0).
 - Structured logging now records every planned step
 
 ## Next Steps toward Production
-- Upgrade the API to stable v1 once semantics are finalized
+- API upgraded to stable v1 and request/response models are locked
 - **Completed**: Implemented full workflow orchestration calling the LLM Gateway and Function Caller
 - Document environment variables and external dependencies
 - Refer to [environment_variables.md](../../../../../docs/environment_variables.md) when configuring the service

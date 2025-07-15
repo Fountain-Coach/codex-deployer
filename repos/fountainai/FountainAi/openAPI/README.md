@@ -9,7 +9,7 @@ This directory contains the OpenAPI specifications for each FountainAI microserv
 | Function Caller | http://functions.fountain.coach/api/v1 | Maps OpenAI function-calling plans to HTTP operations. Retrieves definitions from the Tools Factory. | [v1/function-caller.yml](v1/function-caller.yml) |
 | LLM Gateway | http://llm-gateway.fountain.coach/api/v1 | Proxies requests to any LLM with function-calling support. Used by the Planner for LLM-driven tasks. | [v2/llm-gateway.yml](v2/llm-gateway.yml) |
 | Persistence | http://persist.fountain.coach/api/v1 | Typesense-backed store for baselines, drifts, reflections and registered tools. | [v1/persist.yml](v1/persist.yml) |
-| Planner | http://planner.fountain.coach/api/v1 | Orchestrates planning workflows across the LLM Gateway and Function Caller. | [v0/planner.yml](v0/planner.yml) |
+| Planner | http://planner.fountain.coach/api/v1 | Orchestrates planning workflows across the LLM Gateway and Function Caller. | [v1/planner.yml](v1/planner.yml) |
 | Tools Factory | http://tools-factory.fountain.coach/api/v1 | Registers new tool definitions in the shared Typesense collection consumed by the Function Caller. | [v1/tools-factory.yml](v1/tools-factory.yml) |
 
 ### Cross-service Interactions
