@@ -189,12 +189,11 @@ final class ServicesIntegrationTests: XCTestCase {
         addTeardownBlock { try? await server.stop() }
 
         // The Swift OpenAPI generator exposes the client types at the module
-        // root. Reference them directly without the `FunctionCallerClient`
-        // prefix to avoid clashes with the server-side helper struct of the
-        // same name.
-        let client = APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
-        let data = try await client.sendRaw(list_functions())
-        let items = try JSONDecoder().decode([FunctionInfo].self, from: data)
+        // root which clashes with `PlannerService.FunctionCallerClient`. Use
+        // the module prefix to disambiguate the generated client.
+        let client = FunctionCallerClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
+        let data = try await client.sendRaw(FunctionCallerClient.list_functions())
+        let items = try JSONDecoder().decode([FunctionCallerClient.FunctionInfo].self, from: data)
         XCTAssertEqual(items.first?.function_id, "f1")
     }
 
@@ -353,7 +352,7 @@ final class ServicesIntegrationTests: XCTestCase {
         _ = try await client.execute(method: .POST, url: "http://127.0.0.1:\(port)/functions/missing/invoke", headers: HTTPHeaders(), body: nil)
 
         let (metricsBuffer, _) = try await client.execute(method: .GET, url: "http://127.0.0.1:\(port)/metrics", headers: HTTPHeaders(), body: nil)
-        let metrics = String(buffer: metricsBuffer) ?? ""
+        let metrics = String(buffer: metricsBuffer)
         XCTAssertTrue(metrics.contains("invocation_success_total"))
         XCTAssertTrue(metrics.contains("invocation_failure_total"))
     }
