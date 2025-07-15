@@ -11,7 +11,7 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Handlers dispatch registered functions via ``FunctionDispatcher`` using ``TypesenseClient``
 - Client decodes typed models for all endpoints
 - When `TYPESENSE_URL` is set the dispatcher looks up functions from the external Typesense service
-- See [environment_variables.md](../../../../../../docs/environment_variables.md) for required configuration.
+- See [environment_variables.md](../../../../../docs/environment_variables.md) for required configuration.
 - Authentication middleware checks the `FUNCTION_CALLER_AUTH_TOKEN` environment variable
 - Integration tests verify the `list_functions` endpoint and invocation flows
 - Tools Factory integration allows dynamic registration via `/tools/register`
@@ -24,8 +24,11 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Docker Compose example at `Docs/Compose/function-caller-tools.yml`
 
 ## Recent Updates
-- Log aggregation setup documented in [log_aggregation.md](../../../../../../docs/log_aggregation.md)
+- Log aggregation setup documented in [log_aggregation.md](../../../../../docs/log_aggregation.md)
 
 ## Next Steps toward Production
 - Harden cache invalidation and error handling
 - Expand integration tests for the Compose workflow
+- Persist registered functions using Typesense so definitions survive restarts
+- Record metrics for invocation success and failures
+- Document Kubernetes deployment examples
