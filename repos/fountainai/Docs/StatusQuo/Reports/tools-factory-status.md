@@ -11,9 +11,10 @@ Spec path: `FountainAi/openAPI/v1/tools-factory.yml` (version 1.0.0).
 - Server persists tools via `TypesenseClient`
 - Client decodes typed models
 - When `TYPESENSE_URL` is configured the service will persist tool definitions remotely
-- See [environment_variables.md](../../../../../../docs/environment_variables.md) for configuration options
+- See [environment_variables.md](../../../../../docs/environment_variables.md) for configuration options
 - Integration tests cover registration and listing flows
 - Authentication middleware checks the `TOOLS_FACTORY_AUTH_TOKEN` environment variable
+- Production Typesense collections can be bootstrapped using `typesense-codex/scripts/bootstrap_typesense.py`
 
 ### Example Usage
 
@@ -26,8 +27,8 @@ curl -X POST \
 curl http://tools-factory.fountain.coach/api/v1/tools
 ```
 
-Invalid documents return `400` with an `ErrorResponse`.
+Invalid documents return `422` with an `ErrorResponse`.
 
 ## Next Steps toward Production
-- Harden validation rules and error reporting
-- Add persistence migrations for production databases
+- **Completed**: Validation rules now detect duplicate `operationId` values and missing path parameters, returning detailed `ErrorResponse` messages.
+- **Completed**: `typesense-codex/scripts/bootstrap_typesense.py` creates required collections for production Typesense instances.

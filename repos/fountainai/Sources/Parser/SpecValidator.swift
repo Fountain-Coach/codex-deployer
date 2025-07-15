@@ -41,9 +41,14 @@ public enum SpecValidator {
         }
 
         if let paths = spec.paths {
+            var seenIds = Set<String>()
             for (path, item) in paths {
                 let operations = [item.get, item.post, item.put, item.delete].compactMap { $0 }
                 for op in operations {
+                    if seenIds.contains(op.operationId) {
+                        throw ValidationError("duplicate operationId \(op.operationId)")
+                    }
+                    seenIds.insert(op.operationId)
                     if op.operationId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                         throw ValidationError("operationId cannot be empty for \(path)")
                     }
@@ -60,6 +65,15 @@ public enum SpecValidator {
                         }
                         if let schema = param.schema {
                             try validateSchema(schema)
+                        }
+                    }
+
+                    let segments = path.split(separator: "/")
+                    for seg in segments where seg.hasPrefix("{") && seg.hasSuffix("}") {
+                        let name = String(seg.dropFirst().dropLast())
+                        let match = op.parameters?.first { $0.name == name && $0.location == "path" }
+                        if match == nil {
+                            throw ValidationError("missing parameter \(name) for path \(path)")
                         }
                     }
 
