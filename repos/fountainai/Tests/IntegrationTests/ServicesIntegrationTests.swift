@@ -188,9 +188,10 @@ final class ServicesIntegrationTests: XCTestCase {
         let (server, port) = try await startServer(with: kernel)
         addTeardownBlock { try? await server.stop() }
 
-        // The Swift OpenAPI generator exposes client types at the module root.
+      // The Swift OpenAPI generator exposes client types at the module root.
         // Use the FunctionCallerClient namespace to avoid collisions with
         // `PlannerService.FunctionCallerClient`.
+      
         let client = FunctionCallerClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
         let data = try await client.sendRaw(FunctionCallerClient.list_functions())
         let items = try JSONDecoder().decode([FunctionCallerClient.FunctionInfo].self, from: data)
