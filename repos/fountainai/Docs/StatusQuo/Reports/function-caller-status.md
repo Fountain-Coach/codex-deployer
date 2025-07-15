@@ -10,7 +10,7 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Generated server kernel at `Generated/Server/function-caller`
 - Handlers dispatch registered functions via ``FunctionDispatcher`` using ``TypesenseClient``
 - Client decodes typed models for all endpoints
-- When `TYPESENSE_URL` is set the dispatcher looks up functions from the external Typesense service
+- When `TYPESENSE_URL` is set the dispatcher persists and retrieves functions from the external Typesense service so definitions survive restarts
 - See [environment_variables.md](../../../../../docs/environment_variables.md) for required configuration.
 - Authentication middleware checks the `FUNCTION_CALLER_AUTH_TOKEN` environment variable
 - Integration tests verify the `list_functions` endpoint and invocation flows
@@ -30,6 +30,6 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 ## Next Steps toward Production
 - Harden cache invalidation and error handling
 - Expand integration tests for the Compose workflow
-- Persist registered functions using Typesense so definitions survive restarts
+- **Completed**: Registered functions persist across restarts via Typesense integration
 - Document Kubernetes deployment examples
 - See [next-steps.md](next-steps.md) for cross-service priorities
