@@ -79,6 +79,7 @@ Press `Ctrl-C` in the terminal running the container to stop the dispatcher.
 
 - Map additional volumes if you want the cloned service repositories (like `fountainai`) to persist outside the container.
 - Edit files on your host; the container sees changes immediately because the project directory is mounted.
+- On macOS ensure the repository directory is listed under Docker Desktop > Settings > Resources > File Sharing, otherwise integration tests fail with "mounts denied" errors.
 
 ## 6. Cross-platform compilation
 

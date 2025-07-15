@@ -1,16 +1,30 @@
 version: '3.9'
 services:
   baseline-awareness:
-    build: ./Generated/Server/baseline-awareness
+    build:
+      context: .
+      dockerfile: Generated/Server/baseline-awareness/Dockerfile
   bootstrap:
-    build: ./Generated/Server/bootstrap
+    build:
+      context: .
+      dockerfile: Generated/Server/bootstrap/Dockerfile
   function-caller:
-    build: ./Generated/Server/function-caller
+    build:
+      context: .
+      dockerfile: Generated/Server/function-caller/Dockerfile
   llm-gateway:
-    build: ./Generated/Server/llm-gateway
+    build:
+      context: .
+      dockerfile: Generated/Server/llm-gateway/Dockerfile
   planner:
-    build: ./Generated/Server/planner
+    build:
+      context: .
+      dockerfile: Generated/Server/planner/Dockerfile
   persist:
-    build: ./Generated/Server/persist
+    build:
+      context: .
+      dockerfile: Generated/Server/persist/Dockerfile
   tools-factory:
-    build: ./Generated/Server/tools-factory
+    build:
+      context: .
+      dockerfile: Generated/Server/tools-factory/Dockerfile
