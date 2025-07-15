@@ -89,6 +89,7 @@ let package = Package(
                 "planner/Handlers.swift",
                 "planner/Models.swift",
                 "planner/LLMGatewayClient.swift",
+                "planner/FunctionCallerClient.swift",
                 "planner/HTTPRequest.swift",
                 "planner/HTTPResponse.swift"
             ]
