@@ -4,7 +4,7 @@ import ServiceShared
 /// Baseline Awareness service kernel. Requires a bearer token when
 /// `BASELINE_AUTH_TOKEN` is set. See `docs/environment_variables.md`.
 
-public struct HTTPKernel {
+public struct HTTPKernel: @unchecked Sendable {
     let router: Router
 
     public init(handlers: Handlers = Handlers()) {
