@@ -8,6 +8,13 @@ let package = Package(
     ],
     products: [
         .executable(name: "generator", targets: ["Generator"]),
+        .executable(name: "baseline-awareness-server", targets: ["BaselineAwarenessServer"]),
+        .executable(name: "bootstrap-server", targets: ["BootstrapServer"]),
+        .executable(name: "persist-server", targets: ["PersistServer"]),
+        .executable(name: "function-caller-server", targets: ["FunctionCallerServer"]),
+        .executable(name: "planner-server", targets: ["PlannerServer"]),
+        .executable(name: "tools-factory-server", targets: ["ToolsFactoryServer"]),
+        .executable(name: "llm-gateway-server", targets: ["LLMGatewayServer"]),
     ],
     dependencies: [
         .package(url: "https://github.com/jpsim/Yams.git", from: "5.0.0"),
@@ -35,6 +42,15 @@ let package = Package(
                 "baseline-awareness/BaselineStore.swift"
             ]
         ),
+        .executableTarget(
+            name: "BaselineAwarenessServer",
+            dependencies: ["BaselineAwarenessService"],
+            path: "Generated/Server",
+            sources: [
+                "baseline-awareness/main.swift",
+                "baseline-awareness/HTTPServer.swift"
+            ]
+        ),
         .target(name: "BaselineAwarenessClient", path: "Generated/Client/baseline-awareness"),
         .target(
             name: "BootstrapService",
@@ -49,6 +65,12 @@ let package = Package(
                 "bootstrap/HTTPResponse.swift"
             ]
         ),
+        .executableTarget(
+            name: "BootstrapServer",
+            dependencies: ["BootstrapService"],
+            path: "Generated/Server",
+            sources: ["bootstrap/main.swift"]
+        ),
         .target(name: "BootstrapClient", path: "Generated/Client/bootstrap"),
         .target(
             name: "PersistService",
@@ -62,6 +84,12 @@ let package = Package(
                 "persist/HTTPRequest.swift",
                 "persist/HTTPResponse.swift"
             ]
+        ),
+        .executableTarget(
+            name: "PersistServer",
+            dependencies: ["PersistService"],
+            path: "Generated/Server",
+            sources: ["persist/main.swift"]
         ),
         .target(name: "PersistClient", path: "Generated/Client/persist"),
         .target(
@@ -79,6 +107,12 @@ let package = Package(
                 "function-caller/Logger.swift"
             ]
         ),
+        .executableTarget(
+            name: "FunctionCallerServer",
+            dependencies: ["FunctionCallerService"],
+            path: "Generated/Server",
+            sources: ["function-caller/main.swift"]
+        ),
         .target(name: "FunctionCallerClient", path: "Generated/Client/function-caller"),
         .target(
             name: "PlannerService",
@@ -95,6 +129,12 @@ let package = Package(
                 "planner/HTTPResponse.swift"
             ]
         ),
+        .executableTarget(
+            name: "PlannerServer",
+            dependencies: ["PlannerService"],
+            path: "Generated/Server",
+            sources: ["planner/main.swift"]
+        ),
         .target(name: "PlannerClient", path: "Generated/Client/planner"),
         .target(
             name: "ToolsFactoryService",
@@ -109,6 +149,12 @@ let package = Package(
                 "tools-factory/HTTPResponse.swift"
             ]
         ),
+        .executableTarget(
+            name: "ToolsFactoryServer",
+            dependencies: ["ToolsFactoryService"],
+            path: "Generated/Server",
+            sources: ["tools-factory/main.swift"]
+        ),
         .target(name: "ToolsFactoryClient", path: "Generated/Client/tools-factory"),
         .target(
             name: "LLMGatewayService",
@@ -122,6 +168,12 @@ let package = Package(
                 "llm-gateway/HTTPRequest.swift",
                 "llm-gateway/HTTPResponse.swift"
             ]
+        ),
+        .executableTarget(
+            name: "LLMGatewayServer",
+            dependencies: ["LLMGatewayService"],
+            path: "Generated/Server",
+            sources: ["llm-gateway/main.swift"]
         ),
         .target(name: "LLMGatewayClientSDK", path: "Generated/Client/llm-gateway"),
         .target(
