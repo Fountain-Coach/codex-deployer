@@ -81,7 +81,7 @@ Accepted values for `"repo"`:
 | `/srv/deploy/repos/kong-codex/` | Kong gateway config + plugins |
 | `/srv/deploy/repos/typesense-codex/` | Typesense indexing definitions |
 | `/srv/deploy/repos/teatro/` | Teatro view engine |
-| `/srv/deploy/` | Contains `dispatcher_v2.py` and runtime control logic |
+| `/srv/deploy/deploy/` | Contains `dispatcher_v2.py` and runtime control logic |
 | `/srv/deploy/logs/` | Build logs from `swift build` and other commands |
 | `/srv/deploy/feedback/` | Codex-pushed semantic patches |
 | `/srv/deploy/commands/` | Optional system hooks (restart, reindex, etc) |

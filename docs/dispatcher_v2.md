@@ -25,7 +25,7 @@ service is built, logs are pushed to GitHub and feedback JSON files are applied.
 The systemd service has been updated to use this version by default:
 
 ```ini
-ExecStart=/usr/bin/python3 /srv/deploy/dispatcher_v2.py
+ExecStart=/usr/bin/python3 /srv/deploy/deploy/dispatcher_v2.py
 ```
 
 See the repository [README](../README.md) for setup details and an overview of

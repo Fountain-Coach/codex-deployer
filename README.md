@@ -49,7 +49,8 @@ At its heart is a single principle:
     │   ├── kong-codex/       ← Gateway config + local Typesense
     │   ├── typesense-codex/  ← Schema definitions + indexing logic
     │   └── teatro/           ← Teatro view engine
-    ├── dispatcher_v2.py   ← Daemonized build + feedback loop
+    ├── deploy/
+    │   └── dispatcher_v2.py   ← Daemonized build + feedback loop
     ├── logs/
     │    └── build.log  ← Swift compiler output
     ├── feedback/
