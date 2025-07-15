@@ -6,10 +6,10 @@ COMPOSE_FILE="$SCRIPT_DIR/Docs/Compose/function-caller-tools.yml"
 
 cd "$SCRIPT_DIR"
 
-docker-compose -f "$COMPOSE_FILE" build
+docker compose -f "$COMPOSE_FILE" build
 
-docker-compose -f "$COMPOSE_FILE" up -d
-trap 'docker-compose -f "$COMPOSE_FILE" down -v' EXIT
+docker compose -f "$COMPOSE_FILE" up -d
+trap 'docker compose -f "$COMPOSE_FILE" down -v' EXIT
 
 # wait for function caller to be up
 for i in {1..30}; do

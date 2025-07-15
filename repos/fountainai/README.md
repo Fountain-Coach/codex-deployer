@@ -137,8 +137,8 @@ See [deployment.md](Docs/StatusQuo/Reports/deployment.md) for more details.
 ### Docker Compose
 To build and run all services together:
 ```bash
-docker-compose build
-docker-compose up
+docker compose build
+docker compose up
 ```
 
 ### Docker Compose Integration Tests

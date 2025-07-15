@@ -322,7 +322,7 @@ def build_docker_images() -> None:
 
 
 def run_e2e_tests() -> None:
-    """Run docker-compose integration tests if a compose file is present."""
+    """Run docker compose integration tests if a compose file is present."""
     if not RUN_E2E:
         return
     with open(LOG_FILE, "a") as fh:
@@ -332,13 +332,14 @@ def run_e2e_tests() -> None:
             if os.path.exists(compose_file):
                 fh.write(f"\n[{timestamp()}] Running integration tests for {alias}...\n")
                 result = subprocess.run(
-                    ["docker-compose", "up", "--build", "--abort-on-container-exit"],
+                    ["docker", "compose", "up", "--build", "--abort-on-container-exit"],
                     cwd=repo_path,
                     stdout=fh,
                     stderr=subprocess.STDOUT,
                 )
                 subprocess.run([
-                    "docker-compose",
+                    "docker",
+                    "compose",
                     "down",
                     "--remove-orphans",
                 ], cwd=repo_path, stdout=fh, stderr=subprocess.STDOUT)
