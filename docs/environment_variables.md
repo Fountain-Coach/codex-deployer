@@ -15,8 +15,8 @@ This document lists the environment variables used by the Codex deployer.
 | `FUNCTION_CALLER_URL` | _(none)_ | Base URL for the Function Caller service invoked by the Planner. |
 | `GIT_USER_NAME` | `Contexter` | Used to configure `git config --global user.name`. |
 | `GIT_USER_EMAIL` | `mail@benedikt-eickhoff.de` | Used to configure `git config --global user.email`. |
-| `DISPATCHER_BUILD_DOCKER` | `0` | Set to `1` to build Docker images for repos containing a `Dockerfile`. |
-| `DISPATCHER_RUN_E2E` | `0` | Set to `1` to run `docker compose` integration tests when available. |
+| `DISPATCHER_BUILD_DOCKER` | `0` | Set to `1` to build Docker images for repos containing a `Dockerfile` after each commit. |
+| `DISPATCHER_RUN_E2E` | `0` | Set to `1` to run `docker compose` integration tests after each commit when available. |
 | | | The Docker CLI is installed in the image. Mount the host's Docker socket so `docker compose` commands can run. |
 | `SWIFTPM_NUM_JOBS` | `2` | Number of build jobs used by `swift test`. Helps limit CI runner concurrency. |
 | `SECRETS_API_URL` | _(none)_ | Endpoint for retrieving secrets at startup. |

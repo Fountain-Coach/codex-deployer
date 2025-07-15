@@ -37,6 +37,6 @@ variables and see
 [managing_environment_variables.md](managing_environment_variables.md) for a
 step-by-step setup guide, including GitHub token creation. The systemd unit reads values from
 `/srv/deploy/dispatcher.env`. Set
-`DISPATCHER_BUILD_DOCKER=1` and `DISPATCHER_RUN_E2E=1` to enable cross-repo
-container builds and integration tests.
+`DISPATCHER_BUILD_DOCKER=1` and `DISPATCHER_RUN_E2E=1` to trigger Docker builds
+and integration tests after each successful commit or PR merge.
 
