@@ -139,4 +139,41 @@ final class ParserTests: XCTestCase {
             XCTAssertEqual(error as? SpecValidator.ValidationError, SpecValidator.ValidationError("missing parameter id for path /items/{id}"))
         }
     }
+
+    func testParsesSecuritySchemes() throws {
+        let json = """
+        {
+          "title": "API",
+          "components": {
+            "schemas": {},
+            "securitySchemes": {"bearer": {"type": "http", "scheme": "bearer"}}
+          },
+          "paths": {
+            "/items": {"get": {"operationId": "list", "security": [{"bearer": []}]}}
+          }
+        }
+        """
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("sec.json")
+        try json.write(to: url, atomically: true, encoding: .utf8)
+        let spec = try SpecLoader.load(from: url)
+        XCTAssertEqual(spec.components?.securitySchemes?["bearer"]?.scheme, "bearer")
+        let req = spec.paths?["/items"]?.get?.security?.first
+        XCTAssertNotNil(req?.schemes["bearer"])
+    }
+
+    func testValidationRejectsUnknownSecurityScheme() throws {
+        let json = """
+        {
+          "title": "API",
+          "paths": {
+            "/items": {"get": {"operationId": "list", "security": [{"missing": []}]}}
+          }
+        }
+        """
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("secfail.json")
+        try json.write(to: url, atomically: true, encoding: .utf8)
+        XCTAssertThrowsError(try SpecLoader.load(from: url)) { error in
+            XCTAssertEqual(error as? SpecValidator.ValidationError, SpecValidator.ValidationError("unknown security scheme missing"))
+        }
+    }
 }

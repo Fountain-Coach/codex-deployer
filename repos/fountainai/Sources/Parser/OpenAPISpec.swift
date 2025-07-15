@@ -1,9 +1,44 @@
 import Foundation
 
 public struct OpenAPISpec: Codable {
-    /// Components container supporting only schemas for now.
+    /// Components container storing reusable objects.
     public struct Components: Codable {
         public var schemas: [String: Schema]
+        public var securitySchemes: [String: SecurityScheme]?
+    }
+
+    /// Top-level server description.
+    public struct Server: Codable {
+        public var url: String
+        public var description: String?
+    }
+
+    /// Supported authentication scheme.
+    public struct SecurityScheme: Codable {
+        public var type: String
+        public var scheme: String?
+        public var name: String?
+        public var location: String?
+
+        enum CodingKeys: String, CodingKey {
+            case type, scheme, name
+            case location = "in"
+        }
+    }
+
+    /// Security requirements applied to an operation.
+    public struct SecurityRequirement: Codable {
+        public var schemes: [String: [String]]
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            schemes = try container.decode([String: [String]].self)
+        }
+
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encode(schemes)
+        }
     }
 
     /// Basic JSON Schema representation used throughout the spec.
@@ -74,6 +109,7 @@ public struct OpenAPISpec: Codable {
         public var parameters: [Parameter]?
         public var requestBody: RequestBody?
         public var responses: [String: Response]?
+        public var security: [SecurityRequirement]?
     }
 
     /// Path item grouping multiple HTTP methods.
@@ -85,6 +121,7 @@ public struct OpenAPISpec: Codable {
     }
 
     public let title: String
+    public var servers: [Server]?
     public var components: Components?
     public var paths: [String: PathItem]?
 }

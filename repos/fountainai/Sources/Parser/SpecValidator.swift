@@ -96,6 +96,16 @@ public enum SpecValidator {
                             }
                         }
                     }
+
+                    if let security = op.security {
+                        for requirement in security {
+                            for name in requirement.schemes.keys {
+                                if spec.components?.securitySchemes?[name] == nil {
+                                    throw ValidationError("unknown security scheme \(name)")
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
