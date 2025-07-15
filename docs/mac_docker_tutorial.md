@@ -52,6 +52,8 @@ docker run --rm -it -v $(pwd):/srv/deploy \
   python3 /srv/deploy/deploy/dispatcher_v2.py
 ```
 
+Set `DISPATCHER_RUN_E2E=1` to run `docker compose` integration tests. Docker and `docker compose` must be installed inside the container or the host's Docker socket mounted. See [environment_variables.md](environment_variables.md) for the variable description.
+
 `GITHUB_TOKEN` must be a personal access token with access to your private
 repositories. See [managing_environment_variables.md](managing_environment_variables.md)
 for instructions and links to GitHub's token documentation.
