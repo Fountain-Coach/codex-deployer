@@ -10,6 +10,7 @@ Spec path: `FountainAi/openAPI/v0/planner.yml` (version 0.1.0).
 - Generated server kernel at `Generated/Server/planner`
 - Router and handlers integrate with `LLMGatewayClient` and `TypesenseClient` to reason over objectives and invoke registered functions
 - Integration tests cover the `planner_list_corpora` endpoint
+- Prometheus metrics exposed at `/metrics`
 
 ## Next Steps toward Production
 - Upgrade the API to stable v1 once semantics are finalized

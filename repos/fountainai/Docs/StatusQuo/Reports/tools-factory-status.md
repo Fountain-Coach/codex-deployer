@@ -15,6 +15,7 @@ Spec path: `FountainAi/openAPI/v1/tools-factory.yml` (version 1.0.0).
 - Integration tests cover registration and listing flows
 - Authentication middleware checks the `TOOLS_FACTORY_AUTH_TOKEN` environment variable
 - Production Typesense collections can be bootstrapped using `typesense-codex/scripts/bootstrap_typesense.py`
+- Prometheus metrics available at `/metrics`
 
 ### Example Usage
 

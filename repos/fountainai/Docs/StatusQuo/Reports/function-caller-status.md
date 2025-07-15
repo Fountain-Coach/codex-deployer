@@ -16,6 +16,7 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Integration tests verify the `list_functions` endpoint and invocation flows
 - Tools Factory integration allows dynamic registration via `/tools/register`
 - Dispatcher reports errors with structured JSON responses
+- Prometheus metrics available at `/metrics`
 
 ## Next Steps toward Production
 - Validate invocation parameters against the stored JSON schemas
