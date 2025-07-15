@@ -20,6 +20,7 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Invocation parameters validated against stored JSON Schemas
 - Structured logging records each request as JSON
 - Per-endpoint metrics now include request durations
+- Invocation success and failure counts tracked via Prometheus
 - Function definitions cached to disk via `FUNCTIONS_CACHE_PATH`
 - Docker Compose example at `Docs/Compose/function-caller-tools.yml`
 
@@ -30,5 +31,5 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Harden cache invalidation and error handling
 - Expand integration tests for the Compose workflow
 - Persist registered functions using Typesense so definitions survive restarts
-- Record metrics for invocation success and failures
 - Document Kubernetes deployment examples
+- See [next-steps.md](next-steps.md) for cross-service priorities

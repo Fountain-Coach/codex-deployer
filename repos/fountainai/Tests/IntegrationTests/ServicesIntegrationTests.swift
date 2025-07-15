@@ -321,6 +321,39 @@ final class ServicesIntegrationTests: XCTestCase {
         // expecting 404 response
     }
 
+    func testFunctionCallerInvocationMetrics() async throws {
+        let echoKernel = IntegrationRuntime.HTTPKernel { _ in
+            IntegrationRuntime.HTTPResponse(status: 200, body: Data())
+        }
+        let echoServer = NIOHTTPServer(kernel: echoKernel)
+        let echoPort = try await echoServer.start(port: 0)
+        addTeardownBlock { try? await echoServer.stop() }
+
+        let tfKernel = ToolsFactoryService.HTTPKernel()
+        let fn = ServiceShared.Function(description: "echo", functionId: "echo", httpMethod: "POST", httpPath: "http://127.0.0.1:\(echoPort)", name: "echo")
+        let body = try JSONEncoder().encode([fn])
+        _ = try await tfKernel.handle(.init(method: "POST", path: "/tools/register", headers: ["Content-Type": "application/json"], body: body))
+
+        let fcKernel = FunctionCallerService.HTTPKernel()
+        let kernel = IntegrationRuntime.HTTPKernel { req in
+            let sreq = FunctionCallerService.HTTPRequest(method: req.method, path: req.path, headers: req.headers, body: req.body)
+            let sresp = try await fcKernel.handle(sreq)
+            return IntegrationRuntime.HTTPResponse(status: sresp.status, body: sresp.body)
+        }
+        let (server, port) = try await startServer(with: kernel)
+        addTeardownBlock { try? await server.stop() }
+
+        let client = AsyncHTTPClientDriver()
+        addTeardownBlock { try? await client.shutdown() }
+        _ = try await client.execute(method: .POST, url: "http://127.0.0.1:\(port)/functions/echo/invoke", headers: HTTPHeaders(), body: nil)
+        _ = try await client.execute(method: .POST, url: "http://127.0.0.1:\(port)/functions/missing/invoke", headers: HTTPHeaders(), body: nil)
+
+        let (metricsBuffer, _) = try await client.execute(method: .GET, url: "http://127.0.0.1:\(port)/metrics", headers: HTTPHeaders(), body: nil)
+        let metrics = String(buffer: metricsBuffer) ?? ""
+        XCTAssertTrue(metrics.contains("invocation_success_total"))
+        XCTAssertTrue(metrics.contains("invocation_failure_total"))
+    }
+
     func testLLMGatewayMetrics() async throws {
         let serviceKernel = LLMGatewayService.HTTPKernel()
         let kernel = IntegrationRuntime.HTTPKernel { req in
