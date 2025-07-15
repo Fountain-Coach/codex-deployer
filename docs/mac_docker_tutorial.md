@@ -46,13 +46,15 @@ export GITHUB_TOKEN=yourtoken
 export OPENAI_API_KEY=yourapikey  # optional
 export GIT_USER_NAME="Contexter"
 export GIT_USER_EMAIL=mail@benedikt-eickhoff.de
-docker run --rm -it -v $(pwd):/srv/deploy \
+docker run --rm -it \
+  -v $(pwd):/srv/deploy \
+  -v /var/run/docker.sock:/var/run/docker.sock \
   -e GITHUB_TOKEN -e OPENAI_API_KEY -e GIT_USER_NAME -e GIT_USER_EMAIL \
   codex-deployer-local \
   python3 /srv/deploy/deploy/dispatcher_v2.py
 ```
 
-Set `DISPATCHER_RUN_E2E=1` to run `docker compose` integration tests. Docker and `docker compose` must be installed inside the container or the host's Docker socket mounted. See [environment_variables.md](environment_variables.md) for the variable description.
+Set `DISPATCHER_RUN_E2E=1` to run `docker compose` integration tests. The image already includes the Docker CLI; mount `/var/run/docker.sock` so the container can talk to the host daemon. See [environment_variables.md](environment_variables.md) for the variable description.
 
 `GITHUB_TOKEN` must be a personal access token with access to your private
 repositories. See [managing_environment_variables.md](managing_environment_variables.md)
