@@ -211,6 +211,35 @@ final class ServicesIntegrationTests: XCTestCase {
         XCTAssertEqual(ids, ["p1"])
     }
 
+    func testPlannerReason() async throws {
+        let kernel = PlannerService.HTTPKernel()
+        let objective = "demo"
+        let body = try JSONEncoder().encode(PlannerService.UserObjectiveRequest(objective: objective))
+        let resp = try await kernel.handle(.init(method: "POST", path: "/planner/reason", body: body))
+        let out = try JSONDecoder().decode(PlannerService.PlanResponse.self, from: resp.body)
+        XCTAssertEqual(out.objective, objective)
+        XCTAssertTrue(out.steps.contains(objective))
+    }
+
+    func testPlannerExecute() async throws {
+        let echoKernel = IntegrationRuntime.HTTPKernel { _ in
+            IntegrationRuntime.HTTPResponse(status: 200, body: Data("done".utf8))
+        }
+        let echoServer = NIOHTTPServer(kernel: echoKernel)
+        let echoPort = try await echoServer.start(port: 0)
+        addTeardownBlock { try? await echoServer.stop() }
+
+        let fn = ServiceShared.Function(description: "echo", functionId: "echo", httpMethod: "POST", httpPath: "http://127.0.0.1:\(echoPort)", name: "echo")
+        await TypesenseClient.shared.addFunction(fn)
+
+        let kernel = PlannerService.HTTPKernel()
+        let plan = PlannerService.PlanExecutionRequest(objective: "demo", steps: "echo")
+        let body = try JSONEncoder().encode(plan)
+        let resp = try await kernel.handle(.init(method: "POST", path: "/planner/execute", body: body))
+        let out = try JSONDecoder().decode(PlannerService.ExecutionResult.self, from: resp.body)
+        XCTAssertEqual(out.results, "done")
+    }
+
     func testToolsFactoryListTools() async throws {
         let serviceKernel = ToolsFactoryService.HTTPKernel()
         let kernel = IntegrationRuntime.HTTPKernel { req in
