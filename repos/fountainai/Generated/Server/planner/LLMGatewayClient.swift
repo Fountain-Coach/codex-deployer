@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Client for the LLM Gateway. When `LLM_GATEWAY_URL` is unset it returns
 /// a stubbed response for offline tests. See `docs/environment_variables.md`.
