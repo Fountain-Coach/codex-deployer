@@ -17,7 +17,7 @@ on these variables.
 3. Start the stack:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 Kong's admin API will be available on `http://localhost:8001` and the proxy

@@ -9,7 +9,7 @@ Each generated server already contains a `Dockerfile`. The root `docker-compose.
 Run the following command at the repository root:
 
 ```bash
-docker-compose build
+docker compose build
 ```
 
 This compiles each service into a minimal Swift container.
@@ -21,7 +21,7 @@ Before running the containers configure the environment variables described in [
 To start all containers:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 The services start minimal Swift HTTP servers that handle simple JSON requests. Persistence uses an in-memory `TypesenseClient`.
@@ -48,7 +48,7 @@ curl http://localhost:8080/health
 Press `Ctrl+C` to stop the running services, then remove containers with:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 This workflow lets you run the microservices locally. Future updates will add full networking and durable persistence.

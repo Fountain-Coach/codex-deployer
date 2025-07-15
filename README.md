@@ -12,7 +12,7 @@ A daemonized, Git-native deployment loop designed for FountainAI infrastructure 
 
 This repo defines a fully autonomous deployment system where Codex:
 - Pulls repositories directly via `git`
-- Triggers service builds (e.g. `swift build`, `docker-compose up`)
+- Triggers service builds (e.g. `swift build`, `docker compose up`)
 - Parses compiler and runtime logs
 - Writes structured feedback into a semantic inbox
 - Iterates on patches based on the build outcome
