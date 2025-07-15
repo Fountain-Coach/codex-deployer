@@ -25,7 +25,7 @@ Create a small Docker image that includes Python, Git and Swift:
 
 ```bash
 cat > Dockerfile <<'DOCKER'
-FROM swift:5.8
+FROM swift:6.1.2-jammy
 RUN apt-get update && apt-get install -y git python3 python3-pip \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /srv/deploy

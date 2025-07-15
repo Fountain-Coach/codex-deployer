@@ -3,7 +3,10 @@
 set -e
 
 echo "[BOOTSTRAP] Updating and installing system dependencies..."
-apt update && apt install -y git python3 python3-pip swift curl unzip
+apt update && apt install -y git python3 python3-pip curl unzip
+# Install Swift using swiftly to ensure a modern toolchain
+curl -L https://github.com/swift-server/swiftly/releases/download/1.0.1/swiftly-linux-amd64.tar.gz | tar -xz -C /usr/local/bin
+/usr/local/bin/swiftly install 6.1.2
 
 echo "[BOOTSTRAP] Cloning codex-deployer repo into /srv/deploy..."
 mkdir -p /srv && cd /srv
