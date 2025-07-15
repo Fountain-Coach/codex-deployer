@@ -21,6 +21,7 @@ public struct HTTPKernel {
         let duration = Date().timeIntervalSince(start)
         await PrometheusAdapter.shared.record(service: "function-caller", path: request.path)
         await PrometheusAdapter.shared.recordDuration(service: "function-caller", path: request.path, duration: duration)
+        await PrometheusAdapter.shared.recordResult(service: "function-caller", path: request.path, success: resp.status < 400)
         Logger.logRequest(method: request.method, path: request.path, status: resp.status, duration: duration)
         return resp
     }
