@@ -2,7 +2,7 @@ import Foundation
 
 public struct NoBody: Codable {}
 
-public struct HTTPRequest {
+public struct HTTPRequest: @unchecked Sendable {
     public let method: String
     public let path: String
     public var headers: [String: String]

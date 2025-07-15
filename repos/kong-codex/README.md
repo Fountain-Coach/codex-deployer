@@ -11,7 +11,7 @@ on these variables.
 
 ## Quick start
 
-1. Set `TYPESENSE_API_KEY` to your desired admin key.
+1. Create a `.env` file with `TYPESENSE_API_KEY` set to your desired admin key.
 2. (Optional) set `TYPESENSE_URL`; the compose file defaults to
    `http://localhost:8108`.
 3. Start the stack:

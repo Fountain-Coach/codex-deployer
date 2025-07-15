@@ -52,7 +52,7 @@ final class ServerTests: XCTestCase {
 
     func testHTTPServerViaURLSession() async throws {
         let kernel = HTTPKernel()
-        HTTPServer.register(kernel: kernel)
+        await HTTPServer.register(kernel: kernel)
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [HTTPServer.self]
         let session = URLSession(configuration: config)

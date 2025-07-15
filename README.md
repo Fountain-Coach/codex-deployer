@@ -132,6 +132,10 @@ The repository's `.gitignore` excludes `dispatcher.env` and other `*.env` files
 to keep secrets out of version control. When building images, `.dockerignore`
 likewise prevents these files from entering the Docker context.
 
+### Running on macOS
+
+Docker Desktop requires explicit volume sharing. Open **Settings → Resources → File Sharing** and add `/srv/deploy/repos/kong-codex/`. Restart Docker Desktop before running `docker compose` or the Kong configuration mount will fail.
+
 ---
 
 ## 🧠 How Codex Uses This
