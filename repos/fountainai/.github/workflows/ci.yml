@@ -49,3 +49,11 @@ jobs:
         run: ./run-tests.sh
         env:
           SWIFTPM_NUM_JOBS: 2
+
+  compose-integration:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Docker Compose workflow
+        run: ./run-compose-e2e.sh

@@ -11,6 +11,8 @@ services:
     environment:
       - TYPESENSE_URL=http://typesense:8108
       - TYPESENSE_API_KEY=xyz
+    ports:
+      - "8087:8080"
     depends_on:
       - typesense
   function-caller:
@@ -19,5 +21,7 @@ services:
       - TYPESENSE_URL=http://typesense:8108
       - TYPESENSE_API_KEY=xyz
       - FUNCTIONS_CACHE_PATH=functions-cache.json
+    ports:
+      - "8088:8080"
     depends_on:
       - typesense
