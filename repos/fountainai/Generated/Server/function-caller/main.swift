@@ -6,7 +6,9 @@ import Glibc
 import Darwin
 #endif
 
-final class SimpleHTTPRuntime {
+import FunctionCallerService
+
+final class SimpleHTTPRuntime: @unchecked Sendable {
     enum RuntimeError: Error { case socket, bind, listen }
     let kernel: HTTPKernel
     let port: Int32
