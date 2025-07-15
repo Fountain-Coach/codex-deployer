@@ -18,8 +18,12 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Dispatcher reports errors with structured JSON responses
 - Prometheus metrics available at `/metrics`
 - Invocation parameters validated against stored JSON Schemas
+- Structured logging records each request as JSON
+- Per-endpoint metrics now include request durations
+- Function definitions cached to disk via `FUNCTIONS_CACHE_PATH`
+- Docker Compose example at `Docs/Compose/function-caller-tools.yml`
 
 ## Next Steps toward Production
-- Add structured logging and per-endpoint metrics
-- Provide a Docker Compose example wiring the Tools Factory and Function Caller
-- Implement persistent caching of function definitions
+- Harden cache invalidation and error handling
+- Document log aggregation setup
+- Expand integration tests for the Compose workflow

@@ -23,6 +23,7 @@ This document lists the environment variables used by the Codex deployer.
 | `BOOTSTRAP_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Bootstrap service. |
 | `BASELINE_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Baseline Awareness service. |
 | `FUNCTION_CALLER_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Function Caller service. |
+| `FUNCTIONS_CACHE_PATH` | `functions-cache.json` | Path to persist cached function definitions for the Function Caller and Tools Factory. |
 | `TOOLS_FACTORY_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Tools Factory service. |
 | `PLANNER_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Planner service. |
 
