@@ -1,0 +1,9 @@
+[2025-07-15T13:47:52.529805] DISPATCHER_INTERVAL not set; using default 60
+[2025-07-15T13:47:52.530234] DISPATCHER_USE_PRS not set; pull request workflow enabled
+[2025-07-15T13:47:52.530513] DISPATCHER_BUILD_DOCKER not set; docker builds disabled
+[2025-07-15T13:47:52.546463] GIT_USER_NAME not set; defaulting to Contexter
+[2025-07-15T13:47:52.546805] GIT_USER_EMAIL not set; defaulting to mail@benedikt-eickhoff.de
+[2025-07-15T13:47:52.546973] Dispatcher started successfully 🟢
+[2025-07-15T13:47:52.547291] === New Cycle ===
+
+[2025-07-15T13:47:52.548204] Running integration tests for fountainai...

@@ -1,0 +1,306 @@
+[2025-07-15T14:46:37.320670] DISPATCHER_INTERVAL not set; using default 60
+[2025-07-15T14:46:37.320896] DISPATCHER_USE_PRS not set; pull request workflow enabled
+[2025-07-15T14:46:37.321155] DISPATCHER_BUILD_DOCKER not set; docker builds disabled
+[2025-07-15T14:46:37.332114] Dispatcher started successfully 🟢
+[2025-07-15T14:46:37.332479] === New Cycle ===
+time="2025-07-15T14:46:37Z" level=warning msg="/srv/deploy/repos/fountainai/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [planner internal] load build definition from Dockerfile
+#1 transferring dockerfile: 319B 0.0s done
+#1 DONE 0.0s
+
+#2 [function-caller internal] load build definition from Dockerfile
+#2 transferring dockerfile: 327B 0.0s done
+#2 DONE 0.1s
+
+#3 [llm-gateway internal] load build definition from Dockerfile
+#3 transferring dockerfile: 323B done
+#3 DONE 0.1s
+
+#4 [baseline-awareness internal] load build definition from Dockerfile
+#4 transferring dockerfile: 330B done
+#4 DONE 0.1s
+
+#5 [persist internal] load build definition from Dockerfile
+#5 transferring dockerfile: 319B done
+#5 DONE 0.1s
+
+#6 [bootstrap internal] load build definition from Dockerfile
+#6 transferring dockerfile: 321B done
+#6 DONE 0.1s
+
+#7 [tools-factory internal] load build definition from Dockerfile
+#7 transferring dockerfile: 325B 0.0s done
+#7 DONE 0.1s
+
+#8 [tools-factory internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 ...
+
+#9 [function-caller internal] load metadata for docker.io/library/ubuntu:22.04
+#9 DONE 0.5s
+
+#8 [tools-factory internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 DONE 1.0s
+
+#10 [function-caller internal] load .dockerignore
+#10 transferring context: 2B done
+#10 DONE 0.0s
+
+#11 [llm-gateway internal] load .dockerignore
+#11 transferring context: 2B done
+#11 DONE 0.0s
+
+#12 [persist internal] load .dockerignore
+#12 transferring context: 2B done
+#12 DONE 0.0s
+
+#13 [baseline-awareness build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:74fce669eb8620bce0607b9942c8f3b1a1933e7702b4784d7c2cc282715178f8
+#13 DONE 0.0s
+
+#14 [bootstrap internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.0s
+
+#15 [planner internal] load .dockerignore
+#15 transferring context: 2B done
+#15 DONE 0.0s
+
+#16 [tools-factory internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.0s
+
+#17 [baseline-awareness internal] load .dockerignore
+#17 transferring context: 2B done
+#17 DONE 0.0s
+
+#18 [baseline-awareness stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:3c61d3759c2639d4b836d32a2d3c83fa0214e36f195a3421018dbaaf79cbe37f
+#18 CACHED
+
+#19 [function-caller internal] load build context
+#19 transferring context: 11.86kB 0.0s done
+#19 DONE 0.0s
+
+#20 [tools-factory internal] load build context
+#20 transferring context: 11.96kB 0.0s done
+#20 DONE 0.0s
+
+#21 [persist internal] load build context
+#21 transferring context: 10.73kB done
+#21 DONE 0.0s
+
+#22 [llm-gateway internal] load build context
+#22 transferring context: 7.60kB 0.0s done
+#22 DONE 0.0s
+
+#23 [function-caller build 3/4] COPY ./ .
+#23 CACHED
+
+#24 [bootstrap internal] load build context
+#24 transferring context: 12.45kB done
+#24 DONE 0.0s
+
+#25 [baseline-awareness internal] load build context
+#25 transferring context: 20.98kB done
+#25 DONE 0.0s
+
+#26 [planner internal] load build context
+#26 transferring context: 14.41kB done
+#26 DONE 0.0s
+
+#27 [tools-factory build 3/4] COPY ./ .
+#27 CACHED
+
+#28 [persist build 2/4] WORKDIR /src
+#28 CACHED
+
+#29 [llm-gateway build 3/4] COPY ./ .
+#29 CACHED
+
+#30 [persist build 3/4] COPY ./ .
+#30 CACHED
+
+#28 [bootstrap build 2/4] WORKDIR /src
+#28 CACHED
+
+#31 [planner build 3/4] COPY ./ .
+#31 CACHED
+
+#32 [baseline-awareness build 3/4] COPY ./ .
+#32 CACHED
+
+#33 [bootstrap build 3/4] COPY ./ .
+#33 CACHED
+
+#34 [bootstrap build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#34 4.259 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#34 4.259  1 | import Foundation
+#34 4.259  2 | import ServiceShared
+#34 4.259    |        `- error: no such module 'ServiceShared'
+#34 4.259  3 | 
+#34 4.259  4 | /// Bootstrap service kernel. Requires a bearer token when
+#34 ...
+
+#35 [baseline-awareness build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#35 4.191 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#35 4.191  1 | import Foundation
+#35 4.191  2 | import ServiceShared
+#35 4.191    |        `- error: no such module 'ServiceShared'
+#35 4.191  3 | 
+#35 4.191  4 | /// Baseline Awareness service kernel. Requires a bearer token when
+#35 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#36 [persist build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#36 4.161 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#36 4.161  1 | import Foundation
+#36 4.161  2 | import ServiceShared
+#36 4.161    |        `- error: no such module 'ServiceShared'
+#36 4.161  3 | 
+#36 4.161  4 | public struct HTTPKernel {
+#36 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#37 [tools-factory build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#37 4.199 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#37 4.199  1 | import Foundation
+#37 4.199  2 | import ServiceShared
+#37 4.199    |        `- error: no such module 'ServiceShared'
+#37 4.199  3 | 
+#37 4.199  4 | public struct HTTPKernel {
+#37 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#38 [llm-gateway build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#38 4.181 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#38 4.181  1 | import Foundation
+#38 4.181  2 | import ServiceShared
+#38 4.181    |        `- error: no such module 'ServiceShared'
+#38 4.181  3 | 
+#38 4.181  4 | public struct HTTPKernel {
+#38 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#39 [function-caller build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#39 4.236 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#39 4.236  1 | import Foundation
+#39 4.236  2 | import ServiceShared
+#39 4.236    |        `- error: no such module 'ServiceShared'
+#39 4.236  3 | 
+#39 4.236  4 | /// Function Caller service kernel. Requires a bearer token when
+#39 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#40 [planner build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#40 4.321 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#40 4.321  1 | import Foundation
+#40 4.321  2 | import ServiceShared
+#40 4.321    |        `- error: no such module 'ServiceShared'
+#40 4.321  3 | 
+#40 4.321  4 | /// Planner service kernel. Requires a bearer token when
+#40 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#34 [bootstrap build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#34 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+------
+ > [function-caller build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+4.236 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+4.236  1 | import Foundation
+4.236  2 | import ServiceShared
+4.236    |        `- error: no such module 'ServiceShared'
+4.236  3 | 
+4.236  4 | /// Function Caller service kernel. Requires a bearer token when
+------
+------
+ > [llm-gateway build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+4.181 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+4.181  1 | import Foundation
+4.181  2 | import ServiceShared
+4.181    |        `- error: no such module 'ServiceShared'
+4.181  3 | 
+4.181  4 | public struct HTTPKernel {
+------
+------
+ > [tools-factory build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+4.199 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+4.199  1 | import Foundation
+4.199  2 | import ServiceShared
+4.199    |        `- error: no such module 'ServiceShared'
+4.199  3 | 
+4.199  4 | public struct HTTPKernel {
+------
+------
+ > [persist build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+4.161 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+4.161  1 | import Foundation
+4.161  2 | import ServiceShared
+4.161    |        `- error: no such module 'ServiceShared'
+4.161  3 | 
+4.161  4 | public struct HTTPKernel {
+------
+------
+ > [baseline-awareness build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+4.191 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+4.191  1 | import Foundation
+4.191  2 | import ServiceShared
+4.191    |        `- error: no such module 'ServiceShared'
+4.191  3 | 
+4.191  4 | /// Baseline Awareness service kernel. Requires a bearer token when
+------
+------
+ > [planner build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+4.321 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+4.321  1 | import Foundation
+4.321  2 | import ServiceShared
+4.321    |        `- error: no such module 'ServiceShared'
+4.321  3 | 
+4.321  4 | /// Planner service kernel. Requires a bearer token when
+------
+------
+ > [bootstrap build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+4.259 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+4.259  1 | import Foundation
+4.259  2 | import ServiceShared
+4.259    |        `- error: no such module 'ServiceShared'
+4.259  3 | 
+4.259  4 | /// Bootstrap service kernel. Requires a bearer token when
+------
+failed to solve: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+time="2025-07-15T14:46:43Z" level=warning msg="/srv/deploy/repos/fountainai/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2025-07-15T14:46:43Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T14:46:43Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T14:46:43Z" level=warning msg="/srv/deploy/repos/kong-codex/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Network kong-codex_default  Creating
+ Network kong-codex_default  Created
+ Container kong-codex-typesense-1  Creating
+ Container kong-codex-kong-1  Creating
+ Container kong-codex-typesense-1  Created
+ Container kong-codex-kong-1  Created
+Attaching to kong-1, typesense-1
+Gracefully stopping... (press Ctrl+C again to force)
+Error response from daemon: mounts denied: 
+The path /srv/deploy/repos/kong-codex/kong.conf is not shared from the host and is not known to Docker.
+You can configure shared paths from Docker -> Preferences... -> Resources -> File Sharing.
+See https://docs.docker.com/desktop/settings/mac/#file-sharing for more info.
+time="2025-07-15T14:46:44Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T14:46:44Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T14:46:44Z" level=warning msg="/srv/deploy/repos/kong-codex/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Container kong-codex-typesense-1  Stopping
+ Container kong-codex-kong-1  Stopping
+ Container kong-codex-kong-1  Stopped
+ Container kong-codex-kong-1  Removing
+ Container kong-codex-kong-1  Removed
+ Container kong-codex-typesense-1  Stopped
+ Container kong-codex-typesense-1  Removing
+ Container kong-codex-typesense-1  Removed
+ Network kong-codex_default  Removing
+ Network kong-codex_default  Removed
+
+[2025-07-15T14:46:37.333529] Running integration tests for fountainai...
+[2025-07-15T14:46:43.807798] Integration tests for fountainai failed with exit code 1
+
+[2025-07-15T14:46:43.808558] Running integration tests for kong-codex...
+[2025-07-15T14:46:44.706144] Integration tests for kong-codex failed with exit code 1
+error: 'fountainai': package 'fountainai' is using Swift tools version 6.1.0 but the installed version is 5.8.1
+
+[2025-07-15T14:46:44.707317] Starting swift build...
+[2025-07-15T14:46:45.153269] swift build failed with exit code 1
+[2025-07-15T14:46:45.232639] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-15T14:46:47.459403] Opened PR #86 for Fountain-Coach/codex-deployer
