@@ -1510,3 +1510,4 @@ error: emit-module command failed with exit code 1 (use -v to see invocation)
 
 [2025-07-15T19:02:24.347552] Starting swift build...
 [2025-07-15T19:02:37.082474] swift build failed with exit code 1
+[2025-07-15T19:02:37.160945] [dispatcher] Updated git remote to use token-based authentication.
