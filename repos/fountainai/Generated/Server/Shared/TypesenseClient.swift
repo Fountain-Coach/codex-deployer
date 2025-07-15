@@ -17,6 +17,7 @@ public actor TypesenseClient {
 
     private let baseURL: URL?
     private let apiKey: String?
+    private let functionsCacheURL: URL?
 
     private var corpora: Set<String> = []
     private var functions: [String: Function] = [:]
@@ -26,7 +27,27 @@ public actor TypesenseClient {
     private var reflections: [String: [String: Reflection]] = [:]
     private var roles: [String: [String: Role]] = [:]
 
+    private func saveCache() {
+        guard let url = functionsCacheURL else { return }
+        if let data = try? JSONEncoder().encode(functions) {
+            try? data.write(to: url)
+        }
+    }
+
     private init() {
+        if let path = ProcessInfo.processInfo.environment["FUNCTIONS_CACHE_PATH"] {
+            self.functionsCacheURL = URL(fileURLWithPath: path)
+            if let data = try? Data(contentsOf: self.functionsCacheURL!),
+               let cached = try? JSONDecoder().decode([String: Function].self, from: data) {
+                self.functions = cached
+            }
+        } else {
+            self.functionsCacheURL = URL(fileURLWithPath: "functions-cache.json")
+            if let data = try? Data(contentsOf: self.functionsCacheURL!),
+               let cached = try? JSONDecoder().decode([String: Function].self, from: data) {
+                self.functions = cached
+            }
+        }
         if let url = ProcessInfo.processInfo.environment["TYPESENSE_URL"] {
             self.baseURL = URL(string: url)
             self.apiKey = ProcessInfo.processInfo.environment["TYPESENSE_API_KEY"]
@@ -77,8 +98,11 @@ public actor TypesenseClient {
         if let _ = baseURL {
             let body = try? JSONEncoder().encode(fn)
             _ = try? await request(path: "functions", method: "POST", body: body)
+            functions[fn.functionId] = fn
+            saveCache()
         } else {
             functions[fn.functionId] = fn
+            saveCache()
         }
     }
 
@@ -86,6 +110,8 @@ public actor TypesenseClient {
         if let _ = baseURL {
             if let data = try? await request(path: "functions", method: "GET", body: nil),
                let resp = try? JSONDecoder().decode([Function].self, from: data) {
+                for fn in resp { functions[fn.functionId] = fn }
+                saveCache()
                 return resp
             }
             return []
@@ -97,6 +123,8 @@ public actor TypesenseClient {
         if let _ = baseURL {
             if let data = try? await request(path: "functions/\(id)", method: "GET", body: nil),
                let fn = try? JSONDecoder().decode(Function.self, from: data) {
+                functions[id] = fn
+                saveCache()
                 return fn
             }
             return nil

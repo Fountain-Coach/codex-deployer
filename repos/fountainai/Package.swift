@@ -75,7 +75,8 @@ let package = Package(
                 "function-caller/Models.swift",
                 "function-caller/Dispatcher.swift",
                 "function-caller/HTTPRequest.swift",
-                "function-caller/HTTPResponse.swift"
+                "function-caller/HTTPResponse.swift",
+                "function-caller/Logger.swift"
             ]
         ),
         .target(name: "FunctionCallerClient", path: "Generated/Client/function-caller"),
