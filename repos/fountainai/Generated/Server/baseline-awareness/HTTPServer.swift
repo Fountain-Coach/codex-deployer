@@ -2,18 +2,16 @@ import Foundation
 import FoundationNetworking
 import BaselineAwarenessService
 
-public class HTTPServer: URLProtocol, @unchecked Sendable {
-    /// Shared kernel protected by an actor for concurrency safety.
-    private actor KernelBox {
-        var kernel: HTTPKernel?
-        func set(_ kernel: HTTPKernel) { self.kernel = kernel }
-        func get() -> HTTPKernel? { kernel }
-    }
+/// Simple URLProtocol based HTTP server used for integration tests.
+@MainActor
+public class HTTPServer: URLProtocol {
+    /// Shared kernel used to handle HTTP requests.
+    static var kernel: HTTPKernel?
 
-    private static let kernelBox = KernelBox()
-
-    public static func register(kernel: HTTPKernel) async {
-        await kernelBox.set(kernel)
+    /// Register the kernel that will handle incoming requests.
+    public static func register(kernel: HTTPKernel) {
+        self.kernel = kernel
+        // Silence warning about unused return value.
         _ = URLProtocol.registerClass(HTTPServer.self)
     }
 
@@ -24,29 +22,20 @@ public class HTTPServer: URLProtocol, @unchecked Sendable {
     public override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
 
     override public func startLoading() {
-        guard let url = request.url else {
+        guard let kernel = HTTPServer.kernel, let url = request.url else {
             client?.urlProtocol(self, didFailWithError: URLError(.badServerResponse))
             return
         }
-        let method = request.httpMethod ?? "GET"
-        let headers = request.allHTTPHeaderFields ?? [:]
-        let body = request.httpBody ?? Data()
-        Task { [self] in
-            guard let kernel = await HTTPServer.kernelBox.get() else {
-                await MainActor.run { client?.urlProtocol(self, didFailWithError: URLError(.badServerResponse)) }
-                return
-            }
-            let req = HTTPRequest(method: method, path: url.path, headers: headers, body: body)
+        let req = HTTPRequest(method: request.httpMethod ?? "GET", path: url.path, headers: request.allHTTPHeaderFields ?? [:], body: request.httpBody ?? Data())
+        Task {
             do {
                 let resp = try await kernel.handle(req)
                 let httpResponse = HTTPURLResponse(url: url, statusCode: resp.status, httpVersion: "HTTP/1.1", headerFields: resp.headers)!
-                await MainActor.run {
-                    client?.urlProtocol(self, didReceive: httpResponse, cacheStoragePolicy: .notAllowed)
-                    client?.urlProtocol(self, didLoad: resp.body)
-                    client?.urlProtocolDidFinishLoading(self)
-                }
+                client?.urlProtocol(self, didReceive: httpResponse, cacheStoragePolicy: .notAllowed)
+                client?.urlProtocol(self, didLoad: resp.body)
+                client?.urlProtocolDidFinishLoading(self)
             } catch {
-                await MainActor.run { client?.urlProtocol(self, didFailWithError: error) }
+                client?.urlProtocol(self, didFailWithError: error)
             }
         }
     }
