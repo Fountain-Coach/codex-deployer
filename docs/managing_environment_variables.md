@@ -21,6 +21,7 @@ DISPATCHER_INTERVAL=60            # Seconds between loops
 DISPATCHER_USE_PRS=1              # Set to 0 for direct pushes
 GIT_USER_NAME="Contexter"         # Name used for git commits
 GIT_USER_EMAIL=mail@benedikt-eickhoff.de  # Email used for git commits
+SWIFTPM_NUM_JOBS=2                # Concurrency for swift test (see environment_variables.md)
 ```
 
 Refer to [environment_variables.md](environment_variables.md) for all available variables and their meanings.
