@@ -22,6 +22,9 @@ Spec path: `FountainAi/openAPI/v1/baseline-awareness.yml` (version 1.0.0).
 - For a full list of configuration options see [environment_variables.md](../../../../../docs/environment_variables.md)
 - Prometheus metrics track request counts and durations
 - Analytics can also be streamed via SSE at `/corpus/history/stream`
+- Structured logging outputs JSON events for log aggregation
+- Docker Compose examples demonstrate running the service alongside Typesense
 ## Recent Updates
 - `/corpus/history/stream` streams analytics via Server-Sent Events
 - Prometheus metrics now record request durations for performance insights
+- Structured logging added for easier debugging and monitoring

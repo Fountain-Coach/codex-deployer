@@ -23,9 +23,11 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - Invocation success and failure counts tracked via Prometheus
 - Function definitions cached to disk via `FUNCTIONS_CACHE_PATH`
 - Docker Compose example at `Docs/Compose/function-caller-tools.yml`
+- Invocation logs can be streamed via SSE for debugging
 
 ## Recent Updates
 - Log aggregation setup documented in [log_aggregation.md](../../../../../docs/log_aggregation.md)
+- Added SSE support for real-time invocation logs
 
 ## Next Steps toward Production
 - Harden cache invalidation and error handling
