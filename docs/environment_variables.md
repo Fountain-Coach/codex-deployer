@@ -11,6 +11,8 @@ This document lists the environment variables used by the Codex deployer.
 | `OPENAI_API_BASE` | `https://api.openai.com/v1/chat/completions` | Optional override for the OpenAI API endpoint used by the LLM Gateway. |
 | `TYPESENSE_URL` | _(none)_ | Base URL for a running Typesense instance used by FountainAI services. |
 | `TYPESENSE_API_KEY` | _(none)_ | Optional API key for authenticating with Typesense. |
+| `LLM_GATEWAY_URL` | _(none)_ | Base URL for the LLM Gateway used by the Planner service. |
+| `FUNCTION_CALLER_URL` | _(none)_ | Base URL for the Function Caller service invoked by the Planner. |
 | `GIT_USER_NAME` | `Contexter` | Used to configure `git config --global user.name`. |
 | `GIT_USER_EMAIL` | `mail@benedikt-eickhoff.de` | Used to configure `git config --global user.email`. |
 | `DISPATCHER_BUILD_DOCKER` | `0` | Set to `1` to build Docker images for repos containing a `Dockerfile`. |

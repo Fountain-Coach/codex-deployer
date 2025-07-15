@@ -2,26 +2,12 @@ import Foundation
 import FoundationNetworking
 import ServiceShared
 
-/// Planner handlers integrating with the LLM Gateway stub.
-fileprivate struct FunctionDispatcher {
-    enum DispatchError: Error { case notFound }
-
-    func invoke(functionId: String, payload: Data) async throws -> Data {
-        guard let fn = await TypesenseClient.shared.functionDetails(id: functionId),
-              let url = URL(string: fn.httpPath) else {
-            throw DispatchError.notFound
-        }
-        var req = URLRequest(url: url)
-        req.httpMethod = fn.httpMethod
-        req.httpBody = payload
-        let (data, _) = try await URLSession.shared.data(for: req)
-        return data
-    }
-}
+/// Planner handlers orchestrating requests to the LLM Gateway and Function
+/// Caller services.
 
 public struct Handlers {
     let llm = LLMGatewayClient()
-    fileprivate let dispatcher = FunctionDispatcher()
+    let functions = FunctionCallerClient()
 
     public init() {}
 
@@ -59,7 +45,7 @@ public struct Handlers {
         guard let plan = try? JSONDecoder().decode(PlanExecutionRequest.self, from: request.body) else {
             return HTTPResponse(status: 400)
         }
-        let resultData = try await dispatcher.invoke(functionId: plan.steps, payload: Data(plan.objective.utf8))
+        let resultData = try await functions.invoke(functionId: plan.steps, payload: Data(plan.objective.utf8))
         let result = String(data: resultData, encoding: .utf8) ?? ""
         let data = try JSONEncoder().encode(ExecutionResult(results: result))
         return HTTPResponse(body: data)
