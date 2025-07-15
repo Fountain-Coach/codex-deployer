@@ -140,6 +140,16 @@ To build and run all services together:
 docker-compose build
 docker-compose up
 ```
+
+### Docker Compose Integration Tests
+Run the workflow defined in `Docs/Compose/function-caller-tools.yml` to test the
+Tools Factory and Function Caller services together. Ensure `TYPESENSE_URL` and
+`TYPESENSE_API_KEY` are configured as described in
+[environment_variables.md](../../docs/environment_variables.md).
+
+```bash
+./run-compose-e2e.sh
+```
 ## 🗓 Versioning & Changelog
 The service specifications follow Semantic Versioning. Major API revisions live in directories like `FountainAi/openAPI/v1`. All changes are recorded in [CHANGELOG.md](CHANGELOG.md); see [VERSIONING.md](VERSIONING.md) for policy details.
 ## 📚 Documentation Structure
