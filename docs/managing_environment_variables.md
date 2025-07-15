@@ -66,11 +66,13 @@ The `set -a` command marks all variables for export so that `python3` inherits t
 
 ## 5. Running inside Docker
 
-Mount your project directory and pass the variables to Docker:
+Mount your project directory and pass the variables to Docker. The image includes
+the Docker CLI, so mount `/var/run/docker.sock` to connect to the host daemon:
 
 ```bash
 export $(grep -v '^#' dispatcher.env)
 docker run --rm -it -v $(pwd):/srv/deploy \
+  -v /var/run/docker.sock:/var/run/docker.sock \
   -e GITHUB_TOKEN -e OPENAI_API_KEY \
   codex-deployer-local \
   python3 /srv/deploy/deploy/dispatcher_v2.py

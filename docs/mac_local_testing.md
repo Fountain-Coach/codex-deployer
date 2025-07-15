@@ -34,12 +34,13 @@ docker build -t codex-deployer-local .
 The Dockerfile installs Python, Git and Swift then copies the repository into `/srv/deploy` so the dispatcher runs just like on a server.
 
 ## 4. Run the dispatcher with tests
-
-Export the variables and start the container with `DISPATCHER_RUN_E2E=1` to run integration tests. `docker` and `docker compose` must be available inside the container, so either install Docker in your image or mount the host's socket. See [environment_variables.md](environment_variables.md) for details:
+Export the variables and start the container with `DISPATCHER_RUN_E2E=1` to run integration tests. The Docker CLI is installed in the image, but the container needs access to the host daemon. Mount `/var/run/docker.sock` so `docker compose` commands work. See [environment_variables.md](environment_variables.md) for details:
 
 ```bash
 export $(grep -v '^#' dispatcher.env | xargs)
-docker run --rm -it -v $(pwd):/srv/deploy \
+docker run --rm -it \
+  -v $(pwd):/srv/deploy \
+  -v /var/run/docker.sock:/var/run/docker.sock \
   -e GITHUB_TOKEN -e OPENAI_API_KEY \
   -e DISPATCHER_RUN_E2E=1 \
   -e GIT_USER_NAME -e GIT_USER_EMAIL \
