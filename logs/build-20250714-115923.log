@@ -1,0 +1,13 @@
+[2025-07-14T11:59:23.840825] DISPATCHER_INTERVAL not set; using default 60
+[2025-07-14T11:59:23.841053] DISPATCHER_USE_PRS not set; pull request workflow enabled
+[2025-07-14T11:59:23.841488] DISPATCHER_BUILD_DOCKER not set; docker builds disabled
+[2025-07-14T11:59:23.841924] DISPATCHER_RUN_E2E not set; integration tests disabled
+[2025-07-14T11:59:23.851810] GIT_USER_NAME not set; defaulting to Contexter
+[2025-07-14T11:59:23.852864] GIT_USER_EMAIL not set; defaulting to mail@benedikt-eickhoff.de
+[2025-07-14T11:59:23.853465] Dispatcher started successfully 🟢
+[2025-07-14T11:59:23.853807] === New Cycle ===
+error: 'fountainai': package 'fountainai' is using Swift tools version 6.1.0 but the installed version is 5.8.1
+
+[2025-07-14T11:59:23.854477] Starting swift build...
+[2025-07-14T11:59:24.476662] swift build failed with exit code 1
+[2025-07-14T11:59:26.829304] Opened PR #48 for Fountain-Coach/codex-deployer

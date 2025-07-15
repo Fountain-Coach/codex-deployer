@@ -1,0 +1,560 @@
+[2025-07-15T14:42:14.598436] DISPATCHER_INTERVAL not set; using default 60
+[2025-07-15T14:42:14.599146] DISPATCHER_USE_PRS not set; pull request workflow enabled
+[2025-07-15T14:42:14.600083] DISPATCHER_BUILD_DOCKER not set; docker builds disabled
+[2025-07-15T14:42:14.622070] Dispatcher started successfully 🟢
+[2025-07-15T14:42:14.622666] === New Cycle ===
+time="2025-07-15T14:42:15Z" level=warning msg="/srv/deploy/repos/fountainai/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [bootstrap internal] load build definition from Dockerfile
+#1 transferring dockerfile: 321B 0.0s done
+#1 DONE 0.1s
+
+#2 [persist internal] load build definition from Dockerfile
+#2 transferring dockerfile: 319B 0.0s done
+#2 DONE 0.1s
+
+#3 [baseline-awareness internal] load build definition from Dockerfile
+#3 transferring dockerfile: 330B 0.0s done
+#3 DONE 0.1s
+
+#4 [function-caller internal] load build definition from Dockerfile
+#4 transferring dockerfile: 327B 0.0s done
+#4 DONE 0.1s
+
+#5 [llm-gateway internal] load build definition from Dockerfile
+#5 transferring dockerfile: 323B 0.0s done
+#5 DONE 0.1s
+
+#6 [tools-factory internal] load build definition from Dockerfile
+#6 transferring dockerfile: 325B 0.0s done
+#6 DONE 0.1s
+
+#7 [planner internal] load build definition from Dockerfile
+#7 transferring dockerfile: 319B 0.0s done
+#7 DONE 0.1s
+
+#8 [planner internal] load metadata for docker.io/library/ubuntu:22.04
+#8 DONE 2.1s
+
+#9 [baseline-awareness internal] load metadata for docker.io/library/swift:6.1-jammy
+#9 DONE 2.2s
+
+#10 [persist internal] load .dockerignore
+#10 transferring context: 2B 0.0s done
+#10 DONE 0.1s
+
+#11 [function-caller internal] load .dockerignore
+#11 transferring context: 2B 0.0s done
+#11 DONE 0.1s
+
+#12 [planner internal] load .dockerignore
+#12 transferring context: 2B 0.0s done
+#12 DONE 0.1s
+
+#13 [tools-factory internal] load .dockerignore
+#13 transferring context: 2B done
+#13 DONE 0.1s
+
+#14 [llm-gateway internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.1s
+
+#15 [baseline-awareness internal] load .dockerignore
+#15 transferring context: 2B done
+#15 DONE 0.1s
+
+#16 [bootstrap internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.1s
+
+#17 [persist build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:74fce669eb8620bce0607b9942c8f3b1a1933e7702b4784d7c2cc282715178f8
+#17 resolve docker.io/library/swift:6.1-jammy@sha256:74fce669eb8620bce0607b9942c8f3b1a1933e7702b4784d7c2cc282715178f8 0.0s done
+#17 ...
+
+#18 [persist internal] load build context
+#18 transferring context: 10.73kB 0.0s done
+#18 DONE 0.1s
+
+#19 [function-caller internal] load build context
+#19 transferring context: 11.86kB 0.0s done
+#19 DONE 0.1s
+
+#20 [planner internal] load build context
+#20 transferring context: 14.41kB 0.0s done
+#20 DONE 0.1s
+
+#21 [tools-factory internal] load build context
+#21 transferring context: 11.96kB 0.0s done
+#21 DONE 0.1s
+
+#22 [bootstrap internal] load build context
+#22 transferring context: 12.45kB 0.0s done
+#22 DONE 0.1s
+
+#23 [baseline-awareness internal] load build context
+#23 transferring context: 20.98kB 0.0s done
+#23 DONE 0.1s
+
+#24 [llm-gateway internal] load build context
+#24 transferring context: 7.60kB 0.0s done
+#24 DONE 0.1s
+
+#17 [persist build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:74fce669eb8620bce0607b9942c8f3b1a1933e7702b4784d7c2cc282715178f8
+#17 sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf 0B / 27.36MB 0.1s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 0B / 171.67MB 0.1s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 0B / 890.70MB 0.1s
+#17 sha256:74fce669eb8620bce0607b9942c8f3b1a1933e7702b4784d7c2cc282715178f8 2.63kB / 2.63kB done
+#17 sha256:e44fbbf0a893e722d0b3fc657368c98c7a0d38ed6df187278ea7dd67c932acb6 1.73kB / 1.73kB done
+#17 sha256:c3d0770ce1d77b3eeeac692d37db36ef2d9b170ca56f17eb22fc3a662d6b9b9c 5.67kB / 5.67kB done
+#17 sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf 2.10MB / 27.36MB 0.6s
+#17 sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf 7.34MB / 27.36MB 0.8s
+#17 sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf 11.53MB / 27.36MB 1.0s
+#17 sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf 16.78MB / 27.36MB 1.2s
+#17 sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf 22.02MB / 27.36MB 1.4s
+#17 sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf 27.36MB / 27.36MB 1.6s
+#17 sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf 27.36MB / 27.36MB 1.6s done
+#17 sha256:973c4d938dd69d0a095379fead6704718895f769ccb140a97b3582b99d7a7ab1 0B / 173B 1.8s
+#17 extracting sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 11.53MB / 171.67MB 2.1s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 25.17MB / 171.67MB 2.6s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 38.80MB / 171.67MB 3.3s
+#17 sha256:973c4d938dd69d0a095379fead6704718895f769ccb140a97b3582b99d7a7ab1 173B / 173B 3.5s done
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 49.28MB / 171.67MB 3.7s
+#17 sha256:973c4d938dd69d0a095379fead6704718895f769ccb140a97b3582b99d7a7ab1 173B / 173B 3.5s done
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 58.72MB / 171.67MB 4.0s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 68.16MB / 171.67MB 4.3s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 46.14MB / 890.70MB 4.3s
+#17 extracting sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf 2.6s done
+#17 ...
+
+#25 [bootstrap stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:3c61d3759c2639d4b836d32a2d3c83fa0214e36f195a3421018dbaaf79cbe37f
+#25 resolve docker.io/library/ubuntu:22.04@sha256:3c61d3759c2639d4b836d32a2d3c83fa0214e36f195a3421018dbaaf79cbe37f 0.0s done
+#25 sha256:3c61d3759c2639d4b836d32a2d3c83fa0214e36f195a3421018dbaaf79cbe37f 6.69kB / 6.69kB done
+#25 sha256:ab34f0c9a1fbaa4c9211a7ae250cdda75d2f3351e015ffdf7bf4e50d9dc72744 424B / 424B done
+#25 sha256:0781dc6bbe44a53f76f5c3e20f0cd0975adfcd88e8b4987e7e8446ef1c948c66 2.31kB / 2.31kB done
+#25 sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf 27.36MB / 27.36MB 1.6s done
+#25 extracting sha256:e730d307d74e767a94e2a36b22cfa82c38738f86f671c4fc0e3c90dadb75afbf 2.6s done
+#25 DONE 4.6s
+
+#17 [persist build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:74fce669eb8620bce0607b9942c8f3b1a1933e7702b4784d7c2cc282715178f8
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 82.84MB / 171.67MB 4.9s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 94.37MB / 171.67MB 5.3s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 104.79MB / 171.67MB 5.7s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 114.29MB / 171.67MB 6.1s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 96.47MB / 890.70MB 6.1s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 124.78MB / 171.67MB 6.5s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 135.27MB / 171.67MB 7.1s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 145.08MB / 171.67MB 7.7s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 156.24MB / 171.67MB 8.3s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 142.61MB / 890.70MB 8.3s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 167.77MB / 171.67MB 9.0s
+#17 sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 171.67MB / 171.67MB 9.7s done
+#17 extracting sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 189.79MB / 890.70MB 10.1s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 234.88MB / 890.70MB 11.6s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 281.02MB / 890.70MB 13.0s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 329.25MB / 890.70MB 14.3s
+#17 extracting sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 5.1s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 375.47MB / 890.70MB 15.8s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 420.48MB / 890.70MB 17.2s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 466.62MB / 890.70MB 18.4s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 517.46MB / 890.70MB 20.0s
+#17 extracting sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 10.7s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 570.43MB / 890.70MB 22.1s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 619.71MB / 890.70MB 24.9s
+#17 extracting sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 16.4s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 668.99MB / 890.70MB 29.1s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 716.18MB / 890.70MB 30.9s
+#17 extracting sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 21.9s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 765.46MB / 890.70MB 32.4s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 811.38MB / 890.70MB 33.7s
+#17 extracting sha256:1d97552662ff9cb92d3cdfff4fccf1b6c165647fe832251099f0a4060ffd0a41 24.0s done
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 856.48MB / 890.70MB 37.9s
+#17 sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 890.70MB / 890.70MB 42.2s done
+#17 extracting sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348
+#17 extracting sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 5.2s
+#17 extracting sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 10.2s
+#17 extracting sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 15.2s
+#17 extracting sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 20.3s
+#17 extracting sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 25.6s
+#17 extracting sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 30.6s
+#17 extracting sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 35.6s
+#17 extracting sha256:e9813bd2d5b53ef011ab88a90437c4e9dd4dd37973574e26fbb983f9c9a32348 40.0s done
+#17 extracting sha256:973c4d938dd69d0a095379fead6704718895f769ccb140a97b3582b99d7a7ab1
+#17 extracting sha256:973c4d938dd69d0a095379fead6704718895f769ccb140a97b3582b99d7a7ab1 done
+#17 DONE 82.7s
+
+#26 [function-caller build 2/4] WORKDIR /src
+#26 DONE 0.5s
+
+#27 [persist build 3/4] COPY ./ .
+#27 DONE 0.1s
+
+#28 [tools-factory build 3/4] COPY ./ .
+#28 DONE 0.2s
+
+#29 [function-caller build 3/4] COPY ./ .
+#29 DONE 0.2s
+
+#30 [bootstrap build 3/4] COPY ./ .
+#30 DONE 0.2s
+
+#31 [planner build 3/4] COPY ./ .
+#31 DONE 0.2s
+
+#32 [llm-gateway build 3/4] COPY ./ .
+#32 DONE 0.2s
+
+#33 [baseline-awareness build 3/4] COPY ./ .
+#33 DONE 0.2s
+
+#34 [tools-factory build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#34 ...
+
+#35 [baseline-awareness build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#35 6.787 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#35 6.787  1 | import Foundation
+#35 6.787  2 | import ServiceShared
+#35 6.787    |        `- error: no such module 'ServiceShared'
+#35 6.787  3 | 
+#35 6.787  4 | /// Baseline Awareness service kernel. Requires a bearer token when
+#35 ...
+
+#34 [tools-factory build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#34 6.797 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#34 6.797  1 | import Foundation
+#34 6.797  2 | import ServiceShared
+#34 6.797    |        `- error: no such module 'ServiceShared'
+#34 6.797  3 | 
+#34 6.797  4 | public struct HTTPKernel {
+#34 ...
+
+#35 [baseline-awareness build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#35 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#34 [tools-factory build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#34 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#36 [function-caller build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#36 6.844 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#36 6.844  1 | import Foundation
+#36 6.844  2 | import ServiceShared
+#36 6.844    |        `- error: no such module 'ServiceShared'
+#36 6.844  3 | 
+#36 6.844  4 | /// Function Caller service kernel. Requires a bearer token when
+#36 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#37 [persist build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#37 6.849 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#37 6.849  1 | import Foundation
+#37 6.849  2 | import ServiceShared
+#37 6.849    |        `- error: no such module 'ServiceShared'
+#37 6.849  3 | 
+#37 6.849  4 | public struct HTTPKernel {
+#37 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#38 [planner build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#38 6.810 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#38 6.810  1 | import Foundation
+#38 6.810  2 | import ServiceShared
+#38 6.810    |        `- error: no such module 'ServiceShared'
+#38 6.810  3 | 
+#38 6.810  4 | /// Planner service kernel. Requires a bearer token when
+#38 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#39 [bootstrap build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#39 6.817 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#39 6.817  1 | import Foundation
+#39 6.817  2 | import ServiceShared
+#39 6.817    |        `- error: no such module 'ServiceShared'
+#39 6.817  3 | 
+#39 6.817  4 | /// Bootstrap service kernel. Requires a bearer token when
+#39 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+
+#40 [llm-gateway build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server
+#40 6.771 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+#40 6.771  1 | import Foundation
+#40 6.771  2 | import ServiceShared
+#40 6.771    |        `- error: no such module 'ServiceShared'
+#40 6.771  3 | 
+#40 6.771  4 | public struct HTTPKernel {
+#40 ERROR: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+------
+ > [persist build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+6.849 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+6.849  1 | import Foundation
+6.849  2 | import ServiceShared
+6.849    |        `- error: no such module 'ServiceShared'
+6.849  3 | 
+6.849  4 | public struct HTTPKernel {
+------
+------
+ > [function-caller build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+6.844 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+6.844  1 | import Foundation
+6.844  2 | import ServiceShared
+6.844    |        `- error: no such module 'ServiceShared'
+6.844  3 | 
+6.844  4 | /// Function Caller service kernel. Requires a bearer token when
+------
+------
+ > [bootstrap build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+6.817 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+6.817  1 | import Foundation
+6.817  2 | import ServiceShared
+6.817    |        `- error: no such module 'ServiceShared'
+6.817  3 | 
+6.817  4 | /// Bootstrap service kernel. Requires a bearer token when
+------
+------
+ > [llm-gateway build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+6.771 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+6.771  1 | import Foundation
+6.771  2 | import ServiceShared
+6.771    |        `- error: no such module 'ServiceShared'
+6.771  3 | 
+6.771  4 | public struct HTTPKernel {
+------
+------
+ > [planner build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+6.810 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+6.810  1 | import Foundation
+6.810  2 | import ServiceShared
+6.810    |        `- error: no such module 'ServiceShared'
+6.810  3 | 
+6.810  4 | /// Planner service kernel. Requires a bearer token when
+------
+------
+ > [tools-factory build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+6.797 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+6.797  1 | import Foundation
+6.797  2 | import ServiceShared
+6.797    |        `- error: no such module 'ServiceShared'
+6.797  3 | 
+6.797  4 | public struct HTTPKernel {
+------
+------
+ > [baseline-awareness build 4/4] RUN swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server:
+6.787 HTTPKernel.swift:2:8: error: no such module 'ServiceShared'
+6.787  1 | import Foundation
+6.787  2 | import ServiceShared
+6.787    |        `- error: no such module 'ServiceShared'
+6.787  3 | 
+6.787  4 | /// Baseline Awareness service kernel. Requires a bearer token when
+------
+failed to solve: process "/bin/sh -c swiftc -O HTTPKernel.swift HTTPRequest.swift HTTPResponse.swift Router.swift Handlers.swift Models.swift main.swift -o /server" did not complete successfully: exit code: 1
+time="2025-07-15T14:43:49Z" level=warning msg="/srv/deploy/repos/fountainai/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2025-07-15T14:43:50Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T14:43:50Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T14:43:50Z" level=warning msg="/srv/deploy/repos/kong-codex/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ kong Pulling 
+ typesense Pulling 
+ 0e25612b6db2 Pulling fs layer 
+ f7e1b852f3c0 Pulling fs layer 
+ f9a917cc18a1 Pulling fs layer 
+ 8e22533ee847 Pulling fs layer 
+ 8e22533ee847 Waiting 
+ 5af00eab9784 Pulling fs layer 
+ bf0d651f7bb0 Pulling fs layer 
+ 4f4fb700ef54 Pulling fs layer 
+ 5af00eab9784 Waiting 
+ 378a5aacd893 Pulling fs layer 
+ bf0d651f7bb0 Waiting 
+ 4f4fb700ef54 Waiting 
+ 378a5aacd893 Waiting 
+ 0e25612b6db2 Downloading  278.5kB/27.36MB
+ 0e25612b6db2 Downloading   1.96MB/27.36MB
+ 0e25612b6db2 Downloading  5.581MB/27.36MB
+ 0e25612b6db2 Downloading  8.399MB/27.36MB
+ 0e25612b6db2 Downloading  12.61MB/27.36MB
+ 0e25612b6db2 Downloading  15.98MB/27.36MB
+ 0e25612b6db2 Downloading   20.2MB/27.36MB
+ f7e1b852f3c0 Downloading     125B/125B
+ f7e1b852f3c0 Verifying Checksum 
+ f7e1b852f3c0 Download complete 
+ 0e25612b6db2 Downloading  24.96MB/27.36MB
+ 0e25612b6db2 Verifying Checksum 
+ 0e25612b6db2 Download complete 
+ 0e25612b6db2 Extracting  294.9kB/27.36MB
+ 0e25612b6db2 Extracting  5.603MB/27.36MB
+ f9a917cc18a1 Downloading  527.6kB/67.23MB
+ 0e25612b6db2 Extracting  8.552MB/27.36MB
+ f9a917cc18a1 Downloading  2.134MB/67.23MB
+ 0e25612b6db2 Extracting  14.16MB/27.36MB
+ 0e25612b6db2 Extracting  21.82MB/27.36MB
+ f9a917cc18a1 Downloading  5.874MB/67.23MB
+ f9a917cc18a1 Downloading  11.22MB/67.23MB
+ f9a917cc18a1 Downloading  16.54MB/67.23MB
+ 0e25612b6db2 Extracting   23.3MB/27.36MB
+ f9a917cc18a1 Downloading  21.88MB/67.23MB
+ 5af00eab9784 Downloading  282.1kB/27.35MB
+ 0e25612b6db2 Extracting  25.95MB/27.36MB
+ f9a917cc18a1 Downloading   27.2MB/67.23MB
+ 5af00eab9784 Downloading  846.3kB/27.35MB
+ 0e25612b6db2 Extracting  26.84MB/27.36MB
+ f9a917cc18a1 Downloading  30.95MB/67.23MB
+ 0e25612b6db2 Extracting  27.36MB/27.36MB
+ 5af00eab9784 Downloading  1.969MB/27.35MB
+ 0e25612b6db2 Pull complete 
+ f9a917cc18a1 Downloading  35.73MB/67.23MB
+ f7e1b852f3c0 Extracting     125B/125B
+ f7e1b852f3c0 Extracting     125B/125B
+ f7e1b852f3c0 Pull complete 
+ 5af00eab9784 Downloading  3.918MB/27.35MB
+ f9a917cc18a1 Downloading  38.91MB/67.23MB
+ 5af00eab9784 Downloading  5.303MB/27.35MB
+ f9a917cc18a1 Downloading  42.11MB/67.23MB
+ 8e22533ee847 Downloading  1.009kB/1.155kB
+ 8e22533ee847 Downloading  1.155kB/1.155kB
+ 8e22533ee847 Verifying Checksum 
+ 8e22533ee847 Download complete 
+ 5af00eab9784 Downloading  8.096MB/27.35MB
+ f9a917cc18a1 Downloading  46.37MB/67.23MB
+ f9a917cc18a1 Downloading  49.56MB/67.23MB
+ 5af00eab9784 Downloading  10.89MB/27.35MB
+ 5af00eab9784 Downloading  13.12MB/27.35MB
+ f9a917cc18a1 Downloading  52.22MB/67.23MB
+ 5af00eab9784 Downloading  15.92MB/27.35MB
+ f9a917cc18a1 Downloading  57.04MB/67.23MB
+ 5af00eab9784 Downloading  17.31MB/27.35MB
+ f9a917cc18a1 Downloading  59.71MB/67.23MB
+ 5af00eab9784 Downloading  18.98MB/27.35MB
+ f9a917cc18a1 Downloading   62.4MB/67.23MB
+ f9a917cc18a1 Downloading  65.59MB/67.23MB
+ 5af00eab9784 Downloading  22.05MB/27.35MB
+ f9a917cc18a1 Download complete 
+ 5af00eab9784 Downloading  25.12MB/27.35MB
+ f9a917cc18a1 Extracting  557.1kB/67.23MB
+ 5af00eab9784 Verifying Checksum 
+ 5af00eab9784 Download complete 
+ 5af00eab9784 Extracting  294.9kB/27.35MB
+ f9a917cc18a1 Extracting  6.685MB/67.23MB
+ 5af00eab9784 Extracting  5.898MB/27.35MB
+ f9a917cc18a1 Extracting   9.47MB/67.23MB
+ 5af00eab9784 Extracting  8.552MB/27.35MB
+ f9a917cc18a1 Extracting  12.26MB/67.23MB
+ 5af00eab9784 Extracting  14.75MB/27.35MB
+ f9a917cc18a1 Extracting  16.71MB/67.23MB
+ 5af00eab9784 Extracting  21.23MB/27.35MB
+ f9a917cc18a1 Extracting  18.94MB/67.23MB
+ 5af00eab9784 Extracting     23MB/27.35MB
+ f9a917cc18a1 Extracting  23.95MB/67.23MB
+ 4f4fb700ef54 Downloading      32B/32B
+ 4f4fb700ef54 Verifying Checksum 
+ 4f4fb700ef54 Download complete 
+ 5af00eab9784 Extracting   23.3MB/27.35MB
+ f9a917cc18a1 Extracting  30.08MB/67.23MB
+ 5af00eab9784 Extracting  25.36MB/27.35MB
+ f9a917cc18a1 Extracting  33.98MB/67.23MB
+ 5af00eab9784 Extracting  26.25MB/27.35MB
+ f9a917cc18a1 Extracting  40.67MB/67.23MB
+ 5af00eab9784 Extracting  27.13MB/27.35MB
+ f9a917cc18a1 Extracting  48.46MB/67.23MB
+ 5af00eab9784 Extracting  27.35MB/27.35MB
+ 5af00eab9784 Pull complete 
+ f9a917cc18a1 Extracting  56.26MB/67.23MB
+ f9a917cc18a1 Extracting  57.38MB/67.23MB
+ f9a917cc18a1 Extracting  60.16MB/67.23MB
+ f9a917cc18a1 Extracting  62.39MB/67.23MB
+ f9a917cc18a1 Extracting  65.18MB/67.23MB
+ f9a917cc18a1 Extracting  66.85MB/67.23MB
+ f9a917cc18a1 Extracting  67.23MB/67.23MB
+ f9a917cc18a1 Pull complete 
+ 8e22533ee847 Extracting  1.155kB/1.155kB
+ 8e22533ee847 Extracting  1.155kB/1.155kB
+ 8e22533ee847 Pull complete 
+ kong Pulled 
+ 378a5aacd893 Downloading  540.7kB/78.77MB
+ 378a5aacd893 Downloading  1.622MB/78.77MB
+ 378a5aacd893 Downloading  3.228MB/78.77MB
+ 378a5aacd893 Downloading  6.423MB/78.77MB
+ 378a5aacd893 Downloading  11.78MB/78.77MB
+ 378a5aacd893 Downloading  16.57MB/78.77MB
+ 378a5aacd893 Downloading  21.39MB/78.77MB
+ 378a5aacd893 Downloading  25.68MB/78.77MB
+ 378a5aacd893 Downloading  30.49MB/78.77MB
+ 378a5aacd893 Downloading  35.28MB/78.77MB
+ 378a5aacd893 Downloading  39.54MB/78.77MB
+ 378a5aacd893 Downloading  44.36MB/78.77MB
+ 378a5aacd893 Downloading  49.14MB/78.77MB
+ 378a5aacd893 Downloading  55.01MB/78.77MB
+ 378a5aacd893 Downloading  60.35MB/78.77MB
+ 378a5aacd893 Downloading  65.68MB/78.77MB
+ 378a5aacd893 Downloading  68.88MB/78.77MB
+ 378a5aacd893 Downloading  72.07MB/78.77MB
+ 378a5aacd893 Downloading  76.36MB/78.77MB
+ 378a5aacd893 Verifying Checksum 
+ 378a5aacd893 Download complete 
+ bf0d651f7bb0 Downloading  536.6kB
+ bf0d651f7bb0 Downloading   2.15MB
+ bf0d651f7bb0 Downloading  4.817MB
+ bf0d651f7bb0 Downloading  9.089MB
+ bf0d651f7bb0 Downloading   12.3MB
+ bf0d651f7bb0 Downloading   15.5MB
+ bf0d651f7bb0 Downloading  18.71MB
+ bf0d651f7bb0 Downloading  23.01MB
+ bf0d651f7bb0 Downloading  27.28MB
+ bf0d651f7bb0 Verifying Checksum 
+ bf0d651f7bb0 Download complete 
+ bf0d651f7bb0 Extracting  557.1kB
+ bf0d651f7bb0 Extracting   9.47MB
+ bf0d651f7bb0 Extracting   23.4MB
+ bf0d651f7bb0 Extracting  29.31MB
+ bf0d651f7bb0 Pull complete 
+ 4f4fb700ef54 Extracting      32B/32B
+ 4f4fb700ef54 Pull complete 
+ 378a5aacd893 Extracting  557.1kB/78.77MB
+ 378a5aacd893 Extracting  10.03MB/78.77MB
+ 378a5aacd893 Extracting   19.5MB/78.77MB
+ 378a5aacd893 Extracting  27.85MB/78.77MB
+ 378a5aacd893 Extracting  38.99MB/78.77MB
+ 378a5aacd893 Extracting  50.69MB/78.77MB
+ 378a5aacd893 Extracting  62.95MB/78.77MB
+ 378a5aacd893 Extracting  67.96MB/78.77MB
+ 378a5aacd893 Extracting   71.3MB/78.77MB
+ 378a5aacd893 Extracting  77.43MB/78.77MB
+ 378a5aacd893 Extracting  78.77MB/78.77MB
+ 378a5aacd893 Pull complete 
+ typesense Pulled 
+ Network kong-codex_default  Creating
+ Network kong-codex_default  Created
+ Volume "kong-codex_typesense-data"  Creating
+ Volume "kong-codex_typesense-data"  Created
+ Container kong-codex-kong-1  Creating
+ Container kong-codex-typesense-1  Creating
+ Container kong-codex-kong-1  Created
+ Container kong-codex-typesense-1  Created
+Attaching to kong-1, typesense-1
+Gracefully stopping... (press Ctrl+C again to force)
+Error response from daemon: mounts denied: 
+The path /srv/deploy/repos/kong-codex/kong.conf is not shared from the host and is not known to Docker.
+You can configure shared paths from Docker -> Preferences... -> Resources -> File Sharing.
+See https://docs.docker.com/desktop/settings/mac/#file-sharing for more info.
+time="2025-07-15T14:44:33Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T14:44:33Z" level=warning msg="The \"TYPESENSE_API_KEY\" variable is not set. Defaulting to a blank string."
+time="2025-07-15T14:44:33Z" level=warning msg="/srv/deploy/repos/kong-codex/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Container kong-codex-kong-1  Stopping
+ Container kong-codex-typesense-1  Stopping
+ Container kong-codex-kong-1  Stopped
+ Container kong-codex-kong-1  Removing
+ Container kong-codex-typesense-1  Stopped
+ Container kong-codex-typesense-1  Removing
+ Container kong-codex-kong-1  Removed
+ Container kong-codex-typesense-1  Removed
+ Network kong-codex_default  Removing
+ Network kong-codex_default  Removed
+
+[2025-07-15T14:42:14.623553] Running integration tests for fountainai...
+[2025-07-15T14:43:49.956564] Integration tests for fountainai failed with exit code 1
+
+[2025-07-15T14:43:49.972770] Running integration tests for kong-codex...
+[2025-07-15T14:44:33.766435] Integration tests for kong-codex failed with exit code 1
+error: 'fountainai': package 'fountainai' is using Swift tools version 6.1.0 but the installed version is 5.8.1
+
+[2025-07-15T14:44:33.773219] Starting swift build...
+[2025-07-15T14:44:34.801447] swift build failed with exit code 1
+[2025-07-15T14:44:34.920592] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-15T14:44:37.466465] Opened PR #85 for Fountain-Coach/codex-deployer

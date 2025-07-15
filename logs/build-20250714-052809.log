@@ -1,0 +1,15 @@
+[2025-07-14T05:28:09.660337] DISPATCHER_INTERVAL not set; using default 60
+[2025-07-14T05:28:09.660531] DISPATCHER_USE_PRS not set; pull request workflow enabled
+[2025-07-14T05:28:09.660641] DISPATCHER_BUILD_DOCKER not set; docker builds disabled
+[2025-07-14T05:28:09.660795] DISPATCHER_RUN_E2E not set; integration tests disabled
+[2025-07-14T05:28:09.677219] GIT_USER_NAME not set; defaulting to Contexter
+[2025-07-14T05:28:09.677450] GIT_USER_EMAIL not set; defaulting to mail@benedikt-eickhoff.de
+[2025-07-14T05:28:09.677630] === New Cycle ===
+[2025-07-14T05:28:11.099653] Cloned fountainai -> swift-codex-openapi-kernel
+[2025-07-14T05:28:11.879917] Cloned kong-codex -> kong-codex
+[2025-07-14T05:28:12.749046] Cloned typesense-codex -> typesense-codex
+[2025-07-14T05:28:13.457469] Cloned teatro -> teatro
+error: 'fountainai': package 'fountainai' is using Swift tools version 6.1.0 but the installed version is 5.8.1
+
+[2025-07-14T05:28:13.457760] Starting swift build...
+[2025-07-14T05:28:14.110905] swift build failed with exit code 1

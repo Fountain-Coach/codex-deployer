@@ -1,0 +1,12 @@
+[2025-07-15T14:26:41.341595] DISPATCHER_INTERVAL not set; using default 60
+[2025-07-15T14:26:41.342026] DISPATCHER_USE_PRS not set; pull request workflow enabled
+[2025-07-15T14:26:41.342354] DISPATCHER_BUILD_DOCKER not set; docker builds disabled
+[2025-07-15T14:26:41.342677] DISPATCHER_RUN_E2E not set; integration tests disabled
+[2025-07-15T14:26:41.366068] Dispatcher started successfully 🟢
+[2025-07-15T14:26:41.366322] === New Cycle ===
+error: 'fountainai': package 'fountainai' is using Swift tools version 6.1.0 but the installed version is 5.8.1
+
+[2025-07-15T14:26:41.366707] Starting swift build...
+[2025-07-15T14:26:44.158167] swift build failed with exit code 1
+[2025-07-15T14:26:45.937140] Failed to create PR for Fountain-Coach/codex-deployer: Unauthorized
+[2025-07-15T14:26:45.938129] Skipping merge wait; missing PR number or token
