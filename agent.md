@@ -130,3 +130,56 @@ progressive fallback sequence:
 ---
 
 © FountainCoach – Agent is semantic, autonomous, and Git-bound.
+
+---
+
+## Swift Log Analyzer Agent
+
+This repository also ships a lightweight log analysis helper written in Python.
+The script reads `build.log` from the working directory, splits the log by
+`CompileSwift`, `Test Case`, and `error:` lines, then generates a human-friendly
+summary in `report.md`.
+
+### Segmentation Strategy
+- Each time a line contains `CompileSwift`, `Test Case`, or `error:` a new chunk
+  begins.
+- The following lines belong to that chunk until the next marker is reached.
+- At most ten chunks are processed per run to conserve resources.
+
+### Analysis Logic
+For every chunk the agent looks for lines with `error:` or `warning:`.  If none
+are found, the chunk is marked as clean.  When issues exist, the agent tries to
+extract the Swift file and line number and suggests a likely fix using simple
+heuristics (missing imports, syntax mistakes, etc.).
+
+### How to Run
+
+```bash
+python3 analyze_swift_log.py
+```
+
+`build.log` must be present in the current directory. The results are written to
+`report.md`.
+
+### Example
+
+For the log snippet
+
+```
+CompileSwift normal x86_64 main.swift
+main.swift:5:5: error: use of unresolved identifier 'foo'
+```
+
+the resulting `report.md` section looks like:
+
+```
+## Segment 1 - CompileSwift normal x86_64 main.swift
+```log
+CompileSwift normal x86_64 main.swift
+main.swift:5:5: error: use of unresolved identifier 'foo'
+```
+❌ Issues found:
+main.swift:5 -> main.swift:5:5: error: use of unresolved identifier 'foo'
+**Suggested Fix:** Define or import the missing symbol.
+```
+
