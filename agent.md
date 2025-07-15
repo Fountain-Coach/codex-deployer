@@ -95,6 +95,30 @@ Accepted values for `"repo"`:
 
 ---
 
+## 🚦 Test Economization
+
+The CI runners sometimes hit CPU or memory limits when executing `swift test`.
+To keep tests green on limited runners, the agent economizes test runs using a
+progressive fallback sequence:
+
+1. **No parallelism** – run `swift test --parallel false`.
+2. **Cap concurrency** – retry with `--jobs 2` or the `SWIFTPM_NUM_JOBS`
+   environment variable (see
+   [docs/environment_variables.md](docs/environment_variables.md)).
+3. **Split targets** – loop over `swift test --filter <Target>` for each test
+   module so heavy modules run in isolation.
+4. **Skip heavy cases** – retry with `-DSKIP_SLOW_TESTS` to omit the slowest
+   tests when resources are scarce.
+5. **Prefer fast tags** – if the suite has tagged tests, run `FastTests` first
+   and postpone `SlowTests` to later jobs.
+6. **Persist build artifacts** – keep the `.build` directory between runs so
+   subsequent retries compile faster.
+7. **Fallback runner** – after two failed attempts on the default
+   GitHub runner, dispatch the job to a self-hosted runner labeled
+   `large-memory`.
+
+---
+
 ## 🛡️ Security Notes
 
 - Initial bootstrap requires SSH access so the server can clone repos and install dependencies.
