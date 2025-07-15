@@ -188,9 +188,13 @@ final class ServicesIntegrationTests: XCTestCase {
         let (server, port) = try await startServer(with: kernel)
         addTeardownBlock { try? await server.stop() }
 
-        let client = FunctionCallerClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
-        let data = try await client.sendRaw(FunctionCallerClient.list_functions())
-        let items = try JSONDecoder().decode([FunctionCallerClient.FunctionInfo].self, from: data)
+        // The Swift OpenAPI generator exposes the client types at the module
+        // root. Reference them directly without the `FunctionCallerClient`
+        // prefix to avoid clashes with the server-side helper struct of the
+        // same name.
+        let client = APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
+        let data = try await client.sendRaw(list_functions())
+        let items = try JSONDecoder().decode([FunctionInfo].self, from: data)
         XCTAssertEqual(items.first?.function_id, "f1")
     }
 
