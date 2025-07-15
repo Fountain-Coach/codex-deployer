@@ -194,6 +194,30 @@ def _wait_for_merge(slug: str, pr_number: int, interval: int = 30) -> None:
         time.sleep(interval)
 
 
+def _update_remote_with_token(repo_path: str, slug: str) -> None:
+    """Set the repo's ``origin`` remote to use HTTPS with the GitHub token.
+
+    This avoids interactive authentication prompts when running in a
+    container. See ``docs/environment_variables.md`` for details on
+    ``GITHUB_TOKEN``.
+    """
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        log("GITHUB_TOKEN not set; cannot rewrite git remote")
+        return
+    url = f"https://x-access-token:{token}@github.com/{slug}.git"
+    subprocess.run([
+        "git",
+        "-C",
+        repo_path,
+        "remote",
+        "set-url",
+        "origin",
+        url,
+    ], check=False)
+    log("[dispatcher] Updated git remote to use token-based authentication.")
+
+
 def commit_and_push(message: str, base: str = "main") -> None:
     """Commit staged changes to the ``codex-deployer`` repo and push upstream."""
     repo_path = "/srv/deploy"
@@ -216,6 +240,7 @@ def commit_and_push(message: str, base: str = "main") -> None:
     subprocess.run(["git", "-C", repo_path, "commit", "-m", message], check=False)
     token = os.environ.get("GITHUB_TOKEN")
     slug = _repo_slug(repo_path)
+    _update_remote_with_token(repo_path, slug)
     if USE_PRS:
         push_cmd = ["git", "-C", repo_path, "push", "-u"]
         if token:
