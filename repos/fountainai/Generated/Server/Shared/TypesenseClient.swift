@@ -158,7 +158,10 @@ public actor TypesenseClient {
             }
             return []
         }
-        return Array(roles[corpusId]?.values ?? [])
+        if let dict = roles[corpusId] {
+            return Array(dict.values)
+        }
+        return []
     }
 
     public func addReflection(_ reflection: Reflection) async {
@@ -228,7 +231,10 @@ public actor TypesenseClient {
             }
             return nil
         }
-        return reflections[corpusId]?.values.last
+        if let dict = reflections[corpusId] {
+            return Array(dict.values).last
+        }
+        return nil
     }
 
     public func historyCount(for corpusId: String) async -> Int {

@@ -1,5 +1,6 @@
 import Foundation
 import BaselineAwarenessService
+import ServiceShared
 
 /// Service handlers that persist data via `BaselineStore`.
 public struct Handlers {

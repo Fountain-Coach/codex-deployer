@@ -1,5 +1,7 @@
 import Foundation
 import ServiceShared
+import Parser
+import Yams
 
 /// Implements the Tools Factory persistence logic backed by ``TypesenseClient``.
 public struct Handlers {
@@ -9,14 +11,63 @@ public struct Handlers {
         self.typesense = typesense
     }
 
-    /// Registers one or more functions provided as JSON array of ``Function`` models.
-    /// In a real deployment this would parse an OpenAPI document.
+    /// Registers one or more functions defined by an OpenAPI document.
+    /// The request body may contain JSON or YAML. Each operationId is mapped to
+    /// a ``Function`` persisted via ``TypesenseClient``.
     public func registerOpenapi(_ request: HTTPRequest) async throws -> HTTPResponse {
-        guard let functions = try? JSONDecoder().decode([Function].self, from: request.body) else {
-            return HTTPResponse(status: 400)
+        let data = request.body
+
+        // Attempt JSON decoding first
+        var spec: OpenAPISpec?
+        if let decoded = try? JSONDecoder().decode(OpenAPISpec.self, from: data) {
+            spec = decoded
+        } else if let string = String(data: data, encoding: .utf8),
+                  let yaml = try? Yams.load(yaml: string),
+                  let json = try? JSONSerialization.data(withJSONObject: yaml),
+                  let decoded = try? JSONDecoder().decode(OpenAPISpec.self, from: json) {
+            spec = decoded
         }
+
+        guard let spec else { return HTTPResponse(status: 400) }
+        try SpecValidator.validate(spec)
+
+        var functions: [Function] = []
+        if let paths = spec.paths {
+            for (path, item) in paths {
+                if let op = item.get {
+                    functions.append(Function(description: op.operationId,
+                                                functionId: op.operationId,
+                                                httpMethod: "GET",
+                                                httpPath: path,
+                                                name: op.operationId))
+                }
+                if let op = item.post {
+                    functions.append(Function(description: op.operationId,
+                                                functionId: op.operationId,
+                                                httpMethod: "POST",
+                                                httpPath: path,
+                                                name: op.operationId))
+                }
+                if let op = item.put {
+                    functions.append(Function(description: op.operationId,
+                                                functionId: op.operationId,
+                                                httpMethod: "PUT",
+                                                httpPath: path,
+                                                name: op.operationId))
+                }
+                if let op = item.delete {
+                    functions.append(Function(description: op.operationId,
+                                                functionId: op.operationId,
+                                                httpMethod: "DELETE",
+                                                httpPath: path,
+                                                name: op.operationId))
+                }
+            }
+        }
+
         for fn in functions { await typesense.addFunction(fn) }
-        return HTTPResponse()
+        let respData = try JSONEncoder().encode(functions)
+        return HTTPResponse(body: respData)
     }
 
     /// Returns all stored function definitions.

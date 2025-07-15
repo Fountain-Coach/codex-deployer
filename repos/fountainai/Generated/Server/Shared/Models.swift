@@ -9,6 +9,14 @@ public struct Function: Codable, Sendable {
     public let httpMethod: String
     public let httpPath: String
     public let name: String
+
+    public init(description: String, functionId: String, httpMethod: String, httpPath: String, name: String) {
+        self.description = description
+        self.functionId = functionId
+        self.httpMethod = httpMethod
+        self.httpPath = httpPath
+        self.name = name
+    }
 }
 
 public struct Baseline: Codable, Sendable {
