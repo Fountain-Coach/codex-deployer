@@ -42,32 +42,44 @@ public struct Handlers {
         if let paths = spec.paths {
             for (path, item) in paths {
                 if let op = item.get {
+                    let schemaData = op.requestBody?.content["application/json"]?.schema
+                    let schemaString = schemaData.flatMap { try? String(data: JSONEncoder().encode($0), encoding: .utf8) }
                     functions.append(Function(description: op.operationId,
                                                 functionId: op.operationId,
                                                 httpMethod: "GET",
                                                 httpPath: path,
-                                                name: op.operationId))
+                                                name: op.operationId,
+                                                parametersSchema: schemaString))
                 }
                 if let op = item.post {
+                    let schemaData = op.requestBody?.content["application/json"]?.schema
+                    let schemaString = schemaData.flatMap { try? String(data: JSONEncoder().encode($0), encoding: .utf8) }
                     functions.append(Function(description: op.operationId,
                                                 functionId: op.operationId,
                                                 httpMethod: "POST",
                                                 httpPath: path,
-                                                name: op.operationId))
+                                                name: op.operationId,
+                                                parametersSchema: schemaString))
                 }
                 if let op = item.put {
+                    let schemaData = op.requestBody?.content["application/json"]?.schema
+                    let schemaString = schemaData.flatMap { try? String(data: JSONEncoder().encode($0), encoding: .utf8) }
                     functions.append(Function(description: op.operationId,
                                                 functionId: op.operationId,
                                                 httpMethod: "PUT",
                                                 httpPath: path,
-                                                name: op.operationId))
+                                                name: op.operationId,
+                                                parametersSchema: schemaString))
                 }
                 if let op = item.delete {
+                    let schemaData = op.requestBody?.content["application/json"]?.schema
+                    let schemaString = schemaData.flatMap { try? String(data: JSONEncoder().encode($0), encoding: .utf8) }
                     functions.append(Function(description: op.operationId,
                                                 functionId: op.operationId,
                                                 httpMethod: "DELETE",
                                                 httpPath: path,
-                                                name: op.operationId))
+                                                name: op.operationId,
+                                                parametersSchema: schemaString))
                 }
             }
         }

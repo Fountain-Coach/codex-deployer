@@ -35,6 +35,9 @@ public struct Handlers {
         } catch FunctionDispatcher.DispatchError.notFound {
             let data = try JSONEncoder().encode(ErrorResponse(error_code: "not_found", message: "Function not found"))
             return HTTPResponse(status: 404, body: data)
+        } catch FunctionDispatcher.DispatchError.invalidParams {
+            let data = try JSONEncoder().encode(ErrorResponse(error_code: "validation_error", message: "Invalid parameters"))
+            return HTTPResponse(status: 400, body: data)
         } catch FunctionDispatcher.DispatchError.server(let code) {
             let data = try JSONEncoder().encode(ErrorResponse(error_code: "dispatch_error", message: "Remote error"))
             return HTTPResponse(status: code, body: data)
