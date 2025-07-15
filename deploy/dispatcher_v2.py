@@ -218,8 +218,10 @@ def _update_remote_with_token(repo_path: str, slug: str) -> None:
     log("[dispatcher] Updated git remote to use token-based authentication.")
 
 
-def commit_and_push(message: str, base: str = "main") -> None:
-    """Commit staged changes to the ``codex-deployer`` repo and push upstream."""
+def commit_and_push(message: str, base: str = "main") -> bool:
+    """Commit staged changes to the ``codex-deployer`` repo and push upstream.
+
+    Returns ``True`` when the push succeeds."""
     repo_path = "/srv/deploy"
     subprocess.run(["git", "-C", repo_path, "add", "-A"], check=False)
     message = generate_commit_message(repo_path, message)
@@ -237,7 +239,10 @@ def commit_and_push(message: str, base: str = "main") -> None:
     if USE_PRS:
         branch = f"codex-{int(time.time())}"
         subprocess.run(["git", "-C", repo_path, "checkout", "-b", branch], check=False)
-    subprocess.run(["git", "-C", repo_path, "commit", "-m", message], check=False)
+    commit_result = subprocess.run(["git", "-C", repo_path, "commit", "-m", message], check=False)
+    if commit_result.returncode != 0:
+        log(f"git commit failed with exit code {commit_result.returncode}")
+        return False
     token = os.environ.get("GITHUB_TOKEN")
     slug = _repo_slug(repo_path)
     _update_remote_with_token(repo_path, slug)
@@ -250,7 +255,10 @@ def commit_and_push(message: str, base: str = "main") -> None:
         else:
             push_cmd.append("origin")
         push_cmd.append(branch)
-        subprocess.run(push_cmd, check=False)
+        push_result = subprocess.run(push_cmd, check=False)
+        if push_result.returncode != 0:
+            log(f"git push failed with exit code {push_result.returncode}")
+            return False
         pr = _create_pr(slug, branch, message, base)
         _wait_for_merge(slug, pr)
         subprocess.run(["git", "-C", repo_path, "checkout", base], check=False)
@@ -262,7 +270,11 @@ def commit_and_push(message: str, base: str = "main") -> None:
         push_cmd = ["git", "-C", repo_path, "push"]
         if token:
             push_cmd.append(f"https://x-access-token:{token}@github.com/{slug}.git")
-        subprocess.run(push_cmd, check=False)
+        push_result = subprocess.run(push_cmd, check=False)
+        if push_result.returncode != 0:
+            log(f"git push failed with exit code {push_result.returncode}")
+            return False
+    return True
 
 
 def push_logs_to_github() -> None:
@@ -281,7 +293,8 @@ def push_logs_to_github() -> None:
         ],
         check=False,
     )
-    commit_and_push(f"Update build log {os.path.basename(LOG_FILE)}: {timestamp()}")
+    if commit_and_push(f"Update build log {os.path.basename(LOG_FILE)}: {timestamp()}"):
+        run_post_commit_hooks()
 
 
 
@@ -326,6 +339,7 @@ def build_docker_images() -> None:
     """Build Docker images for any repository containing a Dockerfile."""
     if not BUILD_DOCKER:
         return
+    log("[dispatcher] Running Docker build...")
     with open(LOG_FILE, "a") as fh:
         for alias in REPO_NAMES:
             repo_path = os.path.join(REPOS_DIR, alias)
@@ -351,6 +365,7 @@ def run_e2e_tests() -> None:
     """Run docker compose integration tests if a compose file is present."""
     if not RUN_E2E:
         return
+    log("[dispatcher] Running tests...")
     with open(LOG_FILE, "a") as fh:
         for alias in REPO_NAMES:
             repo_path = os.path.join(REPOS_DIR, alias)
@@ -377,6 +392,17 @@ def run_e2e_tests() -> None:
                     )
 
 
+def run_post_commit_hooks() -> None:
+    """Run optional build and test steps after a commit or PR."""
+    try:
+        if BUILD_DOCKER:
+            build_docker_images()
+        if RUN_E2E:
+            run_e2e_tests()
+    except Exception as exc:
+        log(f"Post-commit hooks failed: {exc}")
+
+
 def commit_applied_patch(fname: str) -> None:
     """Mark a feedback JSON file as applied and push it upstream."""
     patch_path = os.path.join(FEEDBACK_DIR, fname)
@@ -384,7 +410,8 @@ def commit_applied_patch(fname: str) -> None:
     new_path = os.path.join(FEEDBACK_DIR, new_name)
     os.rename(patch_path, new_path)
     subprocess.run(["git", "-C", "/srv/deploy", "add", f"feedback/{new_name}"], check=False)
-    commit_and_push(f"Applied patch: {fname}")
+    if commit_and_push(f"Applied patch: {fname}"):
+        run_post_commit_hooks()
 
 
 def apply_codex_feedback() -> None:
@@ -444,8 +471,6 @@ def loop() -> None:
     log("Dispatcher started successfully \U0001F7E2")
     while True:
         log("=== New Cycle ===")
-        build_docker_images()
-        run_e2e_tests()
         build_swift()
         push_logs_to_github()
         apply_codex_feedback()
