@@ -38,6 +38,7 @@ LOG_FILE = LOG_LATEST
 LOOP_INTERVAL = int(os.environ.get("DISPATCHER_INTERVAL", "60"))
 USE_PRS = os.environ.get("DISPATCHER_USE_PRS", "1").lower() not in {"0", "false", "no"}
 BUILD_DOCKER = os.environ.get("DISPATCHER_BUILD_DOCKER", "0").lower() not in {"0", "false", "no"}
+# docker and docker compose must be available inside the container when running integration tests
 RUN_E2E = os.environ.get("DISPATCHER_RUN_E2E", "0").lower() not in {"0", "false", "no"}
 
 # Defaults for git identity when environment variables are missing.

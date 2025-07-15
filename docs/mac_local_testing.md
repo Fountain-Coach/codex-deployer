@@ -35,7 +35,7 @@ The Dockerfile installs Python, Git and Swift then copies the repository into `/
 
 ## 4. Run the dispatcher with tests
 
-Export the variables and start the container with `DISPATCHER_RUN_E2E=1` to run integration tests:
+Export the variables and start the container with `DISPATCHER_RUN_E2E=1` to run integration tests. `docker` and `docker compose` must be available inside the container, so either install Docker in your image or mount the host's socket. See [environment_variables.md](environment_variables.md) for details:
 
 ```bash
 export $(grep -v '^#' dispatcher.env | xargs)
