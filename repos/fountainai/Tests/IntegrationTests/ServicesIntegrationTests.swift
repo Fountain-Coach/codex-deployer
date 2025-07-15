@@ -226,6 +226,23 @@ final class ServicesIntegrationTests: XCTestCase {
         XCTAssertEqual(data.count, 0)
     }
 
+    func testToolsFactoryRegisterOpenAPI() async throws {
+        let kernel = ToolsFactoryService.HTTPKernel()
+
+        // load OpenAPI document for the Function Caller service
+        let specURL = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("FountainAi/openAPI/v1/function-caller.yml")
+        let yaml = try Data(contentsOf: specURL)
+
+        _ = try await kernel.handle(.init(method: "POST", path: "/tools/register", headers: ["Content-Type": "application/x-yaml"], body: yaml))
+        let list = try await kernel.handle(.init(method: "GET", path: "/tools"))
+        let functions = try JSONDecoder().decode([ServiceShared.Function].self, from: list.body)
+        XCTAssertGreaterThan(functions.count, 0)
+    }
+
     func testFunctionCallerInvokeFlow() async throws {
         // start echo service
         let echoKernel = IntegrationRuntime.HTTPKernel { _ in

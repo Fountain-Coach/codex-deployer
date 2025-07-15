@@ -96,7 +96,7 @@ let package = Package(
         .target(name: "PlannerClient", path: "Generated/Client/planner"),
         .target(
             name: "ToolsFactoryService",
-            dependencies: ["ServiceShared"],
+            dependencies: ["ServiceShared", "Parser"],
             path: "Generated/Server",
             sources: [
                 "tools-factory/HTTPKernel.swift",

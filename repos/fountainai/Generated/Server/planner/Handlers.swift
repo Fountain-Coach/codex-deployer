@@ -21,7 +21,7 @@ fileprivate struct FunctionDispatcher {
 
 public struct Handlers {
     let llm = LLMGatewayClient()
-    let dispatcher = FunctionDispatcher()
+    fileprivate let dispatcher = FunctionDispatcher()
 
     public init() {}
 
