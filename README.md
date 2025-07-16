@@ -97,6 +97,7 @@ At its heart is a single principle:
 | `docs/managing_environment_variables.md` | Step-by-step variable setup |
 | `docs/mac_docker_tutorial.md` | Run the dispatcher locally on macOS with Docker |
 | `docs/mac_local_testing.md` | Test services locally on macOS |
+| `docs/fountainai_mac_ui_plan.md` | Plan for a macOS UI using FountainAI and Teatro |
 | `docs/what_is_git.md` | Intro to Git with history and flow |
 | `docs/design_patterns.md` | Evaluation of client/server, plugin, and declarative patterns |
 
