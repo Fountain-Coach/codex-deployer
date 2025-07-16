@@ -34,7 +34,8 @@ import BaselineAwarenessService
             body: self.request.httpBody ?? Data()
         )
         let client = self.client
-        Task { [client, strongSelf = self] @Sendable in
+        let strongSelf = self
+        Task { @Sendable in
             do {
                 let resp = try await kernel.handle(req)
                 let httpResponse = HTTPURLResponse(
