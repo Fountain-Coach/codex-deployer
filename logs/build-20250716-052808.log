@@ -1,0 +1,74 @@
+[2025-07-16T05:28:08.031158] Dispatcher started successfully 🟢
+[2025-07-16T05:28:08.031366] === New Cycle ===
+[0/1] Planning build
+Building for debugging...
+[0/16] Write sources
+[1/16] Write swift-version-24593BA9C3E375BF.txt
+[3/4] Emitting module IntegrationRuntime
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/AsyncHTTPClientDriver.swift:8:78: warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
+ 6 |     let client: HTTPClient
+ 7 | 
+ 8 |     public init(eventLoopGroupProvider: HTTPClient.EventLoopGroupProvider = .createNew) {
+   |                                                                              |- warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
+   |                                                                              `- note: use 'singleton' instead
+ 9 |         self.client = HTTPClient(eventLoopGroupProvider: eventLoopGroupProvider)
+10 |     }
+[4/4] Compiling IntegrationRuntime NIOHTTPServer.swift
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:69:29: warning: variable 'buffer' was never mutated; consider changing to 'let' constant
+67 |                         responseHead.headers = headers
+68 |                         context.write(self.wrapOutboundOut(.head(responseHead)), promise: nil)
+69 |                         var buffer = context.channel.allocator.buffer(bytes: resp.body)
+   |                             `- warning: variable 'buffer' was never mutated; consider changing to 'let' constant
+70 |                         context.write(self.wrapOutboundOut(.body(.byteBuffer(buffer))), promise: nil)
+71 |                         context.writeAndFlush(self.wrapOutboundOut(.end(nil)), promise: nil)
+
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:65:39: warning: capture of 'resp' with non-sendable type 'HTTPResponse' in a '@Sendable' closure
+63 |                     context.eventLoop.execute {
+64 |                         var headers = HTTPHeaders()
+65 |                         for (k, v) in resp.headers { headers.add(name: k, value: v) }
+   |                                       `- warning: capture of 'resp' with non-sendable type 'HTTPResponse' in a '@Sendable' closure
+66 |                         var responseHead = HTTPResponseHead(version: head.version, status: .init(statusCode: resp.status))
+67 |                         responseHead.headers = headers
+
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/HTTPResponse.swift:3:15: note: consider making struct 'HTTPResponse' conform to the 'Sendable' protocol
+ 1 | import Foundation
+ 2 | 
+ 3 | public struct HTTPResponse {
+   |               `- note: consider making struct 'HTTPResponse' conform to the 'Sendable' protocol
+ 4 |     public var status: Int
+ 5 |     public var headers: [String: String]
+
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:68:25: warning: capture of 'context' with non-sendable type 'ChannelHandlerContext' in a '@Sendable' closure
+66 |                         var responseHead = HTTPResponseHead(version: head.version, status: .init(statusCode: resp.status))
+67 |                         responseHead.headers = headers
+68 |                         context.write(self.wrapOutboundOut(.head(responseHead)), promise: nil)
+   |                         `- warning: capture of 'context' with non-sendable type 'ChannelHandlerContext' in a '@Sendable' closure
+69 |                         var buffer = context.channel.allocator.buffer(bytes: resp.body)
+70 |                         context.write(self.wrapOutboundOut(.body(.byteBuffer(buffer))), promise: nil)
+
+/srv/deploy/repos/fountainai/.build/checkouts/swift-nio/Sources/NIOCore/ChannelPipeline.swift:1792:20: note: class 'ChannelHandlerContext' does not conform to the 'Sendable' protocol
+1790 | /// at the right point in time. Often, the right behaviour is to react to an event and then forward it to the next
+1791 | /// `ChannelHandler`.
+1792 | public final class ChannelHandlerContext: ChannelInvoker {
+     |                    `- note: class 'ChannelHandlerContext' does not conform to the 'Sendable' protocol
+1793 |     // visible for ChannelPipeline to modify
+1794 |     fileprivate var next: Optional<ChannelHandlerContext>
+
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:61:22: warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+59 |                     body: Data(body?.readableBytesView ?? [])
+60 |                 )
+61 |                 Task {
+   |                      `- warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+62 |                     let resp = try await self.kernel.handle(req)
+   |                                                             `- note: closure captures non-Sendable 'req'
+63 |                     context.eventLoop.execute {
+   |                     `- note: closure captures non-Sendable 'context'
+64 |                         var headers = HTTPHeaders()
+65 |                         for (k, v) in resp.headers { headers.add(name: k, value: v) }
+Build complete! (6.75s)
+[0/1] Planning build
+Building for debugging...
+[0/16] Write swift-version-24593BA9C3E375BF.txt
+[1/3] Write Objects.LinkFileList
+[2/3] Linking SwiftCodexOpenAPIKernelPackageTests.xctest
+Build complete! (5.02s)
