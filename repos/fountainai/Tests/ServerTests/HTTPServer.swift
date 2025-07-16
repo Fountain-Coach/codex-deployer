@@ -24,15 +24,16 @@ import FoundationNetworking
         }
         let req = HTTPRequest(method: self.request.httpMethod ?? "GET", path: url.path, headers: self.request.allHTTPHeaderFields ?? [:], body: self.request.httpBody ?? Data())
         let client = self.client
-        Task { [client] in
+        let strongSelf = self
+        Task { [client, strongSelf] @Sendable in
             do {
                 let resp = try await kernel.handle(req)
                 let httpResponse = HTTPURLResponse(url: url, statusCode: resp.status, httpVersion: "HTTP/1.1", headerFields: resp.headers)!
-                client?.urlProtocol(self, didReceive: httpResponse, cacheStoragePolicy: .notAllowed)
-                client?.urlProtocol(self, didLoad: resp.body)
-                client?.urlProtocolDidFinishLoading(self)
+                client?.urlProtocol(strongSelf, didReceive: httpResponse, cacheStoragePolicy: .notAllowed)
+                client?.urlProtocol(strongSelf, didLoad: resp.body)
+                client?.urlProtocolDidFinishLoading(strongSelf)
             } catch {
-                client?.urlProtocol(self, didFailWithError: error)
+                client?.urlProtocol(strongSelf, didFailWithError: error)
             }
         }
     }
