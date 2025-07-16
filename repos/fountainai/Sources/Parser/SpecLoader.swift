@@ -16,7 +16,12 @@ public enum SpecLoader {
         guard let yamlString = String(data: data, encoding: .utf8) else {
             throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Input data is not valid UTF-8"))
         }
-        var yamlObject = try Yams.load(yaml: yamlString)
+        guard let loadedYaml = try Yams.load(yaml: yamlString) else {
+            throw DecodingError.dataCorrupted(
+                .init(codingPath: [], debugDescription: "YAML document is empty")
+            )
+        }
+        var yamlObject = loadedYaml
 
         // If using OpenAPI 3.x with `info.title`, normalize to `title`
         if var dict = yamlObject as? [String: Any] {

@@ -33,7 +33,7 @@ public enum ModelEmitter {
                 return
             }
 
-            if let type = schema.type {
+            if let _ = schema.type {
                 output += "public typealias \(name) = \(schema.swiftType)\n\n"
             }
         }
