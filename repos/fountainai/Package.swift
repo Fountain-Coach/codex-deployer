@@ -31,149 +31,160 @@ let package = Package(
         .target(
             name: "BaselineAwarenessService",
             dependencies: ["ServiceShared"],
-            path: "Generated/Server",
+            path: "Generated/Server/baseline-awareness",
+            exclude: ["main.swift", "HTTPServer.swift", "Dockerfile"],
             sources: [
-                "baseline-awareness/HTTPKernel.swift",
-                "baseline-awareness/Router.swift",
-                "baseline-awareness/Handlers.swift",
-                "baseline-awareness/Models.swift",
-                "baseline-awareness/HTTPRequest.swift",
-                "baseline-awareness/HTTPResponse.swift",
-                "baseline-awareness/BaselineStore.swift"
+                "HTTPKernel.swift",
+                "Router.swift",
+                "Handlers.swift",
+                "Models.swift",
+                "HTTPRequest.swift",
+                "HTTPResponse.swift",
+                "BaselineStore.swift"
             ]
         ),
         .executableTarget(
             name: "BaselineAwarenessServer",
             dependencies: ["BaselineAwarenessService"],
-            path: "Generated/Server",
-            sources: [
-                "baseline-awareness/main.swift",
-                "baseline-awareness/HTTPServer.swift"
-            ]
+            path: "Generated/Server/baseline-awareness",
+            exclude: ["HTTPKernel.swift", "Router.swift", "Handlers.swift", "Models.swift", "HTTPRequest.swift", "HTTPResponse.swift", "BaselineStore.swift", "Dockerfile"],
+            sources: ["main.swift", "HTTPServer.swift"]
         ),
         .target(name: "BaselineAwarenessClient", path: "Generated/Client/baseline-awareness"),
         .target(
             name: "BootstrapService",
             dependencies: ["ServiceShared", "BaselineAwarenessService"],
-            path: "Generated/Server",
+            path: "Generated/Server/bootstrap",
+            exclude: ["main.swift", "Dockerfile"],
             sources: [
-                "bootstrap/HTTPKernel.swift",
-                "bootstrap/Router.swift",
-                "bootstrap/Handlers.swift",
-                "bootstrap/Models.swift",
-                "bootstrap/HTTPRequest.swift",
-                "bootstrap/HTTPResponse.swift"
+                "HTTPKernel.swift",
+                "Router.swift",
+                "Handlers.swift",
+                "Models.swift",
+                "HTTPRequest.swift",
+                "HTTPResponse.swift"
             ]
         ),
         .executableTarget(
             name: "BootstrapServer",
             dependencies: ["BootstrapService"],
-            path: "Generated/Server",
-            sources: ["bootstrap/main.swift"]
+            path: "Generated/Server/bootstrap",
+            exclude: ["HTTPKernel.swift", "Router.swift", "Handlers.swift", "Models.swift", "HTTPRequest.swift", "HTTPResponse.swift", "Dockerfile"],
+            sources: ["main.swift"]
         ),
         .target(name: "BootstrapClient", path: "Generated/Client/bootstrap"),
         .target(
             name: "PersistService",
             dependencies: ["ServiceShared"],
-            path: "Generated/Server",
+            path: "Generated/Server/persist",
+            exclude: ["main.swift", "Dockerfile"],
             sources: [
-                "persist/HTTPKernel.swift",
-                "persist/Router.swift",
-                "persist/Handlers.swift",
-                "persist/Models.swift",
-                "persist/HTTPRequest.swift",
-                "persist/HTTPResponse.swift"
+                "HTTPKernel.swift",
+                "Router.swift",
+                "Handlers.swift",
+                "Models.swift",
+                "HTTPRequest.swift",
+                "HTTPResponse.swift"
             ]
         ),
         .executableTarget(
             name: "PersistServer",
             dependencies: ["PersistService"],
-            path: "Generated/Server",
-            sources: ["persist/main.swift"]
+            path: "Generated/Server/persist",
+            exclude: ["HTTPKernel.swift", "Router.swift", "Handlers.swift", "Models.swift", "HTTPRequest.swift", "HTTPResponse.swift", "Dockerfile"],
+            sources: ["main.swift"]
         ),
         .target(name: "PersistClient", path: "Generated/Client/persist"),
         .target(
             name: "FunctionCallerService",
             dependencies: ["ServiceShared", "Parser"],
-            path: "Generated/Server",
+            path: "Generated/Server/function-caller",
+            exclude: ["main.swift", "Dockerfile"],
             sources: [
-                "function-caller/HTTPKernel.swift",
-                "function-caller/Router.swift",
-                "function-caller/Handlers.swift",
-                "function-caller/Models.swift",
-                "function-caller/Dispatcher.swift",
-                "function-caller/HTTPRequest.swift",
-                "function-caller/HTTPResponse.swift",
-                "function-caller/Logger.swift"
+                "HTTPKernel.swift",
+                "Router.swift",
+                "Handlers.swift",
+                "Models.swift",
+                "Dispatcher.swift",
+                "HTTPRequest.swift",
+                "HTTPResponse.swift",
+                "Logger.swift"
             ]
         ),
         .executableTarget(
             name: "FunctionCallerServer",
             dependencies: ["FunctionCallerService"],
-            path: "Generated/Server",
-            sources: ["function-caller/main.swift"]
+            path: "Generated/Server/function-caller",
+            exclude: ["HTTPKernel.swift", "Router.swift", "Handlers.swift", "Models.swift", "Dispatcher.swift", "HTTPRequest.swift", "HTTPResponse.swift", "Logger.swift", "Dockerfile"],
+            sources: ["main.swift"]
         ),
         .target(name: "FunctionCallerClient", path: "Generated/Client/function-caller"),
         .target(
             name: "PlannerService",
             dependencies: ["ServiceShared"],
-            path: "Generated/Server",
+            path: "Generated/Server/planner",
+            exclude: ["main.swift", "Dockerfile"],
             sources: [
-                "planner/HTTPKernel.swift",
-                "planner/Router.swift",
-                "planner/Handlers.swift",
-                "planner/Models.swift",
-                "planner/LLMGatewayClient.swift",
-                "planner/FunctionCallerClient.swift",
-                "planner/HTTPRequest.swift",
-                "planner/HTTPResponse.swift"
+                "HTTPKernel.swift",
+                "Router.swift",
+                "Handlers.swift",
+                "Models.swift",
+                "LLMGatewayClient.swift",
+                "LocalFunctionCallerClient.swift",
+                "HTTPRequest.swift",
+                "HTTPResponse.swift"
             ]
         ),
         .executableTarget(
             name: "PlannerServer",
             dependencies: ["PlannerService"],
-            path: "Generated/Server",
-            sources: ["planner/main.swift"]
+            path: "Generated/Server/planner",
+            exclude: ["HTTPKernel.swift", "Router.swift", "Handlers.swift", "Models.swift", "LLMGatewayClient.swift", "LocalFunctionCallerClient.swift", "HTTPRequest.swift", "HTTPResponse.swift", "Dockerfile"],
+            sources: ["main.swift"]
         ),
         .target(name: "PlannerClient", path: "Generated/Client/planner"),
         .target(
             name: "ToolsFactoryService",
             dependencies: ["ServiceShared", "Parser"],
-            path: "Generated/Server",
+            path: "Generated/Server/tools-factory",
+            exclude: ["main.swift", "Dockerfile"],
             sources: [
-                "tools-factory/HTTPKernel.swift",
-                "tools-factory/Router.swift",
-                "tools-factory/Handlers.swift",
-                "tools-factory/Models.swift",
-                "tools-factory/HTTPRequest.swift",
-                "tools-factory/HTTPResponse.swift"
+                "HTTPKernel.swift",
+                "Router.swift",
+                "Handlers.swift",
+                "Models.swift",
+                "HTTPRequest.swift",
+                "HTTPResponse.swift"
             ]
         ),
         .executableTarget(
             name: "ToolsFactoryServer",
             dependencies: ["ToolsFactoryService"],
-            path: "Generated/Server",
-            sources: ["tools-factory/main.swift"]
+            path: "Generated/Server/tools-factory",
+            exclude: ["HTTPKernel.swift", "Router.swift", "Handlers.swift", "Models.swift", "HTTPRequest.swift", "HTTPResponse.swift", "Dockerfile"],
+            sources: ["main.swift"]
         ),
         .target(name: "ToolsFactoryClient", path: "Generated/Client/tools-factory"),
         .target(
             name: "LLMGatewayService",
             dependencies: ["ServiceShared"],
-            path: "Generated/Server",
+            path: "Generated/Server/llm-gateway",
+            exclude: ["main.swift", "Dockerfile"],
             sources: [
-                "llm-gateway/HTTPKernel.swift",
-                "llm-gateway/Router.swift",
-                "llm-gateway/Handlers.swift",
-                "llm-gateway/Models.swift",
-                "llm-gateway/HTTPRequest.swift",
-                "llm-gateway/HTTPResponse.swift"
+                "HTTPKernel.swift",
+                "Router.swift",
+                "Handlers.swift",
+                "Models.swift",
+                "HTTPRequest.swift",
+                "HTTPResponse.swift"
             ]
         ),
         .executableTarget(
             name: "LLMGatewayServer",
             dependencies: ["LLMGatewayService"],
-            path: "Generated/Server",
-            sources: ["llm-gateway/main.swift"]
+            path: "Generated/Server/llm-gateway",
+            exclude: ["HTTPKernel.swift", "Router.swift", "Handlers.swift", "Models.swift", "HTTPRequest.swift", "HTTPResponse.swift", "Dockerfile"],
+            sources: ["main.swift"]
         ),
         .target(name: "LLMGatewayClientSDK", path: "Generated/Client/llm-gateway"),
         .target(

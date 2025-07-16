@@ -5,7 +5,7 @@ import ServiceShared
 /// Client for delegating executions to the Function Caller service. When
 /// `FUNCTION_CALLER_URL` is unset it falls back to the local dispatcher used
 /// during tests. See `docs/environment_variables.md`.
-struct FunctionCallerClient {
+struct LocalFunctionCallerClient {
     enum DispatchError: Error { case notFound }
 
     private let baseURL: URL?
