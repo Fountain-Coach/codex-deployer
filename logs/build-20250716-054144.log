@@ -1,0 +1,49 @@
+[2025-07-16T05:41:44.520323] Dispatcher started successfully 🟢
+[2025-07-16T05:41:44.520649] === New Cycle ===
+[0/1] Planning build
+Building for debugging...
+[0/16] Write sources
+[1/16] Write swift-version-24593BA9C3E375BF.txt
+[3/7] Emitting module IntegrationRuntime
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:83:1: warning: extension declares a conformance of imported type 'ChannelHandlerContext' to imported protocol 'Sendable'; this will not behave correctly if the owners of 'NIOCore' introduce this conformance in the future
+81 | extension NIOHTTPServer.HTTPHandler: @unchecked Sendable {}
+82 | 
+83 | extension ChannelHandlerContext: @unchecked Sendable {}
+   | |- warning: extension declares a conformance of imported type 'ChannelHandlerContext' to imported protocol 'Sendable'; this will not behave correctly if the owners of 'NIOCore' introduce this conformance in the future
+   | `- note: add '@retroactive' to silence this warning
+84 | 
+[4/7] Compiling IntegrationRuntime AsyncHTTPClientDriver.swift
+[5/7] Compiling IntegrationRuntime HTTPResponse.swift
+[6/7] Compiling IntegrationRuntime NIOHTTPServer.swift
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:83:1: warning: extension declares a conformance of imported type 'ChannelHandlerContext' to imported protocol 'Sendable'; this will not behave correctly if the owners of 'NIOCore' introduce this conformance in the future
+81 | extension NIOHTTPServer.HTTPHandler: @unchecked Sendable {}
+82 | 
+83 | extension ChannelHandlerContext: @unchecked Sendable {}
+   | |- warning: extension declares a conformance of imported type 'ChannelHandlerContext' to imported protocol 'Sendable'; this will not behave correctly if the owners of 'NIOCore' introduce this conformance in the future
+   | `- note: add '@retroactive' to silence this warning
+84 | 
+[7/7] Compiling IntegrationRuntime HTTPRequest.swift
+[8/8] Compiling IntegrationRuntime HTTPKernel.swift
+Build complete! (7.03s)
+[0/1] Planning build
+Building for debugging...
+[0/16] Write swift-version-24593BA9C3E375BF.txt
+[1/9] Wrapping AST for IntegrationRuntime for debugging
+[3/14] Compiling IntegrationTests IntegrationTests.swift
+[4/14] Compiling IntegrationTests Router.swift
+[5/14] Compiling IntegrationTests Handlers.swift
+[6/14] Emitting module IntegrationTests
+[7/14] Compiling IntegrationTests ServicesIntegrationTests.swift
+[8/14] /srv/deploy/repos/fountainai/.build/aarch64-unknown-linux-gnu/debug/SwiftCodexOpenAPIKernelPackageDiscoveredTests.derived/all-discovered-tests.swift
+[9/15] Write sources
+[11/23] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests ModelEmitterTests.swift
+[12/23] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests ServerTests.swift
+[13/23] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests ParserTests.swift
+[14/23] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests all-discovered-tests.swift
+[15/23] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests GeneratorTests.swift
+[16/23] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests ClientGeneratorTests.swift
+[17/23] Emitting module SwiftCodexOpenAPIKernelPackageDiscoveredTests
+[18/23] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests IntegrationTests.swift
+[19/21] Write Objects.LinkFileList
+[20/21] Linking SwiftCodexOpenAPIKernelPackageTests.xctest
+Build complete! (6.45s)
