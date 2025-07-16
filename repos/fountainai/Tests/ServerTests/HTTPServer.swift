@@ -40,3 +40,5 @@ import FoundationNetworking
 
     override public func stopLoading() {}
 }
+
+extension HTTPServer: @unchecked Sendable {}

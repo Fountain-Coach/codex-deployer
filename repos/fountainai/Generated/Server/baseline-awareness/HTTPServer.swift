@@ -55,3 +55,5 @@ import BaselineAwarenessService
 
     override public func stopLoading() {}
 }
+
+extension HTTPServer: @unchecked Sendable {}
