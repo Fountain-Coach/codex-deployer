@@ -45,3 +45,6 @@ Test Case 'ServicesIntegrationTests.testBootstrapPromoteReflection' failed (0.0 
 Test Case 'ServicesIntegrationTests.testBootstrapSeedRoles' started at 2025-07-16 05:44:27.866
 <EXPR>:0: error: ServicesIntegrationTests.testBootstrapSeedRoles : threw error "dataCorrupted(Swift.DecodingError.Context(codingPath: [], debugDescription: "The given data was not valid JSON.", underlyingError: nil))"
 Test Case 'ServicesIntegrationTests.testBootstrapSeedRoles' 
+[2025-07-16T05:44:16.899332] Starting swift build...
+[2025-07-16T05:44:24.153342] swift build succeeded
+[2025-07-16T05:44:24.153731] running swift test...
