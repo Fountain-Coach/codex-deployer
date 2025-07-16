@@ -20,7 +20,8 @@ public class HTTPServer: URLProtocol {
             return
         }
         let req = HTTPRequest(method: request.httpMethod ?? "GET", path: url.path, headers: request.allHTTPHeaderFields ?? [:], body: request.httpBody ?? Data())
-        Task { [strongSelf = self] @Sendable in
+        let strongSelf = self
+        Task { @Sendable in
             do {
                 let resp = try await kernel.handle(req)
                 let httpResponse = HTTPURLResponse(url: url, statusCode: resp.status, httpVersion: "HTTP/1.1", headerFields: resp.headers)!

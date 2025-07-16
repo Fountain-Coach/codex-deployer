@@ -24,7 +24,8 @@ import FoundationNetworking
         }
         let req = HTTPRequest(method: self.request.httpMethod ?? "GET", path: url.path, headers: self.request.allHTTPHeaderFields ?? [:], body: self.request.httpBody ?? Data())
         let client = self.client
-        Task { [client, strongSelf = self] @Sendable in
+        let strongSelf = self
+        Task { @Sendable in
             do {
                 let resp = try await kernel.handle(req)
                 let httpResponse = HTTPURLResponse(url: url, statusCode: resp.status, httpVersion: "HTTP/1.1", headerFields: resp.headers)!
