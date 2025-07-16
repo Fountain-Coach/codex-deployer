@@ -66,7 +66,7 @@ public final class NIOHTTPServer: @unchecked Sendable {
                         var responseHead = HTTPResponseHead(version: head.version, status: .init(statusCode: resp.status))
                         responseHead.headers = headers
                         context.write(self.wrapOutboundOut(.head(responseHead)), promise: nil)
-                        var buffer = context.channel.allocator.buffer(bytes: resp.body)
+                        let buffer = context.channel.allocator.buffer(bytes: resp.body)
                         context.write(self.wrapOutboundOut(.body(.byteBuffer(buffer))), promise: nil)
                         context.writeAndFlush(self.wrapOutboundOut(.end(nil)), promise: nil)
                     }
@@ -79,3 +79,5 @@ public final class NIOHTTPServer: @unchecked Sendable {
 }
 
 extension NIOHTTPServer.HTTPHandler: @unchecked Sendable {}
+
+extension ChannelHandlerContext: @unchecked Sendable {}
