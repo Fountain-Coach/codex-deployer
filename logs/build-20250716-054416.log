@@ -1,0 +1,47 @@
+[2025-07-16T05:44:16.898841] Dispatcher started successfully 🟢
+[2025-07-16T05:44:16.899018] === New Cycle ===
+[0/1] Planning build
+Building for debugging...
+[0/15] Write swift-version-24593BA9C3E375BF.txt
+Build complete! (6.36s)
+[0/1] Planning build
+Building for debugging...
+[0/16] Write swift-version-24593BA9C3E375BF.txt
+Build complete! (3.31s)
+Test Suite 'All tests' started at 2025-07-16 05:44:27.812
+Test Suite 'debug.xctest' started at 2025-07-16 05:44:27.815
+Test Suite 'GeneratorTests' started at 2025-07-16 05:44:27.815
+Test Case 'GeneratorTests.testCLIWithFixtures' started at 2025-07-16 05:44:27.815
+Test Case 'GeneratorTests.testCLIWithFixtures' passed (0.015 seconds)
+Test Suite 'GeneratorTests' passed at 2025-07-16 05:44:27.830
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.015 (0.015) seconds
+Test Suite 'IntegrationTests' started at 2025-07-16 05:44:27.830
+Test Case 'IntegrationTests.testAsyncHTTPClientRoundTrip' started at 2025-07-16 05:44:27.830
+Test Case 'IntegrationTests.testAsyncHTTPClientRoundTrip' passed (0.022 seconds)
+Test Suite 'IntegrationTests' passed at 2025-07-16 05:44:27.852
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.022 (0.022) seconds
+Test Suite 'ServicesIntegrationTests' started at 2025-07-16 05:44:27.852
+Test Case 'ServicesIntegrationTests.testBaselineAnalyticsStream' started at 2025-07-16 05:44:27.852
+/srv/deploy/repos/fountainai/Tests/IntegrationTests/ServicesIntegrationTests.swift:88: error: ServicesIntegrationTests.testBaselineAnalyticsStream : XCTAssertEqual failed: ("nil") is not equal to ("Optional("text/event-stream")") - 
+/srv/deploy/repos/fountainai/Tests/IntegrationTests/ServicesIntegrationTests.swift:90: error: ServicesIntegrationTests.testBaselineAnalyticsStream : XCTAssertTrue failed - 
+Test Case 'ServicesIntegrationTests.testBaselineAnalyticsStream' failed (0.001 seconds)
+Test Case 'ServicesIntegrationTests.testBaselineAuthMiddleware' started at 2025-07-16 05:44:27.853
+/srv/deploy/repos/fountainai/Tests/IntegrationTests/ServicesIntegrationTests.swift:114: error: ServicesIntegrationTests.testBaselineAuthMiddleware : XCTAssertTrue failed - 
+<EXPR>:0: error: ServicesIntegrationTests.testBaselineAuthMiddleware : threw error "dataCorrupted(Swift.DecodingError.Context(codingPath: [], debugDescription: "The given data was not valid JSON.", underlyingError: nil))"
+Test Case 'ServicesIntegrationTests.testBaselineAuthMiddleware' failed (0.006 seconds)
+Test Case 'ServicesIntegrationTests.testBaselineAwarenessHealth' started at 2025-07-16 05:44:27.859
+Test Case 'ServicesIntegrationTests.testBaselineAwarenessHealth' passed (0.002 seconds)
+Test Case 'ServicesIntegrationTests.testBaselineHistoryAnalytics' started at 2025-07-16 05:44:27.861
+<EXPR>:0: error: ServicesIntegrationTests.testBaselineHistoryAnalytics : threw error "dataCorrupted(Swift.DecodingError.Context(codingPath: [], debugDescription: "The given data was not valid JSON.", underlyingError: nil))"
+Test Case 'ServicesIntegrationTests.testBaselineHistoryAnalytics' failed (0.002 seconds)
+Test Case 'ServicesIntegrationTests.testBaselineInitializeAndAdd' started at 2025-07-16 05:44:27.863
+<EXPR>:0: error: ServicesIntegrationTests.testBaselineInitializeAndAdd : threw error "dataCorrupted(Swift.DecodingError.Context(codingPath: [], debugDescription: "The given data was not valid JSON.", underlyingError: nil))"
+Test Case 'ServicesIntegrationTests.testBaselineInitializeAndAdd' failed (0.002 seconds)
+Test Case 'ServicesIntegrationTests.testBootstrapInitializeCorpus' started at 2025-07-16 05:44:27.865
+Test Case 'ServicesIntegrationTests.testBootstrapInitializeCorpus' passed (0.001 seconds)
+Test Case 'ServicesIntegrationTests.testBootstrapPromoteReflection' started at 2025-07-16 05:44:27.866
+<EXPR>:0: error: ServicesIntegrationTests.testBootstrapPromoteReflection : threw error "dataCorrupted(Swift.DecodingError.Context(codingPath: [], debugDescription: "The given data was not valid JSON.", underlyingError: nil))"
+Test Case 'ServicesIntegrationTests.testBootstrapPromoteReflection' failed (0.0 seconds)
+Test Case 'ServicesIntegrationTests.testBootstrapSeedRoles' started at 2025-07-16 05:44:27.866
+<EXPR>:0: error: ServicesIntegrationTests.testBootstrapSeedRoles : threw error "dataCorrupted(Swift.DecodingError.Context(codingPath: [], debugDescription: "The given data was not valid JSON.", underlyingError: nil))"
+Test Case 'ServicesIntegrationTests.testBootstrapSeedRoles' 
