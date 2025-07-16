@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
 import FoundationNetworking
+#endif
 import BaselineAwarenessService
 
 /// Simple URLProtocol based HTTP server used for integration tests.

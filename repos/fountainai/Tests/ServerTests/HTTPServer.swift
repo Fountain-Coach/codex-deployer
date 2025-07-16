@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
 import FoundationNetworking
+#endif
 
 @preconcurrency public class HTTPServer: URLProtocol {
     nonisolated(unsafe) static var kernel: HTTPKernel?

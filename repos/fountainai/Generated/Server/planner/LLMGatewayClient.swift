@@ -1,6 +1,8 @@
 import Foundation
 #if canImport(FoundationNetworking)
+#if canImport(FoundationNetworking)
 import FoundationNetworking
+#endif
 #endif
 
 /// Client for the LLM Gateway. When `LLM_GATEWAY_URL` is unset it returns

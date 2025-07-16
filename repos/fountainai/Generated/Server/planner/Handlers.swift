@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
 import FoundationNetworking
+#endif
 import ServiceShared
 
 /// Planner handlers orchestrating requests to the LLM Gateway and Function
