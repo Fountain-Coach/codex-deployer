@@ -30,7 +30,8 @@ public struct Handlers {
     public func addreflection(_ request: HTTPRequest, body: ReflectionRequest?) async throws -> HTTPResponse {
         guard let model = body else { return HTTPResponse(status: 400) }
         await store.addReflection(model)
-        return HTTPResponse()
+        let data = Data("\"ok\"".utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
 
     public func listhistory(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
@@ -45,7 +46,8 @@ public struct Handlers {
     public func adddrift(_ request: HTTPRequest, body: DriftRequest?) async throws -> HTTPResponse {
         guard let drift = body else { return HTTPResponse(status: 400) }
         await store.addDrift(drift)
-        return HTTPResponse()
+        let data = Data("\"ok\"".utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
 
     public func listhistoryanalytics(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
@@ -75,7 +77,8 @@ public struct Handlers {
     public func addpatterns(_ request: HTTPRequest, body: PatternsRequest?) async throws -> HTTPResponse {
         guard let patterns = body else { return HTTPResponse(status: 400) }
         await store.addPatterns(patterns)
-        return HTTPResponse()
+        let data = Data("\"ok\"".utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
 
     public func healthHealthGet(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
@@ -102,6 +105,7 @@ public struct Handlers {
     public func addbaseline(_ request: HTTPRequest, body: BaselineRequest?) async throws -> HTTPResponse {
         guard let baseline = body else { return HTTPResponse(status: 400) }
         await store.addBaseline(baseline)
-        return HTTPResponse()
+        let data = Data("\"ok\"".utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
 }
