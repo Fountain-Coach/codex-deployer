@@ -1,5 +1,7 @@
 import XCTest
+#if canImport(FoundationNetworking)
 import FoundationNetworking
+#endif
 @testable import Parser
 @testable import ServerGenerator
 

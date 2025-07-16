@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
 import FoundationNetworking
+#endif
 
 private struct CorpusCreateRequest: Codable {
     let corpusId: String

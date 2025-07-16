@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
 import FoundationNetworking
+#endif
 import ServiceShared
 
 /// Client for delegating executions to the Function Caller service. When
