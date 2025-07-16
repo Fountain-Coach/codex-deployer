@@ -4,7 +4,6 @@ import ModelEmitter
 import ClientGenerator
 import ServerGenerator
 
-@main
 struct GeneratorCLI {
     static func run(args: [String]) throws {
         var inputPath: String?
@@ -34,3 +33,5 @@ struct GeneratorCLI {
         try run(args: Array(CommandLine.arguments.dropFirst()))
     }
 }
+
+try GeneratorCLI.main()
