@@ -1777,3 +1777,1451 @@ error: fatalError
 [2025-07-16T04:33:12.755450] swift test failed with exit code 1
 [2025-07-16T04:33:12.893175] [dispatcher] Updated git remote to use token-based authentication.
 [2025-07-16T04:33:16.291353] Opened PR #141 for Fountain-Coach/codex-deployer
+[2025-07-16T04:34:18.032807] PR #141 merged
+[2025-07-16T04:34:19.105397] [dispatcher] Running Docker build...
+[2025-07-16T04:34:19.106183] [dispatcher] Running tests...
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [planner internal] load build definition from Dockerfile
+#1 transferring dockerfile: 266B done
+#1 DONE 0.0s
+
+#2 [tools-factory internal] load build definition from Dockerfile
+#2 transferring dockerfile: 284B done
+#2 DONE 0.0s
+
+#3 [persist internal] load build definition from Dockerfile
+#3 transferring dockerfile: 266B done
+#3 DONE 0.0s
+
+#4 [bootstrap internal] load build definition from Dockerfile
+#4 transferring dockerfile: 272B done
+#4 DONE 0.0s
+
+#5 [llm-gateway internal] load build definition from Dockerfile
+#5 transferring dockerfile: 278B done
+#5 DONE 0.0s
+
+#6 [function-caller internal] load build definition from Dockerfile
+#6 transferring dockerfile: 290B done
+#6 DONE 0.0s
+
+#7 [baseline-awareness internal] load build definition from Dockerfile
+#7 transferring dockerfile: 299B done
+#7 DONE 0.0s
+
+#8 [function-caller internal] load metadata for docker.io/library/ubuntu:22.04
+#8 DONE 1.0s
+
+#9 [baseline-awareness internal] load metadata for docker.io/library/swift:6.1-jammy
+#9 DONE 1.4s
+
+#10 [persist internal] load .dockerignore
+#10 transferring context: 2B done
+#10 DONE 0.0s
+
+#11 [llm-gateway internal] load .dockerignore
+#11 transferring context: 2B done
+#11 DONE 0.0s
+
+#12 [planner internal] load .dockerignore
+#12 transferring context: 2B done
+#12 DONE 0.0s
+
+#13 [bootstrap internal] load .dockerignore
+#13 transferring context: 2B done
+#13 DONE 0.0s
+
+#14 [function-caller internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.0s
+
+#15 [tools-factory internal] load .dockerignore
+#15 transferring context: 2B done
+#15 DONE 0.0s
+
+#16 [baseline-awareness internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.0s
+
+#17 [tools-factory build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:ec555b61cd4518a10311f36486a9e12d6dbd693c4ec42093c239e6eceff576d6
+#17 resolve docker.io/library/swift:6.1-jammy@sha256:ec555b61cd4518a10311f36486a9e12d6dbd693c4ec42093c239e6eceff576d6 done
+#17 DONE 0.0s
+
+#18 [baseline-awareness stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:3d256b40acbf7859ab80126ea5dca7527b6f72d2288cbd90be1369cc10fa9dfc
+#18 resolve docker.io/library/ubuntu:22.04@sha256:3d256b40acbf7859ab80126ea5dca7527b6f72d2288cbd90be1369cc10fa9dfc 0.0s done
+#18 DONE 0.0s
+
+#19 [tools-factory internal] load build context
+#19 transferring context: 10.79MB 4.9s
+#19 ...
+
+#20 [function-caller internal] load build context
+#20 ...
+
+#19 [tools-factory internal] load build context
+#19 transferring context: 17.30MB 6.3s done
+#19 DONE 6.6s
+
+#21 [bootstrap internal] load build context
+#21 transferring context: 17.30MB 6.3s done
+#21 DONE 6.6s
+
+#22 [planner internal] load build context
+#22 transferring context: 17.30MB 6.4s done
+#22 DONE 6.6s
+
+#23 [persist internal] load build context
+#23 transferring context: 17.30MB 6.3s done
+#23 DONE 6.6s
+
+#24 [llm-gateway internal] load build context
+#24 transferring context: 17.30MB 6.3s done
+#24 DONE 6.6s
+
+#20 [function-caller internal] load build context
+#20 transferring context: 17.30MB 6.4s done
+#20 DONE 6.6s
+
+#25 [baseline-awareness internal] load build context
+#25 transferring context: 17.30MB 6.3s done
+#25 DONE 6.6s
+
+#26 [bootstrap build 2/4] WORKDIR /src
+#26 CACHED
+
+#27 [baseline-awareness build 3/4] COPY . .
+#27 DONE 5.2s
+
+#28 [tools-factory build 3/4] COPY . .
+#28 CACHED
+
+#29 [function-caller build 3/4] COPY . .
+#29 CACHED
+
+#30 [persist build 3/4] COPY . .
+#30 CACHED
+
+#31 [planner build 3/4] COPY . .
+#31 CACHED
+
+#32 [llm-gateway build 3/4] COPY . .
+#32 CACHED
+
+#33 [baseline-awareness build 3/4] COPY . .
+#33 CACHED
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 ...
+
+#35 [persist build 4/4] RUN swift build -c release --product persist-server
+#35 ...
+
+#36 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#36 ...
+
+#37 [planner build 4/4] RUN swift build -c release --product planner-server
+#37 ...
+
+#38 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#38 ...
+
+#39 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#39 ...
+
+#40 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#40 ...
+
+#37 [planner build 4/4] RUN swift build -c release --product planner-server
+#37 13.47 warning: 'src': found 64 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#37 13.47     /src/Generated/Server/planner/LLMGatewayClient.swift
+#37 13.47     /src/Generated/Server/Shared/TypesenseClient.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#37 13.47     /src/Generated/Server/function-caller/Logger.swift
+#37 13.47     /src/Generated/Server/function-caller/Router.swift
+#37 13.47     /src/Generated/Server/planner/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/bootstrap/main.swift
+#37 13.47     /src/Generated/Server/persist/Router.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/Dockerfile
+#37 13.47     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#37 13.47     /src/Generated/Server/function-caller/Dockerfile
+#37 13.47     /src/Generated/Server/persist/Dockerfile
+#37 13.47     /src/Generated/Server/bootstrap/Router.swift
+#37 13.47     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/persist/Handlers.swift
+#37 13.47     /src/Generated/Server/bootstrap/Models.swift
+#37 13.47     /src/Generated/Server/tools-factory/main.swift
+#37 13.47     /src/Generated/Server/llm-gateway/Router.swift
+#37 13.47     /src/Generated/Server/function-caller/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/llm-gateway/main.swift
+#37 13.47     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/planner/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/bootstrap/Dockerfile
+#37 13.47     /src/Generated/Server/baseline-awareness/Router.swift
+#37 13.47     /src/Generated/Server/persist/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/llm-gateway/Dockerfile
+#37 13.47     /src/Generated/Server/function-caller/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/main.swift
+#37 13.47     /src/Generated/Server/persist/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/planner/FunctionCallerClient.swift
+#37 13.47     /src/Generated/Server/tools-factory/Models.swift
+#37 13.47     /src/Generated/Server/tools-factory/Dockerfile
+#37 13.47     /src/Generated/Server/persist/main.swift
+#37 13.47     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/function-caller/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/llm-gateway/Models.swift
+#37 13.47     /src/Generated/Server/tools-factory/Router.swift
+#37 13.47     /src/Generated/Server/function-caller/Models.swift
+#37 13.47     /src/Generated/Server/planner/Router.swift
+#37 13.47     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/planner/Models.swift
+#37 13.47     /src/Generated/Server/tools-factory/Handlers.swift
+#37 13.47     /src/Generated/Server/llm-gateway/Handlers.swift
+#37 13.47     /src/Generated/Server/bootstrap/Handlers.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/Handlers.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/Models.swift
+#37 13.47     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/Shared/Models.swift
+#37 13.47     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/function-caller/main.swift
+#37 13.47     /src/Generated/Server/function-caller/Handlers.swift
+#37 13.47     /src/Generated/Server/planner/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/function-caller/Dispatcher.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/persist/Models.swift
+#37 13.47     /src/Generated/Server/persist/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/planner/Dockerfile
+#37 13.47     /src/Generated/Server/planner/Handlers.swift
+#37 13.47 warning: 'src': found 57 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#37 13.47     /src/Generated/Server/Shared/Models.swift
+#37 13.47     /src/Generated/Server/bootstrap/main.swift
+#37 13.47     /src/Generated/Server/persist/main.swift
+#37 13.47     /src/Generated/Server/function-caller/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/llm-gateway/Models.swift
+#37 13.47     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/bootstrap/Models.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#37 13.47     /src/Generated/Server/tools-factory/Router.swift
+#37 13.47     /src/Generated/Server/function-caller/Logger.swift
+#37 13.47     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/llm-gateway/main.swift
+#37 13.47     /src/Generated/Server/bootstrap/Dockerfile
+#37 13.47     /src/Generated/Server/function-caller/Router.swift
+#37 13.47     /src/Generated/Server/persist/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/bootstrap/Router.swift
+#37 13.47     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/tools-factory/Handlers.swift
+#37 13.47     /src/Generated/Server/function-caller/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/tools-factory/Models.swift
+#37 13.47     /src/Generated/Server/function-caller/Dispatcher.swift
+#37 13.47     /src/Generated/Server/function-caller/Handlers.swift
+#37 13.47     /src/Generated/Server/persist/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/function-caller/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/persist/Dockerfile
+#37 13.47     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/function-caller/main.swift
+#37 13.47     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/Models.swift
+#37 13.47     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/llm-gateway/Router.swift
+#37 13.47     /src/Generated/Server/planner/Dockerfile
+#37 13.47     /src/Generated/Server/bootstrap/Handlers.swift
+#37 13.47     /src/Generated/Server/Shared/TypesenseClient.swift
+#37 13.47     /src/Generated/Server/persist/Models.swift
+#37 13.47     /src/Generated/Server/persist/Router.swift
+#37 13.47     /src/Generated/Server/llm-gateway/Handlers.swift
+#37 13.47     /src/Generated/Server/function-caller/Dockerfile
+#37 13.47     /src/Generated/Server/baseline-awareness/main.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/Handlers.swift
+#37 13.47     /src/Generated/Server/persist/HTTPKernel.swift
+#37 13.47     /src/Generated/Server/persist/Handlers.swift
+#37 13.47     /src/Generated/Server/tools-factory/Dockerfile
+#37 13.47     /src/Generated/Server/tools-factory/main.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/Router.swift
+#37 13.47     /src/Generated/Server/planner/main.swift
+#37 13.47     /src/Generated/Server/function-caller/Models.swift
+#37 13.47     /src/Generated/Server/llm-gateway/Dockerfile
+#37 13.47     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#37 13.47     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#37 13.47     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#37 13.47     /src/Generated/Server/baseline-awareness/Dockerfile
+#37 15.13 Building for production...
+#37 15.17 [0/6] Write sources
+#37 15.31 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#37 ...
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 13.73 warning: 'src': found 64 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#34 13.73     /src/Generated/Server/persist/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/bootstrap/Router.swift
+#34 13.73     /src/Generated/Server/llm-gateway/Dockerfile
+#34 13.73     /src/Generated/Server/baseline-awareness/Handlers.swift
+#34 13.73     /src/Generated/Server/planner/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#34 13.73     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/bootstrap/Dockerfile
+#34 13.73     /src/Generated/Server/function-caller/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/persist/Router.swift
+#34 13.73     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/function-caller/Router.swift
+#34 13.73     /src/Generated/Server/bootstrap/Models.swift
+#34 13.73     /src/Generated/Server/llm-gateway/Handlers.swift
+#34 13.73     /src/Generated/Server/planner/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/tools-factory/Handlers.swift
+#34 13.73     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/function-caller/Dispatcher.swift
+#34 13.73     /src/Generated/Server/function-caller/Dockerfile
+#34 13.73     /src/Generated/Server/persist/main.swift
+#34 13.73     /src/Generated/Server/planner/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/main.swift
+#34 13.73     /src/Generated/Server/planner/Handlers.swift
+#34 13.73     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/function-caller/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/tools-factory/Dockerfile
+#34 13.73     /src/Generated/Server/function-caller/main.swift
+#34 13.73     /src/Generated/Server/llm-gateway/main.swift
+#34 13.73     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/bootstrap/Handlers.swift
+#34 13.73     /src/Generated/Server/function-caller/Handlers.swift
+#34 13.73     /src/Generated/Server/planner/Router.swift
+#34 13.73     /src/Generated/Server/llm-gateway/Models.swift
+#34 13.73     /src/Generated/Server/llm-gateway/Router.swift
+#34 13.73     /src/Generated/Server/persist/Handlers.swift
+#34 13.73     /src/Generated/Server/planner/Models.swift
+#34 13.73     /src/Generated/Server/planner/main.swift
+#34 13.73     /src/Generated/Server/planner/Dockerfile
+#34 13.73     /src/Generated/Server/function-caller/Logger.swift
+#34 13.73     /src/Generated/Server/Shared/Models.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/bootstrap/main.swift
+#34 13.73     /src/Generated/Server/persist/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/persist/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#34 13.73     /src/Generated/Server/planner/FunctionCallerClient.swift
+#34 13.73     /src/Generated/Server/planner/LLMGatewayClient.swift
+#34 13.73     /src/Generated/Server/persist/Dockerfile
+#34 13.73     /src/Generated/Server/function-caller/Models.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/Dockerfile
+#34 13.73     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/Models.swift
+#34 13.73     /src/Generated/Server/tools-factory/Router.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/Router.swift
+#34 13.73     /src/Generated/Server/Shared/TypesenseClient.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#34 13.73     /src/Generated/Server/tools-factory/Models.swift
+#34 13.73     /src/Generated/Server/function-caller/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/persist/Models.swift
+#34 13.73 warning: 'src': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#34 13.73     /src/Generated/Server/function-caller/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/function-caller/Dockerfile
+#34 13.73     /src/Generated/Server/function-caller/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/persist/main.swift
+#34 13.73     /src/Generated/Server/persist/Models.swift
+#34 13.73     /src/Generated/Server/function-caller/Models.swift
+#34 13.73     /src/Generated/Server/planner/LLMGatewayClient.swift
+#34 13.73     /src/Generated/Server/persist/Dockerfile
+#34 13.73     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#34 13.73     /src/Generated/Server/Shared/Models.swift
+#34 13.73     /src/Generated/Server/planner/Models.swift
+#34 13.73     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/persist/Handlers.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/function-caller/Dispatcher.swift
+#34 13.73     /src/Generated/Server/persist/Router.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/Handlers.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/llm-gateway/Models.swift
+#34 13.73     /src/Generated/Server/bootstrap/Models.swift
+#34 13.73     /src/Generated/Server/persist/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/bootstrap/main.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/Models.swift
+#34 13.73     /src/Generated/Server/persist/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/main.swift
+#34 13.73     /src/Generated/Server/bootstrap/Dockerfile
+#34 13.73     /src/Generated/Server/baseline-awareness/Dockerfile
+#34 13.73     /src/Generated/Server/planner/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/planner/Dockerfile
+#34 13.73     /src/Generated/Server/bootstrap/Handlers.swift
+#34 13.73     /src/Generated/Server/tools-factory/Dockerfile
+#34 13.73     /src/Generated/Server/function-caller/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/bootstrap/Router.swift
+#34 13.73     /src/Generated/Server/function-caller/Router.swift
+#34 13.73     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/function-caller/Handlers.swift
+#34 13.73     /src/Generated/Server/function-caller/Logger.swift
+#34 13.73     /src/Generated/Server/function-caller/main.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#34 13.73     /src/Generated/Server/llm-gateway/main.swift
+#34 13.73     /src/Generated/Server/planner/FunctionCallerClient.swift
+#34 13.73     /src/Generated/Server/planner/Handlers.swift
+#34 13.73     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/planner/Router.swift
+#34 13.73     /src/Generated/Server/tools-factory/main.swift
+#34 13.73     /src/Generated/Server/persist/HTTPRequest.swift
+#34 13.73     /src/Generated/Server/llm-gateway/Dockerfile
+#34 13.73     /src/Generated/Server/baseline-awareness/Router.swift
+#34 13.73     /src/Generated/Server/planner/main.swift
+#34 13.73     /src/Generated/Server/planner/HTTPResponse.swift
+#34 13.73     /src/Generated/Server/llm-gateway/Router.swift
+#34 13.73     /src/Generated/Server/Shared/TypesenseClient.swift
+#34 13.73     /src/Generated/Server/llm-gateway/Handlers.swift
+#34 13.73     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#34 13.73     /src/Generated/Server/planner/HTTPKernel.swift
+#34 13.73     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#34 15.45 Building for production...
+#34 15.49 [0/14] Write sources
+#34 16.04 [5/14] Write swift-version-24593BA9C3E375BF.txt
+#34 16.05 [6/14] Compiling writer.c
+#34 16.11 [7/14] Compiling reader.c
+#34 16.18 [8/14] Compiling parser.c
+#34 16.40 [9/15] Compiling api.c
+#34 16.74 [10/15] Compiling scanner.c
+#34 16.81 [11/15] Compiling emitter.c
+#34 ...
+
+#37 [planner build 4/4] RUN swift build -c release --product planner-server
+#37 20.85 [5/7] Compiling ServiceShared Models.swift
+#37 22.54 [6/8] Compiling PlannerService FunctionCallerClient.swift
+#37 ...
+
+#39 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#39 13.50 warning: 'src': found 64 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#39 13.50     /src/Generated/Server/llm-gateway/Handlers.swift
+#39 13.50     /src/Generated/Server/persist/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/bootstrap/main.swift
+#39 13.50     /src/Generated/Server/planner/LLMGatewayClient.swift
+#39 13.50     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/tools-factory/Router.swift
+#39 13.50     /src/Generated/Server/persist/Router.swift
+#39 13.50     /src/Generated/Server/planner/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/planner/Handlers.swift
+#39 13.50     /src/Generated/Server/persist/Handlers.swift
+#39 13.50     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/llm-gateway/Models.swift
+#39 13.50     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/function-caller/main.swift
+#39 13.50     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/Models.swift
+#39 13.50     /src/Generated/Server/function-caller/Dispatcher.swift
+#39 13.50     /src/Generated/Server/function-caller/Handlers.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/Router.swift
+#39 13.50     /src/Generated/Server/planner/Models.swift
+#39 13.50     /src/Generated/Server/function-caller/Logger.swift
+#39 13.50     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/bootstrap/Models.swift
+#39 13.50     /src/Generated/Server/bootstrap/Router.swift
+#39 13.50     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/planner/main.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/main.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/llm-gateway/Dockerfile
+#39 13.50     /src/Generated/Server/bootstrap/Handlers.swift
+#39 13.50     /src/Generated/Server/planner/Dockerfile
+#39 13.50     /src/Generated/Server/planner/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/tools-factory/Dockerfile
+#39 13.50     /src/Generated/Server/function-caller/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/planner/FunctionCallerClient.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/Handlers.swift
+#39 13.50     /src/Generated/Server/planner/Router.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/Dockerfile
+#39 13.50     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/function-caller/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/persist/Models.swift
+#39 13.50     /src/Generated/Server/function-caller/Dockerfile
+#39 13.50     /src/Generated/Server/planner/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/tools-factory/Handlers.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#39 13.50     /src/Generated/Server/tools-factory/main.swift
+#39 13.50     /src/Generated/Server/function-caller/Router.swift
+#39 13.50     /src/Generated/Server/persist/Dockerfile
+#39 13.50     /src/Generated/Server/tools-factory/Models.swift
+#39 13.50     /src/Generated/Server/function-caller/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/bootstrap/Dockerfile
+#39 13.50     /src/Generated/Server/llm-gateway/Router.swift
+#39 13.50     /src/Generated/Server/persist/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/Shared/Models.swift
+#39 13.50     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#39 13.50     /src/Generated/Server/function-caller/Models.swift
+#39 13.50     /src/Generated/Server/persist/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/Shared/TypesenseClient.swift
+#39 13.50     /src/Generated/Server/persist/main.swift
+#39 13.50 warning: 'src': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#39 13.50     /src/Generated/Server/persist/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/bootstrap/main.swift
+#39 13.50     /src/Generated/Server/planner/LLMGatewayClient.swift
+#39 13.50     /src/Generated/Server/tools-factory/Router.swift
+#39 13.50     /src/Generated/Server/persist/Router.swift
+#39 13.50     /src/Generated/Server/planner/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/planner/Handlers.swift
+#39 13.50     /src/Generated/Server/persist/Handlers.swift
+#39 13.50     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/function-caller/main.swift
+#39 13.50     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/Models.swift
+#39 13.50     /src/Generated/Server/function-caller/Dispatcher.swift
+#39 13.50     /src/Generated/Server/function-caller/Handlers.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/Router.swift
+#39 13.50     /src/Generated/Server/llm-gateway/main.swift
+#39 13.50     /src/Generated/Server/function-caller/Logger.swift
+#39 13.50     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/bootstrap/Models.swift
+#39 13.50     /src/Generated/Server/bootstrap/Router.swift
+#39 13.50     /src/Generated/Server/planner/Models.swift
+#39 13.50     /src/Generated/Server/planner/main.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/main.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/llm-gateway/Dockerfile
+#39 13.50     /src/Generated/Server/bootstrap/Handlers.swift
+#39 13.50     /src/Generated/Server/planner/Dockerfile
+#39 13.50     /src/Generated/Server/planner/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/tools-factory/Dockerfile
+#39 13.50     /src/Generated/Server/function-caller/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/planner/FunctionCallerClient.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/Handlers.swift
+#39 13.50     /src/Generated/Server/planner/Router.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/Dockerfile
+#39 13.50     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/function-caller/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/persist/Models.swift
+#39 13.50     /src/Generated/Server/function-caller/Dockerfile
+#39 13.50     /src/Generated/Server/planner/HTTPKernel.swift
+#39 13.50     /src/Generated/Server/tools-factory/Handlers.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#39 13.50     /src/Generated/Server/tools-factory/main.swift
+#39 13.50     /src/Generated/Server/function-caller/Router.swift
+#39 13.50     /src/Generated/Server/persist/Dockerfile
+#39 13.50     /src/Generated/Server/tools-factory/Models.swift
+#39 13.50     /src/Generated/Server/function-caller/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/bootstrap/Dockerfile
+#39 13.50     /src/Generated/Server/persist/HTTPResponse.swift
+#39 13.50     /src/Generated/Server/Shared/Models.swift
+#39 13.50     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#39 13.50     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#39 13.50     /src/Generated/Server/function-caller/Models.swift
+#39 13.50     /src/Generated/Server/persist/HTTPRequest.swift
+#39 13.50     /src/Generated/Server/Shared/TypesenseClient.swift
+#39 13.50     /src/Generated/Server/persist/main.swift
+#39 15.18 Building for production...
+#39 15.22 [0/6] Write sources
+#39 15.35 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#39 20.93 [5/7] Compiling ServiceShared Models.swift
+#39 22.14 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+#39 23.08 [7/9] Compiling LLMGatewayServer main.swift
+#39 23.09 [7/9] Write Objects.LinkFileList
+#39 23.30 [8/9] Linking llm-gateway-server
+#39 23.31 Build of product 'llm-gateway-server' complete! (21.69s)
+#39 DONE 23.6s
+
+#35 [persist build 4/4] RUN swift build -c release --product persist-server
+#35 13.71 warning: 'src': found 64 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#35 13.71     /src/Generated/Server/Shared/TypesenseClient.swift
+#35 13.71     /src/Generated/Server/bootstrap/main.swift
+#35 13.71     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/tools-factory/Models.swift
+#35 13.71     /src/Generated/Server/function-caller/Dockerfile
+#35 13.71     /src/Generated/Server/function-caller/Handlers.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/Dockerfile
+#35 13.71     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/function-caller/Models.swift
+#35 13.71     /src/Generated/Server/planner/Handlers.swift
+#35 13.71     /src/Generated/Server/planner/FunctionCallerClient.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/Handlers.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#35 13.71     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/persist/Dockerfile
+#35 13.71     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#35 13.71     /src/Generated/Server/function-caller/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/function-caller/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/persist/Models.swift
+#35 13.71     /src/Generated/Server/llm-gateway/Dockerfile
+#35 13.71     /src/Generated/Server/persist/Handlers.swift
+#35 13.71     /src/Generated/Server/planner/Router.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/function-caller/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/persist/Router.swift
+#35 13.71     /src/Generated/Server/bootstrap/Handlers.swift
+#35 13.71     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/Shared/Models.swift
+#35 13.71     /src/Generated/Server/bootstrap/Models.swift
+#35 13.71     /src/Generated/Server/bootstrap/Router.swift
+#35 13.71     /src/Generated/Server/function-caller/Dispatcher.swift
+#35 13.71     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/llm-gateway/Router.swift
+#35 13.71     /src/Generated/Server/persist/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/planner/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/planner/LLMGatewayClient.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/Models.swift
+#35 13.71     /src/Generated/Server/persist/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/function-caller/main.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/tools-factory/Router.swift
+#35 13.71     /src/Generated/Server/tools-factory/main.swift
+#35 13.71     /src/Generated/Server/planner/main.swift
+#35 13.71     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/function-caller/Logger.swift
+#35 13.71     /src/Generated/Server/tools-factory/Handlers.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/Router.swift
+#35 13.71     /src/Generated/Server/function-caller/Router.swift
+#35 13.71     /src/Generated/Server/llm-gateway/main.swift
+#35 13.71     /src/Generated/Server/planner/Models.swift
+#35 13.71     /src/Generated/Server/planner/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/main.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#35 13.71     /src/Generated/Server/llm-gateway/Models.swift
+#35 13.71     /src/Generated/Server/bootstrap/Dockerfile
+#35 13.71     /src/Generated/Server/persist/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/planner/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/tools-factory/Dockerfile
+#35 13.71     /src/Generated/Server/llm-gateway/Handlers.swift
+#35 13.71     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/planner/Dockerfile
+#35 13.71 warning: 'src': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#35 13.71     /src/Generated/Server/Shared/TypesenseClient.swift
+#35 13.71     /src/Generated/Server/bootstrap/main.swift
+#35 13.71     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/tools-factory/Models.swift
+#35 13.71     /src/Generated/Server/function-caller/Dockerfile
+#35 13.71     /src/Generated/Server/function-caller/Handlers.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/Dockerfile
+#35 13.71     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/function-caller/Models.swift
+#35 13.71     /src/Generated/Server/planner/Handlers.swift
+#35 13.71     /src/Generated/Server/planner/FunctionCallerClient.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/Handlers.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#35 13.71     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/persist/Dockerfile
+#35 13.71     /src/Generated/Server/persist/main.swift
+#35 13.71     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#35 13.71     /src/Generated/Server/function-caller/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/function-caller/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/llm-gateway/Dockerfile
+#35 13.71     /src/Generated/Server/planner/Router.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/function-caller/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/bootstrap/Handlers.swift
+#35 13.71     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/Shared/Models.swift
+#35 13.71     /src/Generated/Server/bootstrap/Models.swift
+#35 13.71     /src/Generated/Server/bootstrap/Router.swift
+#35 13.71     /src/Generated/Server/function-caller/Dispatcher.swift
+#35 13.71     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/llm-gateway/Router.swift
+#35 13.71     /src/Generated/Server/planner/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/planner/LLMGatewayClient.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/Models.swift
+#35 13.71     /src/Generated/Server/tools-factory/Router.swift
+#35 13.71     /src/Generated/Server/function-caller/main.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#35 13.71     /src/Generated/Server/tools-factory/main.swift
+#35 13.71     /src/Generated/Server/planner/main.swift
+#35 13.71     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/function-caller/Logger.swift
+#35 13.71     /src/Generated/Server/tools-factory/Handlers.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/Router.swift
+#35 13.71     /src/Generated/Server/function-caller/Router.swift
+#35 13.71     /src/Generated/Server/llm-gateway/main.swift
+#35 13.71     /src/Generated/Server/planner/Models.swift
+#35 13.71     /src/Generated/Server/planner/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/main.swift
+#35 13.71     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#35 13.71     /src/Generated/Server/llm-gateway/Models.swift
+#35 13.71     /src/Generated/Server/bootstrap/Dockerfile
+#35 13.71     /src/Generated/Server/tools-factory/Dockerfile
+#35 13.71     /src/Generated/Server/planner/HTTPResponse.swift
+#35 13.71     /src/Generated/Server/llm-gateway/Handlers.swift
+#35 13.71     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#35 13.71     /src/Generated/Server/planner/Dockerfile
+#35 15.39 Building for production...
+#35 15.44 [0/6] Write sources
+#35 15.70 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#35 20.81 [5/7] Compiling ServiceShared Models.swift
+#35 22.27 [6/8] Compiling PersistService HTTPKernel.swift
+#35 22.27 /src/Generated/Server/persist/Handlers.swift:14:19: warning: immutable value 'corpusId' was never used; consider replacing with '_' or removing it
+#35 22.27 12 |     }
+#35 22.27 13 |     public func addbaseline(_ request: HTTPRequest) async throws -> HTTPResponse {
+#35 22.27 14 |         guard let corpusId = request.path.split(separator: "/").dropFirst(2).first,
+#35 22.27    |                   `- warning: immutable value 'corpusId' was never used; consider replacing with '_' or removing it
+#35 22.27 15 |               let model = try? JSONDecoder().decode(Baseline.self, from: request.body) else {
+#35 22.27 16 |             return HTTPResponse(status: 400)
+#35 22.27 
+#35 22.27 /src/Generated/Server/persist/Handlers.swift:33:19: warning: immutable value 'corpusId' was never used; consider replacing with '_' or removing it
+#35 22.27 31 | 
+#35 22.27 32 |     public func addreflection(_ request: HTTPRequest) async throws -> HTTPResponse {
+#35 22.27 33 |         guard let corpusId = request.path.split(separator: "/").dropFirst(2).first,
+#35 22.27    |                   `- warning: immutable value 'corpusId' was never used; consider replacing with '_' or removing it
+#35 22.27 34 |               let reflection = try? JSONDecoder().decode(Reflection.self, from: request.body) else {
+#35 22.27 35 |             return HTTPResponse(status: 400)
+#35 23.21 [7/9] Compiling PersistServer main.swift
+#35 23.21 [7/9] Write Objects.LinkFileList
+#35 23.55 [8/9] Linking persist-server
+#35 23.58 Build of product 'persist-server' complete! (21.96s)
+#35 DONE 23.6s
+
+#41 [llm-gateway stage-1 2/2] COPY --from=build /src/.build/release/llm-gateway-server /server
+#41 CACHED
+
+#42 [llm-gateway] exporting to image
+#42 exporting layers done
+#42 writing image sha256:b242dd8971cd9a5cf1dd6497c19a6c5beb87b7d89ff8d7d6f4ef274146cbb5cb done
+#42 naming to docker.io/library/fountainai-llm-gateway
+#42 naming to docker.io/library/fountainai-llm-gateway done
+#42 DONE 0.0s
+
+#43 [persist stage-1 2/2] COPY --from=build /src/.build/release/persist-server /server
+#43 CACHED
+
+#44 [persist] exporting to image
+#44 exporting layers done
+#44 writing image sha256:bc1e88fc274123a9b6f734341ed87cacd63ce63fc6c68d97e0c6b15b2a2fe10a done
+#44 naming to docker.io/library/fountainai-persist done
+#44 DONE 0.0s
+
+#45 [persist] resolving provenance for metadata file
+#45 DONE 0.0s
+
+#40 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#40 13.62 warning: 'src': found 64 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#40 13.62     /src/Generated/Server/Shared/TypesenseClient.swift
+#40 13.62     /src/Generated/Server/tools-factory/main.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#40 13.62     /src/Generated/Server/planner/Dockerfile
+#40 13.62     /src/Generated/Server/llm-gateway/Models.swift
+#40 13.62     /src/Generated/Server/bootstrap/Dockerfile
+#40 13.62     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/llm-gateway/Router.swift
+#40 13.62     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/tools-factory/Dockerfile
+#40 13.62     /src/Generated/Server/function-caller/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/bootstrap/Models.swift
+#40 13.62     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/planner/Models.swift
+#40 13.62     /src/Generated/Server/function-caller/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/persist/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#40 13.62     /src/Generated/Server/bootstrap/main.swift
+#40 13.62     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#40 13.62     /src/Generated/Server/persist/Handlers.swift
+#40 13.62     /src/Generated/Server/planner/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/Handlers.swift
+#40 13.62     /src/Generated/Server/function-caller/Logger.swift
+#40 13.62     /src/Generated/Server/function-caller/Models.swift
+#40 13.62     /src/Generated/Server/tools-factory/Handlers.swift
+#40 13.62     /src/Generated/Server/persist/Models.swift
+#40 13.62     /src/Generated/Server/persist/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/persist/main.swift
+#40 13.62     /src/Generated/Server/bootstrap/Handlers.swift
+#40 13.62     /src/Generated/Server/persist/Dockerfile
+#40 13.62     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/planner/LLMGatewayClient.swift
+#40 13.62     /src/Generated/Server/planner/Router.swift
+#40 13.62     /src/Generated/Server/tools-factory/Models.swift
+#40 13.62     /src/Generated/Server/planner/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/bootstrap/Router.swift
+#40 13.62     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/persist/Router.swift
+#40 13.62     /src/Generated/Server/Shared/Models.swift
+#40 13.62     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/function-caller/Dockerfile
+#40 13.62     /src/Generated/Server/llm-gateway/Handlers.swift
+#40 13.62     /src/Generated/Server/tools-factory/Router.swift
+#40 13.62     /src/Generated/Server/function-caller/Handlers.swift
+#40 13.62     /src/Generated/Server/planner/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/Dockerfile
+#40 13.62     /src/Generated/Server/baseline-awareness/Router.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/main.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/Models.swift
+#40 13.62     /src/Generated/Server/persist/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/planner/main.swift
+#40 13.62     /src/Generated/Server/planner/Handlers.swift
+#40 13.62     /src/Generated/Server/planner/FunctionCallerClient.swift
+#40 13.62     /src/Generated/Server/llm-gateway/main.swift
+#40 13.62     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/function-caller/Router.swift
+#40 13.62     /src/Generated/Server/function-caller/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/llm-gateway/Dockerfile
+#40 13.62     /src/Generated/Server/function-caller/Dispatcher.swift
+#40 13.62 warning: 'src': found 57 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#40 13.62     /src/Generated/Server/Shared/TypesenseClient.swift
+#40 13.62     /src/Generated/Server/tools-factory/main.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#40 13.62     /src/Generated/Server/planner/Dockerfile
+#40 13.62     /src/Generated/Server/llm-gateway/Models.swift
+#40 13.62     /src/Generated/Server/bootstrap/Dockerfile
+#40 13.62     /src/Generated/Server/function-caller/main.swift
+#40 13.62     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/llm-gateway/Router.swift
+#40 13.62     /src/Generated/Server/tools-factory/Dockerfile
+#40 13.62     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/bootstrap/Models.swift
+#40 13.62     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/planner/Models.swift
+#40 13.62     /src/Generated/Server/persist/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#40 13.62     /src/Generated/Server/bootstrap/main.swift
+#40 13.62     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#40 13.62     /src/Generated/Server/persist/Handlers.swift
+#40 13.62     /src/Generated/Server/planner/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/Handlers.swift
+#40 13.62     /src/Generated/Server/tools-factory/Handlers.swift
+#40 13.62     /src/Generated/Server/persist/Models.swift
+#40 13.62     /src/Generated/Server/persist/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/persist/main.swift
+#40 13.62     /src/Generated/Server/bootstrap/Handlers.swift
+#40 13.62     /src/Generated/Server/persist/Dockerfile
+#40 13.62     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/planner/LLMGatewayClient.swift
+#40 13.62     /src/Generated/Server/planner/Router.swift
+#40 13.62     /src/Generated/Server/tools-factory/Models.swift
+#40 13.62     /src/Generated/Server/planner/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/bootstrap/Router.swift
+#40 13.62     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#40 13.62     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/persist/Router.swift
+#40 13.62     /src/Generated/Server/Shared/Models.swift
+#40 13.62     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/function-caller/Dockerfile
+#40 13.62     /src/Generated/Server/llm-gateway/Handlers.swift
+#40 13.62     /src/Generated/Server/tools-factory/Router.swift
+#40 13.62     /src/Generated/Server/planner/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/Dockerfile
+#40 13.62     /src/Generated/Server/baseline-awareness/Router.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/main.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/Models.swift
+#40 13.62     /src/Generated/Server/persist/HTTPKernel.swift
+#40 13.62     /src/Generated/Server/planner/main.swift
+#40 13.62     /src/Generated/Server/planner/Handlers.swift
+#40 13.62     /src/Generated/Server/planner/FunctionCallerClient.swift
+#40 13.62     /src/Generated/Server/llm-gateway/main.swift
+#40 13.62     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#40 13.62     /src/Generated/Server/llm-gateway/Dockerfile
+#40 15.32 Building for production...
+#40 15.36 [0/14] Write sources
+#40 16.05 [5/14] Write swift-version-24593BA9C3E375BF.txt
+#40 16.07 [6/14] Compiling writer.c
+#40 16.08 [6/14] Compiling reader.c
+#40 16.40 [8/15] Compiling parser.c
+#40 16.40 [9/15] Compiling api.c
+#40 16.60 [10/15] Compiling emitter.c
+#40 17.39 [11/15] Compiling scanner.c
+#40 22.04 [13/16] Compiling ServiceShared Models.swift
+#40 ...
+
+#46 [llm-gateway] resolving provenance for metadata file
+#46 DONE 0.0s
+
+#37 [planner build 4/4] RUN swift build -c release --product planner-server
+#37 23.56 [7/9] Compiling PlannerServer main.swift
+#37 23.57 [7/9] Write Objects.LinkFileList
+#37 23.86 [8/9] Linking planner-server
+#37 23.86 Build of product 'planner-server' complete! (22.24s)
+#37 DONE 23.9s
+
+#36 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#36 13.73 warning: 'src': found 64 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#36 13.73     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/tools-factory/Handlers.swift
+#36 13.73     /src/Generated/Server/function-caller/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/bootstrap/Dockerfile
+#36 13.73     /src/Generated/Server/tools-factory/main.swift
+#36 13.73     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/Dockerfile
+#36 13.73     /src/Generated/Server/llm-gateway/Handlers.swift
+#36 13.73     /src/Generated/Server/llm-gateway/Models.swift
+#36 13.73     /src/Generated/Server/persist/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/planner/FunctionCallerClient.swift
+#36 13.73     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/persist/Dockerfile
+#36 13.73     /src/Generated/Server/persist/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/persist/Router.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/main.swift
+#36 13.73     /src/Generated/Server/planner/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/persist/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/planner/Handlers.swift
+#36 13.73     /src/Generated/Server/bootstrap/Models.swift
+#36 13.73     /src/Generated/Server/persist/Handlers.swift
+#36 13.73     /src/Generated/Server/Shared/TypesenseClient.swift
+#36 13.73     /src/Generated/Server/planner/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/function-caller/Logger.swift
+#36 13.73     /src/Generated/Server/llm-gateway/Router.swift
+#36 13.73     /src/Generated/Server/function-caller/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/function-caller/Handlers.swift
+#36 13.73     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/planner/main.swift
+#36 13.73     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/bootstrap/Handlers.swift
+#36 13.73     /src/Generated/Server/tools-factory/Dockerfile
+#36 13.73     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#36 13.73     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/persist/Models.swift
+#36 13.73     /src/Generated/Server/planner/Dockerfile
+#36 13.73     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/persist/main.swift
+#36 13.73     /src/Generated/Server/planner/LLMGatewayClient.swift
+#36 13.73     /src/Generated/Server/function-caller/Dispatcher.swift
+#36 13.73     /src/Generated/Server/function-caller/Router.swift
+#36 13.73     /src/Generated/Server/tools-factory/Router.swift
+#36 13.73     /src/Generated/Server/tools-factory/Models.swift
+#36 13.73     /src/Generated/Server/Shared/Models.swift
+#36 13.73     /src/Generated/Server/bootstrap/Router.swift
+#36 13.73     /src/Generated/Server/function-caller/Dockerfile
+#36 13.73     /src/Generated/Server/baseline-awareness/Handlers.swift
+#36 13.73     /src/Generated/Server/llm-gateway/main.swift
+#36 13.73     /src/Generated/Server/planner/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/planner/Router.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/Models.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#36 13.73     /src/Generated/Server/function-caller/Models.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/Router.swift
+#36 13.73     /src/Generated/Server/llm-gateway/Dockerfile
+#36 13.73     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/function-caller/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/function-caller/main.swift
+#36 13.73     /src/Generated/Server/planner/Models.swift
+#36 13.73 warning: 'src': found 59 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#36 13.73     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/tools-factory/Handlers.swift
+#36 13.73     /src/Generated/Server/function-caller/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/bootstrap/Dockerfile
+#36 13.73     /src/Generated/Server/tools-factory/main.swift
+#36 13.73     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/Dockerfile
+#36 13.73     /src/Generated/Server/llm-gateway/Handlers.swift
+#36 13.73     /src/Generated/Server/llm-gateway/Models.swift
+#36 13.73     /src/Generated/Server/persist/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/planner/FunctionCallerClient.swift
+#36 13.73     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/persist/Dockerfile
+#36 13.73     /src/Generated/Server/persist/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/persist/Router.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/main.swift
+#36 13.73     /src/Generated/Server/planner/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/persist/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/planner/Handlers.swift
+#36 13.73     /src/Generated/Server/persist/Handlers.swift
+#36 13.73     /src/Generated/Server/Shared/TypesenseClient.swift
+#36 13.73     /src/Generated/Server/planner/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/function-caller/Logger.swift
+#36 13.73     /src/Generated/Server/llm-gateway/Router.swift
+#36 13.73     /src/Generated/Server/function-caller/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/function-caller/Handlers.swift
+#36 13.73     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/planner/main.swift
+#36 13.73     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/tools-factory/Dockerfile
+#36 13.73     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#36 13.73     /src/Generated/Server/persist/Models.swift
+#36 13.73     /src/Generated/Server/planner/Dockerfile
+#36 13.73     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/persist/main.swift
+#36 13.73     /src/Generated/Server/planner/LLMGatewayClient.swift
+#36 13.73     /src/Generated/Server/function-caller/Dispatcher.swift
+#36 13.73     /src/Generated/Server/function-caller/Router.swift
+#36 13.73     /src/Generated/Server/tools-factory/Router.swift
+#36 13.73     /src/Generated/Server/tools-factory/Models.swift
+#36 13.73     /src/Generated/Server/Shared/Models.swift
+#36 13.73     /src/Generated/Server/function-caller/Dockerfile
+#36 13.73     /src/Generated/Server/baseline-awareness/Handlers.swift
+#36 13.73     /src/Generated/Server/bootstrap/main.swift
+#36 13.73     /src/Generated/Server/llm-gateway/main.swift
+#36 13.73     /src/Generated/Server/planner/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/planner/Router.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/Models.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#36 13.73     /src/Generated/Server/function-caller/Models.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/Router.swift
+#36 13.73     /src/Generated/Server/llm-gateway/Dockerfile
+#36 13.73     /src/Generated/Server/function-caller/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/function-caller/main.swift
+#36 13.73     /src/Generated/Server/planner/Models.swift
+#36 13.73 warning: 'src': found 58 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#36 13.73     /src/Generated/Server/tools-factory/Handlers.swift
+#36 13.73     /src/Generated/Server/function-caller/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/bootstrap/Dockerfile
+#36 13.73     /src/Generated/Server/tools-factory/main.swift
+#36 13.73     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/Dockerfile
+#36 13.73     /src/Generated/Server/llm-gateway/Handlers.swift
+#36 13.73     /src/Generated/Server/llm-gateway/Models.swift
+#36 13.73     /src/Generated/Server/persist/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/planner/FunctionCallerClient.swift
+#36 13.73     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/persist/Dockerfile
+#36 13.73     /src/Generated/Server/persist/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/persist/Router.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/main.swift
+#36 13.73     /src/Generated/Server/planner/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#36 13.73     /src/Generated/Server/persist/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/planner/Handlers.swift
+#36 13.73     /src/Generated/Server/bootstrap/Models.swift
+#36 13.73     /src/Generated/Server/persist/Handlers.swift
+#36 13.73     /src/Generated/Server/Shared/TypesenseClient.swift
+#36 13.73     /src/Generated/Server/planner/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/function-caller/Logger.swift
+#36 13.73     /src/Generated/Server/llm-gateway/Router.swift
+#36 13.73     /src/Generated/Server/function-caller/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/function-caller/Handlers.swift
+#36 13.73     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/planner/main.swift
+#36 13.73     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/bootstrap/Handlers.swift
+#36 13.73     /src/Generated/Server/tools-factory/Dockerfile
+#36 13.73     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/persist/Models.swift
+#36 13.73     /src/Generated/Server/planner/Dockerfile
+#36 13.73     /src/Generated/Server/planner/LLMGatewayClient.swift
+#36 13.73     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#36 13.73     /src/Generated/Server/persist/main.swift
+#36 13.73     /src/Generated/Server/function-caller/Dispatcher.swift
+#36 13.73     /src/Generated/Server/function-caller/Router.swift
+#36 13.73     /src/Generated/Server/tools-factory/Router.swift
+#36 13.73     /src/Generated/Server/tools-factory/Models.swift
+#36 13.73     /src/Generated/Server/Shared/Models.swift
+#36 13.73     /src/Generated/Server/bootstrap/Router.swift
+#36 13.73     /src/Generated/Server/function-caller/Dockerfile
+#36 13.73     /src/Generated/Server/bootstrap/main.swift
+#36 13.73     /src/Generated/Server/llm-gateway/main.swift
+#36 13.73     /src/Generated/Server/planner/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/planner/Router.swift
+#36 13.73     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#36 13.73     /src/Generated/Server/function-caller/Models.swift
+#36 13.73     /src/Generated/Server/llm-gateway/Dockerfile
+#36 13.73     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#36 13.73     /src/Generated/Server/function-caller/HTTPRequest.swift
+#36 13.73     /src/Generated/Server/function-caller/main.swift
+#36 13.73     /src/Generated/Server/planner/Models.swift
+#36 15.51 Building for production...
+#36 15.62 [0/7] Write sources
+#36 15.93 [4/7] Write swift-version-24593BA9C3E375BF.txt
+#36 21.35 [6/8] Compiling ServiceShared Models.swift
+#36 22.96 [7/9] Compiling BaselineAwarenessService BaselineStore.swift
+#36 ...
+
+#47 [planner stage-1 2/2] COPY --from=build /src/.build/release/planner-server /server
+#47 CACHED
+
+#48 [planner] exporting to image
+#48 exporting layers done
+#48 writing image sha256:76ef5274245e89938b70305fa7d2b4d109fa96f735e89c9a8f488d491a600c67 done
+#48 naming to docker.io/library/fountainai-planner done
+#48 DONE 0.0s
+
+#49 [planner] resolving provenance for metadata file
+#49 DONE 0.0s
+
+#38 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#38 13.68 warning: 'src': found 63 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#38 13.68     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#38 13.68     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/llm-gateway/main.swift
+#38 13.68     /src/Generated/Server/tools-factory/Router.swift
+#38 13.68     /src/Generated/Server/function-caller/main.swift
+#38 13.68     /src/Generated/Server/bootstrap/Models.swift
+#38 13.68     /src/Generated/Server/function-caller/Models.swift
+#38 13.68     /src/Generated/Server/persist/Router.swift
+#38 13.68     /src/Generated/Server/baseline-awareness/Models.swift
+#38 13.68     /src/Generated/Server/bootstrap/main.swift
+#38 13.68     /src/Generated/Server/function-caller/Dockerfile
+#38 13.68     /src/Generated/Server/persist/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/persist/Handlers.swift
+#38 13.68     /src/Generated/Server/planner/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/planner/LLMGatewayClient.swift
+#38 13.68     /src/Generated/Server/baseline-awareness/Handlers.swift
+#38 13.68     /src/Generated/Server/baseline-awareness/BaselineStore.swift
+#38 13.68     /src/Generated/Server/function-caller/Logger.swift
+#38 13.68     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#38 13.68     /src/Generated/Server/tools-factory/Models.swift
+#38 13.68     /src/Generated/Server/planner/FunctionCallerClient.swift
+#38 13.68     /src/Generated/Server/planner/HTTPRequest.swift
+#38 13.68     /src/Generated/Server/baseline-awareness/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/Shared/Models.swift
+#38 13.68     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/tools-factory/Handlers.swift
+#38 13.68     /src/Generated/Server/function-caller/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/function-caller/Handlers.swift
+#38 13.68     /src/Generated/Server/persist/Dockerfile
+#38 13.68     /src/Generated/Server/baseline-awareness/Router.swift
+#38 13.68     /src/Generated/Server/planner/Handlers.swift
+#38 13.68     /src/Generated/Server/persist/Models.swift
+#38 13.68     /src/Generated/Server/llm-gateway/Models.swift
+#38 13.68     /src/Generated/Server/baseline-awareness/HTTPRequest.swift
+#38 13.68     /src/Generated/Server/llm-gateway/Dockerfile
+#38 13.68     /src/Generated/Server/persist/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/planner/main.swift
+#38 13.68     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#38 13.68     /src/Generated/Server/bootstrap/Handlers.swift
+#38 13.68     /src/Generated/Server/tools-factory/main.swift
+#38 13.68     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/tools-factory/Dockerfile
+#38 13.68     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/planner/Models.swift
+#38 13.68     /src/Generated/Server/function-caller/Dispatcher.swift
+#38 13.68     /src/Generated/Server/function-caller/HTTPRequest.swift
+#38 13.68     /src/Generated/Server/function-caller/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/bootstrap/Router.swift
+#38 13.68     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/baseline-awareness/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/persist/HTTPRequest.swift
+#38 13.68     /src/Generated/Server/llm-gateway/Handlers.swift
+#38 13.68     /src/Generated/Server/Shared/TypesenseClient.swift
+#38 13.68     /src/Generated/Server/persist/main.swift
+#38 13.68     /src/Generated/Server/planner/Dockerfile
+#38 13.68     /src/Generated/Server/bootstrap/Dockerfile
+#38 13.68     /src/Generated/Server/baseline-awareness/Dockerfile
+#38 13.68     /src/Generated/Server/function-caller/Router.swift
+#38 13.68     /src/Generated/Server/planner/Router.swift
+#38 13.68     /src/Generated/Server/llm-gateway/Router.swift
+#38 13.68     /src/Generated/Server/planner/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#38 13.68 warning: 'src': found 58 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+#38 13.68     /src/Generated/Server/bootstrap/HTTPRequest.swift
+#38 13.68     /src/Generated/Server/baseline-awareness/main.swift
+#38 13.68     /src/Generated/Server/tools-factory/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/llm-gateway/main.swift
+#38 13.68     /src/Generated/Server/tools-factory/Router.swift
+#38 13.68     /src/Generated/Server/function-caller/main.swift
+#38 13.68     /src/Generated/Server/bootstrap/Models.swift
+#38 13.68     /src/Generated/Server/function-caller/Models.swift
+#38 13.68     /src/Generated/Server/persist/Router.swift
+#38 13.68     /src/Generated/Server/bootstrap/main.swift
+#38 13.68     /src/Generated/Server/function-caller/Dockerfile
+#38 13.68     /src/Generated/Server/persist/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/baseline-awareness/HTTPServer.swift
+#38 13.68     /src/Generated/Server/persist/Handlers.swift
+#38 13.68     /src/Generated/Server/planner/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/planner/LLMGatewayClient.swift
+#38 13.68     /src/Generated/Server/function-caller/Logger.swift
+#38 13.68     /src/Generated/Server/tools-factory/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/Shared/PrometheusAdapter.swift
+#38 13.68     /src/Generated/Server/tools-factory/Models.swift
+#38 13.68     /src/Generated/Server/planner/FunctionCallerClient.swift
+#38 13.68     /src/Generated/Server/planner/HTTPRequest.swift
+#38 13.68     /src/Generated/Server/Shared/Models.swift
+#38 13.68     /src/Generated/Server/bootstrap/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/tools-factory/Handlers.swift
+#38 13.68     /src/Generated/Server/function-caller/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/function-caller/Handlers.swift
+#38 13.68     /src/Generated/Server/persist/Dockerfile
+#38 13.68     /src/Generated/Server/planner/Handlers.swift
+#38 13.68     /src/Generated/Server/persist/Models.swift
+#38 13.68     /src/Generated/Server/llm-gateway/Models.swift
+#38 13.68     /src/Generated/Server/llm-gateway/Dockerfile
+#38 13.68     /src/Generated/Server/persist/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/planner/main.swift
+#38 13.68     /src/Generated/Server/llm-gateway/HTTPRequest.swift
+#38 13.68     /src/Generated/Server/bootstrap/Handlers.swift
+#38 13.68     /src/Generated/Server/tools-factory/main.swift
+#38 13.68     /src/Generated/Server/llm-gateway/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/tools-factory/Dockerfile
+#38 13.68     /src/Generated/Server/bootstrap/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/planner/Models.swift
+#38 13.68     /src/Generated/Server/function-caller/Dispatcher.swift
+#38 13.68     /src/Generated/Server/function-caller/HTTPRequest.swift
+#38 13.68     /src/Generated/Server/function-caller/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/bootstrap/Router.swift
+#38 13.68     /src/Generated/Server/llm-gateway/HTTPKernel.swift
+#38 13.68     /src/Generated/Server/persist/HTTPRequest.swift
+#38 13.68     /src/Generated/Server/llm-gateway/Handlers.swift
+#38 13.68     /src/Generated/Server/Shared/TypesenseClient.swift
+#38 13.68     /src/Generated/Server/persist/main.swift
+#38 13.68     /src/Generated/Server/planner/Dockerfile
+#38 13.68     /src/Generated/Server/bootstrap/Dockerfile
+#38 13.68     /src/Generated/Server/baseline-awareness/Dockerfile
+#38 13.68     /src/Generated/Server/function-caller/Router.swift
+#38 13.68     /src/Generated/Server/planner/Router.swift
+#38 13.68     /src/Generated/Server/llm-gateway/Router.swift
+#38 13.68     /src/Generated/Server/planner/HTTPResponse.swift
+#38 13.68     /src/Generated/Server/tools-factory/HTTPRequest.swift
+#38 15.40 Building for production...
+#38 15.43 [0/6] Write sources
+#38 15.68 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#38 20.93 [5/7] Compiling ServiceShared Models.swift
+#38 22.84 [6/8] Compiling BaselineAwarenessService BaselineStore.swift
+#38 24.10 [7/9] Compiling BaselineAwarenessServer HTTPServer.swift
+#38 24.10 /src/Generated/Server/baseline-awareness/HTTPServer.swift:35:14: warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+#38 24.10 33 |         )
+#38 24.10 34 |         let client = self.client
+#38 24.10 35 |         Task { [client] in
+#38 24.10    |              `- warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+#38 24.10 36 |             do {
+#38 24.10 37 |                 let resp = try await kernel.handle(req)
+#38 24.10    :
+#38 24.10 42 |                     headerFields: resp.headers
+#38 24.10 43 |                 )!
+#38 24.10 44 |                 client?.urlProtocol(self, didReceive: httpResponse, cacheStoragePolicy: .notAllowed)
+#38 24.10    |                                     `- note: closure captures 'self' which is accessible to code in the current task
+#38 24.10 45 |                 client?.urlProtocol(self, didLoad: resp.body)
+#38 24.10 46 |                 client?.urlProtocolDidFinishLoading(self)
+#38 24.11 [7/9] Write Objects.LinkFileList
+#38 24.26 [8/9] Linking baseline-awareness-server
+#38 ...
+
+#36 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#36 24.17 [8/10] Compiling BootstrapService HTTPKernel.swift
+#36 ...
+
+#38 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#38 24.26 Build of product 'baseline-awareness-server' complete! (22.64s)
+#38 DONE 24.3s
+
+#50 [baseline-awareness stage-1 2/2] COPY --from=build /src/.build/release/baseline-awareness-server /server
+#50 CACHED
+
+#51 [baseline-awareness] exporting to image
+#51 exporting layers done
+#51 writing image sha256:213d3f58687982c491078818573d05b9f336275d8c6dfe694c669684a2d897b0 done
+#51 naming to docker.io/library/fountainai-baseline-awareness done
+#51 DONE 0.0s
+
+#52 [baseline-awareness] resolving provenance for metadata file
+#52 DONE 0.0s
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 21.31 [13/16] Compiling ServiceShared Models.swift
+#34 ...
+
+#36 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#36 24.77 [9/11] Compiling BootstrapServer main.swift
+#36 24.78 [9/11] Write Objects.LinkFileList
+#36 24.92 [10/11] Linking bootstrap-server
+#36 24.93 Build of product 'bootstrap-server' complete! (23.31s)
+#36 DONE 25.0s
+
+#53 [bootstrap stage-1 2/2] COPY --from=build /src/.build/release/bootstrap-server /server
+#53 CACHED
+
+#54 [bootstrap] exporting to image
+#54 exporting layers done
+#54 writing image sha256:11781d116044a68cdc01a00169c5338dd0e2b1095a10513ca18838feec109163 done
+#54 naming to docker.io/library/fountainai-bootstrap done
+#54 DONE 0.0s
+
+#55 [bootstrap] resolving provenance for metadata file
+#55 DONE 0.0s
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 27.02 [14/16] Compiling Yams AliasDereferencingStrategy.swift
+#34 28.38 [15/17] Compiling Parser OpenAPISpec.swift
+#34 28.38 /src/Sources/Parser/SpecLoader.swift:31:67: warning: expression implicitly coerced from 'Any?' to 'Any'
+#34 28.38 29 |         }
+#34 28.38 30 | 
+#34 28.38 31 |         let jsonData = try JSONSerialization.data(withJSONObject: yamlObject, options: [])
+#34 28.38    |                                                                   |- warning: expression implicitly coerced from 'Any?' to 'Any'
+#34 28.38    |                                                                   |- note: provide a default value to avoid this warning
+#34 28.38    |                                                                   |- note: force-unwrap the value to avoid this warning
+#34 28.38    |                                                                   `- note: explicitly cast to 'Any' with 'as Any' to silence this warning
+#34 28.38 32 |         let spec = try JSONDecoder().decode(OpenAPISpec.self, from: jsonData)
+#34 28.38 33 |         try SpecValidator.validate(spec)
+#34 28.92 [16/18] Compiling ToolsFactoryService HTTPKernel.swift
+#34 29.41 [17/19] Compiling ToolsFactoryServer main.swift
+#34 29.42 [17/19] Write Objects.LinkFileList
+#34 29.56 [18/19] Linking tools-factory-server
+#34 29.57 Build of product 'tools-factory-server' complete! (27.95s)
+#34 DONE 29.6s
+
+#56 [tools-factory stage-1 2/2] COPY --from=build /src/.build/release/tools-factory-server /server
+#56 CACHED
+
+#57 [tools-factory] exporting to image
+#57 exporting layers done
+#57 writing image sha256:2f2e30fc5b240ce8f079070c0c7b2a0350c303113c1fbbcbb78b163787f9aff5
+#57 writing image sha256:2f2e30fc5b240ce8f079070c0c7b2a0350c303113c1fbbcbb78b163787f9aff5 done
+#57 naming to docker.io/library/fountainai-tools-factory done
+#57 DONE 0.0s
+
+#58 [tools-factory] resolving provenance for metadata file
+#58 DONE 0.0s
+
+#40 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#40 27.24 [14/16] Compiling Yams AliasDereferencingStrategy.swift
+#40 28.58 [15/17] Compiling Parser OpenAPISpec.swift
+#40 28.58 /src/Sources/Parser/SpecLoader.swift:31:67: warning: expression implicitly coerced from 'Any?' to 'Any'
+#40 28.58 29 |         }
+#40 28.58 30 | 
+#40 28.58 31 |         let jsonData = try JSONSerialization.data(withJSONObject: yamlObject, options: [])
+#40 28.58    |                                                                   |- warning: expression implicitly coerced from 'Any?' to 'Any'
+#40 28.58    |                                                                   |- note: provide a default value to avoid this warning
+#40 28.58    |                                                                   |- note: force-unwrap the value to avoid this warning
+#40 28.58    |                                                                   `- note: explicitly cast to 'Any' with 'as Any' to silence this warning
+#40 28.58 32 |         let spec = try JSONDecoder().decode(OpenAPISpec.self, from: jsonData)
+#40 28.58 33 |         try SpecValidator.validate(spec)
+#40 29.06 [16/18] Compiling FunctionCallerService Dispatcher.swift
+#40 29.54 [17/19] Compiling FunctionCallerServer main.swift
+#40 29.54 [17/19] Write Objects.LinkFileList
+#40 29.71 [18/19] Linking function-caller-server
+#40 29.71 Build of product 'function-caller-server' complete! (28.09s)
+#40 DONE 29.7s
+
+#59 [function-caller stage-1 2/2] COPY --from=build /src/.build/release/function-caller-server /server
+#59 CACHED
+
+#60 [function-caller] exporting to image
+#60 exporting layers done
+#60 writing image sha256:aed79130a58ce83dbf3fb0204a2a70914a727d97faf79d62e64f93ee4e9c1e5b done
+#60 naming to docker.io/library/fountainai-function-caller done
+#60 DONE 0.0s
+
+#61 [function-caller] resolving provenance for metadata file
+#61 DONE 0.0s
+ baseline-awareness  Built
+ bootstrap  Built
+ function-caller  Built
+ llm-gateway  Built
+ persist  Built
+ planner  Built
+ tools-factory  Built
+ Network fountainai_default  Creating
+ Network fountainai_default  Created
+ Container fountainai-llm-gateway-1  Creating
+ Container fountainai-function-caller-1  Creating
+ Container fountainai-tools-factory-1  Creating
+ Container fountainai-planner-1  Creating
+ Container fountainai-persist-1  Creating
+ Container fountainai-bootstrap-1  Creating
+ Container fountainai-baseline-awareness-1  Creating
+ Container fountainai-tools-factory-1  Created
+ Container fountainai-function-caller-1  Created
+ Container fountainai-planner-1  Created
+ Container fountainai-baseline-awareness-1  Created
+ Container fountainai-persist-1  Created
+ Container fountainai-bootstrap-1  Created
+ Container fountainai-llm-gateway-1  Created
+Attaching to baseline-awareness-1, bootstrap-1, function-caller-1, llm-gateway-1, persist-1, planner-1, tools-factory-1
+planner-1             | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+bootstrap-1           | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+baseline-awareness-1  | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+llm-gateway-1         | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+function-caller-1     | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+persist-1             | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+tools-factory-1       | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+[Kplanner-1 exited with code 127
+Aborting on container exit...
+ Container fountainai-planner-1  Stopping
+ Container fountainai-bootstrap-1  Stopping
+ Container fountainai-baseline-awareness-1  Stopping
+ Container fountainai-function-caller-1  Stopping
+ Container fountainai-llm-gateway-1  Stopping
+ Container fountainai-tools-factory-1  Stopping
+ Container fountainai-persist-1  Stopping
+ Container fountainai-baseline-awareness-1  Stopped
+ Container fountainai-bootstrap-1  Stopped
+ Container fountainai-planner-1  Stopped
+ Container fountainai-function-caller-1  Stopped
+ Container fountainai-llm-gateway-1  Stopped
+ Container fountainai-persist-1  Stopped
+ Container fountainai-tools-factory-1  Stopped
+ Container fountainai-tools-factory-1  Stopping
+ Container fountainai-baseline-awareness-1  Stopping
+ Container fountainai-bootstrap-1  Stopping
+ Container fountainai-function-caller-1  Stopping
+ Container fountainai-planner-1  Stopping
+ Container fountainai-llm-gateway-1  Stopping
+ Container fountainai-persist-1  Stopping
+ Container fountainai-tools-factory-1  Stopped
+ Container fountainai-tools-factory-1  Removing
+ Container fountainai-baseline-awareness-1  Stopped
+ Container fountainai-baseline-awareness-1  Removing
+ Container fountainai-bootstrap-1  Stopped
+ Container fountainai-bootstrap-1  Removing
+ Container fountainai-function-caller-1  Stopped
+ Container fountainai-function-caller-1  Removing
+ Container fountainai-llm-gateway-1  Stopped
+ Container fountainai-llm-gateway-1  Removing
+ Container fountainai-planner-1  Stopped
+ Container fountainai-planner-1  Removing
+ Container fountainai-persist-1  Stopped
+ Container fountainai-persist-1  Removing
+ Container fountainai-baseline-awareness-1  Removed
+ Container fountainai-tools-factory-1  Removed
+ Container fountainai-bootstrap-1  Removed
+ Container fountainai-llm-gateway-1  Removed
+ Container fountainai-planner-1  Removed
+ Container fountainai-function-caller-1  Removed
+ Container fountainai-persist-1  Removed
+ Network fountainai_default  Removing
+ Network fountainai_default  Removed
+ Network kong-codex_default  Creating
+ Network kong-codex_default  Created
+ Container kong-codex-kong-1  Creating
+ Container kong-codex-typesense-1  Creating
+ Container kong-codex-kong-1  Created
+ Container kong-codex-typesense-1  Created
+Attaching to kong-1, typesense-1
+Error response from daemon: mounts denied: 
+The path /srv/deploy/repos/kong-codex/kong.conf is not shared from the host and is not known to Docker.
+You can configure shared paths from Docker -> Preferences... -> Resources -> File Sharing.
+See https://docs.docker.com/desktop/settings/mac/#file-sharing for more info.
+ Container kong-codex-kong-1  Stopping
+ Container kong-codex-typesense-1  Stopping
+ Container kong-codex-kong-1  Stopped
+ Container kong-codex-kong-1  Removing
+ Container kong-codex-kong-1  Removed
+ Container kong-codex-typesense-1  Stopped
+ Container kong-codex-typesense-1  Removing
+ Container kong-codex-typesense-1  Removed
+ Network kong-codex_default  Removing
+ Network kong-codex_default  Removed
+
+[2025-07-16T04:34:19.106408] Running integration tests for fountainai...
+[2025-07-16T04:35:03.426260] Integration tests for fountainai failed with exit code 127
+
+[2025-07-16T04:35:03.426846] Running integration tests for kong-codex...
+[2025-07-16T04:35:14.149156] Integration tests for kong-codex failed with exit code 1
