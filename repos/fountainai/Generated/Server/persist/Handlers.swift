@@ -11,7 +11,7 @@ public struct Handlers {
         self.typesense = typesense
     }
     public func addbaseline(_ request: HTTPRequest) async throws -> HTTPResponse {
-        guard let corpusId = request.path.split(separator: "/").dropFirst(2).first,
+        guard request.path.split(separator: "/").dropFirst(2).first != nil,
               let model = try? JSONDecoder().decode(Baseline.self, from: request.body) else {
             return HTTPResponse(status: 400)
         }
@@ -30,7 +30,7 @@ public struct Handlers {
     }
 
     public func addreflection(_ request: HTTPRequest) async throws -> HTTPResponse {
-        guard let corpusId = request.path.split(separator: "/").dropFirst(2).first,
+        guard request.path.split(separator: "/").dropFirst(2).first != nil,
               let reflection = try? JSONDecoder().decode(Reflection.self, from: request.body) else {
             return HTTPResponse(status: 400)
         }
