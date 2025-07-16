@@ -1,144 +1,91 @@
 ## Segment 1 - Preamble
 
 ```log
-[2025-07-16T05:04:00.919663] === New Cycle ===
+[2025-07-16T05:28:08.031158] Dispatcher started successfully 🟢
+[2025-07-16T05:28:08.031366] === New Cycle ===
 [0/1] Planning build
 Building for debugging...
-[0/15] Write swift-version-24593BA9C3E375BF.txt
-Build complete! (3.05s)
+[0/16] Write sources
+[1/16] Write swift-version-24593BA9C3E375BF.txt
+[3/4] Emitting module IntegrationRuntime
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/AsyncHTTPClientDriver.swift:8:78: warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
+ 6 |     let client: HTTPClient
+ 7 | 
+ 8 |     public init(eventLoopGroupProvider: HTTPClient.EventLoopGroupProvider = .createNew) {
+   |                                                                              |- warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
+   |                                                                              `- note: use 'singleton' instead
+ 9 |         self.client = HTTPClient(eventLoopGroupProvider: eventLoopGroupProvider)
+10 |     }
+[4/4] Compiling IntegrationRuntime NIOHTTPServer.swift
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:69:29: warning: variable 'buffer' was never mutated; consider changing to 'let' constant
+67 |                         responseHead.headers = headers
+68 |                         context.write(self.wrapOutboundOut(.head(responseHead)), promise: nil)
+69 |                         var buffer = context.channel.allocator.buffer(bytes: resp.body)
+   |                             `- warning: variable 'buffer' was never mutated; consider changing to 'let' constant
+70 |                         context.write(self.wrapOutboundOut(.body(.byteBuffer(buffer))), promise: nil)
+71 |                         context.writeAndFlush(self.wrapOutboundOut(.end(nil)), promise: nil)
+
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:65:39: warning: capture of 'resp' with non-sendable type 'HTTPResponse' in a '@Sendable' closure
+63 |                     context.eventLoop.execute {
+64 |                         var headers = HTTPHeaders()
+65 |                         for (k, v) in resp.headers { headers.add(name: k, value: v) }
+   |                                       `- warning: capture of 'resp' with non-sendable type 'HTTPResponse' in a '@Sendable' closure
+66 |                         var responseHead = HTTPResponseHead(version: head.version, status: .init(statusCode: resp.status))
+67 |                         responseHead.headers = headers
+
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/HTTPResponse.swift:3:15: note: consider making struct 'HTTPResponse' conform to the 'Sendable' protocol
+ 1 | import Foundation
+ 2 | 
+ 3 | public struct HTTPResponse {
+   |               `- note: consider making struct 'HTTPResponse' conform to the 'Sendable' protocol
+ 4 |     public var status: Int
+ 5 |     public var headers: [String: String]
+
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:68:25: warning: capture of 'context' with non-sendable type 'ChannelHandlerContext' in a '@Sendable' closure
+66 |                         var responseHead = HTTPResponseHead(version: head.version, status: .init(statusCode: resp.status))
+67 |                         responseHead.headers = headers
+68 |                         context.write(self.wrapOutboundOut(.head(responseHead)), promise: nil)
+   |                         `- warning: capture of 'context' with non-sendable type 'ChannelHandlerContext' in a '@Sendable' closure
+69 |                         var buffer = context.channel.allocator.buffer(bytes: resp.body)
+70 |                         context.write(self.wrapOutboundOut(.body(.byteBuffer(buffer))), promise: nil)
+
+/srv/deploy/repos/fountainai/.build/checkouts/swift-nio/Sources/NIOCore/ChannelPipeline.swift:1792:20: note: class 'ChannelHandlerContext' does not conform to the 'Sendable' protocol
+1790 | /// at the right point in time. Often, the right behaviour is to react to an event and then forward it to the next
+1791 | /// `ChannelHandler`.
+1792 | public final class ChannelHandlerContext: ChannelInvoker {
+     |                    `- note: class 'ChannelHandlerContext' does not conform to the 'Sendable' protocol
+1793 |     // visible for ChannelPipeline to modify
+1794 |     fileprivate var next: Optional<ChannelHandlerContext>
+
+/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:61:22: warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+59 |                     body: Data(body?.readableBytesView ?? [])
+60 |                 )
+61 |                 Task {
+   |                      `- warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+62 |                     let resp = try await self.kernel.handle(req)
+   |                                                             `- note: closure captures non-Sendable 'req'
+63 |                     context.eventLoop.execute {
+   |                     `- note: closure captures non-Sendable 'context'
+64 |                         var headers = HTTPHeaders()
+65 |                         for (k, v) in resp.headers { headers.add(name: k, value: v) }
+Build complete! (6.75s)
 [0/1] Planning build
 Building for debugging...
 [0/16] Write swift-version-24593BA9C3E375BF.txt
-Build complete! (3.04s)
-Test Suite 'All tests' started at 2025-07-16 05:04:07.920
-Test Suite 'debug.xctest' started at 2025-07-16 05:04:07.933
-Test Suite 'GeneratorTests' started at 2025-07-16 05:04:07.933
-```
-✅ No errors found.
-
-## Segment 2 - Test Case 'GeneratorTests.testCLIWithFixtures' started at 2025-07-16 05:04:07.933
-
-```log
-Test Case 'GeneratorTests.testCLIWithFixtures' started at 2025-07-16 05:04:07.933
-```
-✅ No errors found.
-
-## Segment 3 - Test Case 'GeneratorTests.testCLIWithFixtures' passed (0.018 seconds)
-
-```log
-Test Case 'GeneratorTests.testCLIWithFixtures' passed (0.018 seconds)
-Test Suite 'GeneratorTests' passed at 2025-07-16 05:04:07.951
-	 Executed 1 test, with 0 failures (0 unexpected) in 0.018 (0.018) seconds
-Test Suite 'ModelEmitterTests' started at 2025-07-16 05:04:07.951
-```
-✅ No errors found.
-
-## Segment 4 - Test Case 'ModelEmitterTests.testModelEmissionMatchesGoldenFile' started at 2025-07-16 05:04:07.951
-
-```log
-Test Case 'ModelEmitterTests.testModelEmissionMatchesGoldenFile' started at 2025-07-16 05:04:07.951
-```
-✅ No errors found.
-
-## Segment 5 - Test Case 'ModelEmitterTests.testModelEmissionMatchesGoldenFile' passed (0.006 seconds)
-
-```log
-Test Case 'ModelEmitterTests.testModelEmissionMatchesGoldenFile' passed (0.006 seconds)
-Test Suite 'ModelEmitterTests' passed at 2025-07-16 05:04:07.957
-	 Executed 1 test, with 0 failures (0 unexpected) in 0.006 (0.006) seconds
-Test Suite 'IntegrationTests' started at 2025-07-16 05:04:07.957
-```
-✅ No errors found.
-
-## Segment 6 - Test Case 'IntegrationTests.testAsyncHTTPClientRoundTrip' started at 2025-07-16 05:04:07.957
-
-```log
-Test Case 'IntegrationTests.testAsyncHTTPClientRoundTrip' started at 2025-07-16 05:04:07.957
-NIOCore/ChannelPipeline.swift:2172: Precondition failed
-
-*** Signal 5: Backtracing from 0xffffb4ea5534... done ***
-
-*** Program crashed: System trap at 0x0000ffffb4ea5534 ***
-
-Thread 0 "NIO-ELT-0-#0" crashed:
-
- 0                  0x0000ffffb4ea5534 _assertionFailure(_:_:file:line:flags:) + 164 in libswiftCore.so
- 1 [ra]             0x0000aaaab0bb67a8 EventLoop.preconditionInEventLoop(file:line:) + 195 in SwiftCodexOpenAPIKernelPackageTests.xctest at /srv/deploy/repos/fountainai/.build/checkouts/swift-nio/Sources/NIOCore/EventLoop.swift:1437:9
- 2 [ra] [thunk]     0x0000aaaab0f39ea4 protocol witness for EventLoop.preconditionInEventLoop(file:line:) in conformance SelectableEventLoop + 15 in SwiftCodexOpenAPIKernelPackageTests.xctest at //<compiler-generated>
- 3 [ra]             0x0000aaaab0bad908 closure #1 in EventLoop.assertInEventLoop(file:line:) + 103 in SwiftCodexOpenAPIKernelPackageTests.xctest at /srv/deploy/repos/fountainai/.build/checkouts/swift-nio/Sources/NIOCore/EventLoop.swift:1418:18
- 4 [ra]             0x0000aaaab0c64b7c closure #1 in implicit closure #1 in debugOnly(_:) + 43 in SwiftCodexOpenAPIKernelPackageTests.xctest at /srv/deploy/repos/fountainai/.build/checkouts/swift-nio/Sources/NIOCore/Utilities.swift:57:13
- 5 [ra]             0x0000aaaab0c64f4c debugOnly(_:) + 67 in SwiftCodexOpenAPIKernelPackageTests.xctest at /srv/deploy/repos/fountainai/.build/checkouts/swift-nio/Sources/NIOCore/Utilities.swift:55:5
- 6 [ra]             0x0000aaaab0bb156c EventLoop.assertInEventLoop(file:line:) + 163 in SwiftCodexOpenAPIKernelPackageTests.xctest at /srv/deploy/repos/fountainai/.build/checkouts/swift-nio/Sources/NIOCore/EventLoop.swift:1417:9
- 7 [ra]             0x0000aaaab0b784b4 ChannelHandlerContext.invokeWrite(_:promise:) + 127 in SwiftCodexOpenAPIKernelPackageTests.xctest at /srv/deploy/repos/fountainai/.build/checkouts/swift-nio/Sources/NIOCore/ChannelPipeline.swift:2172:24
- 8 [ra]             0x0000aaaab0b8a24c ChannelHandlerContext.write(_:promise:) + 151 in SwiftCodexOpenAPIKernelPackageTests.xctest at /srv/deploy/repos/fountainai/.build/checkouts/swift-nio/Sources/NIOCore/ChannelPipeline.swift:1969:26
- 9 [ra]             0x0000aaaab0a6288c closure #2 in NIOHTTPServer.HTTPHandler.channelRead(context:data:) + 935 in SwiftCodexOpenAPIKernelPackageTests.xctest at /srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:67:29
-10 [async] [thunk]  0x0000aaaab0a62e10 partial apply for closure #2 in NIOHTTPServer.HTTPHandler.channelRead(context:data:) in SwiftCodexOpenAPIKernelPackageTests.xctest at //<compiler-generated>
-11 [async] [system] 0x0000ffffb5304ae8 completeTaskWithClosure(swift::AsyncContext*, swift::SwiftError*) in libswift_Concurrency.so
-
-
-Registers:
-
- x0 0x8000000000000000  9223372036854775808
- x1 0x0000000000000000  0
- x2 0x0000000000000000  0
- x3 0x0000ffff580008e0  01 00 00 00 00 00 01 00 01 00 00 00 01 00 01 00  ················
- x4 0x0000000000000000  0
- x5 0x0000ffff58001540  01 80 f5 ff 0f 00 00 00 5a 58 50 a2 20 6b e1 ed  ··õÿ····ZXP¢ káí
-```
-✅ No errors found.
-
-## Segment 7 - x6error: Exited with unexpected signal code 5
-
-```log
- x6error: Exited with unexpected signal code 5
- 0xede16b20a250585a  17141099444655118426
- x7 0x696166206e6f6974  7593462736201148788
- x8 0x0000000000000000  0
- x9 0x0000aaaab2443040  50 72 65 63 6f 6e 64 69 74 69 6f 6e 20 66 61 69  Precondition fai
-x10 0x0000000000000000  0
-x11 0x0000ffffb3397440  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ················
-x12 0x0000ffffb3397720  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ················
-x13 0x0000000000000000  0
-x14 0x0000000000000020  32
-x15 0x0000000000000000  0
-x16 0x0000ffffb5150038  c4 db 2d b3 ff ff 00 00 48 fa d4 b4 ff ff 00 00  ÄÛ-³ÿÿ··HúÔ´ÿÿ··
-x17 0x0000ffffb32ddbc4  40 07 00 b4 fd 7b bc a9 01 40 00 d1 fd 03 00 91  @··´ý{¼©·@·Ñý···
-x18 0x0000000000000000  0
-x19 0x0000ffff90007590  78 16 34 b5 ff ff 00 00 03 00 00 00 00 00 00 00  x·4µÿÿ··········
-x20 0x0000ffff90005d00  10 1b 52 b2 aa aa 00 00 03 00 00 00 24 00 00 00  ··R²ªª······$···
-x21 0x0000000000000030  48
-x22 0x0000ffff9000cbb0  90 76 00 90 ff ff 00 00 10 2e a6 b0 aa aa 00 00  ·v··ÿÿ···.¦°ªª··
-x23 0x0000ffff9b40f5c8  38 05 00 00 00 00 00 00 80 cf 00 90 ff ff 00 00  8········Ï··ÿÿ··
-x24 0x0000ffff9000cbb0  90 76 00 90 ff ff 00 00 10 2e a6 b0 aa aa 00 00  ·v··ÿÿ···.¦°ªª··
-x25 0x0000000000005015  20501
-x26 0x0000ffff9b40f580  70 db 00 90 ff ff 00 00 00 00 00 00 00 00 00 00  pÛ··ÿÿ··········
-x27 0x0000000000000000  0
-x28 0x0000000000000000  0
- fp 0x0000ffff9b40dd40  e0 dd 40 9b ff ff 00 00 a8 67 bb b0 aa aa 00 00  àÝ@·ÿÿ··¨g»°ªª··
- lr 0x0000ffffb4ea5534  20 00 20 d4 28 00 80 52 89 12 80 52 00 16 00 90   · Ô(··R···R····
- sp 0x0000ffff9b40dcd0  01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ················
- pc 0x0000ffffb4ea5534  20 00 20 d4 28 00 80 52 89 12 80 52 00 16 00 90   · Ô(··R···R····
-
-
-Images (50 omitted):
-
-0x0000aaaab0420000–0x0000aaaab23be068 c54b3b4ba8133dabf2c4fe0bd8f23a610e34e278 SwiftCodexOpenAPIKernelPackageTests.xctest /srv/deploy/repos/fountainai/.build/aarch64-unknown-linux-gnu/debug/SwiftCodexOpenAPIKernelPackageTests.xctest
-0x0000ffffb4c00000–0x0000ffffb5123a18 db686f459fa5f79f26f43e04601a349f3165432f libswiftCore.so                            /usr/lib/swift/linux/libswiftCore.so
-0x0000ffffb52a0000–0x0000ffffb531dbd8 2a9f7d706aa66439e4d23f43d11cb05a4eb598e6 libswift_Concurrency.so                    /usr/lib/swift/linux/libswift_Concurrency.so
-
-Backtrace took 1.48s
-
-◇ Test run started.
-↳ Testing Library Version: 6.1.2 (d6b70f9ef9eb207)
-↳ Target Platform: aarch64-unknown-linux-gnu
-✔ Test run with 0 tests passed after 0.001 seconds.
-
-[2025-07-16T05:04:00.920782] Starting swift build...
-[2025-07-16T05:04:04.501472] swift build succeeded
-[2025-07-16T05:04:04.501523] running swift test...
-[2025-07-16T05:04:09.498670] swift test failed with exit code 1
+[1/3] Write Objects.LinkFileList
+[2/3] Linking SwiftCodexOpenAPIKernelPackageTests.xctest
+Build complete! (5.02s)
 ```
 ❌ Issues found:
-x6error: Exited with unexpected signal code 5
-**Suggested Fix:** Check for syntax errors near the reported line.
+AsyncHTTPClientDriver.swift:8 -> /srv/deploy/repos/fountainai/Sources/IntegrationRuntime/AsyncHTTPClientDriver.swift:8:78: warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
+|                                                                              |- warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
+NIOHTTPServer.swift:69 -> /srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:69:29: warning: variable 'buffer' was never mutated; consider changing to 'let' constant
+|                             `- warning: variable 'buffer' was never mutated; consider changing to 'let' constant
+NIOHTTPServer.swift:65 -> /srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:65:39: warning: capture of 'resp' with non-sendable type 'HTTPResponse' in a '@Sendable' closure
+|                                       `- warning: capture of 'resp' with non-sendable type 'HTTPResponse' in a '@Sendable' closure
+NIOHTTPServer.swift:68 -> /srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:68:25: warning: capture of 'context' with non-sendable type 'ChannelHandlerContext' in a '@Sendable' closure
+|                         `- warning: capture of 'context' with non-sendable type 'ChannelHandlerContext' in a '@Sendable' closure
+NIOHTTPServer.swift:61 -> /srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:61:22: warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+|                      `- warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
+**Suggested Fix:** Review the code around the reported line.
 
