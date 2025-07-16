@@ -36,3 +36,5 @@ public class HTTPServer: URLProtocol {
 
     override public func stopLoading() {}
 }
+
+extension HTTPServer: @unchecked Sendable {}
