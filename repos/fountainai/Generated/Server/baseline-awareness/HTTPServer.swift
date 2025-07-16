@@ -6,7 +6,7 @@ import BaselineAwarenessService
 @MainActor
 public class HTTPServer: URLProtocol {
     /// Shared kernel used to handle HTTP requests.
-    static var kernel: HTTPKernel?
+    @MainActor static var kernel: HTTPKernel?
 
     /// Register the kernel that will handle incoming requests.
     public static func register(kernel: HTTPKernel) {
