@@ -7,7 +7,7 @@ import ServiceShared
 
 public struct Handlers {
     let llm = LLMGatewayClient()
-    let functions = FunctionCallerClient()
+    let functions = LocalFunctionCallerClient()
 
     public init() {}
 
