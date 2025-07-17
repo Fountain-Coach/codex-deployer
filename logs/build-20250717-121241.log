@@ -109,3 +109,750 @@ error: 'swift-atomics': Error Domain=NSCocoaErrorDomain Code=513 "You don’t ha
 
 [2025-07-17T12:12:41.110465] Starting swift build...
 [2025-07-17T12:12:54.421832] swift build failed with exit code 1
+[2025-07-17T12:12:54.695052] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-17T12:12:57.346620] [dispatcher] Running Docker build...
+[2025-07-17T12:12:57.347610] [dispatcher] Running tests...
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [planner internal] load build definition from Dockerfile
+#1 DONE 0.0s
+
+#2 [function-caller internal] load build definition from Dockerfile
+#2 transferring dockerfile: 290B done
+#2 DONE 0.0s
+
+#3 [tools-factory internal] load build definition from Dockerfile
+#3 transferring dockerfile: 284B done
+#3 DONE 0.0s
+
+#4 [bootstrap internal] load build definition from Dockerfile
+#4 transferring dockerfile: 272B done
+#4 DONE 0.0s
+
+#5 [persist internal] load build definition from Dockerfile
+#5 transferring dockerfile: 266B done
+#5 DONE 0.0s
+
+#1 [planner internal] load build definition from Dockerfile
+#1 transferring dockerfile: 266B done
+#1 DONE 0.0s
+
+#6 [baseline-awareness internal] load build definition from Dockerfile
+#6 transferring dockerfile: 299B done
+#6 DONE 0.1s
+
+#7 [llm-gateway internal] load build definition from Dockerfile
+#7 transferring dockerfile: 278B done
+#7 DONE 0.1s
+
+#8 [llm-gateway internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 DONE 0.5s
+
+#9 [llm-gateway internal] load metadata for docker.io/library/ubuntu:22.04
+#9 DONE 0.5s
+
+#10 [function-caller internal] load .dockerignore
+#10 transferring context: 2B done
+#10 DONE 0.0s
+
+#11 [bootstrap internal] load .dockerignore
+#11 transferring context: 2B done
+#11 DONE 0.0s
+
+#12 [persist internal] load .dockerignore
+#12 transferring context: 2B done
+#12 DONE 0.0s
+
+#13 [persist build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#13 DONE 0.0s
+
+#14 [llm-gateway internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.0s
+
+#15 [persist stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:59ccd419c0dc0edf9e3bff1a3b2b073ea15a2ce4bc45ce7c989278b225b09af3
+#15 DONE 0.0s
+
+#16 [tools-factory internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.0s
+
+#17 [planner internal] load .dockerignore
+#17 transferring context: 2B done
+#17 DONE 0.0s
+
+#18 [baseline-awareness internal] load .dockerignore
+#18 transferring context: 2B done
+#18 DONE 0.1s
+
+#19 [tools-factory internal] load build context
+#19 ...
+
+#13 [baseline-awareness build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#13 DONE 0.0s
+
+#15 [baseline-awareness stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:59ccd419c0dc0edf9e3bff1a3b2b073ea15a2ce4bc45ce7c989278b225b09af3
+#15 DONE 0.0s
+
+#19 [tools-factory internal] load build context
+#19 transferring context: 16.20MB 5.2s
+#19 ...
+
+#20 [function-caller internal] load build context
+#20 ...
+
+#21 [llm-gateway internal] load build context
+#21 transferring context: 50.42MB 10.2s
+#21 ...
+
+#22 [persist internal] load build context
+#22 ...
+
+#23 [planner internal] load build context
+#23 ...
+
+#24 [bootstrap internal] load build context
+#24 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#23 [planner internal] load build context
+#23 transferring context: 72.53MB 15.3s
+#23 ...
+
+#21 [llm-gateway internal] load build context
+#21 ...
+
+#23 [planner internal] load build context
+#23 ...
+
+#19 [tools-factory internal] load build context
+#19 ...
+
+#20 [function-caller internal] load build context
+#20 ...
+
+#19 [tools-factory internal] load build context
+#19 transferring context: 121.44MB 20.5s
+#19 ...
+
+#22 [persist internal] load build context
+#22 ...
+
+#19 [tools-factory internal] load build context
+#19 ...
+
+#24 [bootstrap internal] load build context
+#24 ...
+
+#22 [persist internal] load build context
+#22 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#22 [persist internal] load build context
+#22 transferring context: 157.92MB 24.9s
+#22 ...
+
+#21 [llm-gateway internal] load build context
+#21 ...
+
+#23 [planner internal] load build context
+#23 ...
+
+#21 [llm-gateway internal] load build context
+#21 ...
+
+#20 [function-caller internal] load build context
+#20 ...
+
+#21 [llm-gateway internal] load build context
+#21 transferring context: 205.11MB 30.6s
+#21 ...
+
+#19 [tools-factory internal] load build context
+#19 ...
+
+#21 [llm-gateway internal] load build context
+#21 ...
+
+#24 [bootstrap internal] load build context
+#24 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#24 [bootstrap internal] load build context
+#24 transferring context: 244.48MB 35.7s
+#24 ...
+
+#22 [persist internal] load build context
+#22 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#23 [planner internal] load build context
+#23 ...
+
+#22 [persist internal] load build context
+#22 ...
+
+#20 [function-caller internal] load build context
+#20 ...
+
+#22 [persist internal] load build context
+#22 transferring context: 287.40MB 40.2s
+#22 ...
+
+#19 [tools-factory internal] load build context
+#19 ...
+
+#21 [llm-gateway internal] load build context
+#21 ...
+
+#19 [tools-factory internal] load build context
+#19 transferring context: 330.02MB 45.1s done
+#19 DONE 46.1s
+
+#25 [baseline-awareness internal] load build context
+#25 transferring context: 330.02MB 45.1s done
+#25 DONE 46.2s
+
+#24 [bootstrap internal] load build context
+#24 transferring context: 330.02MB 45.1s done
+#24 DONE 46.1s
+
+#23 [planner internal] load build context
+#23 transferring context: 330.02MB 45.0s done
+#23 DONE 46.1s
+
+#21 [llm-gateway internal] load build context
+#21 transferring context: 330.02MB 45.1s done
+#21 DONE 46.1s
+
+#22 [persist internal] load build context
+#22 transferring context: 330.02MB 44.6s done
+#22 DONE 46.1s
+
+#20 [function-caller internal] load build context
+#20 transferring context: 330.02MB 45.2s done
+#20 DONE 46.2s
+
+#26 [bootstrap build 2/4] WORKDIR /src
+#26 CACHED
+
+#27 [bootstrap build 3/4] COPY . .
+#27 ...
+
+#26 [planner build 2/4] WORKDIR /src
+#26 CACHED
+
+#27 [function-caller build 3/4] COPY . .
+#27 DONE 3.9s
+
+#28 [llm-gateway build 3/4] COPY . .
+#28 CACHED
+
+#29 [bootstrap build 3/4] COPY . .
+#29 CACHED
+
+#30 [persist build 3/4] COPY . .
+#30 CACHED
+
+#31 [baseline-awareness build 3/4] COPY . .
+#31 CACHED
+
+#32 [function-caller build 3/4] COPY . .
+#32 CACHED
+
+#33 [planner build 3/4] COPY . .
+#33 CACHED
+
+#34 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#34 3.091 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#34 3.139 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#34 3.386 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#34 3.406 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#34 3.607 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#34 3.623 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#34 3.885 Creating working copy for https://github.com/apple/swift-http-types.git
+#34 3.905 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#34 ...
+
+#35 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#35 2.805 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#35 2.843 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#35 3.806 Creating working copy for https://github.com/apple/swift-certificates.git
+#35 3.859 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#35 4.362 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#35 4.446 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#35 4.780 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#35 4.803 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#35 5.045 Creating working copy for https://github.com/apple/swift-numerics.git
+#35 5.066 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#35 5.361 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#35 5.412 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#35 5.954 Creating working copy for https://github.com/swift-server/async-http-client.git
+#35 6.011 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#35 ...
+
+#34 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#34 6.986 Creating working copy for https://github.com/apple/swift-crypto.git
+#34 7.386 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#34 9.843 Creating working copy for https://github.com/apple/swift-nio.git
+#34 9.971 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#34 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 4.428 Creating working copy for https://github.com/apple/swift-nio.git
+#36 4.594 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#36 4.855 Creating working copy for https://github.com/apple/swift-log.git
+#36 4.875 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#36 5.955 Creating working copy for https://github.com/apple/swift-certificates.git
+#36 6.021 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#36 8.875 Creating working copy for https://github.com/apple/swift-crypto.git
+#36 9.187 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#36 9.664 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#36 9.716 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#36 10.18 Creating working copy for https://github.com/apple/swift-algorithms.git
+#36 ...
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 3.528 Creating working copy for https://github.com/apple/swift-certificates.git
+#37 3.601 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#37 3.852 Creating working copy for https://github.com/apple/swift-log.git
+#37 3.871 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#37 4.143 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#37 4.168 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#37 6.313 Creating working copy for https://github.com/apple/swift-nio.git
+#37 6.443 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#37 6.989 Creating working copy for https://github.com/apple/swift-atomics.git
+#37 7.023 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#37 7.363 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#37 7.387 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#37 ...
+
+#38 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#38 3.528 Creating working copy for https://github.com/apple/swift-certificates.git
+#38 3.598 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#38 5.240 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#38 5.583 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#38 5.795 Creating working copy for https://github.com/apple/swift-http-types.git
+#38 5.809 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#38 6.298 Creating working copy for https://github.com/apple/swift-atomics.git
+#38 6.350 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#38 7.096 Creating working copy for https://github.com/apple/swift-asn1.git
+#38 7.175 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#38 7.464 Creating working copy for https://github.com/apple/swift-numerics.git
+#38 7.483 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#38 7.824 Creating working copy for https://github.com/apple/swift-algorithms.git
+#38 7.861 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#38 8.077 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#38 8.115 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#38 ...
+
+#39 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#39 2.804 Creating working copy for https://github.com/apple/swift-log.git
+#39 2.842 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#39 4.440 Creating working copy for https://github.com/apple/swift-collections.git
+#39 4.569 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#39 6.638 Creating working copy for https://github.com/apple/swift-nio.git
+#39 6.743 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#39 7.354 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#39 7.389 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#39 9.157 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#39 9.411 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#39 10.19 Creating working copy for https://github.com/swift-server/async-http-client.git
+#39 10.24 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#39 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 3.163 Creating working copy for https://github.com/apple/swift-atomics.git
+#40 3.205 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#40 3.445 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#40 3.467 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#40 4.060 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#40 4.095 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#40 4.344 Creating working copy for https://github.com/apple/swift-numerics.git
+#40 4.388 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#40 6.109 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#40 6.342 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#40 8.226 Creating working copy for https://github.com/apple/swift-nio.git
+#40 8.475 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#40 9.036 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#40 9.171 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#40 9.606 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#40 9.664 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#40 ...
+
+#38 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#38 10.68 Creating working copy for https://github.com/apple/swift-collections.git
+#38 10.84 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#38 11.29 Creating working copy for https://github.com/apple/swift-log.git
+#38 11.31 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#38 11.95 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#38 11.98 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#38 ...
+
+#34 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#34 11.03 Creating working copy for https://github.com/apple/swift-asn1.git
+#34 11.11 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#34 12.27 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#34 12.33 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#34 12.87 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#34 12.96 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#34 13.44 Creating working copy for https://github.com/apple/swift-log.git
+#34 13.49 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#34 ...
+
+#35 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#35 8.886 Creating working copy for https://github.com/apple/swift-crypto.git
+#35 9.206 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#35 9.855 Creating working copy for https://github.com/apple/swift-algorithms.git
+#35 9.893 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#35 12.98 Creating working copy for https://github.com/apple/swift-collections.git
+#35 13.16 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#35 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 14.57 Creating working copy for https://github.com/apple/swift-crypto.git
+#40 15.12 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#40 19.00 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#40 19.06 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#40 ...
+
+#35 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#35 20.23 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#35 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 10.23 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#36 13.68 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#36 14.04 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#36 18.77 Creating working copy for https://github.com/apple/swift-atomics.git
+#36 18.86 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#36 19.86 Creating working copy for https://github.com/swift-server/async-http-client.git
+#36 19.94 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#36 ...
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 10.76 Creating working copy for https://github.com/apple/swift-crypto.git
+#37 11.14 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#37 14.40 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#37 14.73 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#37 18.75 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#37 18.81 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#37 19.38 Creating working copy for https://github.com/apple/swift-http-types.git
+#37 19.41 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#37 20.45 Creating working copy for https://github.com/swift-server/async-http-client.git
+#37 20.51 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#37 ...
+
+#35 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#35 20.55 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#35 20.92 Creating working copy for https://github.com/apple/swift-log.git
+#35 20.95 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#35 ...
+
+#39 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#39 11.31 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#39 11.35 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#39 11.95 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#39 11.98 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#39 21.02 Creating working copy for https://github.com/apple/swift-crypto.git
+#39 21.33 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#39 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 21.28 Creating working copy for https://github.com/apple/swift-asn1.git
+#36 21.32 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#36 22.26 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#36 22.31 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#36 23.34 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#36 23.40 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#36 24.42 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#36 24.52 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#36 24.99 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#36 25.02 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#36 25.39 Creating working copy for https://github.com/apple/swift-http-types.git
+#36 25.41 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#36 25.78 Creating working copy for https://github.com/apple/swift-numerics.git
+#36 25.81 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#36 ...
+
+#39 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#39 23.35 Creating working copy for https://github.com/apple/swift-certificates.git
+#39 23.42 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#39 24.25 Creating working copy for https://github.com/apple/swift-algorithms.git
+#39 24.31 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#39 24.83 Creating working copy for https://github.com/apple/swift-numerics.git
+#39 24.87 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#39 25.38 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#39 25.41 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#39 25.76 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#39 25.80 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#39 26.82 Creating working copy for https://github.com/apple/swift-http-types.git
+#39 26.84 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#39 27.91 Creating working copy for https://github.com/apple/swift-atomics.git
+#39 27.97 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#39 29.06 Creating working copy for https://github.com/apple/swift-asn1.git
+#39 29.13 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#39 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 30.17 Creating working copy for https://github.com/apple/swift-collections.git
+#36 ...
+
+#34 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#34 20.50 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#34 20.75 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#34 21.80 Creating working copy for https://github.com/apple/swift-algorithms.git
+#34 21.82 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#34 25.00 Creating working copy for https://github.com/apple/swift-collections.git
+#34 25.21 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#34 26.05 Creating working copy for https://github.com/swift-server/async-http-client.git
+#34 26.14 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#34 28.52 Creating working copy for https://github.com/apple/swift-certificates.git
+#34 28.61 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#34 29.12 Creating working copy for https://github.com/apple/swift-numerics.git
+#34 29.26 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#34 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 30.61 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#36 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 20.95 Creating working copy for https://github.com/apple/swift-certificates.git
+#40 21.01 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#40 21.78 Creating working copy for https://github.com/apple/swift-log.git
+#40 21.80 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#40 25.00 Creating working copy for https://github.com/apple/swift-collections.git
+#40 25.20 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#40 25.60 Creating working copy for https://github.com/apple/swift-http-types.git
+#40 25.64 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#40 27.36 Creating working copy for https://github.com/apple/swift-asn1.git
+#40 27.42 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#40 28.11 Creating working copy for https://github.com/apple/swift-algorithms.git
+#40 28.17 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#40 29.09 Creating working copy for https://github.com/swift-server/async-http-client.git
+#40 29.27 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#40 ...
+
+#38 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#38 21.01 Creating working copy for https://github.com/apple/swift-crypto.git
+#38 21.31 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#38 22.54 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#38 22.61 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#38 25.79 Creating working copy for https://github.com/apple/swift-nio.git
+#38 26.17 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#38 27.57 Creating working copy for https://github.com/swift-server/async-http-client.git
+#38 27.65 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#38 28.55 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#38 28.60 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#38 29.05 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#38 29.08 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#38 ...
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 21.79 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#37 21.82 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#37 22.98 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#37 23.04 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#37 25.77 Creating working copy for https://github.com/apple/swift-collections.git
+#37 26.10 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#37 27.90 Creating working copy for https://github.com/apple/swift-asn1.git
+#37 27.95 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#37 28.76 Creating working copy for https://github.com/apple/swift-algorithms.git
+#37 28.79 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#37 29.71 Creating working copy for https://github.com/apple/swift-numerics.git
+#37 30.03 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#37 ...
+
+#34 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#34 31.64 Creating working copy for https://github.com/apple/swift-atomics.git
+#34 31.70 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#34 ...
+
+#35 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#35 22.53 Creating working copy for https://github.com/apple/swift-atomics.git
+#35 22.69 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#35 23.04 Creating working copy for https://github.com/apple/swift-http-types.git
+#35 23.07 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#35 27.06 Creating working copy for https://github.com/apple/swift-nio.git
+#35 27.36 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#35 28.53 Creating working copy for https://github.com/apple/swift-asn1.git
+#35 28.57 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#35 30.56 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#35 30.63 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#35 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 50.87 Building for production...
+#40 50.91 [0/6] Write sources
+#40 51.25 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#40 ...
+
+#39 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#39 51.10 Building for production...
+#39 51.20 [0/14] Write sources
+#39 51.73 [5/14] Compiling writer.c
+#39 51.76 [6/14] Compiling reader.c
+#39 52.24 [7/14] Compiling api.c
+#39 52.28 [8/14] Compiling parser.c
+#39 52.45 [9/14] Compiling emitter.c
+#39 52.74 [10/14] Write swift-version-24593BA9C3E375BF.txt
+#39 52.75 [11/14] Compiling scanner.c
+#39 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 58.67 [5/7] Compiling ServiceShared Models.swift
+#40 ...
+
+#35 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#35 50.88 Building for production...
+#35 50.92 [0/6] Write sources
+#35 51.28 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#35 58.61 [5/7] Compiling ServiceShared Models.swift
+#35 60.77 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+#35 ...
+
+#34 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#34 51.07 Building for production...
+#34 51.12 [0/6] Write sources
+#34 51.39 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#34 58.78 [5/7] Compiling ServiceShared Models.swift
+#34 ...
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 51.26 Building for production...
+#37 51.32 [0/7] Write sources
+#37 51.52 [4/7] Write swift-version-24593BA9C3E375BF.txt
+#37 58.96 [6/8] Compiling ServiceShared Models.swift
+#37 ...
+
+#38 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#38 51.05 Building for production...
+#38 51.09 [0/14] Write sources
+#38 51.74 [5/14] Compiling writer.c
+#38 51.76 [6/14] Compiling reader.c
+#38 51.76 [7/14] Write swift-version-24593BA9C3E375BF.txt
+#38 52.03 [8/14] Compiling parser.c
+#38 52.30 [9/15] Compiling api.c
+#38 53.16 [10/15] Compiling emitter.c
+#38 53.21 [11/15] Compiling scanner.c
+#38 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 61.39 [6/8] Compiling PersistService HTTPKernel.swift
+#40 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 51.96 Building for production...
+#36 52.02 [0/6] Write sources
+#36 52.35 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#36 59.13 [5/7] Compiling ServiceShared Models.swift
+#36 ...
+
+#35 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#35 61.95 [7/9] Compiling LLMGatewayServer main.swift
+#35 61.97 /src/Generated/Server/llm-gateway/main.swift:29:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#35 61.97  27 |         #endif
+#35 61.97  28 | 
+#35 61.97  29 |         serverFD = socket(AF_INET, socketType, 0)
+#35 61.97     |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#35 61.97  30 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#35 61.97  31 |         var opt: Int32 = 1
+#35 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 62.28 [7/9] Compiling PersistServer main.swift
+#40 62.29 /src/Generated/Server/persist/main.swift:29:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#40 62.29  27 |         #endif
+#40 62.29  28 | 
+#40 62.29  29 |         serverFD = socket(AF_INET, socketType, 0)
+#40 62.29     |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#40 62.29  30 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#40 62.29  31 |         var opt: Int32 = 1
+#40 ERROR: process "/bin/sh -c swift build -c release --product persist-server" did not complete successfully: exit code: 1
+
+#35 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#35 ERROR: process "/bin/sh -c swift build -c release --product llm-gateway-server" did not complete successfully: exit code: 1
+
+#39 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#39 61.88 [13/16] Compiling ServiceShared Models.swift
+#39 ...
+
+#38 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#38 61.72 [13/16] Compiling ServiceShared Models.swift
+#38 CANCELED
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 63.83 [7/9] Compiling BaselineAwarenessService BaselineStore.swift
+#37 ...
+
+#34 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#34 63.57 [6/8] Compiling BaselineAwarenessService BaselineStore.swift
+#34 CANCELED
+
+#39 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+------
+ > [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server:
+58.61 [5/7] Compiling ServiceShared Models.swift
+60.77 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+61.95 [7/9] Compiling LLMGatewayServer main.swift
+61.97 /src/Generated/Server/llm-gateway/main.swift:29:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+61.97  27 |         #endif
+61.97  28 | 
+61.97  29 |         serverFD = socket(AF_INET, socketType, 0)
+61.97     |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+61.97  30 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+61.97  31 |         var opt: Int32 = 1
+------
+------
+ > [persist build 4/4] RUN swift build -c release --product persist-server:
+58.67 [5/7] Compiling ServiceShared Models.swift
+61.39 [6/8] Compiling PersistService HTTPKernel.swift
+62.28 [7/9] Compiling PersistServer main.swift
+62.29 /src/Generated/Server/persist/main.swift:29:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+62.29  27 |         #endif
+62.29  28 | 
+62.29  29 |         serverFD = socket(AF_INET, socketType, 0)
+62.29     |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+62.29  30 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+62.29  31 |         var opt: Int32 = 1
+------
+failed to solve: process "/bin/sh -c swift build -c release --product persist-server" did not complete successfully: exit code: 1
+ Network kong-codex_default  Creating
+ Network kong-codex_default  Created
+ Container kong-codex-kong-1  Creating
+ Container kong-codex-typesense-1  Creating
+ Container kong-codex-typesense-1  Created
+ Container kong-codex-kong-1  Created
+Attaching to kong-1, typesense-1
+Gracefully stopping... (press Ctrl+C again to force)
+Error response from daemon: mounts denied: 
+The path /srv/deploy/repos/kong-codex/kong.conf is not shared from the host and is not known to Docker.
+You can configure shared paths from Docker -> Preferences... -> Resources -> File Sharing.
+See https://docs.docker.com/desktop/settings/mac/#file-sharing for more info.
+ Container kong-codex-kong-1  Stopping
+ Container kong-codex-typesense-1  Stopping
+ Container kong-codex-kong-1  Stopped
+ Container kong-codex-kong-1  Removing
+ Container kong-codex-kong-1  Removed
+ Container kong-codex-typesense-1  Stopped
+ Container kong-codex-typesense-1  Removing
+ Container kong-codex-typesense-1  Removed
+ Network kong-codex_default  Removing
+ Network kong-codex_default  Removed
+
+[2025-07-17T12:12:57.347889] Running integration tests for fountainai...
+[2025-07-17T12:14:55.823919] Integration tests for fountainai failed with exit code 1
+
+[2025-07-17T12:14:55.844925] Running integration tests for kong-codex...
+[2025-07-17T12:14:58.739715] Integration tests for kong-codex failed with exit code 1
