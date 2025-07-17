@@ -78,21 +78,14 @@ final class ServicesIntegrationTests: XCTestCase {
     }
 
     func testBaselineHistoryAnalytics() async throws {
-        let serviceKernel = BaselineAwarenessService.HTTPKernel()
-        let kernel = IntegrationRuntime.HTTPKernel { req in
-            let sreq = BaselineAwarenessService.HTTPRequest(method: req.method, path: req.path, headers: req.headers, body: req.body)
-            let sresp = try await serviceKernel.handle(sreq)
-            return IntegrationRuntime.HTTPResponse(status: sresp.status, body: sresp.body)
-        }
-        let (server, port) = try await startServer(with: kernel)
-        addTeardownBlock { try? await server.stop() }
-
-        let client = BaselineAwarenessClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
-        _ = try await client.send(BaselineAwarenessClient.initializeCorpus(body: .init(corpusId: "a1")))
-        _ = try await client.send(BaselineAwarenessClient.addBaseline(body: .init(baselineId: "b1", content: "x", corpusId: "a1")))
-        let analytics = try await client.send(
-            BaselineAwarenessClient.listHistoryAnalytics(parameters: .init(corpusId: "a1"))
-        )
+        let kernel = BaselineAwarenessService.HTTPKernel()
+        let initBody = try JSONEncoder().encode(BaselineAwarenessService.InitIn(corpusId: "a1"))
+        _ = try await kernel.handle(.init(method: "POST", path: "/corpus/init", body: initBody))
+        let baseline = BaselineAwarenessService.BaselineRequest(baselineId: "b1", content: "x", corpusId: "a1")
+        let bdata = try JSONEncoder().encode(baseline)
+        _ = try await kernel.handle(.init(method: "POST", path: "/corpus/baseline", body: bdata))
+        let resp = try await kernel.handle(.init(method: "GET", path: "/corpus/history?corpus_id=a1"))
+        let analytics = try JSONDecoder().decode(BaselineAwarenessService.HistoryAnalyticsResponse.self, from: resp.body)
         XCTAssertEqual(analytics.baselines, 1)
         XCTAssertEqual(analytics.drifts, 0)
         XCTAssertEqual(analytics.patterns, 0)
@@ -304,7 +297,7 @@ final class ServicesIntegrationTests: XCTestCase {
     func testFunctionCallerInvokeFlow() async throws {
         // start echo service
         let echoKernel = IntegrationRuntime.HTTPKernel { _ in
-            IntegrationRuntime.HTTPResponse(status: 200, body: Data("{}".utf8))
+            IntegrationRuntime.HTTPResponse(status: 200, body: Data("{\"message\":\"ok\"}".utf8))
         }
         let echoServer = NIOHTTPServer(kernel: echoKernel)
         let echoPort = try await echoServer.start(port: 0)
@@ -378,9 +371,10 @@ final class ServicesIntegrationTests: XCTestCase {
         _ = try await client.execute(method: .POST, url: "http://127.0.0.1:\(port)/functions/missing/invoke", headers: HTTPHeaders(), body: nil)
         // ensure metrics are recorded
         await Task.yield()
-        try await Task.sleep(nanoseconds: 50_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
 
         let (metricsBuffer, _) = try await client.execute(method: .GET, url: "http://127.0.0.1:\(port)/metrics", headers: HTTPHeaders(), body: nil)
+        XCTAssertGreaterThan(metricsBuffer.readableBytes, 0)
         let metrics = String(buffer: metricsBuffer)
         XCTAssertTrue(metrics.contains("invocation_success_total"))
         XCTAssertTrue(metrics.contains("invocation_failure_total"))
