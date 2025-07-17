@@ -2,6 +2,11 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
+/// Default headers used by integration tests when sending raw requests.
+let defaultHeaders: [String: String] = [
+    "Accept": "application/json",
+    "User-Agent": "CodexIntegrationClient/1.0"
+]
 @testable import BaselineAwarenessClient
 @testable import BootstrapClient
 @testable import PersistClient
@@ -30,10 +35,6 @@ extension BootstrapClient.APIClient {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(request.path))
         urlRequest.httpMethod = request.method
         for (h, v) in defaultHeaders { urlRequest.setValue(v, forHTTPHeaderField: h) }
-        if let body = request.body {
-            urlRequest.httpBody = try JSONEncoder().encode(body)
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        }
         let (data, _) = try await session.data(for: urlRequest)
         return data
     }
@@ -44,10 +45,6 @@ extension PersistClient.APIClient {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(request.path))
         urlRequest.httpMethod = request.method
         for (h, v) in defaultHeaders { urlRequest.setValue(v, forHTTPHeaderField: h) }
-        if let body = request.body {
-            urlRequest.httpBody = try JSONEncoder().encode(body)
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        }
         let (data, _) = try await session.data(for: urlRequest)
         return data
     }
@@ -58,10 +55,6 @@ extension FunctionCallerClient.APIClient {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(request.path))
         urlRequest.httpMethod = request.method
         for (h, v) in defaultHeaders { urlRequest.setValue(v, forHTTPHeaderField: h) }
-        if let body = request.body {
-            urlRequest.httpBody = try JSONEncoder().encode(body)
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        }
         let (data, _) = try await session.data(for: urlRequest)
         return data
     }
@@ -72,10 +65,6 @@ extension PlannerClient.APIClient {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(request.path))
         urlRequest.httpMethod = request.method
         for (h, v) in defaultHeaders { urlRequest.setValue(v, forHTTPHeaderField: h) }
-        if let body = request.body {
-            urlRequest.httpBody = try JSONEncoder().encode(body)
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        }
         let (data, _) = try await session.data(for: urlRequest)
         return data
     }
@@ -86,10 +75,6 @@ extension ToolsFactoryClient.APIClient {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(request.path))
         urlRequest.httpMethod = request.method
         for (h, v) in defaultHeaders { urlRequest.setValue(v, forHTTPHeaderField: h) }
-        if let body = request.body {
-            urlRequest.httpBody = try JSONEncoder().encode(body)
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        }
         let (data, _) = try await session.data(for: urlRequest)
         return data
     }
@@ -100,10 +85,6 @@ extension LLMGatewayClientSDK.APIClient {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(request.path))
         urlRequest.httpMethod = request.method
         for (h, v) in defaultHeaders { urlRequest.setValue(v, forHTTPHeaderField: h) }
-        if let body = request.body {
-            urlRequest.httpBody = try JSONEncoder().encode(body)
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        }
         let (data, _) = try await session.data(for: urlRequest)
         return data
     }
