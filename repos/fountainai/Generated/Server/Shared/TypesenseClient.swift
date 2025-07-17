@@ -97,6 +97,15 @@ public actor TypesenseClient {
 
     // MARK: - Functions
     public func addFunction(_ fn: Function) async {
+        var fn = fn
+        if fn.parametersSchema == nil {
+            fn = Function(description: fn.description,
+                         functionId: fn.functionId,
+                         httpMethod: fn.httpMethod,
+                         httpPath: fn.httpPath,
+                         name: fn.name,
+                         parametersSchema: "{}")
+        }
         if let _ = baseURL {
             let body = try? JSONEncoder().encode(fn)
             _ = try? await request(path: "functions", method: "POST", body: body)
