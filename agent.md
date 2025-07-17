@@ -1,5 +1,10 @@
 # 🤖 agent.md
 
+Copyright (c) 2025 Benedikte Eickhoff.
+All rights reserved.
+This software is proprietary and confidential.
+Unauthorized copying or distribution is strictly prohibited.
+
 > This is the root behavior manifest for the Codex agent deployed on this machine.
 
 ---

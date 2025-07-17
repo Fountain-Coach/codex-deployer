@@ -1,5 +1,10 @@
 # 🧠 codex-deployer
 
+Copyright (c) 2025 Benedikte Eickhoff.
+All rights reserved.
+This software is proprietary and confidential.
+Unauthorized copying or distribution is strictly prohibited.
+
 > **The Codex-powered operating system for semantic deployment**
 
 ---

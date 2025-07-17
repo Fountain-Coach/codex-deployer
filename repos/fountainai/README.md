@@ -1,5 +1,10 @@
 # swift-codex-openapi-kernel
 
+Copyright (c) 2025 Benedikte Eickhoff.
+All rights reserved.
+This software is proprietary and confidential.
+Unauthorized copying or distribution is strictly prohibited.
+
 *A fully Codex-compatible Swift 6 tool that generates both client SDKs and native HTTP server kernels from OpenAPI 3.1 — with zero dependencies on external frameworks like Vapor.*
 
 ---
