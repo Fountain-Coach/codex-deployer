@@ -716,3 +716,66 @@ Just set COMPOSE_BAKE=true
 
 #24 [planner internal] load build context
 #24 transferring context: 1.03GB 139.0s
+#24 ...
+
+#25 [bootstrap internal] load build context
+#25 ...
+
+#20 [persist internal] load build context
+#20 transferring context: 1.02GB 144.2s
+#20 ...
+
+#25 [bootstrap internal] load build context
+#25 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#22 [baseline-awareness internal] load build context
+#22 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#19 [tools-factory internal] load build context
+#19 ...
+
+#23 [llm-gateway internal] load build context
+#23 transferring context: 1.03GB 149.2s
+#23 ...
+
+#19 [tools-factory internal] load build context
+#19 transferring context: 1.02GB 149.8s done
+#19 ERROR: write /var/lib/docker/overlay2/v1nzarcjp8z9tsixzzjre2ca4/diff/.build/repositories/swift-nio-http2-440d95c6/objects/pack/pack-263e4f4aba6569d5a592227745b4919cb39df05a.pack: input/output error
+
+#23 [llm-gateway internal] load build context
+#23 transferring context: 1.03GB 149.7s done
+#23 ERROR: write /var/lib/docker/overlay2/9tdipm87p1xlzivy631dfap13/diff/.build/repositories/swift-nio-ssl-3eddd832/objects/pack/pack-29cf972ace5fa63f4c91026abf0f06dd084037ea.pack: input/output error
+
+#24 [planner internal] load build context
+#24 transferring context: 1.06GB 149.7s done
+#24 ERROR: failed to open /var/lib/docker/overlay2/j381a7olrg9p917wfp08pef6z/diff/.build/repositories/swift-system-5815d4b7/objects/0f/45a15f05be76327f9cbf016c87eb4d9b3393c8: open /var/lib/docker/overlay2/j381a7olrg9p917wfp08pef6z/diff/.build/repositories/swift-system-5815d4b7/objects/0f/45a15f05be76327f9cbf016c87eb4d9b3393c8: read-only file system
+
+#21 [function-caller internal] load build context
+#21 transferring context: 1.03GB 149.7s done
+#21 ERROR: failed to open /var/lib/docker/overlay2/zd22po6f3k4hwt7tjd003l1r4/diff/.build/repositories/swift-nio-ssl-3eddd832/objects/64/1a392791a34afe9eaefe67ee83f814d3d87b0e: open /var/lib/docker/overlay2/zd22po6f3k4hwt7tjd003l1r4/diff/.build/repositories/swift-nio-ssl-3eddd832/objects/64/1a392791a34afe9eaefe67ee83f814d3d87b0e: input/output error
+
+#20 [persist internal] load build context
+#20 transferring context: 1.02GB 149.8s done
+#20 ERROR: error setting metadata for /var/lib/docker/overlay2/uk2fpuhril43sfqgyydysnecd/diff/.build/repositories/swift-system-5815d4b7/objects/41: lchown /var/lib/docker/overlay2/uk2fpuhril43sfqgyydysnecd/diff/.build/repositories/swift-system-5815d4b7/objects/41: input/output error
+
+#25 [bootstrap internal] load build context
+#25 transferring context: 1.05GB 149.8s done
+#25 ERROR: write /var/lib/docker/overlay2/jojk9k0gb6zskh3f0lprgj1ze/diff/.build/repositories/swift-nio-ssl-3eddd832/objects/pack/pack-69bc3c33cd9e93309695655caabae67601de155b.pack: input/output error
+
+#22 [baseline-awareness internal] load build context
+#22 transferring context: 1.02GB 149.7s done
+#22 ERROR: failed to create /var/lib/docker/overlay2/7hsyf14e8drxk3jscqxxgkztw/diff/.build/repositories/swift-system-5815d4b7/refs/pull/211/head: open /var/lib/docker/overlay2/7hsyf14e8drxk3jscqxxgkztw/diff/.build/repositories/swift-system-5815d4b7/refs/pull/211/head: input/output error
+------
+ > [bootstrap internal] load build context:
+------
+------
+ > [function-caller internal] load build context:
+------
+------
+ > [tools-factory i
