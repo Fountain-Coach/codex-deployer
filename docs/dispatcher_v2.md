@@ -40,3 +40,5 @@ step-by-step setup guide, including GitHub token creation. The systemd unit read
 `DISPATCHER_BUILD_DOCKER=1` and `DISPATCHER_RUN_E2E=1` to trigger Docker builds
 and integration tests after each successful commit or PR merge.
 
+For tips on reviewing failed builds, see the [README](../README.md#analyzing-swift-logs) section on analyzing Swift logs.
+

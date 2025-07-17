@@ -59,6 +59,8 @@ ls deploy/logs
 cat deploy/logs/build.log
 ```
 
+To generate a concise error report, run `python3 analyze_swift_log.py` from the repository root. It will produce `report.md` summarizing each log segment. See [README](../README.md#analyzing-swift-logs) for details.
+
 ## 6. Stopping
 
 Press `Ctrl-C` in the terminal running the container to stop the dispatcher.

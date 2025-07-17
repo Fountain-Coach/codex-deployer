@@ -89,6 +89,8 @@ At its heart is a single principle:
 | `dispatcher_v2.py` | The daemon loop (v2.4): pulls repos, builds services, opens PRs by default |
 | `logs/latest.log` | Most recent Swift build/test output |
 | `logs/build-*.log` | Historical logs for each dispatcher cycle |
+| `analyze_swift_log.py` | Parse `build.log` and produce a Markdown report |
+| `report.md` | Output of the log analyzer |
 | `feedback/` | Codex inbox – write here to apply changes or fix builds |
 | `commands/restart-services.sh` | Optional legacy restart script |
 | `commands/restart-target.sh` | Restart a service specified in feedback |
@@ -137,6 +139,16 @@ likewise prevents these files from entering the Docker context.
 ### Running on macOS
 
 Docker Desktop requires explicit volume sharing. Open **Settings → Resources → File Sharing** and add `/srv/deploy/repos/kong-codex/`. Restart Docker Desktop before running `docker compose` or the Kong configuration mount will fail.
+
+### Analyzing Swift Logs
+
+After a build, you can summarize errors recorded in `build.log`:
+
+```bash
+python3 analyze_swift_log.py
+```
+
+The script reads `build.log` from the current directory and writes `report.md` with one section per log segment and a suggested fix. Open `report.md` in your editor to review the results.
 
 ---
 
