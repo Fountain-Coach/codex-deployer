@@ -90,3 +90,322 @@ Building for debugging...
 
 [2025-07-17T04:35:58.928657] Starting swift build...
 [2025-07-17T04:36:12.217876] swift build failed with exit code 1
+[2025-07-17T04:36:12.387753] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-17T04:36:14.162174] [dispatcher] Running Docker build...
+[2025-07-17T04:36:14.163084] [dispatcher] Running tests...
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [persist internal] load build definition from Dockerfile
+#1 transferring dockerfile: 266B done
+#1 DONE 0.0s
+
+#2 [function-caller internal] load build definition from Dockerfile
+#2 transferring dockerfile: 290B done
+#2 DONE 0.0s
+
+#3 [tools-factory internal] load build definition from Dockerfile
+#3 transferring dockerfile: 284B done
+#3 DONE 0.0s
+
+#4 [llm-gateway internal] load build definition from Dockerfile
+#4 transferring dockerfile: 278B done
+#4 DONE 0.1s
+
+#5 [planner internal] load build definition from Dockerfile
+#5 transferring dockerfile: 266B done
+#5 DONE 0.0s
+
+#6 [bootstrap internal] load build definition from Dockerfile
+#6 transferring dockerfile: 272B done
+#6 DONE 0.1s
+
+#7 [baseline-awareness internal] load build definition from Dockerfile
+#7 transferring dockerfile: 299B done
+#7 DONE 0.1s
+
+#8 [baseline-awareness internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 ...
+
+#9 [baseline-awareness internal] load metadata for docker.io/library/ubuntu:22.04
+#9 DONE 2.0s
+
+#8 [baseline-awareness internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 DONE 2.9s
+
+#10 [persist internal] load .dockerignore
+#10 transferring context: 2B 0.0s done
+#10 DONE 0.0s
+
+#11 [llm-gateway internal] load .dockerignore
+#11 transferring context: 2B done
+#11 DONE 0.0s
+
+#12 [bootstrap internal] load .dockerignore
+#12 transferring context: 2B done
+#12 DONE 0.0s
+
+#13 [planner internal] load .dockerignore
+#13 transferring context: 2B done
+#13 DONE 0.0s
+
+#14 [baseline-awareness internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.1s
+
+#15 [function-caller internal] load .dockerignore
+#15 transferring context: 2B done
+#15 DONE 0.1s
+
+#16 [tools-factory internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.1s
+
+#17 [bootstrap stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:59ccd419c0dc0edf9e3bff1a3b2b073ea15a2ce4bc45ce7c989278b225b09af3
+#17 resolve docker.io/library/ubuntu:22.04@sha256:59ccd419c0dc0edf9e3bff1a3b2b073ea15a2ce4bc45ce7c989278b225b09af3 0.0s done
+#17 sha256:59ccd419c0dc0edf9e3bff1a3b2b073ea15a2ce4bc45ce7c989278b225b09af3 6.69kB / 6.69kB done
+#17 sha256:e8054b48720c54efdb365e6b4340d042a3e29e1eefaa0070ac1e246187605b71 424B / 424B done
+#17 sha256:61cbdeb57a0f863e1780e060468aa64ae41f9a11252196626dfb7d4c2035caf7 2.31kB / 2.31kB done
+#17 sha256:ef6d179edc98e93dc6073cb3ddec6f1a6ed1d68d04cd7836a82abfd397922a05 0B / 27.36MB 0.1s
+#17 sha256:ef6d179edc98e93dc6073cb3ddec6f1a6ed1d68d04cd7836a82abfd397922a05 5.24MB / 27.36MB 1.1s
+#17 sha256:ef6d179edc98e93dc6073cb3ddec6f1a6ed1d68d04cd7836a82abfd397922a05 11.53MB / 27.36MB 1.2s
+#17 sha256:ef6d179edc98e93dc6073cb3ddec6f1a6ed1d68d04cd7836a82abfd397922a05 17.83MB / 27.36MB 1.3s
+#17 sha256:ef6d179edc98e93dc6073cb3ddec6f1a6ed1d68d04cd7836a82abfd397922a05 24.12MB / 27.36MB 1.4s
+#17 sha256:ef6d179edc98e93dc6073cb3ddec6f1a6ed1d68d04cd7836a82abfd397922a05 27.36MB / 27.36MB 1.4s done
+#17 extracting sha256:ef6d179edc98e93dc6073cb3ddec6f1a6ed1d68d04cd7836a82abfd397922a05 1.8s
+#17 extracting sha256:ef6d179edc98e93dc6073cb3ddec6f1a6ed1d68d04cd7836a82abfd397922a05 2.5s done
+#17 DONE 4.4s
+
+#18 [tools-factory build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#18 resolve docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342 done
+#18 sha256:d1c47e635abd39d9ed84f467c550543b5dd51cbcccdfcf2cbc0663126f029b39 1.73kB / 1.73kB done
+#18 sha256:3ba8f04ffdf76f1ff5ae74a1074c17e85e2259297ccd3c3ece17c588293a7803 5.67kB / 5.67kB done
+#18 sha256:ef6d179edc98e93dc6073cb3ddec6f1a6ed1d68d04cd7836a82abfd397922a05 27.36MB / 27.36MB 1.5s done
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 45.09MB / 171.66MB 4.5s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 49.28MB / 890.70MB 4.5s
+#18 sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342 2.63kB / 2.63kB done
+#18 sha256:b2129f7edf6241e4ef645ca6909dfa1b1fd1539b5503f0177d6c5b76ea2f81ec 175B / 175B 3.7s done
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 56.62MB / 171.66MB 4.9s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 66.06MB / 171.66MB 5.2s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 76.55MB / 171.66MB 6.0s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 96.47MB / 890.70MB 6.1s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 85.98MB / 171.66MB 6.4s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 97.52MB / 171.66MB 6.9s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 109.24MB / 171.66MB 7.3s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 120.59MB / 171.66MB 7.7s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 131.08MB / 171.66MB 8.1s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 140.09MB / 171.66MB 8.7s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 150.99MB / 171.66MB 9.1s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 160.43MB / 171.66MB 9.4s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 141.56MB / 890.70MB 9.7s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 171.66MB / 171.66MB 9.8s
+#18 sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 171.66MB / 171.66MB 9.9s done
+#18 extracting sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091
+#18 ...
+
+#19 [planner internal] load build context
+#19 transferring context: 107.41MB 10.0s
+#19 ...
+
+#20 [persist internal] load build context
+#20 ...
+
+#21 [tools-factory internal] load build context
+#21 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#24 [llm-gateway internal] load build context
+#24 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#18 [tools-factory build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 188.74MB / 890.70MB 11.3s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 234.88MB / 890.70MB 12.7s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 282.07MB / 890.70MB 14.3s
+#18 extracting sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 5.1s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 334.50MB / 890.70MB 15.5s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 379.74MB / 890.70MB 16.8s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 427.82MB / 890.70MB 18.3s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 473.96MB / 890.70MB 19.3s
+#18 extracting sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 10.2s
+#18 ...
+
+#19 [planner internal] load build context
+#19 transferring context: 206.58MB 20.3s
+#19 ...
+
+#20 [persist internal] load build context
+#20 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#21 [tools-factory internal] load build context
+#21 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#24 [llm-gateway internal] load build context
+#24 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#18 [tools-factory build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 521.14MB / 890.70MB 21.0s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 567.28MB / 890.70MB 22.7s
+#18 extracting sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 14.9s done
+#18 extracting sha256:e0425dda695838d245b83011c25ace0ee20fcddecbc686895451ccd73004c091 14.9s done
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 612.37MB / 890.70MB 25.4s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 665.85MB / 890.70MB 28.4s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 713.03MB / 890.70MB 29.8s
+#18 ...
+
+#20 [persist internal] load build context
+#20 transferring context: 250.13MB 30.6s
+#20 ...
+
+#19 [planner internal] load build context
+#19 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#21 [tools-factory internal] load build context
+#21 ...
+
+#24 [llm-gateway internal] load build context
+#24 ...
+
+#18 [tools-factory build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 759.17MB / 890.70MB 31.4s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 804.26MB / 890.70MB 32.6s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 849.35MB / 890.70MB 34.0s
+#18 sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 890.70MB / 890.70MB 35.2s done
+#18 extracting sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c
+#18 extracting sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 5.0s
+#18 ...
+
+#20 [persist internal] load build context
+#20 transferring context: 372.67MB 40.9s
+#20 ...
+
+#19 [planner internal] load build context
+#19 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#21 [tools-factory internal] load build context
+#21 ...
+
+#24 [llm-gateway internal] load build context
+#24 ...
+
+#18 [tools-factory build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#18 extracting sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 10.3s
+#18 extracting sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 15.5s
+#18 ...
+
+#20 [persist internal] load build context
+#20 transferring context: 421.20MB 51.2s
+#20 ...
+
+#19 [planner internal] load build context
+#19 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#21 [tools-factory internal] load build context
+#21 ...
+
+#24 [llm-gateway internal] load build context
+#24 ...
+
+#18 [tools-factory build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#18 extracting sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 20.8s
+#18 extracting sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 25.8s
+#18 ...
+
+#20 [persist internal] load build context
+#20 transferring context: 484.68MB 61.5s
+#20 ...
+
+#19 [planner internal] load build context
+#19 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#24 [llm-gateway internal] load build context
+#24 ...
+
+#21 [tools-factory internal] load build context
+#21 ...
+
+#24 [llm-gateway internal] load build context
+#24 transferring context: 523.96MB 66.6s
+#24 ...
+
+#18 [tools-factory build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#18 extracting sha256:4ebc2b074d92dc69e24c159ab8d172d57d3fcaef0e2864a347afbe67434e440c 32.6s
+#18 ...
+
+#19 [planner internal] load build context
+#19 transferring context: 563.19MB 71.7s
+#19 ...
+
+#20 [persist internal] load build context
+#20 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#18 [tools-factory build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#18 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#21 [tools-factory internal] load build context
+#21 ...
+
+#25 [baseline-awareness internal] load build context
+#25 transferring context: 616.06MB 76.7s
