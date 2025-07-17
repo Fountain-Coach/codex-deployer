@@ -23,7 +23,9 @@ public enum ClientGenerator {
 
         let apiClient = """
         import Foundation
+        #if canImport(FoundationNetworking)
         import FoundationNetworking
+        #endif
 
         public protocol HTTPSession {
             func data(for request: URLRequest) async throws -> (Data, URLResponse)
