@@ -26,3 +26,6 @@ Building for debugging...
 [67/564] Compiling RealModule AlgebraicField.swift
 [68/564] Compiling RealModule ApproximateEquality.swift
 [69/564] Compiling RealModule Float+Real.swift
+[71/565] Compiling _NIODataStructures _TinyArray.swift
+[72/565] Compiling _NIODataStructures PriorityQueue.swift
+[74/591] Emitting module PersistClient
