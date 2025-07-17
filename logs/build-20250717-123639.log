@@ -1619,3 +1619,130 @@ Just set COMPOSE_BAKE=true
 #36 90.54 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
 #36 90.63 Creating working copy for https://github.com/apple/swift-system.git
 #36 90.73 Working copy of https://github.com/apple/swift-system.git resolved at 1.5.0
+#36 ...
+
+#34 [planner build 4/4] RUN swift build -c release --product planner-server
+#34 92.63 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#34 92.78 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#34 92.80 Creating working copy for https://github.com/swift-server/async-http-client.git
+#34 94.00 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#34 94.02 Creating working copy for https://github.com/apple/swift-system.git
+#34 94.21 Working copy of https://github.com/apple/swift-system.git resolved at 1.5.0
+#34 94.24 Creating working copy for https://github.com/apple/swift-collections.git
+#34 95.77 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#34 95.80 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#34 96.12 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#34 96.14 Creating working copy for https://github.com/apple/swift-algorithms.git
+#34 96.42 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#34 ...
+
+#40 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#40 86.36 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#40 86.40 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#40 86.88 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#40 ...
+
+#34 [planner build 4/4] RUN swift build -c release --product planner-server
+#34 96.47 Creating working copy for https://github.com/apple/swift-crypto.git
+#34 ...
+
+#39 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#39 87.86 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#39 87.86 Creating working copy for https://github.com/apple/swift-nio.git
+#39 89.35 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#39 89.36 Creating working copy for https://github.com/apple/swift-atomics.git
+#39 89.46 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#39 89.48 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#39 89.54 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#39 ...
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 92.85 warning: 'swift-nio-extras': skipping cache due to an error: Failed to clone repository https://github.com/apple/swift-nio-extras.git:
+#37 92.85     Cloning into bare repository '/root/.cache/org.swift.swiftpm/repositories/swift-nio-extras-ee9c8e34'...
+#37 92.85     fatal: unable to access 'https://github.com/apple/swift-nio-extras.git/': Failed to connect to github.com port 443 after 27007 ms: Connection refused
+#37 95.67 [1/6039] Fetching swift-nio-extras
+#37 96.15 Fetched https://github.com/apple/swift-nio-extras.git from cache (30.45s)
+#37 96.18 Creating working copy for https://github.com/apple/swift-nio.git
+#37 96.86 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#37 96.91 Creating working copy for https://github.com/apple/swift-system.git
+#37 97.07 Working copy of https://github.com/apple/swift-system.git resolved at 1.5.0
+#37 97.10 Creating working copy for https://github.com/jpsim/Yams.git
+#37 97.63 Working copy of https://github.com/jpsim/Yams.git resolved at 5.4.0
+#37 98.05 Creating working copy for https://github.com/apple/swift-collections.git
+#37 ...
+
+#34 [planner build 4/4] RUN swift build -c release --product planner-server
+#34 98.74 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#34 98.78 Creating working copy for https://github.com/apple/swift-certificates.git
+#34 99.23 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#34 99.26 Creating working copy for https://github.com/jpsim/Yams.git
+#34 99.90 Working copy of https://github.com/jpsim/Yams.git resolved at 5.4.0
+#34 99.98 Creating working copy for https://github.com/apple/swift-asn1.git
+#34 100.8 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#34 100.8 Creating working copy for https://github.com/apple/swift-nio.git
+#34 ...
+
+#35 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#35 90.73 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#35 90.75 Creating working copy for https://github.com/swift-server/async-http-client.git
+#35 90.92 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#35 ...
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 98.98 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#37 99.01 Creating working copy for https://github.com/swift-server/async-http-client.git
+#37 99.40 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#37 99.48 Creating working copy for https://github.com/apple/swift-certificates.git
+#37 100.5 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#37 100.7 Creating working copy for https://github.com/apple/swift-atomics.git
+#37 101.1 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#37 101.5 Creating working copy for https://github.com/apple/swift-nio-ssl.git
+#37 ...
+
+#34 [planner build 4/4] RUN swift build -c release --product planner-server
+#34 104.2 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#34 104.3 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#34 105.1 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#34 105.1 Fetching https://github.com/swift-server/swift-service-lifecycle.git
+#34 107.4 [1/2426] Fetching swift-service-lifecycle
+#34 107.8 Fetched https://github.com/swift-server/swift-service-lifecycle.git from cache (2.70s)
+#34 107.8 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#34 108.0 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#34 108.0 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#34 108.2 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#34 108.3 Creating working copy for https://github.com/apple/swift-log.git
+#34 109.0 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#34 109.0 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#34 112.9 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#34 115.2 Creating working copy for https://github.com/apple/swift-http-types.git
+#34 ...
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 105.5 Working copy of https://github.com/apple/swift-nio-ssl.git resolved at 2.32.0
+#37 105.6 Creating working copy for https://github.com/apple/swift-crypto.git
+#37 109.0 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#37 109.0 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#37 109.2 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#37 109.2 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#37 112.9 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#37 114.9 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#37 ...
+
+#34 [planner build 4/4] RUN swift build -c release --product planner-server
+#34 117.3 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#34 117.3 Creating working copy for https://github.com/apple/swift-atomics.git
+#34 118.1 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#34 118.2 Creating working copy for https://github.com/apple/swift-numerics.git
+#34 118.9 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#34 118.9 Creating working copy for https://github.com/apple/swift-nio-ssl.git
+#34 ...
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 117.3 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#37 117.4 Creating working copy for https://github.com/apple/swift-numerics.git
+#37 118.1 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#37 118.1 Creating working copy for https://github.com/apple/swift-algorithms.git
+#37 118.9 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#37 118.9 Creating working copy for https://github.com/apple/swift-http-types.git
+#37 119.4 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#37 120.3 Creating working copy for https://github.com/apple/swift-log.git
