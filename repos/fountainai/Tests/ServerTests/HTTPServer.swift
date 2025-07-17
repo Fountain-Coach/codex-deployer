@@ -42,3 +42,6 @@ import FoundationNetworking
 }
 
 extension HTTPServer: @unchecked Sendable {}
+
+extension HTTPKernel: @unchecked Sendable {}
+extension HTTPRequest: @unchecked Sendable {}
