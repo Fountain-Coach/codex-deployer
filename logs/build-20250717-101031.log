@@ -229,3 +229,4 @@ Just set COMPOSE_BAKE=true
 #35 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
 #35 18.78 Building for production...
 #35 18.86 [0/6] Write sources
+#35 19.14 [3/6] Write swift-version-24593BA9C3E375BF.txt
