@@ -53,3 +53,710 @@ error: fatalError
 [2025-07-17T05:14:23.933725] swift build succeeded
 [2025-07-17T05:14:23.933776] running swift test...
 [2025-07-17T05:14:27.781775] swift test failed with exit code 1
+[2025-07-17T05:14:27.921985] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-17T05:14:29.043573] [dispatcher] Running Docker build...
+[2025-07-17T05:14:29.044579] [dispatcher] Running tests...
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [persist internal] load build definition from Dockerfile
+#1 transferring dockerfile: 266B done
+#1 DONE 0.1s
+
+#2 [tools-factory internal] load build definition from Dockerfile
+#2 transferring dockerfile: 284B done
+#2 DONE 0.1s
+
+#3 [llm-gateway internal] load build definition from Dockerfile
+#3 transferring dockerfile: 278B done
+#3 DONE 0.1s
+
+#4 [baseline-awareness internal] load build definition from Dockerfile
+#4 transferring dockerfile: 299B done
+#4 DONE 0.1s
+
+#5 [planner internal] load build definition from Dockerfile
+#5 transferring dockerfile: 266B done
+#5 DONE 0.1s
+
+#6 [bootstrap internal] load build definition from Dockerfile
+#6 transferring dockerfile: 272B done
+#6 DONE 0.1s
+
+#7 [function-caller internal] load build definition from Dockerfile
+#7 transferring dockerfile: 290B done
+#7 DONE 0.1s
+
+#8 [function-caller internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 DONE 0.7s
+
+#9 [function-caller internal] load metadata for docker.io/library/ubuntu:22.04
+#9 DONE 1.4s
+
+#10 [function-caller internal] load .dockerignore
+#10 transferring context: 2B done
+#10 DONE 0.0s
+
+#11 [planner internal] load .dockerignore
+#11 transferring context: 2B done
+#11 DONE 0.1s
+
+#12 [baseline-awareness build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#12 DONE 0.0s
+
+#13 [baseline-awareness stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:59ccd419c0dc0edf9e3bff1a3b2b073ea15a2ce4bc45ce7c989278b225b09af3
+#13 DONE 0.0s
+
+#14 [persist internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.1s
+
+#15 [bootstrap internal] load .dockerignore
+#15 transferring context: 2B done
+#15 DONE 0.1s
+
+#16 [llm-gateway internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.1s
+
+#17 [baseline-awareness internal] load .dockerignore
+#17 transferring context: 2B done
+#17 DONE 0.1s
+
+#18 [tools-factory internal] load .dockerignore
+#18 transferring context: 2B done
+#18 DONE 0.1s
+
+#19 [bootstrap internal] load build context
+#19 transferring context: 55.97MB 5.1s
+#19 ...
+
+#20 [persist internal] load build context
+#20 ...
+
+#19 [bootstrap internal] load build context
+#19 ...
+
+#21 [planner internal] load build context
+#21 transferring context: 105.84MB 10.1s
+#21 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#24 [baseline-awareness internal] load build context
+#24 ...
+
+#25 [llm-gateway internal] load build context
+#25 ...
+
+#24 [baseline-awareness internal] load build context
+#24 transferring context: 181.17MB 15.1s
+#24 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#24 [baseline-awareness internal] load build context
+#24 ...
+
+#20 [persist internal] load build context
+#20 ...
+
+#24 [baseline-awareness internal] load build context
+#24 ...
+
+#19 [bootstrap internal] load build context
+#19 transferring context: 245.43MB 20.2s
+#19 ...
+
+#21 [planner internal] load build context
+#21 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#21 [planner internal] load build context
+#21 ...
+
+#25 [llm-gateway internal] load build context
+#25 ...
+
+#19 [bootstrap internal] load build context
+#19 transferring context: 307.25MB 25.2s
+#19 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#19 [bootstrap internal] load build context
+#19 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#19 [bootstrap internal] load build context
+#19 ...
+
+#20 [persist internal] load build context
+#20 ...
+
+#19 [bootstrap internal] load build context
+#19 transferring context: 358.89MB 30.3s
+#19 ...
+
+#24 [baseline-awareness internal] load build context
+#24 ...
+
+#19 [bootstrap internal] load build context
+#19 ...
+
+#21 [planner internal] load build context
+#21 ...
+
+#25 [llm-gateway internal] load build context
+#25 ...
+
+#21 [planner internal] load build context
+#21 transferring context: 388.41MB 35.4s
+#21 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#25 [llm-gateway internal] load build context
+#25 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#20 [persist internal] load build context
+#20 ...
+
+#22 [tools-factory internal] load build context
+#22 transferring context: 413.97MB 40.4s
+#22 ...
+
+#24 [baseline-awareness internal] load build context
+#24 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#19 [bootstrap internal] load build context
+#19 ...
+
+#22 [tools-factory internal] load build context
+#22 transferring context: 450.24MB 45.5s
+#22 ...
+
+#21 [planner internal] load build context
+#21 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#25 [llm-gateway internal] load build context
+#25 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#20 [persist internal] load build context
+#20 ...
+
+#22 [tools-factory internal] load build context
+#22 transferring context: 486.29MB 50.5s
+#22 ...
+
+#24 [baseline-awareness internal] load build context
+#24 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#19 [bootstrap internal] load build context
+#19 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#19 [bootstrap internal] load build context
+#19 transferring context: 530.64MB 55.6s
+#19 ...
+
+#21 [planner internal] load build context
+#21 ...
+
+#19 [bootstrap internal] load build context
+#19 ...
+
+#25 [llm-gateway internal] load build context
+#25 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#20 [persist internal] load build context
+#20 ...
+
+#25 [llm-gateway internal] load build context
+#25 transferring context: 579.93MB 60.6s
+#25 ...
+
+#24 [baseline-awareness internal] load build context
+#24 ...
+
+#25 [llm-gateway internal] load build context
+#25 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#25 [llm-gateway internal] load build context
+#25 transferring context: 643.93MB 65.7s
+#25 ...
+
+#21 [planner internal] load build context
+#21 ...
+
+#25 [llm-gateway internal] load build context
+#25 ...
+
+#19 [bootstrap internal] load build context
+#19 ...
+
+#21 [planner internal] load build context
+#21 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#20 [persist internal] load build context
+#20 ...
+
+#23 [function-caller internal] load build context
+#23 transferring context: 711.28MB 70.8s
+#23 ...
+
+#24 [baseline-awareness internal] load build context
+#24 transferring context: 723.46MB 70.4s done
+#24 ...
+
+#21 [planner internal] load build context
+#21 ...
+
+#22 [tools-factory internal] load build context
+#22 transferring context: 723.46MB 71.1s done
+#22 DONE 71.6s
+
+#24 [baseline-awareness internal] load build context
+#24 DONE 71.6s
+
+#20 [persist internal] load build context
+#20 transferring context: 723.46MB 71.4s done
+#20 DONE 71.6s
+
+#23 [function-caller internal] load build context
+#23 transferring context: 723.46MB 71.6s done
+#23 DONE 71.8s
+
+#26 [function-caller build 2/4] WORKDIR /src
+#26 CACHED
+
+#21 [planner internal] load build context
+#21 transferring context: 723.46MB 71.6s done
+#21 DONE 71.8s
+
+#25 [llm-gateway internal] load build context
+#25 transferring context: 723.46MB 71.6s done
+#25 DONE 71.8s
+
+#19 [bootstrap internal] load build context
+#19 transferring context: 723.46MB 71.6s done
+#19 DONE 71.8s
+
+#27 [bootstrap build 3/4] COPY . .
+#27 DONE 8.3s
+
+#28 [persist build 3/4] COPY . .
+#28 CACHED
+
+#29 [baseline-awareness build 3/4] COPY . .
+#29 CACHED
+
+#30 [planner build 3/4] COPY . .
+#30 CACHED
+
+#31 [llm-gateway build 3/4] COPY . .
+#31 CACHED
+
+#32 [bootstrap build 3/4] COPY . .
+#32 CACHED
+
+#33 [function-caller build 3/4] COPY . .
+#33 CACHED
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 ...
+
+#35 [planner build 4/4] RUN swift build -c release --product planner-server
+#35 ...
+
+#36 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#36 ...
+
+#37 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#37 ...
+
+#38 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#38 ...
+
+#39 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#39 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 ...
+
+#37 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#37 21.05 Building for production...
+#37 21.11 [0/6] Write sources
+#37 21.45 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#37 ...
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 21.29 Building for production...
+#34 21.34 [0/14] Write sources
+#34 22.23 [5/14] Compiling writer.c
+#34 22.29 [6/14] Compiling reader.c
+#34 22.49 [7/14] Compiling parser.c
+#34 22.55 [8/14] Compiling api.c
+#34 22.95 [9/14] Compiling scanner.c
+#34 22.97 [10/14] Write swift-version-24593BA9C3E375BF.txt
+#34 22.97 [11/14] Compiling emitter.c
+#34 ...
+
+#37 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#37 28.63 [5/7] Compiling ServiceShared Models.swift
+#37 ...
+
+#36 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#36 21.08 Building for production...
+#36 21.14 [0/7] Write sources
+#36 21.44 [4/7] Write swift-version-24593BA9C3E375BF.txt
+#36 28.63 [6/8] Compiling ServiceShared Models.swift
+#36 ...
+
+#38 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#38 21.06 Building for production...
+#38 21.11 [0/6] Write sources
+#38 21.44 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#38 28.63 [5/7] Compiling ServiceShared Models.swift
+#38 30.42 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+#38 ...
+
+#39 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#39 21.09 Building for production...
+#39 21.16 [0/14] Write sources
+#39 22.25 [5/14] Write swift-version-24593BA9C3E375BF.txt
+#39 22.26 [5/14] Compiling reader.c
+#39 22.27 [6/14] Compiling writer.c
+#39 22.50 [8/14] Compiling api.c
+#39 22.68 [9/15] Compiling parser.c
+#39 23.27 [10/15] Compiling scanner.c
+#39 23.52 [11/15] Compiling emitter.c
+#39 29.68 [13/16] Compiling ServiceShared Models.swift
+#39 ...
+
+#35 [planner build 4/4] RUN swift build -c release --product planner-server
+#35 21.08 Building for production...
+#35 21.16 [0/6] Write sources
+#35 21.44 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#35 28.63 [5/7] Compiling ServiceShared Models.swift
+#35 31.21 [6/8] Compiling PlannerService HTTPKernel.swift
+#35 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 21.10 Building for production...
+#40 21.17 [0/6] Write sources
+#40 21.47 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#40 28.63 [5/7] Compiling ServiceShared Models.swift
+#40 30.65 [6/8] Compiling PersistService HTTPKernel.swift
+#40 ...
+
+#36 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#36 31.49 [7/9] Compiling BaselineAwarenessService BaselineStore.swift
+#36 ...
+
+#38 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#38 31.94 [7/9] Compiling LLMGatewayServer main.swift
+#38 31.95 [7/9] Write Objects.LinkFileList
+#38 32.20 [8/9] Linking llm-gateway-server
+#38 32.22 Build of product 'llm-gateway-server' complete! (29.99s)
+#38 DONE 32.5s
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 31.92 [7/9] Compiling PersistServer main.swift
+#40 31.93 [7/9] Write Objects.LinkFileList
+#40 32.20 [8/9] Linking persist-server
+#40 32.21 Build of product 'persist-server' complete! (29.99s)
+#40 DONE 32.5s
+
+#41 [persist stage-1 2/2] COPY --from=build /src/.build/release/persist-server /server
+#41 CACHED
+
+#42 [llm-gateway stage-1 2/2] COPY --from=build /src/.build/release/llm-gateway-server /server
+#42 CACHED
+
+#43 [llm-gateway] exporting to image
+#43 exporting layers done
+#43 writing image sha256:f867aefd2b2ae948b7a66a10c4410a5106548f117dfe822e1b31bbf296642510 0.0s done
+#43 naming to docker.io/library/fountainai-llm-gateway done
+#43 DONE 0.0s
+
+#44 [persist] exporting to image
+#44 exporting layers done
+#44 writing image sha256:18b2dce99ffb36de1f26971ff3b92ecedac4d65d4919ab46c27da6f083329a6d done
+#44 naming to docker.io/library/fountainai-persist done
+#44 DONE 0.0s
+
+#35 [planner build 4/4] RUN swift build -c release --product planner-server
+#35 32.26 [7/9] Compiling PlannerServer main.swift
+#35 32.27 [7/9] Write Objects.LinkFileList
+#35 32.59 [8/9] Linking planner-server
+#35 32.61 Build of product 'planner-server' complete! (30.38s)
+#35 DONE 32.7s
+
+#37 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#37 31.33 [6/8] Compiling BaselineAwarenessService BaselineStore.swift
+#37 ...
+
+#45 [planner stage-1 2/2] COPY --from=build /src/.build/release/planner-server /server
+#45 CACHED
+
+#46 [planner] exporting to image
+#46 exporting layers done
+#46 writing image sha256:99f8b243da9634eaf6ffcc06cf55cc0f82f221aa5221b22a504501a4f2ae61b3 done
+#46 naming to docker.io/library/fountainai-planner done
+#46 DONE 0.0s
+
+#47 [persist] resolving provenance for metadata file
+#47 DONE 0.1s
+
+#48 [llm-gateway] resolving provenance for metadata file
+#48 DONE 0.1s
+
+#49 [planner] resolving provenance for metadata file
+#49 DONE 0.0s
+
+#37 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#37 32.96 [7/9] Compiling BaselineAwarenessServer HTTPServer.swift
+#37 32.97 [7/9] Write Objects.LinkFileList
+#37 33.18 [8/9] Linking baseline-awareness-server
+#37 33.19 Build of product 'baseline-awareness-server' complete! (30.96s)
+#37 DONE 33.3s
+
+#50 [baseline-awareness stage-1 2/2] COPY --from=build /src/.build/release/baseline-awareness-server /server
+#50 CACHED
+
+#36 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#36 32.99 [8/10] Compiling BootstrapService HTTPKernel.swift
+#36 ...
+
+#51 [baseline-awareness] exporting to image
+#51 exporting layers done
+#51 writing image sha256:b063ff2a9c9fe903d553c26d38720b8e3b9f44ebe74576719e7a88df20a18870 done
+#51 naming to docker.io/library/fountainai-baseline-awareness done
+#51 DONE 0.0s
+
+#52 [baseline-awareness] resolving provenance for metadata file
+#52 DONE 0.0s
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 30.65 [13/16] Compiling ServiceShared Models.swift
+#34 ...
+
+#36 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#36 33.72 [9/11] Compiling BootstrapServer main.swift
+#36 33.73 [9/11] Write Objects.LinkFileList
+#36 34.16 [10/11] Linking bootstrap-server
+#36 34.19 Build of product 'bootstrap-server' complete! (31.97s)
+#36 DONE 34.3s
+
+#53 [bootstrap stage-1 2/2] COPY --from=build /src/.build/release/bootstrap-server /server
+#53 CACHED
+
+#54 [bootstrap] exporting to image
+#54 exporting layers done
+#54 writing image sha256:b328b9ba67bbaa27669b3dc7b60cd5ba709c78006a08c0436734aa3bd03d6459 done
+#54 naming to docker.io/library/fountainai-bootstrap done
+#54 DONE 0.0s
+
+#55 [bootstrap] resolving provenance for metadata file
+#55 DONE 0.0s
+
+#39 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#39 37.59 [14/16] Compiling Yams AliasDereferencingStrategy.swift
+#39 39.40 [15/17] Compiling Parser OpenAPISpec.swift
+#39 39.98 [16/18] Compiling FunctionCallerService Dispatcher.swift
+#39 40.55 [17/19] Compiling FunctionCallerServer main.swift
+#39 40.56 [17/19] Write Objects.LinkFileList
+#39 40.75 [18/19] Linking function-caller-server
+#39 40.84 Build of product 'function-caller-server' complete! (38.62s)
+#39 DONE 41.5s
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 37.93 [14/16] Compiling Yams AliasDereferencingStrategy.swift
+#34 39.56 [15/17] Compiling Parser OpenAPISpec.swift
+#34 40.20 [16/18] Compiling ToolsFactoryService HTTPKernel.swift
+#34 40.77 [17/19] Compiling ToolsFactoryServer main.swift
+#34 40.78 [17/19] Write Objects.LinkFileList
+#34 41.33 [18/19] Linking tools-factory-server
+#34 41.38 Build of product 'tools-factory-server' complete! (39.16s)
+#34 DONE 41.5s
+
+#56 [function-caller stage-1 2/2] COPY --from=build /src/.build/release/function-caller-server /server
+#56 CACHED
+
+#57 [tools-factory stage-1 2/2] COPY --from=build /src/.build/release/tools-factory-server /server
+#57 CACHED
+
+#58 [tools-factory] exporting to image
+#58 exporting layers done
+#58 writing image sha256:103dcc4171412a0cba054e98a2348fecb4d20bd071a481c14b34d4b8df45a8f4 0.0s done
+#58 naming to docker.io/library/fountainai-tools-factory 0.0s done
+#58 DONE 0.1s
+
+#59 [function-caller] exporting to image
+#59 exporting layers done
+#59 writing image sha256:6d9798d79891f4735d6bd3d8e8b5f73652293b50ac71cf1cf790d10ff40349ba
+#59 writing image sha256:6d9798d79891f4735d6bd3d8e8b5f73652293b50ac71cf1cf790d10ff40349ba 0.0s done
+#59 naming to docker.io/library/fountainai-function-caller done
+#59 DONE 0.9s
+
+#60 [tools-factory] resolving provenance for metadata file
+#60 DONE 0.0s
+
+#61 [function-caller] resolving provenance for metadata file
+#61 DONE 0.0s
+ baseline-awareness  Built
+ bootstrap  Built
+ function-caller  Built
+ llm-gateway  Built
+ persist  Built
+ planner  Built
+ tools-factory  Built
+ Network fountainai_default  Creating
+ Network fountainai_default  Created
+ Container fountainai-bootstrap-1  Creating
+ Container fountainai-baseline-awareness-1  Creating
+ Container fountainai-function-caller-1  Creating
+ Container fountainai-persist-1  Creating
+ Container fountainai-tools-factory-1  Creating
+ Container fountainai-llm-gateway-1  Creating
+ Container fountainai-planner-1  Creating
+ Container fountainai-planner-1  Created
+ Container fountainai-bootstrap-1  Created
+ Container fountainai-persist-1  Created
+ Container fountainai-function-caller-1  Created
+ Container fountainai-llm-gateway-1  Created
+ Container fountainai-tools-factory-1  Created
+ Container fountainai-baseline-awareness-1  Created
+Attaching to baseline-awareness-1, bootstrap-1, function-caller-1, llm-gateway-1, persist-1, planner-1, tools-factory-1
+persist-1             | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+function-caller-1     | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+llm-gateway-1         | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+tools-factory-1       | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+planner-1             | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+bootstrap-1           | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+baseline-awareness-1  | /server: error while loading shared libraries: libswiftCore.so: cannot open shared object file: No such file or directory
+[Kpersist-1 exited with code 127
+Aborting on container exit...
+ Container fountainai-tools-factory-1  Stopping
+ Container fountainai-baseline-awareness-1  Stopping
+ Container fountainai-llm-gateway-1  Stopping
+ Container fountainai-function-caller-1  Stopping
+ Container fountainai-bootstrap-1  Stopping
+ Container fountainai-persist-1  Stopping
+ Container fountainai-baseline-awareness-1  Stopped
+ Container fountainai-llm-gateway-1  Stopped
+ Container fountainai-tools-factory-1  Stopped
+ Container fountainai-planner-1  Stopping
+ Container fountainai-function-caller-1  Stopped
+ Container fountainai-bootstrap-1  Stopped
+ Container fountainai-persist-1  Stopped
+ Container fountainai-planner-1  Stopped
+ Container fountainai-planner-1  Stopping
+ Container fountainai-persist-1  Stopping
+ Container fountainai-bootstrap-1  Stopping
+ Container fountainai-tools-factory-1  Stopping
+ Container fountainai-baseline-awareness-1  Stopping
+ Container fountainai-planner-1  Stopped
+ Container fountainai-planner-1  Removing
+ Container fountainai-llm-gateway-1  Stopping
+ Container fountainai-function-caller-1  Stopping
+ Container fountainai-persist-1  Stopped
+ Container fountainai-persist-1  Removing
+ Container fountainai-baseline-awareness-1  Stopped
+ Container fountainai-baseline-awareness-1  Removing
+ Container fountainai-function-caller-1  Stopped
+ Container fountainai-tools-factory-1  Stopped
+ Container fountainai-tools-factory-1  Removing
+ Container fountainai-llm-gateway-1  Stopped
+ Container fountainai-llm-gateway-1  Removing
+ Container fountainai-bootstrap-1  Stopped
+ Container fountainai-bootstrap-1  Removing
+ Container fountainai-planner-1  Removed
+ Container fountainai-function-caller-1  Removing
+ Container fountainai-function-caller-1  Removed
+ Container fountainai-tools-factory-1  Removed
+ Container fountainai-bootstrap-1  Removed
+ Container fountainai-baseline-awareness-1  Removed
+ Container fountainai-llm-gateway-1  Removed
+ Container fountainai-persist-1  Removed
+ Network fountainai_default  Removing
+ Network fountainai_default  Removed
+ Network kong-codex_default  Creating
+ Network kong-codex_default  Created
+ Container kong-codex-kong-1  Creating
+ Container kong-codex-typesense-1  Creating
+ Container kong-codex-typesense-1  Created
+ Container kong-codex-kong-1  Created
+Attaching to kong-1, typesense-1
+Gracefully stopping... (press Ctrl+C again to force)
+Error response from daemon: mounts denied: 
+The path /srv/deploy/repos/kong-codex/kong.conf is not shared from the host and is not known to Docker.
+You can configure shared paths from Docker -> Preferences... -> Resources -> File Sharing.
+See https://docs.docker.com/desktop/settings/mac/#file-sharing for more info.
+ Container kong-codex-kong-1  Stopping
+ Container kong-codex-typesense-1  Stopping
+ Container kong-codex-kong-1  Stopped
+ Container kong-codex-kong-1  Removing
+ Container kong-codex-kong-1  Removed
+ Container kong-codex-typesense-1  Stopped
+ Container kong-codex-typesense-1  Removing
+ Container kong-codex-typesense-1  Removed
+ Network kong-codex_default  Removing
+ Network kong-codex_default  Removed
+
+[2025-07-17T05:14:29.044932] Running integration tests for fountainai...
+[2025-07-17T05:16:36.667693] Integration tests for fountainai failed with exit code 127
+
+[2025-07-17T05:16:36.669128] Running integration tests for kong-codex...
+[2025-07-17T05:16:47.439184] Integration tests for kong-codex failed with exit code 1
