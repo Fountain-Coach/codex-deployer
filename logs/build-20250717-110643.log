@@ -79,3 +79,41 @@ Just set COMPOSE_BAKE=true
 #8 DONE 1.9s
 
 #9 [function-caller internal] load metadata for docker.io/library/ubuntu:22.04
+#9 DONE 3.9s
+
+#10 [bootstrap internal] load .dockerignore
+#10 transferring context: 2B 0.0s done
+#10 DONE 0.0s
+
+#11 [function-caller internal] load .dockerignore
+#11 transferring context: 2B 0.0s done
+#11 DONE 0.0s
+
+#12 [planner internal] load .dockerignore
+#12 transferring context: 2B done
+#12 DONE 0.0s
+
+#13 [baseline-awareness internal] load .dockerignore
+#13 transferring context: 2B done
+#13 DONE 0.0s
+
+#14 [persist build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#14 DONE 0.0s
+
+#15 [persist stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:59ccd419c0dc0edf9e3bff1a3b2b073ea15a2ce4bc45ce7c989278b225b09af3
+#15 DONE 0.0s
+
+#16 [tools-factory internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.1s
+
+#17 [llm-gateway internal] load .dockerignore
+#17 transferring context: 2B done
+#17 DONE 0.1s
+
+#18 [persist internal] load .dockerignore
+#18 transferring context: 2B done
+#18 DONE 0.1s
+
+#19 [persist internal] load build context
+#19 transferring context: 15.13MB 5.0s
