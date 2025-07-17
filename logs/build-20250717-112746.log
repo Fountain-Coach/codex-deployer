@@ -912,3 +912,654 @@ Just set COMPOSE_BAKE=true
 #38 11.90 Fetched https://github.com/apple/swift-log.git from cache (3.91s)
 #38 11.92 Fetching https://github.com/apple/swift-http-types.git
 #38 11.96 [37092/125170] Fetching swift-collections, swift-crypto, swift-async-algorithms, yams, swift-nio
+#38 13.29 [69297/126074] Fetching swift-collections, swift-crypto, swift-async-algorithms, yams, swift-nio, swift-http-types
+#38 13.41 Fetched https://github.com/apple/swift-http-types.git from cache (1.50s)
+#38 13.41 Fetching https://github.com/apple/swift-atomics.git
+#38 13.41 [76146/125170] Fetching swift-collections, swift-crypto, swift-async-algorithms, yams, swift-nio
+#38 15.92 Fetched https://github.com/apple/swift-collections.git from cache (13.38s)
+#38 15.92 Fetching https://github.com/apple/swift-nio-transport-services.git
+#38 16.35 [77566/108424] Fetching swift-crypto, swift-async-algorithms, yams, swift-nio
+#38 16.75 [77786/111097] Fetching swift-crypto, swift-async-algorithms, yams, swift-nio, swift-nio-transport-services
+#38 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 10.88 [10977/34826] Fetching swift-collections, swift-nio-extras, swift-numerics, swift-log, swift-service-lifecycle
+#40 11.00 Fetched https://github.com/apple/swift-nio-extras.git from cache (4.81s)
+#40 11.01 [5556/28787] Fetching swift-collections, swift-numerics, swift-log, swift-service-lifecycle
+#40 11.13 [6634/33444] Fetching swift-collections, swift-numerics, swift-log, swift-service-lifecycle, swift-system
+#40 11.14 Fetching https://github.com/apple/swift-http-types.git
+#40 11.78 Fetched https://github.com/swift-server/swift-service-lifecycle.git from cache (2.39s)
+#40 11.79 Fetching https://github.com/apple/swift-nio-ssl.git
+#40 11.83 [13475/31018] Fetching swift-collections, swift-numerics, swift-log, swift-system
+#40 11.96 Fetched https://github.com/apple/swift-system.git from cache (2.55s)
+#40 11.96 [9145/26361] Fetching swift-collections, swift-numerics, swift-log
+#40 11.97 Fetching https://github.com/swift-server/async-http-client.git
+#40 12.62 [9617/27265] Fetching swift-collections, swift-numerics, swift-log, swift-http-types
+#40 12.68 Fetched https://github.com/apple/swift-numerics.git from cache (6.30s)
+#40 12.68 [4128/21508] Fetching swift-collections, swift-log, swift-http-types
+#40 12.72 Fetching https://github.com/apple/swift-asn1.git
+#40 13.03 Fetched https://github.com/apple/swift-http-types.git from cache (1.90s)
+#40 13.06 [5253/20604] Fetching swift-collections, swift-log
+#40 13.07 Fetching https://github.com/apple/swift-nio-transport-services.git
+#40 13.44 [6335/35582] Fetching swift-collections, swift-log, swift-nio-ssl
+#40 13.89 Fetched https://github.com/apple/swift-log.git from cache (4.50s)
+#40 13.90 Fetching https://github.com/apple/swift-atomics.git
+#40 13.98 [5835/31724] Fetching swift-collections, swift-nio-ssl
+#40 14.33 [6285/45746] Fetching swift-collections, swift-nio-ssl, async-http-client
+#40 14.39 [6407/47362] Fetching swift-collections, swift-nio-ssl, async-http-client, swift-asn1
+#40 14.79 [7009/49170] Fetching swift-collections, swift-nio-ssl, async-http-client, swift-asn1, swift-atomics
+#40 15.17 [8726/51843] Fetching swift-collections, swift-nio-ssl, async-http-client, swift-asn1, swift-atomics, swift-nio-transport-services
+#40 15.64 Fetched https://github.com/apple/swift-atomics.git from cache (1.74s)
+#40 15.64 [10820/50035] Fetching swift-collections, swift-nio-ssl, async-http-client, swift-asn1, swift-nio-transport-services
+#40 15.65 Fetching https://github.com/apple/swift-algorithms.git
+#40 15.97 Fetched https://github.com/apple/swift-nio-transport-services.git from cache (2.90s)
+#40 15.97 [8881/47362] Fetching swift-collections, swift-nio-ssl, async-http-client, swift-asn1
+#40 15.97 Fetching https://github.com/apple/swift-nio.git
+#40 16.79 [9536/53321] Fetching swift-collections, swift-nio-ssl, async-http-client, swift-asn1, swift-algorithms
+#40 ...
+
+#37 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#37 10.42 [16176/43097] Fetching swift-crypto, swift-collections, swift-service-lifecycle, swift-certificates, swift-atomics
+#37 11.05 Fetched https://github.com/apple/swift-certificates.git from cache (2.47s)
+#37 11.14 [18476/36729] Fetching swift-crypto, swift-collections, swift-service-lifecycle, swift-atomics
+#37 11.18 Fetching https://github.com/apple/swift-system.git
+#37 11.28 Fetched https://github.com/swift-server/swift-service-lifecycle.git from cache (4.51s)
+#37 11.33 Fetching https://github.com/apple/swift-nio-transport-services.git
+#37 11.40 [16758/34303] Fetching swift-crypto, swift-collections, swift-atomics
+#37 11.65 [18018/49281] Fetching swift-crypto, swift-collections, swift-atomics, swift-nio-ssl
+#37 11.94 Fetched https://github.com/apple/swift-atomics.git from cache (2.73s)
+#37 11.97 Fetching https://github.com/apple/swift-http-structured-headers.git
+#37 12.01 [19606/47473] Fetching swift-crypto, swift-collections, swift-nio-ssl
+#37 12.85 [21449/50146] Fetching swift-crypto, swift-collections, swift-nio-ssl, swift-nio-transport-services
+#37 12.98 [22288/54803] Fetching swift-crypto, swift-collections, swift-nio-ssl, swift-nio-transport-services, swift-system
+#37 13.30 [25841/55972] Fetching swift-crypto, swift-collections, swift-nio-ssl, swift-nio-transport-services, swift-system, swift-http-structured-headers
+#37 13.46 Fetched https://github.com/apple/swift-nio-transport-services.git from cache (2.14s)
+#37 13.47 Fetching https://github.com/apple/swift-nio.git
+#37 13.48 Fetched https://github.com/apple/swift-http-structured-headers.git from cache (1.51s)
+#37 13.48 Fetching https://github.com/swift-server/async-http-client.git
+#37 13.53 [24956/52130] Fetching swift-crypto, swift-collections, swift-nio-ssl, swift-system
+#37 14.51 [28711/66152] Fetching swift-crypto, swift-collections, swift-nio-ssl, swift-system, async-http-client
+#37 14.83 [31292/142850] Fetching swift-crypto, swift-collections, swift-nio-ssl, swift-system, async-http-client, swift-nio
+#37 15.61 Fetched https://github.com/apple/swift-system.git from cache (4.44s)
+#37 15.61 [53008/138193] Fetching swift-crypto, swift-collections, swift-nio-ssl, async-http-client, swift-nio
+#37 15.61 Fetching https://github.com/jpsim/Yams.git
+#37 15.73 Fetched https://github.com/apple/swift-crypto.git from cache (11.28s)
+#37 15.73 Fetching https://github.com/apple/swift-algorithms.git
+#37 15.73 [40481/122444] Fetching swift-collections, swift-nio-ssl, async-http-client, swift-nio
+#37 15.97 Fetched https://github.com/swift-server/async-http-client.git from cache (2.49s)
+#37 15.97 Fetching https://github.com/apple/swift-http-types.git
+#37 16.00 [41071/108422] Fetching swift-collections, swift-nio-ssl, swift-nio
+#37 16.66 [57818/119409] Fetching swift-collections, swift-nio-ssl, swift-nio, yams
+#37 16.67 [57878/125368] Fetching swift-collections, swift-nio-ssl, swift-nio, yams, swift-algorithms
+#37 16.68 [57820/126272] Fetching swift-collections, swift-nio-ssl, swift-nio, yams, swift-algorithms, swift-http-types
+#37 16.84 Fetched https://github.com/apple/swift-http-types.git from cache (0.86s)
+#37 16.86 [58969/125368] Fetching swift-collections, swift-nio-ssl, swift-nio, yams, swift-algorithms
+#37 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 17.24 [10711/130019] Fetching swift-collections, swift-nio-ssl, async-http-client, swift-asn1, swift-algorithms, swift-nio
+#40 19.47 Fetched https://github.com/apple/swift-asn1.git from cache (6.75s)
+#40 19.48 Fetching https://github.com/jpsim/Yams.git
+#40 19.48 Fetched https://github.com/apple/swift-algorithms.git from cache (3.84s)
+#40 19.49 [12819/122444] Fetching swift-collections, swift-nio-ssl, async-http-client, swift-nio
+#40 20.32 [16581/133431] Fetching swift-collections, swift-nio-ssl, async-http-client, swift-nio, yams
+#40 ...
+
+#39 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#39 10.87 [20328/92631] Fetching yams, swift-nio, swift-http-types, swift-service-lifecycle, swift-asn1
+#39 10.97 [22111/108380] Fetching yams, swift-nio, swift-http-types, swift-service-lifecycle, swift-asn1, swift-crypto
+#39 11.22 Fetched https://github.com/apple/swift-http-types.git from cache (1.93s)
+#39 11.23 [24817/107476] Fetching yams, swift-nio, swift-service-lifecycle, swift-asn1, swift-crypto
+#39 11.23 Fetching https://github.com/apple/swift-log.git
+#39 11.35 Fetched https://github.com/swift-server/swift-service-lifecycle.git from cache (1.81s)
+#39 11.36 [24169/105050] Fetching yams, swift-nio, swift-asn1, swift-crypto
+#39 11.36 Fetching https://github.com/apple/swift-collections.git
+#39 11.78 Fetched https://github.com/apple/swift-asn1.git from cache (2.26s)
+#39 11.79 Fetching https://github.com/apple/swift-nio-http2.git
+#39 11.79 [26421/103434] Fetching yams, swift-nio, swift-crypto
+#39 12.96 [39477/107292] Fetching yams, swift-nio, swift-crypto, swift-log
+#39 13.13 [41107/124038] Fetching yams, swift-nio, swift-crypto, swift-log, swift-collections
+#39 13.28 [44642/135657] Fetching yams, swift-nio, swift-crypto, swift-log, swift-collections, swift-nio-http2
+#39 13.95 Fetched https://github.com/apple/swift-log.git from cache (2.72s)
+#39 13.96 Fetching https://github.com/apple/swift-nio-transport-services.git
+#39 13.96 [62306/131799] Fetching yams, swift-nio, swift-crypto, swift-collections, swift-nio-http2
+#39 14.73 Fetched https://github.com/apple/swift-crypto.git from cache (5.20s)
+#39 14.73 [56205/116050] Fetching yams, swift-nio, swift-collections, swift-nio-http2
+#39 14.74 Fetching https://github.com/apple/swift-nio-ssl.git
+#39 15.12 [56973/118723] Fetching yams, swift-nio, swift-collections, swift-nio-http2, swift-nio-transport-services
+#39 15.71 Fetched https://github.com/apple/swift-nio-transport-services.git from cache (1.75s)
+#39 15.72 Fetching https://github.com/apple/swift-certificates.git
+#39 15.76 [58271/116050] Fetching yams, swift-nio, swift-collections, swift-nio-http2
+#39 16.10 [58834/131028] Fetching yams, swift-nio, swift-collections, swift-nio-http2, swift-nio-ssl
+#39 16.64 [61819/137396] Fetching yams, swift-nio, swift-collections, swift-nio-http2, swift-nio-ssl, swift-certificates
+#39 19.02 Fetched https://github.com/apple/swift-nio-http2.git from cache (7.23s)
+#39 19.03 Fetching https://github.com/apple/swift-nio-extras.git
+#39 19.05 [66053/125777] Fetching yams, swift-nio, swift-collections, swift-nio-ssl, swift-certificates
+#39 19.79 [67585/131816] Fetching yams, swift-nio, swift-collections, swift-nio-ssl, swift-certificates, swift-nio-extras
+#39 20.60 Fetched https://github.com/apple/swift-nio-extras.git from cache (1.57s)
+#39 20.60 [69238/125777] Fetching yams, swift-nio, swift-collections, swift-nio-ssl, swift-certificates
+#39 20.61 Fetching https://github.com/apple/swift-async-algorithms.git
+#39 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 10.90 Fetching https://github.com/apple/swift-algorithms.git
+#36 10.92 Fetching https://github.com/apple/swift-nio-http2.git
+#36 10.96 Fetched https://github.com/apple/swift-numerics.git from cache (8.40s)
+#36 10.97 Fetching https://github.com/jpsim/Yams.git
+#36 11.08 [18710/30768] Fetching swift-collections, async-http-client
+#36 11.14 [18711/46517] Fetching swift-collections, async-http-client, swift-crypto
+#36 11.16 Fetched https://github.com/apple/swift-collections.git from cache (8.60s)
+#36 11.22 [2419/29771] Fetching async-http-client, swift-crypto
+#36 11.24 Fetching https://github.com/apple/swift-http-types.git
+#36 12.66 [9410/35730] Fetching async-http-client, swift-crypto, swift-algorithms
+#36 12.66 [9411/46717] Fetching async-http-client, swift-crypto, swift-algorithms, yams
+#36 12.68 [9628/58336] Fetching async-http-client, swift-crypto, swift-algorithms, yams, swift-nio-http2
+#36 12.69 [10178/59240] Fetching async-http-client, swift-crypto, swift-algorithms, yams, swift-nio-http2, swift-http-types
+#36 13.03 Fetched https://github.com/apple/swift-http-types.git from cache (1.79s)
+#36 13.04 [18310/58336] Fetching async-http-client, swift-crypto, swift-algorithms, yams, swift-nio-http2
+#36 13.04 Fetching https://github.com/apple/swift-http-structured-headers.git
+#36 15.66 Fetched https://github.com/apple/swift-nio-http2.git from cache (4.75s)
+#36 15.67 [30348/46717] Fetching async-http-client, swift-crypto, swift-algorithms, yams
+#36 15.68 Fetching https://github.com/apple/swift-nio.git
+#36 17.36 [33451/123415] Fetching async-http-client, swift-crypto, swift-algorithms, yams, swift-nio
+#36 17.46 Fetched https://github.com/swift-server/async-http-client.git from cache (9.63s)
+#36 17.47 Fetching https://github.com/apple/swift-nio-ssl.git
+#36 17.52 [20195/109393] Fetching swift-crypto, swift-algorithms, yams, swift-nio
+#36 18.47 [30800/124371] Fetching swift-crypto, swift-algorithms, yams, swift-nio, swift-nio-ssl
+#36 ...
+
+#34 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#34 10.88 [96036/113292] Fetching swift-system, swift-collections, async-http-client, swift-nio, swift-http-structured-headers
+#34 11.26 [102558/114196] Fetching swift-system, swift-collections, async-http-client, swift-nio, swift-http-structured-headers, swift-http-types
+#34 11.36 Fetched https://github.com/apple/swift-http-structured-headers.git from cache (1.89s)
+#34 11.36 [102210/113027] Fetching swift-system, swift-collections, async-http-client, swift-nio, swift-http-types
+#34 11.37 Fetching https://github.com/apple/swift-numerics.git
+#34 12.59 Fetched https://github.com/apple/swift-http-types.git from cache (3.13s)
+#34 12.59 Fetching https://github.com/swift-server/swift-service-lifecycle.git
+#34 12.72 [102930/112123] Fetching swift-system, swift-collections, async-http-client, swift-nio
+#34 13.02 [102931/117880] Fetching swift-system, swift-collections, async-http-client, swift-nio, swift-numerics
+#34 13.89 [105945/120306] Fetching swift-system, swift-collections, async-http-client, swift-nio, swift-numerics, swift-service-lifecycle
+#34 14.27 Fetched https://github.com/swift-server/swift-service-lifecycle.git from cache (1.67s)
+#34 14.32 Fetching https://github.com/jpsim/Yams.git
+#34 14.80 [107155/117880] Fetching swift-system, swift-collections, async-http-client, swift-nio, swift-numerics
+#34 14.90 Fetched https://github.com/swift-server/async-http-client.git from cache (12.33s)
+#34 14.92 Fetching https://github.com/apple/swift-crypto.git
+#34 14.99 Fetched https://github.com/apple/swift-system.git from cache (12.42s)
+#34 14.99 [88534/99201] Fetching swift-collections, swift-nio, swift-numerics
+#34 14.99 Fetching https://github.com/apple/swift-atomics.git
+#34 15.43 [88708/110188] Fetching swift-collections, swift-nio, swift-numerics, yams
+#34 15.62 Fetched https://github.com/apple/swift-nio.git from cache (13.04s)
+#34 15.63 Fetching https://github.com/apple/swift-nio-extras.git
+#34 15.63 [12459/33490] Fetching swift-collections, swift-numerics, yams
+#34 15.95 [13188/35298] Fetching swift-collections, swift-numerics, yams, swift-atomics
+#34 15.95 [13207/51047] Fetching swift-collections, swift-numerics, yams, swift-atomics, swift-crypto
+#34 16.44 Fetched https://github.com/apple/swift-atomics.git from cache (1.44s)
+#34 16.44 Fetching https://github.com/apple/swift-nio-http2.git
+#34 16.46 [15946/49239] Fetching swift-collections, swift-numerics, yams, swift-crypto
+#34 16.60 [16481/55278] Fetching swift-collections, swift-numerics, yams, swift-crypto, swift-nio-extras
+#34 17.34 [25480/66897] Fetching swift-collections, swift-numerics, yams, swift-crypto, swift-nio-extras, swift-nio-http2
+#34 17.53 Fetched https://github.com/apple/swift-nio-extras.git from cache (1.91s)
+#34 17.53 Fetching https://github.com/apple/swift-asn1.git
+#34 17.56 [23263/60858] Fetching swift-collections, swift-numerics, yams, swift-crypto, swift-nio-http2
+#34 17.68 Fetched https://github.com/apple/swift-numerics.git from cache (6.31s)
+#34 17.68 Fetching https://github.com/apple/swift-nio-ssl.git
+#34 17.69 [19085/55101] Fetching swift-collections, yams, swift-crypto, swift-nio-http2
+#34 18.19 [20225/56717] Fetching swift-collections, yams, swift-crypto, swift-nio-http2, swift-asn1
+#34 18.54 Fetched https://github.com/apple/swift-asn1.git from cache (1.00s)
+#34 18.55 [20714/55101] Fetching swift-collections, yams, swift-crypto, swift-nio-http2
+#34 18.70 [21248/70079] Fetching swift-collections, yams, swift-crypto, swift-nio-http2, swift-nio-ssl
+#34 21.24 Fetched https://github.com/apple/swift-nio-http2.git from cache (4.80s)
+#34 21.26 [23711/58460] Fetching swift-collections, yams, swift-crypto, swift-nio-ssl
+#34 ...
+
+#39 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#39 21.53 [72913/130767] Fetching yams, swift-nio, swift-collections, swift-nio-ssl, swift-certificates, swift-async-algorithms
+#39 ...
+
+#35 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#35 11.70 [26767/65880] Fetching swift-nio-ssl, swift-collections, async-http-client, swift-log, swift-nio-http2, swift-system
+#35 12.73 Fetched https://github.com/apple/swift-system.git from cache (3.09s)
+#35 12.77 Fetching https://github.com/jpsim/Yams.git
+#35 12.79 [30598/61223] Fetching swift-nio-ssl, swift-collections, async-http-client, swift-log, swift-nio-http2
+#35 12.81 Fetched https://github.com/apple/swift-log.git from cache (5.90s)
+#35 12.83 [26972/57365] Fetching swift-nio-ssl, swift-collections, async-http-client, swift-nio-http2
+#35 12.85 Fetching https://github.com/apple/swift-atomics.git
+#35 13.05 Fetched https://github.com/swift-server/async-http-client.git from cache (6.76s)
+#35 13.07 Fetching https://github.com/apple/swift-algorithms.git
+#35 13.12 [14041/43343] Fetching swift-nio-ssl, swift-collections, swift-nio-http2
+#35 14.12 [16496/49302] Fetching swift-nio-ssl, swift-collections, swift-nio-http2, swift-algorithms
+#35 14.12 [16556/51110] Fetching swift-nio-ssl, swift-collections, swift-nio-http2, swift-algorithms, swift-atomics
+#35 14.56 Fetched https://github.com/apple/swift-atomics.git from cache (1.72s)
+#35 14.57 Fetching https://github.com/apple/swift-nio.git
+#35 14.60 [19644/49302] Fetching swift-nio-ssl, swift-collections, swift-nio-http2, swift-algorithms
+#35 15.48 [21469/60289] Fetching swift-nio-ssl, swift-collections, swift-nio-http2, swift-algorithms, yams
+#35 16.08 [24218/136987] Fetching swift-nio-ssl, swift-collections, swift-nio-http2, swift-algorithms, yams, swift-nio
+#35 16.81 Fetched https://github.com/apple/swift-algorithms.git from cache (3.74s)
+#35 16.81 [25269/131028] Fetching swift-nio-ssl, swift-collections, swift-nio-http2, yams, swift-nio
+#35 17.38 Fetched https://github.com/apple/swift-nio-http2.git from cache (9.39s)
+#35 17.45 [17586/119409] Fetching swift-nio-ssl, swift-collections, yams, swift-nio
+#35 ...
+
+#39 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#39 21.93 Fetched https://github.com/apple/swift-async-algorithms.git from cache (1.32s)
+#39 21.94 [74708/125777] Fetching yams, swift-nio, swift-collections, swift-nio-ssl, swift-certificates
+#39 22.32 Fetched https://github.com/apple/swift-certificates.git from cache (6.60s)
+#39 22.36 [69305/119409] Fetching yams, swift-nio, swift-collections, swift-nio-ssl
+#39 27.15 Fetched https://github.com/apple/swift-collections.git from cache (15.80s)
+#39 27.19 [74582/102663] Fetching yams, swift-nio, swift-nio-ssl
+#39 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 25.12 Fetched https://github.com/apple/swift-crypto.git from cache (15.61s)
+#36 25.13 Fetching https://github.com/apple/swift-async-algorithms.git
+#36 25.19 [76024/108622] Fetching swift-algorithms, yams, swift-nio, swift-nio-ssl
+#36 25.35 Fetched https://github.com/apple/swift-nio-ssl.git from cache (7.88s)
+#36 25.35 Fetching https://github.com/apple/swift-nio-extras.git
+#36 25.39 [61550/93644] Fetching swift-algorithms, yams, swift-nio
+#36 26.32 [61808/99683] Fetching swift-algorithms, yams, swift-nio, swift-nio-extras
+#36 26.93 [68350/104673] Fetching swift-algorithms, yams, swift-nio, swift-nio-extras, swift-async-algorithms
+#36 26.94 Fetched https://github.com/apple/swift-nio-extras.git from cache (1.59s)
+#36 26.94 Fetching https://github.com/apple/swift-asn1.git
+#36 26.99 [62360/98634] Fetching swift-algorithms, yams, swift-nio, swift-async-algorithms
+#36 27.58 [63773/100250] Fetching swift-algorithms, yams, swift-nio, swift-async-algorithms, swift-asn1
+#36 ...
+
+#38 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#38 17.80 Fetched https://github.com/apple/swift-nio-transport-services.git from cache (1.88s)
+#38 17.81 Fetching https://github.com/apple/swift-certificates.git
+#38 18.31 [78921/108424] Fetching swift-crypto, swift-async-algorithms, yams, swift-nio
+#38 18.65 [78958/114792] Fetching swift-crypto, swift-async-algorithms, yams, swift-nio, swift-certificates
+#38 19.13 Fetched https://github.com/apple/swift-certificates.git from cache (1.32s)
+#38 19.13 Fetching https://github.com/swift-server/swift-service-lifecycle.git
+#38 19.14 [79334/108424] Fetching swift-crypto, swift-async-algorithms, yams, swift-nio
+#38 20.06 [79710/110850] Fetching swift-crypto, swift-async-algorithms, yams, swift-nio, swift-service-lifecycle
+#38 21.19 Fetched https://github.com/swift-server/swift-service-lifecycle.git from cache (2.05s)
+#38 21.20 Fetching https://github.com/apple/swift-nio-http2.git
+#38 21.27 [80760/108424] Fetching swift-crypto, swift-async-algorithms, yams, swift-nio
+#38 22.77 [82954/120043] Fetching swift-crypto, swift-async-algorithms, yams, swift-nio, swift-nio-http2
+#38 23.99 Fetched https://github.com/apple/swift-async-algorithms.git from cache (21.46s)
+#38 24.00 [81082/115053] Fetching swift-crypto, yams, swift-nio, swift-nio-http2
+#38 24.00 Fetching https://github.com/apple/swift-algorithms.git
+#38 24.06 Fetched https://github.com/jpsim/Yams.git from cache (21.53s)
+#38 24.06 Fetching https://github.com/apple/swift-http-structured-headers.git
+#38 24.07 [70978/104066] Fetching swift-crypto, swift-nio, swift-nio-http2
+#38 24.07 Fetched https://github.com/apple/swift-crypto.git from cache (21.54s)
+#38 24.11 Fetching https://github.com/apple/swift-nio-ssl.git
+#38 24.12 [55502/88317] Fetching swift-nio, swift-nio-http2
+#38 24.88 [57559/89486] Fetching swift-nio, swift-nio-http2, swift-http-structured-headers
+#38 24.93 [57723/95445] Fetching swift-nio, swift-nio-http2, swift-http-structured-headers, swift-algorithms
+#38 25.11 Fetched https://github.com/apple/swift-http-structured-headers.git from cache (1.05s)
+#38 25.11 Fetching https://github.com/apple/swift-numerics.git
+#38 25.13 [57901/109254] Fetching swift-nio, swift-nio-http2, swift-algorithms, swift-nio-ssl
+#38 26.18 [68230/115011] Fetching swift-nio, swift-nio-http2, swift-algorithms, swift-nio-ssl, swift-numerics
+#38 26.92 Fetched https://github.com/apple/swift-algorithms.git from cache (2.91s)
+#38 26.92 Fetched https://github.com/apple/swift-numerics.git from cache (1.80s)
+#38 26.92 [65486/103295] Fetching swift-nio, swift-nio-http2, swift-nio-ssl
+#38 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 27.92 Fetched https://github.com/apple/swift-asn1.git from cache (0.98s)
+#36 27.93 Fetching https://github.com/swift-server/swift-service-lifecycle.git
+#36 27.95 [64840/98634] Fetching swift-algorithms, yams, swift-nio, swift-async-algorithms
+#36 28.73 Fetched https://github.com/apple/swift-async-algorithms.git from cache (3.61s)
+#36 28.78 [63686/93644] Fetching swift-algorithms, yams, swift-nio
+#36 28.79 [63687/96070] Fetching swift-algorithms, yams, swift-nio, swift-service-lifecycle
+#36 29.04 Fetched https://github.com/swift-server/swift-service-lifecycle.git from cache (1.12s)
+#36 29.06 [64159/93644] Fetching swift-algorithms, yams, swift-nio
+#36 ...
+
+#37 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#37 19.21 Fetched https://github.com/apple/swift-collections.git from cache (14.69s)
+#37 19.22 [61708/108622] Fetching swift-nio-ssl, swift-nio, yams, swift-algorithms
+#37 19.64 Fetched https://github.com/apple/swift-algorithms.git from cache (3.91s)
+#37 19.66 [56964/102663] Fetching swift-nio-ssl, swift-nio, yams
+#37 29.23 Fetched https://github.com/jpsim/Yams.git from cache (13.62s)
+#37 29.27 [63792/91676] Fetching swift-nio-ssl, swift-nio
+#37 ...
+
+#38 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#38 29.25 Fetched https://github.com/apple/swift-nio-http2.git from cache (8.06s)
+#38 29.32 [70926/91676] Fetching swift-nio, swift-nio-ssl
+#38 31.13 Fetched https://github.com/apple/swift-nio-ssl.git from cache (7.04s)
+#38 31.32 [61655/76698] Fetching swift-nio
+#38 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 23.93 Fetched https://github.com/swift-server/async-http-client.git from cache (11.96s)
+#40 24.00 [27699/119409] Fetching swift-collections, swift-nio-ssl, swift-nio, yams
+#40 27.02 Fetched https://github.com/jpsim/Yams.git from cache (7.55s)
+#40 27.03 [33319/108422] Fetching swift-collections, swift-nio-ssl, swift-nio
+#40 28.04 Fetched https://github.com/apple/swift-nio-ssl.git from cache (16.25s)
+#40 28.21 [24441/93444] Fetching swift-collections, swift-nio
+#40 32.46 Fetched https://github.com/apple/swift-collections.git from cache (28.06s)
+#40 32.60 [44485/76698] Fetching swift-nio
+#40 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 33.49 Fetched https://github.com/apple/swift-algorithms.git from cache (22.57s)
+#36 33.58 Fetched https://github.com/jpsim/Yams.git from cache (22.61s)
+#36 33.95 [60592/76698] Fetching swift-nio
+#36 ...
+
+#34 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#34 25.64 Fetched https://github.com/jpsim/Yams.git from cache (11.31s)
+#34 25.65 [35591/47473] Fetching swift-collections, swift-crypto, swift-nio-ssl
+#34 26.89 Fetched https://github.com/apple/swift-nio-ssl.git from cache (9.21s)
+#34 27.04 [23505/32495] Fetching swift-collections, swift-crypto
+#34 27.60 Fetched https://github.com/apple/swift-collections.git from cache (25.03s)
+#34 27.66 [7245/15749] Fetching swift-crypto
+#34 32.01 Fetched https://github.com/apple/swift-crypto.git from cache (17.09s)
+#34 32.03 Creating working copy for https://github.com/apple/swift-system.git
+#34 32.10 Working copy of https://github.com/apple/swift-system.git resolved at 1.5.0
+#34 32.10 Creating working copy for https://github.com/apple/swift-log.git
+#34 32.15 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#34 32.15 Creating working copy for https://github.com/apple/swift-certificates.git
+#34 32.33 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#34 32.34 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#34 32.41 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#34 32.46 Creating working copy for https://github.com/swift-server/async-http-client.git
+#34 32.56 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#34 32.57 Creating working copy for https://github.com/apple/swift-collections.git
+#34 32.75 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#34 32.78 Creating working copy for https://github.com/apple/swift-algorithms.git
+#34 33.19 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#34 33.21 Creating working copy for https://github.com/apple/swift-nio.git
+#34 33.46 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#34 33.48 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#34 33.64 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#34 33.65 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#34 33.69 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#34 33.72 Creating working copy for https://github.com/apple/swift-http-types.git
+#34 33.77 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#34 33.79 Creating working copy for https://github.com/apple/swift-numerics.git
+#34 33.85 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#34 33.87 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#34 34.04 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#34 34.04 Creating working copy for https://github.com/jpsim/Yams.git
+#34 34.21 Working copy of https://github.com/jpsim/Yams.git resolved at 5.4.0
+#34 34.22 Creating working copy for https://github.com/apple/swift-crypto.git
+#34 34.49 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#34 34.51 Creating working copy for https://github.com/apple/swift-atomics.git
+#34 34.60 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#34 34.60 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#34 34.64 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#34 34.64 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#34 35.02 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#34 35.03 Creating working copy for https://github.com/apple/swift-asn1.git
+#34 35.07 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#34 35.07 Creating working copy for https://github.com/apple/swift-nio-ssl.git
+#34 35.29 Working copy of https://github.com/apple/swift-nio-ssl.git resolved at 2.32.0
+#34 ...
+
+#39 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#39 27.58 Fetched https://github.com/jpsim/Yams.git from cache (23.14s)
+#39 27.68 [65241/91676] Fetching swift-nio, swift-nio-ssl
+#39 29.98 Fetched https://github.com/apple/swift-nio-ssl.git from cache (15.23s)
+#39 30.06 [59825/76698] Fetching swift-nio
+#39 34.74 Fetched https://github.com/apple/swift-nio.git from cache (30.21s)
+#39 34.75 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#39 34.84 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#39 34.89 Creating working copy for https://github.com/apple/swift-atomics.git
+#39 34.98 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#39 34.99 Creating working copy for https://github.com/apple/swift-system.git
+#39 35.03 Working copy of https://github.com/apple/swift-system.git resolved at 1.5.0
+#39 35.03 Creating working copy for https://github.com/apple/swift-nio.git
+#39 35.16 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#39 35.17 Creating working copy for https://github.com/apple/swift-numerics.git
+#39 35.27 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#39 35.28 Creating working copy for https://github.com/jpsim/Yams.git
+#39 35.32 Working copy of https://github.com/jpsim/Yams.git resolved at 5.4.0
+#39 35.32 Creating working copy for https://github.com/swift-server/async-http-client.git
+#39 35.38 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#39 35.38 Creating working copy for https://github.com/apple/swift-algorithms.git
+#39 35.43 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#39 35.44 Creating working copy for https://github.com/apple/swift-crypto.git
+#39 35.82 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#39 35.83 Creating working copy for https://github.com/apple/swift-asn1.git
+#39 35.89 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#39 35.89 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#39 35.95 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#39 35.95 Creating working copy for https://github.com/apple/swift-http-types.git
+#39 35.97 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#39 35.97 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#39 36.00 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#39 36.00 Creating working copy for https://github.com/apple/swift-log.git
+#39 36.05 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#39 36.05 Creating working copy for https://github.com/apple/swift-collections.git
+#39 36.22 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#39 36.23 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#39 36.53 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#39 36.55 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#39 36.61 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#39 36.61 Creating working copy for https://github.com/apple/swift-nio-ssl.git
+#39 36.82 Working copy of https://github.com/apple/swift-nio-ssl.git resolved at 2.32.0
+#39 36.84 Creating working copy for https://github.com/apple/swift-certificates.git
+#39 36.93 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#39 36.94 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#39 36.99 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#39 ...
+
+#35 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#35 28.17 Fetched https://github.com/apple/swift-nio-ssl.git from cache (24.44s)
+#35 28.22 [55909/104431] Fetching swift-collections, yams, swift-nio
+#35 30.44 Fetched https://github.com/jpsim/Yams.git from cache (17.68s)
+#35 30.64 [53793/93444] Fetching swift-collections, swift-nio
+#35 33.22 Fetched https://github.com/apple/swift-collections.git from cache (27.37s)
+#35 33.90 [49854/76698] Fetching swift-nio
+#35 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 38.20 Fetched https://github.com/apple/swift-nio.git from cache (22.53s)
+#36 ...
+
+#37 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#37 30.12 Fetched https://github.com/apple/swift-nio-ssl.git from cache (20.37s)
+#37 30.64 [50621/76698] Fetching swift-nio
+#37 41.68 Fetched https://github.com/apple/swift-nio.git from cache (28.21s)
+#37 41.74 Creating working copy for https://github.com/apple/swift-collections.git
+#37 41.93 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#37 41.94 Creating working copy for https://github.com/apple/swift-asn1.git
+#37 42.03 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#37 42.04 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#37 42.12 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#37 42.13 Creating working copy for https://github.com/apple/swift-crypto.git
+#37 ...
+
+#35 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#35 42.07 Fetched https://github.com/apple/swift-nio.git from cache (27.51s)
+#35 42.10 Creating working copy for https://github.com/apple/swift-numerics.git
+#35 42.16 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#35 42.17 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#35 42.23 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#35 42.24 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#35 42.28 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#35 42.29 Creating working copy for https://github.com/apple/swift-certificates.git
+#35 42.50 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#35 42.52 Creating working copy for https://github.com/apple/swift-crypto.git
+#35 43.26 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#35 43.27 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#35 43.34 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#35 43.35 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#35 43.41 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#35 43.42 Creating working copy for https://github.com/apple/swift-asn1.git
+#35 43.57 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#35 43.59 Creating working copy for https://github.com/apple/swift-nio-ssl.git
+#35 43.88 Working copy of https://github.com/apple/swift-nio-ssl.git resolved at 2.32.0
+#35 43.93 Creating working copy for https://github.com/apple/swift-http-types.git
+#35 43.95 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#35 43.96 Creating working copy for https://github.com/apple/swift-collections.git
+#35 44.14 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#35 44.14 Creating working copy for https://github.com/swift-server/async-http-client.git
+#35 44.26 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#35 ...
+
+#38 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#38 34.21 Fetched https://github.com/apple/swift-nio.git from cache (24.96s)
+#38 ...
+
+#35 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#35 44.27 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#35 44.32 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#35 44.33 Creating working copy for https://github.com/apple/swift-log.git
+#35 44.36 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#35 44.36 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#35 44.86 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#35 44.87 Creating working copy for https://github.com/apple/swift-system.git
+#35 44.91 Working copy of https://github.com/apple/swift-system.git resolved at 1.5.0
+#35 44.91 Creating working copy for https://github.com/jpsim/Yams.git
+#35 44.96 Working copy of https://github.com/jpsim/Yams.git resolved at 5.4.0
+#35 44.97 Creating working copy for https://github.com/apple/swift-atomics.git
+#35 45.11 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#35 45.11 Creating working copy for https://github.com/apple/swift-algorithms.git
+#35 45.20 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#35 45.21 Creating working copy for https://github.com/apple/swift-nio.git
+#35 45.36 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#35 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 43.26 Fetched https://github.com/apple/swift-nio.git from cache (27.29s)
+#40 43.29 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#40 43.75 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#40 43.76 Creating working copy for https://github.com/apple/swift-async-algorithms.git
+#40 43.96 Working copy of https://github.com/apple/swift-async-algorithms.git resolved at 1.0.4
+#40 43.96 Creating working copy for https://github.com/jpsim/Yams.git
+#40 43.99 Working copy of https://github.com/jpsim/Yams.git resolved at 5.4.0
+#40 44.00 Creating working copy for https://github.com/apple/swift-certificates.git
+#40 44.17 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#40 44.19 Creating working copy for https://github.com/apple/swift-crypto.git
+#40 44.65 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#40 44.70 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#40 44.74 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#40 44.85 Creating working copy for https://github.com/apple/swift-log.git
+#40 44.89 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#40 44.90 Creating working copy for https://github.com/apple/swift-collections.git
+#40 45.10 Working copy of https://github.com/apple/swift-collections.git resolved at 1.2.0
+#40 45.11 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#40 45.15 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#40 45.16 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#40 45.23 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#40 45.24 Creating working copy for https://github.com/apple/swift-numerics.git
+#40 45.30 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#40 45.32 Creating working copy for https://github.com/apple/swift-system.git
+#40 45.35 Working copy of https://github.com/apple/swift-system.git resolved at 1.5.0
+#40 45.35 Creating working copy for https://github.com/apple/swift-http-types.git
+#40 45.43 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#40 45.44 Creating working copy for https://github.com/apple/swift-nio-ssl.git
+#40 45.79 Working copy of https://github.com/apple/swift-nio-ssl.git resolved at 2.32.0
+#40 45.80 Creating working copy for https://github.com/swift-server/async-http-client.git
+#40 45.88 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#40 45.90 Creating working copy for https://github.com/apple/swift-asn1.git
+#40 45.96 Working copy of https://github.com/apple/swift-asn1.git resolved at 1.4.0
+#40 45.98 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#40 46.02 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#40 46.03 Creating working copy for https://github.com/apple/swift-atomics.git
+#40 46.10 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#40 46.11 Creating working copy for https://github.com/apple/swift-algorithms.git
+#40 46.15 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#40 46.16 Creating working copy for https://github.com/apple/swift-nio.git
+#40 46.29 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#40 ...
+
+#37 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#37 42.59 Working copy of https://github.com/apple/swift-crypto.git resolved at 3.12.3
+#37 42.60 Creating working copy for https://github.com/apple/swift-nio-http2.git
+#37 43.21 Working copy of https://github.com/apple/swift-nio-http2.git resolved at 1.37.0
+#37 43.22 Creating working copy for https://github.com/apple/swift-nio-extras.git
+#37 43.29 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#37 43.30 Creating working copy for https://github.com/apple/swift-log.git
+#37 43.38 Working copy of https://github.com/apple/swift-log.git resolved at 1.6.3
+#37 43.40 Creating working copy for https://github.com/apple/swift-numerics.git
+#37 43.48 Working copy of https://github.com/apple/swift-numerics.git resolved at 1.0.3
+#37 43.49 Creating working copy for https://github.com/swift-server/swift-service-lifecycle.git
+#37 43.67 Working copy of https://github.com/swift-server/swift-service-lifecycle.git resolved at 2.8.0
+#37 43.69 Creating working copy for https://github.com/apple/swift-certificates.git
+#37 43.80 Working copy of https://github.com/apple/swift-certificates.git resolved at 1.11.0
+#37 43.93 Creating working copy for https://github.com/apple/swift-atomics.git
+#37 43.98 Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+#37 43.98 Creating working copy for https://github.com/apple/swift-nio-ssl.git
+#37 44.22 Working copy of https://github.com/apple/swift-nio-ssl.git resolved at 2.32.0
+#37 44.22 Creating working copy for https://github.com/apple/swift-system.git
+#37 44.26 Working copy of https://github.com/apple/swift-system.git resolved at 1.5.0
+#37 44.27 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#37 44.30 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
+#37 44.31 Creating working copy for https://github.com/apple/swift-http-structured-headers.git
+#37 44.34 Working copy of https://github.com/apple/swift-http-structured-headers.git resolved at 1.3.0
+#37 44.35 Creating working copy for https://github.com/apple/swift-nio.git
+#37 44.64 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#37 44.66 Creating working copy for https://github.com/swift-server/async-http-client.git
+#37 44.86 Working copy of https://github.com/swift-server/async-http-client.git resolved at 1.26.1
+#37 44.87 Creating working copy for https://github.com/jpsim/Yams.git
+#37 44.90 Working copy of https://github.com/jpsim/Yams.git resolved at 5.4.0
+#37 44.91 Creating working copy for https://github.com/apple/swift-algorithms.git
+#37 44.96 Working copy of https://github.com/apple/swift-algorithms.git resolved at 1.2.1
+#37 44.97 Creating working copy for https://github.com/apple/swift-http-types.git
+#37 45.07 Working copy of https://github.com/apple/swift-http-types.git resolved at 1.4.0
+#37 ...
+
+#34 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#34 54.24 Building for production...
+#34 54.48 [0/7] Write sources
+#34 54.73 [4/7] Write swift-version-24593BA9C3E375BF.txt
+#34 ...
+
+#39 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#39 54.75 Building for production...
+#39 54.85 [0/6] Write sources
+#39 55.29 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#39 64.19 [5/7] Compiling ServiceShared Models.swift
+#39 ...
+
+#34 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#34 64.18 [6/8] Compiling ServiceShared Models.swift
+#34 67.85 [7/9] Compiling BaselineAwarenessService BaselineStore.swift
+#34 ...
+
+#37 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#37 66.65 Building for production...
+#37 66.83 [0/14] Write sources
+#37 67.96 [5/14] Compiling reader.c
+#37 67.96 [6/14] Compiling writer.c
+#37 68.19 [7/14] Compiling parser.c
+#37 68.23 [8/14] Compiling api.c
+#37 69.60 [9/14] Compiling emitter.c
+#37 69.60 [9/14] Compiling scanner.c
+#37 69.60 [11/14] Write swift-version-24593BA9C3E375BF.txt
+#37 ...
+
+#39 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#39 66.40 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+#39 67.22 [7/9] Compiling LLMGatewayServer main.swift
+#39 67.22 /src/Generated/Server/llm-gateway/main.swift:29:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#39 67.22  27 |         #endif
+#39 67.22  28 | 
+#39 67.22  29 |         serverFD = socket(AF_INET, socketType, 0)
+#39 67.22     |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#39 67.22  30 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#39 67.22  31 |         var opt: Int32 = 1
+#39 ERROR: process "/bin/sh -c swift build -c release --product llm-gateway-server" did not complete successfully: exit code: 1
+
+#35 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#35 66.69 Building for production...
+#35 66.82 [0/6] Write sources
+#35 67.13 [3/6] Write swift-version-24593BA9C3E375BF.txt
+------
+ > [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server:
+64.19 [5/7] Compiling ServiceShared Models.swift
+66.40 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+67.22 [7/9] Compiling LLMGatewayServer main.swift
+67.22 /src/Generated/Server/llm-gateway/main.swift:29:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+67.22  27 |         #endif
+67.22  28 | 
+67.22  29 |         serverFD = socket(AF_INET, socketType, 0)
+67.22     |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+67.22  30 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+67.22  31 |         var opt: Int32 = 1
+------
+failed to solve: process "/bin/sh -c swift build -c release --product llm-gateway-server" did not complete successfully: exit code: 1
+ Network kong-codex_default  Creating
+ Network kong-codex_default  Created
+ Container kong-codex-kong-1  Creating
+ Container kong-codex-typesense-1  Creating
+ Container kong-codex-kong-1  Created
+ Container kong-codex-typesense-1  Created
+Attaching to kong-1, typesense-1
