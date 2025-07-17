@@ -12,3 +12,89 @@ Building for debugging...
 [51/521] Compiling emitter.c
 [53/521] Compiling scanner.c
 [53/521] Compiling parser.c
+[56/563] Compiling PersistClient Models.swift
+[57/563] Compiling PersistClient addBaseline.swift
+[58/564] Compiling RealModule ElementaryFunctions.swift
+[59/564] Compiling RealModule Float+Real.swift
+[60/564] Compiling _NIOBase64 Base64.swift
+[61/564] Emitting module _NIOBase64
+[62/564] Compiling PersistClient APIClient.swift
+[63/564] Compiling PersistClient APIRequest.swift
+[64/564] Emitting module RealModule
+[65/565] Compiling RealModule RealFunctions.swift
+[66/565] Compiling RealModule Float16+Real.swift
+[67/565] Compiling RealModule Float80+Real.swift
+[68/565] Compiling RealModule Real.swift
+[69/566] Compiling _NIODataStructures _TinyArray.swift
+[70/566] Compiling _NIODataStructures PriorityQueue.swift
+[73/591] Emitting module Logging
+[74/591] Compiling _NIODataStructures Heap.swift
+[75/591] Emitting module _NIODataStructures
+[76/591] Compiling Logging MetadataProvider.swift
+[77/592] Emitting module SocketFixAgent
+[78/592] Compiling SocketFixAgent SocketFixAgent.swift
+/srv/deploy/repos/fountainai/Tools/Agents/SocketFixAgent.swift:16:36: warning: 'init(contentsOfFile:)' is deprecated: Use `init(contentsOfFile:encoding:)` instead
+14 |             if file.hasSuffix("main.swift") {
+15 |                 let path = generatedPath + "/" + file
+16 |                 var contents = try String(contentsOfFile: path)
+   |                                    `- warning: 'init(contentsOfFile:)' is deprecated: Use `init(contentsOfFile:encoding:)` instead
+17 |                 let original = contents
+18 |                 for constant in constants {
+[79/593] Compiling PlannerClient get_semantic_arc.swift
+[80/594] Compiling PlannerClient planner_execute.swift
+[81/594] Compiling PlannerClient planner_reason.swift
+[82/594] Compiling PlannerClient get_reflection_history.swift
+[83/594] Compiling PlannerClient Models.swift
+[84/594] Emitting module PlannerClient
+[85/594] Compiling Yams AliasDereferencingStrategy.swift
+[86/594] Compiling Yams Anchor.swift
+[87/595] Compiling PersistClient listCorpora.swift
+[88/595] Compiling ToolsFactoryClient Models.swift
+[89/595] Compiling ToolsFactoryClient register_openapi.swift
+[90/595] Compiling ToolsFactoryClient APIRequest.swift
+[91/595] Compiling ToolsFactoryClient list_tools.swift
+[92/595] Compiling PersistClient listFunctions.swift
+[94/595] Compiling PersistClient createCorpus.swift
+[95/595] Compiling Yams Constructor.swift
+[96/595] Compiling Yams Decoder.swift
+[97/595] Emitting module PersistClient
+[98/595] Compiling PersistClient getFunctionDetails.swift
+[100/595] Compiling Yams Emitter.swift
+[101/595] Compiling Yams Encoder.swift
+[102/595] Compiling PlannerClient planner_list_corpora.swift
+[105/595] Compiling Logging LogHandler.swift
+[106/595] Compiling Logging Locks.swift
+[107/595] Compiling Logging Logging.swift
+[108/596] Compiling ToolsFactoryClient APIClient.swift
+[109/596] Emitting module ToolsFactoryClient
+[111/610] Wrapping AST for SocketFixAgent for debugging
+[113/610] Compiling PlannerClient post_reflection.swift
+[114/617] Compiling PersistClient listReflections.swift
+[115/625] Compiling ServiceShared PrometheusAdapter.swift
+[116/625] Compiling ServiceShared TypesenseClient.swift
+[117/625] Compiling ServiceShared Models.swift
+[118/625] Emitting module ServiceShared
+[121/627] Write Objects.LinkFileList
+[123/627] Compiling LLMGatewayClientSDK metrics_metrics_get.swift
+[124/627] Compiling LLMGatewayClientSDK chatWithObjective.swift
+[124/627] Compiling CNIOWASI CNIOWASI.c
+[124/627] Compiling CNIOWindows WSAStartup.c
+[127/627] Compiling FunctionCallerClient list_functions.swift
+[128/642] Compiling FunctionCallerClient APIRequest.swift
+[129/642] Compiling InternalCollectionsUtilities UnsafeBufferPointer+Extras.swift
+[130/650] Emitting module LLMGatewayClientSDK
+[131/650] Emitting module FunctionCallerClient
+[132/650] Compiling InternalCollectionsUtilities Descriptions.swift
+[133/650] Compiling InternalCollectionsUtilities RandomAccessCollection+Offsets.swift
+[134/650] Compiling InternalCollectionsUtilities _UniqueCollection.swift
+[135/650] Compiling InternalCollectionsUtilities Debugging.swift
+[136/650] Compiling LLMGatewayClientSDK APIClient.swift
+[137/650] Compiling LLMGatewayClientSDK APIRequest.swift
+[138/650] Compiling FunctionCallerClient APIClient.swift
+[139/650] Compiling FunctionCallerClient get_function_details.swift
+[140/650] Compiling FunctionCallerClient invoke_function.swift
+[141/650] Compiling FunctionCallerClient Models.swift
+[142/650] Compiling LLMGatewayClientSDK Models.swift
+[144/652] Linking SocketFixAgent
+[146/652] Emitting module Yams
+[146/652] Compiling CNIOLinux liburing_shims.c
