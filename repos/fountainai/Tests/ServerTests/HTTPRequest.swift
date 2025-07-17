@@ -15,3 +15,6 @@ public struct HTTPRequest {
         self.body = body
     }
 }
+
+// Allow using HTTPRequest across concurrency domains for tests
+extension HTTPRequest: @unchecked Sendable {}
