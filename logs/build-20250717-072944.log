@@ -640,3 +640,249 @@ Just set COMPOSE_BAKE=true
 #25 DONE 108.1s
 
 #27 [llm-gateway build 3/4] COPY . .
+#27 DONE 18.3s
+
+#28 [llm-gateway build 3/4] COPY . .
+#28 CACHED
+
+#29 [baseline-awareness build 3/4] COPY . .
+#29 CACHED
+
+#30 [tools-factory build 3/4] COPY . .
+#30 CACHED
+
+#31 [persist build 3/4] COPY . .
+#31 CACHED
+
+#32 [bootstrap build 3/4] COPY . .
+#32 CACHED
+
+#33 [planner build 3/4] COPY . .
+#33 CACHED
+
+#34 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#34 ...
+
+#35 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#35 ...
+
+#36 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#36 ...
+
+#37 [planner build 4/4] RUN swift build -c release --product planner-server
+#37 ...
+
+#38 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#38 ...
+
+#39 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#39 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 ...
+
+#38 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#38 18.74 Building for production...
+#38 18.86 [0/6] Write sources
+#38 19.15 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#38 ...
+
+#36 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#36 20.05 Building for production...
+#36 20.11 [0/14] Write sources
+#36 20.40 [5/14] Compiling reader.c
+#36 20.61 [6/14] Compiling writer.c
+#36 21.08 [7/14] Compiling api.c
+#36 21.24 [8/14] Compiling parser.c
+#36 21.61 [9/14] Compiling emitter.c
+#36 22.82 [10/14] Compiling scanner.c
+#36 22.84 [11/14] Write swift-version-24593BA9C3E375BF.txt
+#36 ...
+
+#38 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#38 27.73 [5/7] Compiling ServiceShared Models.swift
+#38 ...
+
+#37 [planner build 4/4] RUN swift build -c release --product planner-server
+#37 18.78 Building for production...
+#37 18.86 [0/6] Write sources
+#37 19.19 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#37 27.41 [5/7] Compiling ServiceShared Models.swift
+#37 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 18.75 Building for production...
+#40 18.86 [0/6] Write sources
+#40 19.14 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#40 27.33 [5/7] Compiling ServiceShared Models.swift
+#40 ...
+
+#34 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#34 18.90 Building for production...
+#34 19.03 [0/7] Write sources
+#34 19.30 [4/7] Write swift-version-24593BA9C3E375BF.txt
+#34 27.55 [6/8] Compiling ServiceShared Models.swift
+#34 ...
+
+#39 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#39 18.76 Building for production...
+#39 18.86 [0/6] Write sources
+#39 19.14 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#39 27.40 [5/7] Compiling ServiceShared Models.swift
+#39 28.87 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+#39 ...
+
+#35 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#35 18.87 Building for production...
+#35 18.95 [0/14] Write sources
+#35 19.30 [5/14] Compiling writer.c
+#35 19.35 [6/14] Compiling reader.c
+#35 19.53 [7/14] Compiling api.c
+#35 19.57 [8/14] Compiling parser.c
+#35 20.06 [9/14] Compiling emitter.c
+#35 20.39 [10/14] Write swift-version-24593BA9C3E375BF.txt
+#35 20.39 [11/14] Compiling scanner.c
+#35 ...
+
+#39 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#39 29.29 [7/9] Compiling LLMGatewayServer main.swift
+#39 29.29 /src/Generated/Server/llm-gateway/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#39 29.29 21 | 
+#39 29.29 22 |     func start() throws {
+#39 29.29 23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+#39 29.29    |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#39 29.29 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#39 29.29 25 |         var opt: Int32 = 1
+#39 ERROR: process "/bin/sh -c swift build -c release --product llm-gateway-server" did not complete successfully: exit code: 1
+
+#37 [planner build 4/4] RUN swift build -c release --product planner-server
+#37 29.91 [6/8] Compiling PlannerService HTTPKernel.swift
+#37 30.32 [7/9] Compiling PlannerServer main.swift
+#37 30.32 /src/Generated/Server/planner/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#37 30.32 21 | 
+#37 30.32 22 |     func start() throws {
+#37 30.32 23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+#37 30.32    |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#37 30.32 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#37 30.32 25 |         var opt: Int32 = 1
+#37 ERROR: process "/bin/sh -c swift build -c release --product planner-server" did not complete successfully: exit code: 1
+
+#36 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#36 30.67 [13/16] Compiling ServiceShared Models.swift
+#36 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 29.26 [6/8] Compiling PersistService HTTPKernel.swift
+#40 30.11 [7/9] Compiling PersistServer main.swift
+#40 30.11 /src/Generated/Server/persist/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#40 30.11 21 | 
+#40 30.11 22 |     func start() throws {
+#40 30.11 23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+#40 30.11    |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#40 30.11 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#40 30.11 25 |         var opt: Int32 = 1
+#40 ERROR: process "/bin/sh -c swift build -c release --product persist-server" did not complete successfully: exit code: 1
+
+#38 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#38 30.23 [6/8] Compiling BaselineAwarenessService BaselineStore.swift
+#38 30.59 [7/9] Compiling BaselineAwarenessServer HTTPServer.swift
+#38 30.59 /src/Generated/Server/baseline-awareness/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#38 30.59  21 | 
+#38 30.59  22 |     func start() throws {
+#38 30.59  23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+#38 30.59     |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#38 30.59  24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#38 30.59  25 |         var opt: Int32 = 1
+#38 ERROR: process "/bin/sh -c swift build -c release --product baseline-awareness-server" did not complete successfully: exit code: 1
+
+#34 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#34 30.22 [7/9] Compiling BaselineAwarenessService BaselineStore.swift
+#34 CANCELED
+
+#35 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#35 29.85 [13/16] Compiling ServiceShared Models.swift
+#35 CANCELED
+
+#36 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#36 CANCELED
+------
+ > [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server:
+27.73 [5/7] Compiling ServiceShared Models.swift
+30.23 [6/8] Compiling BaselineAwarenessService BaselineStore.swift
+30.59 [7/9] Compiling BaselineAwarenessServer HTTPServer.swift
+30.59 /src/Generated/Server/baseline-awareness/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+30.59  21 | 
+30.59  22 |     func start() throws {
+30.59  23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+30.59     |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+30.59  24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+30.59  25 |         var opt: Int32 = 1
+------
+------
+ > [planner build 4/4] RUN swift build -c release --product planner-server:
+27.41 [5/7] Compiling ServiceShared Models.swift
+29.91 [6/8] Compiling PlannerService HTTPKernel.swift
+30.32 [7/9] Compiling PlannerServer main.swift
+30.32 /src/Generated/Server/planner/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+30.32 21 | 
+30.32 22 |     func start() throws {
+30.32 23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+30.32    |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+30.32 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+30.32 25 |         var opt: Int32 = 1
+------
+------
+ > [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server:
+27.40 [5/7] Compiling ServiceShared Models.swift
+28.87 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+29.29 [7/9] Compiling LLMGatewayServer main.swift
+29.29 /src/Generated/Server/llm-gateway/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+29.29 21 | 
+29.29 22 |     func start() throws {
+29.29 23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+29.29    |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+29.29 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+29.29 25 |         var opt: Int32 = 1
+------
+------
+ > [persist build 4/4] RUN swift build -c release --product persist-server:
+27.33 [5/7] Compiling ServiceShared Models.swift
+29.26 [6/8] Compiling PersistService HTTPKernel.swift
+30.11 [7/9] Compiling PersistServer main.swift
+30.11 /src/Generated/Server/persist/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+30.11 21 | 
+30.11 22 |     func start() throws {
+30.11 23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+30.11    |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+30.11 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+30.11 25 |         var opt: Int32 = 1
+------
+failed to solve: process "/bin/sh -c swift build -c release --product llm-gateway-server" did not complete successfully: exit code: 1
+ Network kong-codex_default  Creating
+ Network kong-codex_default  Created
+ Container kong-codex-typesense-1  Creating
+ Container kong-codex-kong-1  Creating
+ Container kong-codex-typesense-1  Created
+ Container kong-codex-kong-1  Created
+Attaching to kong-1, typesense-1
+Gracefully stopping... (press Ctrl+C again to force)
+Error response from daemon: mounts denied: 
+The path /srv/deploy/repos/kong-codex/kong.conf is not shared from the host and is not known to Docker.
+You can configure shared paths from Docker -> Preferences... -> Resources -> File Sharing.
+See https://docs.docker.com/desktop/settings/mac/#file-sharing for more info.
+ Container kong-codex-typesense-1  Stopping
+ Container kong-codex-kong-1  Stopping
+ Container kong-codex-kong-1  Stopped
+ Container kong-codex-kong-1  Removing
+ Container kong-codex-kong-1  Removed
+ Container kong-codex-typesense-1  Stopped
+ Container kong-codex-typesense-1  Removing
+ Container kong-codex-typesense-1  Removed
+ Network kong-codex_default  Removing
+ Network kong-codex_default  Removed
+
+[2025-07-17T07:30:23.988746] Running integration tests for fountainai...
+[2025-07-17T07:33:03.703226] Integration tests for fountainai failed with exit code 1
+
+[2025-07-17T07:33:03.703446] Running integration tests for kong-codex...
+[2025-07-17T07:33:07.157241] Integration tests for kong-codex failed with exit code 1
