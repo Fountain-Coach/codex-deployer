@@ -182,3 +182,7 @@ Codex-deployer began as an experiment to remove brittle CI pipelines and GitHub 
 ---
 
 © FountainCoach — Codex-first infrastructure
+
+## License
+
+Released under the [MIT License](LICENSE).
