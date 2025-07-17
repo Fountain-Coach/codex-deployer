@@ -21,6 +21,15 @@ import ServiceShared
 final class ServicesIntegrationTests: XCTestCase {
     var cachePath: String!
 
+    private func registerEchoFunction(port: Int, method: String) async throws {
+        let tfKernel = ToolsFactoryService.HTTPKernel()
+        let fn = ServiceShared.Function(description: "echo", functionId: "echo", httpMethod: method, httpPath: "http://127.0.0.1:\(port)", name: "echo")
+        let body = try JSONEncoder().encode([fn])
+        _ = try await tfKernel.handle(
+            .init(method: "POST", path: "/tools/register", headers: ["Content-Type": "application/json"], body: body)
+        )
+    }
+
     override func setUp() async throws {
         cachePath = URL(fileURLWithPath: NSTemporaryDirectory())
             .appendingPathComponent(UUID().uuidString).path
@@ -304,10 +313,7 @@ final class ServicesIntegrationTests: XCTestCase {
         addTeardownBlock { try? await echoServer.stop() }
 
         // register function via Tools Factory
-        let tfKernel = ToolsFactoryService.HTTPKernel()
-        let fn = ServiceShared.Function(description: "echo", functionId: "echo", httpMethod: "GET", httpPath: "http://127.0.0.1:\(echoPort)", name: "echo")
-        let body = try JSONEncoder().encode([fn])
-        _ = try await tfKernel.handle(.init(method: "POST", path: "/tools/register", headers: ["Content-Type": "application/json"], body: body))
+        try await registerEchoFunction(port: echoPort, method: "GET")
 
         // start function caller
         let fcKernel = FunctionCallerService.HTTPKernel()
@@ -351,10 +357,7 @@ final class ServicesIntegrationTests: XCTestCase {
         let echoPort = try await echoServer.start(port: 0)
         addTeardownBlock { try? await echoServer.stop() }
 
-        let tfKernel = ToolsFactoryService.HTTPKernel()
-        let fn = ServiceShared.Function(description: "echo", functionId: "echo", httpMethod: "POST", httpPath: "http://127.0.0.1:\(echoPort)", name: "echo")
-        let body = try JSONEncoder().encode([fn])
-        _ = try await tfKernel.handle(.init(method: "POST", path: "/tools/register", headers: ["Content-Type": "application/json"], body: body))
+        try await registerEchoFunction(port: echoPort, method: "POST")
 
         let fcKernel = FunctionCallerService.HTTPKernel()
         let kernel = IntegrationRuntime.HTTPKernel { req in
