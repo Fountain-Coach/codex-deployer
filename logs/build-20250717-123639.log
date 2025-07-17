@@ -1319,3 +1319,11 @@ Just set COMPOSE_BAKE=true
 #38 61.64 Fetched https://github.com/apple/swift-collections.git from cache (59.42s)
 #38 61.75 Fetched https://github.com/apple/swift-nio.git from cache (59.54s)
 #38 63.73 [1/5757] Fetching swift-numerics
+#38 65.09 Fetched https://github.com/apple/swift-numerics.git from cache (13.11s)
+#38 65.19 [1/904] Fetching swift-http-types
+#38 65.77 Fetched https://github.com/apple/swift-http-types.git from cache (12.67s)
+#38 65.78 Fetched https://github.com/apple/swift-crypto.git from cache (17.59s)
+#38 65.80 Fetched https://github.com/apple/swift-nio-ssl.git from cache (17.24s)
+#38 65.96 Creating working copy for https://github.com/apple/swift-nio.git
+#38 67.35 Working copy of https://github.com/apple/swift-nio.git resolved at 2.84.0
+#38 67.38 Creating working copy for https://github.com/apple/swift-collections.git
