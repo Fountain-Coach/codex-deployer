@@ -770,3 +770,24 @@ Just set COMPOSE_BAKE=true
 #26 CACHED
 
 #27 [bootstrap build 3/4] COPY . .
+#27 DONE 25.2s
+
+#28 [persist build 3/4] COPY . .
+#28 CACHED
+
+#29 [llm-gateway build 3/4] COPY . .
+#29 CACHED
+
+#30 [function-caller build 3/4] COPY . .
+#30 CACHED
+
+#31 [bootstrap build 3/4] COPY . .
+#31 CACHED
+
+#32 [planner build 3/4] COPY . .
+#32 CACHED
+
+#33 [baseline-awareness build 3/4] COPY . .
+#33 CACHED
+
+#34 [persist build 4/4] RUN swift build -c release --product persist-server
