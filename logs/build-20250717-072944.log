@@ -1,0 +1,28 @@
+[2025-07-17T07:29:44.304807] Dispatcher started successfully 🟢
+[2025-07-17T07:29:44.305090] === New Cycle ===
+Building for debugging...
+[0/511] Write sources
+[45/511] Compiling _NumericsShims _NumericsShims.c
+[46/511] Compiling _AtomicsShims.c
+[47/511] Write swift-version-24593BA9C3E375BF.txt
+[48/511] Compiling CNIOWindows shim.c
+[49/511] Compiling CNIOWindows WSAStartup.c
+[50/517] Compiling writer.c
+[51/517] Compiling emitter.c
+[51/517] Compiling parser.c
+[52/517] Compiling reader.c
+[53/517] Compiling scanner.c
+[55/517] Compiling api.c
+[57/562] Emitting module RealModule
+[58/563] Compiling RealModule Real.swift
+[59/563] Emitting module _NIOBase64
+[60/563] Compiling _NIOBase64 Base64.swift
+[61/564] Compiling RealModule RealFunctions.swift
+[62/564] Compiling RealModule Float80+Real.swift
+[63/564] Compiling RealModule Float16+Real.swift
+[64/564] Compiling RealModule AugmentedArithmetic.swift
+[65/564] Compiling RealModule Double+Real.swift
+[66/564] Compiling RealModule ElementaryFunctions.swift
+[67/564] Compiling RealModule AlgebraicField.swift
+[68/564] Compiling RealModule ApproximateEquality.swift
+[69/564] Compiling RealModule Float+Real.swift
