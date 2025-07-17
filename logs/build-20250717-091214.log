@@ -116,3 +116,23 @@ Just set COMPOSE_BAKE=true
 #20 ...
 
 #19 [tools-factory internal] load build context
+#19 ...
+
+#21 [baseline-awareness internal] load build context
+#21 transferring context: 2.20MB 7.7s
+#21 ...
+
+#22 [planner internal] load build context
+#22 ...
+
+#23 [persist internal] load build context
+#23 ...
+
+#24 [llm-gateway internal] load build context
+#24 ...
+
+#25 [bootstrap internal] load build context
+#25 ...
+
+#24 [llm-gateway internal] load build context
+#24 transferring context: 9.25MB 15.1s
