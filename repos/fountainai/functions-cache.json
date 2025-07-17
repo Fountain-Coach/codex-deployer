@@ -1,1 +1,1 @@
-{"echo":{"name":"echo","httpPath":"http:\/\/127.0.0.1:51226","functionId":"echo","description":"echo","httpMethod":"POST"},"f1":{"name":"fn","httpPath":"http:\/\/example.com","functionId":"f1","description":"test","httpMethod":"GET"}}
+{"echo":{"name":"echo","description":"echo","functionId":"echo","httpMethod":"POST","httpPath":"http:\/\/127.0.0.1:51530"},"f1":{"name":"fn","description":"test","functionId":"f1","httpMethod":"GET","httpPath":"http:\/\/example.com"}}
