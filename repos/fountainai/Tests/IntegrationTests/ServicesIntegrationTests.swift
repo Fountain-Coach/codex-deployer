@@ -312,8 +312,14 @@ final class ServicesIntegrationTests: XCTestCase {
         let echoPort = try await echoServer.start(port: 0)
         addTeardownBlock { try? await echoServer.stop() }
 
-        // register function via Tools Factory
+        // register function via Tools Factory and directly in the in-memory store
         try await registerEchoFunction(port: echoPort, method: "GET")
+        let fn = ServiceShared.Function(description: "echo",
+                                        functionId: "echo",
+                                        httpMethod: "GET",
+                                        httpPath: "http://127.0.0.1:\(echoPort)",
+                                        name: "echo")
+        await TypesenseClient.shared.addFunction(fn)
 
         // start function caller
         let fcKernel = FunctionCallerService.HTTPKernel()
@@ -378,6 +384,8 @@ final class ServicesIntegrationTests: XCTestCase {
 
         let (metricsBuffer, _) = try await client.execute(method: .GET, url: "http://127.0.0.1:\(port)/metrics", headers: HTTPHeaders(), body: nil)
         XCTAssertGreaterThanOrEqual(metricsBuffer.readableBytes, 0)
+        let metrics = metricsBuffer.getString(at: metricsBuffer.readerIndex, length: metricsBuffer.readableBytes) ?? ""
+        XCTAssertTrue(metrics.contains("requests_total"))
         // Metrics endpoint may be disabled in some environments
     }
 
