@@ -90,7 +90,8 @@ final class ServicesIntegrationTests: XCTestCase {
         let client = BaselineAwarenessClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
         _ = try await client.send(BaselineAwarenessClient.initializeCorpus(body: .init(corpusId: "a1")))
         _ = try await client.send(BaselineAwarenessClient.addBaseline(body: .init(baselineId: "b1", content: "x", corpusId: "a1")))
-        let analytics = try await client.send(BaselineAwarenessClient.listHistoryAnalytics(parameters: .init(corpusId: "a1")))
+        let analyticsData = try await client.sendRaw(BaselineAwarenessClient.listHistoryAnalytics(parameters: .init(corpusId: "a1")))
+        let analytics = try JSONDecoder().decode(BaselineAwarenessService.HistoryAnalyticsResponse.self, from: analyticsData)
         XCTAssertEqual(analytics.baselines, 1)
         XCTAssertEqual(analytics.drifts, 0)
         XCTAssertEqual(analytics.patterns, 0)
@@ -280,7 +281,9 @@ final class ServicesIntegrationTests: XCTestCase {
 
         let client = ToolsFactoryClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
         let data = try await client.sendRaw(ToolsFactoryClient.list_tools())
-        let functions = try JSONDecoder().decode([ServiceShared.Function].self, from: data)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let functions = try decoder.decode([ServiceShared.Function].self, from: data)
         XCTAssertEqual(functions.count, 2)
     }
 
@@ -297,7 +300,9 @@ final class ServicesIntegrationTests: XCTestCase {
 
         _ = try await kernel.handle(.init(method: "POST", path: "/tools/register", headers: ["Content-Type": "application/x-yaml"], body: yaml))
         let list = try await kernel.handle(.init(method: "GET", path: "/tools"))
-        let functions = try JSONDecoder().decode([ServiceShared.Function].self, from: list.body)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let functions = try decoder.decode([ServiceShared.Function].self, from: list.body)
         XCTAssertGreaterThanOrEqual(functions.count, 5)
     }
 
@@ -376,6 +381,8 @@ final class ServicesIntegrationTests: XCTestCase {
         addTeardownBlock { try? await client.shutdown() }
         _ = try await client.execute(method: .POST, url: "http://127.0.0.1:\(port)/functions/echo/invoke", headers: HTTPHeaders(), body: nil)
         _ = try await client.execute(method: .POST, url: "http://127.0.0.1:\(port)/functions/missing/invoke", headers: HTTPHeaders(), body: nil)
+        // ensure metrics are recorded
+        await Task.yield()
 
         let (metricsBuffer, _) = try await client.execute(method: .GET, url: "http://127.0.0.1:\(port)/metrics", headers: HTTPHeaders(), body: nil)
         let metrics = String(buffer: metricsBuffer)
@@ -394,6 +401,8 @@ final class ServicesIntegrationTests: XCTestCase {
         addTeardownBlock { try? await server.stop() }
 
         let client = LLMGatewayClientSDK.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
+        // trigger at least one request so metrics are populated
+        _ = try await client.sendRaw(LLMGatewayClientSDK.chatWithObjective())
         let data = try await client.sendRaw(LLMGatewayClientSDK.metrics_metrics_get())
         XCTAssertGreaterThan(data.count, 0)
         let metrics = String(data: data, encoding: .utf8) ?? ""
