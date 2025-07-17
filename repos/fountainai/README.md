@@ -93,6 +93,16 @@ Add or modify any service spec under the appropriate version directory inside `F
 - **Missing Swift toolchain** – install dependencies with `sudo apt-get update && sudo apt-get install -y clang libicu-dev swift`.
 - **Build failures** – run `swift build -v` to see compilation output and verify you generated sources for the intended service.
 
+### Developer Tools
+
+Run the SocketFix agent after regeneration to ensure server code builds on both macOS and Linux:
+
+```bash
+make socketfix
+```
+
+This rewrites any unsafe `rawValue` socket constants under `Generated/Server/*/main.swift`.
+
 ---
 
 ## ✅ Codex Compatibility

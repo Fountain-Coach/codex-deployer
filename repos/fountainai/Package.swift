@@ -15,6 +15,7 @@ let package = Package(
         .executable(name: "planner-server", targets: ["PlannerServer"]),
         .executable(name: "tools-factory-server", targets: ["ToolsFactoryServer"]),
         .executable(name: "llm-gateway-server", targets: ["LLMGatewayServer"]),
+        .executable(name: "SocketFixAgent", targets: ["SocketFixAgent"]),
     ],
     dependencies: [
         .package(url: "https://github.com/jpsim/Yams.git", from: "5.0.0"),
@@ -195,6 +196,10 @@ let package = Package(
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "NIOHTTP1", package: "swift-nio")
             ]
+        ),
+        .executableTarget(
+            name: "SocketFixAgent",
+            path: "Tools/Agents"
         ),
         .executableTarget(
             name: "Generator",
