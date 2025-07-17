@@ -809,3 +809,21 @@ Just set COMPOSE_BAKE=true
 #39 ...
 
 #40 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#40 ...
+
+#35 [planner build 4/4] RUN swift build -c release --product planner-server
+#35 22.97 Building for production...
+#35 23.18 [0/6] Write sources
+#35 23.50 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#35 ...
+
+#39 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#39 23.07 Building for production...
+#39 23.35 [0/14] Write sources
+#39 23.84 [5/14] Compiling writer.c
+#39 23.87 [6/14] Compiling reader.c
+#39 24.01 [7/14] Write swift-version-24593BA9C3E375BF.txt
+#39 24.18 [8/14] Compiling parser.c
+#39 24.19 [9/14] Compiling api.c
+#39 24.65 [10/15] Compiling emitter.c
+#39 25.27 [11/15] Compiling scanner.c
