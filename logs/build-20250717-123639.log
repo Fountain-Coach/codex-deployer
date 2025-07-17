@@ -1756,3 +1756,9 @@ Just set COMPOSE_BAKE=true
 
 #34 [planner build 4/4] RUN swift build -c release --product planner-server
 #34 135.2 Working copy of https://github.com/apple/swift-nio-ssl.git resolved at 2.32.0
+#34 ...
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 140.2 Working copy of https://github.com/apple/swift-nio-extras.git resolved at 1.28.0
+#37 140.3 Creating working copy for https://github.com/apple/swift-nio-transport-services.git
+#37 141.4 Working copy of https://github.com/apple/swift-nio-transport-services.git resolved at 1.25.0
