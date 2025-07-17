@@ -11,3 +11,6 @@ public struct HTTPKernel {
         try await router.route(request)
     }
 }
+
+// Allow using HTTPKernel across concurrency domains for tests
+extension HTTPKernel: @unchecked Sendable {}
