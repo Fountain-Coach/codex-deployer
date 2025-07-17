@@ -1,0 +1,43 @@
+[2025-07-17T05:02:12.796778] === New Cycle ===
+Building for debugging...
+[0/22] Write sources
+[7/22] Write swift-version-24593BA9C3E375BF.txt
+[9/41] Emitting module PlannerServer
+[10/41] Emitting module BootstrapService
+[11/42] Emitting module Generator
+[12/42] Compiling Generator main.swift
+[14/42] Emitting module LLMGatewayServer
+[15/42] Compiling LLMGatewayServer main.swift
+[16/43] Emitting module PersistServer
+[17/43] Compiling PersistServer main.swift
+[18/43] Compiling PlannerServer main.swift
+[19/43] Emitting module FunctionCallerServer
+[20/43] Compiling FunctionCallerServer main.swift
+[21/43] Emitting module ToolsFactoryServer
+[22/43] Compiling ToolsFactoryServer main.swift
+[23/48] Compiling BaselineAwarenessServer main.swift
+[24/48] Emitting module BaselineAwarenessServer
+[30/50] Write Objects.LinkFileList
+[34/52] Wrapping AST for Generator for debugging
+[35/52] Wrapping AST for LLMGatewayService for debugging
+[36/52] Write Objects.LinkFileList
+[38/52] Wrapping AST for FunctionCallerService for debugging
+[39/52] Write Objects.LinkFileList
+[40/52] Wrapping AST for BaselineAwarenessServer for debugging
+[41/53] Write Objects.LinkFileList
+[43/53] Compiling BootstrapServer main.swift
+[44/53] Emitting module BootstrapServer
+[45/54] Write Objects.LinkFileList
+[46/54] Linking llm-gateway-server
+[46/54] Linking planner-server
+[48/54] Linking baseline-awareness-server
+[49/54] Linking persist-server
+[50/54] Linking function-caller-server
+[51/54] Linking tools-factory-server
+[52/54] Linking generator
+[53/54] Linking bootstrap-server
+Build complete! (2.48s)
+
+[2025-07-17T05:02:12.798040] Starting swift build...
+[2025-07-17T05:02:16.217786] swift build succeeded
+[2025-07-17T05:02:16.218294] running swift test...
