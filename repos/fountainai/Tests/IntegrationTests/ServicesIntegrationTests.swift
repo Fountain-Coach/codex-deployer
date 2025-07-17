@@ -92,6 +92,9 @@ final class ServicesIntegrationTests: XCTestCase {
         _ = try await client.send(BaselineAwarenessClient.addBaseline(body: .init(baselineId: "b1", content: "x", corpusId: "a1")))
         let analytics = try await client.send(BaselineAwarenessClient.listHistoryAnalytics(parameters: .init(corpusId: "a1")))
         XCTAssertEqual(analytics.baselines, 1)
+        XCTAssertEqual(analytics.drifts, 0)
+        XCTAssertEqual(analytics.patterns, 0)
+        XCTAssertEqual(analytics.reflections, 0)
     }
 
     func testBaselineAnalyticsStream() async throws {
@@ -122,13 +125,13 @@ final class ServicesIntegrationTests: XCTestCase {
         }
 
         let client = BaselineAwarenessClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
-        var failed = false
+        var unauthorized = false
         do {
-            _ = try await client.sendRaw(BaselineAwarenessClient.health_health_get())
+            _ = try await client.send(BaselineAwarenessClient.health_health_get())
         } catch {
-            failed = true
+            unauthorized = true
         }
-        XCTAssertTrue(failed)
+        XCTAssertTrue(unauthorized)
 
         let authedClient = BaselineAwarenessClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!, bearerToken: "secret")
         let data = try await authedClient.sendRaw(BaselineAwarenessClient.health_health_get())
@@ -162,6 +165,10 @@ final class ServicesIntegrationTests: XCTestCase {
         let data = try await client.sendRaw(BootstrapClient.seedRoles())
         let defaults = try JSONDecoder().decode(BootstrapService.RoleDefaults.self, from: data)
         XCTAssertEqual(defaults.drift, "Analyze drift")
+        XCTAssertEqual(defaults.history, "Summarize history")
+        XCTAssertEqual(defaults.patterns, "Detect patterns")
+        XCTAssertEqual(defaults.semantic_arc, "Synthesize semantic arc")
+        XCTAssertEqual(defaults.view_creator, "Create view")
     }
 
     func testBootstrapInitializeCorpus() async throws {
@@ -212,7 +219,7 @@ final class ServicesIntegrationTests: XCTestCase {
         let client = FunctionCallerClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
         let data = try await client.sendRaw(FunctionCallerClient.list_functions())
         let items = try JSONDecoder().decode([FunctionCallerClient.FunctionInfo].self, from: data)
-        XCTAssertEqual(items.first?.function_id, "f1")
+        XCTAssertTrue(items.contains(where: { $0.function_id == "f1" }))
     }
 
     func testPlannerListCorpora() async throws {
@@ -273,7 +280,8 @@ final class ServicesIntegrationTests: XCTestCase {
 
         let client = ToolsFactoryClient.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
         let data = try await client.sendRaw(ToolsFactoryClient.list_tools())
-        XCTAssertEqual(data.count, 0)
+        let functions = try JSONDecoder().decode([ServiceShared.Function].self, from: data)
+        XCTAssertEqual(functions.count, 2)
     }
 
     func testToolsFactoryRegisterOpenAPI() async throws {
@@ -290,7 +298,7 @@ final class ServicesIntegrationTests: XCTestCase {
         _ = try await kernel.handle(.init(method: "POST", path: "/tools/register", headers: ["Content-Type": "application/x-yaml"], body: yaml))
         let list = try await kernel.handle(.init(method: "GET", path: "/tools"))
         let functions = try JSONDecoder().decode([ServiceShared.Function].self, from: list.body)
-        XCTAssertGreaterThan(functions.count, 0)
+        XCTAssertGreaterThanOrEqual(functions.count, 5)
     }
 
     func testFunctionCallerInvokeFlow() async throws {
@@ -387,7 +395,9 @@ final class ServicesIntegrationTests: XCTestCase {
 
         let client = LLMGatewayClientSDK.APIClient(baseURL: URL(string: "http://127.0.0.1:\(port)")!)
         let data = try await client.sendRaw(LLMGatewayClientSDK.metrics_metrics_get())
-        XCTAssertEqual(data.count, 0)
+        XCTAssertGreaterThan(data.count, 0)
+        let metrics = String(data: data, encoding: .utf8) ?? ""
+        XCTAssertTrue(metrics.contains("requests_total"))
     }
 
     func testBootstrapPromoteReflection() async throws {
