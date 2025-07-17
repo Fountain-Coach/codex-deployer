@@ -1,0 +1,149 @@
+[2025-07-17T13:00:12.520209] === New Cycle ===
+[0/1] Planning build
+Building for debugging...
+[0/15] Write swift-version-24593BA9C3E375BF.txt
+Build complete! (3.79s)
+[0/1] Planning build
+Building for debugging...
+[0/65] Copying Models.swift
+[1/65] Copying ServerModels.swift
+[2/65] Copying HTTPServer.swift
+[2/65] Copying RootModels.swift
+[2/65] Copying api.json
+[2/65] Copying Handlers.swift
+[2/65] Copying HTTPResponse.swift
+[2/65] Copying HTTPRequest.swift
+[2/66] Copying GetTodos.swift
+[2/66] Copying Router.swift
+[2/66] Copying HTTPKernel.swift
+[2/66] Write sources
+[2/66] Copying ClientModels.swift
+[2/67] Write sources
+[2/67] Copying APIRequest.swift
+[2/67] Copying APIClient.swift
+[2/93] Write sources
+[20/93] Write swift-version-24593BA9C3E375BF.txt
+[21/66] Wrapping AST for NIOTLS for debugging
+[22/66] Wrapping AST for NIOSSL for debugging
+[23/66] Wrapping AST for NIOTransportServices for debugging
+[23/66] Wrapping AST for NIOSOCKS for debugging
+[24/66] Wrapping AST for NIOHTTPCompression for debugging
+[24/66] Wrapping AST for IntegrationRuntime for debugging
+[27/66] Wrapping AST for NIOHTTP2 for debugging
+[28/66] Wrapping AST for AsyncHTTPClient for debugging
+[29/85] Wrapping AST for _NIODataStructures for debugging
+[30/85] Wrapping AST for _NIOBase64 for debugging
+[31/90] Wrapping AST for RealModule for debugging
+[32/90] Wrapping AST for ToolsFactoryClient for debugging
+[33/90] Wrapping AST for PlannerClient for debugging
+[34/90] Wrapping AST for PersistClient for debugging
+[35/90] Wrapping AST for NIOPosix for debugging
+[36/90] Wrapping AST for NIOHPACK for debugging
+[37/90] Wrapping AST for NIOHTTP1 for debugging
+[38/90] Wrapping AST for NIOFoundationCompat for debugging
+[39/90] Wrapping AST for NIOEmbedded for debugging
+[41/90] Compiling ServerTests Handlers.swift
+[41/90] Wrapping AST for NIOConcurrencyHelpers for debugging
+[42/90] Wrapping AST for NIOCore for debugging
+[44/90] Compiling GeneratorTests resource_bundle_accessor.swift
+[44/90] Wrapping AST for NIO for debugging
+[46/90] Compiling ServerTests HTTPServer.swift
+/srv/deploy/repos/fountainai/Tests/ServerTests/HTTPServer.swift:11:21: warning: result of call to 'registerClass' is unused
+ 9 |     public static func register(kernel: HTTPKernel) {
+10 |         self.kernel = kernel
+11 |         URLProtocol.registerClass(HTTPServer.self)
+   |                     `- warning: result of call to 'registerClass' is unused
+12 |     }
+13 | 
+[46/90] Wrapping AST for Logging for debugging
+[47/90] Compiling ServerTests HTTPResponse.swift
+[49/90] Compiling ServerTests HTTPKernel.swift
+[50/90] Compiling ServerTests HTTPRequest.swift
+[50/90] Wrapping AST for LLMGatewayClientSDK for debugging
+[51/90] Compiling ModelEmitterTests resource_bundle_accessor.swift
+[52/90] Compiling ModelEmitterTests ModelEmitterTests.swift
+/srv/deploy/repos/fountainai/Tests/ModelEmitterTests/ModelEmitterTests.swift:33:29: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+31 | 
+32 |         let generatedURL = outDir.appendingPathComponent("Models.swift")
+33 |         let generated = try String(contentsOf: generatedURL)
+   |                             `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+34 | 
+35 |         let fixtureURL = Bundle.module.url(forResource: "Models", withExtension: "swift")!
+
+/srv/deploy/repos/fountainai/Tests/ModelEmitterTests/ModelEmitterTests.swift:36:28: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+34 | 
+35 |         let fixtureURL = Bundle.module.url(forResource: "Models", withExtension: "swift")!
+36 |         let expected = try String(contentsOf: fixtureURL)
+   |                            `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+37 | 
+38 |         XCTAssertEqual(generated, expected)
+[53/90] Wrapping AST for InternalCollectionsUtilities for debugging
+[55/90] Compiling ClientGeneratorTests ClientGeneratorTests.swift
+[56/90] Emitting module ParserTests
+[57/90] Compiling ParserTests ParserTests.swift
+[58/91] Compiling GeneratorTests GeneratorTests.swift
+/srv/deploy/repos/fountainai/Tests/GeneratorTests/GeneratorTests.swift:21:33: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+19 |                 .appendingPathComponent("Generated")
+20 |                 .appendingPathComponent(fixtureName ?? relative)
+21 |             let generated = try String(contentsOf: generatedURL)
+   |                                 `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+22 |             let expected = try String(contentsOf: fixtureURL)
+23 |             XCTAssertEqual(generated, expected, "Mismatch for \(relative)")
+
+/srv/deploy/repos/fountainai/Tests/GeneratorTests/GeneratorTests.swift:22:32: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+20 |                 .appendingPathComponent(fixtureName ?? relative)
+21 |             let generated = try String(contentsOf: generatedURL)
+22 |             let expected = try String(contentsOf: fixtureURL)
+   |                                `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+23 |             XCTAssertEqual(generated, expected, "Mismatch for \(relative)")
+24 |         }
+[59/91] Emitting module GeneratorTests
+[60/91] Emitting module ClientGeneratorTests
+[61/91] Compiling ServerTests Router.swift
+[62/92] Emitting module ServerTests
+[63/92] Compiling ServerTests ServerTests.swift
+[64/92] Emitting module ModelEmitterTests
+[64/95] Wrapping AST for FunctionCallerClient for debugging
+[65/95] Wrapping AST for DequeModule for debugging
+[71/95] Wrapping AST for BootstrapClient for debugging
+[72/95] Wrapping AST for BaselineAwarenessClient for debugging
+[73/95] Wrapping AST for ParserTests for debugging
+[74/95] Wrapping AST for ModelEmitterTests for debugging
+[75/95] Wrapping AST for Atomics for debugging
+[76/95] Wrapping AST for GeneratorTests for debugging
+[77/95] Wrapping AST for Algorithms for debugging
+[78/95] Wrapping AST for ClientGeneratorTests for debugging
+[78/95] Wrapping AST for ServerTests for debugging
+[81/95] Emitting module IntegrationTests
+[82/95] Compiling IntegrationTests Handlers.swift
+[83/95] Compiling IntegrationTests IntegrationTests.swift
+[84/95] Compiling IntegrationTests APIClient+Raw.swift
+[85/95] Compiling IntegrationTests Router.swift
+[86/95] Compiling IntegrationTests ServicesIntegrationTests.swift
+/srv/deploy/repos/fountainai/Tests/IntegrationTests/ServicesIntegrationTests.swift:37:29: warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+ 35 |             .appendingPathComponent(UUID().uuidString).path
+ 36 |         setenv("FUNCTIONS_CACHE_PATH", cachePath, 1)
+ 37 |         FileManager.default.createFile(atPath: cachePath, contents: Data(), attributes: nil)
+    |                             `- warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+ 38 |         await TypesenseClient.shared.reset()
+ 39 |         await PrometheusAdapter.shared.reset()
+[87/96] /srv/deploy/repos/fountainai/.build/aarch64-unknown-linux-gnu/debug/SwiftCodexOpenAPIKernelPackageDiscoveredTests.derived/all-discovered-tests.swift
+[88/96] Write sources
+[89/96] Wrapping AST for IntegrationTests for debugging
+[91/104] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests all-discovered-tests.swift
+[92/104] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests ModelEmitterTests.swift
+[93/104] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests ParserTests.swift
+[94/104] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests ServerTests.swift
+[95/104] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests IntegrationTests.swift
+[96/104] Emitting module SwiftCodexOpenAPIKernelPackageDiscoveredTests
+[97/104] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests ClientGeneratorTests.swift
+[98/104] Compiling SwiftCodexOpenAPIKernelPackageDiscoveredTests GeneratorTests.swift
+[99/105] /srv/deploy/repos/fountainai/.build/aarch64-unknown-linux-gnu/debug/SwiftCodexOpenAPIKernelPackageTests.derived/runner.swift
+[100/105] Write sources
+[101/105] Wrapping AST for SwiftCodexOpenAPIKernelPackageDiscoveredTests for debugging
+[103/107] Emitting module SwiftCodexOpenAPIKernelPackageTests
+[104/107] Compiling SwiftCodexOpenAPIKernelPackageTests runner.swift
+[105/108] Wrapping AST for SwiftCodexOpenAPIKernelPackageTests for debugging
+[106/108] Write Objects.LinkFileList
+[107/108] Linking SwiftCodexOpenAPIKernelPackageTests.xctest
+Build complete! (8.96s)
