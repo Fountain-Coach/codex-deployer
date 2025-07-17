@@ -1,75 +1,190 @@
-[2025-07-17T06:11:11.749342] === New Cycle ===
+[2025-07-17T07:29:44.304807] Dispatcher started successfully 🟢
+[2025-07-17T07:29:44.305090] === New Cycle ===
 Building for debugging...
-[0/208] Compiling sha512.cc
-[0/208] Compiling rsa_extra.cc
-[1/208] Compiling sha256.cc
-[1/208] Compiling sha1.cc
-[1/208] Compiling siphash.cc
-[1/208] Compiling rsa_print.cc
-[6/208] Compiling slhdsa.cc
-[7/208] Compiling rc4.cc
-[8/208] Compiling spake2plus.cc
-[9/208] Compiling refcount.cc
-[10/208] Compiling windows.cc
-[11/208] Write swift-version-24593BA9C3E375BF.txt
-[12/208] Compiling rsa_crypt.cc
-[13/203] Compiling trusty.cc
-[14/203] Compiling rsa_asn1.cc
-[15/203] Compiling urandom.cc
-[16/203] Compiling rand.cc
-[17/203] Compiling passive.cc
-[18/205] Compiling ios.cc
-[19/225] Compiling getentropy.cc
-[20/226] Compiling forkunsafe.cc
-[22/240] Emitting module PlannerServer
-[23/240] Compiling PersistServer main.swift
-/srv/deploy/repos/fountainai/Generated/Server/persist/main.swift:23:36: error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+[0/511] Write sources
+[45/511] Compiling _NumericsShims _NumericsShims.c
+[46/511] Compiling _AtomicsShims.c
+[47/511] Write swift-version-24593BA9C3E375BF.txt
+[48/511] Compiling CNIOWindows shim.c
+[49/511] Compiling CNIOWindows WSAStartup.c
+[50/517] Compiling writer.c
+[51/517] Compiling emitter.c
+[51/517] Compiling parser.c
+[52/517] Compiling reader.c
+[53/517] Compiling scanner.c
+[55/517] Compiling api.c
+[57/562] Emitting module RealModule
+[58/563] Compiling RealModule Real.swift
+[59/563] Emitting module _NIOBase64
+[60/563] Compiling _NIOBase64 Base64.swift
+[61/564] Compiling RealModule RealFunctions.swift
+[62/564] Compiling RealModule Float80+Real.swift
+[63/564] Compiling RealModule Float16+Real.swift
+[64/564] Compiling RealModule AugmentedArithmetic.swift
+[65/564] Compiling RealModule Double+Real.swift
+[66/564] Compiling RealModule ElementaryFunctions.swift
+[67/564] Compiling RealModule AlgebraicField.swift
+[68/564] Compiling RealModule ApproximateEquality.swift
+[69/564] Compiling RealModule Float+Real.swift
+[71/565] Compiling _NIODataStructures _TinyArray.swift
+[72/565] Compiling _NIODataStructures PriorityQueue.swift
+[74/591] Emitting module PersistClient
+[75/592] Emitting module _NIODataStructures
+[76/592] Compiling PersistClient listReflections.swift
+[77/592] Compiling _NIODataStructures Heap.swift
+[78/592] Compiling PlannerClient planner_list_corpora.swift
+[79/592] Compiling Logging MetadataProvider.swift
+[80/592] Compiling LLMGatewayClientSDK metrics_metrics_get.swift
+[81/592] Emitting module LLMGatewayClientSDK
+[82/592] Compiling Yams Encoder.swift
+[83/592] Compiling Yams Resolver.swift
+[84/592] Compiling LLMGatewayClientSDK APIRequest.swift
+[85/592] Compiling LLMGatewayClientSDK chatWithObjective.swift
+[86/592] Compiling LLMGatewayClientSDK Models.swift
+[87/592] Compiling Yams String+Yams.swift
+[88/592] Compiling Yams Tag.swift
+[89/594] Compiling ToolsFactoryClient Models.swift
+[90/594] Compiling ToolsFactoryClient list_tools.swift
+[91/594] Compiling PlannerClient planner_execute.swift
+[92/594] Compiling ToolsFactoryClient APIRequest.swift
+[93/594] Compiling ToolsFactoryClient register_openapi.swift
+[94/594] Emitting module ToolsFactoryClient
+[95/594] Compiling LLMGatewayClientSDK APIClient.swift
+[96/594] Compiling PlannerClient get_semantic_arc.swift
+[97/594] Compiling PlannerClient Models.swift
+[98/594] Compiling PlannerClient get_reflection_history.swift
+[99/595] Compiling Yams Decoder.swift
+[100/595] Compiling Yams Emitter.swift
+[101/595] Compiling ToolsFactoryClient APIClient.swift
+[104/596] Compiling PlannerClient planner_reason.swift
+[105/596] Emitting module PlannerClient
+[106/596] Compiling PersistClient listFunctions.swift
+[107/596] Compiling PersistClient createCorpus.swift
+[108/596] Compiling PersistClient listCorpora.swift
+[109/596] Compiling PersistClient getFunctionDetails.swift
+[114/597] Compiling Logging Logging.swift
+[115/597] Emitting module Logging
+[116/597] Compiling Logging Locks.swift
+[117/597] Compiling Logging LogHandler.swift
+[118/598] Compiling ServiceShared PrometheusAdapter.swift
+[119/598] Emitting module ServiceShared
+[120/598] Compiling ServiceShared Models.swift
+[121/598] Compiling ServiceShared TypesenseClient.swift
+[123/599] Compiling PlannerClient post_reflection.swift
+[125/623] Compiling CNIOWASI CNIOWASI.c
+[126/626] Compiling CNIOLinux liburing_shims.c
+[128/645] Compiling BootstrapClient bootstrapPromoteReflection.swift
+[129/646] Emitting module Yams
+[130/648] Compiling InternalCollectionsUtilities UnsafeBufferPointer+Extras.swift
+[130/649] Compiling CNIOLLHTTP c_nio_llhttp.c
+[132/649] Compiling InternalCollectionsUtilities _UniqueCollection.swift
+[133/649] Compiling InternalCollectionsUtilities Debugging.swift
+[134/649] Compiling InternalCollectionsUtilities Descriptions.swift
+[135/649] Compiling InternalCollectionsUtilities RandomAccessCollection+Offsets.swift
+[137/649] Compiling InternalCollectionsUtilities UInt+first and last set bit.swift
+[138/649] Compiling BootstrapClient bootstrapSeedRoles.swift
+[140/649] Compiling InternalCollectionsUtilities UInt+reversed.swift
+[140/653] Compiling CNIOLinux shim.c
+[142/656] Compiling FunctionCallerClient get_function_details.swift
+[143/656] Compiling BootstrapClient bootstrapAddBaseline.swift
+[144/656] Compiling BootstrapClient bootstrapEnqueueReflection.swift
+[145/656] Compiling BootstrapClient Models.swift
+[149/664] Compiling InternalCollectionsUtilities _UnsafeBitSet+Index.swift
+[150/664] Compiling InternalCollectionsUtilities _UnsafeBitSet+_Word.swift
+[151/664] Emitting module BootstrapClient
+[152/664] Compiling BootstrapClient APIClient.swift
+[153/664] Compiling BootstrapClient APIRequest.swift
+[154/664] Compiling FunctionCallerClient list_functions.swift
+[155/664] Compiling InternalCollectionsUtilities UnsafeMutableBufferPointer+Extras.swift
+[156/664] Compiling BootstrapClient bootstrapInitializeCorpus.swift
+[157/664] Compiling FunctionCallerClient invoke_function.swift
+[158/664] Compiling Yams Mark.swift
+[159/664] Compiling Yams Node.Alias.swift
+[160/664] Compiling Yams Node.Mapping.swift
+[161/664] Compiling Yams AliasDereferencingStrategy.swift
+[162/664] Compiling Yams Anchor.swift
+[163/664] Compiling Yams Constructor.swift
+[166/664] Compiling BootstrapClient seedRoles.swift
+[167/664] Emitting module InternalCollectionsUtilities
+[168/665] Compiling FunctionCallerClient APIClient.swift
+[169/665] Emitting module FunctionCallerClient
+[170/665] Compiling FunctionCallerClient Models.swift
+[171/665] Compiling FunctionCallerClient APIRequest.swift
+[172/665] Compiling PersistService Router.swift
+[173/666] Compiling PlannerService LLMGatewayClient.swift
+[176/667] Compiling InternalCollectionsUtilities FixedWidthInteger+roundUpToPowerOfTwo.swift
+[177/667] Compiling InternalCollectionsUtilities Integer rank.swift
+[180/667] Compiling PersistService HTTPResponse.swift
+[181/668] Emitting module PlannerService
+[182/668] Compiling PlannerService HTTPRequest.swift
+[183/668] Compiling PlannerService HTTPResponse.swift
+[184/668] Compiling PlannerService HTTPKernel.swift
+[185/668] Compiling PlannerService Handlers.swift
+[188/668] Compiling Yams Representer.swift
+[189/668] Emitting module PersistService
+[189/668] Compiling CNIOLLHTTP c_nio_http.c
+[190/668] Wrapping AST for ServiceShared for debugging
+[192/668] Compiling Yams YamlError.swift
+[193/668] Compiling Yams YamlTagProviding.swift
+[194/668] Compiling LLMGatewayService Router.swift
+[196/668] Compiling LLMGatewayService HTTPResponse.swift
+[197/668] Compiling LLMGatewayService Handlers.swift
+[198/668] Compiling LLMGatewayService HTTPKernel.swift
+[198/668] Compiling CNIOExtrasZlib empty.c
+[199/668] Emitting module LLMGatewayService
+[200/668] Compiling LLMGatewayService HTTPRequest.swift
+[201/668] Compiling CNIODarwin shim.c
+[203/668] Compiling PersistService HTTPKernel.swift
+[204/668] Compiling PersistService Models.swift
+[205/668] Compiling PersistService Handlers.swift
+[206/668] Compiling PersistService HTTPRequest.swift
+[207/668] Compiling BaselineAwarenessService BaselineStore.swift
+[207/669] Compiling CNIOLLHTTP c_nio_api.c
+[209/669] Compiling PlannerService Router.swift
+[210/669] Emitting module BaselineAwarenessService
+[211/669] Compiling BaselineAwarenessService HTTPResponse.swift
+[212/669] Compiling LLMGatewayService Models.swift
+[212/670] Compiling fiat_p256_adx_sqr.S
+[214/678] Compiling PlannerService LocalFunctionCallerClient.swift
+[215/679] Compiling PlannerService Models.swift
+[217/686] Compiling fiat_p256_adx_mul.S
+[219/686] Compiling DequeModule Deque+Extras.swift
+[220/686] Compiling DequeModule Deque+Hashable.swift
+[221/686] Compiling DequeModule Deque+Equatable.swift
+[223/686] Compiling BaselineAwarenessService HTTPRequest.swift
+[224/686] Compiling BaselineAwarenessService Models.swift
+[225/686] Compiling BaselineAwarenessService HTTPKernel.swift
+[225/687] Compiling fiat_curve25519_adx_square.S
+[226/691] Wrapping AST for PersistService for debugging
+[226/691] Wrapping AST for LLMGatewayService for debugging
+[230/691] Compiling BaselineAwarenessService Handlers.swift
+[231/691] Compiling BaselineAwarenessService Router.swift
+[231/691] Wrapping AST for PlannerService for debugging
+[233/694] Compiling DequeModule _DequeBuffer.swift
+[234/694] Compiling DequeModule _DequeBufferHeader.swift
+[234/694] Compiling fiat_curve25519_adx_mul.S
+[239/696] Emitting module LLMGatewayServer
+[239/700] Wrapping AST for Yams for debugging
+[241/700] Emitting module PersistServer
+[242/700] Compiling PersistServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/persist/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
 21 | 
 22 |     func start() throws {
-23 |         serverFD = socket(AF_INET, Int32(SOCK_STREAM), 0)
-   |                                    `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+   |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
 25 |         var opt: Int32 = 1
-
-Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
-1 | protocol FixedWidthInteger {
-2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
-  |                   `- note: where 'T' = '__socket_type'
-3 | 
-[24/240] Emitting module PersistServer
-[25/240] Compiling DequeModule _DequeSlot.swift
-[26/240] Compiling DequeModule Deque.swift
-[27/241] Compiling PlannerServer main.swift
-/srv/deploy/repos/fountainai/Generated/Server/planner/main.swift:23:36: error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+[243/700] Compiling LLMGatewayServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
 21 | 
 22 |     func start() throws {
-23 |         serverFD = socket(AF_INET, Int32(SOCK_STREAM), 0)
-   |                                    `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+   |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
 25 |         var opt: Int32 = 1
+[243/700] Compiling CNIOBoringSSLShims shims.c
+[243/700] Compiling tls_method.cc
+[243/700] Compiling tls_record.cc
 
-Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
-1 | protocol FixedWidthInteger {
-2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
-  |                   `- note: where 'T' = '__socket_type'
-3 | 
-[28/241] Emitting module LLMGatewayServer
-[29/241] Compiling LLMGatewayServer main.swift
-/srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift:23:36: error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
-21 | 
-22 |     func start() throws {
-23 |         serverFD = socket(AF_INET, Int32(SOCK_STREAM), 0)
-   |                                    `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
-24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
-25 |         var opt: Int32 = 1
-
-Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
-1 | protocol FixedWidthInteger {
-2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
-  |                   `- note: where 'T' = '__socket_type'
-3 | 
-[29/241] Compiling fork_detect.cc
-[30/241] Emitting module Parser
-
-[2025-07-17T06:11:11.749954] Starting swift build...
-[2025-07-17T06:11:14.470663] swift build failed with exit code 1
+[2025-07-17T07:29:44.305416] Starting swift build...
+[2025-07-17T07:30:21.959646] swift build failed with exit code 1
