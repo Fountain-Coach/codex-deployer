@@ -20,7 +20,13 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
     }
 
     func start() throws {
-        serverFD = socket(Int32(AF_INET), Int32(SOCK_STREAM.rawValue), Int32(0))
+        #if os(Linux)
+        let socketType = SOCK_STREAM
+        #else
+        let socketType = Int32(SOCK_STREAM)
+        #endif
+
+        serverFD = socket(AF_INET, socketType, 0)
         guard serverFD >= 0 else { throw RuntimeError.socket }
         var opt: Int32 = 1
         setsockopt(serverFD, SOL_SOCKET, SO_REUSEADDR, &opt, socklen_t(MemoryLayout.size(ofValue: opt)))
