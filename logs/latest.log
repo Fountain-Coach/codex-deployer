@@ -1,24 +1,19 @@
-[2025-07-17T07:49:25.398566] === New Cycle ===
+[2025-07-17T07:51:26.493381] Dispatcher started successfully 🟢
+[2025-07-17T07:51:26.493637] === New Cycle ===
+[0/1] Planning build
 Building for debugging...
-[0/391] Compiling aes128gcmsiv-x86_64-apple.S
-[1/391] Compiling aes128gcmsiv-x86_64-linux.S
-[2/391] Compiling x86_64-mont5-linux.S
-[3/391] Compiling x86_64-mont5-apple.S
-[4/391] Compiling x86_64-mont-linux.S
-[5/391] Write swift-version-24593BA9C3E375BF.txt
-[6/386] Compiling x86_64-mont-apple.S
-[7/386] Compiling x86-mont-linux.S
-[9/390] Emitting module PersistServer
-[10/390] Compiling PersistServer main.swift
-/srv/deploy/repos/fountainai/Generated/Server/persist/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
-21 | 
-22 |     func start() throws {
-23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
-   |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
-24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
-25 |         var opt: Int32 = 1
-[11/390] Emitting module PlannerServer
-[12/390] Compiling PlannerServer main.swift
+[0/384] Compiling vpaes-x86_64-linux.S
+[1/384] Compiling x86-mont-apple.S
+[2/384] Compiling vpaes-x86_64-apple.S
+[3/384] Compiling vpaes-x86-linux.S
+[4/384] Compiling vpaes-x86-apple.S
+[5/384] Write swift-version-24593BA9C3E375BF.txt
+[6/380] Compiling vpaes-armv8-win.S
+[7/379] Compiling vpaes-armv8-apple.S
+[8/379] Compiling vpaes-armv8-linux.S
+[10/383] Emitting module PlannerServer
+[11/383] Emitting module PersistServer
+[12/383] Compiling PlannerServer main.swift
 /srv/deploy/repos/fountainai/Generated/Server/planner/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
 21 | 
 22 |     func start() throws {
@@ -26,12 +21,20 @@ Building for debugging...
    |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
 25 |         var opt: Int32 = 1
-[12/390] Compiling d1_lib.cc
-[12/390] Compiling d1_srtp.cc
-[12/390] Compiling d1_pkt.cc
-[12/390] Compiling d1_both.cc
-[12/390] Compiling dtls_record.cc
-[12/390] Compiling dtls_method.cc
+[13/383] Compiling PersistServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/persist/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+21 | 
+22 |     func start() throws {
+23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+   |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+25 |         var opt: Int32 = 1
+[13/383] Compiling dtls_method.cc
+[13/383] Compiling d1_srtp.cc
+[13/383] Compiling dtls_record.cc
+[13/383] Compiling d1_both.cc
+[13/383] Compiling d1_lib.cc
+[13/383] Compiling d1_pkt.cc
 
-[2025-07-17T07:49:25.399949] Starting swift build...
-[2025-07-17T07:49:28.420608] swift build failed with exit code 1
+[2025-07-17T07:51:26.493983] Starting swift build...
+[2025-07-17T07:51:36.693419] swift build failed with exit code 1
