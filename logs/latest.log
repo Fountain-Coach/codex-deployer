@@ -1,941 +1,192 @@
-[2025-07-17T12:55:15.478962] === New Cycle ===
+[2025-07-17T13:37:55.934051] Dispatcher started successfully 🟢
+[2025-07-17T13:37:55.935062] === New Cycle ===
 Building for debugging...
-[0/355] Compiling sha1-armv8-win.S
-[0/355] Compiling sha1-x86_64-apple.S
-[0/356] Compiling sha1-armv8-linux.S
-[0/359] Compiling sha1-armv4-large-linux.S
-[0/359] Compiling sha1-armv8-apple.S
-[0/359] Compiling sha1-586-linux.S
-[0/366] Compiling sha1-586-apple.S
-[0/366] Compiling rsaz-avx2-linux.S
-[1/366] Compiling rsaz-avx2-apple.S
-[9/366] Compiling rdrand-x86_64-apple.S
-[9/366] Compiling rdrand-x86_64-linux.S
-[11/366] Write sources
-[16/366] Compiling p256_beeu-x86_64-asm-linux.S
-[16/366] Compiling p256_beeu-x86_64-asm-apple.S
-[18/366] Write swift-version-24593BA9C3E375BF.txt
-[19/362] Compiling p256_beeu-armv8-asm-win.S
-[19/361] Compiling p256_beeu-armv8-asm-linux.S
-[19/362] Compiling p256_beeu-armv8-asm-apple.S
-[22/361] Compiling p256-x86_64-asm-linux.S
-[23/361] Compiling p256-x86_64-asm-apple.S
-[24/361] Compiling p256-armv8-asm-win.S
-[26/369] Emitting module PlannerServer
-[27/369] Compiling PlannerServer main.swift
-[28/370] Compiling Parser SpecValidator.swift
-[29/370] Compiling Parser SpecLoader.swift
-[29/370] Compiling d1_pkt.cc
-[30/370] Compiling d1_srtp.cc
-[31/370] Compiling dtls_method.cc
-[32/370] Emitting module PersistServer
-[33/370] Compiling PersistServer main.swift
-[35/371] Compiling p256-armv8-asm-apple.S
-[36/371] Compiling p256-armv8-asm-linux.S
-[38/371] Compiling ghashv8-armv8-win.S
-[39/373] Compiling ghashv8-armv8-linux.S
-[40/373] Compiling ghashv8-armv8-apple.S
-[41/373] Wrapping AST for PersistServer for debugging
-[41/373] Wrapping AST for PlannerServer for debugging
-[42/373] Compiling d1_both.cc
-[44/373] Compiling ghash-x86_64-linux.S
-[45/373] Compiling ghashv8-armv7-linux.S
-[46/373] Write Objects.LinkFileList
-[48/373] Compiling d1_lib.cc
-[49/373] Compiling ghash-x86-linux.S
-[50/373] Compiling ghash-x86_64-apple.S
-[51/373] Compiling ghash-x86-apple.S
-[52/373] Compiling ghash-ssse3-x86_64-apple.S
-[53/373] Compiling ghash-ssse3-x86_64-linux.S
-[54/373] Compiling ghash-ssse3-x86-linux.S
-[55/373] Compiling ghash-ssse3-x86-apple.S
-[55/373] Compiling ghash-neon-armv8-win.S
-[57/373] Compiling ghash-neon-armv8-linux.S
-[58/373] Compiling ghash-neon-armv8-apple.S
-[59/373] Compiling ghash-armv4-linux.S
-[60/373] Compiling co-586-apple.S
-[61/373] Compiling co-586-linux.S
-[62/373] Compiling bsaes-armv7-linux.S
-[64/373] Compiling Parser OpenAPISpec.swift
-[65/373] Emitting module Parser
-[65/373] Compiling bn-armv8-linux.S
-[65/373] Compiling bn-armv8-win.S
-[67/374] Compiling bn-armv8-apple.S
-[68/374] Compiling bn-586-linux.S
-[69/374] Compiling bn-586-apple.S
-[70/374] Compiling armv8-mont-win.S
-[71/374] Compiling armv8-mont-apple.S
-[73/374] Compiling armv8-mont-linux.S
-[74/374] Linking planner-server
-[75/374] Compiling aesv8-gcm-armv8-win.S
-[76/374] Compiling armv4-mont-linux.S
-[78/374] Emitting module LLMGatewayServer
-[79/374] Compiling LLMGatewayServer main.swift
-[79/375] Compiling aesv8-gcm-armv8-apple.S
-[79/375] Compiling aesv8-gcm-armv8-linux.S
-[81/375] Compiling aesv8-armv8-win.S
-[82/375] Compiling aesv8-armv8-linux.S
-[83/375] Compiling aesv8-armv7-linux.S
-[83/375] Compiling aesv8-armv8-apple.S
-[86/375] Linking persist-server
-[87/384] Wrapping AST for Parser for debugging
-[88/384] Compiling aesni-x86_64-linux.S
-[88/384] Compiling aesni-x86_64-apple.S
-[90/395] Compiling aesni-x86-apple.S
-[91/396] Wrapping AST for LLMGatewayServer for debugging
-[92/396] Compiling aesni-x86-linux.S
-[92/396] Write Objects.LinkFileList
-[94/396] Compiling aesni-gcm-x86_64-linux.S
-[95/396] Compiling aesni-gcm-x86_64-apple.S
-[96/396] Compiling aes-gcm-avx2-x86_64-linux.S
-[97/396] Compiling aes-gcm-avx2-x86_64-apple.S
-[98/396] Compiling aes-gcm-avx10-x86_64-linux.S
-[99/396] Compiling aes-gcm-avx10-x86_64-apple.S
-[101/396] Emitting module ServerGenerator
-[102/396] Compiling ToolsFactoryService HTTPKernel.swift
-[103/396] Compiling ToolsFactoryService Router.swift
-[104/396] Compiling ToolsFactoryService Models.swift
-[105/396] Compiling ToolsFactoryService HTTPResponse.swift
-[105/396] Linking llm-gateway-server
-[107/396] Compiling ServerGenerator ServerGenerator.swift
-[108/396] Emitting module ToolsFactoryService
-[109/396] Compiling ClientGenerator ClientGenerator.swift
-[110/396] Emitting module ClientGenerator
-[111/398] Compiling ToolsFactoryService HTTPRequest.swift
-[112/398] Compiling ToolsFactoryService Handlers.swift
-[113/398] Emitting module ModelEmitter
-[114/398] Compiling ModelEmitter ModelEmitter.swift
-[116/400] Compiling FunctionCallerService HTTPRequest.swift
-[117/400] Compiling FunctionCallerService HTTPKernel.swift
-[118/400] Compiling FunctionCallerService Handlers.swift
-[119/400] Compiling FunctionCallerService HTTPResponse.swift
-[121/401] Compiling FunctionCallerService Logger.swift
-[122/401] Compiling FunctionCallerService Models.swift
-[123/401] Emitting module FunctionCallerService
-[124/401] Compiling FunctionCallerService Dispatcher.swift
-[126/401] Wrapping AST for ServerGenerator for debugging
-[127/401] Wrapping AST for ClientGenerator for debugging
-[128/405] Wrapping AST for ToolsFactoryService for debugging
-[129/405] Wrapping AST for ModelEmitter for debugging
-[131/405] Compiling FunctionCallerService Router.swift
-[131/406] Compiling x_x509a.cc
-[133/406] Emitting module Generator
-[135/406] Compiling Generator main.swift
-[135/407] Compiling x_x509.cc
-[136/407] Compiling x_val.cc
-[139/409] Compiling ToolsFactoryServer main.swift
-[140/409] Emitting module ToolsFactoryServer
-[140/409] Wrapping AST for FunctionCallerService for debugging
-[141/410] Wrapping AST for Generator for debugging
-[143/410] Write Objects.LinkFileList
-[144/410] Compiling x_spki.cc
-[145/410] Wrapping AST for ToolsFactoryServer for debugging
-[146/410] Compiling x_sig.cc
-[147/410] Write Objects.LinkFileList
-[149/410] Compiling FunctionCallerServer main.swift
-[150/410] Emitting module FunctionCallerServer
-[151/411] Compiling x_req.cc
-[152/411] Compiling x_pubkey.cc
-[153/411] Wrapping AST for FunctionCallerServer for debugging
-[154/411] Write Objects.LinkFileList
-[155/411] Linking generator
-[156/411] Compiling x_name.cc
-[157/411] Compiling x_exten.cc
-[158/411] Compiling x_crl.cc
-[159/411] Linking tools-factory-server
-[160/411] Linking function-caller-server
-[161/411] Compiling x_attrib.cc
-[162/411] Compiling x_all.cc
-[163/411] Compiling x_algor.cc
-[164/411] Compiling x509spki.cc
-[165/411] Compiling x509rset.cc
-[166/411] Compiling x509name.cc
-[167/411] Compiling x509cset.cc
-[168/411] Compiling x509_vpm.cc
-[169/411] Compiling x509_vfy.cc
-[170/411] Compiling x509_v3.cc
-[171/411] Compiling x509_txt.cc
-[172/411] Compiling x509_trs.cc
-[173/411] Compiling x509_set.cc
-[174/411] Compiling x509_req.cc
-[175/411] Compiling x509_obj.cc
-[176/411] Compiling x509_lu.cc
-[177/411] Compiling x509_ext.cc
-[178/411] Compiling x509_def.cc
-[179/411] Compiling x509_d2.cc
-[180/411] Compiling x509_cmp.cc
-[181/411] Compiling x509_att.cc
-[182/411] Compiling x509.cc
-[183/411] Compiling v3_prn.cc
-[184/411] Compiling v3_skey.cc
-[185/411] Compiling v3_utl.cc
-[186/411] Compiling v3_pmaps.cc
-[187/411] Compiling v3_purp.cc
-[188/411] Compiling v3_pcons.cc
-[189/411] Compiling v3_ocsp.cc
-[190/411] Compiling v3_ncons.cc
-[191/411] Compiling v3_int.cc
-[192/411] Compiling v3_lib.cc
-[193/411] Compiling v3_info.cc
-[194/411] Compiling v3_ia5.cc
-[195/411] Compiling v3_extku.cc
-[196/411] Compiling v3_genn.cc
-[197/411] Compiling v3_enum.cc
-[198/411] Compiling v3_crld.cc
-[199/411] Compiling v3_cpols.cc
-[200/411] Compiling v3_conf.cc
-[201/411] Compiling v3_bitst.cc
-[202/411] Compiling v3_bcons.cc
-[203/411] Compiling v3_akeya.cc
-[204/411] Compiling v3_alt.cc
-[205/411] Compiling v3_akey.cc
-[206/411] Compiling t_x509a.cc
-[207/411] Compiling t_req.cc
-[208/411] Compiling t_x509.cc
-[209/411] Compiling i2d_pr.cc
-[210/411] Compiling t_crl.cc
-[211/411] Compiling rsa_pss.cc
-[212/411] Compiling name_print.cc
-[213/411] Compiling policy.cc
-[214/411] Compiling by_file.cc
-[215/411] Compiling by_dir.cc
-[216/411] Compiling algorithm.cc
-[217/411] Compiling voprf.cc
-[218/411] Compiling asn1_gen.cc
-[219/411] Compiling a_digest.cc
-[220/411] Compiling a_verify.cc
-[221/411] Compiling a_sign.cc
-[222/411] Compiling thread.cc
-[223/411] Compiling thread_win.cc
-[224/411] Compiling thread_none.cc
-[225/411] Compiling trust_token.cc
-[226/411] Compiling thread_pthread.cc
-[227/411] Compiling stack.cc
-[228/411] Compiling pmbtoken.cc
-[229/411] Compiling siphash.cc
-[230/411] Compiling sha1.cc
-[231/411] Compiling sha256.cc
-[232/411] Compiling sha512.cc
-[233/411] Compiling slhdsa.cc
-[234/411] Compiling spake2plus.cc
-[235/411] Compiling rsa_print.cc
-[236/411] Compiling rsa_extra.cc
-[237/411] Compiling refcount.cc
-[238/411] Compiling rc4.cc
-[239/411] Compiling windows.cc
-[240/411] Compiling rsa_crypt.cc
-[241/411] Compiling trusty.cc
-[242/411] Compiling rand.cc
-[243/411] Compiling rsa_asn1.cc
-[244/411] Compiling urandom.cc
-[245/411] Compiling ios.cc
-[246/411] Compiling passive.cc
-[247/411] Compiling poly1305_arm_asm.S
-[248/411] Compiling getentropy.cc
-[249/411] Compiling deterministic.cc
-[250/411] Compiling fork_detect.cc
-[251/411] Compiling forkunsafe.cc
-[252/411] Compiling poly1305_vec.cc
-[253/411] Compiling poly1305_arm.cc
-[254/411] Compiling poly1305.cc
-[255/411] Compiling pool.cc
-[256/411] Compiling pkcs7.cc
-[257/411] Compiling pkcs8_x509.cc
-[258/411] Compiling p5_pbev2.cc
-[259/411] Compiling pkcs8.cc
-[260/411] Compiling pkcs7_x509.cc
-[261/411] Compiling pem_xaux.cc
-[262/411] Compiling pem_x509.cc
-[263/411] Compiling pem_pkey.cc
-[264/411] Compiling mlkem.cc
-[265/411] Compiling pem_pk8.cc
-[266/411] Compiling obj_xref.cc
-[266/411] Compiling pem_oth.cc
-[268/411] Compiling pem_info.cc
-[269/411] Compiling mldsa.cc
-[270/411] Compiling pem_all.cc
-[271/411] Compiling obj.cc
-[272/411] Compiling pem_lib.cc
-[273/411] Compiling poly_rq_mul.S
-[274/411] Compiling mem.cc
-[275/411] Compiling fips_shared_support.cc
-[276/411] Compiling md4.cc
-[277/411] Compiling md5.cc
-[278/411] Compiling lhash.cc
-[279/411] Compiling kyber.cc
-[280/411] Compiling ex_data.cc
-[281/411] Compiling scrypt.cc
-[282/411] Compiling sign.cc
-[283/411] Compiling hpke.cc
-[284/411] Compiling hrss.cc
-[285/411] Compiling print.cc
-[286/411] Compiling pbkdf.cc
-[287/411] Compiling p_x25519.cc
-[288/411] Compiling p_x25519_asn1.cc
-[289/411] Compiling p_rsa_asn1.cc
-[290/411] Compiling p_rsa.cc
-[291/411] Compiling p_ed25519.cc
-[292/411] Compiling p_hkdf.cc
-[293/411] Compiling p_ed25519_asn1.cc
-[294/411] Compiling p_ec_asn1.cc
-[295/411] Compiling p_ec.cc
-[296/411] Compiling p_dh.cc
-[297/411] Compiling p_dh_asn1.cc
-[298/411] Compiling p_dsa_asn1.cc
-[299/411] Compiling evp_ctx.cc
-[300/411] Compiling evp.cc
-[301/411] Compiling err.cc
-[302/411] Compiling evp_asn1.cc
-[303/411] Compiling engine.cc
-[304/411] Compiling ecdsa_asn1.cc
-[305/411] Compiling hash_to_curve.cc
-[306/411] Compiling ecdh.cc
-[307/411] Compiling ec_derive.cc
-[308/411] Compiling ec_asn1.cc
-[309/411] Compiling dsa_asn1.cc
-[309/411] Compiling dsa.cc
-[311/411] Compiling params.cc
-[312/411] Compiling x25519-asm-arm.S
-[313/411] Compiling des.cc
-[314/411] Compiling dh_asn1.cc
-[315/411] Compiling digest_extra.cc
-[316/411] Compiling curve25519_64_adx.cc
-[317/411] Compiling cpu_intel.cc
-[318/411] Compiling crypto.cc
-[319/411] Compiling spake25519.cc
-[320/411] Compiling curve25519.cc
-[321/411] Compiling cpu_arm_linux.cc
-[322/411] Compiling cpu_arm_freebsd.cc
-[323/411] Compiling cpu_aarch64_win.cc
-[324/411] Compiling cpu_aarch64_sysreg.cc
-[325/411] Compiling cpu_aarch64_openbsd.cc
-[326/411] Compiling cpu_aarch64_linux.cc
-[327/411] Compiling cpu_aarch64_apple.cc
-[328/411] Compiling cpu_aarch64_fuchsia.cc
-[329/411] Compiling conf.cc
-[330/411] Compiling get_cipher.cc
-[331/411] Compiling tls_cbc.cc
-[332/411] Compiling e_tls.cc
-[333/411] Compiling e_rc4.cc
-[334/411] Compiling e_null.cc
-[335/411] Compiling e_rc2.cc
-[336/411] Compiling bcm.cc
-[337/411] Compiling e_aesgcmsiv.cc
-[338/411] Compiling e_des.cc
-[339/411] Compiling e_chacha20poly1305.cc
-[340/411] Compiling e_aesctrhmac.cc
-[341/411] Compiling derive_key.cc
-[342/411] Compiling chacha.cc
-[343/411] Compiling unicode.cc
-[344/411] Compiling buf.cc
-[345/411] Compiling ber.cc
-[346/411] Compiling cbs.cc
-[347/411] Compiling asn1_compat.cc
-[348/411] Compiling cbb.cc
-[349/411] Compiling blake2.cc
-[350/411] Compiling convert.cc
-[351/411] Compiling bn_asn1.cc
-[352/411] Compiling printf.cc
-[353/411] Compiling socket.cc
-[354/411] Compiling socket_helper.cc
-[355/411] Compiling pair.cc
-[356/411] Compiling errno.cc
-[357/411] Compiling hexdump.cc
-[358/411] Compiling fd.cc
-[359/411] Compiling file.cc
-[360/411] Compiling bio_mem.cc
-[361/411] Compiling connect.cc
-[362/411] Compiling bio.cc
-[363/411] Compiling tasn_typ.cc
-[364/411] Compiling base64.cc
-[365/411] Compiling tasn_fre.cc
-[366/411] Compiling tasn_new.cc
-[367/411] Compiling tasn_utl.cc
-[368/411] Compiling tasn_enc.cc
-[369/411] Compiling posix_time.cc
-[370/411] Compiling f_int.cc
-[371/411] Compiling f_string.cc
-[372/411] Compiling tasn_dec.cc
-[373/411] Compiling asn_pack.cc
-[374/411] Compiling asn1_par.cc
-[375/411] Compiling a_utctm.cc
-[376/411] Compiling asn1_lib.cc
-[377/411] Compiling a_octet.cc
-[378/411] Compiling a_type.cc
-[379/411] Compiling a_time.cc
-[380/411] Compiling a_strnid.cc
-[381/411] Compiling a_strex.cc
-[382/411] Compiling a_object.cc
-[383/411] Compiling a_i2d_fp.cc
-[384/411] Compiling a_mbstr.cc
-[385/411] Compiling a_dup.cc
-[386/411] Compiling CAsyncHTTPClient CAsyncHTTPClient.c
-[387/411] Write sources
-[391/411] Compiling a_int.cc
-[392/411] Compiling a_gentm.cc
-[393/411] Write sources
-[396/428] Compiling a_d2i_fp.cc
-[397/457] Compiling a_bool.cc
-[398/460] Write sources
-[400/460] Compiling a_bitstr.cc
-[402/460] Compiling BootstrapClient bootstrapSeedRoles.swift
-[403/486] Compiling BootstrapClient bootstrapPromoteReflection.swift
-[404/486] Compiling BootstrapClient bootstrapEnqueueReflection.swift
-[405/486] Compiling BootstrapClient bootstrapInitializeCorpus.swift
-[406/486] Compiling BaselineAwarenessService HTTPResponse.swift
-[407/486] Compiling BootstrapClient bootstrapAddBaseline.swift
-[408/486] Emitting module BaselineAwarenessClient
-[409/486] Compiling Algorithms Joined.swift
-[410/486] Compiling Algorithms Keyed.swift
-[411/487] Compiling BaselineAwarenessClient readSemanticArc.swift
-[414/487] Emitting module BootstrapClient
-[415/487] Compiling BootstrapClient Models.swift
-[416/487] Compiling BaselineAwarenessService HTTPRequest.swift
-[417/487] Compiling Algorithms Reductions.swift
-[418/487] Compiling Algorithms Rotate.swift
-[419/489] Compiling BaselineAwarenessService HTTPKernel.swift
-[420/489] Compiling BootstrapClient seedRoles.swift
-[421/489] Compiling BaselineAwarenessService BaselineStore.swift
-[422/490] Emitting module BaselineAwarenessService
-[423/490] Compiling Algorithms EitherSequence.swift
-[424/490] Compiling Algorithms FirstNonNil.swift
-[425/490] Compiling Algorithms Combinations.swift
-[426/490] Compiling Algorithms RandomSample.swift
-[427/490] Compiling Algorithms Compacted.swift
-[428/490] Compiling Algorithms Cycle.swift
-[430/490] Compiling Algorithms AdjacentPairs.swift
-/srv/deploy/repos/fountainai/Generated/Client/baseline-awareness/Requests/listHistory.swift:14:13: warning: variable 'query' was never mutated; consider changing to 'let' constant
-12 |     public var path: String {
-13 |         var path = "/corpus/history/{corpus_id}"
-14 |         var query: [String] = []
-   |             `- warning: variable 'query' was never mutated; consider changing to 'let' constant
-15 |         path = path.replacingOccurrences(of: "{corpus_id}", with: String(parameters.corpusId))
-16 |         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
-[431/490] Compiling Algorithms Chain.swift
-/srv/deploy/repos/fountainai/Generated/Client/baseline-awareness/Requests/listHistory.swift:14:13: warning: variable 'query' was never mutated; consider changing to 'let' constant
-12 |     public var path: String {
-13 |         var path = "/corpus/history/{corpus_id}"
-14 |         var query: [String] = []
-   |             `- warning: variable 'query' was never mutated; consider changing to 'let' constant
-15 |         path = path.replacingOccurrences(of: "{corpus_id}", with: String(parameters.corpusId))
-16 |         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
-/srv/deploy/repos/fountainai/Generated/Client/baseline-awareness/Requests/listReflections.swift:14:13: warning: variable 'query' was never mutated; consider changing to 'let' constant
-12 |     public var path: String {
-13 |         var path = "/corpus/reflections/{corpus_id}"
-14 |         var query: [String] = []
-   |             `- warning: variable 'query' was never mutated; consider changing to 'let' constant
-15 |         path = path.replacingOccurrences(of: "{corpus_id}", with: String(parameters.corpusId))
-16 |         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
-/srv/deploy/repos/fountainai/Generated/Client/baseline-awareness/Requests/listReflections.swift:14:13: warning: variable 'query' was never mutated; consider changing to 'let' constant
-12 |     public var path: String {
-13 |         var path = "/corpus/reflections/{corpus_id}"
-14 |         var query: [String] = []
-   |             `- warning: variable 'query' was never mutated; consider changing to 'let' constant
-15 |         path = path.replacingOccurrences(of: "{corpus_id}", with: String(parameters.corpusId))
-16 |         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
-[434/490] Compiling BaselineAwarenessService Handlers.swift
-[435/490] Compiling BaselineAwarenessService Router.swift
-[436/490] Compiling BaselineAwarenessService Models.swift
-[440/491] Compiling Algorithms Permutations.swift
-[441/491] Compiling Algorithms Product.swift
-[442/491] Compiling Algorithms MinMax.swift
-[443/491] Compiling Algorithms Partition.swift
-[447/491] Compiling Atomics IntegerOperations.swift
-[448/491] Compiling Atomics Unmanaged extensions.swift
-[451/491] Compiling Algorithms Chunked.swift
-[452/491] Compiling BaselineAwarenessClient summarizeHistory.swift
-/srv/deploy/repos/fountainai/Generated/Client/baseline-awareness/Requests/summarizeHistory.swift:14:13: warning: variable 'query' was never mutated; consider changing to 'let' constant
-12 |     public var path: String {
-13 |         var path = "/corpus/summary/{corpus_id}"
-14 |         var query: [String] = []
-   |             `- warning: variable 'query' was never mutated; consider changing to 'let' constant
-15 |         path = path.replacingOccurrences(of: "{corpus_id}", with: String(parameters.corpusId))
-16 |         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
-[453/502] Wrapping AST for BaselineAwarenessService for debugging
-[455/502] Compiling Algorithms Split.swift
-[456/502] Compiling Algorithms Stride.swift
-[457/502] Compiling Algorithms Suffix.swift
-[457/505] Compiling c-nioatomics.c
-[462/505] Emitting module Atomics
-[463/505] Compiling BootstrapService HTTPKernel.swift
-[464/505] Emitting module BootstrapService
-[465/505] Compiling BootstrapService HTTPRequest.swift
-[466/505] Compiling BootstrapService HTTPResponse.swift
-[467/505] Compiling BootstrapService Router.swift
-[476/506] Compiling Algorithms Indexed.swift
-[477/506] Compiling Algorithms Intersperse.swift
-[478/506] Compiling BootstrapService Models.swift
-[479/506] Compiling BootstrapService Handlers.swift
-[480/507] Compiling BaselineAwarenessServer main.swift
-[481/507] Compiling BaselineAwarenessServer HTTPServer.swift
-[482/507] Emitting module BaselineAwarenessServer
-[482/508] Compiling c-atomics.c
-[485/508] Emitting module Algorithms
-[499/508] Compiling Algorithms Trim.swift
-[500/508] Compiling Algorithms Unique.swift
-[501/508] Compiling Algorithms Windows.swift
-[501/509] Wrapping AST for BootstrapService for debugging
-[502/517] Wrapping AST for BaselineAwarenessServer for debugging
-[503/517] Write Objects.LinkFileList
-[506/517] Compiling NIOConcurrencyHelpers NIOLockedValueBox.swift
-[506/517] Linking baseline-awareness-server
-[508/517] Compiling NIOConcurrencyHelpers lock.swift
-[509/517] Compiling BootstrapServer main.swift
-[510/517] Emitting module BootstrapServer
-[512/518] Compiling NIOConcurrencyHelpers NIOAtomic.swift
-[513/518] Emitting module NIOConcurrencyHelpers
-[514/518] Compiling NIOConcurrencyHelpers NIOLock.swift
-[515/518] Compiling NIOConcurrencyHelpers atomics.swift
-[515/519] Wrapping AST for BootstrapServer for debugging
-[516/519] Write Objects.LinkFileList
-[518/580] Linking bootstrap-server
-[520/580] Compiling NIOCore NIOAny.swift
-[521/580] Compiling NIOCore NIOCloseOnErrorHandler.swift
-[522/580] Compiling NIOCore NIOCoreSendableMetatype.swift
-[523/580] Compiling NIOCore NIOLoopBound.swift
-[524/580] Compiling NIOCore NIOPooledRecvBufferAllocator.swift
-[525/580] Compiling NIOCore NIOScheduledCallback.swift
-[526/580] Compiling NIOCore NIOSendable.swift
-[527/580] Compiling NIOCore RecvByteBufferAllocator.swift
-[528/588] Compiling NIOCore EventLoopFuture+Deprecated.swift
-[529/588] Compiling NIOCore EventLoopFuture+WithEventLoop.swift
-[530/588] Compiling NIOCore EventLoopFuture.swift
-[531/588] Compiling NIOCore FileDescriptor.swift
-[532/588] Compiling NIOCore FileHandle.swift
-[533/588] Compiling NIOCore FileRegion.swift
-[534/588] Compiling NIOCore GlobalSingletons.swift
-[535/588] Compiling NIOCore IO.swift
-[536/588] Compiling NIOCore AddressedEnvelope.swift
-[537/588] Compiling NIOCore AsyncAwaitSupport.swift
-[538/588] Compiling NIOCore AsyncChannel.swift
-[539/588] Compiling NIOCore AsyncChannelHandler.swift
-[540/588] Compiling NIOCore AsyncChannelInboundStream.swift
-[541/588] Compiling NIOCore AsyncChannelOutboundWriter.swift
-[542/588] Compiling NIOCore NIOAsyncSequenceProducer.swift
-[543/588] Compiling NIOCore NIOAsyncSequenceProducerStrategies.swift
-[544/588] Compiling NIOCore NIOAsyncWriter.swift
-[545/588] Compiling NIOCore CircularBuffer.swift
-[546/588] Compiling NIOCore Codec.swift
-[547/588] Compiling NIOCore ConvenienceOptionSupport.swift
-[548/588] Compiling NIOCore DeadChannel.swift
-[549/588] Compiling NIOCore DispatchQueue+WithFuture.swift
-[550/588] Compiling NIOCore EventLoop+Deprecated.swift
-[551/588] Compiling NIOCore EventLoop+SerialExecutor.swift
-[552/588] Compiling NIOCore EventLoop.swift
-[553/588] Compiling NIOCore EventLoopFuture+AssumeIsolated.swift
-[554/588] Compiling NIOCore NIOThrowingAsyncSequenceProducer.swift
-[555/588] Compiling NIOCore BSDSocketAPI.swift
-[556/588] Compiling NIOCore ByteBuffer-aux.swift
-[557/588] Compiling NIOCore ByteBuffer-binaryEncodedLengthPrefix.swift
-[558/588] Compiling NIOCore ByteBuffer-conversions.swift
-[559/588] Compiling NIOCore ByteBuffer-core.swift
-[560/588] Compiling NIOCore ByteBuffer-hex.swift
-[561/588] Compiling NIOCore ByteBuffer-int.swift
-[562/588] Compiling NIOCore ByteBuffer-lengthPrefix.swift
-[563/588] Compiling NIOCore IOData.swift
-[564/588] Compiling NIOCore IPProtocol.swift
-[565/588] Compiling NIOCore IntegerBitPacking.swift
-[566/588] Compiling NIOCore IntegerTypes.swift
-[567/588] Compiling NIOCore Interfaces.swift
-[568/588] Compiling NIOCore Linux.swift
-[569/588] Compiling NIOCore MarkedCircularBuffer.swift
-[570/588] Compiling NIOCore MulticastChannel.swift
-[571/588] Compiling NIOCore SingleStepByteToMessageDecoder.swift
-[572/588] Compiling NIOCore SocketAddresses.swift
-[573/588] Compiling NIOCore SocketOptionProvider.swift
-[574/588] Compiling NIOCore SystemCallHelpers.swift
-[575/588] Compiling NIOCore TimeAmount+Duration.swift
-[576/588] Compiling NIOCore TypeAssistedChannelHandler.swift
-[577/588] Compiling NIOCore UniversalBootstrapSupport.swift
-[578/588] Compiling NIOCore Utilities.swift
-[579/588] Emitting module NIOCore
-[580/588] Compiling NIOCore ByteBuffer-multi-int.swift
-[581/588] Compiling NIOCore ByteBuffer-quicBinaryEncodingStrategy.swift
-[582/588] Compiling NIOCore ByteBuffer-views.swift
-[583/588] Compiling NIOCore Channel.swift
-[584/588] Compiling NIOCore ChannelHandler.swift
-[585/588] Compiling NIOCore ChannelHandlers.swift
-[586/588] Compiling NIOCore ChannelInvoker.swift
-[587/588] Compiling NIOCore ChannelOption.swift
-[588/588] Compiling NIOCore ChannelPipeline.swift
-[590/640] Emitting module NIOEmbedded
-[591/640] Compiling NIOEmbedded AsyncTestingEventLoop.swift
-[592/640] Compiling NIOEmbedded AsyncTestingChannel.swift
-[593/640] Compiling NIOEmbedded Embedded.swift
-[595/641] Compiling NIOPosix IO.swift
-[596/641] Compiling NIOPosix IntegerBitPacking.swift
-[597/641] Compiling NIOPosix IntegerTypes.swift
-[598/641] Compiling NIOPosix Linux.swift
-[599/641] Compiling NIOPosix LinuxCPUSet.swift
-[600/641] Compiling NIOPosix LinuxUring.swift
-[601/641] Compiling NIOPosix MultiThreadedEventLoopGroup.swift
-[602/647] Compiling NIOPosix ThreadPosix.swift
-[603/647] Compiling NIOPosix ThreadWindows.swift
-[604/647] Compiling NIOPosix UnsafeTransfer.swift
-[605/647] Compiling NIOPosix Utilities.swift
-[606/647] Compiling NIOPosix VsockAddress.swift
-[607/647] Compiling NIOPosix VsockChannelEvents.swift
-[608/647] Compiling NIOPosix BSDSocketAPICommon.swift
-[609/647] Compiling NIOPosix BSDSocketAPIPosix.swift
-[610/647] Compiling NIOPosix BSDSocketAPIWindows.swift
-[611/647] Compiling NIOPosix BaseSocket.swift
-[612/647] Compiling NIOPosix BaseSocketChannel+SocketOptionProvider.swift
-[613/647] Compiling NIOPosix BaseSocketChannel.swift
-[614/647] Compiling NIOPosix BaseStreamSocketChannel.swift
-[615/647] Compiling NIOPosix Bootstrap.swift
-[616/647] Compiling NIOPosix ControlMessage.swift
-[617/647] Compiling NIOPosix DatagramVectorReadManager.swift
-[618/647] Compiling NIOPosix Errors+Any.swift
-[619/647] Compiling NIOPosix FileDescriptor.swift
-[620/647] Compiling NIOPosix GetaddrinfoResolver.swift
-[621/647] Compiling NIOPosix HappyEyeballs.swift
-[622/647] Compiling NIOPosix ServerSocket.swift
-[623/647] Compiling NIOPosix Socket.swift
-[624/647] Compiling NIOPosix SocketChannel.swift
-[625/647] Compiling NIOPosix SocketProtocols.swift
-[626/647] Compiling NIOPosix System.swift
-[627/647] Compiling NIOPosix Thread.swift
-[628/647] Compiling NIOPosix NIOPosixSendableMetatype.swift
-[629/647] Compiling NIOPosix NIOThreadPool.swift
-[630/647] Compiling NIOPosix NonBlockingFileIO.swift
-[631/647] Compiling NIOPosix PendingDatagramWritesManager.swift
-[632/647] Compiling NIOPosix PendingWritesManager.swift
-[633/647] Compiling NIOPosix PipeChannel.swift
-[634/647] Compiling NIOPosix PipePair.swift
-[635/647] Compiling NIOPosix Pool.swift
-[636/647] Compiling NIOPosix PosixSingletons+ConcurrencyTakeOver.swift
-[637/647] Compiling NIOPosix PosixSingletons.swift
-[638/647] Compiling NIOPosix RawSocketBootstrap.swift
-[639/647] Compiling NIOPosix Resolver.swift
-[640/647] Compiling NIOPosix Selectable.swift
-[641/647] Emitting module NIOPosix
-[642/647] Compiling NIOPosix SelectableChannel.swift
-[643/647] Compiling NIOPosix SelectableEventLoop.swift
-[644/647] Compiling NIOPosix SelectorEpoll.swift
-[645/647] Compiling NIOPosix SelectorGeneric.swift
-[646/647] Compiling NIOPosix SelectorKqueue.swift
-[647/647] Compiling NIOPosix SelectorUring.swift
-[649/650] Emitting module NIO
-[650/650] Compiling NIO Exports.swift
-[652/690] Compiling NIOTLS TLSEvents.swift
-[653/690] Compiling NIOTLS NIOTypedApplicationProtocolNegotiationHandler.swift
-[654/690] Compiling NIOTLS ApplicationProtocolNegotiationHandler.swift
-[655/690] Emitting module NIOTLS
-[656/690] Compiling NIOSOCKS ClientStateMachine.swift
-[657/690] Compiling NIOSOCKS SelectedAuthenticationMethod.swift
-[658/690] Compiling NIOSOCKS SOCKSResponse.swift
-[659/691] Compiling NIOTLS ProtocolNegotiationHandlerStateMachine.swift
-[660/691] Compiling NIOTLS SNIHandler.swift
-[662/692] Compiling NIOHTTP1 ByteCollectionUtils.swift
-[663/692] Compiling NIOHTTP1 HTTPDecoder.swift
-[664/692] Compiling NIOHTTP1 HTTPPipelineSetup.swift
-[665/692] Compiling NIOHTTP1 HTTPServerPipelineHandler.swift
-[666/692] Compiling NIOHTTP1 HTTPEncoder.swift
-[667/692] Compiling NIOHTTP1 HTTPServerProtocolErrorHandler.swift
-[668/692] Compiling NIOHTTP1 HTTPHeaderValidator.swift
-[669/692] Compiling NIOHTTP1 HTTPHeaders+Validation.swift
-[670/692] Emitting module NIOSOCKS
-[671/721] Compiling NIOSSL String+unsafeUninitializedCapacity.swift
-[672/721] Compiling NIOSSL SubjectAlternativeName.swift
-[673/723] Emitting module NIOHTTP1
-[674/723] Compiling NIOSOCKS ServerStateMachine.swift
-[675/724] Compiling NIOSSL NIOSSLSecureBytes.swift
-[676/724] Compiling NIOSSL RNG.swift
-[678/724] Compiling NIOSSL SSLPublicKey.swift
-[679/724] Compiling NIOSSL SecurityFrameworkCertificateVerification.swift
-[680/724] Compiling NIOSSL SSLPKCS12Bundle.swift
-[681/724] Compiling NIOSSL SSLPrivateKey.swift
-[682/724] Compiling NIOSSL CustomPrivateKey.swift
-[683/724] Compiling NIOSSL IdentityVerification.swift
-[684/724] Compiling NIOSSL AndroidCABundle.swift
-[685/724] Compiling NIOSSL ByteBufferBIO.swift
-[686/724] Compiling NIOSSL SSLContext.swift
-[687/724] Compiling NIOSSL SSLErrors.swift
-[688/724] Compiling NIOSSL SSLInit.swift
-[689/724] Compiling NIOFoundationCompat WaitSpinningRunLoop.swift
-[690/724] Compiling NIOFoundationCompat JSONSerialization+ByteBuffer.swift
-[691/724] Compiling NIOHTTP1 NIOTypedHTTPServerUpgradeHandler.swift
-[692/724] Compiling NIOHTTP1 NIOTypedHTTPServerUpgraderStateMachine.swift
-[693/725] Compiling NIOFoundationCompat Codable+ByteBuffer.swift
-[694/725] Compiling NIOFoundationCompat ByteBuffer-foundation.swift
-[695/725] Emitting module NIOFoundationCompat
-[698/766] Emitting module NIOSSL
-[699/770] Emitting module NIOTransportServices
-[700/772] Compiling NIOTransportServices NIOTSEventLoopGroup.swift
-[701/772] Compiling NIOTransportServices NIOTSListenerBootstrap.swift
-[702/772] Compiling NIOTransportServices NIOTSListenerChannel.swift
-[703/772] Compiling NIOTransportServices NIOTSNetworkEvents.swift
-[704/772] Compiling NIOTransportServices NIOTSSingletons.swift
-[705/772] Compiling NIOTransportServices SocketAddress+NWEndpoint.swift
-[706/772] Compiling NIOHPACK IndexedHeaderTable.swift
-[707/772] Compiling NIOHPACK HuffmanTables.swift
-[708/772] Compiling NIOHPACK IntegerCoding.swift
-[709/772] Compiling NIOTransportServices StateManagedChannel.swift
-[710/772] Compiling NIOTransportServices StateManagedListenerChannel.swift
-[711/772] Compiling NIOTransportServices StateManagedNWConnectionChannel.swift
-[712/772] Compiling NIOTransportServices NIOTSConnectionChannel.swift
-[713/772] Compiling NIOTransportServices NIOTSErrors.swift
-[714/772] Compiling NIOTransportServices NIOTSEventLoop.swift
-[715/772] Compiling NIOTransportServices NIOTSBootstraps.swift
-[716/772] Compiling NIOTransportServices NIOTSChannelOptions.swift
-[717/772] Compiling NIOTransportServices NIOTSConnectionBootstrap.swift
-[718/773] Compiling NIOTransportServices AcceptHandler.swift
-[719/773] Compiling NIOTransportServices NIOTSDatagramConnectionBootstrap.swift
-[720/773] Compiling NIOTransportServices NIOTSDatagramConnectionChannel.swift
-[721/773] Compiling NIOTransportServices NIOTSDatagramListenerBootstrap.swift
-[722/773] Compiling NIOTransportServices NIOTSDatagramListenerChannel.swift
-[723/773] Compiling NIOTransportServices NIOFilterEmptyWritesHandler.swift
-[724/773] Compiling NIOHPACK HuffmanCoding.swift
-[725/773] Compiling NIOTransportServices TCPOptions+SocketChannelOption.swift
-[726/773] Compiling NIOTransportServices UDPOptions+SocketChannelOption.swift
-[727/774] Compiling NIOSSL LinuxCABundle.swift
-[728/774] Compiling NIOSSL NIOSSLClientHandler.swift
-[729/774] Compiling NIOSSL NIOSSLHandler+Configuration.swift
-[730/774] Compiling NIOSSL NIOSSLHandler.swift
-[732/774] Compiling NIOHPACK StaticHeaderTable.swift
-[733/774] Compiling NIOHTTPCompression HTTPResponseDecompressor.swift
-[740/774] Emitting module NIOHPACK
-[745/775] Compiling NIOHTTPCompression HTTPDecompression.swift
-[746/775] Emitting module NIOHTTPCompression
-[747/775] Compiling NIOHTTPCompression HTTPCompression.swift
-[755/775] Compiling NIOSSL SSLConnection.swift
-[768/775] Compiling NIOHTTPCompression HTTPResponseCompressor.swift
-[769/775] Compiling NIOHTTPCompression HTTPRequestDecompressor.swift
-[770/775] Compiling NIOHTTPCompression HTTPRequestCompressor.swift
-[773/834] Compiling NIOHTTP2 Error+Any.swift
-[774/834] Compiling NIOHTTP2 ConcurrentStreamBuffer.swift
-[775/834] Compiling NIOHTTP2 ControlFrameBuffer.swift
-[776/834] Compiling NIOHTTP2 OutboundFlowControlBuffer.swift
-[778/835] Compiling NIOHTTP2 MaySendFrames.swift
-[779/835] Compiling NIOHTTP2 SendingDataState.swift
-[780/835] Compiling NIOHTTP2 SendingGoawayState.swift
-[781/835] Compiling NIOHTTP2 SendingHeadersState.swift
-[782/835] Compiling NIOHTTP2 SendingPushPromiseState.swift
-[783/835] Compiling NIOHTTP2 SendingRstStreamState.swift
-[784/835] Compiling NIOHTTP2 SendingWindowUpdateState.swift
-[785/835] Compiling NIOHTTP2 HTTP2SettingsState.swift
-[786/843] Emitting module NIOHTTP2
-[787/843] Compiling NIOHTTP2 HasExtendedConnectSettings.swift
-[788/843] Compiling NIOHTTP2 HasFlowControlWindows.swift
-[789/843] Compiling NIOHTTP2 HasLocalSettings.swift
-[790/843] Compiling NIOHTTP2 HasRemoteSettings.swift
-[791/843] Compiling NIOHTTP2 LocallyQuiescingState.swift
-[792/843] Compiling NIOHTTP2 QuiescingState.swift
-[793/843] Compiling NIOHTTP2 RemotelyQuiescingState.swift
-[794/843] Compiling NIOHTTP2 SendAndReceiveGoawayState.swift
-[795/843] Compiling NIOHTTP2 HTTP2StreamChannel+OutboundStreamMultiplexer.swift
-[796/843] Compiling NIOHTTP2 HTTP2StreamChannel.swift
-[797/843] Compiling NIOHTTP2 HTTP2StreamDelegate.swift
-[798/843] Compiling NIOHTTP2 HTTP2StreamID.swift
-[799/843] Compiling NIOHTTP2 HTTP2StreamMultiplexer.swift
-[800/843] Compiling NIOHTTP2 HTTP2ToHTTP1Codec.swift
-[801/843] Compiling NIOHTTP2 HTTP2UserEvents.swift
-[802/843] Compiling NIOHTTP2 InboundEventBuffer.swift
-[803/843] Compiling NIOHTTP2 ConnectionStateMachine.swift
-[804/843] Compiling NIOHTTP2 ConnectionStreamsState.swift
-[805/843] Compiling NIOHTTP2 MayReceiveFrames.swift
-[806/843] Compiling NIOHTTP2 ReceivingDataState.swift
-[807/843] Compiling NIOHTTP2 ReceivingGoAwayState.swift
-[808/843] Compiling NIOHTTP2 ReceivingHeadersState.swift
-[809/843] Compiling NIOHTTP2 ReceivingPushPromiseState.swift
-[810/843] Compiling NIOHTTP2 ReceivingRstStreamState.swift
-[811/843] Compiling NIOHTTP2 ReceivingWindowUpdateState.swift
-[812/843] Compiling NIOHTTP2 InboundWindowManager.swift
-[813/843] Compiling NIOHTTP2 MultiplexerAbstractChannel.swift
-[814/843] Compiling NIOHTTP2 StreamChannelFlowController.swift
-[815/843] Compiling NIOHTTP2 StreamChannelList.swift
-[816/843] Compiling NIOHTTP2 StreamMap.swift
-[817/843] Compiling NIOHTTP2 StreamStateMachine.swift
-[818/843] Compiling NIOHTTP2 UnsafeTransfer.swift
-[819/843] Compiling NIOHTTP2 WatermarkedFlowController.swift
-[820/843] Compiling NIOHTTP2 HTTP2FlowControlWindow.swift
-[821/843] Compiling NIOHTTP2 HTTP2Frame.swift
-[822/843] Compiling NIOHTTP2 HTTP2FrameEncoder.swift
-[823/843] Compiling NIOHTTP2 HTTP2FrameParser.swift
-[824/843] Compiling NIOHTTP2 HTTP2PingData.swift
-[825/843] Compiling NIOHTTP2 HTTP2PipelineHelpers.swift
-[826/843] Compiling NIOHTTP2 HTTP2Settings.swift
-[827/843] Compiling NIOHTTP2 HTTP2Stream.swift
-[828/843] Compiling NIOHTTP2 StateMachineResult.swift
-[829/843] Compiling NIOHTTP2 ContentLengthVerifier.swift
-[830/843] Compiling NIOHTTP2 DOSHeuristics.swift
-[835/843] Compiling NIOHTTP2 OutboundFrameBuffer.swift
-[836/843] Compiling NIOHTTP2 HPACKHeaders+Validation.swift
-[837/843] Compiling NIOHTTP2 HTTP2ChannelHandler+InboundStreamMultiplexer.swift
-[838/843] Compiling NIOHTTP2 HTTP2ChannelHandler+InlineStreamMultiplexer.swift
-[839/843] Compiling NIOHTTP2 HTTP2ChannelHandler.swift
-[840/843] Compiling NIOHTTP2 HTTP2CommonInboundStreamMultiplexer.swift
-[841/843] Compiling NIOHTTP2 HTTP2ConnectionStateChange.swift
-[842/843] Compiling NIOHTTP2 HTTP2Error.swift
-[843/843] Compiling NIOHTTP2 HTTP2ErrorCode.swift
-[845/904] Emitting module AsyncHTTPClient
-[846/912] Compiling AsyncHTTPClient AnyAsyncSequence.swift
-[847/912] Compiling AsyncHTTPClient AnyAsyncSequenceProucerDelete.swift
-[848/912] Compiling AsyncHTTPClient AsyncLazySequence.swift
-[849/912] Compiling AsyncHTTPClient HTTPClient+execute.swift
-[850/912] Compiling AsyncHTTPClient HTTPClient+shutdown.swift
-[851/912] Compiling AsyncHTTPClient HTTPClientRequest+Prepared.swift
-[852/912] Compiling AsyncHTTPClient HTTPClientRequest+auth.swift
-[853/912] Compiling AsyncHTTPClient HTTPClientRequest.swift
-[854/912] Compiling AsyncHTTPClient HTTPClientResponse.swift
-[855/912] Compiling AsyncHTTPClient SOCKSEventsHandler.swift
-[856/912] Compiling AsyncHTTPClient TLSEventsHandler.swift
-[857/912] Compiling AsyncHTTPClient HTTP1ClientChannelHandler.swift
-[858/912] Compiling AsyncHTTPClient HTTP1Connection.swift
-[859/912] Compiling AsyncHTTPClient HTTP1ConnectionStateMachine.swift
-[860/912] Compiling AsyncHTTPClient HTTP2ClientRequestHandler.swift
-[861/912] Compiling AsyncHTTPClient HTTP2Connection.swift
-[862/912] Compiling AsyncHTTPClient HTTP2IdleHandler.swift
-[863/912] Compiling AsyncHTTPClient HTTPConnectionEvent.swift
-[864/912] Compiling AsyncHTTPClient HTTPHandler.swift
-[865/912] Compiling AsyncHTTPClient LRUCache.swift
-[866/912] Compiling AsyncHTTPClient NIOLoopBound+Execute.swift
-[867/912] Compiling AsyncHTTPClient NWErrorHandler.swift
-[868/912] Compiling AsyncHTTPClient NWWaitingHandler.swift
-[869/912] Compiling AsyncHTTPClient TLSConfiguration.swift
-[870/912] Compiling AsyncHTTPClient RedirectState.swift
-[871/912] Compiling AsyncHTTPClient RequestBag+StateMachine.swift
-[872/912] Compiling AsyncHTTPClient ConnectionTarget.swift
-[873/912] Compiling AsyncHTTPClient DeconstructedURL.swift
-[874/912] Compiling AsyncHTTPClient FileDownloadDelegate.swift
-[875/912] Compiling AsyncHTTPClient FoundationExtensions.swift
-[876/912] Compiling AsyncHTTPClient HTTPClient+HTTPCookie.swift
-[877/912] Compiling AsyncHTTPClient HTTPClient+Proxy.swift
-[878/912] Compiling AsyncHTTPClient HTTPClient+StructuredConcurrency.swift
-[879/912] Compiling AsyncHTTPClient HTTPClient.swift
-[880/912] Compiling AsyncHTTPClient SingleIteratorPrecondition.swift
-[881/912] Compiling AsyncHTTPClient Transaction+StateMachine.swift
-[882/912] Compiling AsyncHTTPClient Transaction.swift
-[883/912] Compiling AsyncHTTPClient Base64.swift
-[884/912] Compiling AsyncHTTPClient BasicAuth.swift
-[885/912] Compiling AsyncHTTPClient BestEffortHashableTLSConfiguration.swift
-[886/912] Compiling AsyncHTTPClient Configuration+BrowserLike.swift
-[887/912] Compiling AsyncHTTPClient ConnectionPool.swift
-[888/912] Compiling AsyncHTTPClient HTTP1ProxyConnectHandler.swift
-[889/912] Compiling AsyncHTTPClient HTTPConnectionPool+Factory.swift
-[890/912] Compiling AsyncHTTPClient HTTPConnectionPool+Manager.swift
-[891/912] Compiling AsyncHTTPClient HTTPConnectionPool.swift
-[892/912] Compiling AsyncHTTPClient HTTPExecutableRequest.swift
-[893/912] Compiling AsyncHTTPClient HTTPRequestStateMachine+Demand.swift
-[894/912] Compiling AsyncHTTPClient HTTPRequestStateMachine.swift
-[895/912] Compiling AsyncHTTPClient RequestBodyLength.swift
-[896/912] Compiling AsyncHTTPClient RequestFramingMetadata.swift
-[897/912] Compiling AsyncHTTPClient RequestOptions.swift
-[898/912] Compiling AsyncHTTPClient HTTPConnectionPool+Backoff.swift
-[899/912] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP1Connections.swift
-[900/912] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP1StateMachine.swift
-[901/912] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP2Connections.swift
-[902/912] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP2StateMachine.swift
-[903/912] Compiling AsyncHTTPClient HTTPConnectionPool+RequestQueue.swift
-[904/912] Compiling AsyncHTTPClient HTTPConnectionPool+StateMachine.swift
-[905/912] Compiling AsyncHTTPClient RequestBag.swift
-[906/912] Compiling AsyncHTTPClient RequestValidation.swift
-[907/912] Compiling AsyncHTTPClient SSLContextCache.swift
-[908/912] Compiling AsyncHTTPClient Scheme.swift
-[909/912] Compiling AsyncHTTPClient Singleton.swift
-[910/912] Compiling AsyncHTTPClient StringConvertibleInstances.swift
-[911/912] Compiling AsyncHTTPClient StructuredConcurrencyHelpers.swift
-[912/912] Compiling AsyncHTTPClient Utils.swift
-[914/921] Compiling IntegrationRuntime HTTPRequest.swift
-[915/921] Compiling IntegrationRuntime URLSessionHTTPClient.swift
-[916/921] Emitting module IntegrationRuntime
-/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:83:1: warning: extension declares a conformance of imported type 'ChannelHandlerContext' to imported protocol 'Sendable'; this will not behave correctly if the owners of 'NIOCore' introduce this conformance in the future
-81 | extension NIOHTTPServer.HTTPHandler: @unchecked Sendable {}
-82 | 
-83 | extension ChannelHandlerContext: @unchecked Sendable {}
-   | |- warning: extension declares a conformance of imported type 'ChannelHandlerContext' to imported protocol 'Sendable'; this will not behave correctly if the owners of 'NIOCore' introduce this conformance in the future
-   | `- note: add '@retroactive' to silence this warning
-84 | 
-[917/921] Compiling IntegrationRuntime AsyncHTTPClientDriver.swift
-[918/921] Compiling IntegrationRuntime HTTPKernel.swift
-[919/921] Compiling IntegrationRuntime HTTPClientProtocol.swift
-[920/921] Compiling IntegrationRuntime NIOHTTPServer.swift
-/srv/deploy/repos/fountainai/Sources/IntegrationRuntime/NIOHTTPServer.swift:83:1: warning: extension declares a conformance of imported type 'ChannelHandlerContext' to imported protocol 'Sendable'; this will not behave correctly if the owners of 'NIOCore' introduce this conformance in the future
-81 | extension NIOHTTPServer.HTTPHandler: @unchecked Sendable {}
-82 | 
-83 | extension ChannelHandlerContext: @unchecked Sendable {}
-   | |- warning: extension declares a conformance of imported type 'ChannelHandlerContext' to imported protocol 'Sendable'; this will not behave correctly if the owners of 'NIOCore' introduce this conformance in the future
-   | `- note: add '@retroactive' to silence this warning
-84 | 
-[921/921] Compiling IntegrationRuntime HTTPResponse.swift
-swift-build: /home/build-user/llbuild/lib/Core/SQLiteBuildDB.cpp:703: virtual void (anonymous namespace)::SQLiteBuildDB::buildComplete(): Assertion `result == SQLITE_OK' failed.
+[0/515] Write sources
+[45/515] Compiling _NumericsShims _NumericsShims.c
+[46/515] Write swift-version-24593BA9C3E375BF.txt
+[47/515] Compiling CNIOWindows shim.c
+[48/515] Compiling _AtomicsShims.c
+[49/521] Compiling api.c
+[50/521] Compiling writer.c
+[51/521] Compiling reader.c
+[51/521] Compiling emitter.c
+[53/521] Compiling scanner.c
+[53/521] Compiling parser.c
+[56/563] Compiling PersistClient Models.swift
+[57/563] Compiling PersistClient addBaseline.swift
+[58/564] Compiling RealModule ElementaryFunctions.swift
+[59/564] Compiling RealModule Float+Real.swift
+[60/564] Compiling _NIOBase64 Base64.swift
+[61/564] Emitting module _NIOBase64
+[62/564] Compiling PersistClient APIClient.swift
+[63/564] Compiling PersistClient APIRequest.swift
+[64/564] Emitting module RealModule
+[65/565] Compiling RealModule RealFunctions.swift
+[66/565] Compiling RealModule Float16+Real.swift
+[67/565] Compiling RealModule Float80+Real.swift
+[68/565] Compiling RealModule Real.swift
+[69/566] Compiling _NIODataStructures _TinyArray.swift
+[70/566] Compiling _NIODataStructures PriorityQueue.swift
+[73/591] Emitting module Logging
+[74/591] Compiling _NIODataStructures Heap.swift
+[75/591] Emitting module _NIODataStructures
+[76/591] Compiling Logging MetadataProvider.swift
+[77/592] Emitting module SocketFixAgent
+[78/592] Compiling SocketFixAgent SocketFixAgent.swift
+/srv/deploy/repos/fountainai/Tools/Agents/SocketFixAgent.swift:16:36: warning: 'init(contentsOfFile:)' is deprecated: Use `init(contentsOfFile:encoding:)` instead
+14 |             if file.hasSuffix("main.swift") {
+15 |                 let path = generatedPath + "/" + file
+16 |                 var contents = try String(contentsOfFile: path)
+   |                                    `- warning: 'init(contentsOfFile:)' is deprecated: Use `init(contentsOfFile:encoding:)` instead
+17 |                 let original = contents
+18 |                 for constant in constants {
+[79/593] Compiling PlannerClient get_semantic_arc.swift
+[80/594] Compiling PlannerClient planner_execute.swift
+[81/594] Compiling PlannerClient planner_reason.swift
+[82/594] Compiling PlannerClient get_reflection_history.swift
+[83/594] Compiling PlannerClient Models.swift
+[84/594] Emitting module PlannerClient
+[85/594] Compiling Yams AliasDereferencingStrategy.swift
+[86/594] Compiling Yams Anchor.swift
+[87/595] Compiling PersistClient listCorpora.swift
+[88/595] Compiling ToolsFactoryClient Models.swift
+[89/595] Compiling ToolsFactoryClient register_openapi.swift
+[90/595] Compiling ToolsFactoryClient APIRequest.swift
+[91/595] Compiling ToolsFactoryClient list_tools.swift
+[92/595] Compiling PersistClient listFunctions.swift
+[94/595] Compiling PersistClient createCorpus.swift
+[95/595] Compiling Yams Constructor.swift
+[96/595] Compiling Yams Decoder.swift
+[97/595] Emitting module PersistClient
+[98/595] Compiling PersistClient getFunctionDetails.swift
+[100/595] Compiling Yams Emitter.swift
+[101/595] Compiling Yams Encoder.swift
+[102/595] Compiling PlannerClient planner_list_corpora.swift
+[105/595] Compiling Logging LogHandler.swift
+[106/595] Compiling Logging Locks.swift
+[107/595] Compiling Logging Logging.swift
+[108/596] Compiling ToolsFactoryClient APIClient.swift
+[109/596] Emitting module ToolsFactoryClient
+[111/610] Wrapping AST for SocketFixAgent for debugging
+[113/610] Compiling PlannerClient post_reflection.swift
+[114/617] Compiling PersistClient listReflections.swift
+[115/625] Compiling ServiceShared PrometheusAdapter.swift
+[116/625] Compiling ServiceShared TypesenseClient.swift
+[117/625] Compiling ServiceShared Models.swift
+[118/625] Emitting module ServiceShared
+[121/627] Write Objects.LinkFileList
+[123/627] Compiling LLMGatewayClientSDK metrics_metrics_get.swift
+[124/627] Compiling LLMGatewayClientSDK chatWithObjective.swift
+[124/627] Compiling CNIOWASI CNIOWASI.c
+[124/627] Compiling CNIOWindows WSAStartup.c
+[127/627] Compiling FunctionCallerClient list_functions.swift
+[128/642] Compiling FunctionCallerClient APIRequest.swift
+[129/642] Compiling InternalCollectionsUtilities UnsafeBufferPointer+Extras.swift
+[130/650] Emitting module LLMGatewayClientSDK
+[131/650] Emitting module FunctionCallerClient
+[132/650] Compiling InternalCollectionsUtilities Descriptions.swift
+[133/650] Compiling InternalCollectionsUtilities RandomAccessCollection+Offsets.swift
+[134/650] Compiling InternalCollectionsUtilities _UniqueCollection.swift
+[135/650] Compiling InternalCollectionsUtilities Debugging.swift
+[136/650] Compiling LLMGatewayClientSDK APIClient.swift
+[137/650] Compiling LLMGatewayClientSDK APIRequest.swift
+[138/650] Compiling FunctionCallerClient APIClient.swift
+[139/650] Compiling FunctionCallerClient get_function_details.swift
+[140/650] Compiling FunctionCallerClient invoke_function.swift
+[141/650] Compiling FunctionCallerClient Models.swift
+[142/650] Compiling LLMGatewayClientSDK Models.swift
+[144/652] Linking SocketFixAgent
+[146/652] Emitting module Yams
+[146/652] Compiling CNIOLinux liburing_shims.c
+[148/654] Compiling InternalCollectionsUtilities UnsafeMutableBufferPointer+Extras.swift
+[148/654] Wrapping AST for ServiceShared for debugging
+[150/654] Compiling Yams Tag.swift
+[151/654] Compiling Yams YamlAnchorProviding.swift
+[152/654] Compiling Yams Resolver.swift
+[153/654] Compiling Yams String+Yams.swift
+[154/654] Compiling InternalCollectionsUtilities _UnsafeBitSet.swift
+[155/654] Compiling InternalCollectionsUtilities _SortedCollection.swift
+[156/654] Emitting module InternalCollectionsUtilities
+[157/654] Compiling InternalCollectionsUtilities FixedWidthInteger+roundUpToPowerOfTwo.swift
+[158/654] Compiling InternalCollectionsUtilities Integer rank.swift
+[159/654] Compiling InternalCollectionsUtilities _UnsafeBitSet+Index.swift
+[160/654] Compiling InternalCollectionsUtilities _UnsafeBitSet+_Word.swift
+[161/654] Compiling InternalCollectionsUtilities UInt+first and last set bit.swift
+[162/654] Compiling InternalCollectionsUtilities UInt+reversed.swift
+[162/654] Compiling CNIOLLHTTP c_nio_http.c
+[167/655] Emitting module PlannerService
+[168/656] Compiling PlannerService HTTPKernel.swift
+[169/656] Compiling PersistService HTTPKernel.swift
+[170/656] Compiling LLMGatewayService Router.swift
+[171/656] Emitting module LLMGatewayService
+[172/656] Compiling PersistService HTTPRequest.swift
+[173/656] Emitting module PersistService
+[175/656] Compiling PersistService Models.swift
+[176/656] Compiling PersistService Router.swift
+[177/656] Compiling LLMGatewayService HTTPRequest.swift
+[177/656] Compiling CNIOLLHTTP c_nio_llhttp.c
+[178/656] Compiling PlannerService HTTPRequest.swift
+[179/656] Compiling CNIOLLHTTP c_nio_api.c
+[181/656] Compiling LLMGatewayService HTTPResponse.swift
+[182/656] Compiling LLMGatewayService HTTPKernel.swift
+[183/656] Compiling LLMGatewayService Handlers.swift
+[184/656] Compiling PersistService Handlers.swift
+[185/656] Compiling PersistService HTTPResponse.swift
+[185/657] Compiling CNIOExtrasZlib empty.c
+[187/657] Compiling PlannerService Models.swift
+[187/657] Compiling CNIODarwin shim.c
+[189/657] Compiling LLMGatewayService Models.swift
+[190/658] Compiling PlannerService LLMGatewayClient.swift
+[191/658] Compiling PlannerService LocalFunctionCallerClient.swift
+[192/658] Compiling PlannerService HTTPResponse.swift
+[193/658] Compiling PlannerService Handlers.swift
+[194/658] Compiling fiat_p256_adx_sqr.S
+[197/673] Compiling PlannerService Router.swift
+[197/674] Compiling fiat_p256_adx_mul.S
+[198/674] Compiling fiat_curve25519_adx_square.S
+[199/674] Compiling CNIOLinux shim.c
+[202/676] Compiling Yams YamlError.swift
+[203/676] Compiling Yams YamlTagProviding.swift
+[203/676] Wrapping AST for PersistService for debugging
+[204/676] Wrapping AST for LLMGatewayService for debugging
+[205/678] Compiling fiat_curve25519_adx_mul.S
+[207/678] Compiling DequeModule Deque._Storage.swift
+[208/678] Compiling DequeModule _DequeBuffer.swift
+[209/678] Compiling DequeModule _DequeBufferHeader.swift
+[210/678] Compiling DequeModule Deque._UnsafeHandle.swift
+[211/678] Compiling DequeModule Deque.swift
+[212/678] Compiling Yams Node.swift
+[213/680] Compiling DequeModule Deque+CustomReflectable.swift
+[214/680] Compiling DequeModule Deque+Descriptions.swift
+[214/682] Wrapping AST for PlannerService for debugging
+[216/682] Compiling DequeModule Deque+Equatable.swift
+[217/682] Compiling DequeModule Deque+ExpressibleByArrayLiteral.swift
+[218/682] Compiling DequeModule Deque+Extras.swift
+[219/682] Compiling DequeModule Deque+Hashable.swift
+[222/682] Compiling DequeModule Deque+Testing.swift
+[224/682] Emitting module LLMGatewayServer
+[225/682] Compiling LLMGatewayServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 21 | 
+ 22 |     func start() throws {
+ 23 |         let socketType: Int32 = SOCK_STREAM
+    |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 24 | 
+ 25 |         serverFD = socket(AF_INET, socketType, 0)
+[225/682] Compiling tls_record.cc
+[226/682] Emitting module PersistServer
+[226/682] Compiling tls_method.cc
+/srv/deploy/repos/fountainai/Generated/Server/persist/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 21 | 
+ 22 |     func start() throws {
+ 23 |         let socketType: Int32 = SOCK_STREAM
+    |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 24 | 
+ 25 |         serverFD = socket(AF_INET, socketType, 0)
+[227/682] Emitting module PlannerServer
+[227/682] Compiling CNIOBoringSSLShims shims.c
+[228/682] Compiling DequeModule Deque+Codable.swift
+[229/682] Compiling DequeModule Deque+Collection.swift
 
-*** Signal 6: Backtracing from 0xffff868cf1f0... done ***
-
-*** Program crashed: Aborted at 0x00000000000073e9 ***
-
-Thread 0 crashed:
-
- 0                  0x0000ffff868cf1f0 <unknown> in libc.so.6
- 1 [ra]             0x0000ffff8688a67c <unknown> in libc.so.6
- 2 [ra]             0x0000ffff86877130 <unknown> in libc.so.6
- 3 [ra]             0x0000ffff86883fd4 <unknown> in libc.so.6
- 4 [ra]             0x0000ffff8688404c <unknown> in libc.so.6
- 5 [ra]             0x0000aaaabe2f3130 (anonymous namespace)::SQLiteBuildDB::buildComplete() + 119 in swift-package at /home/build-user/llbuild/lib/Core/SQLiteBuildDB.cpp:703:5
- 6 [ra]             0x0000aaaabe2e7ad4 llbuild::core::BuildEngine::build(llbuild::core::KeyType const&) + 959 in swift-package at /home/build-user/llbuild/lib/Core/BuildEngine.cpp:1527:13
- 7 [ra]             0x0000aaaabe2b9f6c (anonymous namespace)::BuildSystemImpl::build(llbuild::buildsystem::BuildKey) + 247 in swift-package at /home/build-user/llbuild/lib/BuildSystem/BuildSystem.cpp:2088:29
- 8 [ra]             0x0000aaaabe2ba218 llbuild::buildsystem::BuildSystem::build(llvm::StringRef) + 135 in swift-package at /home/build-user/llbuild/lib/BuildSystem/BuildSystem.cpp:2119:10
- 9 [ra]             0x0000aaaabe2dfda0 llbuild::buildsystem::BuildSystemFrontend::build(llvm::StringRef) + 59 in swift-package at /home/build-user/llbuild/lib/BuildSystem/BuildSystemFrontend.cpp:474:18
-10 [ra]             0x0000aaaabe30c6e0 BuildSystem.build(target:) + 143 in swift-package at /home/build-user/llbuild/products/llbuildSwift/BuildSystemBindings.swift:1234:16
-11 [ra]             0x0000aaaabd061af8 BuildOperation.build(subset:) + 59 in swift-package at /home/build-user/swiftpm/Sources/Build/BuildOperation.swift:427:35
-12 [async] [thunk]  0x0000aaaabd066694 protocol witness for BuildSystem.build(subset:) in conformance BuildOperation in swift-package at //<compiler-generated>
-13 [async]          0x0000aaaabd2deae0 SwiftBuildCommand.build(_:subset:productsBuildParameters:toolsBuildParameters:) in swift-package at /home/build-user/swiftpm/Sources/Commands/SwiftBuildCommand.swift:186
-14 [async]          0x0000aaaabd2dda88 SwiftBuildCommand.run(_:) in swift-package at /home/build-user/swiftpm/Sources/Commands/SwiftBuildCommand.swift:166
-15 [async] [thunk]  0x0000aaaabd2def84 protocol witness for AsyncSwiftCommand.run(_:) in conformance SwiftBuildCommand in swift-package at //<compiler-generated>
-16 [async]          0x0000aaaabd3a770c AsyncSwiftCommand.run() in swift-package at /home/build-user/swiftpm/Sources/CoreCommands/SwiftCommandState.swift:163
-17 [async] [thunk]  0x0000aaaabd2df018 protocol witness for AsyncParsableCommand.run() in conformance SwiftBuildCommand in swift-package at //<compiler-generated>
-18 [async]          0x0000aaaabcf8586c static AsyncParsableCommand.main(_:) in swift-package at /home/build-user/swift-argument-parser/Sources/ArgumentParser/Parsable Types/AsyncParsableCommand.swift:41
-19 [async]          0x0000aaaabe395c44 specialized static SwiftPM.main(execName:) in swift-package at /home/build-user/swiftpm/Sources/swift-package-manager/SwiftPM.swift:38
-20 [async]          0x0000aaaabe395fd0 specialized static SwiftPM.main() in swift-package at /home/build-user/swiftpm/Sources/swift-package-manager/SwiftPM.swift:34
-21 [async] [system] 0x0000aaaabe3956a4 specialized thunk for @escaping @convention(thin) @async () -> () in swift-package at //<compiler-generated>
-22 [async]          0x0000ffff881b4b0c completeTaskAndRelease(swift::AsyncContext*, swift::SwiftError*) in libswift_Concurrency.so
-
-
-Registers:
-
- x0 0x0000000000000000  0
- x1 0x00000000000073ed  29677
- x2 0x0000000000000006  6
- x3 0x0000ffff7b40edc0  01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ················
- x4 0x0000ffff88a31b58  00 9b ba cb 60 95 de b7 00 00 00 00 0e 0a 06 00  ··ºË`·Þ·········
- x5 0x0000ffff68b6b890  cb 2f dc 97 f0 ff 00 00 e8 1a d9 99 61 f8 e9 52  Ë/Ü·ðÿ··è·Ù·aøéR
- x6 0x52e9f86199d91ae8  5974579478760332008
- x7 0x6f682f203a646c69  8027718151253027945
- x8 0x0000000000000083  131
- x9 0x4c5153203d3d2074  5499268017927561332
-x10 0x20274b4f5f455449  2316903337578288201
-x11 0x0a2e64656c696166  733634176081289574
-x12 0x0000000000002180  8576
-x13 0x29286574656c706d  2965731905215688813
-x14 0x623a3a4244646c69  7078033820655840361
-x15 0x706d6f43646c6975  8101253639947708789
-x16 0x0000000000000001  1
-x17 0x0000ffff868ddbc4  40 07 00 b4 fd 7b bc a9 01 40 00 d1 fd 03 00 91  @··´ý{¼©·@·Ñý···
-x18 0x0000000000000009  9
-x19 0x00000000000073ed  29677
-x20 0x0000ffff7b40edc0  01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ················
-x21 0x0000000000000006  6
-x22 0x00000000000002bf  703
-x23 0x0000aaaabec78408  72 65 73 75 6c 74 20 3d 3d 20 53 51 4c 49 54 45  result == SQLITE
-x24 0x0000ffff7b40dfc0  00 df 40 7b ff ff 00 00 cc 9b 2b be aa aa 00 00  ·ß@{ÿÿ··Ì·+¾ªª··
-x25 0x0000000000005015  20501
-x26 0x0000ffff7b40f580  20 27 00 7c ff ff 00 00 00 00 00 00 00 00 00 00   '·|ÿÿ··········
-x27 0x0000000000000000  0
-x28 0x0000000000000000  0
- fp 0x0000ffff7b40dc80  50 dd 40 7b ff ff 00 00 7c a6 88 86 ff ff 00 00  PÝ@{ÿÿ··|¦··ÿÿ··
- lr 0x0000ffff868cf1dc  e1 03 13 aa e2 03 15 aa 00 7c 40 93 68 10 80 d2  á··ªâ··ª·|@·h··Ò
- sp 0x0000ffff7b40dc80  50 dd 40 7b ff ff 00 00 7c a6 88 86 ff ff 00 00  PÝ@{ÿÿ··|¦··ÿÿ··
- pc 0x0000ffff868cf1f0  1f 04 40 31 e0 97 80 5a e0 ff ff 17 e0 03 16 aa  ··@1à··Zàÿÿ·à··ª
-
-
-Images (69 omitted):
-
-0x0000aaaabccf0000–0x0000aaaabeaae1a0 8e5cd2ed2e002677b494a6a68ee85e15802b422d swift-package           /usr/bin/swift-package
-0x0000ffff86850000–0x0000ffff869d73fc a10ee556ec5706640b27d9a9c346cb29e9516cec libc.so.6               /usr/lib/aarch64-linux-gnu/libc.so.6
-0x0000ffff88150000–0x0000ffff881cdbd8 2a9f7d706aa66439e4d23f43d11cb05a4eb598e6 libswift_Concurrency.so /usr/lib/swift/linux/libswift_Concurrency.so
-
-Backtrace took 8.87s
-
-
-[2025-07-17T12:55:15.479963] Starting swift build...
-[2025-07-17T12:56:14.359487] swift build failed with exit code -6
+[2025-07-17T13:37:55.935506] Starting swift build...
+[2025-07-17T13:38:30.169561] swift build failed with exit code 1

@@ -98,3 +98,95 @@ Building for debugging...
 [144/652] Linking SocketFixAgent
 [146/652] Emitting module Yams
 [146/652] Compiling CNIOLinux liburing_shims.c
+[148/654] Compiling InternalCollectionsUtilities UnsafeMutableBufferPointer+Extras.swift
+[148/654] Wrapping AST for ServiceShared for debugging
+[150/654] Compiling Yams Tag.swift
+[151/654] Compiling Yams YamlAnchorProviding.swift
+[152/654] Compiling Yams Resolver.swift
+[153/654] Compiling Yams String+Yams.swift
+[154/654] Compiling InternalCollectionsUtilities _UnsafeBitSet.swift
+[155/654] Compiling InternalCollectionsUtilities _SortedCollection.swift
+[156/654] Emitting module InternalCollectionsUtilities
+[157/654] Compiling InternalCollectionsUtilities FixedWidthInteger+roundUpToPowerOfTwo.swift
+[158/654] Compiling InternalCollectionsUtilities Integer rank.swift
+[159/654] Compiling InternalCollectionsUtilities _UnsafeBitSet+Index.swift
+[160/654] Compiling InternalCollectionsUtilities _UnsafeBitSet+_Word.swift
+[161/654] Compiling InternalCollectionsUtilities UInt+first and last set bit.swift
+[162/654] Compiling InternalCollectionsUtilities UInt+reversed.swift
+[162/654] Compiling CNIOLLHTTP c_nio_http.c
+[167/655] Emitting module PlannerService
+[168/656] Compiling PlannerService HTTPKernel.swift
+[169/656] Compiling PersistService HTTPKernel.swift
+[170/656] Compiling LLMGatewayService Router.swift
+[171/656] Emitting module LLMGatewayService
+[172/656] Compiling PersistService HTTPRequest.swift
+[173/656] Emitting module PersistService
+[175/656] Compiling PersistService Models.swift
+[176/656] Compiling PersistService Router.swift
+[177/656] Compiling LLMGatewayService HTTPRequest.swift
+[177/656] Compiling CNIOLLHTTP c_nio_llhttp.c
+[178/656] Compiling PlannerService HTTPRequest.swift
+[179/656] Compiling CNIOLLHTTP c_nio_api.c
+[181/656] Compiling LLMGatewayService HTTPResponse.swift
+[182/656] Compiling LLMGatewayService HTTPKernel.swift
+[183/656] Compiling LLMGatewayService Handlers.swift
+[184/656] Compiling PersistService Handlers.swift
+[185/656] Compiling PersistService HTTPResponse.swift
+[185/657] Compiling CNIOExtrasZlib empty.c
+[187/657] Compiling PlannerService Models.swift
+[187/657] Compiling CNIODarwin shim.c
+[189/657] Compiling LLMGatewayService Models.swift
+[190/658] Compiling PlannerService LLMGatewayClient.swift
+[191/658] Compiling PlannerService LocalFunctionCallerClient.swift
+[192/658] Compiling PlannerService HTTPResponse.swift
+[193/658] Compiling PlannerService Handlers.swift
+[194/658] Compiling fiat_p256_adx_sqr.S
+[197/673] Compiling PlannerService Router.swift
+[197/674] Compiling fiat_p256_adx_mul.S
+[198/674] Compiling fiat_curve25519_adx_square.S
+[199/674] Compiling CNIOLinux shim.c
+[202/676] Compiling Yams YamlError.swift
+[203/676] Compiling Yams YamlTagProviding.swift
+[203/676] Wrapping AST for PersistService for debugging
+[204/676] Wrapping AST for LLMGatewayService for debugging
+[205/678] Compiling fiat_curve25519_adx_mul.S
+[207/678] Compiling DequeModule Deque._Storage.swift
+[208/678] Compiling DequeModule _DequeBuffer.swift
+[209/678] Compiling DequeModule _DequeBufferHeader.swift
+[210/678] Compiling DequeModule Deque._UnsafeHandle.swift
+[211/678] Compiling DequeModule Deque.swift
+[212/678] Compiling Yams Node.swift
+[213/680] Compiling DequeModule Deque+CustomReflectable.swift
+[214/680] Compiling DequeModule Deque+Descriptions.swift
+[214/682] Wrapping AST for PlannerService for debugging
+[216/682] Compiling DequeModule Deque+Equatable.swift
+[217/682] Compiling DequeModule Deque+ExpressibleByArrayLiteral.swift
+[218/682] Compiling DequeModule Deque+Extras.swift
+[219/682] Compiling DequeModule Deque+Hashable.swift
+[222/682] Compiling DequeModule Deque+Testing.swift
+[224/682] Emitting module LLMGatewayServer
+[225/682] Compiling LLMGatewayServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 21 | 
+ 22 |     func start() throws {
+ 23 |         let socketType: Int32 = SOCK_STREAM
+    |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 24 | 
+ 25 |         serverFD = socket(AF_INET, socketType, 0)
+[225/682] Compiling tls_record.cc
+[226/682] Emitting module PersistServer
+[226/682] Compiling tls_method.cc
+/srv/deploy/repos/fountainai/Generated/Server/persist/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 21 | 
+ 22 |     func start() throws {
+ 23 |         let socketType: Int32 = SOCK_STREAM
+    |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 24 | 
+ 25 |         serverFD = socket(AF_INET, socketType, 0)
+[227/682] Emitting module PlannerServer
+[227/682] Compiling CNIOBoringSSLShims shims.c
+[228/682] Compiling DequeModule Deque+Codable.swift
+[229/682] Compiling DequeModule Deque+Collection.swift
+
+[2025-07-17T13:37:55.935506] Starting swift build...
+[2025-07-17T13:38:30.169561] swift build failed with exit code 1
