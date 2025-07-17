@@ -637,3 +637,36 @@ Just set COMPOSE_BAKE=true
 #26 CACHED
 
 #27 [function-caller build 3/4] COPY . .
+#27 DONE 13.8s
+
+#28 [function-caller build 3/4] COPY . .
+#28 CACHED
+
+#29 [baseline-awareness build 3/4] COPY . .
+#29 CACHED
+
+#30 [bootstrap build 3/4] COPY . .
+#30 CACHED
+
+#31 [persist build 3/4] COPY . .
+#31 CACHED
+
+#32 [llm-gateway build 3/4] COPY . .
+#32 CACHED
+
+#33 [tools-factory build 3/4] COPY . .
+#33 CACHED
+
+#34 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#34 2.569 Fetching https://github.com/swift-server/async-http-client.git
+#34 2.571 Fetching https://github.com/apple/swift-system.git
+#34 2.571 Fetching https://github.com/apple/swift-collections.git
+#34 2.571 Fetching https://github.com/apple/swift-log.git
+#34 2.571 Fetching https://github.com/apple/swift-algorithms.git
+#34 2.572 Fetching https://github.com/apple/swift-nio.git
+#34 3.462 [1/4657] Fetching swift-system
+#34 3.509 [141/8515] Fetching swift-system, swift-log
+#34 3.509 [142/25261] Fetching swift-system, swift-log, swift-collections
+#34 3.549 [584/31220] Fetching swift-system, swift-log, swift-collections, swift-algorithms
+#34 3.632 [2784/45242] Fetching swift-system, swift-log, swift-collections, swift-algorithms, async-http-client
+#34 3.851 [7346/121940] Fetching swift-system, swift-log, swift-collections, swift-algorithms, async-http-client, swift-nio
