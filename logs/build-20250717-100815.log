@@ -50,3 +50,419 @@ Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
 
 [2025-07-17T10:08:15.204753] Starting swift build...
 [2025-07-17T10:08:17.761829] swift build failed with exit code 1
+[2025-07-17T10:08:17.940010] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-17T10:08:19.500965] [dispatcher] Running Docker build...
+[2025-07-17T10:08:19.501845] [dispatcher] Running tests...
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [function-caller internal] load build definition from Dockerfile
+#1 transferring dockerfile: 290B done
+#1 DONE 0.0s
+
+#2 [tools-factory internal] load build definition from Dockerfile
+#2 transferring dockerfile: 284B done
+#2 DONE 0.0s
+
+#3 [persist internal] load build definition from Dockerfile
+#3 transferring dockerfile: 266B done
+#3 DONE 0.0s
+
+#4 [llm-gateway internal] load build definition from Dockerfile
+#4 transferring dockerfile: 278B done
+#4 DONE 0.0s
+
+#5 [bootstrap internal] load build definition from Dockerfile
+#5 transferring dockerfile: 272B done
+#5 DONE 0.0s
+
+#6 [planner internal] load build definition from Dockerfile
+#6 transferring dockerfile: 266B done
+#6 DONE 0.0s
+
+#7 [baseline-awareness internal] load build definition from Dockerfile
+#7 transferring dockerfile: 299B done
+#7 DONE 0.0s
+
+#8 [baseline-awareness internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 DONE 1.3s
+
+#9 [bootstrap internal] load metadata for docker.io/library/ubuntu:22.04
+#9 DONE 1.3s
+
+#10 [baseline-awareness internal] load .dockerignore
+#10 transferring context: 2B done
+#10 DONE 0.0s
+
+#11 [persist internal] load .dockerignore
+#11 transferring context: 2B done
+#11 DONE 0.0s
+
+#12 [function-caller internal] load .dockerignore
+#12 transferring context: 2B done
+#12 DONE 0.0s
+
+#13 [bootstrap build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#13 DONE 0.0s
+
+#14 [bootstrap stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:59ccd419c0dc0edf9e3bff1a3b2b073ea15a2ce4bc45ce7c989278b225b09af3
+#14 DONE 0.0s
+
+#15 [bootstrap internal] load .dockerignore
+#15 transferring context: 2B done
+#15 DONE 0.0s
+
+#16 [llm-gateway internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.0s
+
+#17 [tools-factory internal] load .dockerignore
+#17 transferring context: 2B done
+#17 DONE 0.0s
+
+#18 [planner internal] load .dockerignore
+#18 transferring context: 2B done
+#18 DONE 0.0s
+
+#19 [baseline-awareness internal] load build context
+#19 transferring context: 1.18MB 5.0s
+#19 ...
+
+#20 [persist internal] load build context
+#20 ...
+
+#19 [baseline-awareness internal] load build context
+#19 transferring context: 7.64MB 10.1s
+#19 ...
+
+#21 [llm-gateway internal] load build context
+#21 ...
+
+#22 [tools-factory internal] load build context
+#22 ...
+
+#23 [bootstrap internal] load build context
+#23 ...
+
+#24 [function-caller internal] load build context
+#24 ...
+
+#25 [planner internal] load build context
+#25 transferring context: 7.71MB 10.8s done
+#25 ...
+
+#20 [persist internal] load build context
+#20 transferring context: 7.71MB 10.8s done
+#20 DONE 11.2s
+
+#19 [baseline-awareness internal] load build context
+#19 transferring context: 7.71MB 10.8s done
+#19 DONE 11.2s
+
+#24 [function-caller internal] load build context
+#24 transferring context: 7.71MB 10.8s done
+#24 DONE 11.2s
+
+#22 [tools-factory internal] load build context
+#22 transferring context: 7.71MB 10.3s done
+#22 DONE 11.2s
+
+#25 [planner internal] load build context
+#25 DONE 11.2s
+
+#23 [bootstrap internal] load build context
+#23 transferring context: 7.71MB 10.8s done
+#23 DONE 11.2s
+
+#21 [llm-gateway internal] load build context
+#21 transferring context: 7.71MB 10.8s done
+#21 DONE 11.2s
+
+#26 [function-caller build 2/4] WORKDIR /src
+#26 CACHED
+
+#27 [llm-gateway build 3/4] COPY . .
+#27 DONE 17.5s
+
+#28 [tools-factory build 3/4] COPY . .
+#28 CACHED
+
+#29 [llm-gateway build 3/4] COPY . .
+#29 CACHED
+
+#30 [baseline-awareness build 3/4] COPY . .
+#30 CACHED
+
+#31 [bootstrap build 3/4] COPY . .
+#31 CACHED
+
+#32 [planner build 3/4] COPY . .
+#32 CACHED
+
+#33 [function-caller build 3/4] COPY . .
+#33 CACHED
+
+#34 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#34 ...
+
+#35 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#35 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 ...
+
+#37 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#37 ...
+
+#38 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#38 ...
+
+#39 [persist build 4/4] RUN swift build -c release --product persist-server
+#39 ...
+
+#40 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#40 ...
+
+#35 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#35 23.10 Building for production...
+#35 23.16 [0/14] Write sources
+#35 23.78 [5/14] Compiling writer.c
+#35 23.85 [6/14] Compiling reader.c
+#35 23.86 [7/14] Write swift-version-24593BA9C3E375BF.txt
+#35 24.32 [8/15] Compiling parser.c
+#35 24.66 [9/15] Compiling api.c
+#35 25.04 [10/15] Compiling emitter.c
+#35 26.68 [11/15] Compiling scanner.c
+#35 ...
+
+#38 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#38 23.15 Building for production...
+#38 23.24 [0/14] Write sources
+#38 23.77 [5/14] Compiling writer.c
+#38 23.79 [6/14] Compiling reader.c
+#38 23.99 [7/14] Write swift-version-24593BA9C3E375BF.txt
+#38 24.29 [8/14] Compiling parser.c
+#38 24.42 [9/15] Compiling api.c
+#38 24.78 [10/15] Compiling emitter.c
+#38 26.57 [11/15] Compiling scanner.c
+#38 33.13 [13/16] Compiling ServiceShared Models.swift
+#38 ...
+
+#35 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#35 33.05 [13/16] Compiling ServiceShared Models.swift
+#35 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 23.26 Building for production...
+#36 23.37 [0/6] Write sources
+#36 23.67 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#36 33.13 [5/7] Compiling ServiceShared Models.swift
+#36 ...
+
+#39 [persist build 4/4] RUN swift build -c release --product persist-server
+#39 23.19 Building for production...
+#39 23.27 [0/6] Write sources
+#39 23.63 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#39 33.03 [5/7] Compiling ServiceShared Models.swift
+#39 ...
+
+#40 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#40 23.21 Building for production...
+#40 23.29 [0/7] Write sources
+#40 23.67 [4/7] Write swift-version-24593BA9C3E375BF.txt
+#40 33.16 [6/8] Compiling ServiceShared Models.swift
+#40 ...
+
+#34 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#34 23.42 Building for production...
+#34 23.52 [0/6] Write sources
+#34 23.90 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#34 33.05 [5/7] Compiling ServiceShared Models.swift
+#34 ...
+
+#37 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#37 23.30 Building for production...
+#37 23.43 [0/6] Write sources
+#37 23.67 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#37 33.18 [5/7] Compiling ServiceShared Models.swift
+#37 ...
+
+#34 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#34 35.07 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+#34 35.87 [7/9] Compiling LLMGatewayServer main.swift
+#34 35.87 /src/Generated/Server/llm-gateway/main.swift:23:43: error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#34 35.87 21 | 
+#34 35.87 22 |     func start() throws {
+#34 35.87 23 |         serverFD = socket(Int32(AF_INET), Int32(SOCK_STREAM), 0)
+#34 35.87    |                                           `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#34 35.87 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#34 35.87 25 |         var opt: Int32 = 1
+#34 35.87 
+#34 35.87 Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
+#34 35.87 1 | protocol FixedWidthInteger {
+#34 35.87 2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
+#34 35.87   |                   `- note: where 'T' = '__socket_type'
+#34 35.87 3 | 
+#34 ERROR: process "/bin/sh -c swift build -c release --product llm-gateway-server" did not complete successfully: exit code: 1
+
+#37 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#37 36.70 [6/8] Compiling BaselineAwarenessService BaselineStore.swift
+#37 37.10 [7/9] Compiling BaselineAwarenessServer HTTPServer.swift
+#37 37.10 /src/Generated/Server/baseline-awareness/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#37 37.10  21 | 
+#37 37.10  22 |     func start() throws {
+#37 37.10  23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+#37 37.10     |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#37 37.10  24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#37 37.10  25 |         var opt: Int32 = 1
+#37 ERROR: process "/bin/sh -c swift build -c release --product baseline-awareness-server" did not complete successfully: exit code: 1
+
+#39 [persist build 4/4] RUN swift build -c release --product persist-server
+#39 35.31 [6/8] Compiling PersistService HTTPKernel.swift
+#39 35.92 [7/9] Compiling PersistServer main.swift
+#39 35.92 /src/Generated/Server/persist/main.swift:23:43: error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#39 35.92 21 | 
+#39 35.92 22 |     func start() throws {
+#39 35.92 23 |         serverFD = socket(Int32(AF_INET), Int32(SOCK_STREAM), 0)
+#39 35.92    |                                           `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#39 35.92 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#39 35.92 25 |         var opt: Int32 = 1
+#39 35.92 
+#39 35.92 Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
+#39 35.92 1 | protocol FixedWidthInteger {
+#39 35.92 2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
+#39 35.92   |                   `- note: where 'T' = '__socket_type'
+#39 35.92 3 | 
+#39 ERROR: process "/bin/sh -c swift build -c release --product persist-server" did not complete successfully: exit code: 1
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 36.56 [6/8] Compiling PlannerService HTTPKernel.swift
+#36 37.06 [7/9] Compiling PlannerServer main.swift
+#36 37.06 /src/Generated/Server/planner/main.swift:23:43: error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#36 37.06 21 | 
+#36 37.06 22 |     func start() throws {
+#36 37.06 23 |         serverFD = socket(Int32(AF_INET), Int32(SOCK_STREAM), 0)
+#36 37.06    |                                           `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#36 37.06 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#36 37.06 25 |         var opt: Int32 = 1
+#36 37.06 
+#36 37.06 Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
+#36 37.06 1 | protocol FixedWidthInteger {
+#36 37.06 2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
+#36 37.06   |                   `- note: where 'T' = '__socket_type'
+#36 37.06 3 | 
+#36 ERROR: process "/bin/sh -c swift build -c release --product planner-server" did not complete successfully: exit code: 1
+
+#40 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#40 36.63 [7/9] Compiling BaselineAwarenessService BaselineStore.swift
+#40 38.16 [8/10] Compiling BootstrapService HTTPKernel.swift
+#40 38.49 [9/11] Compiling BootstrapServer main.swift
+#40 38.49 /src/Generated/Server/bootstrap/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#40 38.49 21 | 
+#40 38.49 22 |     func start() throws {
+#40 38.49 23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+#40 38.49    |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#40 38.49 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#40 38.49 25 |         var opt: Int32 = 1
+#40 ERROR: process "/bin/sh -c swift build -c release --product bootstrap-server" did not complete successfully: exit code: 1
+
+#38 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#38 CANCELED
+
+#35 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#35 CANCELED
+------
+ > [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server:
+36.63 [7/9] Compiling BaselineAwarenessService BaselineStore.swift
+38.16 [8/10] Compiling BootstrapService HTTPKernel.swift
+38.49 [9/11] Compiling BootstrapServer main.swift
+38.49 /src/Generated/Server/bootstrap/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+38.49 21 | 
+38.49 22 |     func start() throws {
+38.49 23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+38.49    |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+38.49 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+38.49 25 |         var opt: Int32 = 1
+------
+------
+ > [persist build 4/4] RUN swift build -c release --product persist-server:
+35.92 23 |         serverFD = socket(Int32(AF_INET), Int32(SOCK_STREAM), 0)
+35.92    |                                           `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+35.92 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+35.92 25 |         var opt: Int32 = 1
+35.92 
+35.92 Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
+35.92 1 | protocol FixedWidthInteger {
+35.92 2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
+35.92   |                   `- note: where 'T' = '__socket_type'
+35.92 3 | 
+------
+------
+ > [planner build 4/4] RUN swift build -c release --product planner-server:
+37.06 23 |         serverFD = socket(Int32(AF_INET), Int32(SOCK_STREAM), 0)
+37.06    |                                           `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+37.06 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+37.06 25 |         var opt: Int32 = 1
+37.06 
+37.06 Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
+37.06 1 | protocol FixedWidthInteger {
+37.06 2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
+37.06   |                   `- note: where 'T' = '__socket_type'
+37.06 3 | 
+------
+------
+ > [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server:
+33.18 [5/7] Compiling ServiceShared Models.swift
+36.70 [6/8] Compiling BaselineAwarenessService BaselineStore.swift
+37.10 [7/9] Compiling BaselineAwarenessServer HTTPServer.swift
+37.10 /src/Generated/Server/baseline-awareness/main.swift:23:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+37.10  21 | 
+37.10  22 |     func start() throws {
+37.10  23 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+37.10     |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+37.10  24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+37.10  25 |         var opt: Int32 = 1
+------
+------
+ > [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server:
+35.87 23 |         serverFD = socket(Int32(AF_INET), Int32(SOCK_STREAM), 0)
+35.87    |                                           `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+35.87 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+35.87 25 |         var opt: Int32 = 1
+35.87 
+35.87 Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
+35.87 1 | protocol FixedWidthInteger {
+35.87 2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
+35.87   |                   `- note: where 'T' = '__socket_type'
+35.87 3 | 
+------
+failed to solve: process "/bin/sh -c swift build -c release --product llm-gateway-server" did not complete successfully: exit code: 1
+ Network kong-codex_default  Creating
+ Network kong-codex_default  Created
+ Container kong-codex-typesense-1  Creating
+ Container kong-codex-kong-1  Creating
+ Container kong-codex-kong-1  Created
+ Container kong-codex-typesense-1  Created
+Attaching to kong-1, typesense-1
+Gracefully stopping... (press Ctrl+C again to force)
+Error response from daemon: mounts denied: 
+The path /srv/deploy/repos/kong-codex/kong.yaml is not shared from the host and is not known to Docker.
+You can configure shared paths from Docker -> Preferences... -> Resources -> File Sharing.
+See https://docs.docker.com/desktop/settings/mac/#file-sharing for more info.
+ Container kong-codex-kong-1  Stopping
+ Container kong-codex-typesense-1  Stopping
+ Container kong-codex-kong-1  Stopped
+ Container kong-codex-kong-1  Removing
+ Container kong-codex-kong-1  Removed
+ Container kong-codex-typesense-1  Stopped
+ Container kong-codex-typesense-1  Removing
+ Container kong-codex-typesense-1  Removed
+ Network kong-codex_default  Removing
+ Network kong-codex_default  Removed
+
+[2025-07-17T10:08:19.502085] Running integration tests for fountainai...
+[2025-07-17T10:09:29.674732] Integration tests for fountainai failed with exit code 1
+
+[2025-07-17T10:09:29.675049] Running integration tests for kong-codex...
+[2025-07-17T10:09:31.797532] Integration tests for kong-codex failed with exit code 1
