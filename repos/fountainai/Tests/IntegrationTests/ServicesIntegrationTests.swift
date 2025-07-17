@@ -200,7 +200,7 @@ final class ServicesIntegrationTests: XCTestCase {
     }
 
     func testFunctionCallerListFunctions() async throws {
-        let json = #"{"description":"test","functionId":"f1","httpMethod":"GET","httpPath":"http://example.com","name":"fn"}"#.data(using: .utf8)!
+        let json = #"{"description":"test","functionId":"f1","httpMethod":"GET","httpPath":"http://example.com","name":"fn","parametersSchema":"{}"}"#.data(using: .utf8)!
         let fn = try JSONDecoder().decode(ServiceShared.Function.self, from: json)
         await TypesenseClient.shared.addFunction(fn)
         let serviceKernel = FunctionCallerService.HTTPKernel()
