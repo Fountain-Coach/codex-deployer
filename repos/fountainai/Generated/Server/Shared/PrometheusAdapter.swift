@@ -10,6 +10,13 @@ public actor PrometheusAdapter {
 
     public init() {}
 
+    public func reset() {
+        counters.removeAll()
+        durations.removeAll()
+        successes.removeAll()
+        failures.removeAll()
+    }
+
     private func key(service: String, path: String) -> String {
         "{service=\"\(service)\",path=\"\(path)\"}"
     }

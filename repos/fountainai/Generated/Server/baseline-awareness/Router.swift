@@ -9,7 +9,8 @@ public struct Router {
     }
 
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
-        switch (request.method, request.path) {
+        let path = request.path.split(separator: "?").first.map(String.init) ?? request.path
+        switch (request.method, path) {
         case ("GET", "/corpus/semantic-arc"):
             let body = try? JSONDecoder().decode(NoBody.self, from: request.body)
             return try await handlers.readsemanticarc(request, body: body)

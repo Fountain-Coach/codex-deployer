@@ -27,10 +27,12 @@ final class ServicesIntegrationTests: XCTestCase {
         setenv("FUNCTIONS_CACHE_PATH", cachePath, 1)
         FileManager.default.createFile(atPath: cachePath, contents: Data(), attributes: nil)
         await TypesenseClient.shared.reset()
+        await PrometheusAdapter.shared.reset()
     }
 
     override func tearDown() async throws {
         await TypesenseClient.shared.reset()
+        await PrometheusAdapter.shared.reset()
         unsetenv("FUNCTIONS_CACHE_PATH")
         try? FileManager.default.removeItem(atPath: cachePath)
     }

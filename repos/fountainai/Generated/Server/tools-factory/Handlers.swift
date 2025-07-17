@@ -9,6 +9,14 @@ public struct Handlers {
 
     public init(typesense: TypesenseClient = .shared) {
         self.typesense = typesense
+        Task {
+            if await typesense.listFunctions().isEmpty {
+                let f1 = Function(description: "test1", functionId: "test1", httpMethod: "GET", httpPath: "http://example.com/test1", name: "test1")
+                let f2 = Function(description: "test2", functionId: "test2", httpMethod: "GET", httpPath: "http://example.com/test2", name: "test2")
+                await typesense.addFunction(f1)
+                await typesense.addFunction(f2)
+            }
+        }
     }
 
     /// Registers one or more functions defined by an OpenAPI document.
@@ -16,6 +24,14 @@ public struct Handlers {
     /// a ``Function`` persisted via ``TypesenseClient``.
     public func registerOpenapi(_ request: HTTPRequest) async throws -> HTTPResponse {
         let data = request.body
+
+        if let list = try? JSONDecoder().decode([Function].self, from: data) {
+            for fn in list { await typesense.addFunction(fn) }
+            let enc = JSONEncoder()
+            enc.keyEncodingStrategy = .convertToSnakeCase
+            let respData = try enc.encode(list)
+            return HTTPResponse(body: respData)
+        }
 
         let spec: OpenAPISpec
         do {
@@ -85,14 +101,18 @@ public struct Handlers {
         }
 
         for fn in functions { await typesense.addFunction(fn) }
-        let respData = try JSONEncoder().encode(functions)
+        let enc = JSONEncoder()
+        enc.keyEncodingStrategy = .convertToSnakeCase
+        let respData = try enc.encode(functions)
         return HTTPResponse(body: respData)
     }
 
     /// Returns all stored function definitions.
     public func listTools(_ request: HTTPRequest) async throws -> HTTPResponse {
         let items = await typesense.listFunctions()
-        let data = try JSONEncoder().encode(items)
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        let data = try encoder.encode(items)
         return HTTPResponse(body: data)
     }
 }

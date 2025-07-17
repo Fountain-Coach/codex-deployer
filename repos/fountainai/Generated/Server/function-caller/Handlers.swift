@@ -15,13 +15,17 @@ public struct Handlers {
         guard let fn = await TypesenseClient.shared.functionDetails(id: String(id)) else {
             return HTTPResponse(status: 404)
         }
-        let data = try JSONEncoder().encode(fn)
+        let enc = JSONEncoder()
+        enc.keyEncodingStrategy = .convertToSnakeCase
+        let data = try enc.encode(fn)
         return HTTPResponse(body: data)
     }
 
     public func listFunctions(_ request: HTTPRequest) async throws -> HTTPResponse {
         let fns = await TypesenseClient.shared.listFunctions()
-        let data = try JSONEncoder().encode(fns)
+        let enc = JSONEncoder()
+        enc.keyEncodingStrategy = .convertToSnakeCase
+        let data = try enc.encode(fns)
         return HTTPResponse(body: data)
     }
 
