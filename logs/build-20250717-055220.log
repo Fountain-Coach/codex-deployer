@@ -223,3 +223,194 @@ Just set COMPOSE_BAKE=true
 #33 CACHED
 
 #34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 ...
+
+#35 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#35 ...
+
+#36 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#36 ...
+
+#37 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#37 ...
+
+#38 [planner build 4/4] RUN swift build -c release --product planner-server
+#38 ...
+
+#39 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#39 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 ...
+
+#36 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#36 16.03 Building for production...
+#36 16.12 [0/6] Write sources
+#36 16.40 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#36 ...
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 16.09 Building for production...
+#34 16.29 [0/14] Write sources
+#34 16.38 [5/14] Compiling writer.c
+#34 16.65 [6/14] Compiling reader.c
+#34 16.84 [7/14] Compiling parser.c
+#34 16.94 [8/14] Compiling api.c
+#34 17.27 [9/14] Compiling emitter.c
+#34 17.65 [10/14] Write swift-version-24593BA9C3E375BF.txt
+#34 17.65 [11/14] Compiling scanner.c
+#34 ...
+
+#36 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#36 21.97 [5/7] Compiling ServiceShared Models.swift
+#36 24.01 [6/8] Compiling BaselineAwarenessService BaselineStore.swift
+#36 ...
+
+#40 [persist build 4/4] RUN swift build -c release --product persist-server
+#40 16.11 Building for production...
+#40 16.31 [0/6] Write sources
+#40 16.57 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#40 21.84 [5/7] Compiling ServiceShared Models.swift
+#40 23.42 [6/8] Compiling PersistService HTTPKernel.swift
+#40 23.75 [7/9] Compiling PersistServer main.swift
+#40 23.75 /src/Generated/Server/persist/main.swift:23:36: error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#40 23.75 21 | 
+#40 23.75 22 |     func start() throws {
+#40 23.75 23 |         serverFD = socket(AF_INET, Int32(SOCK_STREAM), 0)
+#40 23.75    |                                    `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#40 23.75 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#40 23.75 25 |         var opt: Int32 = 1
+#40 23.75 
+#40 23.75 Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
+#40 23.75 1 | protocol FixedWidthInteger {
+#40 23.75 2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
+#40 23.75   |                   `- note: where 'T' = '__socket_type'
+#40 23.75 3 | 
+#40 ERROR: process "/bin/sh -c swift build -c release --product persist-server" did not complete successfully: exit code: 1
+
+#37 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#37 16.21 Building for production...
+#37 16.29 [0/6] Write sources
+#37 16.53 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#37 21.96 [5/7] Compiling ServiceShared Models.swift
+#37 23.33 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+#37 23.73 [7/9] Compiling LLMGatewayServer main.swift
+#37 23.73 /src/Generated/Server/llm-gateway/main.swift:23:36: error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#37 23.73 21 | 
+#37 23.73 22 |     func start() throws {
+#37 23.73 23 |         serverFD = socket(AF_INET, Int32(SOCK_STREAM), 0)
+#37 23.73    |                                    `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#37 23.73 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#37 23.73 25 |         var opt: Int32 = 1
+#37 23.73 
+#37 23.73 Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
+#37 23.73 1 | protocol FixedWidthInteger {
+#37 23.73 2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
+#37 23.73   |                   `- note: where 'T' = '__socket_type'
+#37 23.73 3 | 
+#37 ERROR: process "/bin/sh -c swift build -c release --product llm-gateway-server" did not complete successfully: exit code: 1
+
+#35 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#35 16.05 Building for production...
+#35 16.12 [0/7] Write sources
+#35 16.41 [4/7] Write swift-version-24593BA9C3E375BF.txt
+#35 21.89 [6/8] Compiling ServiceShared Models.swift
+#35 23.83 [7/9] Compiling BaselineAwarenessService BaselineStore.swift
+#35 CANCELED
+
+#39 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#39 16.05 Building for production...
+#39 16.12 [0/14] Write sources
+#39 16.39 [5/14] Compiling writer.c
+#39 16.49 [6/14] Compiling reader.c
+#39 16.78 [7/14] Compiling parser.c
+#39 16.82 [8/14] Compiling api.c
+#39 17.14 [9/14] Compiling emitter.c
+#39 17.14 [10/14] Write swift-version-24593BA9C3E375BF.txt
+#39 17.58 [11/15] Compiling scanner.c
+#39 22.84 [13/16] Compiling ServiceShared Models.swift
+#39 CANCELED
+
+#38 [planner build 4/4] RUN swift build -c release --product planner-server
+#38 16.10 Building for production...
+#38 16.30 [0/6] Write sources
+#38 16.68 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#38 22.17 [5/7] Compiling ServiceShared Models.swift
+#38 23.86 [6/8] Compiling PlannerService HTTPKernel.swift
+#38 24.17 [7/9] Compiling PlannerServer main.swift
+#38 24.17 /src/Generated/Server/planner/main.swift:23:36: error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#38 24.17 21 | 
+#38 24.17 22 |     func start() throws {
+#38 24.17 23 |         serverFD = socket(AF_INET, Int32(SOCK_STREAM), 0)
+#38 24.17    |                                    `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+#38 24.17 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#38 24.17 25 |         var opt: Int32 = 1
+#38 24.17 
+#38 24.17 Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
+#38 24.17 1 | protocol FixedWidthInteger {
+#38 24.17 2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
+#38 24.17   |                   `- note: where 'T' = '__socket_type'
+#38 24.17 3 | 
+#38 CANCELED
+
+#36 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#36 CANCELED
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 23.44 [13/16] Compiling ServiceShared Models.swift
+#34 CANCELED
+------
+ > [persist build 4/4] RUN swift build -c release --product persist-server:
+23.75 23 |         serverFD = socket(AF_INET, Int32(SOCK_STREAM), 0)
+23.75    |                                    `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+23.75 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+23.75 25 |         var opt: Int32 = 1
+23.75 
+23.75 Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
+23.75 1 | protocol FixedWidthInteger {
+23.75 2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
+23.75   |                   `- note: where 'T' = '__socket_type'
+23.75 3 | 
+------
+------
+ > [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server:
+23.73 23 |         serverFD = socket(AF_INET, Int32(SOCK_STREAM), 0)
+23.73    |                                    `- error: initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingPoint'
+23.73 24 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+23.73 25 |         var opt: Int32 = 1
+23.73 
+23.73 Swift.FixedWidthInteger.init:2:19: note: where 'T' = '__socket_type'
+23.73 1 | protocol FixedWidthInteger {
+23.73 2 | @inlinable public init<T>(_ source: T) where T : BinaryFloatingPoint}
+23.73   |                   `- note: where 'T' = '__socket_type'
+23.73 3 | 
+------
+failed to solve: process "/bin/sh -c swift build -c release --product persist-server" did not complete successfully: exit code: 1
+ Network kong-codex_default  Creating
+ Network kong-codex_default  Created
+ Container kong-codex-typesense-1  Creating
+ Container kong-codex-kong-1  Creating
+ Container kong-codex-typesense-1  Created
+ Container kong-codex-kong-1  Created
+Attaching to kong-1, typesense-1
+Gracefully stopping... (press Ctrl+C again to force)
+Error response from daemon: mounts denied: 
+The path /srv/deploy/repos/kong-codex/kong.conf is not shared from the host and is not known to Docker.
+You can configure shared paths from Docker -> Preferences... -> Resources -> File Sharing.
+See https://docs.docker.com/desktop/settings/mac/#file-sharing for more info.
+ Container kong-codex-kong-1  Stopping
+ Container kong-codex-typesense-1  Stopping
+ Container kong-codex-kong-1  Stopped
+ Container kong-codex-kong-1  Removing
+ Container kong-codex-kong-1  Removed
+ Container kong-codex-typesense-1  Stopped
+ Container kong-codex-typesense-1  Removing
+ Container kong-codex-typesense-1  Removed
+ Network kong-codex_default  Removing
+ Network kong-codex_default  Removed
+
+[2025-07-17T05:52:25.679649] Running integration tests for fountainai...
+[2025-07-17T05:53:09.485538] Integration tests for fountainai failed with exit code 1
+
+[2025-07-17T05:53:09.485717] Running integration tests for kong-codex...
+[2025-07-17T05:53:20.215238] Integration tests for kong-codex failed with exit code 1
