@@ -9,7 +9,8 @@ public struct Router {
     }
 
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
-        switch (request.method, request.path) {
+        let path = request.path.split(separator: "?").first.map(String.init) ?? request.path
+        switch (request.method, path) {
         case ("POST", "/bootstrap/corpus/reflect"):
             return try await handlers.bootstrapenqueuereflection(request)
         case ("POST", "/bootstrap/corpus/init"):
