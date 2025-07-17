@@ -1,0 +1,1 @@
+{"echo":{"httpPath":"http:\/\/127.0.0.1:51086","description":"echo","functionId":"echo","httpMethod":"POST","name":"echo"},"f1":{"httpPath":"http:\/\/example.com","description":"test","functionId":"f1","httpMethod":"GET","name":"fn"}}
