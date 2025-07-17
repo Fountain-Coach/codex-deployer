@@ -1278,3 +1278,44 @@ Just set COMPOSE_BAKE=true
 #38 52.00 [3703/30727] Fetching swift-crypto, swift-nio-ssl
 #38 53.07 Fetched https://github.com/swift-server/swift-service-lifecycle.git from cache (50.84s)
 #38 53.12 Fetching https://github.com/apple/swift-http-types.git
+#38 ...
+
+#34 [planner build 4/4] RUN swift build -c release --product planner-server
+#34 51.50 [1/2673] Fetching swift-nio-transport-services
+#34 51.61 [1017/8430] Fetching swift-nio-transport-services, swift-numerics
+#34 51.76 [8431/23408] Fetching swift-nio-transport-services, swift-numerics, swift-nio-ssl
+#34 51.84 Fetched https://github.com/apple/swift-nio-http2.git from cache (12.84s)
+#34 52.08 Fetched https://github.com/apple/swift-numerics.git from cache (3.69s)
+#34 52.08 [4471/17651] Fetching swift-nio-transport-services, swift-nio-ssl
+#34 52.13 Fetched https://github.com/apple/swift-nio-transport-services.git from cache (3.65s)
+#34 52.13 [1948/14978] Fetching swift-nio-ssl
+#34 ...
+
+#35 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#35 51.51 [1/6039] Fetching swift-nio-extras
+#35 51.57 [122/21788] Fetching swift-nio-extras, swift-crypto
+#35 51.69 Fetched https://github.com/jpsim/Yams.git from cache (42.89s)
+#35 51.70 Fetching https://github.com/swift-server/async-http-client.git
+#35 52.05 Fetched https://github.com/apple/swift-nio-extras.git from cache (3.67s)
+#35 52.07 [2678/15749] Fetching swift-crypto
+#35 ...
+
+#40 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#40 51.85 Fetched https://github.com/apple/swift-nio-ssl.git from cache (49.63s)
+#40 ...
+
+#36 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#36 51.49 [1/1169] Fetching swift-http-structured-headers
+#36 51.50 [25/3842] Fetching swift-http-structured-headers, swift-nio-transport-services
+#36 51.92 [3033/5650] Fetching swift-http-structured-headers, swift-nio-transport-services, swift-atomics
+#36 51.93 Fetched https://github.com/apple/swift-http-structured-headers.git from cache (28.80s)
+#36 51.94 [2042/4481] Fetching swift-nio-transport-services, swift-atomics
+#36 51.94 Fetching https://github.com/apple/swift-nio.git
+#36 53.02 Fetched https://github.com/apple/swift-nio-transport-services.git from cache (12.55s)
+#36 53.06 Fetching https://github.com/apple/swift-system.git
+#36 ...
+
+#38 [persist build 4/4] RUN swift build -c release --product persist-server
+#38 61.64 Fetched https://github.com/apple/swift-collections.git from cache (59.42s)
+#38 61.75 Fetched https://github.com/apple/swift-nio.git from cache (59.54s)
+#38 63.73 [1/5757] Fetching swift-numerics
