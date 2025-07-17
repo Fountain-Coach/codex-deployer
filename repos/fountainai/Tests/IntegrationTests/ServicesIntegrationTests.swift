@@ -19,6 +19,21 @@ import ServiceShared
 @testable import LLMGatewayClientSDK
 
 final class ServicesIntegrationTests: XCTestCase {
+    var cachePath: String!
+
+    override func setUp() async throws {
+        cachePath = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent(UUID().uuidString).path
+        setenv("FUNCTIONS_CACHE_PATH", cachePath, 1)
+        FileManager.default.createFile(atPath: cachePath, contents: Data(), attributes: nil)
+        await TypesenseClient.shared.reset()
+    }
+
+    override func tearDown() async throws {
+        await TypesenseClient.shared.reset()
+        unsetenv("FUNCTIONS_CACHE_PATH")
+        try? FileManager.default.removeItem(atPath: cachePath)
+    }
     func startServer(with kernel: IntegrationRuntime.HTTPKernel) async throws -> (NIOHTTPServer, Int) {
         let server = NIOHTTPServer(kernel: kernel)
         let port = try await server.start(port: 0)

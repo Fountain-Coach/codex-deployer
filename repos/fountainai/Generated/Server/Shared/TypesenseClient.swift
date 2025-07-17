@@ -290,4 +290,16 @@ public actor TypesenseClient {
         let r = reflections[corpusId]?.count ?? 0
         return b + d + p + r
     }
+
+    /// Clears all stored data. Tests call this to avoid state leakage.
+    public func reset() async {
+        corpora.removeAll()
+        functions.removeAll()
+        baselines.removeAll()
+        drifts.removeAll()
+        patterns.removeAll()
+        reflections.removeAll()
+        roles.removeAll()
+        saveCache()
+    }
 }
