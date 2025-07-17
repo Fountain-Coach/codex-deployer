@@ -1,0 +1,14 @@
+[2025-07-17T13:37:55.934051] Dispatcher started successfully 🟢
+[2025-07-17T13:37:55.935062] === New Cycle ===
+Building for debugging...
+[0/515] Write sources
+[45/515] Compiling _NumericsShims _NumericsShims.c
+[46/515] Write swift-version-24593BA9C3E375BF.txt
+[47/515] Compiling CNIOWindows shim.c
+[48/515] Compiling _AtomicsShims.c
+[49/521] Compiling api.c
+[50/521] Compiling writer.c
+[51/521] Compiling reader.c
+[51/521] Compiling emitter.c
+[53/521] Compiling scanner.c
+[53/521] Compiling parser.c
