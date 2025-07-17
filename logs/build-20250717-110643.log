@@ -40,3 +40,42 @@ Building for debugging...
 
 [2025-07-17T11:06:43.298912] Starting swift build...
 [2025-07-17T11:06:46.661583] swift build failed with exit code 1
+[2025-07-17T11:06:46.969147] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-17T11:06:49.625154] [dispatcher] Running Docker build...
+[2025-07-17T11:06:49.684056] [dispatcher] Running tests...
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [baseline-awareness internal] load build definition from Dockerfile
+#1 transferring dockerfile: 299B done
+#1 DONE 0.0s
+
+#2 [llm-gateway internal] load build definition from Dockerfile
+#2 transferring dockerfile: 278B done
+#2 DONE 0.0s
+
+#3 [persist internal] load build definition from Dockerfile
+#3 transferring dockerfile: 266B done
+#3 DONE 0.0s
+
+#4 [planner internal] load build definition from Dockerfile
+#4 transferring dockerfile: 266B done
+#4 DONE 0.0s
+
+#5 [tools-factory internal] load build definition from Dockerfile
+#5 transferring dockerfile: 284B done
+#5 DONE 0.0s
+
+#6 [bootstrap internal] load build definition from Dockerfile
+#6 transferring dockerfile: 272B done
+#6 DONE 0.0s
+
+#7 [function-caller internal] load build definition from Dockerfile
+#7 transferring dockerfile: 290B done
+#7 DONE 0.0s
+
+#8 [function-caller internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 DONE 1.9s
+
+#9 [function-caller internal] load metadata for docker.io/library/ubuntu:22.04
