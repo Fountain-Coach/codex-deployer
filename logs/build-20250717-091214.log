@@ -136,3 +136,46 @@ Just set COMPOSE_BAKE=true
 
 #24 [llm-gateway internal] load build context
 #24 transferring context: 9.25MB 15.1s
+#24 ...
+
+#20 [function-caller internal] load build context
+#20 ...
+
+#24 [llm-gateway internal] load build context
+#24 transferring context: 9.47MB 16.8s done
+#24 ...
+
+#21 [baseline-awareness internal] load build context
+#21 transferring context: 9.47MB 14.5s done
+#21 DONE 17.0s
+
+#23 [persist internal] load build context
+#23 transferring context: 9.47MB 16.8s done
+#23 DONE 17.1s
+
+#25 [bootstrap internal] load build context
+#25 transferring context: 9.47MB 16.8s done
+#25 DONE 17.1s
+
+#19 [tools-factory internal] load build context
+#19 transferring context: 9.47MB 16.8s done
+#19 DONE 17.1s
+
+#26 [llm-gateway build 2/4] WORKDIR /src
+#26 CACHED
+
+#24 [llm-gateway internal] load build context
+#24 DONE 17.1s
+
+#20 [function-caller internal] load build context
+#20 transferring context: 9.47MB 16.8s done
+#20 DONE 17.1s
+
+#27 [baseline-awareness build 3/4] COPY . .
+#27 ...
+
+#22 [planner internal] load build context
+#22 transferring context: 9.47MB 16.8s done
+#22 DONE 17.1s
+
+#27 [llm-gateway build 3/4] COPY . .
