@@ -12,18 +12,23 @@ and serve as its own semantic reasoning engine.
 Copyright (c) 2025 Benedikte Eickhoff. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 
-Codex-Deployer keeps multiple services in lockstep. A small Python loop builds them, logs errors and patches code through Git.
+A minimal Python dispatcher builds each service, logs errors and patches code through Git—keeping every repository in lockstep. This central loop sets up the deployment problem described next.
 
 ---
 
 ## 1. Problem
 Deploying several Swift services across Linux and macOS quickly becomes brittle. Every project needs a slightly different toolchain and CI feedback is slow.
+To overcome these hurdles, Codex-Deployer unifies builds, logs and fixes in one workflow.
 
 ## 2. Solution
 Codex-Deployer bundles everything in one Git repository. A Python dispatcher pulls the repos, builds each service and commits any fixes. Environment variables configure authentication and optional Docker Compose tests[^env-vars].
 
+Understanding how this works requires a quick look at the architecture.
+
 ## 3. Architecture
 The dispatcher loop lives in `deploy/dispatcher_v2.py`. It writes logs to `deploy/logs/` and reads patch proposals from `feedback/`. A diagram and feature list appear in the architecture overview[^arch-overview].
+With these components in mind, you can start the dispatcher locally in a few steps.
+
 
 ## 4. Quick start
 ```bash
@@ -41,6 +46,9 @@ docker run --rm -it \
 ```
 For a full explanation of each variable and how to generate tokens, see the setup guide[^manage-env].
 
+Once the basics are running, the documentation hub walks you through advanced usage.
+
+
 ## 5. Documentation hub
 Start with the handbook[^handbook] for tutorials. The introduction[^intro] prepares you for the environment setup and cross‑platform workflow. The code reference[^code-ref] links to inline docs.
 
@@ -51,6 +59,8 @@ Start with the handbook[^handbook] for tutorials. The introduction[^intro] prepa
 | `docs/handbook/README.md` | Documentation hub |
 | `docs/environment_variables.md` | Variable reference |
 | `AGENT.md` | Agent behaviour contract |
+
+The references below expand on each topic and trace the project's evolution.
 
 ## Further reading
 - Architecture overview[^arch-overview]
