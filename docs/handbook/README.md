@@ -8,6 +8,7 @@ locate all relevant guides in one place.
 ## Table of Contents
 
 ### Getting Started
+
 - [Running on macOS with Docker](../mac_docker_tutorial.md)
 - [Local Testing on macOS](../mac_local_testing.md)
 - [Managing Environment Variables](../managing_environment_variables.md)
@@ -18,6 +19,7 @@ locate all relevant guides in one place.
 - [Pull Request Workflow](../pull_request_workflow.md)
 
 ### Background Reading
+
 - [Design Pattern Evaluation](../design_patterns.md)
 - [Log Aggregation Setup](../log_aggregation.md)
 - [Secrets API Proposal](../secrets_api_proposal.md)
