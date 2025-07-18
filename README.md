@@ -6,8 +6,8 @@ This software is proprietary and confidential.
 Unauthorized copying or distribution is strictly prohibited.
 
 > **The Codex-powered operating system for semantic deployment**
-
 ---
+
 
 ## 🌐 Repository: `fountain-coach/codex-deployer`
 
@@ -24,15 +24,13 @@ This repo defines a fully autonomous deployment system where Codex:
 
 An always-on deployment brain powered by Codex.
 
-If you're new to the project, start with [docs/handbook/introduction.md](docs/handbook/introduction.md) for a concise overview and links to required environment variables.
-
-For module-level documentation see [docs/handbook/code_reference.md](docs/handbook/code_reference.md).
+If you're new to the project, jump to the [Handbook](docs/handbook/README.md) which collects all tutorials and reference material in one place.
+Start with [Introduction to Codex‑Deployer](docs/handbook/introduction.md) for the big picture and required environment variables.  Module level docs live in [code_reference.md](docs/handbook/code_reference.md).
 
 > **Repo Alias**: References to `fountainai` actually point to
 > [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).
 > The sources now reside in `repos/fountainai/`, so no additional clone is required.
 
----
 
 ## 🧠 What is the Codex-Powered Operating System?
 
@@ -42,7 +40,6 @@ At its heart is a single principle:
 
 > **Codex acts as a compiler — the source of truth lives in the repo, and every build becomes feedback for semantic correction.**
 
----
 
 ## 🧩 System Design
 
@@ -69,6 +66,11 @@ At its heart is a single principle:
          └── restart-target.sh  ← restart a specific service
 ```
 
+
+
+## 📚 Documentation Hub
+
+The [Handbook](docs/handbook/README.md) collects all guides and references. Start with [Introduction](docs/handbook/introduction.md) for the big picture. API docs live in [code_reference.md](docs/handbook/code_reference.md). The agent behaviour contract resides in [agent.md](agent.md).
 ---
 
 ## 🚀 Features
@@ -89,7 +91,6 @@ At its heart is a single principle:
 | ✅ Custom OpenAI endpoint | Set `OPENAI_API_BASE` to override the API URL used by the LLM Gateway. See [docs/environment_variables.md](docs/environment_variables.md). |
 | ✅ Docker builds & e2e tests | Set `DISPATCHER_BUILD_DOCKER=1` and `DISPATCHER_RUN_E2E=1` to build containers and run integration tests |
 
----
 
 ## 📂 Key Files
 
@@ -109,7 +110,6 @@ At its heart is a single principle:
 | `docs/dispatcher_v2.md` | Detailed dispatcher v2 documentation |
 | `docs/handbook/code_reference.md` | Links to Python and Swift API docs |
 
----
 
 ## ⚡ Setup Instructions
 
@@ -155,7 +155,6 @@ python3 analyze_swift_log.py
 
 The script reads `build.log` from the current directory and writes `report.md` with one section per log segment and a suggested fix. Open `report.md` in your editor to review the results.
 
----
 
 ## 🧠 How Codex Uses This
 
@@ -175,7 +174,6 @@ Codex can:
 - On next loop, the dispatcher reads and applies it
 - Applied patches and the latest build log are committed and pushed to GitHub
 
----
 
 ## 🧠 Codex + Git = Compiler
 
@@ -183,13 +181,11 @@ This repo is the **Codex compiler runtime** — a deploy tool that unifies reaso
 
 You deploy a system that understands itself.
 
----
 
 ## 🗺️ History & Motivation
 
 Codex-deployer began as an experiment to remove brittle CI pipelines and GitHub Actions from the deployment process. It evolved into an always-on, Git-native compiler loop. While it isn't a conventional CI tool, that difference is intentional: the project focuses on reasoning-driven deployments where Codex continually patches and rebuilds services without external runners.
 
----
 
 ## 🏁 Next Steps
 
@@ -197,7 +193,6 @@ Codex-deployer began as an experiment to remove brittle CI pipelines and GitHub 
 - Build a visual dashboard for log + feedback inspection
 - Improve the auto-patch workflow with better conflict handling
 
----
 
 © FountainCoach — Codex-first infrastructure
 

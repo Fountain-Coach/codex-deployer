@@ -3,7 +3,8 @@
 Welcome to the early draft of the **Codex-Deployer Handbook**. This folder aggregates the
 existing tutorials and reference material for operating the deployment loop.
 The goal is to centralize onboarding documentation so new contributors can
-locate all relevant guides in one place.
+locate all relevant guides in one place. For a high level overview of the
+repository itself see the [main README](../../README.md).
 
 ## Table of Contents
 
