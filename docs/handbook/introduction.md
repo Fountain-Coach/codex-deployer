@@ -53,3 +53,4 @@ list of options.
 The [handbook README](README.md) contains a complete table of contents with links to additional background material. For API details see [code_reference.md](code_reference.md).
 
 [codex-doc]: https://platform.openai.com/docs/codex/overview
+[^codex-doc]: <https://platform.openai.com/docs/codex/overview>

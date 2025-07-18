@@ -29,7 +29,6 @@ Understanding how this works requires a quick look at the architecture.
 The dispatcher loop lives in `deploy/dispatcher_v2.py`. It writes logs to `deploy/logs/` and reads patch proposals from `feedback/`. A diagram and feature list appear in the architecture overview[^arch-overview].
 With these components in mind, you can start the dispatcher locally in a few steps.
 
-
 ## 4. Quick start
 ```bash
 git clone https://github.com/fountain-coach/codex-deployer /srv/deploy
@@ -47,7 +46,6 @@ docker run --rm -it \
 For a full explanation of each variable and how to generate tokens, see the setup guide[^manage-env].
 
 Once the basics are running, the documentation hub walks you through advanced usage.
-
 
 ## 5. Documentation hub
 Start with the handbook[^handbook] for tutorials. The introduction[^intro] prepares you for the environment setup and cross‑platform workflow. The code reference[^code-ref] links to inline docs.
@@ -68,10 +66,10 @@ The references below expand on each topic and trace the project's evolution.
 - Code reference[^code-ref]
 
 [codex-doc]: https://platform.openai.com/docs/codex/overview
-[^env-vars]: `docs/environment_variables.md`
-[^manage-env]: `docs/managing_environment_variables.md`
-[^handbook]: `docs/handbook/README.md`
-[^intro]: `docs/handbook/introduction.md`
-[^code-ref]: `docs/handbook/code_reference.md`
-[^arch-overview]: `docs/handbook/architecture.md`
-[^history]: `docs/handbook/history.md`
+[^env-vars]: [docs/environment_variables.md](docs/environment_variables.md)
+[^manage-env]: [docs/managing_environment_variables.md](docs/managing_environment_variables.md)
+[^handbook]: [docs/handbook/README.md](docs/handbook/README.md)
+[^intro]: [docs/handbook/introduction.md](docs/handbook/introduction.md)
+[^code-ref]: [docs/handbook/code_reference.md](docs/handbook/code_reference.md)
+[^arch-overview]: [docs/handbook/architecture.md](docs/handbook/architecture.md)
+[^history]: [docs/handbook/history.md](docs/handbook/history.md)
