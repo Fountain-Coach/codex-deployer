@@ -1,4 +1,3 @@
-
 # 🧠 codex-deployer
 
 *Git-driven deployment companion for Swift services.*
@@ -50,5 +49,3 @@ Start with the [Handbook](docs/handbook/README.md) for tutorials. The [Introduct
 - [Architecture Overview](docs/handbook/architecture.md)
 - [History and Roadmap](docs/handbook/history.md)
 - [Code Reference](docs/handbook/code_reference.md)
-
-Released under the [MIT License](LICENSE).
