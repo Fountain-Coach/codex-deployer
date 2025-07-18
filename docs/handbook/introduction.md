@@ -4,7 +4,11 @@
 
 Codex-Deployer is an always-on deployment companion built around a simple idea: every build is feedback for the next.
 
-The project bundles several FountainAI services and a Python dispatcher that continuously pulls repositories, compiles the code, and reacts to failures. By keeping the entire deployment logic in Git, the dispatcher acts like a compiler for infrastructure. You operate it just like any other repository: clone it, edit the configuration, and run the dispatcher.
+Powered by OpenAI's [Codex](https://platform.openai.com/docs/codex/overview), the dispatcher acts like a **semantic compiler** for infrastructure. It reads build logs, proposes fixes and keeps services coherent. See the official [Codex overview](https://platform.openai.com/docs/codex/overview) for more details.
+
+FountainAI expands this concept into a cross-platform LLM operating system. When fully deployed it will extend Codex and eventually operate independently as a semantic reasoning engine.
+
+The project bundles several FountainAI services and a Python dispatcher that continuously pulls repositories, compiles the code, and reacts to failures. Because all deployment logic lives in Git, you operate it just like any other repository: clone it, edit the configuration, and run the dispatcher.
 
 This introduction summarises the core concepts and explains how environment variables drive the system. Follow the links at the end for deeper dives.
 
