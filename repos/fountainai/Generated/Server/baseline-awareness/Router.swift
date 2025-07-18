@@ -1,3 +1,5 @@
+/// Routes HTTP requests to service handlers.
+/// Documentation lives in `docs/handbook/code_reference.md`.
 import Foundation
 import ServiceShared
 
