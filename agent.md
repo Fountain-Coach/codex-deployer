@@ -7,6 +7,9 @@ Unauthorized copying or distribution is strictly prohibited.
 
 > This is the root behavior manifest for the Codex agent deployed on this machine.
 
+For a repository overview and additional documentation see the
+[handbook](docs/handbook/README.md) linked from the main README.
+
 ---
 
 ## 📌 Purpose
