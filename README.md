@@ -2,6 +2,11 @@
 
 *Git-driven deployment companion for Swift services.*
 
+Powered by OpenAI's [Codex](https://platform.openai.com/docs/guides/codex),
+the dispatcher acts like a **semantic compiler**. It interprets build logs,
+rewrites code automatically and keeps services in sync without waiting for
+traditional CI feedback.
+
 Copyright (c) 2025 Benedikte Eickhoff. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 
