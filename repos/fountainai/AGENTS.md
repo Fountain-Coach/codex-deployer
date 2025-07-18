@@ -9,3 +9,12 @@ This repository uses Swift 6 and Swift Package Manager.
   sudo apt-get update && sudo apt-get install -y clang libicu-dev swift
   ```
 - Summarize the test results in the PR description.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

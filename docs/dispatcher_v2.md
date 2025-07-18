@@ -42,3 +42,12 @@ and integration tests after each successful commit or PR merge.
 
 For tips on reviewing failed builds, see the [README](../README.md#analyzing-swift-logs) section on analyzing Swift logs.
 
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

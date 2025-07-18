@@ -58,3 +58,12 @@ The project has a solid start: parsing, model emission, client and server genera
    - Evaluate deeper validation of OpenAPI documents to catch more errors during parsing.
 
 Addressing these items will close the gap between the current implementation and the aspirations laid out in the execution plan, delivering a more polished and self‑describing project.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

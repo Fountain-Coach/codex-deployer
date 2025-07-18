@@ -40,3 +40,12 @@ how to configure it, and how the surrounding services fit together. All guides
 reference [`environment_variables.md`](../environment_variables.md) when
 describing required settings.
 
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

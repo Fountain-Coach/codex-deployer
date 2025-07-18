@@ -93,3 +93,12 @@ MIDIRenderer.renderToFile(melody, to: "demo.mid")
 - Compatible with future `MIDIPianoRoll` visual rendering
 - Pairs well with `Animator` for synchronizing scenes and sounds
 
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

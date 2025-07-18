@@ -7,3 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ## [0.1.0] - 2025-07-07
 ### Added
 - Initial OpenAPI specs and generator skeleton.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

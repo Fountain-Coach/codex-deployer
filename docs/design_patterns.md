@@ -51,3 +51,12 @@ Teatro defines its UI purely through declarations.
 ## Overall Evaluation
 
 The combination of a client/server kernel, plugin-driven gateway, and declarative view engine offers clear separation of concerns. While each pattern introduces trade-offs, the design aligns with common best practices and provides a solid foundation for scaling the system.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

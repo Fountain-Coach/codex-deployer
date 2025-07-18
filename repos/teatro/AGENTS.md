@@ -12,3 +12,12 @@ This repository contains the documentation for **Teatro View Engine**, a declara
 ## Repo Tasks for Codex
 - There are currently no automated tests. If you add code, provide appropriate tests and ensure they run via `swift test`.
 - Maintain this `AGENTS.md` if repository structure changes.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

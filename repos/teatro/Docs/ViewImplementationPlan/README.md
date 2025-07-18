@@ -58,3 +58,12 @@ Update `Package.swift` to add library and executable targets for the new sources
 ---
 
 Following this implementation and testing plan will produce a fully functional Teatro View Engine with deterministic rendering logic and comprehensive unit coverage for every view.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

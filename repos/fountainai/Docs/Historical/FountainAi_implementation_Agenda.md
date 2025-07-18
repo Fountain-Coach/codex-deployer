@@ -49,3 +49,12 @@ For each service:
 ---
 
 Following this agenda will lead to a complete set of FountainAI services implemented in Swift, each accompanied by an independent client SDK and clear documentation describing how they fit together.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

@@ -48,3 +48,12 @@ For a gentle introduction see [Introduction to Codex-Deployer](introduction.md).
 
 For implementation details see [dispatcher_v2.md](../dispatcher_v2.md).
 
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

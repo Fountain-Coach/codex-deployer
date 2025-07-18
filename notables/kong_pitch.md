@@ -17,3 +17,12 @@ By choosing Kong as our API gateway, we benefit from the following features with
 Configuration variables for the deployment system are documented in [`docs/environment_variables.md`](../docs/environment_variables.md). Although no Kong-specific variables are listed there, we can introduce them in the future and keep that file updated.
 
 Overall, Kong provides production-ready routing, security, observability, and extensibility, reducing the need for a custom gateway built in Swift or Python.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

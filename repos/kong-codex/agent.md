@@ -6,3 +6,12 @@ Kong runs in db-less mode using `kong.yaml` as the declarative config.
 
 Use `docker-compose.yml` for local testing. Update `docs/environment_variables.md`
 when introducing new configuration.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

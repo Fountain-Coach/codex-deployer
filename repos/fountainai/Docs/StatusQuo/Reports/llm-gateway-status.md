@@ -27,3 +27,12 @@ Spec path: `FountainAi/openAPI/v2/llm-gateway.yml` (version 2.0.0).
 - Add integration tests for the `/chat` endpoint
 - Provide Docker build and deployment instructions
 - Document `OPENAI_API_KEY` and `OPENAI_API_BASE` usage in [environment_variables.md](../../../../../docs/environment_variables.md)
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

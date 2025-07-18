@@ -19,3 +19,12 @@ All FountainAI services now run using a shared Swift concurrency runtime. Integr
 5. **Document configuration** – reference required environment variables in [environment_variables.md](../../../../../docs/environment_variables.md) from all service documentation.
 
 Completing these steps will transition FountainAI from prototype status to a stable, production‑ready microservice suite.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

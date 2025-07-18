@@ -28,3 +28,12 @@ Spec path: `FountainAi/openAPI/v1/baseline-awareness.yml` (version 1.0.0).
 - `/corpus/history/stream` streams analytics via Server-Sent Events
 - Prometheus metrics now record request durations for performance insights
 - Structured logging added for easier debugging and monitoring
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```
