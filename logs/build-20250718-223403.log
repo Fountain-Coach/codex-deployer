@@ -33,3 +33,324 @@ Building for debugging...
 
 [2025-07-18T22:34:03.176794] Starting swift build...
 [2025-07-18T22:34:04.840573] swift build failed with exit code 1
+[2025-07-18T22:34:05.010901] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-18T22:34:06.518723] [dispatcher] Running Docker build...
+[2025-07-18T22:34:06.519364] [dispatcher] Running tests...
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [baseline-awareness internal] load build definition from Dockerfile
+#1 transferring dockerfile: 299B 0.0s done
+#1 DONE 0.0s
+
+#2 [persist internal] load build definition from Dockerfile
+#2 transferring dockerfile: 266B 0.0s done
+#2 DONE 0.0s
+
+#3 [tools-factory internal] load build definition from Dockerfile
+#3 transferring dockerfile: 284B 0.0s done
+#3 DONE 0.0s
+
+#4 [planner internal] load build definition from Dockerfile
+#4 transferring dockerfile: 266B done
+#4 DONE 0.0s
+
+#5 [bootstrap internal] load build definition from Dockerfile
+#5 transferring dockerfile: 272B done
+#5 DONE 0.0s
+
+#6 [llm-gateway internal] load build definition from Dockerfile
+#6 transferring dockerfile: 278B done
+#6 DONE 0.0s
+
+#7 [function-caller internal] load build definition from Dockerfile
+#7 transferring dockerfile: 290B done
+#7 DONE 0.0s
+
+#8 [function-caller internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 DONE 0.6s
+
+#9 [persist internal] load metadata for docker.io/library/ubuntu:22.04
+#9 DONE 0.6s
+
+#10 [bootstrap internal] load .dockerignore
+#10 transferring context: 2B done
+#10 DONE 0.0s
+
+#11 [persist internal] load .dockerignore
+#11 transferring context: 2B done
+#11 DONE 0.0s
+
+#12 [llm-gateway internal] load .dockerignore
+#12 transferring context: 2B done
+#12 DONE 0.0s
+
+#13 [function-caller internal] load .dockerignore
+#13 transferring context: 2B done
+#13 DONE 0.0s
+
+#14 [tools-factory internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.0s
+
+#15 [planner internal] load .dockerignore
+#15 transferring context: 2B done
+#15 DONE 0.0s
+
+#16 [baseline-awareness internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.0s
+
+#17 [baseline-awareness build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#17 resolve docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342 0.0s done
+#17 DONE 0.0s
+
+#18 [bootstrap stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:1ec65b2719518e27d4d25f104d93f9fac60dc437f81452302406825c46fcc9cb
+#18 resolve docker.io/library/ubuntu:22.04@sha256:1ec65b2719518e27d4d25f104d93f9fac60dc437f81452302406825c46fcc9cb 0.0s done
+#18 CACHED
+
+#19 [tools-factory internal] load build context
+#19 transferring context: 8.27MB 5.1s
+#19 ...
+
+#20 [planner internal] load build context
+#20 ...
+
+#19 [tools-factory internal] load build context
+#19 ...
+
+#21 [bootstrap internal] load build context
+#21 ...
+
+#22 [persist internal] load build context
+#22 transferring context: 9.24MB 10.1s
+#22 ...
+
+#23 [function-caller internal] load build context
+#23 ...
+
+#24 [llm-gateway internal] load build context
+#24 ...
+
+#25 [baseline-awareness internal] load build context
+#25 ...
+
+#24 [llm-gateway internal] load build context
+#24 ...
+
+#22 [persist internal] load build context
+#22 transferring context: 9.69MB 13.0s done
+#22 DONE 13.2s
+
+#24 [llm-gateway internal] load build context
+#24 transferring context: 9.69MB 11.7s done
+#24 ...
+
+#25 [baseline-awareness internal] load build context
+#25 transferring context: 9.69MB 13.0s done
+#25 DONE 13.3s
+
+#20 [planner internal] load build context
+#20 transferring context: 9.69MB 13.0s done
+#20 DONE 13.3s
+
+#24 [llm-gateway internal] load build context
+#24 DONE 13.3s
+
+#23 [function-caller internal] load build context
+#23 transferring context: 9.69MB 13.0s done
+#23 DONE 13.3s
+
+#19 [tools-factory internal] load build context
+#19 transferring context: 9.69MB 13.0s done
+#19 DONE 13.3s
+
+#21 [bootstrap internal] load build context
+#21 transferring context: 9.69MB 13.0s done
+#21 DONE 13.3s
+
+#26 [bootstrap build 2/4] WORKDIR /src
+#26 CACHED
+
+#27 [tools-factory build 3/4] COPY . .
+#27 DONE 12.9s
+
+#28 [tools-factory build 3/4] COPY . .
+#28 CACHED
+
+#29 [bootstrap build 3/4] COPY . .
+#29 CACHED
+
+#30 [function-caller build 3/4] COPY . .
+#30 CACHED
+
+#31 [planner build 3/4] COPY . .
+#31 CACHED
+
+#32 [llm-gateway build 3/4] COPY . .
+#32 CACHED
+
+#33 [baseline-awareness build 3/4] COPY . .
+#33 CACHED
+
+#34 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#34 ...
+
+#35 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#35 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 ...
+
+#37 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#37 ...
+
+#38 [persist build 4/4] RUN swift build -c release --product persist-server
+#38 ...
+
+#39 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#39 ...
+
+#40 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#40 ...
+
+#35 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#35 15.24 Building for production...
+#35 15.32 [0/7] Write sources
+#35 15.51 [4/7] Write swift-version-24593BA9C3E375BF.txt
+#35 ...
+
+#39 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#39 16.59 Building for production...
+#39 16.62 [0/14] Write sources
+#39 16.81 [5/14] Compiling writer.c
+#39 16.81 [6/14] Compiling reader.c
+#39 17.07 [7/14] Compiling api.c
+#39 17.14 [8/14] Compiling parser.c
+#39 17.14 [9/14] Write swift-version-24593BA9C3E375BF.txt
+#39 17.86 [10/15] Compiling emitter.c
+#39 18.31 [11/15] Compiling scanner.c
+#39 22.83 [13/16] Compiling ServiceShared Models.swift
+#39 ...
+
+#37 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#37 15.27 Building for production...
+#37 15.32 [0/6] Write sources
+#37 15.49 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#37 21.31 [5/7] Compiling ServiceShared Models.swift
+#37 22.52 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+#37 22.93 [7/9] Compiling LLMGatewayServer main.swift
+#37 22.93 /src/Generated/Server/llm-gateway/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+#37 22.93  21 | 
+#37 22.93  22 |     func start() throws {
+#37 22.93  23 |         let socketType: Int32 = SOCK_STREAM
+#37 22.93     |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+#37 22.93  24 | 
+#37 22.93  25 |         serverFD = socket(AF_INET, socketType, 0)
+#37 ERROR: process "/bin/sh -c swift build -c release --product llm-gateway-server" did not complete successfully: exit code: 1
+
+#34 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#34 15.31 Building for production...
+#34 15.36 [0/14] Write sources
+#34 15.55 [5/14] Write swift-version-24593BA9C3E375BF.txt
+#34 15.80 [6/15] Compiling writer.c
+#34 15.87 [7/15] Compiling reader.c
+#34 15.90 [8/15] Compiling api.c
+#34 15.92 [9/15] Compiling parser.c
+#34 16.28 [10/15] Compiling emitter.c
+#34 16.44 [11/15] Compiling scanner.c
+#34 21.24 [13/16] Compiling ServiceShared Models.swift
+#34 ...
+
+#39 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#39 CANCELED
+
+#40 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#40 15.46 Building for production...
+#40 15.51 [0/6] Write sources
+#40 15.73 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#40 21.18 [5/7] Compiling ServiceShared Models.swift
+#40 23.11 [6/8] Compiling BaselineAwarenessService BaselineStore.swift
+#40 23.56 [7/9] Compiling BaselineAwarenessServer HTTPServer.swift
+#40 23.56 /src/Generated/Server/baseline-awareness/main.swift:26:36: error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#40 23.56  24 | 
+#40 23.56  25 |     func start() throws {
+#40 23.56  26 |         serverFD = socket(AF_INET, SOCK_STREAM, 0)
+#40 23.56     |                                    `- error: cannot convert value of type '__socket_type' to expected argument type 'Int32'
+#40 23.56  27 |         guard serverFD >= 0 else { throw RuntimeError.socket }
+#40 23.56  28 |         var opt: Int32 = 1
+#40 CANCELED
+
+#34 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#34 CANCELED
+
+#38 [persist build 4/4] RUN swift build -c release --product persist-server
+#38 16.57 Building for production...
+#38 16.62 [0/6] Write sources
+#38 17.03 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#38 22.59 [5/7] Compiling ServiceShared Models.swift
+#38 CANCELED
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 15.25 Building for production...
+#36 15.32 [0/6] Write sources
+#36 15.48 [3/6] Write swift-version-24593BA9C3E375BF.txt
+#36 20.83 [5/7] Compiling ServiceShared Models.swift
+#36 23.13 [6/8] Compiling PlannerService HTTPKernel.swift
+#36 23.54 [7/9] Compiling PlannerServer main.swift
+#36 23.54 /src/Generated/Server/planner/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+#36 23.54  21 | 
+#36 23.54  22 |     func start() throws {
+#36 23.54  23 |         let socketType: Int32 = SOCK_STREAM
+#36 23.54     |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+#36 23.54  24 | 
+#36 23.54  25 |         serverFD = socket(AF_INET, socketType, 0)
+#36 CANCELED
+
+#35 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#35 21.18 [6/8] Compiling ServiceShared Models.swift
+#35 23.22 [7/9] Compiling BaselineAwarenessService BaselineStore.swift
+#35 CANCELED
+------
+ > [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server:
+21.31 [5/7] Compiling ServiceShared Models.swift
+22.52 [6/8] Compiling LLMGatewayService HTTPKernel.swift
+22.93 [7/9] Compiling LLMGatewayServer main.swift
+22.93 /src/Generated/Server/llm-gateway/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+22.93  21 | 
+22.93  22 |     func start() throws {
+22.93  23 |         let socketType: Int32 = SOCK_STREAM
+22.93     |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+22.93  24 | 
+22.93  25 |         serverFD = socket(AF_INET, socketType, 0)
+------
+failed to solve: process "/bin/sh -c swift build -c release --product llm-gateway-server" did not complete successfully: exit code: 1
+ Network kong-codex_default  Creating
+ Network kong-codex_default  Created
+ Container kong-codex-typesense-1  Creating
+ Container kong-codex-kong-1  Creating
+ Container kong-codex-kong-1  Created
+ Container kong-codex-typesense-1  Created
+Attaching to kong-1, typesense-1
+Gracefully stopping... (press Ctrl+C again to force)
+Error response from daemon: mounts denied: 
+The path /srv/deploy/repos/kong-codex/kong.yaml is not shared from the host and is not known to Docker.
+You can configure shared paths from Docker -> Preferences... -> Resources -> File Sharing.
+See https://docs.docker.com/go/mac-file-sharing/ for more info.
+ Container kong-codex-kong-1  Stopping
+ Container kong-codex-typesense-1  Stopping
+ Container kong-codex-kong-1  Stopped
+ Container kong-codex-kong-1  Removing
+ Container kong-codex-kong-1  Removed
+ Container kong-codex-typesense-1  Stopped
+ Container kong-codex-typesense-1  Removing
+ Container kong-codex-typesense-1  Removed
+ Network kong-codex_default  Removing
+ Network kong-codex_default  Removed
+
+[2025-07-18T22:34:06.519622] Running integration tests for fountainai...
+[2025-07-18T22:34:57.749890] Integration tests for fountainai failed with exit code 1
+
+[2025-07-18T22:34:57.750182] Running integration tests for kong-codex...
+[2025-07-18T22:34:59.942666] Integration tests for kong-codex failed with exit code 1
