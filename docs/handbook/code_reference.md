@@ -1,5 +1,7 @@
 # Code Reference
 
+*Links to API and inline docs.*
+
 This placeholder collects API documentation derived from the source files.
 Inline comments in both Python and Swift explain how the system works and how
 it consumes the variables listed in [../environment_variables.md](../environment_variables.md).
