@@ -4,15 +4,15 @@ Codex-Deployer is an always-on deployment companion built around a simple idea: 
 
 The project bundles several FountainAI services and a Python dispatcher that continuously pulls repositories, compiles the code, and reacts to failures. By keeping the entire deployment logic in Git, the dispatcher acts like a compiler for infrastructure. You operate it just like any other repository: clone it, edit the configuration, and run the dispatcher.
 
-This introduction summarises the core concepts and explains how environment variables drive the system. Follow the links at the end of each section for deeper dives.
+This introduction summarises the core concepts and explains how environment variables drive the system. Follow the links at the end for deeper dives.
 
 ## Core Concepts
 
 1. **Git as the source of truth** – All services live under `repos/` in this repository. The dispatcher pulls updates and commits any changes, so the repo history is the single point of reference.
-2. **Python dispatcher loop** – `deploy/dispatcher_v2.py` runs continuously under systemd or in Docker. It builds services, runs tests, and writes logs under `deploy/logs/`.
+2. **Python dispatcher loop** – `deploy/dispatcher_v2.py` runs continuously under systemd or inside Docker. It builds services, runs tests, and writes logs under `deploy/logs/`.
 3. **Semantic feedback** – After each cycle, JSON placed in `feedback/` can modify the code or restart services. This allows Codex to iterate automatically based on build results.
-4. **Optional Docker workflows** – Set `DISPATCHER_BUILD_DOCKER=1` or `DISPATCHER_RUN_E2E=1` to build images and execute `docker compose` integration tests.
-5. **Platform diversity** – On macOS the dispatcher uses `xcrun swift` so that Apple SDKs are available. On Linux and inside Docker it defaults to the open source `swift` toolchain. The same repository can be built on either platform without changes.
+4. **Cross-platform workflow** – The same loop works on macOS or Linux. Optional Docker Compose tests run when `DISPATCHER_RUN_E2E=1`.
+
 
 ## Configuring the Environment
 
@@ -22,12 +22,10 @@ For a step-by-step walkthrough of creating `dispatcher.env` and exporting secret
 
 ## Managing Platform Diversity
 
-Codex-Deployer intentionally runs on multiple platforms. The Python dispatcher
-detects the host OS and chooses the appropriate Swift toolchain. When running
-on macOS it invokes `xcrun swift` so that Xcode's SDKs are available. On Linux
-or inside the Docker image it calls the open source `swift` command. You do not
-need to change the repository between platforms—the dispatcher adapts
-automatically.
+Codex-Deployer runs on both macOS and Linux. The dispatcher detects the host and
+chooses the correct Swift toolchain: `xcrun swift` when Xcode is present and the
+open source `swift` command elsewhere. You can build the same repository on
+either platform without changes.
 
 Two environment variables influence how cross-platform builds behave:
 
@@ -48,4 +46,3 @@ list of options.
 - [Dispatcher v2 Overview](../dispatcher_v2.md) – deep dive into how the loop works and how pull requests are opened.
 
 The [handbook README](README.md) contains a complete table of contents with links to additional background material. For API details see [code_reference.md](code_reference.md).
-
