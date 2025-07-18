@@ -1,6 +1,5 @@
 # Architecture Overview
 
-
 *High-level map of components and features.*
 
 This page expands on the overall structure and capabilities of **Codex-Deployer**. It collects information that was previously spread across the main README.
