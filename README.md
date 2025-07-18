@@ -26,6 +26,8 @@ An always-on deployment brain powered by Codex.
 
 If you're new to the project, start with [docs/handbook/introduction.md](docs/handbook/introduction.md) for a concise overview and links to required environment variables.
 
+For module-level documentation see [docs/handbook/code_reference.md](docs/handbook/code_reference.md).
+
 > **Repo Alias**: References to `fountainai` actually point to
 > [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).
 > The sources now reside in `repos/fountainai/`, so no additional clone is required.
@@ -105,6 +107,7 @@ At its heart is a single principle:
 | `docs/handbook/README.md` | Central hub for all deployment guides |
 | `docs/environment_variables.md` | Reference for all environment variables |
 | `docs/dispatcher_v2.md` | Detailed dispatcher v2 documentation |
+| `docs/handbook/code_reference.md` | Links to Python and Swift API docs |
 
 ---
 

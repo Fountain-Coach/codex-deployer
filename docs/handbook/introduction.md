@@ -1,6 +1,10 @@
 # Introduction to Codex-Deployer
 
-Codex-Deployer is an always-on deployment companion built around a simple idea: every build is feedback for the next. The project bundles several FountainAI services and a Python dispatcher that continuously pulls repositories, compiles the code, and reacts to failures. By keeping the entire deployment logic in Git, the dispatcher acts like a compiler for infrastructure. You operate it just like any other repository: clone it, edit the configuration, and run the dispatcher. This introduction summarises the core concepts and explains how environment variables drive the system. Follow the links at the end of each section for deeper dives.
+Codex-Deployer is an always-on deployment companion built around a simple idea: every build is feedback for the next.
+
+The project bundles several FountainAI services and a Python dispatcher that continuously pulls repositories, compiles the code, and reacts to failures. By keeping the entire deployment logic in Git, the dispatcher acts like a compiler for infrastructure. You operate it just like any other repository: clone it, edit the configuration, and run the dispatcher.
+
+This introduction summarises the core concepts and explains how environment variables drive the system. Follow the links at the end of each section for deeper dives.
 
 ## Core Concepts
 
@@ -43,4 +47,5 @@ list of options.
 - [Local Testing on macOS](../mac_local_testing.md) – mirror the Linux workflow and execute compose-based service tests.
 - [Dispatcher v2 Overview](../dispatcher_v2.md) – deep dive into how the loop works and how pull requests are opened.
 
-The [handbook README](README.md) contains a complete table of contents with links to additional background material.
+The [handbook README](README.md) contains a complete table of contents with links to additional background material. For API details see [code_reference.md](code_reference.md).
+

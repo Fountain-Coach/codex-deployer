@@ -19,6 +19,7 @@ locate all relevant guides in one place.
 
 - [Dispatcher v2 Overview](../dispatcher_v2.md)
 - [Pull Request Workflow](../pull_request_workflow.md)
+- [Code Reference](code_reference.md)
 
 ### Background Reading
 
