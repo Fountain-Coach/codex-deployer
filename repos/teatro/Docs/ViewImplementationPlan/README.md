@@ -64,6 +64,6 @@ Following this implementation and testing plan will produce a fully functional T
 
 
 ```
-© 2025 Benedikte Eickhoff. All rights reserved.
+© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```

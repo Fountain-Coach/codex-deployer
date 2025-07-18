@@ -1,10 +1,5 @@
 # 🧠 kong-codex
 
-Copyright (c) 2025 Benedikte Eickhoff.
-All rights reserved.
-This software is proprietary and confidential.
-Unauthorized copying or distribution is strictly prohibited.
-
 Codex-managed configuration for the Kong API gateway. This repository includes a
 `docker-compose.yml` setup that launches Kong in db-less mode with a
 Typesense instance used by FountainAI.
@@ -33,6 +28,6 @@ listens on `http://localhost:8000`. Typesense is reachable at `${TYPESENSE_URL}`
 
 
 ```
-© 2025 Benedikte Eickhoff. All rights reserved.
+© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```

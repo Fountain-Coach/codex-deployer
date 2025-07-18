@@ -1,13 +1,6 @@
 # Teatro View Engine
 *A Declarative, Codex-Controllable Rendering Framework in Swift*
-
-Copyright (c) 2025 Benedikte Eickhoff.
-All rights reserved.
-This software is proprietary and confidential.
-Unauthorized copying or distribution is strictly prohibited.
-
 This repository contains the specification for Teatro, a modular Swift 6 view engine. The original long-form documentation has been split into separate files under the `Docs` directory.
-
 ## Documentation
 - [Core Protocols](Docs/CoreProtocols/README.md)
 - [View Types](Docs/ViewTypes/README.md)
@@ -29,6 +22,6 @@ The `Sources/` directory follows the structure suggested in the documentation an
 
 
 ```
-© 2025 Benedikte Eickhoff. All rights reserved.
+© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```

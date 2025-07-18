@@ -1,9 +1,5 @@
 # 🤖 AGENT.md
 
-Copyright (c) 2025 Benedikte Eickhoff.
-All rights reserved.
-This software is proprietary and confidential.
-Unauthorized copying or distribution is strictly prohibited.
 
 > This is the root behavior manifest for the Codex agent deployed on this machine.
 
@@ -17,7 +13,12 @@ All contributor guides live under `docs/handbook`. Start from the
   are introduced or removed.
 - Reference that file in documentation and code comments when explaining
   configuration.
-- Ensure every README and other `.md` file ends with the preformatted copyright notice.
+- Ensure every README and other `.md` file ends with the footer:
+
+```
+© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```
 
 ---
 
@@ -224,6 +225,6 @@ main.swift:5 -> main.swift:5:5: error: use of unresolved identifier 'foo'
 
 
 ```
-© 2025 Benedikte Eickhoff. All rights reserved.
+© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
