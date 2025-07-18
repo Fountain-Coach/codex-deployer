@@ -2,6 +2,7 @@
 
 This guide shows how to run the Codex deployer on a Mac so you can execute service tests locally.
 It builds a small Docker image and starts `dispatcher_v2.py` with environment variables exported from `dispatcher.env`.
+For a broader overview of available guides see [docs/handbook](handbook/README.md).
 See [environment_variables.md](environment_variables.md) for the full list of variables.
 
 ## 1. Prerequisites
