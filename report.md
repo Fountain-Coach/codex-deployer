@@ -75,7 +75,6 @@ Building for debugging...
 [1/3] Write Objects.LinkFileList
 [2/3] Linking SwiftCodexOpenAPIKernelPackageTests.xctest
 Build complete! (5.02s)
-```
 ❌ Issues found:
 AsyncHTTPClientDriver.swift:8 -> /srv/deploy/repos/fountainai/Sources/IntegrationRuntime/AsyncHTTPClientDriver.swift:8:78: warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
 |                                                                              |- warning: 'createNew' is deprecated: Please use the singleton EventLoopGroup explicitly
@@ -89,8 +88,6 @@ NIOHTTPServer.swift:61 -> /srv/deploy/repos/fountainai/Sources/IntegrationRuntim
 |                      `- warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
 **Suggested Fix:** Review the code around the reported line.
 
-
-```
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
