@@ -19,7 +19,6 @@ Configuration variables for the deployment system are documented in [`docs/envir
 Overall, Kong provides production-ready routing, security, observability, and extensibility, reducing the need for a custom gateway built in Swift or Python.
 
 ```
-```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
