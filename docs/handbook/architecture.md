@@ -50,9 +50,6 @@ For implementation details see [dispatcher_v2.md](../dispatcher_v2.md).
 
 
 ```
-
-
-
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.

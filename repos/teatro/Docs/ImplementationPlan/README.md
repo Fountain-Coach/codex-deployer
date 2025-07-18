@@ -49,9 +49,6 @@ This roadmap converts the critique and analysis of the Teatro View Engine into c
 This document should evolve alongside the codebase. **Maintain and update this roadmap** as new features land or priorities shift to keep development focused and transparent.
 
 ```
-
-
-
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.

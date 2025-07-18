@@ -38,9 +38,6 @@ All current integration tests use this runtime and run in CI on Linux and macOS.
 Developers run `swift test -v` locally to reproduce the same cross-platform flow.
 
 ```
-
-
-
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.

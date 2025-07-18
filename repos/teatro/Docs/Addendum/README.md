@@ -78,9 +78,6 @@ This ensures that semantic rendering, narrative structuring, and musical composi
 © 2025 FountainAI — MIT License
 
 ```
-
-
-
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
