@@ -13,3 +13,12 @@ In the Codex deployer, Git plays a central role. The dispatcher pulls repositori
 *Figure 1: Git's evolution from a patch management tool to the standard version control system.*
 
 *Figure 2: The branching flow used by Codex deployer to orchestrate code updates.*
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

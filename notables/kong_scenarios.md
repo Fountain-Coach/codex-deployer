@@ -11,3 +11,12 @@ The FountainAI microservices expose OpenAPI-based endpoints that can be unified 
 7. **Declarative Configuration with CI/CD** – Gateway configuration stored under version control can be rolled out automatically as part of the deployer loop. Any environment variables for this process are documented in [docs/environment_variables.md](../docs/environment_variables.md).
 
 These scenarios show how Kong becomes more than a simple router—it orchestrates versioning, tenant management, observability and real-time tooling around FountainAI's services.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

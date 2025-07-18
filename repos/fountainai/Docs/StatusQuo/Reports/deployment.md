@@ -53,3 +53,12 @@ docker compose down
 
 This workflow lets you run the microservices locally. Future updates will add full networking and durable persistence.
 All containers emit JSON logs which can be aggregated by your logging stack.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

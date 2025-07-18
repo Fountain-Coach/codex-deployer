@@ -11,3 +11,12 @@ Codex-Deployer began as an experiment to remove brittle CI pipelines and GitHub 
 - Improve the auto-patch workflow with better conflict handling
 
 Return to the [handbook index](README.md) for additional background material.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

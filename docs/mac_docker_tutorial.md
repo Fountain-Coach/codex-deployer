@@ -100,3 +100,12 @@ This lets the dispatcher build Swift packages that rely on Apple-provided
 frameworks while still running inside a container. Prefer the open source Swift
 toolchain whenever possible, but branch out into vendor-specific builds only
 when necessary.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

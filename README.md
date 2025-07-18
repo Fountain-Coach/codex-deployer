@@ -66,3 +66,9 @@ The references below expand on each topic and trace the project's evolution.
 - [Code reference](docs/handbook/code_reference.md)
 
 [codex-doc]: https://platform.openai.com/docs/codex/overview
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

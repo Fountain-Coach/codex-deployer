@@ -56,3 +56,12 @@ This CLI is ideal for:
 - Connecting renderable output to other tools (e.g., orchestration logs, build pipelines)
 - Rendering `.fountain`, `.mid`, or `.ly` views via CLI with extended routing
 
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

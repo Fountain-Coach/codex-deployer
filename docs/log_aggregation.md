@@ -19,3 +19,12 @@ services:
 Replace `loki-url` with your aggregator endpoint. The same pattern applies to the Tools Factory and other services.
 
 For manual deployments, run a tool like `fluent-bit` or `promtail` to stream logs from Docker to the aggregator.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

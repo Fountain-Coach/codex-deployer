@@ -56,3 +56,12 @@ Teatro/
 
 ---
 
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

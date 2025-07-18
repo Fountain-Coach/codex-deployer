@@ -64,3 +64,12 @@ Unit tests verify the generator using a simplified fixture rather than the full 
 - Maintain a changelog of spec revisions and corresponding generated versions.
 
 Implementing these steps will transform the current skeleton generators into production‑ready client libraries and standalone servers for the entire FountainAI suite.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

@@ -180,3 +180,12 @@ Current status reports reside in [Docs/StatusQuo](Docs/StatusQuo/).
 
 MIT License  
 © 2025 FountainAI
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

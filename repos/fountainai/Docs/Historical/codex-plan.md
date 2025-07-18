@@ -69,3 +69,12 @@ This plan defines how Codex should build a Swift 6-native OpenAPI code generator
 - [ ] Consider GitHub Actions workflow for `swift build` + `swift test`.
 
 ---
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

@@ -123,3 +123,12 @@ CUT TO: >>
 - Pair with `Stage` to segment narrative structure into episodic slices
 - Embed semantic cues for lighting, props, and character arcs via `TeatroIcon` and `CodexPreviewer`
 
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

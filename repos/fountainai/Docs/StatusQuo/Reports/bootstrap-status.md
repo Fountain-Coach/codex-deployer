@@ -21,3 +21,12 @@ Spec path: `FountainAi/openAPI/v1/bootstrap.yml` (version 1.0.0).
 - Added authentication middleware and Prometheus monitoring
 - Implemented reflection promotion logic and streaming analytics
 - Added structured logging and a Compose workflow example
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

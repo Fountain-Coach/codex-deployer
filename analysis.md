@@ -8,3 +8,12 @@ initializer 'init(_:)' requires that '__socket_type' conform to 'BinaryFloatingP
 
 This indicates the constants `AF_INET` and `SOCK_STREAM` need to be explicitly cast to `Int32` when calling `socket()` on Linux. After patching `main.swift` files to use `Int32(AF_INET)` and `Int32(SOCK_STREAM)`, the build could not fully complete due to environment resource limits.
 
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

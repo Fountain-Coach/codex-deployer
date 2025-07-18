@@ -63,3 +63,12 @@ This animation system works especially well for:
 - `.fountain` screenplay line reveals
 - Drift and semantic arc transitions
 
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

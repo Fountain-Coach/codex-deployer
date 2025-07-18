@@ -27,3 +27,12 @@ docker compose up -d
 
 Kong's admin API will be available on `http://localhost:8001` and the proxy
 listens on `http://localhost:8000`. Typesense is reachable at `${TYPESENSE_URL}`.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

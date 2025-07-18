@@ -36,3 +36,12 @@ Invalid documents return `422` with an `ErrorResponse`.
 - **Completed**: Validation rules now detect duplicate `operationId` values and missing path parameters, returning detailed `ErrorResponse` messages.
 - **Completed**: `typesense-codex/scripts/bootstrap_typesense.py` creates required collections for production Typesense instances.
 - Structured logging and Docker Compose example added for local testing
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

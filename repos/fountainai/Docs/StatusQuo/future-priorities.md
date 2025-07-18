@@ -14,3 +14,12 @@ To progress toward a functional release we should:
 4. **Introduce integration tests** – use the generated SDKs to call the running servers and verify end‑to‑end flows.
 5. **Automate CI and container builds** – run `swift build` and `swift test` on every pull request and document Docker workflows for deployment.
 6. **Update the execution plan** – reconcile `Docs/Historical/codex-plan.md` with completed work and these new tasks.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

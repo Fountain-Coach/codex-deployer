@@ -30,3 +30,12 @@ The `README.md` describes the purpose and structure of this project. The `.codex
 - You may use modular directory structure and file naming as appropriate.
 
 Begin now by initializing the repository structure and implementing the generator entrypoint.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

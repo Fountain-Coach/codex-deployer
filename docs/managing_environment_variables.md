@@ -98,3 +98,12 @@ Using a token avoids interactive Git prompts when cloning private repositories.
 - [mac_docker_tutorial.md](mac_docker_tutorial.md) – full walkthrough for macOS
 
 - [handbook](handbook/README.md) – index of all tutorials
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

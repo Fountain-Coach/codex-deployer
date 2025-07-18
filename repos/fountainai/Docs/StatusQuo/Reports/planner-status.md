@@ -25,3 +25,12 @@ Spec path: `FountainAi/openAPI/v1/planner.yml` (version 1.0.0).
 - **Completed**: Implemented full workflow orchestration calling the LLM Gateway and Function Caller
 - Document environment variables and external dependencies
 - Refer to [environment_variables.md](../../../../../docs/environment_variables.md) when configuring the service
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

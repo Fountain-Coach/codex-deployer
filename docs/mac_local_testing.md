@@ -71,3 +71,12 @@ Press `Ctrl-C` in the terminal running the container to stop the dispatcher.
 - [mac_docker_tutorial.md](mac_docker_tutorial.md) – more details on running the dispatcher locally
 - [environment_variables.md](environment_variables.md) – complete variable reference
 - [managing_environment_variables.md](managing_environment_variables.md) – step‑by‑step setup guide
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

@@ -12,3 +12,12 @@ When PR mode is active the dispatcher:
 
 This approach allows human review while keeping automation centralized. Direct push mode remains available by disabling `DISPATCHER_USE_PRS`.
 
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```

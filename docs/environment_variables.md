@@ -85,3 +85,12 @@ tokens remain private. The accompanying `.dockerignore` file ensures these
 values are not copied into Docker build contexts.
 
 See the [handbook](handbook/README.md) for additional setup guides.
+
+```
+
+
+
+```
+© 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+```
