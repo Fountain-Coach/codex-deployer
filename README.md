@@ -24,6 +24,8 @@ This repo defines a fully autonomous deployment system where Codex:
 
 An always-on deployment brain powered by Codex.
 
+If you're new to the project, start with [docs/handbook/introduction.md](docs/handbook/introduction.md) for a concise overview and links to required environment variables.
+
 > **Repo Alias**: References to `fountainai` actually point to
 > [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).
 > The sources now reside in `repos/fountainai/`, so no additional clone is required.
@@ -100,14 +102,9 @@ At its heart is a single principle:
 | `commands/restart-services.sh` | Optional legacy restart script |
 | `commands/restart-target.sh` | Restart a service specified in feedback |
 | `systemd/fountain-dispatcher.service` | Autostarts dispatcher on VPS boot |
-| `docs/dispatcher_v2.md` | Detailed dispatcher v2 documentation |
+| `docs/handbook/README.md` | Central hub for all deployment guides |
 | `docs/environment_variables.md` | Reference for all environment variables |
-| `docs/managing_environment_variables.md` | Step-by-step variable setup |
-| `docs/mac_docker_tutorial.md` | Run the dispatcher locally on macOS with Docker |
-| `docs/mac_local_testing.md` | Test services locally on macOS |
-| `docs/fountainai_mac_ui_plan.md` | Plan for a macOS UI using FountainAI and Teatro |
-| `docs/what_is_git.md` | Intro to Git with history and flow |
-| `docs/design_patterns.md` | Evaluation of client/server, plugin, and declarative patterns |
+| `docs/dispatcher_v2.md` | Detailed dispatcher v2 documentation |
 
 ---
 
