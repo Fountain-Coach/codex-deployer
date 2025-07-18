@@ -24,6 +24,8 @@ This repo defines a fully autonomous deployment system where Codex:
 
 An always-on deployment brain powered by Codex.
 
+If you're new to the project, start with [docs/handbook/introduction.md](docs/handbook/introduction.md) for a concise overview and links to required environment variables.
+
 > **Repo Alias**: References to `fountainai` actually point to
 > [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).
 > The sources now reside in `repos/fountainai/`, so no additional clone is required.

@@ -9,12 +9,14 @@ locate all relevant guides in one place.
 
 ### Getting Started
 
+- [Introduction to Codex-Deployer](introduction.md)
 - [Running on macOS with Docker](../mac_docker_tutorial.md)
 - [Local Testing on macOS](../mac_local_testing.md)
 - [Managing Environment Variables](../managing_environment_variables.md)
 - [Environment Variables Reference](../environment_variables.md)
 
 ### Dispatcher Details
+
 - [Dispatcher v2 Overview](../dispatcher_v2.md)
 - [Pull Request Workflow](../pull_request_workflow.md)
 
