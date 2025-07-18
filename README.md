@@ -21,12 +21,12 @@ Deploying several Swift services across Linux and macOS quickly becomes brittle.
 To overcome these hurdles, Codex-Deployer unifies builds, logs and fixes in one workflow.
 
 ## 2. Solution
-Codex-Deployer bundles everything in one Git repository. A Python dispatcher pulls the repos, builds each service and commits any fixes. Environment variables configure authentication and optional Docker Compose tests[^env-vars].
+Codex-Deployer bundles everything in one Git repository. A Python dispatcher pulls the repos, builds each service and commits any fixes. Environment variables configure authentication and optional Docker Compose tests (see [environment_variables.md](docs/environment_variables.md)).
 
 Understanding how this works requires a quick look at the architecture.
 
 ## 3. Architecture
-The dispatcher loop lives in `deploy/dispatcher_v2.py`. It writes logs to `deploy/logs/` and reads patch proposals from `feedback/`. A diagram and feature list appear in the architecture overview[^arch-overview].
+The dispatcher loop lives in `deploy/dispatcher_v2.py`. It writes logs to `deploy/logs/` and reads patch proposals from `feedback/`. A diagram and feature list appear in the [architecture overview](docs/handbook/architecture.md).
 With these components in mind, you can start the dispatcher locally in a few steps.
 
 ## 4. Quick start
@@ -43,12 +43,12 @@ docker run --rm -it \
   codex-deployer-local \
   python3 /srv/deploy/deploy/dispatcher_v2.py
 ```
-For a full explanation of each variable and how to generate tokens, see the setup guide[^manage-env].
+For a full explanation of each variable and how to generate tokens, see the [setup guide](docs/managing_environment_variables.md).
 
 Once the basics are running, the documentation hub walks you through advanced usage.
 
 ## 5. Documentation hub
-Start with the handbook[^handbook] for tutorials. The introduction[^intro] prepares you for the environment setup and cross‑platform workflow. The code reference[^code-ref] links to inline docs.
+Start with the [handbook](docs/handbook/README.md) for tutorials. The [introduction](docs/handbook/introduction.md) prepares you for the environment setup and cross‑platform workflow. The [code reference](docs/handbook/code_reference.md) links to inline docs.
 
 ## Key files
 | File | Purpose |
@@ -61,15 +61,8 @@ Start with the handbook[^handbook] for tutorials. The introduction[^intro] prepa
 The references below expand on each topic and trace the project's evolution.
 
 ## Further reading
-- Architecture overview[^arch-overview]
-- History and roadmap[^history]
-- Code reference[^code-ref]
+- [Architecture overview](docs/handbook/architecture.md)
+- [History and roadmap](docs/handbook/history.md)
+- [Code reference](docs/handbook/code_reference.md)
 
 [codex-doc]: https://platform.openai.com/docs/codex/overview
-[^env-vars]: [docs/environment_variables.md](docs/environment_variables.md)
-[^manage-env]: [docs/managing_environment_variables.md](docs/managing_environment_variables.md)
-[^handbook]: [docs/handbook/README.md](docs/handbook/README.md)
-[^intro]: [docs/handbook/introduction.md](docs/handbook/introduction.md)
-[^code-ref]: [docs/handbook/code_reference.md](docs/handbook/code_reference.md)
-[^arch-overview]: [docs/handbook/architecture.md](docs/handbook/architecture.md)
-[^history]: [docs/handbook/history.md](docs/handbook/history.md)
