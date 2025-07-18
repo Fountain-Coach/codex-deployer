@@ -9,9 +9,6 @@ FountainAI—a suite of microservices that will extend Codex into a cross-platfo
 LLM operating system. Once deployed, FountainAI aims to emancipate from Codex
 and serve as its own semantic reasoning engine.
 
-Copyright (c) 2025 Benedikte Eickhoff. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-
 A minimal Python dispatcher builds each service, logs errors and patches code through Git—keeping every repository in lockstep. This central loop sets up the deployment problem described next.
 
 ---
