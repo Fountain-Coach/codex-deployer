@@ -2,10 +2,17 @@
 
 *Git-driven deployment companion for Swift services.*
 
-Powered by OpenAI's [Codex](https://platform.openai.com/docs/guides/codex),
+Powered by OpenAI's [Codex](https://platform.openai.com/docs/codex/overview),
 the dispatcher acts like a **semantic compiler**. It interprets build logs,
 rewrites code automatically and keeps services in sync without waiting for
-traditional CI feedback.
+traditional CI feedback. See the official
+[Codex overview](https://platform.openai.com/docs/codex/overview) for more
+background.
+
+These foundations pave the way for FountainAI—a suite of microservices that
+will extend Codex into a cross-platform LLM operating system. Once deployed,
+FountainAI aims to emancipate from Codex and serve as its own semantic reasoning
+engine.
 
 Copyright (c) 2025 Benedikte Eickhoff. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
