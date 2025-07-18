@@ -3,6 +3,7 @@
 Copyright (c) 2025 Benedikte Eickhoff. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 
+
 Codex-Deployer is a pragmatic deployment companion. It keeps your services in sync by running a small Python loop that builds everything, captures errors and applies fixes from Git.
 
 ---
@@ -53,5 +54,6 @@ For a full explanation of each variable and how to generate tokens, see [managin
 - [Architecture Overview](docs/handbook/architecture.md)
 - [History and Roadmap](docs/handbook/history.md)
 - [Code Reference](docs/handbook/code_reference.md)
+
 
 Released under the [MIT License](LICENSE).
