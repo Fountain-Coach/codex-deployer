@@ -1,3 +1,8 @@
+"""Analyze Swift build logs and produce a Markdown summary.
+
+See `docs/handbook/code_reference.md` for an overview of this script's role.
+"""
+
 import os
 import re
 from typing import List, Dict
@@ -8,6 +13,7 @@ SEGMENT_MARKERS = ["CompileSwift", "Test Case", "error:"]
 
 
 def segment_log(text: str, max_segments: int = MAX_SEGMENTS) -> List[Dict[str, List[str]]]:
+    """Split log output into segments of interest."""
     segments = []
     current = None
     for line in text.splitlines():
@@ -28,6 +34,7 @@ def segment_log(text: str, max_segments: int = MAX_SEGMENTS) -> List[Dict[str, L
 
 
 def analyze_segment(segment: Dict[str, List[str]]) -> Dict[str, str]:
+    """Classify a log segment and suggest fixes."""
     lines = segment["lines"]
     errors = [l for l in lines if "error:" in l]
     warnings = [l for l in lines if "warning:" in l]
@@ -65,6 +72,7 @@ def analyze_segment(segment: Dict[str, List[str]]) -> Dict[str, str]:
 
 
 def generate_report(segments: List[Dict[str, List[str]]], out_path: str = "report.md") -> None:
+    """Write a Markdown summary of the analyzed log segments."""
     with open(out_path, "w") as f:
         for idx, seg in enumerate(segments, 1):
             f.write(f"## Segment {idx} - {seg['header']}\n\n")
@@ -82,6 +90,7 @@ def generate_report(segments: List[Dict[str, List[str]]], out_path: str = "repor
 
 
 def main() -> None:
+    """Entry point for manual analysis of `build.log`."""
     if not os.path.exists("build.log"):
         print("build.log not found")
         return

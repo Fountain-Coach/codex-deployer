@@ -7,6 +7,9 @@ basic build result checking, log rotation, automatic patch
 application, and granular service restarts. It remains backward
 compatible with the original :mod:`dispatcher` but exposes a new
 entry point.
+
+See `docs/handbook/code_reference.md` for an overview of this module and
+`docs/environment_variables.md` for the environment variables it consumes.
 """
 
 import os
@@ -48,7 +51,10 @@ DEFAULT_GIT_EMAIL = "mail@benedikt-eickhoff.de"
 
 
 def configure_git() -> None:
-    """Set global git identity, falling back to defaults."""
+    """Set global git identity using ``GIT_USER_NAME`` and ``GIT_USER_EMAIL``.
+
+    See ``docs/environment_variables.md`` for details on these variables.
+    """
     name = os.environ.get("GIT_USER_NAME", DEFAULT_GIT_NAME)
     email = os.environ.get("GIT_USER_EMAIL", DEFAULT_GIT_EMAIL)
     subprocess.run(["git", "config", "--global", "user.name", name], check=False)
@@ -60,7 +66,10 @@ def configure_git() -> None:
 
 
 def check_env() -> None:
-    """Log the availability of environment variables."""
+    """Log the availability of required environment variables.
+
+    Refer to ``docs/environment_variables.md`` for the full list.
+    """
     if "DISPATCHER_INTERVAL" not in os.environ:
         log("DISPATCHER_INTERVAL not set; using default 60")
     if "DISPATCHER_USE_PRS" not in os.environ:
@@ -336,7 +345,10 @@ def build_swift() -> None:
 
 
 def build_docker_images() -> None:
-    """Build Docker images for any repository containing a Dockerfile."""
+    """Build Docker images for repositories with a ``Dockerfile``.
+
+    Controlled by ``DISPATCHER_BUILD_DOCKER``. See ``docs/environment_variables.md``.
+    """
     if not BUILD_DOCKER:
         return
     log("[dispatcher] Running Docker build...")
@@ -362,7 +374,10 @@ def build_docker_images() -> None:
 
 
 def run_e2e_tests() -> None:
-    """Run docker compose integration tests if a compose file is present."""
+    """Run docker compose integration tests if a compose file is present.
+
+    Controlled by ``DISPATCHER_RUN_E2E``. See ``docs/environment_variables.md``.
+    """
     if not RUN_E2E:
         return
     log("[dispatcher] Running tests...")
