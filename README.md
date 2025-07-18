@@ -43,7 +43,8 @@ Start with the [Handbook](docs/handbook/README.md) for tutorials. The [Introduct
 | `deploy/dispatcher_v2.py` | Main dispatcher loop |
 | `docs/handbook/README.md` | Documentation hub |
 | `docs/environment_variables.md` | Variable reference |
-| `agent.md` | Agent behaviour contract |
+| `AGENT.md` | Agent behaviour contract |
+
 
 ## Further reading
 - [Architecture Overview](docs/handbook/architecture.md)
