@@ -66,8 +66,15 @@ The `set -a` command marks all variables for export so that `python3` inherits t
 
 ## 5. Running inside Docker
 
-Mount your project directory and pass the variables to Docker. The image includes
-the Docker CLI, so mount `/var/run/docker.sock` to connect to the host daemon:
+You can launch the dispatcher directly on your host or inside the
+`codex-deployer-local` image. Running inside Docker keeps the environment
+identical across macOS and Linux while still using your host's Docker daemon for
+compose-based tests. This mirrors the cross‑platform approach described in the
+[handbook introduction](handbook/introduction.md#managing-platform-diversity).
+
+Mount the project directory and pass the exported variables to the container.
+The image already bundles the Docker CLI, so mount `/var/run/docker.sock` so it
+can talk to the host daemon:
 
 ```bash
 export $(grep -v '^#' dispatcher.env)
@@ -78,6 +85,11 @@ docker run --rm -it -v $(pwd):/srv/deploy \
   python3 /srv/deploy/deploy/dispatcher_v2.py
 ```
 
+Set `DISPATCHER_RUN_E2E=1` if you want the dispatcher to run each service's
+`docker compose` tests. See
+[environment_variables.md](environment_variables.md) for a description of this
+and other variables.
+
 Using a token avoids interactive Git prompts when cloning private repositories.
 
 ## Further Reading
@@ -85,3 +97,4 @@ Using a token avoids interactive Git prompts when cloning private repositories.
 - [environment_variables.md](environment_variables.md) – complete variable reference
 - [mac_docker_tutorial.md](mac_docker_tutorial.md) – full walkthrough for macOS
 
+- [handbook](handbook/README.md) – index of all tutorials
