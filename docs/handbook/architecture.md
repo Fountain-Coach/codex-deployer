@@ -29,6 +29,7 @@ For a gentle introduction see [Introduction to Codex-Deployer](introduction.md).
 
 ## Key Features
 
+
 | Capability | Description |
 |------------|-------------|
 | ✅ Git-native | Codex pulls from `main` and reads current state |
@@ -46,3 +47,4 @@ For a gentle introduction see [Introduction to Codex-Deployer](introduction.md).
 | ✅ Docker builds & e2e tests | Set `DISPATCHER_BUILD_DOCKER=1` and `DISPATCHER_RUN_E2E=1` for container workflows |
 
 For implementation details see [dispatcher_v2.md](../dispatcher_v2.md).
+
