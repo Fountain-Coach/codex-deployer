@@ -1,5 +1,9 @@
-
 # 🧠 codex-deployer
+
+Copyright (c) 2025 Benedikte Eickhoff. All rights reserved.
+Unauthorized copying or distribution is strictly prohibited.
+
+Codex-Deployer is a pragmatic deployment companion. It keeps your services in sync by running a small Python loop that builds everything, captures errors and applies fixes from Git.
 
 *Git-driven deployment companion for Swift services.*
 
@@ -8,7 +12,7 @@ Unauthorized copying or distribution is strictly prohibited.
 
 Codex-Deployer keeps multiple services in lockstep. A small Python loop builds them, logs errors and patches code through Git.
 
----
+Codex-Deployer centralizes multiple Swift services and a Python dispatcher in one repository. It builds the services, applies JSON patches from `feedback/` and pushes results back to GitHub. The same workflow works on macOS or Linux with optional Docker Compose tests.
 
 ## 1. Problem
 Deploying several Swift services across Linux and macOS quickly becomes brittle. Every project needs a slightly different toolchain and CI feedback is slow.
@@ -20,6 +24,7 @@ Codex-Deployer bundles everything in one Git repository. A Python dispatcher pul
 The dispatcher loop lives in `deploy/dispatcher_v2.py`. It writes logs to `deploy/logs/` and reads patch proposals from `feedback/`. A diagram and feature list appear in [Architecture Overview](docs/handbook/architecture.md).
 
 ## 4. Quick start
+
 ```bash
 git clone https://github.com/fountain-coach/codex-deployer /srv/deploy
 cd /srv/deploy
