@@ -1,0 +1,64 @@
+[2025-07-18T17:05:06.062517] DISPATCHER_INTERVAL not set; using default 60
+[2025-07-18T17:05:06.062911] DISPATCHER_USE_PRS not set; pull request workflow enabled
+[2025-07-18T17:05:06.063469] DISPATCHER_BUILD_DOCKER not set; docker builds disabled
+[2025-07-18T17:05:06.063805] DISPATCHER_RUN_E2E not set; integration tests disabled
+[2025-07-18T17:05:06.069002] GIT_USER_NAME not set; defaulting to Contexter
+[2025-07-18T17:05:06.069153] GIT_USER_EMAIL not set; defaulting to mail@benedikt-eickhoff.de
+[2025-07-18T17:05:06.069414] Dispatcher started successfully 🟢
+[2025-07-18T17:05:06.069639] === New Cycle ===
+[0/1] Planning build
+Building for debugging...
+[0/155] Compiling pbkdf.cc
+[0/155] Compiling p_x25519.cc
+[1/155] Compiling scrypt.cc
+[1/155] Compiling print.cc
+[4/155] Compiling p_rsa_asn1.cc
+[5/155] Compiling p_x25519_asn1.cc
+[6/155] Compiling p_rsa.cc
+[7/155] Write swift-version-24593BA9C3E375BF.txt
+[8/150] Compiling p_ed25519.cc
+[9/150] Compiling p_ec.cc
+[10/167] Compiling p_hkdf.cc
+[11/167] Compiling p_ed25519_asn1.cc
+[12/167] Compiling p_dh_asn1.cc
+[13/167] Compiling p_ec_asn1.cc
+[14/173] Compiling p_dsa_asn1.cc
+[16/226] Compiling DequeModule Deque.swift
+[17/227] Emitting module PlannerServer
+[18/227] Compiling DequeModule _DequeSlot.swift
+[19/227] Compiling Algorithms MinMax.swift
+[20/227] Compiling Algorithms Compacted.swift
+[21/227] Compiling Algorithms Cycle.swift
+[22/227] Compiling Algorithms EitherSequence.swift
+[23/228] Emitting module LLMGatewayServer
+[24/228] Compiling PlannerServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/planner/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 21 | 
+ 22 |     func start() throws {
+ 23 |         let socketType: Int32 = SOCK_STREAM
+    |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 24 | 
+ 25 |         serverFD = socket(AF_INET, socketType, 0)
+[25/228] Compiling LLMGatewayServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 21 | 
+ 22 |     func start() throws {
+ 23 |         let socketType: Int32 = SOCK_STREAM
+    |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 24 | 
+ 25 |         serverFD = socket(AF_INET, socketType, 0)
+[26/228] Emitting module PersistServer
+[27/228] Compiling PersistServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/persist/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 21 | 
+ 22 |     func start() throws {
+ 23 |         let socketType: Int32 = SOCK_STREAM
+    |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 24 | 
+ 25 |         serverFD = socket(AF_INET, socketType, 0)
+[27/228] Compiling bcm.cc
+
+[2025-07-18T17:05:06.070135] Starting swift build...
+[2025-07-18T17:05:16.394493] swift build failed with exit code 1
+[2025-07-18T17:05:16.544272] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-18T17:05:19.382286] Opened PR #228 for Fountain-Coach/codex-deployer
