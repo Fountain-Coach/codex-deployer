@@ -13,6 +13,7 @@ This introduction summarises the core concepts and explains how environment vari
 3. **Semantic feedback** – After each cycle, JSON placed in `feedback/` can modify the code or restart services. This allows Codex to iterate automatically based on build results.
 4. **Cross-platform workflow** – The same loop works on macOS or Linux. Optional Docker Compose tests run when `DISPATCHER_RUN_E2E=1`.
 
+
 ## Configuring the Environment
 
 The dispatcher relies heavily on environment variables for authentication and feature flags. The full list is documented in [environment_variables.md](../environment_variables.md). At minimum you will need a `GITHUB_TOKEN` and commit identity variables (`GIT_USER_NAME`, `GIT_USER_EMAIL`).
