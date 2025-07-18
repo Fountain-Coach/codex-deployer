@@ -1,38 +1,30 @@
-# 🧠 codex-deployer
+# Codex-Deployer Handbook
 
 *Git-driven deployment companion for Swift services.*
 
-Codex-Deployer orchestrates builds and deployments directly from Git. Powered by
-OpenAI's [Codex][codex-doc], it acts like a **semantic compiler**—interpreting
-build logs and rewriting code automatically. These foundations pave the way for
-FountainAI—a suite of microservices that will extend Codex into a cross-platform
-LLM operating system. Once deployed, FountainAI aims to emancipate from Codex
-and serve as its own semantic reasoning engine.
+## Abstract
+Codex-Deployer unifies builds, logs, and semantic fixes in a single Git-bound loop. The project began as a pragmatic helper for Codex, but it ultimately clears the path for **FountainAI**, a platform where large language models orchestrate tools, analyse knowledge drift, and learn from reflection. As the deployment loop compiles and patches code, it mirrors FountainAI's broader reasoning flow, where plans are executed step by step and every outcome informs the next iteration.
 
-A minimal Python dispatcher builds each service, logs errors and patches code through Git—keeping every repository in lockstep. This central loop sets up the deployment problem described next.
+## Table of Contents
+- [Introduction to Codex-Deployer](docs/handbook/introduction.md) – overview of the dispatcher and how environment variables shape the workflow.
+- [Architecture Overview](docs/handbook/architecture.md) – diagram of repositories and the build loop.
+- [Running on macOS with Docker](docs/mac_docker_tutorial.md) – instructions for local Docker setups.
+- [Local Testing on macOS](docs/mac_local_testing.md) – guidance for replicating the Linux build on macOS.
+- [Managing Environment Variables](docs/managing_environment_variables.md) – how to set up tokens and secrets.
+- [Environment Variables Reference](docs/environment_variables.md) – complete list of variables.
+- [Dispatcher v2 Overview](docs/dispatcher_v2.md) – inner workings of the Python loop.
+- [Pull Request Workflow](docs/pull_request_workflow.md) – how patches are proposed and merged.
+- [Code Reference](docs/handbook/code_reference.md) – links to inline API docs.
+- [History and Roadmap](docs/handbook/history.md) – how the project evolved and what's next.
 
----
-
-## 1. Problem
-Deploying several Swift services across Linux and macOS quickly becomes brittle. Every project needs a slightly different toolchain and CI feedback is slow.
-To overcome these hurdles, Codex-Deployer unifies builds, logs and fixes in one workflow.
-
-## 2. Solution
-Codex-Deployer bundles everything in one Git repository. A Python dispatcher pulls the repos, builds each service and commits any fixes. Environment variables configure authentication and optional Docker Compose tests (see [environment_variables.md](docs/environment_variables.md)).
-
-Understanding how this works requires a quick look at the architecture.
-
-## 3. Architecture
-The dispatcher loop lives in `deploy/dispatcher_v2.py`. It writes logs to `deploy/logs/` and reads patch proposals from `feedback/`. A diagram and feature list appear in the [architecture overview](docs/handbook/architecture.md).
-With these components in mind, you can start the dispatcher locally in a few steps.
-
-## 4. Quick start
+## Quick start
+Clone the repository, copy the sample environment file, and start the dispatcher in Docker.
 ```bash
 git clone https://github.com/fountain-coach/codex-deployer /srv/deploy
 cd /srv/deploy
 cp systemd/dispatcher.env dispatcher.env  # edit values
-docker build -t codex-deployer-local .
 export $(grep -v '^#' dispatcher.env | xargs)
+docker build -t codex-deployer-local .
 docker run --rm -it \
   -v $(pwd):/srv/deploy \
   -v /var/run/docker.sock:/var/run/docker.sock \
@@ -40,30 +32,18 @@ docker run --rm -it \
   codex-deployer-local \
   python3 /srv/deploy/deploy/dispatcher_v2.py
 ```
-For a full explanation of each variable and how to generate tokens, see the [setup guide](docs/managing_environment_variables.md).
+For an explanation of each variable and how to generate tokens, see the [setup guide](docs/managing_environment_variables.md).
 
-Once the basics are running, the documentation hub walks you through advanced usage.
-
-## 5. Documentation hub
-Start with the [handbook](docs/handbook/README.md) for tutorials. The [introduction](docs/handbook/introduction.md) prepares you for the environment setup and cross‑platform workflow. The [code reference](docs/handbook/code_reference.md) links to inline docs.
+## From Codex to FountainAI
+The dispatcher acts as a **semantic compiler**, applying patches and rebuilding until services succeed. FountainAI takes this approach further. According to the platform overview, it "combines large language models with a suite of specialized services to enable advanced AI reasoning, planning, and knowledge management"【F:repos/fountainai/Docs/FountainAI Platform Overview.pdf†L1-L8】. Tools are registered, called, and reflected upon so that the AI can improve over time. Our build loop foreshadows that design: after each cycle, the log is parsed, fixes are applied, and the next iteration begins. FountainAI generalizes this idea by orchestrating plans, invoking tools, and storing reflections in corpora, producing "structured multi-step planning" and "automated reflection" for continuous improvement【F:repos/fountainai/Docs/FountainAI Platform Overview.pdf†L381-L405】.
 
 ## Key files
-| File | Purpose |
-| --- | --- |
-| `deploy/dispatcher_v2.py` | Main dispatcher loop |
-| `docs/handbook/README.md` | Documentation hub |
-| `docs/environment_variables.md` | Variable reference |
-| `AGENT.md` | Agent behaviour contract |
+- `deploy/dispatcher_v2.py` – main loop that builds each service.
+- `docs/handbook/introduction.md` – starting point for new contributors.
+- `docs/environment_variables.md` – reference for configuration.
+- `AGENT.md` – behaviour contract for the autonomous agent.
 
-The references below expand on each topic and trace the project's evolution.
-
-## Further reading
-- [Architecture overview](docs/handbook/architecture.md)
-- [History and roadmap](docs/handbook/history.md)
-- [Code reference](docs/handbook/code_reference.md)
-
-[codex-doc]: https://platform.openai.com/docs/codex/overview
-
+For deeper context and a complete list of documents, explore the pages linked in the table of contents. They describe how FountainAI will emancipate from Codex, using the same reasoning flow but expanded to dynamic tool orchestration and persistent semantic memory.
 
 ```
 © 2025 Benedikte Eickhoff. All rights reserved.
