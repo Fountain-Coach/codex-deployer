@@ -51,3 +51,431 @@ Building for debugging...
 
 [2025-07-18T04:35:45.383424] Starting swift build...
 [2025-07-18T04:35:56.557260] swift build failed with exit code 1
+[2025-07-18T04:35:56.671918] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-18T04:35:58.207362] [dispatcher] Running Docker build...
+[2025-07-18T04:35:58.208046] [dispatcher] Running tests...
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [bootstrap internal] load build definition from Dockerfile
+#1 transferring dockerfile: 272B done
+#1 DONE 0.0s
+
+#2 [baseline-awareness internal] load build definition from Dockerfile
+#2 transferring dockerfile: 299B done
+#2 DONE 0.0s
+
+#3 [llm-gateway internal] load build definition from Dockerfile
+#3 transferring dockerfile: 278B done
+#3 DONE 0.0s
+
+#4 [function-caller internal] load build definition from Dockerfile
+#4 transferring dockerfile: 290B done
+#4 DONE 0.0s
+
+#5 [planner internal] load build definition from Dockerfile
+#5 transferring dockerfile: 266B done
+#5 DONE 0.0s
+
+#6 [tools-factory internal] load build definition from Dockerfile
+#6 transferring dockerfile: 284B done
+#6 DONE 0.0s
+
+#7 [persist internal] load build definition from Dockerfile
+#7 transferring dockerfile: 266B done
+#7 DONE 0.0s
+
+#8 [persist internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 DONE 0.9s
+
+#9 [tools-factory internal] load metadata for docker.io/library/ubuntu:22.04
+#9 DONE 0.9s
+
+#10 [llm-gateway internal] load .dockerignore
+#10 transferring context: 2B done
+#10 DONE 0.0s
+
+#11 [function-caller build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#11 DONE 0.0s
+
+#12 [function-caller stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:59ccd419c0dc0edf9e3bff1a3b2b073ea15a2ce4bc45ce7c989278b225b09af3
+#12 DONE 0.0s
+
+#13 [persist internal] load .dockerignore
+#13 transferring context: 2B done
+#13 DONE 0.0s
+
+#14 [tools-factory internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.0s
+
+#15 [baseline-awareness internal] load .dockerignore
+#15 transferring context: 2B done
+#15 DONE 0.0s
+
+#16 [function-caller internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.0s
+
+#17 [planner internal] load .dockerignore
+#17 transferring context: 2B done
+#17 DONE 0.0s
+
+#18 [bootstrap internal] load .dockerignore
+#18 transferring context: 2B done
+#18 DONE 0.0s
+
+#19 [llm-gateway internal] load build context
+#19 transferring context: 68.01MB 5.0s
+#19 ...
+
+#20 [baseline-awareness internal] load build context
+#20 ...
+
+#19 [llm-gateway internal] load build context
+#19 transferring context: 120.37MB 10.1s
+#19 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#23 [persist internal] load build context
+#23 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#25 [tools-factory internal] load build context
+#25 ...
+
+#24 [planner internal] load build context
+#24 transferring context: 184.26MB 15.2s
+#24 ...
+
+#20 [baseline-awareness internal] load build context
+#20 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#19 [llm-gateway internal] load build context
+#19 transferring context: 260.76MB 20.2s
+#19 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#23 [persist internal] load build context
+#23 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#25 [tools-factory internal] load build context
+#25 ...
+
+#21 [function-caller internal] load build context
+#21 transferring context: 328.75MB 25.2s
+#21 ...
+
+#20 [baseline-awareness internal] load build context
+#20 ...
+
+#21 [function-caller internal] load build context
+#21 transferring context: 405.52MB 30.3s
+#21 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#19 [llm-gateway internal] load build context
+#19 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#23 [persist internal] load build context
+#23 ...
+
+#25 [tools-factory internal] load build context
+#25 ...
+
+#21 [function-caller internal] load build context
+#21 transferring context: 467.62MB 35.3s
+#21 ...
+
+#20 [baseline-awareness internal] load build context
+#20 ...
+
+#21 [function-caller internal] load build context
+#21 transferring context: 518.50MB 40.4s
+#21 ...
+
+#19 [llm-gateway internal] load build context
+#19 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#25 [tools-factory internal] load build context
+#25 ...
+
+#23 [persist internal] load build context
+#23 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#25 [tools-factory internal] load build context
+#25 transferring context: 533.66MB 45.5s
+#25 ...
+
+#20 [baseline-awareness internal] load build context
+#20 ...
+
+#25 [tools-factory internal] load build context
+#25 transferring context: 618.56MB 50.5s
+#25 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#19 [llm-gateway internal] load build context
+#19 ...
+
+#23 [persist internal] load build context
+#23 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#23 [persist internal] load build context
+#23 transferring context: 654.79MB 55.5s
+#23 ...
+
+#20 [baseline-awareness internal] load build context
+#20 ...
+
+#23 [persist internal] load build context
+#23 transferring context: 688.16MB 60.6s
+#23 ...
+
+#25 [tools-factory internal] load build context
+#25 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#19 [llm-gateway internal] load build context
+#19 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#25 [tools-factory internal] load build context
+#25 transferring context: 730.77MB 65.7s
+#25 ...
+
+#20 [baseline-awareness internal] load build context
+#20 ...
+
+#25 [tools-factory internal] load build context
+#25 transferring context: 772.30MB 70.7s
+#25 ...
+
+#23 [persist internal] load build context
+#23 ...
+
+#25 [tools-factory internal] load build context
+#25 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#19 [llm-gateway internal] load build context
+#19 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#24 [planner internal] load build context
+#24 transferring context: 824.39MB 75.8s
+#24 ...
+
+#20 [baseline-awareness internal] load build context
+#20 ...
+
+#24 [planner internal] load build context
+#24 transferring context: 857.24MB 80.9s
+#24 ...
+
+#23 [persist internal] load build context
+#23 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#25 [tools-factory internal] load build context
+#25 ...
+
+#23 [persist internal] load build context
+#23 ...
+
+#19 [llm-gateway internal] load build context
+#19 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#19 [llm-gateway internal] load build context
+#19 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#19 [llm-gateway internal] load build context
+#19 transferring context: 901.88MB 86.0s
+#19 ...
+
+#20 [baseline-awareness internal] load build context
+#20 ...
+
+#19 [llm-gateway internal] load build context
+#19 transferring context: 947.07MB 91.0s
+#19 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#25 [tools-factory internal] load build context
+#25 ...
+
+#23 [persist internal] load build context
+#23 ...
+
+#25 [tools-factory internal] load build context
+#25 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#25 [tools-factory internal] load build context
+#25 transferring context: 978.52MB 96.1s
+#25 ...
+
+#20 [baseline-awareness internal] load build context
+#20 ...
+
+#25 [tools-factory internal] load build context
+#25 transferring context: 1.03GB 101.1s
+#25 ...
+
+#19 [llm-gateway internal] load build context
+#19 ...
+
+#23 [persist internal] load build context
+#23 ...
+
+#21 [function-caller internal] load build context
+#21 ...
+
+#22 [bootstrap internal] load build context
+#22 ...
+
+#24 [planner internal] load build context
+#24 ...
+
+#23 [persist internal] load build context
+#23 transferring context: 1.06GB 106.1s
+#23 ...
+
+#20 [baseline-awareness internal] load build context
+#20 ...
+
+#23 [persist internal] load build context
+#23 transferring context: 1.07GB 108.9s done
+#23 ...
+
+#25 [tools-factory internal] load build context
+#25 transferring context: 1.07GB 108.9s done
+#25 ...
+
+#22 [bootstrap internal] load build context
+#22 transferring context: 1.07GB 108.7s done
+#22 ...
+
+#24 [planner internal] load build context
+#24 transferring context: 1.07GB 111.3s done
+#24 ...
+
+#19 [llm-gateway internal] load build context
+#19 transferring context: 1.07GB 111.3s done
+#19 ...
+
+#21 [function-caller internal] load build context
+#21 transferring context: 1.07GB 111.3s done
+#21 ...
+
+#22 [bootstrap internal] load build context
+#22 DONE 114.3s
+
+#20 [baseline-awareness internal] load build context
+#20 transferring context: 1.07GB 108.7s done
+#20 DONE 114.3s
+
+#23 [persist internal] load build context
+#23 DONE 114.3s
+
+#25 [tools-factory internal] load build context
+#25 DONE 114.3s
+
+#24 [planner internal] load build context
+#24 DONE 114.3s
+
+#21 [function-caller internal] load build context
+#21 DONE 114.3s
+
+#19 [llm-gateway internal] load build context
+#19 DONE 114.3s
+
+#26 [tools-factory build 2/4] WORKDIR /src
+#26 CACHED
+
+#26 [planner build 2/4] WORKDIR /src
+#26 CACHED
+
+#27 [function-caller build 3/4] COPY . .
+#27 ERROR: failed to copy files: userspace copy failed: write /src/.build/repositories/swift-system-5815d4b7/objects/pack/pack-9e28992825b401fdc3fc2b48b33b2208a7dfe1bf.pack: input/output error
+------
+ > [
