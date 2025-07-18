@@ -1,0 +1,53 @@
+[2025-07-18T16:39:56.050344] === New Cycle ===
+Building for debugging...
+[0/213] Compiling thread.cc
+[1/213] Compiling thread_none.cc
+[1/213] Compiling sha256.cc
+[2/213] Compiling sha512.cc
+[2/213] Compiling siphash.cc
+[5/213] Compiling stack.cc
+[6/213] Compiling slhdsa.cc
+[7/213] Write swift-version-24593BA9C3E375BF.txt
+[8/208] Compiling sha1.cc
+[9/208] Compiling spake2plus.cc
+[10/208] Compiling rsa_extra.cc
+[11/208] Compiling rsa_print.cc
+[12/225] Compiling rc4.cc
+[13/231] Compiling rsa_crypt.cc
+[14/231] Compiling refcount.cc
+[15/251] Compiling rsa_asn1.cc
+[17/276] Emitting module LLMGatewayServer
+[18/276] Compiling LLMGatewayServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/llm-gateway/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 21 | 
+ 22 |     func start() throws {
+ 23 |         let socketType: Int32 = SOCK_STREAM
+    |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 24 | 
+ 25 |         serverFD = socket(AF_INET, socketType, 0)
+[19/276] Compiling PersistServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/persist/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 21 | 
+ 22 |     func start() throws {
+ 23 |         let socketType: Int32 = SOCK_STREAM
+    |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 24 | 
+ 25 |         serverFD = socket(AF_INET, socketType, 0)
+[20/276] Emitting module PersistServer
+[21/276] Emitting module PlannerServer
+[22/276] Compiling DequeModule Deque+Codable.swift
+[23/276] Compiling PlannerServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/planner/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 21 | 
+ 22 |     func start() throws {
+ 23 |         let socketType: Int32 = SOCK_STREAM
+    |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 24 | 
+ 25 |         serverFD = socket(AF_INET, socketType, 0)
+[23/276] Compiling windows.cc
+
+[2025-07-18T16:39:56.051575] Starting swift build...
+[2025-07-18T16:39:58.366441] swift build failed with exit code 1
+[2025-07-18T16:39:58.758951] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-18T16:40:02.191012] Opened PR #224 for Fountain-Coach/codex-deployer
+[2025-07-18T16:54:41.565617] Invalid PR status response: <urlopen error [Errno 111] Connection refused>
