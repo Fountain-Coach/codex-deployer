@@ -7,6 +7,9 @@ Unauthorized copying or distribution is strictly prohibited.
 
 > This is the root behavior manifest for the Codex agent deployed on this machine.
 
+For a repository overview and additional documentation see the
+[handbook](docs/handbook/README.md) linked from the main README.
+
 ---
 
 ## 📌 Purpose
@@ -177,12 +180,10 @@ main.swift:5:5: error: use of unresolved identifier 'foo'
 
 the resulting `report.md` section looks like:
 
-```
-## Segment 1 - CompileSwift normal x86_64 main.swift
 ```log
+## Segment 1 - CompileSwift normal x86_64 main.swift
 CompileSwift normal x86_64 main.swift
 main.swift:5:5: error: use of unresolved identifier 'foo'
-```
 ❌ Issues found:
 main.swift:5 -> main.swift:5:5: error: use of unresolved identifier 'foo'
 **Suggested Fix:** Define or import the missing symbol.
