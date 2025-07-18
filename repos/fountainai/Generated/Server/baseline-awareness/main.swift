@@ -1,3 +1,6 @@
+/// Entry point for the Baseline Awareness server.
+/// See `docs/handbook/code_reference.md` for documentation and
+/// `docs/environment_variables.md` for configuration.
 import Foundation
 import Dispatch
 #if os(Linux)

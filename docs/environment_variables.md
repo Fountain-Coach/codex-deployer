@@ -63,8 +63,8 @@ repository settings and reference it when running the deployer:
 ```bash
 export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
 export OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
-```
 export OPENAI_API_BASE="${OPENAI_API_BASE:-https://api.openai.com/v1/chat/completions}"
+```
 
 The dispatcher reads these variables at startup, so ensure they are exported
 before launching the service (e.g. inside your systemd unit file).
@@ -83,3 +83,5 @@ Secrets such as `GITHUB_TOKEN` should never be committed to the repository.
 `dispatcher.env` and other `*.env` files are excluded by `.gitignore` so your
 tokens remain private. The accompanying `.dockerignore` file ensures these
 values are not copied into Docker build contexts.
+
+See the [handbook](handbook/README.md) for additional setup guides.

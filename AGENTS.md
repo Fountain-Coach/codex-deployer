@@ -1,5 +1,9 @@
 # Agent Guidance
 
+All onboarding material lives under `docs/handbook`. Start from the
+[main README](README.md) or [`docs/handbook/README.md`](docs/handbook/README.md)
+for an index of tutorials and reference pages.
+
 - Keep `docs/environment_variables.md` updated whenever new environment variables are introduced or removed.
 - Reference `docs/environment_variables.md` in documentation and code comments when explaining configuration.
 
