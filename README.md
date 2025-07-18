@@ -1,201 +1,59 @@
 # 🧠 codex-deployer
 
-Copyright (c) 2025 Benedikte Eickhoff.
-All rights reserved.
-This software is proprietary and confidential.
+Copyright (c) 2025 Benedikte Eickhoff. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 
-> **The Codex-powered operating system for semantic deployment**
+
+Codex-Deployer is a pragmatic deployment companion. It keeps your services in sync by running a small Python loop that builds everything, captures errors and applies fixes from Git.
+
 ---
 
+## Overview
 
-## 🌐 Repository: `fountain-coach/codex-deployer`
+Codex-Deployer centralizes multiple Swift services and a Python dispatcher in one repository. It builds the services, applies JSON patches from `feedback/` and pushes results back to GitHub. The same workflow works on macOS or Linux with optional Docker Compose tests.
 
-### 🏷️ Description
+## Why use it?
+Managing multiple Swift services across Linux and macOS can be tedious. CI pipelines are slow and local builds require manual setup. Codex-Deployer places the entire workflow in a single repository so you can drive deployments directly through Git.
 
-A daemonized, Git-native deployment loop designed for FountainAI infrastructure — controlled directly by Codex.
+## How it works
+- `deploy/dispatcher_v2.py` pulls the repos, builds the services and runs tests
+- Logs go to `deploy/logs/` and can be analysed with `analyze_swift_log.py`
+- JSON files in `feedback/` describe patches; the dispatcher applies them and pushes the result
+- Environment variables control behaviour. See [docs/environment_variables.md](docs/environment_variables.md)
 
-This repo defines a fully autonomous deployment system where Codex:
-- Pulls repositories directly via `git`
-- Triggers service builds (e.g. `swift build`, `docker compose up`)
-- Parses compiler and runtime logs
-- Writes structured feedback into a semantic inbox
-- Iterates on patches based on the build outcome
+For a visual diagram and feature list see [Architecture Overview](docs/handbook/architecture.md).
 
-An always-on deployment brain powered by Codex.
+## Documentation
+Start with the [Handbook](docs/handbook/README.md) for tutorials. The [Introduction](docs/handbook/introduction.md) prepares you for the environment setup and cross‑platform workflow. A detailed [Architecture Overview](docs/handbook/architecture.md) expands on the system layout and features. The [Code Reference](docs/handbook/code_reference.md) links to inline docs.
 
-If you're new to the project, jump to the [Handbook](docs/handbook/README.md) which collects all tutorials and reference material in one place.
-Start with [Introduction to Codex‑Deployer](docs/handbook/introduction.md) for the big picture and required environment variables.  Module level docs live in [code_reference.md](docs/handbook/code_reference.md).
-
-> **Repo Alias**: References to `fountainai` actually point to
-> [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).
-> The sources now reside in `repos/fountainai/`, so no additional clone is required.
-
-
-## 🧠 What is the Codex-Powered Operating System?
-
-This is a **Git-based semantic OS** that lets Codex orchestrate software evolution across services, machines, and configurations by applying reasoning and semantic rules instead of imperative scripts.
-
-At its heart is a single principle:
-
-> **Codex acts as a compiler — the source of truth lives in the repo, and every build becomes feedback for semantic correction.**
-
-
-## 🧩 System Design
-
-```
-[ GitHub ]
-    ▲
-    |   (codex pulls the self-contained repo)
-    ▼
-[ VPS: FountainAI Node ]
-    /srv/deploy/
-    ├── repos/
-    │   ├── fountainai/       ← Swift + Python services
-    │   ├── kong-codex/       ← Gateway config + local Typesense
-    │   ├── typesense-codex/  ← Schema definitions + indexing logic
-    │   └── teatro/           ← Teatro view engine
-    ├── deploy/
-    │   └── dispatcher_v2.py   ← Daemonized build + feedback loop
-    ├── logs/
-    │    └── build.log  ← Swift compiler output
-    ├── feedback/
-    │    └── codex-001.json  ← Structured GPT feedback
-    └── commands/
-         ├── restart-services.sh (optional legacy script)
-         └── restart-target.sh  ← restart a specific service
-```
-
-
-
-## 📚 Documentation Hub
-
-The [Handbook](docs/handbook/README.md) collects all guides and references. Start with [Introduction](docs/handbook/introduction.md) for the big picture. API docs live in [code_reference.md](docs/handbook/code_reference.md). The agent behaviour contract resides in [agent.md](agent.md).
----
-
-## 🚀 Features
-
-| Capability | Description |
-|------------|-------------|
-| ✅ Git-native | Codex pulls from `main` and reads current state |
-| ✅ Swift compiler integration | Full `swift build`, `swift test`, and `swift run` output is captured |
-| ✅ Runs entirely on your VPS | No external runners are required |
-| ✅ Semantic feedback loop | Codex writes JSON to `/feedback/`, patches are applied |
-| ✅ Daemon architecture | One Python loop drives the whole system |
-| ✅ Multi-repo awareness | Includes FountainAI, Kong, Typesense and Teatro sources in one repository |
-| ✅ Developer-agnostic | Works whether code was committed by a human or Codex |
-| ✅ GitHub sync | Build logs and applied patches automatically pushed |
-| ✅ Log rotation | Each cycle writes `build-YYYYMMDD-HHMMSS.log` for history |
-| ✅ Platform-aware compilation | Uses `xcrun` on macOS, open source Swift elsewhere. See [Managing Platform Diversity](docs/handbook/introduction.md#managing-platform-diversity) |
-| ✅ Codex-generated commits | Set `OPENAI_API_KEY` for semantic commit messages |
-| ✅ Custom OpenAI endpoint | Set `OPENAI_API_BASE` to override the API URL used by the LLM Gateway. See [docs/environment_variables.md](docs/environment_variables.md). |
-| ✅ Docker builds & e2e tests | Set `DISPATCHER_BUILD_DOCKER=1` and `DISPATCHER_RUN_E2E=1` to build containers and run integration tests |
-
-
-## 📂 Key Files
-
-| File | Purpose |
-|------|---------|
-| `dispatcher_v2.py` | The daemon loop (v2.4): pulls repos, builds services, opens PRs by default |
-| `logs/latest.log` | Most recent Swift build/test output |
-| `logs/build-*.log` | Historical logs for each dispatcher cycle |
-| `analyze_swift_log.py` | Parse `build.log` and produce a Markdown report |
-| `report.md` | Output of the log analyzer |
-| `feedback/` | Codex inbox – write here to apply changes or fix builds |
-| `commands/restart-services.sh` | Optional legacy restart script |
-| `commands/restart-target.sh` | Restart a service specified in feedback |
-| `systemd/fountain-dispatcher.service` | Autostarts dispatcher on VPS boot |
-| `docs/handbook/README.md` | Central hub for all deployment guides |
-| `docs/environment_variables.md` | Reference for all environment variables |
-| `docs/dispatcher_v2.md` | Detailed dispatcher v2 documentation |
-| `docs/handbook/code_reference.md` | Links to Python and Swift API docs |
-
-
-## ⚡ Setup Instructions
-
+## Quick start
 ```bash
 git clone https://github.com/fountain-coach/codex-deployer /srv/deploy
 cd /srv/deploy
-sudo cp systemd/fountain-dispatcher.service /etc/systemd/system/
-sudo cp systemd/dispatcher.env /srv/deploy/dispatcher.env
-sudo nano /srv/deploy/dispatcher.env  # edit values or source secrets
-sudo systemctl daemon-reexec
-sudo systemctl enable fountain-dispatcher
-sudo systemctl start fountain-dispatcher
+cp systemd/dispatcher.env dispatcher.env  # edit values
+docker build -t codex-deployer-local .
+export $(grep -v '^#' dispatcher.env | xargs)
+docker run --rm -it \
+  -v $(pwd):/srv/deploy \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -e GITHUB_TOKEN -e OPENAI_API_KEY \
+  codex-deployer-local \
+  python3 /srv/deploy/deploy/dispatcher_v2.py
 ```
+For a full explanation of each variable and how to generate tokens, see [managing_environment_variables.md](docs/managing_environment_variables.md).
 
-Make sure `/srv/` is writable and owned by the system user running the daemon.
-See [docs/environment_variables.md](docs/environment_variables.md) for required
-environment variables and GitHub secret configuration. For a detailed token
-setup walk-through, including how to create `GITHUB_TOKEN`, consult
-[docs/managing_environment_variables.md](docs/managing_environment_variables.md).
-Update `/srv/deploy/dispatcher.env` with those values before starting the
-service.
-Set `GIT_USER_NAME` and `GIT_USER_EMAIL` there to configure the identity used
-for commits and avoid interactive Git prompts.
-Set `GITHUB_TOKEN` as well to authenticate `git pull` and `git push` commands
-without manual prompts. See [docs/environment_variables.md](docs/environment_variables.md)
-for details.
+## Key files
+| File | Purpose |
+| --- | --- |
+| `deploy/dispatcher_v2.py` | Main dispatcher loop |
+| `docs/handbook/README.md` | Documentation hub |
+| `docs/environment_variables.md` | Variable reference |
+| `agent.md` | Agent behaviour contract |
 
-The repository's `.gitignore` excludes `dispatcher.env` and other `*.env` files
-to keep secrets out of version control. When building images, `.dockerignore`
-likewise prevents these files from entering the Docker context.
+## Further reading
+- [Architecture Overview](docs/handbook/architecture.md)
+- [History and Roadmap](docs/handbook/history.md)
+- [Code Reference](docs/handbook/code_reference.md)
 
-### Running on macOS
-
-Docker Desktop requires explicit volume sharing. Open **Settings → Resources → File Sharing** and add `/srv/deploy/repos/kong-codex/`. Restart Docker Desktop before running `docker compose` or the Kong configuration mount will fail.
-
-### Analyzing Swift Logs
-
-After a build, you can summarize errors recorded in `build.log`:
-
-```bash
-python3 analyze_swift_log.py
-```
-
-The script reads `build.log` from the current directory and writes `report.md` with one section per log segment and a suggested fix. Open `report.md` in your editor to review the results.
-
-
-## 🧠 How Codex Uses This
-
-Codex can:
-
-- Pull `build.log`, detect Swift errors or drift
-- Write feedback JSON like:
-
-```json
-{
-  "description": "Fix crash due to optional unwrapping",
-  "target": "fountainai/bootstrap-service/Sources/InitIn.swift",
-  "patch": "guard let corpusId = req.corpusId else { return ... }"
-}
-```
-
-- On next loop, the dispatcher reads and applies it
-- Applied patches and the latest build log are committed and pushed to GitHub
-
-
-## 🧠 Codex + Git = Compiler
-
-This repo is the **Codex compiler runtime** — a deploy tool that unifies reasoning and code in the repository as the source of truth.
-
-You deploy a system that understands itself.
-
-
-## 🗺️ History & Motivation
-
-Codex-deployer began as an experiment to remove brittle CI pipelines and GitHub Actions from the deployment process. It evolved into an always-on, Git-native compiler loop. While it isn't a conventional CI tool, that difference is intentional: the project focuses on reasoning-driven deployments where Codex continually patches and rebuilds services without external runners.
-
-
-## 🏁 Next Steps
-
-- Add webhook triggers or file watchers to speed up feedback cycles
-- Build a visual dashboard for log + feedback inspection
-- Improve the auto-patch workflow with better conflict handling
-
-
-© FountainCoach — Codex-first infrastructure
-
-## License
 
 Released under the [MIT License](LICENSE).
