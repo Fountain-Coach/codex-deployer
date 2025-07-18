@@ -1,6 +1,7 @@
 # Running codex-deployer locally on macOS with Docker
 
 This tutorial demonstrates how to start the deployment loop on a Mac using Docker Desktop. It mirrors the expected `/srv/deploy` layout without installing dependencies directly on your host.
+For an overview of how the dispatcher adapts to macOS and Linux see the [handbook introduction](handbook/introduction.md#managing-platform-diversity).
 
 ## Prerequisites
 

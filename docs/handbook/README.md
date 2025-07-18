@@ -9,7 +9,7 @@ locate all relevant guides in one place.
 
 ### Getting Started
 
-- [Introduction to Codex-Deployer](introduction.md)
+- [Introduction to Codex-Deployer](introduction.md) – start here for core concepts and platform overview
 - [Running on macOS with Docker](../mac_docker_tutorial.md)
 - [Local Testing on macOS](../mac_local_testing.md)
 - [Managing Environment Variables](../managing_environment_variables.md)

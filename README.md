@@ -82,7 +82,7 @@ At its heart is a single principle:
 | ✅ Developer-agnostic | Works whether code was committed by a human or Codex |
 | ✅ GitHub sync | Build logs and applied patches automatically pushed |
 | ✅ Log rotation | Each cycle writes `build-YYYYMMDD-HHMMSS.log` for history |
-| ✅ Platform-aware compilation | Uses `xcrun` on macOS, open source Swift elsewhere |
+| ✅ Platform-aware compilation | Uses `xcrun` on macOS, open source Swift elsewhere. See [Managing Platform Diversity](docs/handbook/introduction.md#managing-platform-diversity) |
 | ✅ Codex-generated commits | Set `OPENAI_API_KEY` for semantic commit messages |
 | ✅ Custom OpenAI endpoint | Set `OPENAI_API_BASE` to override the API URL used by the LLM Gateway. See [docs/environment_variables.md](docs/environment_variables.md). |
 | ✅ Docker builds & e2e tests | Set `DISPATCHER_BUILD_DOCKER=1` and `DISPATCHER_RUN_E2E=1` to build containers and run integration tests |
