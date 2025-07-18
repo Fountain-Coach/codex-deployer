@@ -9,6 +9,7 @@ repository itself see the [main README](../../README.md).
 ## Table of Contents
 
 ### Getting Started
+
 - [Introduction to Codex-Deployer](introduction.md) – start here for core concepts and platform overview
 - [Running on macOS with Docker](../mac_docker_tutorial.md)
 - [Local Testing on macOS](../mac_local_testing.md)
@@ -16,11 +17,13 @@ repository itself see the [main README](../../README.md).
 - [Environment Variables Reference](../environment_variables.md)
 
 ### Dispatcher Details
+
 - [Dispatcher v2 Overview](../dispatcher_v2.md)
 - [Pull Request Workflow](../pull_request_workflow.md)
 - [Code Reference](code_reference.md)
 
 ### Background Reading
+
 - [Design Pattern Evaluation](../design_patterns.md)
 - [Log Aggregation Setup](../log_aggregation.md)
 - [Secrets API Proposal](../secrets_api_proposal.md)
