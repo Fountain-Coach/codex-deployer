@@ -15,9 +15,6 @@ In the Codex deployer, Git plays a central role. The dispatcher pulls repositori
 *Figure 2: The branching flow used by Codex deployer to orchestrate code updates.*
 
 ```
-
-
-
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.

@@ -102,9 +102,6 @@ toolchain whenever possible, but branch out into vendor-specific builds only
 when necessary.
 
 ```
-
-
-
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.

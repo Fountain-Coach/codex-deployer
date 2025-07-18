@@ -44,9 +44,6 @@ For tips on reviewing failed builds, see the [README](../README.md#analyzing-swi
 
 
 ```
-
-
-
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
