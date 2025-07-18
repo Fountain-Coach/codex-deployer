@@ -34,6 +34,7 @@ repository itself see the [main README](../../README.md).
 - [History and Roadmap](history.md)
 
 - [FountainAI macOS UI Plan](../fountainai_mac_ui_plan.md)
+- [Dispatcher Mac GUI Concept](../dispatcher_mac_gui_plan.md)
 
 These documents should give you a complete picture of how the dispatcher works,
 how to configure it, and how the surrounding services fit together. All guides
