@@ -83,3 +83,5 @@ Secrets such as `GITHUB_TOKEN` should never be committed to the repository.
 `dispatcher.env` and other `*.env` files are excluded by `.gitignore` so your
 tokens remain private. The accompanying `.dockerignore` file ensures these
 values are not copied into Docker build contexts.
+
+See the [handbook](handbook/README.md) for additional setup guides.

@@ -9,7 +9,7 @@ This tutorial demonstrates how to start the deployment loop on a Mac using Docke
 - Review [environment_variables.md](environment_variables.md) and
   [managing_environment_variables.md](managing_environment_variables.md)
   for required variables like `GITHUB_TOKEN`.
-
+- For integration testing workflow see [mac_local_testing.md](mac_local_testing.md).
 ## 1. Clone the repository
 
 Open Terminal and clone the repository somewhere on your machine:
@@ -39,13 +39,11 @@ The image copies the repository into `/srv/deploy` so the dispatcher can run as 
 
 ## 3. Start the dispatcher
 
-Launch the container and run `dispatcher_v2.py`:
+
+Launch the container and run `dispatcher_v2.py` using the values from `dispatcher.env`:
 
 ```bash
-export GITHUB_TOKEN=yourtoken
-export OPENAI_API_KEY=yourapikey  # optional
-export GIT_USER_NAME="Contexter"
-export GIT_USER_EMAIL=mail@benedikt-eickhoff.de
+export $(grep -v '^#' dispatcher.env | xargs)
 docker run --rm -it \
   -v $(pwd):/srv/deploy \
   -v /var/run/docker.sock:/var/run/docker.sock \
@@ -54,12 +52,9 @@ docker run --rm -it \
   python3 /srv/deploy/deploy/dispatcher_v2.py
 ```
 
-Set `DISPATCHER_RUN_E2E=1` to run `docker compose` integration tests. The image already includes the Docker CLI; mount `/var/run/docker.sock` so the container can talk to the host daemon. See [environment_variables.md](environment_variables.md) for the variable description.
+Set `DISPATCHER_RUN_E2E=1` to run `docker compose` integration tests. The image already includes the Docker CLI; mount `/var/run/docker.sock` so the container can talk to the host daemon. See [environment_variables.md](environment_variables.md) for variable descriptions.
 
-`GITHUB_TOKEN` must be a personal access token with access to your private
-repositories. See [managing_environment_variables.md](managing_environment_variables.md)
-for instructions and links to GitHub's token documentation.
-
+For a walkthrough of creating `dispatcher.env` and generating a `GITHUB_TOKEN`, see [managing_environment_variables.md](managing_environment_variables.md).
 The dispatcher starts immediately because all repositories are already present under `/srv/deploy/repos`. After initialization you should see `Dispatcher started successfully` followed by a green circle.
 
 ## 4. Inspect logs
@@ -76,6 +71,8 @@ cat deploy/logs/build.log
 Press `Ctrl-C` in the terminal running the container to stop the dispatcher.
 
 ## Tips
+For a more detailed workflow including local integration tests, see [mac_local_testing.md](mac_local_testing.md).
+
 
 - Map additional volumes if you want the cloned service repositories (like `fountainai`) to persist outside the container.
 - Edit files on your host; the container sees changes immediately because the project directory is mounted.
