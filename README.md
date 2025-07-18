@@ -22,6 +22,7 @@ To overcome these hurdles, Codex-Deployer unifies builds, logs and fixes in one 
 
 ## 2. Solution
 Codex-Deployer bundles everything in one Git repository. A Python dispatcher pulls the repos, builds each service and commits any fixes. Environment variables configure authentication and optional Docker Compose tests[^env-vars].
+
 Understanding how this works requires a quick look at the architecture.
 
 ## 3. Architecture
@@ -43,6 +44,7 @@ docker run --rm -it \
   python3 /srv/deploy/deploy/dispatcher_v2.py
 ```
 For a full explanation of each variable and how to generate tokens, see the setup guide[^manage-env].
+
 Once the basics are running, the documentation hub walks you through advanced usage.
 
 ## 5. Documentation hub
