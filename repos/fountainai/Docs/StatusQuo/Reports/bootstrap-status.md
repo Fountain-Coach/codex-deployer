@@ -27,6 +27,6 @@ Spec path: `FountainAi/openAPI/v1/bootstrap.yml` (version 1.0.0).
 
 
 ```
-© 2025 Benedikte Eickhoff. All rights reserved.
+© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```

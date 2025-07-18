@@ -46,6 +46,6 @@ The dispatcher acts as a **semantic compiler**, applying patches and rebuilding 
 For deeper context and a complete list of documents, explore the pages linked in the table of contents. They describe how FountainAI will emancipate from Codex, using the same reasoning flow but expanded to dynamic tool orchestration and persistent semantic memory.
 
 ```
-© 2025 Benedikte Eickhoff. All rights reserved.
+© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```

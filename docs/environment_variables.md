@@ -1,10 +1,5 @@
 # Environment Variables
 
-Copyright (c) 2025 Benedikte Eickhoff.
-All rights reserved.
-This software is proprietary and confidential.
-Unauthorized copying or distribution is strictly prohibited.
-
 This document lists the environment variables used by the Codex deployer.
 
 | Variable | Default | Purpose |
@@ -91,6 +86,6 @@ See the [handbook](handbook/README.md) for additional setup guides.
 
 
 ```
-© 2025 Benedikte Eickhoff. All rights reserved.
+© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
