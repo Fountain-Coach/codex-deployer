@@ -8,6 +8,7 @@ locate all relevant guides in one place.
 ## Table of Contents
 
 ### Getting Started
+
 - [Introduction to Codex-Deployer](introduction.md)
 - [Running on macOS with Docker](../mac_docker_tutorial.md)
 - [Local Testing on macOS](../mac_local_testing.md)
@@ -15,10 +16,12 @@ locate all relevant guides in one place.
 - [Environment Variables Reference](../environment_variables.md)
 
 ### Dispatcher Details
+
 - [Dispatcher v2 Overview](../dispatcher_v2.md)
 - [Pull Request Workflow](../pull_request_workflow.md)
 
 ### Background Reading
+
 - [Design Pattern Evaluation](../design_patterns.md)
 - [Log Aggregation Setup](../log_aggregation.md)
 - [Secrets API Proposal](../secrets_api_proposal.md)
