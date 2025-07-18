@@ -25,6 +25,7 @@ This repo defines a fully autonomous deployment system where Codex:
 An always-on deployment brain powered by Codex.
 
 If you're new to the project, start with [docs/handbook/introduction.md](docs/handbook/introduction.md) for a concise overview and links to required environment variables.
+
 For module-level documentation see [docs/handbook/code_reference.md](docs/handbook/code_reference.md).
 
 > **Repo Alias**: References to `fountainai` actually point to
