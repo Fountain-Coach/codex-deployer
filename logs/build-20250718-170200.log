@@ -1,0 +1,36 @@
+[2025-07-18T17:02:00.112810] DISPATCHER_INTERVAL not set; using default 60
+[2025-07-18T17:02:00.113078] DISPATCHER_USE_PRS not set; pull request workflow enabled
+[2025-07-18T17:02:00.113405] DISPATCHER_BUILD_DOCKER not set; docker builds disabled
+[2025-07-18T17:02:00.119667] Dispatcher started successfully 🟢
+[2025-07-18T17:02:00.119839] === New Cycle ===
+[0/1] Planning build
+Building for debugging...
+[0/183] Compiling pkcs7.cc
+[1/183] Compiling pem_xaux.cc
+[2/183] Compiling pem_pkey.cc
+[3/183] Compiling p5_pbev2.cc
+[4/183] Write swift-version-24593BA9C3E375BF.txt
+[4/183] Compiling pkcs8.cc
+[6/183] Compiling pem_x509.cc
+[7/178] Compiling pkcs8_x509.cc
+[8/178] Compiling pkcs7_x509.cc
+[9/197] Compiling obj_xref.cc
+[11/197] Emitting module PlannerServer
+[12/197] Compiling PlannerServer main.swift
+/srv/deploy/repos/fountainai/Generated/Server/planner/main.swift:23:33: error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 21 | 
+ 22 |     func start() throws {
+ 23 |         let socketType: Int32 = SOCK_STREAM
+    |                                 `- error: cannot convert value of type '__socket_type' to specified type 'Int32'
+ 24 | 
+ 25 |         serverFD = socket(AF_INET, socketType, 0)
+[12/197] Compiling pem_oth.cc
+[12/197] Compiling pem_info.cc
+[12/197] Compiling pem_pk8.cc
+[12/197] Compiling pem_lib.cc
+[12/197] Compiling pem_all.cc
+
+[2025-07-18T17:02:00.120263] Starting swift build...
+[2025-07-18T17:02:09.202364] swift build failed with exit code 1
+[2025-07-18T17:02:09.306841] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-18T17:02:13.177407] Opened PR #226 for Fountain-Coach/codex-deployer
