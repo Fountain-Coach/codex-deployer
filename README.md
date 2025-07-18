@@ -108,6 +108,7 @@ At its heart is a single principle:
 | `docs/fountainai_mac_ui_plan.md` | Plan for a macOS UI using FountainAI and Teatro |
 | `docs/what_is_git.md` | Intro to Git with history and flow |
 | `docs/design_patterns.md` | Evaluation of client/server, plugin, and declarative patterns |
+| `docs/handbook/README.md` | Central hub for all deployment guides |
 
 ---
 
