@@ -3,9 +3,9 @@ import SwiftUI
 
 /// Displays pending JSON patches from the feedback directory.
 public struct QueueView: View {
+
     @State private var items: [QueueItem] = []
     var timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
-
     public init() {}
 
     public var body: some View {
