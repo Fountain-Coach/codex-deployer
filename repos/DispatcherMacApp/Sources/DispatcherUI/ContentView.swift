@@ -3,7 +3,7 @@ import SwiftUI
 import Teatro
 
 public struct ContentView: View {
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Dispatcher GUI")
                 .font(.title)

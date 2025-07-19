@@ -4,7 +4,7 @@ import Teatro
 
 public struct TeatroRenderView: View {
     let content: Renderable
-    var body: some View {
+    public var body: some View {
         Text(content.render())
             .font(.system(.body, design: .monospaced))
             .padding()
