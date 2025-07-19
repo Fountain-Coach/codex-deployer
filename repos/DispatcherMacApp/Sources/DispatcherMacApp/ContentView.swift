@@ -17,7 +17,7 @@ struct ContentView: View {
     }
 }
 
-#if canImport(SwiftUI) && DEBUG
+#if canImport(SwiftUI) && DEBUG && !SWIFT_PACKAGE
 #Preview {
     ContentView()
 }
