@@ -13,7 +13,9 @@ All contributor guides live under `docs/handbook`. Start from the
   are introduced or removed.
 - Reference that file in documentation and code comments when explaining
   configuration.
-- Follow the ⚖️ Footer-Insertion Policy below when editing `.md` files.
+- Follow the ⚖️ Footer-Insertion Policy when editing `.md` files.
+
+--- 
 
 ## ⚖️ Footer-Insertion Policy (back-tick-only)
 
@@ -47,6 +49,7 @@ If that exact footer already appears as the very last line of the file, make **n
 * No language tags other than `text`.  
 * Do **not** split the copyright line.  
 * Do **not** add anything after the footer.
+
 ---
 
 ## 📌 Purpose
@@ -245,7 +248,8 @@ main.swift:5:5: error: use of unresolved identifier 'foo'
 main.swift:5 -> main.swift:5:5: error: use of unresolved identifier 'foo'
 **Suggested Fix:** Define or import the missing symbol.
 ```
+---
 
-```` text
+``` text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-````
+```
