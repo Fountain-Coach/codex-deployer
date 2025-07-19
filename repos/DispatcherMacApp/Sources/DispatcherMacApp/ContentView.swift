@@ -1,3 +1,4 @@
+#if canImport(SwiftUI)
 import SwiftUI
 import Teatro
 
@@ -22,3 +23,10 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+#else
+import Teatro
+
+public struct ContentView {
+    public init() {}
+}
+#endif
