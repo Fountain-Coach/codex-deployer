@@ -1,3 +1,4 @@
+#if canImport(SwiftUI)
 import SwiftUI
 
 @main
@@ -8,3 +9,13 @@ struct DispatcherMacApp: App {
         }
     }
 }
+#else
+import Foundation
+
+@main
+struct DispatcherMacApp {
+    static func main() {
+        print("DispatcherMacApp stub - SwiftUI unavailable")
+    }
+}
+#endif
