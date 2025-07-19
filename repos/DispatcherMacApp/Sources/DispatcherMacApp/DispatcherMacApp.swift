@@ -1,12 +1,13 @@
 #if canImport(SwiftUI)
 import SwiftUI
 import DispatcherUI
+import Teatro
 
 @main
 struct DispatcherMacApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DispatcherUI.ContentView()
         }
     }
 }
