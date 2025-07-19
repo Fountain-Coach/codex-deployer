@@ -74,7 +74,8 @@ All contributor guides live under `docs/handbook`. Start from the
   are introduced or removed.
 - Reference that file in documentation and code comments when explaining
   configuration.
-- Ensure every README and other `.md` file ends with the footer:
+- Ensure every README and other `.md` file ends with exactly one fenced footer:
+  Use a single opening and closing triple backtick with no extra ticks:
 
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
