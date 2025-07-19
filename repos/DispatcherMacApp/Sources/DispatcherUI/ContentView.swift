@@ -3,18 +3,22 @@ import SwiftUI
 import Teatro
 
 public struct ContentView: View {
+    @StateObject private var manager = DispatcherManager()
+
     public init() {}
+
     public var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Dispatcher GUI")
-                .font(.title)
-            Button("Start Dispatcher") {
-                print("Start dispatcher tapped")
-            }
-            TeatroRenderView(content: DispatcherPrompt())
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        TabView {
+            DashboardView(manager: manager)
+                .tabItem { Text("Dashboard") }
+            QueueView()
+                .tabItem { Text("Queue") }
+            LogView(manager: manager)
+                .tabItem { Text("Logs") }
+            SettingsView()
+                .tabItem { Text("Settings") }
         }
-        .padding()
+        .frame(minWidth: 700, minHeight: 500)
     }
 }
 
