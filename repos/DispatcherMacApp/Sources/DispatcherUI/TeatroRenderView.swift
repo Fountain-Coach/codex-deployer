@@ -3,8 +3,10 @@ import SwiftUI
 import Teatro
 
 public struct TeatroRenderView: View {
-    public init() {}
     let content: Renderable
+    public init(content: Renderable) {
+        self.content = content
+    }
     public var body: some View {
         Text(content.render())
             .font(.system(.body, design: .monospaced))
