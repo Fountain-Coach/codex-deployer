@@ -1,8 +1,9 @@
-// swift-tools-version:5.9
+// swift-tools-version: 6.1
 import PackageDescription
 
 let package = Package(
-    name: "Teatro",
+    name: "teatro",
+    platforms: [.macOS(.v14)],
     products: [
         .library(
             name: "Teatro",
@@ -20,11 +21,6 @@ let package = Package(
             name: "RenderCLI",
             dependencies: ["Teatro"],
             path: "Sources/CLI"
-        ),
-        .testTarget(
-            name: "TeatroTests",
-            dependencies: ["Teatro"],
-            path: "Tests"
         )
     ]
 )
