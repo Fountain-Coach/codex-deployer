@@ -9,8 +9,11 @@ public struct ContentView: View {
 
     public var body: some View {
         TabView {
-            DashboardView(manager: manager)
-                .tabItem { Text("Dashboard") }
+            ZStack {
+                DashboardView(manager: manager)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .tabItem { Text("Dashboard") }
             QueueView()
                 .tabItem { Text("Queue") }
             LogView(manager: manager)
