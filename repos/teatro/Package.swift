@@ -4,7 +4,10 @@ import PackageDescription
 let package = Package(
     name: "Teatro",
     products: [
-        .library(name: "Teatro", targets: ["Teatro"]),
+        .library(
+            name: "Teatro",
+            targets: ["Teatro"]
+        ),
         .executable(name: "RenderCLI", targets: ["RenderCLI"])
     ],
     targets: [
