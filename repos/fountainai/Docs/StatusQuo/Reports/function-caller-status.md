@@ -37,7 +37,6 @@ Spec path: `FountainAi/openAPI/v1/function-caller.yml` (version 1.0.0).
 - See [next-steps.md](next-steps.md) for cross-service priorities
 
 ```
-```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```

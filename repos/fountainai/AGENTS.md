@@ -11,7 +11,6 @@ This repository uses Swift 6 and Swift Package Manager.
 - Summarize the test results in the PR description.
 
 ```
-```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```

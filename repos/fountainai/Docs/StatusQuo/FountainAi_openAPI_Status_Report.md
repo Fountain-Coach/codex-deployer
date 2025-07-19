@@ -66,7 +66,6 @@ Unit tests verify the generator using a simplified fixture rather than the full 
 Implementing these steps will transform the current skeleton generators into production‑ready client libraries and standalone servers for the entire FountainAI suite.
 
 ```
-```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
