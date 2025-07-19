@@ -3,6 +3,9 @@ import SwiftUI
 import DispatcherUI
 import Teatro
 
+public typealias TViewBuilder = Teatro.ViewBuilder
+public typealias SViewBuilder = SwiftUI.ViewBuilder
+
 @main
 struct DispatcherMacApp: App {
     var body: some Scene {
