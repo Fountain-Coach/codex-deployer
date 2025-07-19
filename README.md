@@ -36,9 +36,9 @@ docker run --rm -it \
 For an explanation of each variable and how to generate tokens, see the [setup guide](docs/managing_environment_variables.md).
 
 ## From Codex to FountainAI
-The dispatcher acts as a **semantic compiler**, applying patches and rebuilding until services succeed. FountainAI takes this approach further. According to the platform overview, it "combines large language models with a suite of specialized services to enable advanced AI reasoning, planning, and knowledge management"【F:repos/fountainai/Docs/FountainAI Platform Overview.md†L1-L8】. Tools are registered, called, and reflected upon so that the AI can improve over time. Our build loop foreshadows that design: after each cycle, the log is parsed, fixes are applied, and the next iteration begins. FountainAI generalizes this idea by orchestrating plans, invoking tools, and storing reflections in corpora, producing "structured multi-step planning" and "automated reflection" for continuous improvement【F:repos/fountainai/Docs/FountainAI Platform Overview.md†L381-L405】.
+The dispatcher acts as a **semantic compiler**, applying patches and rebuilding until services succeed. FountainAI takes this approach further. According to the platform overview, it "combines large language models with a suite of specialized services to enable advanced AI reasoning, planning, and knowledge management." Tools are registered, called, and reflected upon so that the AI can improve over time. Our build loop foreshadows that design: after each cycle, the log is parsed, fixes are applied, and the next iteration begins. FountainAI generalizes this idea by orchestrating plans, invoking tools, and storing reflections in corpora, producing "structured multi-step planning" and "automated reflection" for continuous improvement.
 
-Although this repository centers on deployment, the greater vision is an orchestration engine where plans, roles and reflections continually refine the agent's behaviour. For a full introduction, see the [FountainAI Platform Overview](repos/fountainai/Docs/FountainAI%20Platform%20Overview.md).
+Although this repository centers on deployment, the greater vision is an orchestration engine where plans, roles and reflections continually refine the agent's behaviour. For a full introduction, see the [FountainAI Platform Overview PDF](repos/fountainai/Docs/FountainAI%20Platform%20Overview.pdf).
 
 FountainAI aims to unify these services under a persistent reasoning loop that stores knowledge and reflections for long‑term improvement. This repository is just one piece of that puzzle.
 
@@ -53,7 +53,6 @@ FountainAI aims to unify these services under a persistent reasoning loop that s
 | Planner | http://planner.fountain.coach/api/v1 | Orchestrates planning workflows across the LLM Gateway and Function Caller. | [v1/planner.yml](repos/fountainai/FountainAi/openAPI/v1/planner.yml) |
 | Tools Factory | http://tools-factory.fountain.coach/api/v1 | Registers new tool definitions in the shared Typesense collection consumed by the Function Caller. | [v1/tools-factory.yml](repos/fountainai/FountainAi/openAPI/v1/tools-factory.yml) |
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
