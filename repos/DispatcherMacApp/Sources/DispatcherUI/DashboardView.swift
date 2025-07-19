@@ -1,5 +1,6 @@
 #if canImport(SwiftUI)
 import SwiftUI
+import Teatro
 
 /// Primary control panel showing dispatcher status and metrics.
 public struct DashboardView: View {

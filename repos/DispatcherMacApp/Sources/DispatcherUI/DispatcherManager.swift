@@ -3,6 +3,9 @@ import Foundation
 import Combine
 
 /// Manages the lifecycle of ``dispatcher_v2.py`` and streams log output.
+
+@MainActor
+
 public final class DispatcherManager: ObservableObject {
     @Published public private(set) var isRunning: Bool = false
     @Published public private(set) var logs: [String] = []

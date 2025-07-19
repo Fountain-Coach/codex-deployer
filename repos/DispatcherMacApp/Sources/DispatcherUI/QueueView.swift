@@ -3,19 +3,18 @@ import SwiftUI
 
 /// Displays pending JSON patches from the feedback directory.
 public struct QueueView: View {
-    @State private var files: [String] = []
-    var timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
 
+    @State private var items: [QueueItem] = []
+    var timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
     public init() {}
 
     public var body: some View {
-        Table(of: String.self) {
+        Table(items) {
             TableColumn("File") { item in
-                Text(item)
+                Text(item.file)
             }
-        } rows: {
-            ForEach(files, id: \.self) { file in
-                TableRow(file)
+            TableColumn("Status") { item in
+                Text(item.status)
             }
         }
         .onReceive(timer) { _ in refresh() }
@@ -28,8 +27,8 @@ public struct QueueView: View {
 
     private func refresh() {
         let path = feedbackDir()
-        let items = (try? FileManager.default.contentsOfDirectory(atPath: path.path)) ?? []
-        files = items.sorted()
+        let names = (try? FileManager.default.contentsOfDirectory(atPath: path.path)) ?? []
+        items = names.sorted().map { QueueItem(file: $0) }
     }
 }
 
