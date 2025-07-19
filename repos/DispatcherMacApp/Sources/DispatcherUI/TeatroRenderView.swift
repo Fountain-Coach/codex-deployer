@@ -3,6 +3,7 @@ import SwiftUI
 import Teatro
 
 public struct TeatroRenderView: View {
+    public init() {}
     let content: Renderable
     var body: some View {
         Text(content.render())
