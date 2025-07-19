@@ -8,7 +8,6 @@ Use `docker-compose.yml` for local testing. Update `docs/environment_variables.m
 when introducing new configuration.
 
 ```
-```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
