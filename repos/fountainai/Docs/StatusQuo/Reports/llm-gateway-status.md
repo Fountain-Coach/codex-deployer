@@ -28,8 +28,6 @@ Spec path: `FountainAi/openAPI/v2/llm-gateway.yml` (version 2.0.0).
 - Provide Docker build and deployment instructions
 - Document `OPENAI_API_KEY` and `OPENAI_API_BASE` usage in [environment_variables.md](../../../../../docs/environment_variables.md)
 
-```
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

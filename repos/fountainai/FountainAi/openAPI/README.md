@@ -18,8 +18,6 @@ This directory contains the OpenAPI specifications for each FountainAI microserv
 - **Tools Factory → Function Caller**: the Tools Factory persists function definitions that the Function Caller dynamically invokes.
 - **Planner → LLM Gateway & Function Caller**: the Planner coordinates with the LLM Gateway for language model responses and triggers registered functions through the Function Caller.
 
-
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

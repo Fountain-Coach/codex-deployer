@@ -29,8 +29,6 @@ Spec path: `FountainAi/openAPI/v1/baseline-awareness.yml` (version 1.0.0).
 - Prometheus metrics now record request durations for performance insights
 - Structured logging added for easier debugging and monitoring
 
-```
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

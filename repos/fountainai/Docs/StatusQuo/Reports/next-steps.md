@@ -20,8 +20,6 @@ All FountainAI services now run using a shared Swift concurrency runtime. Integr
 
 Completing these steps will transition FountainAI from prototype status to a stable, production‑ready microservice suite.
 
-```
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

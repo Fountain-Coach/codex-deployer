@@ -15,8 +15,6 @@ To progress toward a functional release we should:
 5. **Automate CI and container builds** – run `swift build` and `swift test` on every pull request and document Docker workflows for deployment.
 6. **Update the execution plan** – reconcile `Docs/Historical/codex-plan.md` with completed work and these new tasks.
 
-```
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

@@ -47,8 +47,6 @@ This document outlines an iterative approach for building a macOS desktop applic
 
 Following this plan will produce a fully featured macOS application that leverages FountainAI's microservices and Teatro's declarative rendering system.
 
-```
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

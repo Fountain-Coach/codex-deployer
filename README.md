@@ -53,7 +53,6 @@ FountainAI aims to unify these services under a persistent reasoning loop that s
 | Planner | http://planner.fountain.coach/api/v1 | Orchestrates planning workflows across the LLM Gateway and Function Caller. | [v1/planner.yml](repos/fountainai/FountainAi/openAPI/v1/planner.yml) |
 | Tools Factory | http://tools-factory.fountain.coach/api/v1 | Registers new tool definitions in the shared Typesense collection consumed by the Function Caller. | [v1/tools-factory.yml](repos/fountainai/FountainAi/openAPI/v1/tools-factory.yml) |
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

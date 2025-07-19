@@ -42,7 +42,6 @@ While the initial release focuses on dispatcher controls, the same Teatro-based 
 
 By approaching the dispatcher as a macOS app, we lower the entry barrier for experimentation and pave the way for deeper FountainAI integrations.
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

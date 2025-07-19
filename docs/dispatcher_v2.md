@@ -42,7 +42,6 @@ and integration tests after each successful commit or PR merge.
 
 For tips on reviewing failed builds, see the [README](../README.md#analyzing-swift-logs) section on analyzing Swift logs.
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

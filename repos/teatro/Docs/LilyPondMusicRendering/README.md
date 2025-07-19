@@ -71,9 +71,6 @@ teatro_theme.ps
 - If needed, Codex can be prompted to emit safe `.ly` fragments
 - Combine with GPT output templates to embed titles, composer metadata, lyrics, and spacing settings
 
-
-```
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

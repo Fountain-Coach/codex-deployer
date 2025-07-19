@@ -233,12 +233,6 @@
 - 2025-07-18T05:23:43.294815 Update build log build-20250718-052340.log: 2025-07-18T05:23:43.121150
 - 2025-07-18T05:25:48.756982 Update build log build-20250718-052546.log: 2025-07-18T05:25:48.697541
 - 2025-07-18T05:27:41.572091 Update build log build-20250718-052738.log: 2025-07-18T05:27:41.522467
-
-```
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
 - 2025-07-18T16:27:23.804768 Update build log build-20250718-162711.log: 2025-07-18T16:27:23.778285
 - 2025-07-18T16:33:34.452142 Update build log build-20250718-163323.log: 2025-07-18T16:33:34.431917
 - 2025-07-18T17:05:16.438066 Update build log build-20250718-170506.log: 2025-07-18T17:05:16.410126
@@ -575,3 +569,7 @@ Unauthorized copying or distribution is strictly prohibited.
 - 2025-07-19T02:56:17.953211 Update build log build-20250719-025615.log: 2025-07-19T02:56:17.879705
 - 2025-07-19T02:58:16.416544 Update build log build-20250719-025814.log: 2025-07-19T02:58:16.338290
 - 2025-07-19T03:00:16.204650 Update build log build-20250719-030013.log: 2025-07-19T03:00:15.819937
+
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

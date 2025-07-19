@@ -22,9 +22,6 @@ pydoc deploy.dispatcher_v2
 Generated services live under `repos/fountainai`. Documentation will be produced
 with `swift package generate-documentation` once the build pipeline is enabled.
 
-
-```
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

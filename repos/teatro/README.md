@@ -17,8 +17,6 @@ This repository contains the specification for Teatro, a modular Swift 6 view en
 
 The `Sources/` directory follows the structure suggested in the documentation and contains placeholders for implementation. `Tests/` remains empty until concrete code is added.
 
-```
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+```` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
