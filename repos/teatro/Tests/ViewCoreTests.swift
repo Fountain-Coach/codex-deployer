@@ -23,4 +23,18 @@ final class ViewCoreTests: XCTestCase {
         }
         XCTAssertEqual(stack.render(), " A B")
     }
+
+    func testPanelRendering() {
+        let panel = Panel(width: 100, height: 100, cornerRadius: 5) {
+            Text("X")
+        }
+        let expected = "[Panel 100x100 r:5]\nX"
+        XCTAssertEqual(panel.render(), expected)
+    }
+
+    func testDotRuleCursorRendering() {
+        XCTAssertEqual(Dot().render(), "\u{25CF}")
+        XCTAssertEqual(Rule().render(), String(repeating: "-", count: 10))
+        XCTAssertEqual(InputCursor().render(), "|")
+    }
 }
