@@ -88,6 +88,8 @@ NIOHTTPServer.swift:61 -> /srv/deploy/repos/fountainai/Sources/IntegrationRuntim
 |                      `- warning: passing closure as a 'sending' parameter risks causing data races between code in the current task and concurrent execution of the closure
 **Suggested Fix:** Review the code around the reported line.
 ```
+
+```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
