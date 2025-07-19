@@ -11,7 +11,7 @@ public struct ContentView: View {
             Button("Start Dispatcher") {
                 print("Start dispatcher tapped")
             }
-            TeatroRenderView(content: DispatcherPrompt())
+            TeatroRenderView(prompt: DispatcherPrompt())
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .padding()
@@ -23,10 +23,4 @@ public struct ContentView: View {
     ContentView()
 }
 #endif
-#else
-import Teatro
-
-public struct ContentView {
-    public init() {}
-}
 #endif
