@@ -37,12 +37,13 @@ While the initial release focuses on dispatcher controls, the same Teatro-based 
 1. Create a small Swift Package that embeds Teatro and exposes the dispatcher process management code.
 2. Prototype the settings form and log viewer using Teatro's SwiftUI preview support.
 3. Iterate based on feedback, expanding the UI to cover additional services as FountainAI evolves.
+4. Open `repos/DispatcherMacApp/` in Xcode to preview `ContentView` and begin UI experimentation.
 
 ---
 
 By approaching the dispatcher as a macOS app, we lower the entry barrier for experimentation and pave the way for deeper FountainAI integrations.
 
-```
+````
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
-```
+````
