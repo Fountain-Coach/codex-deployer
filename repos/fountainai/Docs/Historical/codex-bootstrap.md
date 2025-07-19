@@ -32,7 +32,6 @@ The `README.md` describes the purpose and structure of this project. The `.codex
 Begin now by initializing the repository structure and implementing the generator entrypoint.
 
 ```
-```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```

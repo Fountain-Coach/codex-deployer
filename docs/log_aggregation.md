@@ -21,7 +21,6 @@ Replace `loki-url` with your aggregator endpoint. The same pattern applies to th
 For manual deployments, run a tool like `fluent-bit` or `promtail` to stream logs from Docker to the aggregator.
 
 ```
-```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```

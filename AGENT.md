@@ -13,7 +13,8 @@ All contributor guides live under `docs/handbook`. Start from the
   are introduced or removed.
 - Reference that file in documentation and code comments when explaining
   configuration.
-- Ensure every README and other `.md` file ends with the footer:
+- Ensure every README and other `.md` file ends with exactly one fenced footer:
+  Use a single opening and closing triple backtick with no extra ticks:
 
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
@@ -217,7 +218,6 @@ main.swift:5:5: error: use of unresolved identifier 'foo'
 ❌ Issues found:
 main.swift:5 -> main.swift:5:5: error: use of unresolved identifier 'foo'
 **Suggested Fix:** Define or import the missing symbol.
-```
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
