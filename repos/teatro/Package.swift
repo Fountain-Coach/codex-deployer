@@ -8,8 +8,20 @@ let package = Package(
         .executable(name: "RenderCLI", targets: ["RenderCLI"])
     ],
     targets: [
-        .target(name: "Teatro", path: "Sources", exclude: ["CLI"]),
-        .executableTarget(name: "RenderCLI", dependencies: ["Teatro"], path: "Sources/CLI"),
-        .testTarget(name: "TeatroTests", dependencies: ["Teatro"], path: "Tests")
+        .target(
+            name: "Teatro",
+            path: "Sources",
+            exclude: ["CLI"]
+        ),
+        .executableTarget(
+            name: "RenderCLI",
+            dependencies: ["Teatro"],
+            path: "Sources/CLI"
+        ),
+        .testTarget(
+            name: "TeatroTests",
+            dependencies: ["Teatro"],
+            path: "Tests"
+        )
     ]
 )
