@@ -3,67 +3,6 @@
 
 > This is the root behavior manifest for the Codex agent deployed on this machine.
 
-
-## ⚖️  Footer-insertion policy  (applies to every *.md file)
-
-### 1. Scope
-* Run this policy **whenever** you create or modify a file whose name ends in `.md`.
-
-### 2. Target footer (single-line “inline shield” code block)
-
-```text
-©\ <YYYY> Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-```
-
-* Replace `<YYYY>` with the current year at generation time.
-* The leading backslash after `©` MUST remain.
-* The 🛡️ emoji MUST remain.
-
-### 3. Idempotency
-* Before inserting anything, scan the entire file.  
-  *If the footer (including fence style and content) already appears **at the very end of the file**, take no further action.*
-
-### 4. Fence-safety algorithm  
-
-1. **Scan the file** top-to-bottom, tracking unmatched code fences separately for  
-   * back-tick fences ``` (variable length, ≥3)  
-   * tilde fences   ~~~ (variable length, ≥3)
-
-2. **If any fence is currently open** when you reach end-of-file, close it by emitting a matching fence on its own line.
-
-3. **Determine the footer fence**:
-   * Let `maxTicks` be the longest run of consecutive back-ticks you observed in the file (0 if none).
-   * If `maxTicks ≥ 3`, set `footerFence` to a run of **`maxTicks + 1` back-ticks**  
-     (→ a longer fence can never be closed by a shorter one).  
-   * Otherwise (no back-ticks or only short ones), use exactly **`~~~`** (three tildes).  
-     Back-tick and tilde fences are mutually invisible to CommonMark/GFM, so this always avoids conflicts.
-
-4. **Insert the footer**:
-   * Append **one blank line** after any existing content (and after any fence you just closed).  
-   * Append the opening `footerFence`.  
-   * Append the single-line notice exactly as shown in §2.  
-   * Append the closing `footerFence`.  
-   * End the file with a final newline (`\n`).
-
-### 5. Prohibitions
-* Do **not** indent the footer’s fence or its content.  
-* Do **not** add language tags other than `text`.  
-* Do **not** wrap the footer text onto multiple lines.  
-* Do **not** insert any extra blank lines inside the fence.  
-* Do **not** add any other footer, license, or comment after this block.
-
-### 6. Example end-of-file (after successful insertion)
-
-```markdown
-…main document content…
-
-~~~~text          ← four back-ticks because the file already contained ``` fences
-©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-~~~~
-```
-
-> **Remember:** this rule MUST succeed even in pathological Markdown files containing unbalanced or nested fences; the algorithm above guarantees safety by closing leftovers and choosing a non-conflicting fence.
-
 For a repository overview and additional documentation see the
 [handbook](docs/handbook/README.md) linked from the main README.
 
@@ -74,13 +13,42 @@ All contributor guides live under `docs/handbook`. Start from the
   are introduced or removed.
 - Reference that file in documentation and code comments when explaining
   configuration.
-- Ensure every README and other `.md` file ends with exactly one fenced footer:
-  Use a single opening and closing triple backtick with no extra ticks:
+- Follow the ⚖️ Footer-Insertion Policy when editing `.md` files.
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+--- 
+
+## ⚖️ Footer-Insertion Policy (back-tick-only)
+
+### 1 Scope
+Run this procedure whenever you create or modify a file whose name ends in `.md`.
+
+### 2 Target footer (single-line “inline shield”)
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+(Replace `<YYYY>` with the current year; keep the back-slash and the 🛡️ emoji.)
+
+### 3 Idempotency
+If that exact footer already appears as the very last line of the file, make **no** changes.
+
+### 4 Fence-safety algorithm (back-tick only)
+1. Scan the file and record the longest sequence of consecutive back-ticks you see  
+    → `maxTicks` (0 if none).  
+2. If any back-tick fence is still open at end-of-file, close it with a matching fence line.  
+3. Set `footerFence` to **`max(maxTicks, 3) + 1`** back-ticks.  
+    *Example: if the longest existing fence is three ticks, use four ticks for the footer.*
+
+### 5 Insert the footer
+* Append one blank line after the current content (and after any fence you just closed).  
+* Add a line containing `footerFence` followed by the info-string `text`.  
+* Add the single-line footer text from § 2.  
+* Add a line containing the same `footerFence`.  
+* End the file with a final newline.
+
+### 6 Prohibitions
+* No indentation of the footer block.  
+* No extra blank lines **inside** the footer fence.  
+* No language tags other than `text`.  
+* Do **not** split the copyright line.  
+* Do **not** add anything after the footer.
 
 ---
 
@@ -280,6 +248,8 @@ main.swift:5:5: error: use of unresolved identifier 'foo'
 main.swift:5 -> main.swift:5:5: error: use of unresolved identifier 'foo'
 **Suggested Fix:** Define or import the missing symbol.
 ```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
+---
+
+``` text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
 ```
