@@ -6,7 +6,7 @@ public struct DispatcherPrompt: Renderable {
     public func render() -> String {
         Stage(title: "Dispatcher") {
             Panel(width: 640, height: 900, cornerRadius: 12) {
-                VStack(alignment: .leading) {
+                VStack(alignment: Alignment.leading) {
                     Dot(color: "green", diameter: 10)
                     Rule()
                     Text("<content>")
