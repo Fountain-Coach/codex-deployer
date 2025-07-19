@@ -2,6 +2,9 @@
 import SwiftUI
 import Teatro
 
+public typealias TViewBuilder = Teatro.ViewBuilder
+public typealias SViewBuilder = SwiftUI.ViewBuilder
+
 /// Primary control panel showing dispatcher status and metrics.
 public struct DashboardView: View {
     @ObservedObject var manager: DispatcherManager
@@ -18,7 +21,7 @@ public struct DashboardView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 
-    @ViewBuilder
+    @SViewBuilder
     private var card: some View {
         VStack(spacing: 0) {
             header

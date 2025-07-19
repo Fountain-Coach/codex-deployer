@@ -2,6 +2,9 @@
 import SwiftUI
 import Teatro
 
+public typealias TViewBuilder = Teatro.ViewBuilder
+public typealias SViewBuilder = SwiftUI.ViewBuilder
+
 public struct ContentView: View {
     @StateObject private var manager = DispatcherManager()
 

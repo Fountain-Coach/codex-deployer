@@ -6,7 +6,7 @@ import Combine
 
 @MainActor
 
-public final class DispatcherManager: ObservableObject {
+public final class DispatcherManager: ObservableObject, Sendable {
     @Published public private(set) var isRunning: Bool = false
     @Published public private(set) var logs: [String] = []
     @Published public private(set) var cycleCount: Int = 0
@@ -39,6 +39,11 @@ public final class DispatcherManager: ObservableObject {
         }
     }
 
+    /// Send a command string to the dispatcher.
+    public func send(_ command: String) {
+        // TODO: dispatch command to running process
+    }
+
     /// Terminate the running dispatcher process.
     public func stop() {
         guard let proc = process, proc.isRunning else { return }
@@ -58,6 +63,7 @@ public final class DispatcherManager: ObservableObject {
     }
 
     private func append(_ line: String) {
+        // TODO: handle dispatcher log lines
         logs.append(contentsOf: line.split(separator: "\n").map(String.init))
         if line.contains("=== New Cycle ===") { cycleCount += 1 }
         if line.contains("swift build succeeded") { lastBuildResult = "✅ build" }
