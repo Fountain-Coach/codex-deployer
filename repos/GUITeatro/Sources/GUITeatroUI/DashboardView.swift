@@ -7,10 +7,10 @@ public typealias SViewBuilder = SwiftUI.ViewBuilder
 
 /// Primary control panel showing dispatcher status and metrics.
 public struct DashboardView: View {
-    @ObservedObject var manager: DispatcherManager
+    @ObservedObject var manager: ProcessManager
     @State private var command: String = ""
 
-    public init(manager: DispatcherManager) {
+    public init(manager: ProcessManager) {
         self.manager = manager
     }
 
@@ -31,7 +31,7 @@ public struct DashboardView: View {
                     .foregroundStyle(.secondary)
             }
             Divider().background(Color.gray.opacity(0.3))
-            TeatroRenderView(content: DispatcherPrompt())
+            TeatroRenderView(content: ProcessPrompt())
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             Divider()
                 .background(Color.gray.opacity(0.3))
@@ -77,6 +77,6 @@ public struct DashboardView: View {
 }
 
 #Preview {
-    DashboardView(manager: DispatcherManager())
+    DashboardView(manager: ProcessManager())
 }
 #endif

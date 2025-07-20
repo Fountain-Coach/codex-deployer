@@ -3,9 +3,9 @@ import SwiftUI
 
 /// Scrollable log output using a monospaced font.
 public struct LogView: View {
-    @ObservedObject var manager: DispatcherManager
+    @ObservedObject var manager: ProcessManager
 
-    public init(manager: DispatcherManager) {
+    public init(manager: ProcessManager) {
         self.manager = manager
     }
 
@@ -31,6 +31,6 @@ public struct LogView: View {
 }
 
 #Preview {
-    LogView(manager: DispatcherManager())
+    LogView(manager: ProcessManager())
 }
 #endif

@@ -2,11 +2,11 @@
 import Foundation
 import Combine
 
-/// Manages the lifecycle of ``dispatcher_v2.py`` and streams log output.
+/// Manages the lifecycle of helper processes such as ``dispatcher_v2.py`` and streams log output.
 
 @MainActor
 
-public final class DispatcherManager: ObservableObject, Sendable {
+public final class ProcessManager: ObservableObject, Sendable {
     @Published public private(set) var isRunning: Bool = false
     @Published public private(set) var logs: [String] = []
     @Published public private(set) var cycleCount: Int = 0
@@ -18,7 +18,7 @@ public final class DispatcherManager: ObservableObject, Sendable {
 
     public init() {}
 
-    /// Launch the Python dispatcher if not already running.
+    /// Launch a helper process if not already running.
     public func start() {
         guard !isRunning else { return }
         let proc = Process()
@@ -35,16 +35,16 @@ public final class DispatcherManager: ObservableObject, Sendable {
             process = proc
             isRunning = true
         } catch {
-            append("Failed to start dispatcher: \(error.localizedDescription)")
+            append("Failed to start process: \(error.localizedDescription)")
         }
     }
 
-    /// Send a command string to the dispatcher.
+    /// Send a command string to the running process.
     public func send(_ command: String) {
         // TODO: dispatch command to running process
     }
 
-    /// Terminate the running dispatcher process.
+    /// Terminate the running process.
     public func stop() {
         guard let proc = process, proc.isRunning else { return }
         proc.terminate()
@@ -63,7 +63,7 @@ public final class DispatcherManager: ObservableObject, Sendable {
     }
 
     private func append(_ line: String) {
-        // TODO: handle dispatcher log lines
+        // TODO: handle process log lines
         logs.append(contentsOf: line.split(separator: "\n").map(String.init))
         if line.contains("=== New Cycle ===") { cycleCount += 1 }
         if line.contains("swift build succeeded") { lastBuildResult = "✅ build" }

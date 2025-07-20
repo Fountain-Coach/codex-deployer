@@ -2,30 +2,30 @@
 import PackageDescription
 
 let package = Package(
-    name: "DispatcherMacApp",
+    name: "GUITeatro",
     platforms: [.macOS(.v14)],
     products: [
-        .library(name: "DispatcherUI", targets: ["DispatcherUI"]),
-        .executable(name: "DispatcherMacApp", targets: ["DispatcherMacApp"])
+        .library(name: "GUITeatroUI", targets: ["GUITeatroUI"]),
+        .executable(name: "GUITeatro", targets: ["GUITeatro"])
     ],
     dependencies: [
         .package(path: "../teatro")
     ],
     targets: [
         .target(
-            name: "DispatcherUI",
+            name: "GUITeatroUI",
             dependencies: [
                 .product(name: "Teatro", package: "teatro")
             ],
-            path: "Sources/DispatcherUI"
+            path: "Sources/GUITeatroUI"
         ),
         .executableTarget(
-            name: "DispatcherMacApp",
+            name: "GUITeatro",
             dependencies: [
-                "DispatcherUI",
+                "GUITeatroUI",
                 .product(name: "Teatro", package: "teatro")
             ],
-            path: "Sources/DispatcherMacApp"
+            path: "Sources/GUITeatro"
         )
     ]
 )
