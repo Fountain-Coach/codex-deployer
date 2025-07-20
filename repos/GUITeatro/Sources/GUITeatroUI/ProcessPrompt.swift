@@ -10,7 +10,7 @@ public struct ProcessPrompt: View, Renderable {
         EmptyView() // TODO
     }
 
-    public func render() -> String {
+    nonisolated nonisolated public func render() -> String {
         "" // TODO: update with prompt content
     }
 }
