@@ -2,7 +2,7 @@
 
 *From overview to environment variables.*
 
-Codex-Deployer is an always-on deployment companion built around a simple idea: every build is feedback for the next.
+Codex-Deployer started as an always-on deployment companion built around a simple idea: every build is feedback for the next. Today it operates as the codex‑FountainAI maintainer and GPT contributor.
 
 Powered by OpenAI's [Codex](https://platform.openai.com/docs/codex/overview), the dispatcher acts like a **semantic compiler** for infrastructure. It reads build logs, proposes fixes and keeps services coherent. See the official Codex overview for more details.
 

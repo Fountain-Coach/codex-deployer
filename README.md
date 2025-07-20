@@ -1,9 +1,9 @@
 # Codex-Deployer Handbook
 
-*Git-driven deployment companion for Swift services.*
+*Originally a Git-driven deployment companion for Swift services, now the codex‑FountainAI maintainer and GPT contributor.*
 
 ## Abstract
-Codex-Deployer unifies builds, logs, and semantic fixes in a single Git-bound loop. It primarily runs `deploy/dispatcher_v2.py` to build the local **FountainAI** sources vendored under `repos/`. The project began as a pragmatic helper for Codex but ultimately clears the path for FountainAI, a platform where large language models orchestrate tools, analyse knowledge drift, and learn from reflection. As the deployment loop compiles and patches code, it mirrors FountainAI's broader reasoning flow, where plans are executed step by step and every outcome informs the next iteration.
+Codex-Deployer unifies builds, logs, and semantic fixes in a single Git-bound loop. It primarily runs `deploy/dispatcher_v2.py` to build the local **FountainAI** sources vendored under `repos/`. The project began as a pragmatic helper for Codex but has grown into the codex‑FountainAI maintainer and GPT contributor. It still clears the path for FountainAI, a platform where large language models orchestrate tools, analyse knowledge drift, and learn from reflection. As the deployment loop compiles and patches code, it mirrors FountainAI's broader reasoning flow, where plans are executed step by step and every outcome informs the next iteration.
 
 ## Table of Contents
 - [Introduction to Codex-Deployer](docs/handbook/introduction.md) – overview of the dispatcher and how environment variables shape the workflow.
@@ -38,7 +38,7 @@ docker run --rm -it \
 For an explanation of each variable and how to generate tokens, see the [setup guide](docs/managing_environment_variables.md).
 
 ## From Codex to FountainAI
-Codex-Deployer focuses on deployment. For an overview of the broader FountainAI platform and its APIs, see [docs/future_vision.md](docs/future_vision.md).
+While deployment remains central, the repository now serves as the codex‑FountainAI maintainer and GPT contributor. For an overview of the broader FountainAI platform and its APIs, see [docs/future_vision.md](docs/future_vision.md).
 
 `````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
