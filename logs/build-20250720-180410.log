@@ -27,3 +27,178 @@ Building for debugging...
 
 [2025-07-20T18:04:10.783132] Starting swift build...
 [2025-07-20T18:04:13.838721] swift build failed with exit code 1
+[2025-07-20T18:04:13.931040] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-20T18:04:14.974532] [dispatcher] Running Docker build...
+[2025-07-20T18:04:14.975625] [dispatcher] Running tests...
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [planner internal] load build definition from Dockerfile
+#1 transferring dockerfile: 266B 0.0s done
+#1 DONE 0.1s
+
+#2 [function-caller internal] load build definition from Dockerfile
+#2 transferring dockerfile: 290B 0.0s done
+#2 DONE 0.1s
+
+#3 [persist internal] load build definition from Dockerfile
+#3 transferring dockerfile: 266B 0.0s done
+#3 DONE 0.1s
+
+#4 [tools-factory internal] load build definition from Dockerfile
+#4 transferring dockerfile: 284B 0.0s done
+#4 DONE 0.1s
+
+#5 [baseline-awareness internal] load build definition from Dockerfile
+#5 transferring dockerfile: 299B 0.0s done
+#5 DONE 0.1s
+
+#6 [llm-gateway internal] load build definition from Dockerfile
+#6 transferring dockerfile: 278B 0.0s done
+#6 DONE 0.1s
+
+#7 [bootstrap internal] load build definition from Dockerfile
+#7 transferring dockerfile: 272B 0.0s done
+#7 DONE 0.1s
+
+#8 [function-caller internal] load metadata for docker.io/library/swift:6.1-jammy
+#8 DONE 0.7s
+
+#9 [bootstrap internal] load metadata for docker.io/library/ubuntu:22.04
+#9 DONE 0.7s
+
+#10 [bootstrap internal] load .dockerignore
+#10 transferring context: 2B done
+#10 DONE 0.0s
+
+#11 [baseline-awareness internal] load .dockerignore
+#11 transferring context: 2B done
+#11 DONE 0.0s
+
+#12 [llm-gateway internal] load .dockerignore
+#12 transferring context: 2B done
+#12 DONE 0.0s
+
+#13 [function-caller internal] load .dockerignore
+#13 transferring context: 2B done
+#13 DONE 0.0s
+
+#14 [tools-factory internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.0s
+
+#15 [persist internal] load .dockerignore
+#15 transferring context: 2B done
+#15 DONE 0.0s
+
+#16 [planner internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.0s
+
+#17 [persist build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#17 resolve docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342 0.0s done
+#17 DONE 0.0s
+
+#18 [function-caller stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:1ec65b2719518e27d4d25f104d93f9fac60dc437f81452302406825c46fcc9cb
+#18 resolve docker.io/library/ubuntu:22.04@sha256:1ec65b2719518e27d4d25f104d93f9fac60dc437f81452302406825c46fcc9cb 0.0s done
+#18 CACHED
+
+#19 [bootstrap internal] load build context
+#19 ...
+
+#20 [persist internal] load build context
+#20 transferring context: 5.28MB 4.1s done
+#20 DONE 4.2s
+
+#19 [bootstrap internal] load build context
+#19 transferring context: 5.28MB 4.1s done
+#19 DONE 4.2s
+
+#21 [baseline-awareness internal] load build context
+#21 transferring context: 5.28MB 3.9s done
+#21 DONE 4.2s
+
+#22 [function-caller internal] load build context
+#22 transferring context: 5.28MB 4.1s done
+#22 DONE 4.2s
+
+#23 [llm-gateway internal] load build context
+#23 transferring context: 5.28MB 4.1s done
+#23 DONE 4.2s
+
+#24 [tools-factory internal] load build context
+#24 transferring context: 5.28MB 4.1s done
+#24 DONE 4.2s
+
+#25 [planner internal] load build context
+#25 transferring context: 5.28MB 4.1s done
+#25 DONE 4.2s
+
+#26 [baseline-awareness build 2/4] WORKDIR /src
+#26 CACHED
+
+#27 [llm-gateway build 3/4] COPY . .
+#27 DONE 4.1s
+
+#28 [baseline-awareness build 3/4] COPY . .
+#28 CACHED
+
+#29 [llm-gateway build 3/4] COPY . .
+#29 CACHED
+
+#30 [planner build 3/4] COPY . .
+#30 CACHED
+
+#31 [tools-factory build 3/4] COPY . .
+#31 CACHED
+
+#32 [function-caller build 3/4] COPY . .
+#32 CACHED
+
+#33 [bootstrap build 3/4] COPY . .
+#33 CACHED
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 ...
+
+#35 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#35 ...
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 ...
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 ...
+
+#38 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#38 ...
+
+#39 [persist build 4/4] RUN swift build -c release --product persist-server
+#39 ...
+
+#40 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+
+[2025-07-20T18:04:14.975967] Running integration tests for fountainai...
+#40 ...
+
+#34 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#34 CANCELED
+
+#38 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#38 CANCELED
+
+#36 [planner build 4/4] RUN swift build -c release --product planner-server
+#36 CANCELED
+
+#40 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#40 CANCELED
+
+#39 [persist build 4/4] RUN swift build -c release --product persist-server
+#39 CANCELED
+
+#35 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#35 CANCELED
+
+#37 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#37 CANCELED
