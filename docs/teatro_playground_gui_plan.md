@@ -43,12 +43,7 @@ TeatroPlayground begins as a playground for Teatro components, but it will grow 
 
 By approaching Teatro with a dedicated macOS app, we lower the entry barrier for experimentation and pave the way for deeper FountainAI integrations.
 
-````
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-````
-
-`````text
+``````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-`````
+``````
 
