@@ -29,7 +29,6 @@ repository itself see the [main README](../../README.md).
 
 - [Design Pattern Evaluation](../design_patterns.md)
 - [Log Aggregation Setup](../log_aggregation.md)
-- [Secrets API Proposal](../secrets_api_proposal.md)
 - [What is Git?](../what_is_git.md)
 - [History and Roadmap](history.md)
 

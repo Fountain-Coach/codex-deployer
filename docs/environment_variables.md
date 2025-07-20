@@ -15,8 +15,6 @@ This document lists the environment variables used by the Codex deployer.
 | `DISPATCHER_BUILD_DOCKER` | `0` | Set to `1` to build Docker images for repos containing a `Dockerfile` after each commit. |
 | `DISPATCHER_RUN_E2E` | `0` | Set to `1` to run `docker compose` integration tests after each commit when available. |
 | `SWIFTPM_NUM_JOBS` | `2` | Number of build jobs used by `swift test`. Helps limit CI runner concurrency. |
-| `SECRETS_API_URL` | _(none)_ | Endpoint for retrieving secrets at startup. Used by `deploy/dispatcher_v2.py` when enabled. |
-| `SECRETS_API_TOKEN` | _(none)_ | Authentication token for the secrets service. |
 
 Variables without defaults are optional but enable additional functionality. The dispatcher logs a warning at startup if any variable is missing, allowing you to verify configuration before the main loop begins.
 

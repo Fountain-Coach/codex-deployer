@@ -9,6 +9,7 @@ Powered by OpenAI's [Codex](https://platform.openai.com/docs/codex/overview), th
 FountainAI expands this concept into a cross-platform LLM operating system. When fully deployed it will extend Codex and eventually operate independently as a semantic reasoning engine.
 
 The project bundles several FountainAI services and a Python dispatcher that continuously pulls repositories, compiles the code, and reacts to failures. Because all deployment logic lives in Git, you operate it just like any other repository: clone it, edit the configuration, and run the dispatcher.
+The dispatcher is the official execution path. Use Xcode only when you need to debug build issues locally.
 
 This introduction summarises the core concepts and explains how environment variables drive the system. Follow the links at the end for deeper dives.
 
