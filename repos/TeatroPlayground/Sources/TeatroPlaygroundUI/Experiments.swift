@@ -3,7 +3,7 @@ import Teatro
 import Foundation
 
 /// A single showcase of a Teatro feature.
-public struct Experiment: Identifiable {
+public struct Experiment: Identifiable, Sendable {
     public let id = UUID()
     public let title: String
     public let description: String
@@ -18,7 +18,7 @@ public struct Experiment: Identifiable {
 
 /// Pre-built experiments demonstrating Teatro's capabilities.
 public enum DemoExperiments {
-    public static let all: [Experiment] = [
+    @MainActor public static let all: [Experiment] = [
         Experiment(
             title: "Hello Teatro",
             description: "A warm welcome rendered in bold text.") {
