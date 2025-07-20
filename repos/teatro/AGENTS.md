@@ -8,6 +8,7 @@ This repository contains the documentation for **Teatro View Engine**, a declara
 - When adding files, follow the suggested directory structure from the documentation (e.g. `Sources/`, `Tests/`, `CLI/`).
 - Include tests under `Tests/` once implementation begins. The repository currently contains only documentation and an empty directory layout.
 - Run `swift build` and `swift test` if a `Package.swift` manifest is present.
+- Use **TeatroPlayground** in `../TeatroPlayground` to preview new views and refine UX components.
 
 ## Repo Tasks for Codex
 - There are currently no automated tests. If you add code, provide appropriate tests and ensure they run via `swift test`.

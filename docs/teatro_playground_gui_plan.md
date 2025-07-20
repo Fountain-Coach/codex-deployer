@@ -1,4 +1,4 @@
-# GUITeatro Concept
+# TeatroPlayground Concept
 
 This document describes a lightweight macOS application for exploring Teatro features through a graphical interface. By providing a friendly UI, new contributors can experiment with Teatro components without editing shell scripts or environment files. The application serves as a playground for FountainAI tools and demonstrates how Teatro renders interfaces.
 
@@ -26,7 +26,7 @@ This document describes a lightweight macOS application for exploring Teatro fea
 
 ## 4. FountainAI Integration Path
 
-GUITeatro begins as a playground for Teatro components, but it will grow into a launcher for FountainAI tools. Future iterations could:
+TeatroPlayground begins as a playground for Teatro components, but it will grow into a launcher for FountainAI tools. Future iterations could:
 
 - Display plan execution results from the Planner service.
 - List reflections and baseline snapshots from the Awareness API.
@@ -37,7 +37,7 @@ GUITeatro begins as a playground for Teatro components, but it will grow into a 
 1. Create a small Swift Package that embeds Teatro and exposes helper process management code.
 2. Prototype the settings form and log viewer using Teatro's SwiftUI preview support.
 3. Iterate based on feedback, expanding the UI to cover additional services as FountainAI evolves.
-4. Open `repos/GUITeatro/` in Xcode to preview `ContentView` and begin UI experimentation.
+4. Open `repos/TeatroPlayground/` in Xcode to preview `ContentView` and begin UI experimentation.
 
 ---
 
