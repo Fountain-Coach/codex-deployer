@@ -2,9 +2,6 @@
 import SwiftUI
 import Teatro
 
-public typealias TViewBuilder = Teatro.ViewBuilder
-public typealias SViewBuilder = SwiftUI.ViewBuilder
-
 public struct TeatroRenderView: View {
     let content: Renderable
     public init(content: Renderable) {
