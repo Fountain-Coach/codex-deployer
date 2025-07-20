@@ -88,6 +88,7 @@ Build logs and applied feedback patches are automatically pushed back to GitHub 
 | `typesense-codex` | Typesense indexing schemas and bootstrapping logic |
 | `codex-deployer` | This repo — hosts the dispatcher, feedback, and loop logic |
 | `teatro` | Teatro view engine and rendering framework |
+| `TeatroPlayground` | macOS playground showcasing Teatro with a focus on UX |
 
 > **Note**: `fountainai` refers to the GitHub repo
 > [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).  

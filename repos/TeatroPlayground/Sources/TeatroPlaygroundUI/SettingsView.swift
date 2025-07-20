@@ -1,7 +1,7 @@
 #if canImport(SwiftUI)
 import SwiftUI
 
-/// Edit guit_teatro.env variables.
+/// Edit teatro_playground.env variables.
 public struct SettingsView: View {
     @State private var values: [String: String] = [:]
 
@@ -25,7 +25,7 @@ public struct SettingsView: View {
     }
 
     private var fileURL: URL {
-        URL(fileURLWithPath: "/srv/deploy/guit_teatro.env")
+        URL(fileURLWithPath: "/srv/deploy/teatro_playground.env")
     }
 
     private func load() {
