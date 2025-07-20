@@ -22,7 +22,15 @@ public struct ContentView: View {
     }
 }
 
-#Preview {
-    ContentView()
+#Preview(traits: .fixedLayout(width: 420, height: 640)) {
+    ZStack {
+        Color(NSColor.windowBackgroundColor)
+        ContentView()
+            .padding()
+            .background(Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .shadow(radius: 4)
+            .padding()
+    }
 }
 #endif
