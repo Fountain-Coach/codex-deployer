@@ -59,7 +59,8 @@ The project has a solid start: parsing, model emission, client and server genera
 
 Addressing these items will close the gap between the current implementation and the aspirations laid out in the execution plan, delivering a more polished and self‑describing project.
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

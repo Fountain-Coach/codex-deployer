@@ -54,7 +54,8 @@ docker compose down
 This workflow lets you run the microservices locally. Future updates will add full networking and durable persistence.
 All containers emit JSON logs which can be aggregated by your logging stack.
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

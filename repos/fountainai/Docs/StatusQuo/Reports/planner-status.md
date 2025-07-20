@@ -26,7 +26,8 @@ Spec path: `FountainAi/openAPI/v1/planner.yml` (version 1.0.0).
 - Document environment variables and external dependencies
 - Refer to [environment_variables.md](../../../../../docs/environment_variables.md) when configuring the service
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

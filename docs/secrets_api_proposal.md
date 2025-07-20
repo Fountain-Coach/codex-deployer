@@ -32,7 +32,8 @@ Storing long‑lived secrets on disk increases the risk of exposure. Fetching th
 Implementing this approach would require extending the dispatcher to perform the API call and parse the response before continuing with the build loop. See [environment_variables.md](environment_variables.md) for the complete list of variables that would be supplied by the secret service.
 
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

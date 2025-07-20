@@ -12,7 +12,8 @@ The FountainAI microservices expose OpenAPI-based endpoints that can be unified 
 
 These scenarios show how Kong becomes more than a simple router—it orchestrates versioning, tenant management, observability and real-time tooling around FountainAI's services.
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

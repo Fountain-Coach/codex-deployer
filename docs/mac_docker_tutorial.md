@@ -101,7 +101,8 @@ frameworks while still running inside a container. Prefer the open source Swift
 toolchain whenever possible, but branch out into vendor-specific builds only
 when necessary.
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+
