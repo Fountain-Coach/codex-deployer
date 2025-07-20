@@ -20,8 +20,8 @@ Each experiment includes a short description and invites you to explore how view
 compose and render. Choose an entry from the list to see the underlying Teatro
 view in action.
 
-The latest "Renderer Showcase" experiment demonstrates how a single view is
-rendered via the Codex, HTML, SVG and PNG backends.
+The latest "Renderer Showcase" experiment now presents a dedicated SwiftUI view
+that previews the Codex, HTML, SVG and PNG renderers side by side.
 
 
 ````text
