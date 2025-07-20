@@ -20,6 +20,9 @@ Each experiment includes a short description and invites you to explore how view
 compose and render. Choose an entry from the list to see the underlying Teatro
 view in action.
 
+The latest "Renderer Showcase" experiment demonstrates how a single view is
+rendered via the Codex, HTML, SVG and PNG backends.
+
 
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
