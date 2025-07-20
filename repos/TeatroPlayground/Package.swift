@@ -25,6 +25,11 @@ let package = Package(
                 "TeatroPlaygroundUI"
             ],
             path: "Sources/TeatroPlayground"
+        ),
+        .testTarget(
+            name: "TeatroPlaygroundTests",
+            dependencies: ["TeatroPlaygroundUI"],
+            path: "Tests"
         )
     ]
 )
