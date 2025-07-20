@@ -1,27 +1,13 @@
 #if canImport(SwiftUI)
 import SwiftUI
-import Teatro
 
+/// Blank container view for FountainAI UX experiments.
 public struct ContentView: View {
-    @StateObject private var manager = ProcessManager()
-
     public init() {}
 
     public var body: some View {
-        TabView {
-            ZStack {
-                DashboardView(manager: manager)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-            .tabItem { Text("Dashboard") }
-            QueueView()
-                .tabItem { Text("Queue") }
-            LogView(manager: manager)
-                .tabItem { Text("Logs") }
-            SettingsView()
-                .tabItem { Text("Settings") }
-        }
-        .frame(minWidth: 700, minHeight: 500)
+        Text("FountainAI UX experiments")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

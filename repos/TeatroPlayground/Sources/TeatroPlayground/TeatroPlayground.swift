@@ -1,16 +1,12 @@
 #if canImport(SwiftUI)
 import SwiftUI
 import TeatroPlaygroundUI
-import Teatro
-
-public typealias TViewBuilder = Teatro.ViewBuilder
-public typealias SViewBuilder = SwiftUI.ViewBuilder
 
 @main
 struct GUITeatroApp: App {
     var body: some Scene {
         WindowGroup {
-            TeatroPlaygroundUI.ContentView()
+            ContentView()
         }
     }
 }
