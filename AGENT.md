@@ -88,7 +88,6 @@ Build logs and applied feedback patches are automatically pushed back to GitHub 
 | `typesense-codex` | Typesense indexing schemas and bootstrapping logic |
 | `codex-deployer` | This repo — hosts the dispatcher, feedback, and loop logic |
 | `teatro` | Teatro view engine and rendering framework |
-| `teatro-playground` | GUI experiments and staging for Teatro components |
 
 > **Note**: `fountainai` refers to the GitHub repo
 > [`Fountain-Coach/swift-codex-openapi-kernel`](https://github.com/Fountain-Coach/swift-codex-openapi-kernel).  
@@ -116,9 +115,8 @@ Accepted values for **`"repo"`**:
 - `"fountainai"` → application logic (Swift services)  
 - `"kong-codex"` → API routes and plugins  
 - `"typesense-codex"` → schema or search logic  
-- `"codex-deployer"` → dispatcher logic or system config
-- `"teatro"` → Teatro components
-- `"teatro-playground"` → GUI experiments for Teatro
+- `"codex-deployer"` → dispatcher logic or system config  
+- `"teatro"` → Teatro components  
 
 ---
 
@@ -130,7 +128,6 @@ Accepted values for **`"repo"`**:
 | `/srv/deploy/repos/kong-codex/` | Kong gateway config + plugins |
 | `/srv/deploy/repos/typesense-codex/` | Typesense indexing definitions |
 | `/srv/deploy/repos/teatro/` | Teatro view engine |
-| `/srv/deploy/repos/teatro-playground/` | Teatro Playground GUI experiments |
 | `/srv/deploy/deploy/` | Contains `dispatcher_v2.py` and runtime control logic |
 | `/srv/deploy/logs/` | Build logs from `swift build` and other commands |
 | `/srv/deploy/feedback/` | Codex-pushed semantic patches |
