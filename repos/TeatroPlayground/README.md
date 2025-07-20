@@ -1,13 +1,14 @@
-# TeatroPlayground
+# TeatroPlayground – Official UX Playground for Teatro
 
-TeatroPlayground acts as a macOS playground for the [Teatro](../teatro) view engine. It bundles the `TeatroPlaygroundUI` library together with a simple SwiftUI app so developers can experiment with Teatro-based UIs in a standalone environment.
+TeatroPlayground is the official UX playground for the [Teatro](../teatro) view engine. It bundles the `TeatroPlaygroundUI` library with a simple SwiftUI app so you can prototype and test Teatro components in a standalone environment.
 
-## Building
+## Build and Run
 
 Run the package with Swift Package Manager:
 
 ```bash
 swift build
+swift run TeatroPlayground
 ```
 
 For live previews, open `ContentView.swift` in Xcode and use the SwiftUI preview canvas.
