@@ -6,13 +6,10 @@ Codex-Deployer began as an experiment to remove brittle CI pipelines and GitHub 
 
 ## Next Steps
 
-- Add webhook triggers or file watchers to speed up feedback cycles
-- Build a visual dashboard for log and feedback inspection
-- Improve the auto-patch workflow with better conflict handling
+See [../roadmap.md](../roadmap.md) for upcoming tasks.
 
 Return to the [handbook index](README.md) for additional background material.
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
