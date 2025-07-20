@@ -16,7 +16,7 @@ Codex-Deployer unifies builds, logs, and semantic fixes in a single Git-bound lo
 - [Pull Request Workflow](docs/pull_request_workflow.md) – how patches are proposed and merged.
 - [Code Reference](docs/handbook/code_reference.md) – links to inline API docs.
 - [History and Roadmap](docs/handbook/history.md) – how the project evolved and what's next.
-- [GUITeatro Concept](docs/guit_teatro_gui_plan.md) – draft plan for a Teatro-based GUI.
+- [TeatroPlayground Concept](docs/guit_teatro_gui_plan.md) – draft plan for a Teatro-based GUI.
 
 ## Quick start
 Clone the repository, copy the sample environment file, and start the dispatcher in Docker.

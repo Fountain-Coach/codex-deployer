@@ -2,30 +2,30 @@
 import PackageDescription
 
 let package = Package(
-    name: "GUITeatro",
+    name: "TeatroPlayground",
     platforms: [.macOS(.v14)],
     products: [
-        .library(name: "GUITeatroUI", targets: ["GUITeatroUI"]),
-        .executable(name: "GUITeatro", targets: ["GUITeatro"])
+        .library(name: "TeatroPlaygroundUI", targets: ["TeatroPlaygroundUI"]),
+        .executable(name: "TeatroPlayground", targets: ["TeatroPlayground"])
     ],
     dependencies: [
         .package(path: "../teatro")
     ],
     targets: [
         .target(
-            name: "GUITeatroUI",
+            name: "TeatroPlaygroundUI",
             dependencies: [
                 .product(name: "Teatro", package: "teatro")
             ],
-            path: "Sources/GUITeatroUI"
+            path: "Sources/TeatroPlaygroundUI"
         ),
         .executableTarget(
-            name: "GUITeatro",
+            name: "TeatroPlayground",
             dependencies: [
-                "GUITeatroUI",
+                "TeatroPlaygroundUI",
                 .product(name: "Teatro", package: "teatro")
             ],
-            path: "Sources/GUITeatro"
+            path: "Sources/TeatroPlayground"
         )
     ]
 )
