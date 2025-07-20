@@ -1,16 +1,16 @@
 #if canImport(SwiftUI)
 import SwiftUI
-import DispatcherUI
+import GUITeatroUI
 import Teatro
 
 public typealias TViewBuilder = Teatro.ViewBuilder
 public typealias SViewBuilder = SwiftUI.ViewBuilder
 
 @main
-struct DispatcherMacApp: App {
+struct GUITeatroApp: App {
     var body: some Scene {
         WindowGroup {
-            DispatcherUI.ContentView()
+            GUITeatroUI.ContentView()
         }
     }
 }
@@ -18,9 +18,9 @@ struct DispatcherMacApp: App {
 import Foundation
 
 @main
-struct DispatcherMacApp {
+struct GUITeatroApp {
     static func main() {
-        print("DispatcherMacApp stub - SwiftUI unavailable")
+        print("GUITeatro stub - SwiftUI unavailable")
     }
 }
 #endif

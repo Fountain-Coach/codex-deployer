@@ -6,7 +6,7 @@ public typealias TViewBuilder = Teatro.ViewBuilder
 public typealias SViewBuilder = SwiftUI.ViewBuilder
 
 public struct ContentView: View {
-    @StateObject private var manager = DispatcherManager()
+    @StateObject private var manager = ProcessManager()
 
     public init() {}
 
