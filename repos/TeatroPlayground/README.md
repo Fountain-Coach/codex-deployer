@@ -13,6 +13,13 @@ swift run TeatroPlayground
 
 For live previews, open `ContentView.swift` in Xcode and use the SwiftUI preview canvas.
 
+## Interactive Experiments
+
+The main window now lists several demo scenes that highlight Teatro's building blocks.
+Each experiment includes a short description and invites you to explore how views
+compose and render. Choose an entry from the list to see the underlying Teatro
+view in action.
+
 
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
