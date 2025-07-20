@@ -22,8 +22,7 @@ let package = Package(
         .executableTarget(
             name: "TeatroPlayground",
             dependencies: [
-                "TeatroPlaygroundUI",
-                .product(name: "Teatro", package: "teatro")
+                "TeatroPlaygroundUI"
             ],
             path: "Sources/TeatroPlayground"
         )
