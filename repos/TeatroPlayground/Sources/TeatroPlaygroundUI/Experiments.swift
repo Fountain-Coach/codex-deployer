@@ -42,6 +42,11 @@ SCIENTIST
     It's alive!
 """)
                 }
+        },
+        Experiment(
+            title: "Renderer Showcase",
+            description: "Outputs the demo view via Codex, HTML, SVG and PNG.") {
+                RendererShowcase()
         }
     ]
 }
