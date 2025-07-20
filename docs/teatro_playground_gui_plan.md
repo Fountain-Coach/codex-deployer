@@ -1,4 +1,4 @@
-# TeatroPlayground Concept
+# TeatroPlayground GUI Plan
 
 This document describes a lightweight macOS application for exploring Teatro features through a graphical interface. By providing a friendly UI, new contributors can experiment with Teatro components without editing shell scripts or environment files. The application serves as a playground for FountainAI tools and demonstrates how Teatro renders interfaces.
 
@@ -43,7 +43,6 @@ TeatroPlayground begins as a playground for Teatro components, but it will grow 
 
 By approaching Teatro with a dedicated macOS app, we lower the entry barrier for experimentation and pave the way for deeper FountainAI integrations.
 
-````
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-````
+`````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+`````

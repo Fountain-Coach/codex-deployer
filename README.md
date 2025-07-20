@@ -16,7 +16,7 @@ Codex-Deployer unifies builds, logs, and semantic fixes in a single Git-bound lo
 - [Pull Request Workflow](docs/pull_request_workflow.md) – how patches are proposed and merged.
 - [Code Reference](docs/handbook/code_reference.md) – links to inline API docs.
 - [History and Roadmap](docs/handbook/history.md) – how the project evolved and what's next.
-- [TeatroPlayground Concept](docs/guit_teatro_gui_plan.md) – draft plan for a Teatro-based GUI.
+- [TeatroPlayground GUI Plan](docs/teatro_playground_gui_plan.md) – draft plan for a Teatro-based GUI.
 
 ## Quick start
 Clone the repository, copy the sample environment file, and start the dispatcher in Docker.
@@ -53,6 +53,6 @@ FountainAI aims to unify these services under a persistent reasoning loop that s
 | Planner | http://planner.fountain.coach/api/v1 | Orchestrates planning workflows across the LLM Gateway and Function Caller. | [v1/planner.yml](repos/fountainai/FountainAi/openAPI/v1/planner.yml) |
 | Tools Factory | http://tools-factory.fountain.coach/api/v1 | Registers new tool definitions in the shared Typesense collection consumed by the Function Caller. | [v1/tools-factory.yml](repos/fountainai/FountainAi/openAPI/v1/tools-factory.yml) |
 
-````text
+`````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-````
+`````

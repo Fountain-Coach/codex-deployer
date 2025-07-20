@@ -34,7 +34,7 @@ repository itself see the [main README](../../README.md).
 - [History and Roadmap](history.md)
 
 - [FountainAI macOS UI Plan](../fountainai_mac_ui_plan.md)
-- [TeatroPlayground Concept](../guit_teatro_gui_plan.md)
+- [TeatroPlayground GUI Plan](../teatro_playground_gui_plan.md)
 
 These documents should give you a complete picture of how the dispatcher works,
 how to configure it, and how the surrounding services fit together. All guides
@@ -42,7 +42,6 @@ reference [`environment_variables.md`](../environment_variables.md) when
 describing required settings.
 
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
