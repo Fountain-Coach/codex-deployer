@@ -8,6 +8,8 @@ This repository contains the documentation for **Teatro View Engine**, a declara
 - When adding files, follow the suggested directory structure from the documentation (e.g. `Sources/`, `Tests/`, `CLI/`).
 - Include tests under `Tests/` once implementation begins. The repository currently contains only documentation and an empty directory layout.
 - Run `swift build` and `swift test` if a `Package.swift` manifest is present.
+- The **TeatroPlayground** repository provides a GUI playground for testing view
+  components. Keep its UX simple and focus on showcasing core features.
 
 ## Repo Tasks for Codex
 - There are currently no automated tests. If you add code, provide appropriate tests and ensure they run via `swift test`.
@@ -17,3 +19,7 @@ This repository contains the documentation for **Teatro View Engine**, a declara
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
