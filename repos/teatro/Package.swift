@@ -21,6 +21,11 @@ let package = Package(
             name: "RenderCLI",
             dependencies: ["Teatro"],
             path: "Sources/CLI"
+        ),
+        .testTarget(
+            name: "TeatroTests",
+            dependencies: ["Teatro"],
+            path: "Tests"
         )
     ]
 )
