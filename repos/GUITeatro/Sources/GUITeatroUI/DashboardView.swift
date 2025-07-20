@@ -2,9 +2,6 @@
 import SwiftUI
 import Teatro
 
-public typealias TViewBuilder = Teatro.ViewBuilder
-public typealias SViewBuilder = SwiftUI.ViewBuilder
-
 /// Primary control panel showing dispatcher status and metrics.
 public struct DashboardView: View {
     @ObservedObject var manager: ProcessManager
