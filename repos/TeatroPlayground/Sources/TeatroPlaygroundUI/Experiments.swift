@@ -9,7 +9,7 @@ public struct Experiment: Identifiable, Sendable {
     public let description: String
     public let view: Renderable
 
-    public init(title: String, description: String, @TViewBuilder content: () -> Renderable) {
+    public init(title: String, description: String, content: () -> Renderable) {
         self.title = title
         self.description = description
         self.view = content()
