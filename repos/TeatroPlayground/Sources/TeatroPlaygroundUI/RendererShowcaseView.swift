@@ -17,7 +17,7 @@ public struct RendererShowcaseView: View, Renderable {
         }
     }
 
-    public func render() -> String {
+    public nonisolated func render() -> String {
         RendererShowcase().render()
     }
 
@@ -50,7 +50,7 @@ public struct RendererShowcaseView: View, Renderable {
         }
     }
 
-    private func section<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
+    private func section<Content: View>(title: String, @SViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title).font(.headline)
             content()
