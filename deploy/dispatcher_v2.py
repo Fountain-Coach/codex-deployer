@@ -22,7 +22,7 @@ import urllib.request
 import urllib.error
 
 # Managed repositories now live directly under ``repos/`` in this repository.
-REPO_NAMES = ["fountainai", "kong-codex", "typesense-codex", "teatro"]
+REPO_NAMES = ["fountainai", "kong-codex", "typesense-codex", "teatro", "teatro-playground"]
 REPOS_DIR = "/srv/deploy/repos"
 from codex_changelog import generate_commit_message, append_changelog
 
