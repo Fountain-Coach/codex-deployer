@@ -1,6 +1,6 @@
 import subprocess, os, time, datetime
 
-REPO_NAMES = ["fountainai", "kong-codex", "typesense-codex", "teatro"]
+REPO_NAMES = ["fountainai", "kong-codex", "typesense-codex", "teatro", "teatro-playground"]
 REPOS_DIR = "/srv/deploy/repos"
 
 LOG_DIR = "/srv/deploy/logs"
