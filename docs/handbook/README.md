@@ -35,6 +35,7 @@ repository itself see the [main README](../../README.md).
 
 - [FountainAI macOS UI Plan](../fountainai_mac_ui_plan.md)
 - [TeatroPlayground GUI Plan](../teatro_playground_gui_plan.md)
+- [FountainAI Playground Guidelines](../fountainai_playground_guidelines.md)
 
 These documents should give you a complete picture of how the dispatcher works,
 how to configure it, and how the surrounding services fit together. All guides
