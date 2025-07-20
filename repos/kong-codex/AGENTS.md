@@ -4,7 +4,8 @@
 - Keep the README updated when configuration or environment variables change.
 - Refer to `../../docs/environment_variables.md` for common variable definitions.
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

@@ -13,7 +13,8 @@ When PR mode is active the dispatcher:
 This approach allows human review while keeping automation centralized. Direct push mode remains available by disabling `DISPATCHER_USE_PRS`.
 
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

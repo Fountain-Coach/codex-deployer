@@ -70,7 +70,8 @@ This plan defines how Codex should build a Swift 6-native OpenAPI code generator
 
 ---
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

@@ -37,7 +37,8 @@ Invalid documents return `422` with an `ErrorResponse`.
 - **Completed**: `typesense-codex/scripts/bootstrap_typesense.py` creates required collections for production Typesense instances.
 - Structured logging and Docker Compose example added for local testing
 
-```
-© 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
-Unauthorized copying or distribution is strictly prohibited.
-```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

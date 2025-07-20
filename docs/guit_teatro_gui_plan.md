@@ -47,3 +47,8 @@ By approaching Teatro with a dedicated macOS app, we lower the entry barrier for
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ````
+
+`````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+`````
+
