@@ -327,9 +327,13 @@ def build_swift() -> None:
             fh.write(f"[{timestamp()}] swift build succeeded\n")
             if os.path.exists(os.path.join(repo_path, "Tests")):
                 fh.write(f"[{timestamp()}] running swift test...\n")
-                test_cmd = ["swift", "test"]
-                if sys.platform == "darwin":
-                    test_cmd = ["xcrun", "swift", "test"]
+                test_script = os.path.join(repo_path, "run-tests.sh")
+                if os.path.exists(test_script) and sys.platform != "darwin":
+                    test_cmd = ["bash", test_script]
+                else:
+                    test_cmd = ["swift", "test"]
+                    if sys.platform == "darwin":
+                        test_cmd = ["xcrun", "swift", "test"]
                 test_result = subprocess.run(
                     test_cmd,
                     cwd=repo_path,

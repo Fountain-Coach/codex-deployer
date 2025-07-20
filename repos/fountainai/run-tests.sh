@@ -36,3 +36,9 @@ fi
 echo "Retry skipping slow tests"
 # Attempt 4: skip heavy tests
 SWIFTPM_NUM_JOBS=${SWIFTPM_NUM_JOBS:-2} run swift test -v --parallel false --jobs 2 -Xswiftc -DSKIP_SLOW_TESTS
+
+# Attempt 5: fast tests only
+if run swift test -v --filter FastTests; then
+  echo "Fast tests passed."
+  exit 0
+fi

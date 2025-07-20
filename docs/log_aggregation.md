@@ -18,6 +18,11 @@ services:
 
 Replace `loki-url` with your aggregator endpoint. The same pattern applies to the Tools Factory and other services.
 
+Popular collectors include:
+- **Grafana Loki** with `promtail`
+- **Fluent Bit** sending to Elasticsearch or Loki
+- **Vector** from Timber for custom pipelines
+Configure whichever tool best matches your stack.
 For manual deployments, run a tool like `fluent-bit` or `promtail` to stream logs from Docker to the aggregator.
 
 ```

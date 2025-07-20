@@ -5,6 +5,9 @@
 ## Abstract
 Codex-Deployer unifies builds, logs, and semantic fixes in a single Git-bound loop. It primarily runs `deploy/dispatcher_v2.py` to build the local **FountainAI** sources vendored under `repos/`. The project began as a pragmatic helper for Codex but has grown into the codex‑FountainAI maintainer and GPT contributor. It still clears the path for FountainAI, a platform where large language models orchestrate tools, analyse knowledge drift, and learn from reflection. As the deployment loop compiles and patches code, it mirrors FountainAI's broader reasoning flow, where plans are executed step by step and every outcome informs the next iteration.
 
+## Official Workflow
+Use `deploy/dispatcher_v2.py` as the default execution path under Docker or systemd. Configure it solely through environment variables defined in [docs/environment_variables.md](docs/environment_variables.md). Manual Xcode builds remain optional for troubleshooting.
+
 ## Table of Contents
 - [Introduction to Codex-Deployer](docs/handbook/introduction.md) – overview of the dispatcher and how environment variables shape the workflow.
 - [Architecture Overview](docs/handbook/architecture.md) – diagram of repositories and the build loop.

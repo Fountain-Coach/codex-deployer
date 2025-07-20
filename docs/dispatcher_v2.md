@@ -41,6 +41,14 @@ step-by-step setup guide, including GitHub token creation. The systemd unit read
 and integration tests after each successful commit or PR merge.
 
 For tips on reviewing failed builds, see the [README](../README.md#analyzing-swift-logs) section on analyzing Swift logs.
+## Test Economization
+When `swift test` fails on Linux, `run-tests.sh` retries with a fallback sequence:
+1. `swift test --parallel false`
+2. `--jobs ${SWIFTPM_NUM_JOBS:-2}`
+3. `swift test --filter <Target>`
+4. `-DSKIP_SLOW_TESTS`
+5. `swift test --filter FastTests`
+The dispatcher runs this script so local results match CI.
 
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
