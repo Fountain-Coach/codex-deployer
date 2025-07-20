@@ -1,9 +1,8 @@
-#if canImport(SwiftUI)
 import Teatro
 import Foundation
 
 /// A single showcase of a Teatro feature.
-public struct Experiment: Identifiable, Sendable {
+public struct Experiment: Identifiable {
     public let id = UUID()
     public let title: String
     public let description: String
@@ -46,4 +45,3 @@ SCIENTIST
         }
     ]
 }
-#endif
