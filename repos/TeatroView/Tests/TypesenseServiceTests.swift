@@ -38,7 +38,7 @@ final class TypesenseServiceTests: XCTestCase {
     func testUpdateSchema() async throws {
         setenv("TYPESENSE_URL", "http://localhost:8108", 1)
         setenv("TYPESENSE_API_KEY", "abc", 1)
-        let schemaData = "{\"fields\":[]}".data(using: .utf8)!
+        let schemaData = "{\"name\":\"books\",\"fields\":[]}".data(using: .utf8)!
         let schema = try JSONDecoder().decode(CollectionUpdateSchema.self, from: schemaData)
         let data = try JSONEncoder().encode(schema)
         var captured: URLRequest?

@@ -59,10 +59,16 @@ public struct SchemaEditorView: View {
 }
 
 #if DEBUG
-struct SchemaEditorView_Previews: PreviewProvider {
-    static var previews: some View {
-        SchemaEditorView(collection: "books", text: "{\n  \"fields\": []\n}")
-    }
+#Preview {
+    SchemaEditorView(
+        collection: "books",
+        text: """
+        {
+            \"name\": \"books\",
+            \"fields\": []
+        }
+        """
+    )
 }
 #endif
 #endif

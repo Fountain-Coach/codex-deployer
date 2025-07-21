@@ -99,7 +99,8 @@ public struct CollectionSchema: Codable {
     public let voice_query_model: VoiceQueryModelCollectionConfig
 }
 
-public struct CollectionUpdateSchema: Codable, Sendable {
+public struct CollectionUpdateSchema: Codable, Sendable, Equatable {
+    public let name: String
     public let fields: [Field]
 }
 
@@ -134,7 +135,7 @@ public struct FacetCounts: Codable, Sendable {
     public let stats: [String: String]
 }
 
-public struct Field: Codable, Sendable {
+public struct Field: Codable, Sendable, Equatable {
     public let drop: Bool
     public let embed: [String: String]
     public let facet: Bool
