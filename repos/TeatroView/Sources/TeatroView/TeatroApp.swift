@@ -6,7 +6,12 @@ import SwiftUI
 struct TeatroApp: App {
     var body: some Scene {
         WindowGroup {
-            CollectionBrowserView(service: .live)
+            TabView {
+                ChatWorkspaceView()
+                    .tabItem { Text("Chat") }
+                CollectionBrowserView(service: .live)
+                    .tabItem { Text("Collections") }
+            }
         }
     }
 }
