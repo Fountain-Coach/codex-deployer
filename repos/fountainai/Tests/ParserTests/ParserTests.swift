@@ -176,4 +176,51 @@ final class ParserTests: XCTestCase {
             XCTAssertEqual(error as? SpecValidator.ValidationError, SpecValidator.ValidationError("unknown security scheme missing"))
         }
     }
+
+    func testLoadsOpenAPI303Spec() throws {
+        let yaml = """
+        openapi: 3.0.3
+        info:
+          title: 303 API
+        paths: {}
+        """
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("v303.yaml")
+        try yaml.write(to: url, atomically: true, encoding: .utf8)
+        let spec = try SpecLoader.load(from: url)
+        XCTAssertEqual(spec.title, "303 API")
+    }
+
+    func testParsesAllOfAndOneOf() throws {
+        let yaml = """
+        title: Combo API
+        components:
+          schemas:
+            Base:
+              type: object
+              properties:
+                id: {type: string}
+            Extra:
+              type: object
+              properties:
+                value: {type: integer}
+            Combined:
+              allOf:
+                - $ref: '#/components/schemas/Base'
+                - $ref: '#/components/schemas/Extra'
+            Wrapper:
+              properties:
+                item:
+                  oneOf:
+                    - $ref: '#/components/schemas/Base'
+                    - $ref: '#/components/schemas/Extra'
+        paths: {}
+        """
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("combo.yaml")
+        try yaml.write(to: url, atomically: true, encoding: .utf8)
+        let spec = try SpecLoader.load(from: url)
+        let combined = spec.components?.schemas["Combined"]
+        XCTAssertEqual(combined?.allOf?.count, 2)
+        let wrapper = spec.components?.schemas["Wrapper"]?.properties?["item"]
+        XCTAssertEqual(wrapper?.oneOf?.count, 2)
+    }
 }

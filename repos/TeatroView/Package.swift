@@ -5,7 +5,8 @@ let package = Package(
     name: "TeatroView",
     platforms: [.macOS(.v14)],
     products: [
-        .executable(name: "TeatroView", targets: ["TeatroView"])
+        .executable(name: "TeatroView", targets: ["TeatroView"]),
+        .library(name: "TypesenseClient", targets: ["TypesenseClient"])
     ],
     dependencies: [
         .package(url: "https://github.com/fountain-coach/teatro.git", branch: "main")
@@ -17,6 +18,10 @@ let package = Package(
                 .product(name: "Teatro", package: "teatro")
             ],
             path: "Sources/TeatroView"
+        ),
+        .target(
+            name: "TypesenseClient",
+            path: "Sources/TypesenseClient"
         ),
         .testTarget(
             name: "TeatroViewTests",
