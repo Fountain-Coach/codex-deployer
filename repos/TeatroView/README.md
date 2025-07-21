@@ -19,6 +19,12 @@ swift run TeatroView
 
 Running `swift run TeatroView` builds the executable and launches a minimal navigation interface. Open the package in Xcode for SwiftUI previews or run from the command line as shown above.
 
+## Features
+
+- **Chat Workspace** – send prompts to the LLM Gateway and stream replies. Set `LLM_GATEWAY_URL` so the app knows where to dispatch requests.
+- **Collection Browser** – list available collections and explore documents.
+- **Schema Editor** – update collection schemas using raw JSON.
+
 ### Dependency Layout
 
 `Package.swift` pulls in the [Teatro](https://github.com/fountain-coach/teatro) dependency via its Git URL. Swift Package Manager will fetch it automatically when building the package.
