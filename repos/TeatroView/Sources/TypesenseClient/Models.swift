@@ -524,11 +524,21 @@ public struct deleteStopwordsSetResponse: Codable {
 
 // MARK: - Placeholder Schemas
 
-public struct CollectionResponse: Codable, Sendable {
+public struct CollectionResponse: Codable, Sendable, Equatable {
     public let name: String
+    public let numDocuments: Int
 }
-public struct PresetSchema: Codable, Sendable {}
-public struct PresetUpsertSchema: Codable, Sendable {}
+
+public struct PresetSchema: Codable, Sendable, Equatable {
+    public let id: String
+    public let name: String
+    public let version: String
+}
+
+public struct PresetUpsertSchema: Codable, Sendable, Equatable {
+    public let id: String
+    public let config: [String: String]
+}
 public struct AnalyticsRuleSchema: Codable, Sendable {}
 public struct ApiKey: Codable, Sendable {}
 public struct ConversationModelSchema: Codable, Sendable {}
