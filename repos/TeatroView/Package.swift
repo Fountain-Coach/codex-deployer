@@ -5,14 +5,14 @@ let package = Package(
     name: "TeatroView",
     platforms: [.macOS(.v14)],
     products: [
-        .executable(name: "TeatroView", targets: ["TeatroView"]),
+        .library(name: "TeatroView", targets: ["TeatroView"]),
         .library(name: "TypesenseClient", targets: ["TypesenseClient"])
     ],
     dependencies: [
         .package(url: "https://github.com/fountain-coach/teatro.git", branch: "main")
     ],
     targets: [
-        .executableTarget(
+        .target(
             name: "TeatroView",
             dependencies: [
                 .product(name: "Teatro", package: "teatro"),
