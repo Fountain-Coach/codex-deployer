@@ -19,6 +19,16 @@ swift run TeatroView
 
 The app builds with Swift Package Manager. Open the package in Xcode for SwiftUI previews or run from the command line as shown above.
 
+### Dependency Layout
+
+`Package.swift` expects the [Teatro](../teatro) package to be present one directory up at `../teatro`. If you cloned this project by itself, clone the Teatro repository next to `TeatroView`:
+
+```bash
+git clone https://github.com/fountain-coach/teatro ../teatro
+```
+
+Keeping this path intact ensures Swift Package Manager can resolve the `Teatro` product.
+
 ## Contributing
 
 This project lives in the `TeatroView` directory of the `codex-deployer` monorepo. Issues and pull requests are welcome. Please keep the README updated if you change build steps or environment variables. Refer to `docs/environment_variables.md` for the full list of variables used across the project.

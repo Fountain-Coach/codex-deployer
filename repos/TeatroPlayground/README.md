@@ -11,6 +11,12 @@ swift build
 swift run TeatroPlayground
 ```
 
+This project also relies on the [Teatro](../teatro) package being available at `../teatro`. If the folder is missing, clone the repository before building:
+
+```bash
+git clone https://github.com/fountain-coach/teatro ../teatro
+```
+
 For live previews, open `ContentView.swift` in Xcode and use the SwiftUI preview canvas.
 
 ## Interactive Experiments
