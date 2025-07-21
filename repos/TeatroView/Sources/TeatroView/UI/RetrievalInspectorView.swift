@@ -26,4 +26,12 @@ public struct RetrievalInspectorView: View {
         }
     }
 }
+
+#if DEBUG
+public struct RetrievalInspectorView_Previews: PreviewProvider {
+    public static var previews: some View {
+        RetrievalInspectorView(hits: ["One", "Two", "Three"])
+    }
+}
+#endif
 #endif
