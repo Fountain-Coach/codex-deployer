@@ -11,7 +11,7 @@ public struct getKey: APIRequest {
     public var parameters: getKeyParameters
     public var path: String {
         var path = "/keys/{keyId}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{keyId}", with: String(parameters.keyid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path

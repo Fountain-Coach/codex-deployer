@@ -1,4 +1,8 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+import TypesenseClient
 
 /// Errors thrown by `TypesenseService` when environment configuration is incomplete.
 public enum TypesenseServiceError: LocalizedError {

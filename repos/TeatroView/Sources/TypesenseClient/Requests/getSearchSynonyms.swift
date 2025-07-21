@@ -11,7 +11,7 @@ public struct getSearchSynonyms: APIRequest {
     public var parameters: getSearchSynonymsParameters
     public var path: String {
         var path = "/collections/{collectionName}/synonyms"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{collectionName}", with: String(parameters.collectionname))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path

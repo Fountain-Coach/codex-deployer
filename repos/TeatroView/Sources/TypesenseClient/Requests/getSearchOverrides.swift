@@ -11,7 +11,7 @@ public struct getSearchOverrides: APIRequest {
     public var parameters: getSearchOverridesParameters
     public var path: String {
         var path = "/collections/{collectionName}/overrides"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{collectionName}", with: String(parameters.collectionname))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path

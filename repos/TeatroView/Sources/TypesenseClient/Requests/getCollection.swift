@@ -11,7 +11,7 @@ public struct getCollection: APIRequest {
     public var parameters: getCollectionParameters
     public var path: String {
         var path = "/collections/{collectionName}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{collectionName}", with: String(parameters.collectionname))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path

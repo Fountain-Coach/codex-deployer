@@ -12,7 +12,7 @@ public struct deleteSearchOverride: APIRequest {
     public var parameters: deleteSearchOverrideParameters
     public var path: String {
         var path = "/collections/{collectionName}/overrides/{overrideId}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{collectionName}", with: String(parameters.collectionname))
         path = path.replacingOccurrences(of: "{overrideId}", with: String(parameters.overrideid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }

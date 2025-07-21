@@ -12,7 +12,7 @@ public struct upsertSearchSynonym: APIRequest {
     public var parameters: upsertSearchSynonymParameters
     public var path: String {
         var path = "/collections/{collectionName}/synonyms/{synonymId}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{collectionName}", with: String(parameters.collectionname))
         path = path.replacingOccurrences(of: "{synonymId}", with: String(parameters.synonymid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }

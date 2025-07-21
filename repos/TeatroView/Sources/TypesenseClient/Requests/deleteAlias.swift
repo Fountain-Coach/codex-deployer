@@ -11,7 +11,7 @@ public struct deleteAlias: APIRequest {
     public var parameters: deleteAliasParameters
     public var path: String {
         var path = "/aliases/{aliasName}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{aliasName}", with: String(parameters.aliasname))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path

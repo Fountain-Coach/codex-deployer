@@ -11,7 +11,7 @@ public struct getStemmingDictionary: APIRequest {
     public var parameters: getStemmingDictionaryParameters
     public var path: String {
         var path = "/stemming/dictionaries/{dictionaryId}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{dictionaryId}", with: String(parameters.dictionaryid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path

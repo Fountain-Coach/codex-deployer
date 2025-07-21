@@ -11,7 +11,7 @@ public struct updateNLSearchModel: APIRequest {
     public var parameters: updateNLSearchModelParameters
     public var path: String {
         var path = "/nl_search_models/{modelId}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{modelId}", with: String(parameters.modelid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path

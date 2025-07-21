@@ -11,7 +11,7 @@ public struct deleteConversationModel: APIRequest {
     public var parameters: deleteConversationModelParameters
     public var path: String {
         var path = "/conversations/models/{modelId}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{modelId}", with: String(parameters.modelid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
