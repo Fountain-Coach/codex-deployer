@@ -52,4 +52,50 @@ final class TypesenseServiceTests: XCTestCase {
         let service = try TypesenseService(session: session)
         _ = try await service.updateSchema(collection: "foo", schema: schema)
     }
+
+    @MainActor
+    func testHealthRequest() async throws {
+        setenv("TYPESENSE_URL", "http://localhost:8108", 1)
+        setenv("TYPESENSE_API_KEY", "abc", 1)
+        let json = "{" + "\"ok\":true" + "}"
+        let data = json.data(using: .utf8)!
+        _ = try JSONDecoder().decode(HealthStatus.self, from: data)
+        let session = MockSession { req in
+            XCTAssertEqual(req.url?.path, "/health")
+            return (data, HTTPURLResponse(url: req.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let service = try TypesenseService(session: session)
+        let resp = try await service.fetchHealth()
+        XCTAssertTrue(resp.ok)
+    }
+
+    @MainActor
+    func testAPIStatsRequest() async throws {
+        setenv("TYPESENSE_URL", "http://localhost:8108", 1)
+        setenv("TYPESENSE_API_KEY", "abc", 1)
+        let json = "{" +
+            "\"delete_latency_ms\":\"0\"," +
+            "\"delete_requests_per_second\":\"0\"," +
+            "\"import_latency_ms\":\"0\"," +
+            "\"import_requests_per_second\":\"0\"," +
+            "\"latency_ms\":{}," +
+            "\"overloaded_requests_per_second\":\"0\"," +
+            "\"pending_write_batches\":\"0\"," +
+            "\"requests_per_second\":{}," +
+            "\"search_latency_ms\":\"1\"," +
+            "\"search_requests_per_second\":\"1\"," +
+            "\"total_requests_per_second\":\"1\"," +
+            "\"write_latency_ms\":\"0\"," +
+            "\"write_requests_per_second\":\"0\"" +
+        "}"
+        let data = json.data(using: .utf8)!
+        _ = try JSONDecoder().decode(APIStatsResponse.self, from: data)
+        let session = MockSession { req in
+            XCTAssertEqual(req.url?.path, "/stats.json")
+            return (data, HTTPURLResponse(url: req.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let service = try TypesenseService(session: session)
+        let resp = try await service.apiStats()
+        XCTAssertEqual(resp.search_latency_ms, "1")
+    }
 }

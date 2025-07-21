@@ -86,6 +86,16 @@ public final class TypesenseService {
         }
         return try await client.send(UpdateRequest(collection: collection, schema: schema))
     }
+
+    /// Retrieve basic health status.
+    public func fetchHealth() async throws -> HealthStatus {
+        try await client.send(health())
+    }
+
+    /// Fetch API statistics for the cluster.
+    public func apiStats() async throws -> APIStatsResponse {
+        try await client.send(retrieveAPIStats())
+    }
 }
 
 public extension TypesenseService {
