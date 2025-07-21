@@ -17,6 +17,18 @@ TeatroView provides a graphical interface for Typesense using the Teatro view en
 4. **SwiftUI Shell** – embed Teatro scenes in a minimal SwiftUI app.
 5. **Documentation** – keep `README.md` and this plan updated as features land.
 
+## Integration Steps
+
+The [LLM-First Typesense GUI](llm_first_typesense_gui.md) outlines a chat-centric workflow that complements the existing TeatroView plan. Follow these concrete steps to integrate it with the Codex deployer:
+
+1. **Regenerate the client** – run `scripts/generate_typesense_client.sh` whenever `openapi.yml` changes so TeatroView uses the latest Typesense API.
+2. **Add the Chat Workspace** – build a SwiftUI view that forwards prompts to the LLM and streams answers, then expose `typesense.search` tool calls.
+3. **Implement the Retrieval Inspector** – show Typesense hits, scores, and raw JSON next to the chat for full transparency.
+4. **Expose corpus management** – provide a schema browser and quick actions (clone, toggle embeddings) using Teatro components.
+5. **Tie into the build loop** – configure the dispatcher to rebuild and restart TeatroView automatically when sources change.
+
+See [environment_variables.md](environment_variables.md) for required variables such as `TYPESENSE_URL` and `TYPESENSE_API_KEY`.
+
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
 ````
