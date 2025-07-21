@@ -8,8 +8,8 @@ public struct TeatroRootView: View {
         TabView {
             ChatWorkspaceView()
                 .tabItem { Text("Chat") }
-
-            CollectionBrowserView(names: ["books", "articles"])
+          
+            CollectionBrowserView(service: .live)
                 .tabItem { Text("Collections") }
         }
     }
