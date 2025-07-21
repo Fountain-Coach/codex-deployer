@@ -1,7 +1,7 @@
 import Foundation
 
 public struct upsertAnalyticsRuleParameters: Codable {
-    public let rulename: String
+    public let ruleName: String
 }
 
 public struct upsertAnalyticsRule: APIRequest {
@@ -9,13 +9,7 @@ public struct upsertAnalyticsRule: APIRequest {
     public typealias Response = AnalyticsRuleSchema
     public var method: String { "PUT" }
     public var parameters: upsertAnalyticsRuleParameters
-    public var path: String {
-        var path = "/analytics/rules/{ruleName}"
-        let query: [String] = []
-        path = path.replacingOccurrences(of: "{ruleName}", with: String(parameters.rulename))
-        if !query.isEmpty { path += "?" + query.joined(separator: "&") }
-        return path
-    }
+    public var path: String { "/analytics/rules/\(parameters.ruleName)" }
     public var body: Body?
 
     public init(parameters: upsertAnalyticsRuleParameters, body: Body? = nil) {

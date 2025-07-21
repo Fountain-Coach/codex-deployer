@@ -1,7 +1,7 @@
 import Foundation
 
 public struct getCollectionParameters: Codable {
-    public let collectionname: String
+    public let collectionName: String
 }
 
 public struct getCollection: APIRequest {
@@ -9,13 +9,7 @@ public struct getCollection: APIRequest {
     public typealias Response = CollectionResponse
     public var method: String { "GET" }
     public var parameters: getCollectionParameters
-    public var path: String {
-        var path = "/collections/{collectionName}"
-        let query: [String] = []
-        path = path.replacingOccurrences(of: "{collectionName}", with: String(parameters.collectionname))
-        if !query.isEmpty { path += "?" + query.joined(separator: "&") }
-        return path
-    }
+    public var path: String { "/collections/\(parameters.collectionName)" }
     public var body: Body?
 
     public init(parameters: getCollectionParameters, body: Body? = nil) {

@@ -1,6 +1,6 @@
 // Models for Typesense API
 
-public struct APIStatsResponse: Codable {
+public struct APIStatsResponse: Codable, Sendable {
     public let delete_latency_ms: String
     public let delete_requests_per_second: String
     public let import_latency_ms: String
@@ -16,51 +16,51 @@ public struct APIStatsResponse: Codable {
     public let write_requests_per_second: String
 }
 
-public struct AnalyticsEventCreateResponse: Codable {
+public struct AnalyticsEventCreateResponse: Codable, Sendable {
     public let ok: Bool
 }
 
-public struct AnalyticsEventCreateSchema: Codable {
+public struct AnalyticsEventCreateSchema: Codable, Sendable {
     public let data: [String: String]
     public let name: String
     public let type: String
 }
 
-public struct AnalyticsRuleDeleteResponse: Codable {
+public struct AnalyticsRuleDeleteResponse: Codable, Sendable {
     public let name: String
 }
 
-public struct AnalyticsRuleParameters: Codable {
+public struct AnalyticsRuleParameters: Codable, Sendable {
     public let destination: AnalyticsRuleParametersDestination
     public let expand_query: Bool
     public let limit: Int
     public let source: AnalyticsRuleParametersSource
 }
 
-public struct AnalyticsRuleParametersDestination: Codable {
+public struct AnalyticsRuleParametersDestination: Codable, Sendable {
     public let collection: String
     public let counter_field: String
 }
 
-public struct AnalyticsRuleParametersSource: Codable {
+public struct AnalyticsRuleParametersSource: Codable, Sendable {
     public let collections: [String]
     public let events: [[String: String]]
 }
 
-public struct AnalyticsRuleUpsertSchema: Codable {
+public struct AnalyticsRuleUpsertSchema: Codable, Sendable {
     public let params: AnalyticsRuleParameters
     public let type: String
 }
 
-public struct AnalyticsRulesRetrieveSchema: Codable {
+public struct AnalyticsRulesRetrieveSchema: Codable, Sendable {
     public let rules: [AnalyticsRuleSchema]
 }
 
-public struct ApiKeyDeleteResponse: Codable {
+public struct ApiKeyDeleteResponse: Codable, Sendable {
     public let id: Int
 }
 
-public struct ApiKeySchema: Codable {
+public struct ApiKeySchema: Codable, Sendable {
     public let actions: [String]
     public let collections: [String]
     public let description: String
@@ -68,28 +68,28 @@ public struct ApiKeySchema: Codable {
     public let value: String
 }
 
-public struct ApiKeysResponse: Codable {
+public struct ApiKeysResponse: Codable, Sendable {
     public let keys: [ApiKey]
 }
 
-public struct ApiResponse: Codable {
+public struct ApiResponse: Codable, Sendable {
     public let message: String
 }
 
-public struct CollectionAlias: Codable {
+public struct CollectionAlias: Codable, Sendable {
     public let collection_name: String
     public let name: String
 }
 
-public struct CollectionAliasSchema: Codable {
+public struct CollectionAliasSchema: Codable, Sendable {
     public let collection_name: String
 }
 
-public struct CollectionAliasesResponse: Codable {
+public struct CollectionAliasesResponse: Codable, Sendable {
     public let aliases: [CollectionAlias]
 }
 
-public struct CollectionSchema: Codable {
+public struct CollectionSchema: Codable, Sendable {
     public let default_sorting_field: String
     public let enable_nested_fields: Bool
     public let fields: [Field]
@@ -104,7 +104,7 @@ public struct CollectionUpdateSchema: Codable, Sendable, Equatable {
     public let fields: [Field]
 }
 
-public struct ConversationModelUpdateSchema: Codable {
+public struct ConversationModelUpdateSchema: Codable, Sendable {
     public let account_id: String
     public let api_key: String
     public let history_collection: String
@@ -116,14 +116,14 @@ public struct ConversationModelUpdateSchema: Codable {
     public let vllm_url: String
 }
 
-public enum DirtyValues: String, Codable {
+public enum DirtyValues: String, Codable, Sendable {
     case coerce_or_reject
     case coerce_or_drop
     case drop
     case reject
 }
 
-public enum DropTokensMode: String, Codable {
+public enum DropTokensMode: String, Codable, Sendable {
     case right_to_left
     case left_to_right
     case both_sides_3 = "both_sides:3"
@@ -157,18 +157,18 @@ public struct Field: Codable, Sendable, Equatable {
     public let vec_dist: String
 }
 
-public struct HealthStatus: Codable {
+public struct HealthStatus: Codable, Sendable {
     public let ok: Bool
 }
 
-public enum IndexAction: String, Codable {
+public enum IndexAction: String, Codable, Sendable {
     case create
     case update
     case upsert
     case emplace
 }
 
-public struct MultiSearchParameters: Codable {
+public struct MultiSearchParameters: Codable, Sendable {
     public let cache_ttl: Int
     public let conversation: Bool
     public let conversation_id: String
@@ -265,19 +265,19 @@ public struct NLSearchModelBase: Codable, Sendable {
     public let top_p: String
 }
 
-public struct NLSearchModelDeleteSchema: Codable {
+public struct NLSearchModelDeleteSchema: Codable, Sendable {
     public let id: String
 }
 
-public struct PresetDeleteSchema: Codable {
+public struct PresetDeleteSchema: Codable, Sendable {
     public let name: String
 }
 
-public struct PresetsRetrieveSchema: Codable {
+public struct PresetsRetrieveSchema: Codable, Sendable {
     public let presets: [PresetSchema]
 }
 
-public struct SchemaChangeStatus: Codable {
+public struct SchemaChangeStatus: Codable, Sendable {
     public let altered_docs: Int
     public let collection: String
     public let validated_docs: Int
@@ -299,27 +299,27 @@ public struct SearchHighlight: Codable, Sendable {
     public let values: [String]
 }
 
-public struct SearchOverrideDeleteResponse: Codable {
+public struct SearchOverrideDeleteResponse: Codable, Sendable {
     public let id: String
 }
 
-public struct SearchOverrideExclude: Codable {
+public struct SearchOverrideExclude: Codable, Sendable {
     public let id: String
 }
 
-public struct SearchOverrideInclude: Codable {
+public struct SearchOverrideInclude: Codable, Sendable {
     public let id: String
     public let position: Int
 }
 
-public struct SearchOverrideRule: Codable {
+public struct SearchOverrideRule: Codable, Sendable {
     public let filter_by: String
     public let match: String
     public let query: String
     public let tags: [String]
 }
 
-public struct SearchOverrideSchema: Codable {
+public struct SearchOverrideSchema: Codable, Sendable {
     public let effective_from_ts: Int
     public let effective_to_ts: Int
     public let excludes: [SearchOverrideExclude]
@@ -334,11 +334,11 @@ public struct SearchOverrideSchema: Codable {
     public let stop_processing: Bool
 }
 
-public struct SearchOverridesResponse: Codable {
+public struct SearchOverridesResponse: Codable, Sendable {
     public let overrides: [SearchOverride]
 }
 
-public struct SearchParameters: Codable {
+public struct SearchParameters: Codable, Sendable {
     public let cache_ttl: Int
     public let conversation: Bool
     public let conversation_id: String
@@ -441,50 +441,50 @@ public struct SearchResultHit: Codable, Sendable {
     public let vector_distance: String
 }
 
-public struct SearchSynonymDeleteResponse: Codable {
+public struct SearchSynonymDeleteResponse: Codable, Sendable {
     public let id: String
 }
 
-public struct SearchSynonymSchema: Codable {
+public struct SearchSynonymSchema: Codable, Sendable {
     public let locale: String
     public let root: String
     public let symbols_to_index: [String]
     public let synonyms: [String]
 }
 
-public struct SearchSynonymsResponse: Codable {
+public struct SearchSynonymsResponse: Codable, Sendable {
     public let synonyms: [SearchSynonym]
 }
 
-public struct StemmingDictionary: Codable {
+public struct StemmingDictionary: Codable, Sendable {
     public let id: String
     public let words: [[String: String]]
 }
 
-public struct StopwordsSetRetrieveSchema: Codable {
+public struct StopwordsSetRetrieveSchema: Codable, Sendable {
     public let stopwords: StopwordsSetSchema
 }
 
-public struct StopwordsSetSchema: Codable {
+public struct StopwordsSetSchema: Codable, Sendable {
     public let id: String
     public let locale: String
     public let stopwords: [String]
 }
 
-public struct StopwordsSetUpsertSchema: Codable {
+public struct StopwordsSetUpsertSchema: Codable, Sendable {
     public let locale: String
     public let stopwords: [String]
 }
 
-public struct StopwordsSetsRetrieveAllSchema: Codable {
+public struct StopwordsSetsRetrieveAllSchema: Codable, Sendable {
     public let stopwords: [StopwordsSetSchema]
 }
 
-public struct SuccessStatus: Codable {
+public struct SuccessStatus: Codable, Sendable {
     public let success: Bool
 }
 
-public struct VoiceQueryModelCollectionConfig: Codable {
+public struct VoiceQueryModelCollectionConfig: Codable, Sendable {
     public let model_name: String
 }
 
@@ -500,13 +500,13 @@ public typealias retrieveAllNLSearchModelsResponse = [NLSearchModelSchema]
 
 public typealias getCollectionsResponse = [CollectionResponse]
 
-public struct debugResponse: Codable {
+public struct debugResponse: Codable, Sendable {
     public let version: String
 }
 
 public typealias indexDocumentRequest = [String: String]
 
-public struct deleteDocumentsResponse: Codable {
+public struct deleteDocumentsResponse: Codable, Sendable {
     public let num_deleted: Int
 }
 
@@ -514,11 +514,11 @@ public typealias getDocumentResponse = [String: String]
 
 public typealias deleteDocumentResponse = [String: String]
 
-public struct listStemmingDictionariesResponse: Codable {
+public struct listStemmingDictionariesResponse: Codable, Sendable {
     public let dictionaries: [String]
 }
 
-public struct deleteStopwordsSetResponse: Codable {
+public struct deleteStopwordsSetResponse: Codable, Sendable {
     public let id: String
 }
 
@@ -528,9 +528,14 @@ public struct CollectionResponse: Codable, Equatable, Sendable {
     public let name: String
 }
 
-public struct PresetSchema: Codable, Equatable, Sendable {}
+public struct PresetSchema: Codable, Equatable, Sendable {
+    public let id: String
+    public let rules: [String]
+}
 
-public struct PresetUpsertSchema: Codable, Equatable, Sendable {}
+public struct PresetUpsertSchema: Codable, Equatable, Sendable {
+    public let rules: [String]
+}
 public struct AnalyticsRuleSchema: Codable, Sendable {}
 public struct ApiKey: Codable, Sendable {}
 public struct ConversationModelSchema: Codable, Sendable {}
