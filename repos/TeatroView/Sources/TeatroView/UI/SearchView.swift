@@ -42,6 +42,7 @@ public struct SearchView: View {
         .task { if results.isEmpty { await performSearch() } }
     }
 
+    @MainActor
     private func performSearch() async {
         guard let service else { return }
         do {

@@ -99,7 +99,7 @@ public struct CollectionSchema: Codable {
     public let voice_query_model: VoiceQueryModelCollectionConfig
 }
 
-public struct CollectionUpdateSchema: Codable {
+public struct CollectionUpdateSchema: Codable, Sendable {
     public let fields: [Field]
 }
 
@@ -128,13 +128,13 @@ public enum DropTokensMode: String, Codable {
     case both_sides_3 = "both_sides:3"
 }
 
-public struct FacetCounts: Codable {
+public struct FacetCounts: Codable, Sendable {
     public let counts: [[String: String]]
     public let field_name: String
     public let stats: [String: String]
 }
 
-public struct Field: Codable {
+public struct Field: Codable, Sendable {
     public let drop: Bool
     public let embed: [String: String]
     public let facet: Bool
@@ -233,17 +233,17 @@ public struct MultiSearchParameters: Codable {
     public let voice_query: String
 }
 
-public struct MultiSearchResult: Codable {
+public struct MultiSearchResult: Codable, Sendable {
     public let conversation: SearchResultConversation
     public let results: [MultiSearchResultItem]
 }
 
-public struct MultiSearchSearchesParameter: Codable {
+public struct MultiSearchSearchesParameter: Codable, Sendable {
     public let searches: [MultiSearchCollectionParameters]
     public let union: Bool
 }
 
-public struct NLSearchModelBase: Codable {
+public struct NLSearchModelBase: Codable, Sendable {
     public let access_token: String
     public let account_id: String
     public let api_key: String
@@ -282,13 +282,13 @@ public struct SchemaChangeStatus: Codable {
     public let validated_docs: Int
 }
 
-public struct SearchGroupedHit: Codable {
+public struct SearchGroupedHit: Codable, Sendable {
     public let found: Int
     public let group_key: [String]
     public let hits: [SearchResultHit]
 }
 
-public struct SearchHighlight: Codable {
+public struct SearchHighlight: Codable, Sendable {
     public let field: String
     public let indices: [Int]
     public let matched_tokens: [[String: String]]
@@ -409,7 +409,7 @@ public struct SearchParameters: Codable {
     public let voice_query: String
 }
 
-public struct SearchResult: Codable {
+public struct SearchResult: Codable, Sendable {
     public let conversation: SearchResultConversation
     public let facet_counts: [FacetCounts]
     public let found: Int
@@ -423,14 +423,14 @@ public struct SearchResult: Codable {
     public let search_time_ms: Int
 }
 
-public struct SearchResultConversation: Codable {
+public struct SearchResultConversation: Codable, Sendable {
     public let answer: String
     public let conversation_history: [[String: String]]
     public let conversation_id: String
     public let query: String
 }
 
-public struct SearchResultHit: Codable {
+public struct SearchResultHit: Codable, Sendable {
     public let document: [String: [String: String]]
     public let geo_distance_meters: [String: Int]
     public let highlight: [String: String]
