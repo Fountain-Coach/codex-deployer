@@ -1,0 +1,15 @@
+{
+  "originHash" : "7718a24cd8a384d4e98ff4687c27cba4200e7ae6b687e7cacd5a6dd2b08e1ac8",
+  "pins" : [
+    {
+      "identity" : "teatro",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/fountain-coach/teatro.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "9449a8a7af811dd883721ee31a78f21365ac95b6"
+      }
+    }
+  ],
+  "version" : 3
+}

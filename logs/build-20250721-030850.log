@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [2025-07-21T03:08:50.029907] DISPATCHER_INTERVAL not set; using default 60
 [2025-07-21T03:08:50.030335] DISPATCHER_USE_PRS not set; pull request workflow enabled
 [2025-07-21T03:08:50.030558] DISPATCHER_BUILD_DOCKER not set; docker builds disabled
@@ -50,3 +51,6 @@ Building for debugging...
 [2025-07-21T03:09:00.340635] swift build failed with exit code 1
 [2025-07-21T03:09:00.414670] [dispatcher] Updated git remote to use token-based authentication.
 [2025-07-21T03:09:02.607219] Opened PR #298 for Fountain-Coach/codex-deployer
+=======
+[2025-07-21T03:46:24.865703] PR #298 merged
+>>>>>>> ae42197 (Update Xcode user state and scheme management)
