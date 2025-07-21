@@ -14,7 +14,7 @@ public struct RetrievalInspectorView: View {
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 8) {
-                ForEach(hits, id: \._self) { hit in
+                ForEach(hits, id: \.self) { hit in
                     Text(hit)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(4)
