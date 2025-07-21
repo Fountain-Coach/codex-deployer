@@ -2,6 +2,8 @@ import Teatro
 #if canImport(SwiftUI)
 import SwiftUI
 
+/// This preview-only container mirrors the tab layout of `TeatroApp` without
+/// conflicting with the production `TeatroRootView` implementation.
 
 /// Preview container replicating the tabbed layout from `TeatroApp` for SwiftUI previews.
 struct TeatroRootPreview: View {
