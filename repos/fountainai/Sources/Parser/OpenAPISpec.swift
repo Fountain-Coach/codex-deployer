@@ -48,12 +48,18 @@ public struct OpenAPISpec: Codable {
             public var type: String?
             public var enumValues: [String]?
             public var items: Schema?
+            public var allOf: [Schema]?
+            public var oneOf: [Schema]?
+            public var additionalProperties: Schema?
 
             enum CodingKeys: String, CodingKey {
                 case ref = "$ref"
                 case type
                 case enumValues = "enum"
                 case items
+                case allOf
+                case oneOf
+                case additionalProperties
             }
         }
 
@@ -62,6 +68,9 @@ public struct OpenAPISpec: Codable {
         public var properties: [String: Property]?
         public var enumValues: [String]?
         public var items: Schema?
+        public var allOf: [Schema]?
+        public var oneOf: [Schema]?
+        public var additionalProperties: Schema?
 
         enum CodingKeys: String, CodingKey {
             case ref = "$ref"
@@ -69,6 +78,9 @@ public struct OpenAPISpec: Codable {
             case properties
             case enumValues = "enum"
             case items
+            case allOf
+            case oneOf
+            case additionalProperties
         }
     }
 
@@ -131,6 +143,9 @@ extension OpenAPISpec.Schema.Property {
         if let ref {
             return ref.components(separatedBy: "/").last ?? ref
         }
+        if let first = allOf?.first ?? oneOf?.first {
+            return first.swiftType
+        }
         guard let type else { return "String" }
         switch type {
         case "string": return "String"
@@ -142,6 +157,11 @@ extension OpenAPISpec.Schema.Property {
             } else {
                 return "[String]"
             }
+        case "object":
+            if let additional = additionalProperties {
+                return "[String: \(additional.swiftType)]"
+            }
+            return "[String: String]"
         default: return "String"
         }
     }
@@ -152,6 +172,9 @@ extension OpenAPISpec.Schema {
         if let ref {
             return ref.components(separatedBy: "/").last ?? ref
         }
+        if let first = allOf?.first ?? oneOf?.first {
+            return first.swiftType
+        }
         guard let type else { return "String" }
         switch type {
         case "string": return "String"
@@ -163,6 +186,11 @@ extension OpenAPISpec.Schema {
             } else {
                 return "[String]"
             }
+        case "object":
+            if let additional = additionalProperties {
+                return "[String: \(additional.swiftType)]"
+            }
+            return "[String: String]"
         default: return "String"
         }
     }
