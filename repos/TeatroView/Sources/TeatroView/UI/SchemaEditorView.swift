@@ -6,7 +6,7 @@ import TypesenseClient
 /// Edits a collection schema using raw JSON and sends updates via `TypesenseService`.
 @MainActor
 public struct SchemaEditorView: View {
-    @MainActor private let service: TypesenseService?
+    private let service: TypesenseService?
     private let collection: String
     @State private var text: String
     @State private var message: String?
