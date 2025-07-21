@@ -31,7 +31,6 @@ public struct CollectionBrowserView: View {
         .task { await loadIfNeeded() }
     }
 
-    @MainActor
     private func loadIfNeeded() async {
         guard let service else { return }
         do {
