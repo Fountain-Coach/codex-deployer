@@ -14,4 +14,11 @@ final class RendererTests: XCTestCase {
         XCTAssertTrue(svg.contains("<svg"))
         XCTAssertTrue(svg.contains("Hi"))
     }
+
+    func testMarkdownRenderer() {
+        let text = Text("Hi")
+        let md = MarkdownRenderer.render(text)
+        XCTAssertTrue(md.contains("```"))
+        XCTAssertTrue(md.contains("Hi"))
+    }
 }

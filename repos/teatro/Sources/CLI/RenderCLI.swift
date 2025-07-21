@@ -1,6 +1,6 @@
 import Teatro
 public enum RenderTarget: String {
-    case html, svg, png, codex
+    case html, svg, png, markdown, codex
 }
 
 public struct RenderCLI {
@@ -21,6 +21,8 @@ public struct RenderCLI {
             print(SVGRenderer.render(view))
         case .png:
             ImageRenderer.renderToPNG(view)
+        case .markdown:
+            print(MarkdownRenderer.render(view))
         case .codex:
             print(CodexPreviewer.preview(view))
         }
