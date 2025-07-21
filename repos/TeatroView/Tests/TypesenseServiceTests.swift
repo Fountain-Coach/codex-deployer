@@ -1,4 +1,5 @@
 import XCTest
+
 @testable import TeatroViewCore
 import TypesenseClient
 #if canImport(FoundationNetworking)
@@ -23,6 +24,7 @@ final class TypesenseServiceTests: XCTestCase {
     func testListCollectionsRequest() async throws {
         setenv("TYPESENSE_URL", "http://localhost:8108", 1)
         setenv("TYPESENSE_API_KEY", "abc", 1)
+
         let expected: [CollectionResponse] = []
         let data = try JSONEncoder().encode(expected)
         let session = MockSession { req in
@@ -38,8 +40,10 @@ final class TypesenseServiceTests: XCTestCase {
     func testUpdateSchema() async throws {
         setenv("TYPESENSE_URL", "http://localhost:8108", 1)
         setenv("TYPESENSE_API_KEY", "abc", 1)
+
         let schemaData = "{\"fields\":[]}".data(using: .utf8)!
         let schema = try JSONDecoder().decode(CollectionUpdateSchema.self, from: schemaData)
+
         let data = try JSONEncoder().encode(schema)
         var captured: URLRequest?
         let session = MockSession { req in
