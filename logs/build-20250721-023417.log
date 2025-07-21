@@ -566,3 +566,14 @@ See https://docs.docker.com/go/mac-file-sharing/ for more info.
  Container kong-codex-kong-1  Stopped
  Container kong-codex-kong-1  Removing
  Container kong-codex-kong-1  Removed
+ Container kong-codex-typesense-1  Stopped
+ Container kong-codex-typesense-1  Removing
+ Container kong-codex-typesense-1  Removed
+ Network kong-codex_default  Removing
+ Network kong-codex_default  Removed
+
+[2025-07-21T02:34:31.747890] Running integration tests for fountainai...
+[2025-07-21T02:36:35.175878] Integration tests for fountainai failed with exit code 1
+
+[2025-07-21T02:36:35.177740] Running integration tests for kong-codex...
+[2025-07-21T02:36:47.133220] Integration tests for kong-codex failed with exit code 1
