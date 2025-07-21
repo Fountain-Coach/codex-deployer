@@ -116,3 +116,56 @@ Just set COMPOSE_BAKE=true
 #18 CACHED
 
 #19 [baseline-awareness internal] load build context
+#19 transferring context: 4.77MB 5.1s
+#19 transferring context: 4.78MB 5.2s done
+#19 DONE 5.3s
+
+#20 [tools-factory internal] load build context
+#20 transferring context: 4.78MB 5.2s done
+#20 DONE 5.3s
+
+#21 [persist internal] load build context
+#21 transferring context: 4.78MB 5.2s done
+#21 DONE 5.3s
+
+#22 [llm-gateway internal] load build context
+#22 transferring context: 4.78MB 5.2s done
+#22 DONE 5.3s
+
+#23 [bootstrap internal] load build context
+#23 transferring context: 4.78MB 5.0s done
+#23 DONE 5.3s
+
+#24 [function-caller internal] load build context
+#24 transferring context: 4.78MB 5.2s done
+#24 DONE 5.3s
+
+#25 [planner internal] load build context
+#25 transferring context: 4.78MB 5.2s done
+#25 DONE 5.3s
+
+#26 [bootstrap build 2/4] WORKDIR /src
+#26 CACHED
+
+#27 [function-caller build 3/4] COPY . .
+#27 DONE 4.4s
+
+#28 [persist build 3/4] COPY . .
+#28 CACHED
+
+#29 [function-caller build 3/4] COPY . .
+#29 CACHED
+
+#30 [tools-factory build 3/4] COPY . .
+#30 CACHED
+
+#31 [planner build 3/4] COPY . .
+#31 CACHED
+
+#32 [bootstrap build 3/4] COPY . .
+#32 CACHED
+
+#33 [llm-gateway build 3/4] COPY . .
+#33 CACHED
+
+#34 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
