@@ -78,6 +78,7 @@ For a more detailed workflow including local integration tests, see [mac_local_t
 - Map additional volumes if you want the cloned service repositories (like `fountainai`) to persist outside the container.
 - Edit files on your host; the container sees changes immediately because the project directory is mounted.
 - On macOS ensure the repository directory is listed under Docker Desktop > Settings > Resources > File Sharing, otherwise integration tests fail with "mounts denied" errors.
+- Run `python3 deploy/mac_file_sharing.py` to automatically add the repository directory to Docker Desktop's file sharing list. Restart Docker Desktop after running the script.
 
 ## 6. Cross-platform compilation
 
@@ -105,3 +106,7 @@ when necessary.
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
