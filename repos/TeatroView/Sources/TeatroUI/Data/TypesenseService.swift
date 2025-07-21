@@ -23,7 +23,8 @@ public enum TypesenseServiceError: LocalizedError {
 }
 
 /// Thin wrapper over the generated `APIClient` providing common Typesense operations.
-public struct TypesenseService {
+@MainActor
+public final class TypesenseService {
     private let client: APIClient
 
     /// Initialize the service using environment variables.
@@ -84,5 +85,11 @@ public struct TypesenseService {
             var body: Body? { schema }
         }
         return try await client.send(UpdateRequest(collection: collection, schema: schema))
+    }
+}
+
+public extension TypesenseService {
+    static var live: TypesenseService {
+        try! TypesenseService()
     }
 }

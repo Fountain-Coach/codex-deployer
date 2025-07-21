@@ -1,7 +1,7 @@
 import XCTest
-@testable import TeatroView
+@testable import TeatroUI
 
-final class TeatroViewTests: XCTestCase {
+final class TeatroUITests: XCTestCase {
     func testExample() throws {
         XCTAssertTrue(true)
     }

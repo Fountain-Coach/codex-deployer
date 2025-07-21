@@ -2,32 +2,36 @@
 import PackageDescription
 
 let package = Package(
-    name: "TeatroView",
-    platforms: [.macOS(.v14)],
-    products: [
-        .executable(name: "TeatroView", targets: ["TeatroView"]),
-        .library(name: "TypesenseClient", targets: ["TypesenseClient"])
-    ],
-    dependencies: [
-        .package(url: "https://github.com/fountain-coach/teatro.git", branch: "main")
-    ],
-    targets: [
-        .executableTarget(
-            name: "TeatroView",
-            dependencies: [
-                .product(name: "Teatro", package: "teatro"),
-                "TypesenseClient"
-            ],
-            path: "Sources/TeatroView"
-        ),
-        .target(
-            name: "TypesenseClient",
-            path: "Sources/TypesenseClient"
-        ),
-        .testTarget(
-            name: "TeatroViewTests",
-            dependencies: ["TeatroView"],
-            path: "Tests"
-        )
-    ]
+  name: "TeatroView",
+  platforms: [
+    .macOS(.v14)
+  ],
+  products: [
+    .library(
+      name: "TeatroUI",
+      targets: ["TeatroUI"]
+    ),
+    .executable(
+      name: "TeatroApp",
+      targets: ["TeatroApp"]
+    )
+  ],
+  dependencies: [
+    .package(name: "Teatro", path: "../teatro"),
+    .package(name: "TypesenseClient", path: "../TypesenseClient")
+  ],
+  targets: [
+    .target(
+      name: "TeatroUI",
+      dependencies: ["Teatro", "TypesenseClient"]
+    ),
+    .executableTarget(
+      name: "TeatroApp",
+      dependencies: ["TeatroUI"]
+    ),
+    .testTarget(
+      name: "TeatroUITests",
+      dependencies: ["TeatroUI"]
+    )
+  ]
 )
