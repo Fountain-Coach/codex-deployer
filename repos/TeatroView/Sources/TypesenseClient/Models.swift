@@ -99,7 +99,8 @@ public struct CollectionSchema: Codable {
     public let voice_query_model: VoiceQueryModelCollectionConfig
 }
 
-public struct CollectionUpdateSchema: Codable, Sendable {
+public struct CollectionUpdateSchema: Codable, Sendable, Equatable {
+    public let name: String
     public let fields: [Field]
 }
 
@@ -134,7 +135,7 @@ public struct FacetCounts: Codable, Sendable {
     public let stats: [String: String]
 }
 
-public struct Field: Codable, Sendable {
+public struct Field: Codable, Sendable, Equatable {
     public let drop: Bool
     public let embed: [String: String]
     public let facet: Bool
@@ -523,11 +524,21 @@ public struct deleteStopwordsSetResponse: Codable {
 
 // MARK: - Placeholder Schemas
 
-public struct CollectionResponse: Codable, Sendable {
+public struct CollectionResponse: Codable, Sendable, Equatable {
     public let name: String
+    public let numDocuments: Int
 }
-public struct PresetSchema: Codable, Sendable {}
-public struct PresetUpsertSchema: Codable, Sendable {}
+
+public struct PresetSchema: Codable, Sendable, Equatable {
+    public let id: String
+    public let name: String
+    public let version: String
+}
+
+public struct PresetUpsertSchema: Codable, Sendable, Equatable {
+    public let id: String
+    public let config: [String: String]
+}
 public struct AnalyticsRuleSchema: Codable, Sendable {}
 public struct ApiKey: Codable, Sendable {}
 public struct ConversationModelSchema: Codable, Sendable {}
