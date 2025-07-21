@@ -56,7 +56,7 @@ public struct CollectionBrowserView: View {
 
 #if DEBUG
 public struct CollectionBrowserView_Previews: PreviewProvider {
-    static var previews: some View {
+    public static var previews: some View {
         CollectionBrowserView(names: ["books", "articles"])
     }
 }
