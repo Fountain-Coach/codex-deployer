@@ -3,7 +3,7 @@ import Teatro
 import SwiftUI
 
 /// Minimal entry point launching the Teatro views in a navigation layout.
-@main
+
 struct TeatroViewApp: App {
     var body: some Scene {
         WindowGroup {
