@@ -5,7 +5,7 @@ import SwiftUI
 
 /// Entry point for the TeatroView package.
 #if canImport(SwiftUI)
-@main
+
 struct TeatroViewApp: App {
     var body: some Scene {
         WindowGroup {
