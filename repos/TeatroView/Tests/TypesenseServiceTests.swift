@@ -8,18 +8,20 @@ import TypesenseClient
 
 final class TypesenseServiceTests: XCTestCase {
     private struct MockSession: HTTPSession {
-        let handler: (URLRequest) async throws -> (Data, URLResponse)
+        let handler: @Sendable (URLRequest) async throws -> (Data, URLResponse)
         func data(for request: URLRequest) async throws -> (Data, URLResponse) {
             try await handler(request)
         }
     }
 
+    @MainActor
     func testInitFailsWithoutEnv() async {
         unsetenv("TYPESENSE_URL")
         unsetenv("TYPESENSE_API_KEY")
         XCTAssertThrowsError(try TypesenseService())
     }
 
+    @MainActor
     func testListCollectionsRequest() async throws {
         setenv("TYPESENSE_URL", "http://localhost:8108", 1)
         setenv("TYPESENSE_API_KEY", "abc", 1)
@@ -35,20 +37,19 @@ final class TypesenseServiceTests: XCTestCase {
         XCTAssertEqual(resp.count, 0)
     }
 
+    @MainActor
     func testUpdateSchema() async throws {
         setenv("TYPESENSE_URL", "http://localhost:8108", 1)
         setenv("TYPESENSE_API_KEY", "abc", 1)
         let schemaData = "{\"name\":\"books\",\"fields\":[]}".data(using: .utf8)!
         let schema = try JSONDecoder().decode(CollectionUpdateSchema.self, from: schemaData)
         let data = try JSONEncoder().encode(schema)
-        var captured: URLRequest?
         let session = MockSession { req in
-            captured = req
+            XCTAssertEqual(req.httpMethod, "PATCH")
+            XCTAssertEqual(req.url?.path, "/collections/foo")
             return (data, HTTPURLResponse(url: req.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
         }
         let service = try TypesenseService(session: session)
         _ = try await service.updateSchema(collection: "foo", schema: schema)
-        XCTAssertEqual(captured?.httpMethod, "PATCH")
-        XCTAssertEqual(captured?.url?.path, "/collections/foo")
     }
 }
