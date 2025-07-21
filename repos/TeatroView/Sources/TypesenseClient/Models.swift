@@ -523,17 +523,19 @@ public struct deleteStopwordsSetResponse: Codable {
 
 // MARK: - Placeholder Schemas
 
-public struct CollectionResponse: Codable {}
-public struct PresetSchema: Codable {}
-public struct PresetUpsertSchema: Codable {}
-public struct AnalyticsRuleSchema: Codable {}
-public struct ApiKey: Codable {}
-public struct ConversationModelSchema: Codable {}
-public struct ConversationModelCreateSchema: Codable {}
-public struct MultiSearchCollectionParameters: Codable {}
-public struct MultiSearchResultItem: Codable {}
-public struct NLSearchModelSchema: Codable {}
-public struct NLSearchModelCreateSchema: Codable {}
-public struct NLSearchModelUpdateSchema: Codable {}
-public struct SearchOverride: Codable {}
-public struct SearchSynonym: Codable {}
+public struct CollectionResponse: Codable, Sendable {
+    public let name: String
+}
+public struct PresetSchema: Codable, Sendable {}
+public struct PresetUpsertSchema: Codable, Sendable {}
+public struct AnalyticsRuleSchema: Codable, Sendable {}
+public struct ApiKey: Codable, Sendable {}
+public struct ConversationModelSchema: Codable, Sendable {}
+public struct ConversationModelCreateSchema: Codable, Sendable {}
+public struct MultiSearchCollectionParameters: Codable, Sendable {}
+public struct MultiSearchResultItem: Codable, Sendable {}
+public struct NLSearchModelSchema: Codable, Sendable {}
+public struct NLSearchModelCreateSchema: Codable, Sendable {}
+public struct NLSearchModelUpdateSchema: Codable, Sendable {}
+public struct SearchOverride: Codable, Sendable {}
+public struct SearchSynonym: Codable, Sendable {}

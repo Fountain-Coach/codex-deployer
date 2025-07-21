@@ -34,5 +34,5 @@ private struct RootView: View {
     }
 }
 #else
-print("TeatroView requires SwiftUI and macOS to run.")
+// Running outside of SwiftUI-capable platforms.
 #endif

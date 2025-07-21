@@ -3,6 +3,7 @@ import Teatro
 import SwiftUI
 
 /// Performs a simple search against a Typesense collection and renders results.
+@MainActor
 public struct SearchView: View {
     private let service: TypesenseService?
     private let collection: String

@@ -3,6 +3,7 @@ import Teatro
 import SwiftUI
 
 /// Edits a collection schema using raw JSON and sends updates via `TypesenseService`.
+@MainActor
 public struct SchemaEditorView: View {
     private let service: TypesenseService?
     private let collection: String
