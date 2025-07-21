@@ -194,6 +194,11 @@ public struct Field: Codable, Sendable, Equatable {
 
 public struct HealthStatus: Codable, Sendable {
     public let ok: Bool
+
+    /// Public initializer so clients can construct sample values without decoding JSON.
+    public init(ok: Bool) {
+        self.ok = ok
+    }
 }
 
 public enum IndexAction: String, Codable, Sendable {
