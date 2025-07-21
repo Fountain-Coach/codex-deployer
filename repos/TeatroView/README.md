@@ -21,13 +21,7 @@ The app builds with Swift Package Manager. Open the package in Xcode for SwiftUI
 
 ### Dependency Layout
 
-`Package.swift` expects the [Teatro](../teatro) package to be present one directory up at `../teatro`. If you cloned this project by itself, clone the Teatro repository next to `TeatroView`:
-
-```bash
-git clone https://github.com/fountain-coach/teatro ../teatro
-```
-
-Keeping this path intact ensures Swift Package Manager can resolve the `Teatro` product.
+`Package.swift` pulls in the [Teatro](https://github.com/fountain-coach/teatro) dependency via its Git URL. Swift Package Manager will fetch it automatically when building the package.
 
 ## Contributing
 
