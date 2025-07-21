@@ -52,6 +52,12 @@ public struct AnalyticsRuleUpsertSchema: Codable {
     public let type: String
 }
 
+public struct AnalyticsRuleSchema: Codable {
+    public let params: AnalyticsRuleParameters
+    public let type: String
+    public let name: String
+}
+
 public struct AnalyticsRulesRetrieveSchema: Codable {
     public let rules: [AnalyticsRuleSchema]
 }
@@ -70,6 +76,17 @@ public struct ApiKeySchema: Codable {
 
 public struct ApiKeysResponse: Codable {
     public let keys: [ApiKey]
+}
+
+/// Representation of an API key including metadata returned by the server.
+public struct ApiKey: Codable {
+    public let id: Int
+    public let value_prefix: String
+    public let actions: [String]
+    public let collections: [String]
+    public let description: String
+    public let expires_at: Int
+    public let value: String
 }
 
 public struct ApiResponse: Codable {
@@ -103,6 +120,19 @@ public struct CollectionUpdateSchema: Codable {
     public let fields: [Field]
 }
 
+/// Representation of a collection including metadata returned by the server.
+public struct CollectionResponse: Codable {
+    public let name: String
+    public let fields: [Field]
+    public let default_sorting_field: String
+    public let enable_nested_fields: Bool
+    public let symbols_to_index: [String]
+    public let token_separators: [String]
+    public let voice_query_model: VoiceQueryModelCollectionConfig
+    public let num_documents: Int
+    public let created_at: Int
+}
+
 public struct ConversationModelUpdateSchema: Codable {
     public let account_id: String
     public let api_key: String
@@ -115,6 +145,31 @@ public struct ConversationModelUpdateSchema: Codable {
     public let vllm_url: String
 }
 
+/// Schema used when creating a conversation model.
+public struct ConversationModelCreateSchema: Codable {
+    public let model_name: String
+    public let max_bytes: Int
+    public let history_collection: String
+    public let account_id: String?
+    public let api_key: String?
+    public let system_prompt: String?
+    public let ttl: Int?
+    public let vllm_url: String?
+}
+
+/// Full representation of a conversation model including its identifier.
+public struct ConversationModelSchema: Codable {
+    public let id: String
+    public let model_name: String
+    public let max_bytes: Int
+    public let history_collection: String
+    public let account_id: String?
+    public let api_key: String?
+    public let system_prompt: String?
+    public let ttl: Int?
+    public let vllm_url: String?
+}
+
 public enum DirtyValues: String, Codable {
     case coerce_or_reject
     case coerce_or_drop
@@ -125,7 +180,7 @@ public enum DirtyValues: String, Codable {
 public enum DropTokensMode: String, Codable {
     case right_to_left
     case left_to_right
-    case both_sides:3
+    case both_sides
 }
 
 public struct FacetCounts: Codable {
@@ -243,6 +298,22 @@ public struct MultiSearchSearchesParameter: Codable {
     public let union: Bool
 }
 
+/// Parameters for an individual search inside a multi-search request.
+public struct MultiSearchCollectionParameters: Codable {
+    public let collection: String
+    public let search_parameters: MultiSearchParameters
+    public let x_typesense_api_key: String?
+    public let rerank_hybrid_matches: Bool?
+}
+
+/// Result item returned from a multi-search call.
+public struct MultiSearchResultItem: Codable {
+    public let code: Int?
+    public let error: String?
+    public let hits: [SearchResultHit]?
+    public let facet_counts: [FacetCounts]?
+}
+
 public struct NLSearchModelBase: Codable {
     public let access_token: String
     public let account_id: String
@@ -264,12 +335,47 @@ public struct NLSearchModelBase: Codable {
     public let top_p: String
 }
 
+/// Schema used to create a new NL Search model.
+public struct NLSearchModelCreateSchema: Codable {
+    public let model_name: String
+    public let max_bytes: Int
+    public let max_output_tokens: Int
+    public let system_prompt: String?
+}
+
+/// Schema used to update an existing NL Search model.
+public struct NLSearchModelUpdateSchema: Codable {
+    public let max_bytes: Int?
+    public let max_output_tokens: Int?
+    public let system_prompt: String?
+}
+
+/// Full representation of an NL Search model returned by the server.
+public struct NLSearchModelSchema: Codable {
+    public let id: String
+    public let model_name: String
+    public let max_bytes: Int
+    public let max_output_tokens: Int
+    public let system_prompt: String?
+}
+
 public struct NLSearchModelDeleteSchema: Codable {
     public let id: String
 }
 
 public struct PresetDeleteSchema: Codable {
     public let name: String
+}
+
+/// Schema used to create or update a preset.
+public struct PresetUpsertSchema: Codable {
+    public let value: SearchParameters
+}
+
+/// Representation of a preset stored on the server.
+public struct PresetSchema: Codable {
+    public let name: String
+    public let value: SearchParameters
 }
 
 public struct PresetsRetrieveSchema: Codable {
@@ -319,6 +425,23 @@ public struct SearchOverrideRule: Codable {
 }
 
 public struct SearchOverrideSchema: Codable {
+    public let effective_from_ts: Int
+    public let effective_to_ts: Int
+    public let excludes: [SearchOverrideExclude]
+    public let filter_by: String
+    public let filter_curated_hits: Bool
+    public let includes: [SearchOverrideInclude]
+    public let metadata: [String: String]
+    public let remove_matched_tokens: Bool
+    public let replace_query: String
+    public let rule: SearchOverrideRule
+    public let sort_by: String
+    public let stop_processing: Bool
+}
+
+/// Full representation of a search override with its identifier.
+public struct SearchOverride: Codable {
+    public let id: String
     public let effective_from_ts: Int
     public let effective_to_ts: Int
     public let excludes: [SearchOverrideExclude]
@@ -445,6 +568,15 @@ public struct SearchSynonymDeleteResponse: Codable {
 }
 
 public struct SearchSynonymSchema: Codable {
+    public let locale: String
+    public let root: String
+    public let symbols_to_index: [String]
+    public let synonyms: [String]
+}
+
+/// Full representation of a search synonym including its identifier.
+public struct SearchSynonym: Codable {
+    public let id: String
     public let locale: String
     public let root: String
     public let symbols_to_index: [String]

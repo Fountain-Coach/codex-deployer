@@ -1,5 +1,11 @@
 import Foundation
 
+import TypesenseClient
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+
+
 /// Errors thrown by `TypesenseService` when environment configuration is incomplete.
 public enum TypesenseServiceError: LocalizedError {
     case missingURL
