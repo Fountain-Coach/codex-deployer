@@ -1,6 +1,7 @@
 import Teatro
 #if canImport(SwiftUI)
 import SwiftUI
+import TypesenseClient
 
 /// Edits a collection schema using raw JSON and sends updates via `TypesenseService`.
 @MainActor
@@ -37,6 +38,7 @@ public struct SchemaEditorView: View {
         }
     }
 
+    @MainActor
     private func submit() async {
         guard let service else { return }
         guard let data = text.data(using: .utf8) else { return }
