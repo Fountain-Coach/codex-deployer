@@ -17,7 +17,7 @@ export TYPESENSE_API_KEY=xyz
 swift run TeatroView
 ```
 
-The app builds with Swift Package Manager. Open the package in Xcode for SwiftUI previews or run from the command line as shown above.
+Running `swift run TeatroView` builds the executable and launches a minimal navigation interface. Open the package in Xcode for SwiftUI previews or run from the command line as shown above.
 
 ### Dependency Layout
 
