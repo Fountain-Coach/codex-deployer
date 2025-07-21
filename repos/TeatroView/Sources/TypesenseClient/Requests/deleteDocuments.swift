@@ -12,9 +12,14 @@ public struct deleteDocuments: APIRequest {
     public var parameters: deleteDocumentsParameters
     public var path: String {
         var path = "/collections/{collectionName}/documents"
-        var query: [String] = []
+        let query: [String] = {
+            var items: [String] = []
+            if let value = parameters.deletedocumentsparameters {
+                items.append("deleteDocumentsParameters=\(value)")
+            }
+            return items
+        }()
         path = path.replacingOccurrences(of: "{collectionName}", with: String(parameters.collectionname))
-        if let value = parameters.deletedocumentsparameters { query.append("deleteDocumentsParameters=\(value)") }
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
     }

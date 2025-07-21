@@ -12,9 +12,14 @@ public struct exportDocuments: APIRequest {
     public var parameters: exportDocumentsParameters
     public var path: String {
         var path = "/collections/{collectionName}/documents/export"
-        var query: [String] = []
+        let query: [String] = {
+            var items: [String] = []
+            if let value = parameters.exportdocumentsparameters {
+                items.append("exportDocumentsParameters=\(value)")
+            }
+            return items
+        }()
         path = path.replacingOccurrences(of: "{collectionName}", with: String(parameters.collectionname))
-        if let value = parameters.exportdocumentsparameters { query.append("exportDocumentsParameters=\(value)") }
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
     }

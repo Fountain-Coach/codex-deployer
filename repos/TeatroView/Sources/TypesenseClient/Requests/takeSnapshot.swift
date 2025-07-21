@@ -11,8 +11,9 @@ public struct takeSnapshot: APIRequest {
     public var parameters: takeSnapshotParameters
     public var path: String {
         var path = "/operations/snapshot"
-        var query: [String] = []
-        query.append("snapshot_path=\(parameters.snapshotPath)")
+        let query: [String] = {
+            ["snapshot_path=\(parameters.snapshotPath)"]
+        }()
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
     }

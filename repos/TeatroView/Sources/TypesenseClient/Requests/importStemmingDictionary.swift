@@ -11,8 +11,9 @@ public struct importStemmingDictionary: APIRequest {
     public var parameters: importStemmingDictionaryParameters
     public var path: String {
         var path = "/stemming/dictionaries/import"
-        var query: [String] = []
-        query.append("id=\(parameters.id)")
+        let query: [String] = {
+            ["id=\(parameters.id)"]
+        }()
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
     }

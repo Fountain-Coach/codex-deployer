@@ -25,6 +25,18 @@ public struct SchemaEditorView: View {
         self._text = State(initialValue: text)
     }
 
+    /// Preview initializer using a schema object.
+    public init(schema: CollectionUpdateSchema) {
+        self.collection = schema.name
+        self.service = nil
+        if let data = try? JSONEncoder().encode(schema),
+           let json = String(data: data, encoding: .utf8) {
+            self._text = State(initialValue: json)
+        } else {
+            self._text = State(initialValue: "{}")
+        }
+    }
+
     public var body: some View {
         VStack(alignment: .leading) {
             TextEditor(text: $text)
@@ -61,13 +73,7 @@ public struct SchemaEditorView: View {
 #if DEBUG
 #Preview {
     SchemaEditorView(
-        collection: "books",
-        text: """
-        {
-            \"name\": \"books\",
-            \"fields\": []
-        }
-        """
+        schema: CollectionUpdateSchema(name: "books", fields: [])
     )
 }
 #endif

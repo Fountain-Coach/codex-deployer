@@ -13,10 +13,17 @@ public struct indexDocument: APIRequest {
     public var parameters: indexDocumentParameters
     public var path: String {
         var path = "/collections/{collectionName}/documents"
-        var query: [String] = []
+        let query: [String] = {
+            var items: [String] = []
+            if let value = parameters.action {
+                items.append("action=\(value)")
+            }
+            if let value = parameters.dirtyValues {
+                items.append("dirty_values=\(value)")
+            }
+            return items
+        }()
         path = path.replacingOccurrences(of: "{collectionName}", with: String(parameters.collectionname))
-        if let value = parameters.action { query.append("action=\(value)") }
-        if let value = parameters.dirtyValues { query.append("dirty_values=\(value)") }
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
     }
