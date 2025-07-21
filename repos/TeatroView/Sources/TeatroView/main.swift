@@ -2,7 +2,7 @@ import Teatro
 #if canImport(SwiftUI)
 import SwiftUI
 
-@main
+
 struct TeatroApp: App {
     var body: some Scene {
         WindowGroup {
