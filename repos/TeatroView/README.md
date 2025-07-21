@@ -37,6 +37,7 @@ The script runs `swift run generator` and copies the resulting sources to `Sourc
 
 This project lives in the `TeatroView` directory of the `codex-deployer` monorepo. Issues and pull requests are welcome. Please keep the README updated if you change build steps or environment variables. Refer to `docs/environment_variables.md` for the full list of variables used across the project.
 
+
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
 ````

@@ -520,4 +520,3 @@ public struct listStemmingDictionariesResponse: Codable {
 public struct deleteStopwordsSetResponse: Codable {
     public let id: String
 }
-
