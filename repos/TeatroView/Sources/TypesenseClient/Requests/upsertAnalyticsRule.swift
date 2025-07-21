@@ -11,7 +11,7 @@ public struct upsertAnalyticsRule: APIRequest {
     public var parameters: upsertAnalyticsRuleParameters
     public var path: String {
         var path = "/analytics/rules/{ruleName}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{ruleName}", with: String(parameters.rulename))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path

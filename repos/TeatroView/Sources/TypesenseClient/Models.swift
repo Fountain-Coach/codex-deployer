@@ -125,7 +125,7 @@ public enum DirtyValues: String, Codable {
 public enum DropTokensMode: String, Codable {
     case right_to_left
     case left_to_right
-    case both_sides:3
+    case both_sides_3 = "both_sides:3"
 }
 
 public struct FacetCounts: Codable {
@@ -520,3 +520,20 @@ public struct listStemmingDictionariesResponse: Codable {
 public struct deleteStopwordsSetResponse: Codable {
     public let id: String
 }
+
+// MARK: - Placeholder Schemas
+
+public struct CollectionResponse: Codable {}
+public struct PresetSchema: Codable {}
+public struct PresetUpsertSchema: Codable {}
+public struct AnalyticsRuleSchema: Codable {}
+public struct ApiKey: Codable {}
+public struct ConversationModelSchema: Codable {}
+public struct ConversationModelCreateSchema: Codable {}
+public struct MultiSearchCollectionParameters: Codable {}
+public struct MultiSearchResultItem: Codable {}
+public struct NLSearchModelSchema: Codable {}
+public struct NLSearchModelCreateSchema: Codable {}
+public struct NLSearchModelUpdateSchema: Codable {}
+public struct SearchOverride: Codable {}
+public struct SearchSynonym: Codable {}

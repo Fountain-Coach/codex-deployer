@@ -11,7 +11,7 @@ public struct deleteStopwordsSet: APIRequest {
     public var parameters: deleteStopwordsSetParameters
     public var path: String {
         var path = "/stopwords/{setId}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{setId}", with: String(parameters.setid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path

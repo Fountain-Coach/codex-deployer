@@ -11,7 +11,7 @@ public struct deletePreset: APIRequest {
     public var parameters: deletePresetParameters
     public var path: String {
         var path = "/presets/{presetId}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{presetId}", with: String(parameters.presetid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path

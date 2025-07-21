@@ -15,7 +15,8 @@ let package = Package(
         .executableTarget(
             name: "TeatroView",
             dependencies: [
-                .product(name: "Teatro", package: "teatro")
+                .product(name: "Teatro", package: "teatro"),
+                "TypesenseClient"
             ],
             path: "Sources/TeatroView"
         ),
