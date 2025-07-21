@@ -12,12 +12,22 @@ let package = Package(
         .package(url: "https://github.com/fountain-coach/teatro.git", branch: "main")
     ],
     targets: [
+        .target(
+            name: "TeatroViewCore",
+            dependencies: ["TypesenseClient"],
+            path: "Sources/TeatroView",
+            exclude: ["main.swift"],
+            resources: []
+        ),
         .executableTarget(
             name: "TeatroView",
             dependencies: [
+                "TeatroViewCore",
+                "TypesenseClient",
                 .product(name: "Teatro", package: "teatro")
             ],
-            path: "Sources/TeatroView"
+            path: "Sources/TeatroView",
+            sources: ["main.swift"]
         ),
         .target(
             name: "TypesenseClient",
@@ -25,7 +35,7 @@ let package = Package(
         ),
         .testTarget(
             name: "TeatroViewTests",
-            dependencies: ["TeatroView"],
+            dependencies: ["TeatroViewCore"],
             path: "Tests"
         )
     ]
