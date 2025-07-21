@@ -1,7 +1,7 @@
 import Foundation
 
 public struct upsertPresetParameters: Codable {
-    public let presetid: String
+    public let presetId: String
 }
 
 public struct upsertPreset: APIRequest {
@@ -12,7 +12,7 @@ public struct upsertPreset: APIRequest {
     public var path: String {
         var path = "/presets/{presetId}"
         let query: [String] = []
-        path = path.replacingOccurrences(of: "{presetId}", with: String(parameters.presetid))
+        path = path.replacingOccurrences(of: "{presetId}", with: String(parameters.presetId))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
     }
