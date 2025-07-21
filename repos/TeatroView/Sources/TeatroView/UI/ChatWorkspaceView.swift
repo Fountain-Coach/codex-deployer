@@ -54,4 +54,12 @@ public struct ChatWorkspaceView: View {
         isLoading = false
     }
 }
+
+#if DEBUG
+public struct ChatWorkspaceView_Previews: PreviewProvider {
+    public static var previews: some View {
+        ChatWorkspaceView()
+    }
+}
+#endif
 #endif
