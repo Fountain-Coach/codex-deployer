@@ -10,6 +10,7 @@ public struct CollectionBrowserView: View {
     @State private var errorMessage: String?
 
     /// Runtime initializer using the Typesense service.
+    @MainActor
     public init(service: TypesenseService) {
         self.service = service
         self._names = State(initialValue: [])
@@ -30,7 +31,6 @@ public struct CollectionBrowserView: View {
         .task { await loadIfNeeded() }
     }
 
-    @MainActor
     private func loadIfNeeded() async {
         guard let service else { return }
         do {
