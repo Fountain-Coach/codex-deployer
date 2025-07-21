@@ -3,7 +3,7 @@ import Teatro
 import SwiftUI
 
 /// Root view replicating `TeatroApp`'s tab layout for SwiftUI previews.
-public struct TeatroRootView: View {
+public struct TeatroRootPreview: View {
     public var body: some View {
         TabView {
             ChatWorkspaceView()
@@ -17,7 +17,7 @@ public struct TeatroRootView: View {
 
 #if DEBUG
 #Preview {
-    TeatroRootView()
+    TeatroRootPreview()
 }
 #endif
 #endif
