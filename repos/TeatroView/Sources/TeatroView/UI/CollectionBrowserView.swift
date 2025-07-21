@@ -3,6 +3,7 @@ import Teatro
 import SwiftUI
 
 /// Displays the list of collections returned by `TypesenseService`.
+@MainActor
 public struct CollectionBrowserView: View {
     private let service: TypesenseService?
     @State private var names: [String]
