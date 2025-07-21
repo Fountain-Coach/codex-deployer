@@ -102,6 +102,11 @@ public struct CollectionSchema: Codable, Sendable {
 public struct CollectionUpdateSchema: Codable, Sendable, Equatable {
     public let name: String
     public let fields: [Field]
+
+    public init(name: String, fields: [Field]) {
+        self.name = name
+        self.fields = fields
+    }
 }
 
 public struct ConversationModelUpdateSchema: Codable, Sendable {
