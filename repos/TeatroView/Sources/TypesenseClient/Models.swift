@@ -14,6 +14,36 @@ public struct APIStatsResponse: Codable, Sendable {
     public let total_requests_per_second: String
     public let write_latency_ms: String
     public let write_requests_per_second: String
+
+    public init(
+        delete_latency_ms: String,
+        delete_requests_per_second: String,
+        import_latency_ms: String,
+        import_requests_per_second: String,
+        latency_ms: [String: String],
+        overloaded_requests_per_second: String,
+        pending_write_batches: String,
+        requests_per_second: [String: String],
+        search_latency_ms: String,
+        search_requests_per_second: String,
+        total_requests_per_second: String,
+        write_latency_ms: String,
+        write_requests_per_second: String
+    ) {
+        self.delete_latency_ms = delete_latency_ms
+        self.delete_requests_per_second = delete_requests_per_second
+        self.import_latency_ms = import_latency_ms
+        self.import_requests_per_second = import_requests_per_second
+        self.latency_ms = latency_ms
+        self.overloaded_requests_per_second = overloaded_requests_per_second
+        self.pending_write_batches = pending_write_batches
+        self.requests_per_second = requests_per_second
+        self.search_latency_ms = search_latency_ms
+        self.search_requests_per_second = search_requests_per_second
+        self.total_requests_per_second = total_requests_per_second
+        self.write_latency_ms = write_latency_ms
+        self.write_requests_per_second = write_requests_per_second
+    }
 }
 
 public struct AnalyticsEventCreateResponse: Codable, Sendable {
