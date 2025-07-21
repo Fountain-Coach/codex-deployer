@@ -8,5 +8,8 @@ public protocol APIRequest {
     associatedtype Response: Decodable
     var method: String { get }
     var path: String { get }
-    var body: Body? { get }
+}
+
+public extension APIRequest {
+    var body: Body? { nil }
 }

@@ -529,7 +529,7 @@ public struct deleteStopwordsSetResponse: Codable, Sendable {
 
 // MARK: - Placeholder Schemas
 
-public struct CollectionResponse: Codable, Equatable, Sendable {
+public struct CollectionResponse: Codable, Sendable {
     public let name: String
 }
 

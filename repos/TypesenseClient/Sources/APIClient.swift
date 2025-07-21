@@ -3,7 +3,7 @@ import Foundation
 import FoundationNetworking
 #endif
 
-public protocol HTTPSession {
+public protocol HTTPSession: Sendable {
     func data(for request: URLRequest) async throws -> (Data, URLResponse)
 }
 
@@ -13,7 +13,7 @@ extension URLSession: HTTPSession {
     }
 }
 
-public struct APIClient {
+public struct APIClient: Sendable {
     let baseURL: URL
     let session: HTTPSession
     let defaultHeaders: [String: String]

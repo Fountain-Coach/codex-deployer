@@ -14,10 +14,10 @@ Make sure the following environment variables are set so the app can reach your 
 ```
 export TYPESENSE_URL=http://localhost:8108
 export TYPESENSE_API_KEY=xyz
-swift run TeatroView
+swift run TeatroApp
 ```
 
-Running `swift run TeatroView` builds the executable and launches a minimal navigation interface. Open the package in Xcode for SwiftUI previews or run from the command line as shown above.
+Running `swift run TeatroApp` builds the executable and launches a minimal navigation interface. Open the package in Xcode for SwiftUI previews or run from the command line as shown above.
 
 ### Dependency Layout
 
@@ -25,7 +25,7 @@ Running `swift run TeatroView` builds the executable and launches a minimal navi
 
 ### Generating the Typesense Client
 
-The Typesense API client used by TeatroView is produced with the in-house OpenAPI generator from the `fountainai` repository. Regenerate the client whenever `repos/typesense-codex/openapi/openapi.yml` changes:
+The Typesense API client used by TeatroUI is produced with the in-house OpenAPI generator from the `fountainai` repository. Regenerate the client whenever `repos/typesense-codex/openapi/openapi.yml` changes:
 
 ```bash
 scripts/generate_typesense_client.sh
