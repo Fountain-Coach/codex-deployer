@@ -2,7 +2,7 @@ import Foundation
 
 public struct deleteDocumentsParameters: Codable {
     public let collectionname: String
-    public var deletedocumentsparameters: String?
+    public var deletedocumentsparameters: [String: String]?
 }
 
 public struct deleteDocuments: APIRequest {

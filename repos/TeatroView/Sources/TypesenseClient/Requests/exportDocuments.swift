@@ -2,7 +2,7 @@ import Foundation
 
 public struct exportDocumentsParameters: Codable {
     public let collectionname: String
-    public var exportdocumentsparameters: String?
+    public var exportdocumentsparameters: [String: String]?
 }
 
 public struct exportDocuments: APIRequest {

@@ -25,17 +25,18 @@ The app builds with Swift Package Manager. Open the package in Xcode for SwiftUI
 
 ### Generating the Typesense Client
 
-The Typesense API client used by TeatroView is generated from the OpenAPI spec vendored in the monorepo. Run the script below whenever `repos/typesense-codex/openapi/openapi.yml` changes:
+The Typesense API client used by TeatroView is produced with the in-house OpenAPI generator from the `fountainai` repository. Regenerate the client whenever `repos/typesense-codex/openapi/openapi.yml` changes:
 
 ```bash
 scripts/generate_typesense_client.sh
 ```
 
-This script builds the custom Swift 6 generator from `repos/fountainai` and emits the sources under `Sources/TypesenseClient`.
+The script runs `swift run generator` and copies the resulting sources to `Sources/TypesenseClient`.
 
 ## Contributing
 
 This project lives in the `TeatroView` directory of the `codex-deployer` monorepo. Issues and pull requests are welcome. Please keep the README updated if you change build steps or environment variables. Refer to `docs/environment_variables.md` for the full list of variables used across the project.
+
 
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

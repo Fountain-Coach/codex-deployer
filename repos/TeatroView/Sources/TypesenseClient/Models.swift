@@ -5,10 +5,10 @@ public struct APIStatsResponse: Codable {
     public let delete_requests_per_second: String
     public let import_latency_ms: String
     public let import_requests_per_second: String
-    public let latency_ms: String
+    public let latency_ms: [String: String]
     public let overloaded_requests_per_second: String
     public let pending_write_batches: String
-    public let requests_per_second: String
+    public let requests_per_second: [String: String]
     public let search_latency_ms: String
     public let search_requests_per_second: String
     public let total_requests_per_second: String
@@ -21,7 +21,7 @@ public struct AnalyticsEventCreateResponse: Codable {
 }
 
 public struct AnalyticsEventCreateSchema: Codable {
-    public let data: String
+    public let data: [String: String]
     public let name: String
     public let type: String
 }
@@ -44,7 +44,7 @@ public struct AnalyticsRuleParametersDestination: Codable {
 
 public struct AnalyticsRuleParametersSource: Codable {
     public let collections: [String]
-    public let events: [String]
+    public let events: [[String: String]]
 }
 
 public struct AnalyticsRuleUpsertSchema: Codable {
@@ -129,14 +129,14 @@ public enum DropTokensMode: String, Codable {
 }
 
 public struct FacetCounts: Codable {
-    public let counts: [String]
+    public let counts: [[String: String]]
     public let field_name: String
-    public let stats: String
+    public let stats: [String: String]
 }
 
 public struct Field: Codable {
     public let drop: Bool
-    public let embed: String
+    public let embed: [String: String]
     public let facet: Bool
     public let index: Bool
     public let infix: Bool
@@ -291,7 +291,7 @@ public struct SearchGroupedHit: Codable {
 public struct SearchHighlight: Codable {
     public let field: String
     public let indices: [Int]
-    public let matched_tokens: [String]
+    public let matched_tokens: [[String: String]]
     public let snippet: String
     public let snippets: [String]
     public let value: String
@@ -325,7 +325,7 @@ public struct SearchOverrideSchema: Codable {
     public let filter_by: String
     public let filter_curated_hits: Bool
     public let includes: [SearchOverrideInclude]
-    public let metadata: String
+    public let metadata: [String: String]
     public let remove_matched_tokens: Bool
     public let replace_query: String
     public let rule: SearchOverrideRule
@@ -418,25 +418,25 @@ public struct SearchResult: Codable {
     public let hits: [SearchResultHit]
     public let out_of: Int
     public let page: Int
-    public let request_params: String
+    public let request_params: [String: String]
     public let search_cutoff: Bool
     public let search_time_ms: Int
 }
 
 public struct SearchResultConversation: Codable {
     public let answer: String
-    public let conversation_history: [String]
+    public let conversation_history: [[String: String]]
     public let conversation_id: String
     public let query: String
 }
 
 public struct SearchResultHit: Codable {
-    public let document: String
-    public let geo_distance_meters: String
-    public let highlight: String
+    public let document: [String: [String: String]]
+    public let geo_distance_meters: [String: Int]
+    public let highlight: [String: String]
     public let highlights: [SearchHighlight]
     public let text_match: Int
-    public let text_match_info: String
+    public let text_match_info: [String: String]
     public let vector_distance: String
 }
 
@@ -457,7 +457,7 @@ public struct SearchSynonymsResponse: Codable {
 
 public struct StemmingDictionary: Codable {
     public let id: String
-    public let words: [String]
+    public let words: [[String: String]]
 }
 
 public struct StopwordsSetRetrieveSchema: Codable {
@@ -487,38 +487,36 @@ public struct VoiceQueryModelCollectionConfig: Codable {
     public let model_name: String
 }
 
-public struct deleteStopwordsSetResponse: Codable {
-    public let id: String
-}
-
-public typealias retrieveMetricsResponse = String
-
 public typealias retrieveAllConversationModelsResponse = [ConversationModelSchema]
 
-public typealias CollectionResponse = CollectionSchema
-public typealias getCollectionsResponse = [CollectionResponse]
-
-public typealias indexDocumentRequest = String
-
-public struct deleteDocumentsResponse: Codable {
-    public let num_deleted: Int
-}
+public typealias importStemmingDictionaryRequest = String
 
 public typealias getSchemaChangesResponse = [SchemaChangeStatus]
 
+public typealias retrieveMetricsResponse = [String: String]
+
 public typealias retrieveAllNLSearchModelsResponse = [NLSearchModelSchema]
+
+public typealias getCollectionsResponse = [CollectionResponse]
 
 public struct debugResponse: Codable {
     public let version: String
 }
 
-public typealias getDocumentResponse = String
+public typealias indexDocumentRequest = [String: String]
 
-public typealias deleteDocumentResponse = String
+public struct deleteDocumentsResponse: Codable {
+    public let num_deleted: Int
+}
 
-public typealias importStemmingDictionaryRequest = String
+public typealias getDocumentResponse = [String: String]
+
+public typealias deleteDocumentResponse = [String: String]
 
 public struct listStemmingDictionariesResponse: Codable {
     public let dictionaries: [String]
 }
 
+public struct deleteStopwordsSetResponse: Codable {
+    public let id: String
+}

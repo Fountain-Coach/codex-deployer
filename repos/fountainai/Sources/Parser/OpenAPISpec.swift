@@ -61,6 +61,23 @@ public struct OpenAPISpec: Codable {
                 case oneOf
                 case additionalProperties
             }
+
+            public init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                ref = try container.decodeIfPresent(String.self, forKey: .ref)
+                type = try container.decodeIfPresent(String.self, forKey: .type)
+                enumValues = try container.decodeIfPresent([String].self, forKey: .enumValues)
+                items = try container.decodeIfPresent(Schema.self, forKey: .items)
+                allOf = try container.decodeIfPresent([Schema].self, forKey: .allOf)
+                oneOf = try container.decodeIfPresent([Schema].self, forKey: .oneOf)
+                if let bool = try? container.decode(Bool.self, forKey: .additionalProperties) {
+                    additionalProperties = bool ? Schema() : nil
+                } else {
+                    additionalProperties = try container.decodeIfPresent(Schema.self, forKey: .additionalProperties)
+                }
+            }
+
+            public init() {}
         }
 
         public var ref: String?
@@ -82,6 +99,24 @@ public struct OpenAPISpec: Codable {
             case oneOf
             case additionalProperties
         }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            ref = try container.decodeIfPresent(String.self, forKey: .ref)
+            type = try container.decodeIfPresent(String.self, forKey: .type)
+            properties = try container.decodeIfPresent([String: Property].self, forKey: .properties)
+            enumValues = try container.decodeIfPresent([String].self, forKey: .enumValues)
+            items = try container.decodeIfPresent(Schema.self, forKey: .items)
+            allOf = try container.decodeIfPresent([Schema].self, forKey: .allOf)
+            oneOf = try container.decodeIfPresent([Schema].self, forKey: .oneOf)
+            if let bool = try? container.decode(Bool.self, forKey: .additionalProperties) {
+                additionalProperties = bool ? Schema() : nil
+            } else {
+                additionalProperties = try container.decodeIfPresent(Schema.self, forKey: .additionalProperties)
+            }
+        }
+
+        public init() {}
     }
 
     /// Parameter object representing path or query parameters.

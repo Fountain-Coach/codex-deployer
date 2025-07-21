@@ -2,7 +2,7 @@ import Foundation
 
 public struct importDocumentsParameters: Codable {
     public let collectionname: String
-    public var importdocumentsparameters: String?
+    public var importdocumentsparameters: [String: String]?
 }
 
 public struct importDocuments: APIRequest {
