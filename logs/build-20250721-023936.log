@@ -169,3 +169,27 @@ Just set COMPOSE_BAKE=true
 #33 CACHED
 
 #34 [bootstrap build 4/4] RUN swift build -c release --product bootstrap-server
+#34 ...
+
+#35 [tools-factory build 4/4] RUN swift build -c release --product tools-factory-server
+#35 ...
+
+#36 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#36 ...
+
+#37 [persist build 4/4] RUN swift build -c release --product persist-server
+#37 ...
+
+#38 [function-caller build 4/4] RUN swift build -c release --product function-caller-server
+#38 ...
+
+#39 [baseline-awareness build 4/4] RUN swift build -c release --product baseline-awareness-server
+#39 ...
+
+#40 [planner build 4/4] RUN swift build -c release --product planner-server
+#40 ...
+
+#36 [llm-gateway build 4/4] RUN swift build -c release --product llm-gateway-server
+#36 17.95 Building for production...
+#36 17.99 [0/6] Write sources
+#36 18.29 [3/6] Write swift-version-24593BA9C3E375BF.txt
