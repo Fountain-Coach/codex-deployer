@@ -72,9 +72,7 @@ public struct SchemaEditorView: View {
 
 #if DEBUG
 #Preview {
-    SchemaEditorView(
-        schema: CollectionUpdateSchema(from: <#any Decoder#>, name: "books", fields: [])
-    )
+    SchemaEditorView(schema: CollectionUpdateSchema(name: "test", fields: []))
 }
 #endif
 #endif
