@@ -11,8 +11,9 @@ public struct multiSearch: APIRequest {
     public var parameters: multiSearchParameters
     public var path: String {
         var path = "/multi_search"
-        var query: [String] = []
-        query.append("multiSearchParameters=\(parameters.multisearchparameters)")
+        let query: [String] = {
+            ["multiSearchParameters=\(parameters.multisearchparameters)"]
+        }()
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
     }

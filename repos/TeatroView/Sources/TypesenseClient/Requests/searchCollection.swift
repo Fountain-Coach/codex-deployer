@@ -12,9 +12,10 @@ public struct searchCollection: APIRequest {
     public var parameters: searchCollectionParameters
     public var path: String {
         var path = "/collections/{collectionName}/documents/search"
-        var query: [String] = []
+        let query: [String] = {
+            ["searchParameters=\(parameters.searchparameters)"]
+        }()
         path = path.replacingOccurrences(of: "{collectionName}", with: String(parameters.collectionname))
-        query.append("searchParameters=\(parameters.searchparameters)")
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
     }
