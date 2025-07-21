@@ -2,15 +2,14 @@ import Teatro
 #if canImport(SwiftUI)
 import SwiftUI
 
-
-/// Preview container replicating the tabbed layout from `TeatroApp` for SwiftUI previews.
-struct TeatroRootPreview: View {
-    var body: some View {
+/// Root view replicating `TeatroApp`'s tab layout for SwiftUI previews.
+public struct TeatroRootView: View {
+    public var body: some View {
         TabView {
             ChatWorkspaceView()
                 .tabItem { Text("Chat") }
 
-            CollectionBrowserView(service: .live)
+            CollectionBrowserView(names: ["books", "articles"])
                 .tabItem { Text("Collections") }
         }
     }
@@ -18,7 +17,7 @@ struct TeatroRootPreview: View {
 
 #if DEBUG
 #Preview {
-    TeatroRootPreview()
+    TeatroRootView()
 }
 #endif
 #endif
