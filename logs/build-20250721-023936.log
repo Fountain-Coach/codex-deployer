@@ -35,3 +35,84 @@ Building for debugging...
 
 [2025-07-21T02:39:36.342598] Starting swift build...
 [2025-07-21T02:39:39.286962] swift build failed with exit code 1
+[2025-07-21T02:39:39.570622] [dispatcher] Updated git remote to use token-based authentication.
+[2025-07-21T02:39:40.767924] [dispatcher] Running Docker build...
+[2025-07-21T02:39:40.768881] [dispatcher] Running tests...
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [planner internal] load build definition from Dockerfile
+#1 transferring dockerfile: 266B done
+#1 DONE 0.0s
+
+#2 [llm-gateway internal] load build definition from Dockerfile
+#2 transferring dockerfile: 278B done
+#2 DONE 0.0s
+
+#3 [function-caller internal] load build definition from Dockerfile
+#3 transferring dockerfile: 290B done
+#3 DONE 0.0s
+
+#4 [bootstrap internal] load build definition from Dockerfile
+#4 transferring dockerfile: 272B done
+#4 DONE 0.0s
+
+#5 [tools-factory internal] load build definition from Dockerfile
+#5 transferring dockerfile: 284B done
+#5 DONE 0.1s
+
+#6 [bootstrap internal] load metadata for docker.io/library/ubuntu:22.04
+#6 ...
+
+#7 [baseline-awareness internal] load build definition from Dockerfile
+#7 transferring dockerfile: 299B done
+#7 DONE 0.1s
+
+#8 [persist internal] load build definition from Dockerfile
+#8 transferring dockerfile: 266B done
+#8 DONE 0.1s
+
+#6 [persist internal] load metadata for docker.io/library/ubuntu:22.04
+#6 DONE 2.2s
+
+#9 [planner internal] load metadata for docker.io/library/swift:6.1-jammy
+#9 DONE 2.2s
+
+#10 [tools-factory internal] load .dockerignore
+#10 transferring context: 2B done
+#10 DONE 0.0s
+
+#11 [persist internal] load .dockerignore
+#11 transferring context: 2B done
+#11 DONE 0.0s
+
+#12 [function-caller internal] load .dockerignore
+#12 transferring context: 2B done
+#12 DONE 0.0s
+
+#13 [llm-gateway internal] load .dockerignore
+#13 transferring context: 2B done
+#13 DONE 0.0s
+
+#14 [planner internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.0s
+
+#15 [bootstrap internal] load .dockerignore
+#15 transferring context: 2B done
+#15 DONE 0.0s
+
+#16 [baseline-awareness internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.0s
+
+#17 [function-caller build 1/4] FROM docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342
+#17 resolve docker.io/library/swift:6.1-jammy@sha256:512716edb447938962d96627ff0b9f00d5701bfa61d97a5b5654f07a1482c342 0.0s done
+#17 DONE 0.0s
+
+#18 [planner stage-1 1/2] FROM docker.io/library/ubuntu:22.04@sha256:1ec65b2719518e27d4d25f104d93f9fac60dc437f81452302406825c46fcc9cb
+#18 resolve docker.io/library/ubuntu:22.04@sha256:1ec65b2719518e27d4d25f104d93f9fac60dc437f81452302406825c46fcc9cb 0.0s done
+#18 CACHED
+
+#19 [baseline-awareness internal] load build context
