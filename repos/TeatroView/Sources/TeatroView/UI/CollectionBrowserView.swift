@@ -5,7 +5,7 @@ import SwiftUI
 /// Displays the list of collections returned by `TypesenseService`.
 @MainActor
 public struct CollectionBrowserView: View {
-    private let service: TypesenseService?
+    @MainActor private let service: TypesenseService?
     @State private var names: [String]
     @State private var errorMessage: String?
 
