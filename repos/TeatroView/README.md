@@ -23,6 +23,16 @@ The app builds with Swift Package Manager. Open the package in Xcode for SwiftUI
 
 `Package.swift` pulls in the [Teatro](https://github.com/fountain-coach/teatro) dependency via its Git URL. Swift Package Manager will fetch it automatically when building the package.
 
+### Generating the Typesense Client
+
+The Typesense API client used by TeatroView is generated with [OpenAPI Generator](https://openapi-generator.tech/) (using the `swift6` template) from the vendored spec. Regenerate the client whenever `repos/typesense-codex/openapi/openapi.yml` changes:
+
+```bash
+scripts/generate_typesense_client.sh
+```
+
+The script expects `openapi-generator-cli` on your `PATH` and writes the sources to `Sources/TypesenseClient`.
+
 ## Contributing
 
 This project lives in the `TeatroView` directory of the `codex-deployer` monorepo. Issues and pull requests are welcome. Please keep the README updated if you change build steps or environment variables. Refer to `docs/environment_variables.md` for the full list of variables used across the project.
