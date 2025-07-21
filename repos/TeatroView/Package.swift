@@ -8,7 +8,7 @@ let package = Package(
         .executable(name: "TeatroView", targets: ["TeatroView"])
     ],
     dependencies: [
-        .package(path: "../teatro")
+        .package(url: "https://github.com/fountain-coach/teatro.git", branch: "main")
     ],
     targets: [
         .executableTarget(
