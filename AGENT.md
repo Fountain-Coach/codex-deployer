@@ -14,6 +14,7 @@ All contributor guides live under `docs/handbook`. Start from the
 - Reference that file in documentation and code comments when explaining
   configuration.
 - Follow the ⚖️ **Footer-Insertion Policy** when editing `.md` files.
+- Keep `docs/evaluations/llm_first_gui_status.md` up to date with the current status and next steps for the LLM-First GUI
 
 ---
 
