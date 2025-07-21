@@ -8,7 +8,7 @@ The **Teatro View Engine** is a modular, fully declarative view system written i
   Composable `Renderable` types (`Text`, `VStack`, `Stage`, etc.) support layout, alignment, styling, and introspection.
 
 - **Rendering Backends**  
-  Multiple output targets including HTML, SVG, PNG (via Cairo), and Codex introspection.
+  Multiple output targets including HTML, SVG, Markdown, PNG (via Cairo), and Codex introspection.
 
 - **CLI Integration**  
   A command-line entry point allows rendering from terminal or scriptable pipelines.

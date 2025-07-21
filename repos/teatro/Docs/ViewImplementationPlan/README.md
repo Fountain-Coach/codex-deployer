@@ -35,7 +35,7 @@ Additional renderable components appear in other documentation sections:
 ### 10.4 Renderers and CLI
 Although not strictly views, renderers are important for integration testing:
 
-- Implement `HTMLRenderer`, `SVGRenderer`, `ImageRenderer`, and `CodexPreviewer` under `Sources/Renderers` exactly as shown in the docs.
+- Implement `HTMLRenderer`, `SVGRenderer`, `ImageRenderer`, `MarkdownRenderer`, and `CodexPreviewer` under `Sources/Renderers` exactly as shown in the docs.
 - Implement `RenderCLI` in `Sources/CLI` to wire up the renderers. Use `swift run` in tests to ensure the binary can be invoked with different targets.
 
 ### 10.5 Animation System

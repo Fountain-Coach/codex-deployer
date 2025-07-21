@@ -94,6 +94,21 @@ public struct CodexPreviewer {
     }
 }
 ```
+
+---
+
+### 3.5 MarkdownRenderer
+
+Renders view output inside a fenced Markdown code block. Useful when embedding
+rendered scenes in documentation or CLI tools.
+
+```swift
+public struct MarkdownRenderer {
+    public static func render(_ view: Renderable) -> String {
+        "```\n" + view.render() + "\n```"
+    }
+}
+```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```

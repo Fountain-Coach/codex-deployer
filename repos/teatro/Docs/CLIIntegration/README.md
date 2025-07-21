@@ -8,7 +8,7 @@ The Teatro View Engine includes a lightweight command-line interface (CLI) imple
 
 ```swift
 public enum RenderTarget: String {
-    case html, svg, png, codex
+    case html, svg, png, markdown, codex
 }
 ```
 
@@ -33,6 +33,8 @@ public struct RenderCLI {
             print(SVGRenderer.render(view))
         case .png:
             ImageRenderer.renderToPNG(view)
+        case .markdown:
+            print(MarkdownRenderer.render(view))
         case .codex:
             print(CodexPreviewer.preview(view))
         }
@@ -48,6 +50,7 @@ public struct RenderCLI {
 swift run RenderCLI html
 swift run RenderCLI svg
 swift run RenderCLI png
+swift run RenderCLI markdown
 swift run RenderCLI codex
 ```
 
