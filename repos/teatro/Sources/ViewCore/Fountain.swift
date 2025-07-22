@@ -26,8 +26,12 @@ public struct FountainRenderer {
             case .character: return .characterCue(node.rawText)
             case .dialogue, .dualDialogue: return .dialogue(node.rawText)
             case .transition: return .transition(node.rawText)
-            case .action, .synopsis, .centered, .lyrics, .pageBreak, .section, .note, .boneyard, .titlePageField: return .action(node.rawText)
-            case .parenthetical: return .dialogue(node.rawText)
+            case .action, .synopsis, .centered, .lyrics, .pageBreak, .section, .note, .boneyard, .titlePageField:
+                return .action(node.rawText)
+            case .parenthetical:
+                return .dialogue(node.rawText)
+            case .text, .emphasis:
+                return nil
             }
         }
     }

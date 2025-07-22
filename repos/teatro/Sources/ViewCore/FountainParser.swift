@@ -25,6 +25,13 @@ public struct RuleSet: Sendable {
     public static let `default` = RuleSet()
 }
 
+public enum EmphasisStyle: Equatable {
+    case italic
+    case bold
+    case underline
+    case boldItalic
+}
+
 public enum FountainElementType: Equatable {
     case sceneHeading
     case action
@@ -41,6 +48,8 @@ public enum FountainElementType: Equatable {
     case note
     case boneyard
     case titlePageField(key: String)
+    case text
+    case emphasis(style: EmphasisStyle)
 }
 
 public struct FountainNode: Equatable {
@@ -49,10 +58,11 @@ public struct FountainNode: Equatable {
     public var lineNumber: Int
     public var children: [FountainNode] = []
 
-    public init(type: FountainElementType, rawText: String, lineNumber: Int) {
+    public init(type: FountainElementType, rawText: String, lineNumber: Int, children: [FountainNode] = []) {
         self.type = type
         self.rawText = rawText
         self.lineNumber = lineNumber
+        self.children = children
     }
 }
 
@@ -73,12 +83,17 @@ public final class FountainParser {
         var currentNote: String = ""
         var currentBoneyard: String = ""
         var previousBlank = true
+        var lastTitleIndex: Int? = nil
         for raw in lines {
             let line = String(raw)
             switch state {
             case .titlePage:
                 if let field = parseTitlePage(line) {
-                    elements.append(FountainNode(type: .titlePageField(key: field.key), rawText: field.raw, lineNumber: lineNumber))
+                    let node = FountainNode(type: .titlePageField(key: field.key), rawText: field.raw, lineNumber: lineNumber)
+                    elements.append(node)
+                    lastTitleIndex = elements.count - 1
+                } else if line.first == " " || line.first == "\t", let idx = lastTitleIndex {
+                    elements[idx].rawText += "\n" + line.trimmingCharacters(in: .whitespaces)
                 } else if line.trimmingCharacters(in: .whitespaces).isEmpty {
                     state = .body
                 } else {
@@ -103,7 +118,8 @@ public final class FountainParser {
                             currentBoneyard = String(trimmed.dropFirst(2))
                         }
                     } else if let element = parseBody(line: line, previousBlank: previousBlank) {
-                        elements.append(FountainNode(type: element, rawText: line, lineNumber: lineNumber))
+                        let inline = parseInline(line)
+                        elements.append(FountainNode(type: element, rawText: line, lineNumber: lineNumber, children: inline))
                     }
                 }
             case .body:
@@ -126,7 +142,8 @@ public final class FountainParser {
                         currentBoneyard = String(trimmed.dropFirst(2))
                     }
                 } else if let element = parseBody(line: line, previousBlank: previousBlank) {
-                    elements.append(FountainNode(type: element, rawText: line, lineNumber: lineNumber))
+                    let inline = parseInline(line)
+                    elements.append(FountainNode(type: element, rawText: line, lineNumber: lineNumber, children: inline))
                 }
             case .note:
                 if line.trimmingCharacters(in: .whitespaces).hasSuffix("]]") {
@@ -168,8 +185,15 @@ public final class FountainParser {
     }
 
     private func parseBody(line: String, previousBlank: Bool) -> FountainElementType? {
-        let trimmed = line.trimmingCharacters(in: .whitespaces)
+        var trimmed = line.trimmingCharacters(in: .whitespaces)
         if trimmed.isEmpty { return nil }
+        if trimmed.hasPrefix("!") {
+            return .action
+        }
+        if trimmed.hasPrefix(">") {
+            trimmed.removeFirst()
+            if isTransition(trimmed) { return .transition }
+        }
         if isPageBreak(trimmed) { return .pageBreak }
         if rules.enableSections && trimmed.hasPrefix("#") { return .section(level: trimmed.prefix { $0 == "#" }.count) }
         if rules.enableSynopses && trimmed.hasPrefix("=") && !isPageBreak(trimmed) { return .synopsis }
@@ -210,5 +234,77 @@ public final class FountainParser {
         let letters = line.trimmingCharacters(in: .whitespaces)
         guard !letters.isEmpty else { return false }
         return letters == letters.uppercased()
+    }
+
+    private func parseInline(_ text: String) -> [FountainNode] {
+        var result: [FountainNode] = []
+        var index = text.startIndex
+        var buffer = ""
+
+        func flush() {
+            if !buffer.isEmpty {
+                result.append(FountainNode(type: .text, rawText: buffer, lineNumber: 0))
+                buffer.removeAll()
+            }
+        }
+
+        while index < text.endIndex {
+            let char = text[index]
+            if char == "\\" {
+                let next = text.index(after: index)
+                if next < text.endIndex {
+                    buffer.append(text[next])
+                    index = text.index(after: next)
+                } else {
+                    index = next
+                }
+                continue
+            }
+
+            if char == "*" || char == "_" {
+                let markerChar = char
+                var count = 1
+                var endIdx = text.index(after: index)
+                while markerChar == "*" && endIdx < text.endIndex && text[endIdx] == markerChar && count < 3 {
+                    count += 1
+                    endIdx = text.index(after: endIdx)
+                }
+                let marker = String(repeating: String(markerChar), count: count)
+                var searchRange = endIdx..<text.endIndex
+                var found: Range<String.Index>? = nil
+                while let range = text.range(of: marker, range: searchRange) {
+                    let prev = text.index(before: range.lowerBound)
+                    if text[prev] != "\\" {
+                        found = range
+                        break
+                    }
+                    searchRange = text.index(after: range.lowerBound)..<text.endIndex
+                }
+                if let range = found {
+                    flush()
+                    let inner = String(text[endIdx..<range.lowerBound])
+                    let children = parseInline(inner)
+                    let style: EmphasisStyle
+                    if markerChar == "_" {
+                        style = .underline
+                    } else if count == 1 {
+                        style = .italic
+                    } else if count == 2 {
+                        style = .bold
+                    } else {
+                        style = .boldItalic
+                    }
+                    result.append(FountainNode(type: .emphasis(style: style), rawText: inner, lineNumber: 0, children: children))
+                    index = range.upperBound
+                    continue
+                }
+            }
+
+            buffer.append(char)
+            index = text.index(after: index)
+        }
+
+        flush()
+        return result
     }
 }
