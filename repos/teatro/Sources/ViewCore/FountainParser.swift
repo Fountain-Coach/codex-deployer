@@ -146,8 +146,13 @@ public final class FountainParser {
                     elements.append(FountainNode(type: element, rawText: line, lineNumber: lineNumber, children: inline))
                 }
             case .note:
-                if line.trimmingCharacters(in: .whitespaces).hasSuffix("]]") {
-                    currentNote += "\n" + String(line.dropLast(2))
+                let trimmedNote = line.trimmingCharacters(in: .whitespaces)
+                if trimmedNote.isEmpty {
+                    elements.append(FountainNode(type: .note, rawText: currentNote, lineNumber: lineNumber))
+                    currentNote = ""
+                    state = .body
+                } else if trimmedNote.hasSuffix("]]") {
+                    currentNote += "\n" + String(trimmedNote.dropLast(2))
                     elements.append(FountainNode(type: .note, rawText: currentNote, lineNumber: lineNumber))
                     currentNote = ""
                     state = .body
@@ -187,24 +192,26 @@ public final class FountainParser {
     private func parseBody(line: String, previousBlank: Bool) -> FountainElementType? {
         var trimmed = line.trimmingCharacters(in: .whitespaces)
         if trimmed.isEmpty { return nil }
-        if trimmed.hasPrefix("!") {
-            return .action
-        }
+
+        if isAction(trimmed) { return .action }
+
         if trimmed.hasPrefix(">") {
-            trimmed.removeFirst()
-            if isTransition(trimmed) { return .transition }
+            var check = trimmed
+            check.removeFirst()
+            if isTransition(check) { return .transition }
         }
+
         if isPageBreak(trimmed) { return .pageBreak }
-        if rules.enableSections && trimmed.hasPrefix("#") { return .section(level: trimmed.prefix { $0 == "#" }.count) }
-        if rules.enableSynopses && trimmed.hasPrefix("=") && !isPageBreak(trimmed) { return .synopsis }
+        if let level = sectionLevel(trimmed) { return .section(level: level) }
+        if isSynopsis(trimmed) { return .synopsis }
         if isSceneHeading(trimmed) { return .sceneHeading }
         if isTransition(trimmed) { return .transition }
-        if trimmed.hasPrefix("~") { return .lyrics }
+        if isLyrics(trimmed) { return .lyrics }
         if isCentered(trimmed) { return .centered }
-        if previousBlank && isAllCaps(trimmed) { return .character }
-        if trimmed.hasPrefix("(") { return .parenthetical }
-        if previousBlank == false && isAllCaps(trimmed) && trimmed.hasSuffix("^") { return .dualDialogue }
-        if previousBlank == false { return .dialogue }
+        if isCharacter(trimmed, previousBlank: previousBlank) { return .character }
+        if isParenthetical(trimmed) { return .parenthetical }
+        if isDualDialogue(trimmed, previousBlank: previousBlank) { return .dualDialogue }
+        if isDialogue(trimmed, previousBlank: previousBlank) { return .dialogue }
         return .action
     }
 
@@ -234,6 +241,43 @@ public final class FountainParser {
         let letters = line.trimmingCharacters(in: .whitespaces)
         guard !letters.isEmpty else { return false }
         return letters == letters.uppercased()
+    }
+
+    // MARK: - Detection Helpers
+
+    private func isAction(_ line: String) -> Bool {
+        line.hasPrefix("!")
+    }
+
+    private func isCharacter(_ line: String, previousBlank: Bool) -> Bool {
+        previousBlank && isAllCaps(line)
+    }
+
+    private func isParenthetical(_ line: String) -> Bool {
+        line.hasPrefix("(")
+    }
+
+    private func isDualDialogue(_ line: String, previousBlank: Bool) -> Bool {
+        !previousBlank && isAllCaps(line) && line.hasSuffix("^")
+    }
+
+    private func isLyrics(_ line: String) -> Bool {
+        line.hasPrefix("~")
+    }
+
+    private func sectionLevel(_ line: String) -> Int? {
+        guard rules.enableSections else { return nil }
+        guard line.hasPrefix("#") else { return nil }
+        return line.prefix { $0 == "#" }.count
+    }
+
+    private func isSynopsis(_ line: String) -> Bool {
+        guard rules.enableSynopses else { return false }
+        return line.hasPrefix("=") && !isPageBreak(line)
+    }
+
+    private func isDialogue(_ line: String, previousBlank: Bool) -> Bool {
+        !previousBlank
     }
 
     private func parseInline(_ text: String) -> [FountainNode] {
