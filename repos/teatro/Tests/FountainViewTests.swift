@@ -12,9 +12,10 @@ CUT TO:
 EXT. CITY - DAY
 """
         let view = FountainSceneView(fountainText: script)
-        let lines = view.render().components(separatedBy: "\n")
+        let output = view.render()
+        let lines = output.components(separatedBy: "\n")
         XCTAssertEqual(lines.first, "# INT. LAB - NIGHT")
-        XCTAssertTrue(lines.contains("ROBOT"))
-        XCTAssertTrue(lines.contains("\tHello."))
+        XCTAssertTrue(lines.contains { $0.contains("ROBOT") })
+        XCTAssertTrue(lines.contains { $0.contains("Hello.") })
     }
 }

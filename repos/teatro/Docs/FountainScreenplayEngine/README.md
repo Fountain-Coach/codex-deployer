@@ -30,37 +30,44 @@ public enum FountainElement: Renderable {
 
 ---
 
-### 8.2 FountainRenderer
+### 8.2 FountainParser
 
-A static parsing utility that converts raw `.fountain` text into a list of typed `FountainElement`s.
+`FountainParser` implements the full state machine described in the
+[implementation plan](FountainParserImplementationPlan.md). It recognises notes,
+boneyard, page breaks and all other token types without relying on regular
+expressions. Behaviour can be customised by passing a `RuleSet` on
+initialisation.
+
+```swift
+let parser = FountainParser(rules: .init(sceneHeadingKeywords: ["INT.", "EXT."]))
+let nodes = parser.parse(scriptText)
+```
+
+### 8.3 FountainRenderer
+
+`FountainRenderer` is a small wrapper that converts the parsed nodes into the
+`FountainElement` enum used by existing views.
 
 ```swift
 public struct FountainRenderer {
     public static func parse(_ text: String) -> [FountainElement] {
-        var elements: [FountainElement] = []
-
-        for line in text.components(separatedBy: "\n") {
-            if line.hasPrefix("INT") || line.hasPrefix("EXT") {
-                elements.append(.sceneHeading(line))
-            } else if line.uppercased() == line && line.trimmingCharacters(in: .whitespaces).count > 0 {
-                elements.append(.characterCue(line))
-            } else if line.hasSuffix("TO:") {
-                elements.append(.transition(line))
-            } else if line.hasPrefix("  ") || line.hasPrefix("\t") {
-                elements.append(.dialogue(line.trimmingCharacters(in: .whitespaces)))
-            } else if !line.isEmpty {
-                elements.append(.action(line))
+        let nodes = FountainParser().parse(text)
+        return nodes.compactMap { node in
+            switch node.type {
+            case .sceneHeading: return .sceneHeading(node.rawText)
+            case .character: return .characterCue(node.rawText)
+            case .dialogue, .dualDialogue: return .dialogue(node.rawText)
+            case .transition: return .transition(node.rawText)
+            default: return .action(node.rawText)
             }
         }
-
-        return elements
     }
 }
 ```
 
 ---
 
-### 8.3 FountainSceneView
+### 8.4 FountainSceneView
 
 A wrapper that takes `.fountain` source and renders it using its parsed structure.
 
@@ -128,3 +135,7 @@ CUT TO: >>
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

@@ -18,23 +18,22 @@ public enum FountainElement: Renderable {
 
 public struct FountainRenderer {
     public static func parse(_ text: String) -> [FountainElement] {
-        var elements: [FountainElement] = []
-
-        for line in text.components(separatedBy: "\n") {
-            if line.hasPrefix("INT") || line.hasPrefix("EXT") {
-                elements.append(.sceneHeading(line))
-            } else if line.uppercased() == line && line.trimmingCharacters(in: .whitespaces).count > 0 {
-                elements.append(.characterCue(line))
-            } else if line.hasSuffix("TO:") {
-                elements.append(.transition(line))
-            } else if line.hasPrefix("  ") || line.hasPrefix("\t") {
-                elements.append(.dialogue(line.trimmingCharacters(in: .whitespaces)))
-            } else if !line.isEmpty {
-                elements.append(.action(line))
+        let parser = FountainParser()
+        let nodes = parser.parse(text)
+        return nodes.compactMap { node in
+            switch node.type {
+            case .sceneHeading: return .sceneHeading(node.rawText)
+            case .character: return .characterCue(node.rawText)
+            case .dialogue, .dualDialogue: return .dialogue(node.rawText)
+            case .transition: return .transition(node.rawText)
+            case .action, .synopsis, .centered, .lyrics, .pageBreak, .section, .note, .boneyard, .titlePageField:
+                return .action(node.rawText)
+            case .parenthetical:
+                return .dialogue(node.rawText)
+            case .text, .emphasis:
+                return nil
             }
         }
-
-        return elements
     }
 }
 
