@@ -121,6 +121,19 @@ CUT TO: >>
 # EXT. CITY STREET - NIGHT
 ```
 
+### Custom Rule Set Example
+
+You can adapt parsing behaviour by providing your own `RuleSet`.
+
+```swift
+let rules = RuleSet(sceneHeadingKeywords: ["INT.", "EXT.", "LOC."],
+                    enableNotes: false)
+let parser = FountainParser(rules: rules)
+let nodes = parser.parse("LOC. MARKET - DAY\n[[note]]")
+```
+
+Here the `LOC.` prefix is recognised as a scene heading while the note is treated as action because notes are disabled.
+
 ---
 
 ### Use Cases

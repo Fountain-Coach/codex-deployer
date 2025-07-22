@@ -79,5 +79,58 @@ Hi
         let nodes = FountainParser().parse(script)
         XCTAssertTrue(nodes.contains { $0.type == .dualDialogue })
     }
+
+    func testSectionsSynopsisCenteredAndPageBreak() {
+        let script = """
+# Opening
+= A summary
+> TITLE <
+===
+"""
+        let nodes = FountainParser().parse(script)
+        XCTAssertTrue(nodes.contains { if case .section(level: 1) = $0.type { return true } else { return false } })
+        XCTAssertTrue(nodes.contains { $0.type == .synopsis })
+        XCTAssertTrue(nodes.contains { $0.type == .centered })
+        XCTAssertTrue(nodes.contains { $0.type == .pageBreak })
+    }
+
+    func testCustomRuleSet() {
+        let rules = RuleSet(sceneHeadingKeywords: ["INT.", "EXT.", "LOC."], enableNotes: false)
+        let script = """
+[[note]]
+LOC. MARKET - DAY
+"""
+        let nodes = FountainParser(rules: rules).parse(script)
+        XCTAssertEqual(nodes.first?.type, .action)
+        XCTAssertTrue(nodes.contains { $0.type == .sceneHeading && $0.rawText.contains("LOC.") })
+    }
+
+    func testEndToEndExampleScript() {
+        let script = """
+INT. LAB - NIGHT
+
+The robot assembles a memory core.
+
+ROBOT
+(to itself)
+I was not made for silence.
+
+CUT TO:
+
+EXT. CITY STREET - NIGHT
+"""
+        let nodes = FountainParser().parse(script)
+        let types = nodes.map { $0.type }
+        let expected: [FountainElementType] = [
+            .sceneHeading,
+            .action,
+            .character,
+            .parenthetical,
+            .dialogue,
+            .transition,
+            .sceneHeading
+        ]
+        XCTAssertEqual(types, expected)
+    }
 }
 
