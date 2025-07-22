@@ -2,6 +2,8 @@
 
 This guide documents the complete strategy for implementing a Fountain screenplay parser in Swift for the Teatro View engine. It mirrors the official specification available at [fountain.io/syntax](https://fountain.io/syntax/) and does **not** omit any feature. Every rule is represented in a deterministic state machine rather than through regular expressions so that it can be overridden or extended when integrating into Teatro.
 
+**Status:** The parser described below is implemented in `Sources/ViewCore/FountainParser.swift` and tested under `TeatroTests`.
+
 ## Token Types
 
 The parser must recognize all of the following element types exactly as described in the spec:
