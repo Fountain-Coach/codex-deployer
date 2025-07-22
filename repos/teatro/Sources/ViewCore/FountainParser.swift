@@ -84,8 +84,11 @@ public final class FountainParser {
         var currentBoneyard: String = ""
         var previousBlank = true
         var lastTitleIndex: Int? = nil
-        for raw in lines {
+        var lastElement: FountainElementType? = nil
+        for (idx, raw) in lines.enumerated() {
             let line = String(raw)
+            let nextLine = idx + 1 < lines.count ? String(lines[idx + 1]) : ""
+            let nextBlank = nextLine.trimmingCharacters(in: .whitespaces).isEmpty
             switch state {
             case .titlePage:
                 if let field = parseTitlePage(line) {
@@ -117,9 +120,12 @@ public final class FountainParser {
                             state = .boneyard
                             currentBoneyard = String(trimmed.dropFirst(2))
                         }
-                    } else if let element = parseBody(line: line, previousBlank: previousBlank) {
+                    } else if let element = parseBody(line: line, previousBlank: previousBlank, nextBlank: nextBlank, lastElement: lastElement) {
                         let inline = parseInline(line)
                         elements.append(FountainNode(type: element, rawText: line, lineNumber: lineNumber, children: inline))
+                        lastElement = element
+                    } else {
+                        lastElement = nil
                     }
                 }
             case .body:
@@ -141,9 +147,12 @@ public final class FountainParser {
                         state = .boneyard
                         currentBoneyard = String(trimmed.dropFirst(2))
                     }
-                } else if let element = parseBody(line: line, previousBlank: previousBlank) {
+                } else if let element = parseBody(line: line, previousBlank: previousBlank, nextBlank: nextBlank, lastElement: lastElement) {
                     let inline = parseInline(line)
                     elements.append(FountainNode(type: element, rawText: line, lineNumber: lineNumber, children: inline))
+                    lastElement = element
+                } else {
+                    lastElement = nil
                 }
             case .note:
                 let trimmedNote = line.trimmingCharacters(in: .whitespaces)
@@ -170,6 +179,7 @@ public final class FountainParser {
                 }
             }
             previousBlank = line.trimmingCharacters(in: .whitespaces).isEmpty
+            if previousBlank { lastElement = nil }
             lineNumber += 1
         }
         if state == .note {
@@ -189,29 +199,31 @@ public final class FountainParser {
         return (key: key, raw: String(value.dropFirst()).trimmingCharacters(in: .whitespaces))
     }
 
-    private func parseBody(line: String, previousBlank: Bool) -> FountainElementType? {
+    private func parseBody(line: String, previousBlank: Bool, nextBlank: Bool, lastElement: FountainElementType?) -> FountainElementType? {
         var trimmed = line.trimmingCharacters(in: .whitespaces)
         if trimmed.isEmpty { return nil }
 
         if isAction(trimmed) { return .action }
 
         if trimmed.hasPrefix(">") {
+            var checkRaw = line
+            if let first = checkRaw.first, first == ">" { checkRaw.removeFirst() }
             var check = trimmed
             check.removeFirst()
-            if isTransition(check) { return .transition }
+            if isTransition(checkRaw, trimmed: check, previousBlank: true, nextBlank: nextBlank) { return .transition }
         }
 
         if isPageBreak(trimmed) { return .pageBreak }
         if let level = sectionLevel(trimmed) { return .section(level: level) }
         if isSynopsis(trimmed) { return .synopsis }
         if isSceneHeading(trimmed) { return .sceneHeading }
-        if isTransition(trimmed) { return .transition }
+        if isTransition(line, trimmed: trimmed, previousBlank: previousBlank, nextBlank: nextBlank) { return .transition }
         if isLyrics(trimmed) { return .lyrics }
         if isCentered(trimmed) { return .centered }
-        if isCharacter(trimmed, previousBlank: previousBlank) { return .character }
-        if isParenthetical(trimmed) { return .parenthetical }
         if isDualDialogue(trimmed, previousBlank: previousBlank) { return .dualDialogue }
-        if isDialogue(trimmed, previousBlank: previousBlank) { return .dialogue }
+        if isCharacter(trimmed, previousBlank: previousBlank) { return .character }
+        if isParenthetical(trimmed, last: lastElement) { return .parenthetical }
+        if isDialogue(trimmed, last: lastElement) { return .dialogue }
         return .action
     }
 
@@ -222,9 +234,12 @@ public final class FountainParser {
         return line.hasPrefix(".")
     }
 
-    private func isTransition(_ line: String) -> Bool {
+    private func isTransition(_ raw: String, trimmed: String, previousBlank: Bool, nextBlank: Bool) -> Bool {
+        guard previousBlank && nextBlank else { return false }
+        if trimmed.hasSuffix(":") && raw.hasSuffix(": ") { return false }
+        guard isAllCaps(trimmed) else { return false }
         for keyword in rules.transitionKeywords {
-            if line.uppercased().hasSuffix(keyword.uppercased()) { return true }
+            if trimmed.hasSuffix(keyword.uppercased()) { return true }
         }
         return false
     }
@@ -250,15 +265,27 @@ public final class FountainParser {
     }
 
     private func isCharacter(_ line: String, previousBlank: Bool) -> Bool {
-        previousBlank && isAllCaps(line)
+        guard previousBlank else { return false }
+        var text = line
+        if text.hasSuffix("^") { text.removeLast() }
+        return isAllCaps(text)
     }
 
-    private func isParenthetical(_ line: String) -> Bool {
-        line.hasPrefix("(")
+    private func isParenthetical(_ line: String, last: FountainElementType?) -> Bool {
+        guard line.hasPrefix("(") else { return false }
+        if let last = last {
+            switch last {
+            case .character, .dialogue, .dualDialogue, .parenthetical:
+                return true
+            default:
+                return false
+            }
+        }
+        return false
     }
 
     private func isDualDialogue(_ line: String, previousBlank: Bool) -> Bool {
-        !previousBlank && isAllCaps(line) && line.hasSuffix("^")
+        return isAllCaps(line) && line.hasSuffix("^")
     }
 
     private func isLyrics(_ line: String) -> Bool {
@@ -276,8 +303,14 @@ public final class FountainParser {
         return line.hasPrefix("=") && !isPageBreak(line)
     }
 
-    private func isDialogue(_ line: String, previousBlank: Bool) -> Bool {
-        !previousBlank
+    private func isDialogue(_ line: String, last: FountainElementType?) -> Bool {
+        guard let last = last else { return false }
+        switch last {
+        case .character, .parenthetical, .dualDialogue, .dialogue:
+            return true
+        default:
+            return false
+        }
     }
 
     private func parseInline(_ text: String) -> [FountainNode] {

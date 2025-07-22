@@ -116,6 +116,7 @@ ROBOT
 I was not made for silence.
 
 CUT TO:
+
 EXT. CITY STREET - NIGHT
 """
         let nodes = FountainParser().parse(script)
