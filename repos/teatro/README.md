@@ -10,6 +10,7 @@ This repository contains the specification for Teatro, a modular Swift 6 view en
 - [LilyPond Music Rendering](Docs/LilyPondMusicRendering/README.md)
 - [MIDI 2.0 DSL](Docs/MIDI20DSL/README.md)
 - [Fountain Screenplay Engine](Docs/FountainScreenplayEngine/README.md)
+- [Fountain Parser Implementation Plan](Docs/FountainScreenplayEngine/FountainParserImplementationPlan.md)
 - [View Implementation and Testing Plan](Docs/ViewImplementationPlan/README.md)
 - [Implementation Roadmap](Docs/ImplementationPlan/README.md)
 - [Summary](Docs/Summary/README.md)
@@ -21,3 +22,7 @@ The `Sources/` directory follows the structure suggested in the documentation an
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
