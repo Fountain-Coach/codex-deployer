@@ -5,6 +5,8 @@ import SwiftUI
 public struct ScreenplayMainStage: View {
     @StateObject var viewModel = ScriptExecutionEngine()
 
+    public init() {}
+
     public var body: some View {
         ZStack {
             Color(white: 0.94).ignoresSafeArea()
