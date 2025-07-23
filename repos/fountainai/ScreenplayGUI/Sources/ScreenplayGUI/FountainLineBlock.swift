@@ -1,24 +1,10 @@
 import Foundation
+import Teatro
 
-public enum OrchestrationTrigger: Equatable {
-    case toolCall(endpoint: String)
-    case sse(filename: String)
-    case reflect
-    case promote(role: String)
-    case summary
-}
 
 public enum FountainLineBlock: Identifiable, Equatable {
     case line(text: String, trigger: OrchestrationTrigger?)
     case injected(InjectedBlock)
-
-    public enum InjectedBlock: Equatable {
-        case toolResponse(String)
-        case reflectionReply(String)
-        case sseChunk(String)
-        case promotionConfirmation(String)
-        case summaryBlock(String)
-    }
 
     public var id: UUID { UUID() }
 

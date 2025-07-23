@@ -1,4 +1,5 @@
 import SwiftUI
+import Teatro
 
 public struct DirectiveBlockView: View {
     let block: FountainLineBlock
@@ -20,7 +21,7 @@ public struct DirectiveBlockView: View {
     }
 
     @ViewBuilder
-    private func injectedView(for inj: FountainLineBlock.InjectedBlock) -> some View {
+    private func injectedView(for inj: InjectedBlock) -> some View {
         switch inj {
         case .toolResponse(let text):
             Text(text)
