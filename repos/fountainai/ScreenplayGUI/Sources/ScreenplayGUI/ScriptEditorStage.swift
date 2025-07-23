@@ -15,6 +15,7 @@ public enum ScriptEditorStage {
 import SwiftUI
 import AppKit
 
+@MainActor
 final class ScriptEditorViewModel: ObservableObject {
     @Published var scriptText: String
     @Published var blocks: [FountainLineBlock] = []
