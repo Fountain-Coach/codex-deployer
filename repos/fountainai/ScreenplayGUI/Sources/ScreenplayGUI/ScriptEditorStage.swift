@@ -15,6 +15,7 @@ public enum ScriptEditorStage {
 import SwiftUI
 import AppKit
 
+
 public struct ScriptEditorStageView: View {
     @State private var scriptText: String
 
