@@ -12,7 +12,7 @@ public struct DirectiveBlockView: View {
         self.block = block
     }
 
-    @ViewBuilder
+    @SwiftUI.ViewBuilder
     public var body: some View {
         switch block {
         case .line(let text, _):
@@ -24,7 +24,7 @@ public struct DirectiveBlockView: View {
         }
     }
 
-    @ViewBuilder
+    @SwiftUI.ViewBuilder
     private func injectedView(for inj: InjectedBlock) -> some View {
         switch inj {
         case .toolResponse(let text):
