@@ -51,23 +51,23 @@ public final class ScriptExecutionEngine: ObservableObject {
         switch trigger {
         case .toolCall(let endpoint):
             callToolAPI(endpoint) { response in
-                insert(.injected(.toolResponse(response)), after: index)
+                self.insert(.injected(.toolResponse(response)), after: index)
             }
         case .reflect:
             reflect { reply in
-                insert(.injected(.reflectionReply(reply)), after: index)
+                self.insert(.injected(.reflectionReply(reply)), after: index)
             }
         case .sse(let file):
             streamMarkdown(file) { chunk in
-                insert(.injected(.sseChunk(chunk)), after: index)
+                self.insert(.injected(.sseChunk(chunk)), after: index)
             }
         case .promote(let role):
             promoteRole(role) { conf in
-                insert(.injected(.promotionConfirmation(conf)), after: index)
+                self.insert(.injected(.promotionConfirmation(conf)), after: index)
             }
         case .summary:
             summarizeCorpus { summary in
-                insert(.injected(.summaryBlock(summary)), after: index)
+                self.insert(.injected(.summaryBlock(summary)), after: index)
             }
         }
     }
