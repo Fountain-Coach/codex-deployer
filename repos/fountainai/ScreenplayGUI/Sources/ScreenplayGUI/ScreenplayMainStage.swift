@@ -19,7 +19,7 @@ public struct ScreenplayMainStage: View {
                 .frame(maxWidth: 700)
                 .padding(48)
                 .background(Color.white)
-                .cornerRadius(12)
+                .cornerRadius(1)
                 .shadow(radius: 20)
                 .padding(.vertical, 60)
             }
@@ -30,3 +30,15 @@ public struct ScreenplayMainStage: View {
 }
 
 #endif
+
+#Preview("DIN A4 - Portrait") {
+    ZStack {
+        Color.gray.opacity(0.1).ignoresSafeArea()
+        ScreenplayMainStage()
+            .frame(width: 794, height: 1123)
+            .padding()
+            .background(Color.white)
+            .cornerRadius(1)
+            .shadow(radius: 1)
+    }
+}
