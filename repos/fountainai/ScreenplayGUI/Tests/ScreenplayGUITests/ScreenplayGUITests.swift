@@ -1,5 +1,6 @@
 import XCTest
 import Teatro
+
 @testable import ScreenplayGUI
 
 final class ScreenplayGUITests: XCTestCase {

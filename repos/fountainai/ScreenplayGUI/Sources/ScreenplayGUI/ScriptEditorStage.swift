@@ -39,6 +39,7 @@ public struct ScriptEditorStageView: View {
 }
 
 #if DEBUG
+
 #Preview("Screenplay Editor Stage") {
     ScriptEditorStageView()
         .frame(width: 800, height: 900)
