@@ -132,5 +132,25 @@ EXT. CITY STREET - NIGHT
         ]
         XCTAssertEqual(types, expected)
     }
+
+    func testFountainAIRules() {
+        let script = """
+        #corpus: test-corpus
+        > BASELINE: data
+        > SSE: event
+        > tool_call: /path
+        REFLECT: note
+        PROMOTE: role
+        SUMMARY: done
+        """
+        let nodes = FountainParser().parse(script)
+        XCTAssertTrue(nodes.contains { $0.type == .corpusHeader })
+        XCTAssertTrue(nodes.contains { $0.type == .baseline })
+        XCTAssertTrue(nodes.contains { $0.type == .sse })
+        XCTAssertTrue(nodes.contains { $0.type == .toolCall })
+        XCTAssertTrue(nodes.contains { $0.type == .reflect })
+        XCTAssertTrue(nodes.contains { $0.type == .promote })
+        XCTAssertTrue(nodes.contains { $0.type == .summary })
+    }
 }
 

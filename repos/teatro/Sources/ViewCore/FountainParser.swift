@@ -50,6 +50,14 @@ public enum FountainElementType: Equatable {
     case titlePageField(key: String)
     case text
     case emphasis(style: EmphasisStyle)
+    // FountainAI extensions
+    case corpusHeader
+    case baseline
+    case sse
+    case toolCall
+    case reflect
+    case promote
+    case summary
 }
 
 public struct FountainNode: Equatable {
@@ -202,6 +210,15 @@ public final class FountainParser {
     private func parseBody(line: String, previousBlank: Bool, nextBlank: Bool, lastElement: FountainElementType?) -> FountainElementType? {
         var trimmed = line.trimmingCharacters(in: .whitespaces)
         if trimmed.isEmpty { return nil }
+
+        // FountainAI overrides
+        if isCorpusHeader(trimmed) { return .corpusHeader }
+        if isBaseline(trimmed) { return .baseline }
+        if isSSE(trimmed) { return .sse }
+        if isToolCall(trimmed) { return .toolCall }
+        if isReflect(trimmed) { return .reflect }
+        if isPromote(trimmed) { return .promote }
+        if isSummary(trimmed) { return .summary }
 
         if isAction(trimmed) { return .action }
 

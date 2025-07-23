@@ -26,7 +26,7 @@ public struct FountainRenderer {
             case .character: return .characterCue(node.rawText)
             case .dialogue, .dualDialogue: return .dialogue(node.rawText)
             case .transition: return .transition(node.rawText)
-            case .action, .synopsis, .centered, .lyrics, .pageBreak, .section, .note, .boneyard, .titlePageField:
+            case .action, .synopsis, .centered, .lyrics, .pageBreak, .section, .note, .boneyard, .titlePageField, .corpusHeader, .baseline, .sse, .toolCall, .reflect, .promote, .summary:
                 return .action(node.rawText)
             case .parenthetical:
                 return .dialogue(node.rawText)
