@@ -108,11 +108,13 @@ SUMMARY:
 
 ### Phase 3: Codex Integration
 
-- Implement `.fountain` → AST parser
-- Drive Codex via screenplay intent:
-  - Detect tool calls
-  - Render roles from dialog
-  - Reflect transitions into planning steps
+- Implement `.fountain` → AST parser.
+- Take parsed `FountainLineBlock` structures and dispatch orchestration
+  triggers via `ScriptExecutionEngine.parseAndTrigger`.
+- Inject tool responses, reflections and SSE chunks directly below the
+  directive that caused them.
+- The main stage becomes a Teatro-styled scrolling page using a monospaced
+  font; no separate run button is required.
 
 ### Phase 4: Live Streaming Support
 
@@ -137,6 +139,6 @@ SUMMARY:
 `.fountain`, GPT roles, screenplay editor, orchestration, semantic reasoning, tool calling, baseline, drift, reflection, function-calling, Codex, planner.
 
 ---
-`````text
+``````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-`````
+``````
