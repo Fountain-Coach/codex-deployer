@@ -1,6 +1,7 @@
 import Foundation
 
 public enum OrchestrationTrigger: Equatable {
+
     case toolCall(endpoint: String)
     case sse(filename: String)
     case reflect
