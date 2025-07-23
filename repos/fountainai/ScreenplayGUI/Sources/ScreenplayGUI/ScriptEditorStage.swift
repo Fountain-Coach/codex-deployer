@@ -13,6 +13,8 @@ public enum ScriptEditorStage {
 
 #if canImport(SwiftUI)
 import SwiftUI
+import AppKit
+
 
 public struct ScriptEditorStageView: View {
     @State private var scriptText: String
@@ -23,16 +25,21 @@ public struct ScriptEditorStageView: View {
 
     public var body: some View {
         ZStack {
-            Color.gray.opacity(0.2).ignoresSafeArea()
-            ScrollView {
-                TextEditor(text: $scriptText)
-                    .font(.system(.body, design: .monospaced))
-                    .padding()
-                    .frame(width: 595, height: 842) // A4 size in points
-                    .background(Color.white)
-                    .cornerRadius(4)
-                    .shadow(radius: 5)
-                    .padding()
+            Color(nsColor: .windowBackgroundColor).ignoresSafeArea()
+            ScrollView(.vertical) {
+                HStack {
+                    Spacer(minLength: 0)
+                    TextEditor(text: $scriptText)
+                        .font(.system(.body, design: .monospaced))
+                        .scrollContentBackground(.hidden)
+                        .padding()
+                        .frame(width: 595, height: 842)
+                        .background(Color.white)
+                        .cornerRadius(4)
+                        .shadow(radius: 5)
+                        .padding()
+                    Spacer(minLength: 0)
+                }
             }
         }
     }

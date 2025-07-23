@@ -11,7 +11,7 @@ This document tracks progress on the chat-centric Typesense interface proposed i
 - `ScreenplayGUI` project scaffold added under `repos/fountainai/ScreenplayGUI`.
 - Main `ScriptEditorStage` view renders a single-page editor styled like a PDF.
 - Xcode preview now shows the editor as a sheet of paper on a desktop.
-- `ScreenplayMainStage` combines the editor with a right-side placeholder pane.
+- `ScreenplayMainStage` centers the PDF-like editor on a desk background and adds a right-side inspector placeholder.
 
 ## Next Steps
 

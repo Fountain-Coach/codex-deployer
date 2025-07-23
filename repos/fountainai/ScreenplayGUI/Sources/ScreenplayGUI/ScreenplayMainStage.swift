@@ -13,9 +13,14 @@ public struct ScreenplayMainStage: View {
         HStack(spacing: 0) {
             ScriptEditorStageView(script: script)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            // Placeholder for right pane inspector
-            Color.gray.opacity(0.1)
-                .frame(width: 300)
+            Divider()
+            VStack {
+                Text("Inspector")
+                    .font(.headline)
+                Spacer()
+            }
+            .frame(width: 280)
+            .background(Color.gray.opacity(0.1))
         }
     }
 }
