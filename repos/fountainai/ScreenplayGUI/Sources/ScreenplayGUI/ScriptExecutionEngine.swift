@@ -13,6 +13,7 @@ public final class ScriptExecutionEngine: ObservableObject {
         blocks = execute(script: script)
     }
 
+
     public func execute(script: String) -> [FountainDirective] {
         var blocks: [FountainDirective] = []
         let lines = script.split(separator: "\n", omittingEmptySubsequences: false)
