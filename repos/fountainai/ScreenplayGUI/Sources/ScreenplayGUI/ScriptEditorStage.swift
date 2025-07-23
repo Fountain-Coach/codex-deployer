@@ -17,7 +17,7 @@ import AppKit
 
 final class ScriptEditorViewModel: ObservableObject {
     @Published var scriptText: String
-    @Published var blocks: [FountainDirective] = []
+    @Published var blocks: [FountainLineBlock] = []
     private let engine = ScriptExecutionEngine()
 
     init(script: String) {
@@ -25,7 +25,8 @@ final class ScriptEditorViewModel: ObservableObject {
     }
 
     func run() {
-        blocks = engine.execute(script: scriptText)
+        engine.parseAndTrigger(scriptText)
+        blocks = engine.blocks
     }
 }
 
@@ -43,10 +44,6 @@ public struct ScriptEditorStageView: View {
             }
         }
         .onAppear { viewModel.run() }
-        .toolbar {
-            Button("Run Script") { viewModel.run() }
-                .keyboardShortcut(.return, modifiers: .command)
-        }
     }
 }
 
