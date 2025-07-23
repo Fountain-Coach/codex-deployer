@@ -85,9 +85,19 @@ SUMMARY:
 ### Phase 1: Syntax & Schema
 
 - Define extended `.fountain` grammar for:
-  - `#corpus:` headers
-  - `> BASELINE:`, `> SSE:`, `> tool_call:` blocks
-  - `REFLECT:`, `PROMOTE:`, `SUMMARY:` tags
+- `#corpus:` headers
+- `> BASELINE:`, `> SSE:`, `> tool_call:` blocks
+- `REFLECT:`, `PROMOTE:`, `SUMMARY:` tags
+
+| Override Rule              | Status Quo Interpretation |
+|----------------------------|---------------------------|
+| `#corpus:`                 | Section heading (`#`)     |
+| `> BASELINE:`              | Transition/Action         |
+| `> SSE:`                   | Transition/Action         |
+| `> tool_call:`             | Transition/Action         |
+| `REFLECT:`                 | Action                    |
+| `PROMOTE:`                 | Action                    |
+| `SUMMARY:`                 | Action                    |
 
 ### Phase 2: Editor Integration
 
