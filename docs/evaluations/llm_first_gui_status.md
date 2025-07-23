@@ -17,6 +17,7 @@ This document tracks progress on the chat-centric Typesense interface proposed i
 4. Connect `CollectionBrowserView` and `SchemaEditorView` for in-chat corpus management.
 5. Add live reload hooks so GUI changes trigger automatic rebuilds.
 6. Document any new environment variables in [environment_variables.md](../environment_variables.md).
+7. Prototype screenplay-style editor as outlined in Docs/FountainAI GUI proposal.
 
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
