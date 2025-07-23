@@ -20,7 +20,11 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
     }
 
     func start() throws {
+        #if os(Linux)
+        let socketType: Int32 = Int32(SOCK_STREAM.rawValue)
+        #else
         let socketType: Int32 = SOCK_STREAM
+        #endif
 
         serverFD = socket(AF_INET, socketType, 0)
         guard serverFD >= 0 else { throw RuntimeError.socket }
