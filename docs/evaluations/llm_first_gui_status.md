@@ -8,6 +8,8 @@ This document tracks progress on the chat-centric Typesense interface proposed i
 - `RetrievalInspectorView` displays raw Typesense hits but is not wired into the chat workflow.
 - `PromptHistoryView`, `CollectionBrowserView`, `SchemaEditorView` and `OpsDashboardView` exist as separate views but are not combined into the dual-pane layout.
 - The Typesense client generation script in `TeatroView` works but lacks live reload hooks.
+- `ScreenplayGUI` project scaffold added under `repos/fountainai/ScreenplayGUI`.
+- Main `ScriptEditorStage` view renders a single-page editor styled like a PDF.
 
 ## Next Steps
 
@@ -17,7 +19,7 @@ This document tracks progress on the chat-centric Typesense interface proposed i
 4. Connect `CollectionBrowserView` and `SchemaEditorView` for in-chat corpus management.
 5. Add live reload hooks so GUI changes trigger automatic rebuilds.
 6. Document any new environment variables in [environment_variables.md](../environment_variables.md).
-7. Prototype screenplay-style editor as outlined in Docs/FountainAI GUI proposal.
+7. Hook the new ScreenplayGUI into the editor workflow as outlined in Docs/FountainAI GUI proposal.
 
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
