@@ -106,20 +106,18 @@ SUMMARY:
 - `ScreenplayMainStage` presents a vertical `ScrollView` with a `LazyVStack`.
 - No right pane – everything flows inside the script.
 
-### Phase 3: Codex Integration
+### Phase 3: Codex & Live Streaming Integration
 
-- Implement `.fountain` → AST parser.
-- Take parsed `FountainLineBlock` structures and dispatch orchestration
-  triggers via `ScriptExecutionEngine.parseAndTrigger`.
+- Leverage the **existing `FountainParser`** to convert screenplay files into
+  `FountainLineBlock` structures.
+- Feed those blocks into `ScriptExecutionEngine.parseAndTrigger` to dispatch
+  orchestration triggers.
 - Inject tool responses, reflections and SSE chunks directly below the
   directive that caused them.
+- SSE support for drift and pattern outputs with Markdown/TeatroView live
+  rendering of AI output blocks.
 - The main stage becomes a Teatro-styled scrolling page using a monospaced
   font; no separate run button is required.
-
-### Phase 4: Live Streaming Support
-
-- SSE support for drift and pattern outputs.
-- Markdown/TeatroView live rendering of AI output blocks.
 
 ---
 
