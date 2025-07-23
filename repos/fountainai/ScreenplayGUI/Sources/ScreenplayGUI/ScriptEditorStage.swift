@@ -15,39 +15,44 @@ public enum ScriptEditorStage {
 import SwiftUI
 import AppKit
 
+final class ScriptEditorViewModel: ObservableObject {
+    @Published var scriptText: String
+    @Published var blocks: [FountainDirective] = []
+    private let engine = ScriptExecutionEngine()
+
+    init(script: String) {
+        self.scriptText = script
+    }
+
+    func run() {
+        blocks = engine.execute(script: scriptText)
+    }
+}
 
 public struct ScriptEditorStageView: View {
-    @State private var scriptText: String
+    @StateObject private var viewModel: ScriptEditorViewModel
 
     public init(script: String = ScriptEditorStage.defaultScript) {
-        _scriptText = State(initialValue: script)
+        _viewModel = StateObject(wrappedValue: ScriptEditorViewModel(script: script))
     }
 
     public var body: some View {
-        ZStack {
-            Color(nsColor: .windowBackgroundColor).ignoresSafeArea()
-            ScrollView(.vertical) {
-                HStack {
-                    Spacer(minLength: 0)
-                    TextEditor(text: $scriptText)
-                        .font(.system(.body, design: .monospaced))
-                        .scrollContentBackground(.hidden)
-                        .padding()
-                        .frame(width: 595, height: 842)
-                        .background(Color.white)
-                        .cornerRadius(4)
-                        .shadow(radius: 5)
-                        .padding()
-                    Spacer(minLength: 0)
-                }
+        ScrollView {
+            ForEach(viewModel.blocks) { block in
+                DirectiveBlockView(block: block)
             }
+        }
+        .onAppear { viewModel.run() }
+        .toolbar {
+            Button("Run Script") { viewModel.run() }
+                .keyboardShortcut(.return, modifiers: .command)
         }
     }
 }
 
 #Preview("Screenplay Editor Stage") {
     ScriptEditorStageView()
-        .frame(width: 800, height: 900)
+        .frame(width: 600, height: 800)
 }
 #endif
 
