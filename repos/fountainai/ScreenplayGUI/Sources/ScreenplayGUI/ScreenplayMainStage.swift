@@ -9,9 +9,9 @@ public struct ScreenplayMainStage: View {
         ZStack {
             Color(white: 0.94).ignoresSafeArea()
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 8) {
+                LazyVStack(alignment: .leading) {
                     ForEach(viewModel.blocks) { block in
-                        DirectiveBlockView(block: block)
+                        DirectiveBlockView(block)
                     }
                 }
                 .frame(maxWidth: 700)
@@ -27,8 +27,4 @@ public struct ScreenplayMainStage: View {
     }
 }
 
-#Preview("Main Stage") {
-    ScreenplayMainStage()
-        .frame(width: 1100, height: 900)
-}
 #endif
