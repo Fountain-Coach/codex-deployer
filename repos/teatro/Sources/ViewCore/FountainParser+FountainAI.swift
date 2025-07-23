@@ -1,5 +1,21 @@
 import Foundation
 
+public enum OrchestrationTrigger: Equatable {
+    case toolCall(endpoint: String)
+    case sse(filename: String)
+    case reflect
+    case promote(role: String)
+    case summary
+}
+
+public enum InjectedBlock: Equatable {
+    case toolResponse(String)
+    case reflectionReply(String)
+    case sseChunk(String)
+    case promotionConfirmation(String)
+    case summaryBlock(String)
+}
+
 extension FountainParser {
     // MARK: - FountainAI Rule Helpers
     func isCorpusHeader(_ line: String) -> Bool {

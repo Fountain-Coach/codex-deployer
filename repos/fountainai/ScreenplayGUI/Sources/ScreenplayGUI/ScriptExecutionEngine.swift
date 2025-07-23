@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import Teatro
 
+@MainActor
 public final class ScriptExecutionEngine: ObservableObject {
     @Published public var script: String
     @Published public var blocks: [FountainLineBlock] = []
@@ -50,56 +51,69 @@ public final class ScriptExecutionEngine: ObservableObject {
     private func handle(_ trigger: OrchestrationTrigger, after index: Int) {
         switch trigger {
         case .toolCall(let endpoint):
-            callToolAPI(endpoint) { response in
-                self.insert(.injected(.toolResponse(response)), after: index)
+            Task {
+                let response = await callToolAPI(endpoint)
+                await MainActor.run {
+                    insert(.injected(.toolResponse(response)), after: index)
+                }
             }
         case .reflect:
-            reflect { reply in
-                self.insert(.injected(.reflectionReply(reply)), after: index)
+            Task {
+                let reply = await reflect()
+                await MainActor.run {
+                    insert(.injected(.reflectionReply(reply)), after: index)
+                }
             }
         case .sse(let file):
-            streamMarkdown(file) { chunk in
-                self.insert(.injected(.sseChunk(chunk)), after: index)
+            Task {
+                let chunk = await streamMarkdown(file)
+                await MainActor.run {
+                    insert(.injected(.sseChunk(chunk)), after: index)
+                }
             }
         case .promote(let role):
-            promoteRole(role) { conf in
-                self.insert(.injected(.promotionConfirmation(conf)), after: index)
+            Task {
+                let conf = await promoteRole(role)
+                await MainActor.run {
+                    insert(.injected(.promotionConfirmation(conf)), after: index)
+                }
             }
         case .summary:
-            summarizeCorpus { summary in
-                self.insert(.injected(.summaryBlock(summary)), after: index)
+            Task {
+                let summary = await summarizeCorpus()
+                await MainActor.run {
+                    insert(.injected(.summaryBlock(summary)), after: index)
+                }
             }
         }
     }
 
     private func insert(_ block: FountainLineBlock, after index: Int) {
-        DispatchQueue.main.async {
-            if index + 1 <= self.blocks.count {
-                self.blocks.insert(block, at: index + 1)
-            } else {
-                self.blocks.append(block)
-            }
+        if index + 1 <= blocks.count {
+            blocks.insert(block, at: index + 1)
+        } else {
+            blocks.append(block)
         }
     }
 
     // MARK: - Mock orchestration helpers
-    private func callToolAPI(_ endpoint: String, completion: @escaping (String) -> Void) {
-        completion("[tool output: \(endpoint)]")
+    private func callToolAPI(_ endpoint: String) async -> String {
+        "[tool output: \(endpoint)]"
     }
 
-    private func reflect(completion: @escaping (String) -> Void) {
-        completion("[reflection]")
+    private func reflect() async -> String {
+        "[reflection]"
     }
 
-    private func streamMarkdown(_ filename: String, chunk: @escaping (String) -> Void) {
-        chunk("[stream from \(filename)]")
+    private func streamMarkdown(_ filename: String) async -> String {
+        "[stream from \(filename)]"
     }
 
-    private func promoteRole(_ role: String, completion: @escaping (String) -> Void) {
-        completion("[promoted \(role)]")
+    private func promoteRole(_ role: String) async -> String {
+        "[promoted \(role)]"
     }
 
-    private func summarizeCorpus(completion: @escaping (String) -> Void) {
-        completion("[summary]")
+    private func summarizeCorpus() async -> String {
+        "[summary]"
     }
 }
