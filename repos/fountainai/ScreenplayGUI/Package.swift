@@ -18,6 +18,10 @@ let package = Package(
             dependencies: [
                 .product(name: "Teatro", package: "teatro")
             ]
+        ),
+        .testTarget(
+            name: "ScreenplayGUITests",
+            dependencies: ["ScreenplayGUI", .product(name: "Teatro", package: "teatro")]
         )
     ]
 )

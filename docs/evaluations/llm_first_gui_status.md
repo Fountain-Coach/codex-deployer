@@ -9,6 +9,7 @@ This document tracks progress on the chat-centric Typesense interface proposed i
 - `PromptHistoryView`, `CollectionBrowserView`, `SchemaEditorView` and `OpsDashboardView` exist as separate views but are not combined into the dual-pane layout.
 - The Typesense client generation script in `TeatroView` works but lacks live reload hooks.
 - `ScreenplayGUI` project scaffold added under `repos/fountainai/ScreenplayGUI`.
+- Main `ScriptEditorStage` view renders a single-page editor styled like a PDF.
 
 ## Next Steps
 
