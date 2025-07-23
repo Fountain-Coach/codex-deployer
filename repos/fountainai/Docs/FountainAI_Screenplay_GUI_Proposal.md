@@ -108,9 +108,10 @@ SUMMARY:
 
 ### Phase 3: Codex Integration
 
-- Implement `.fountain` → AST parser.
-- Take parsed `FountainLineBlock` structures and dispatch orchestration
-  triggers via `ScriptExecutionEngine.parseAndTrigger`.
+- Leverage the **existing `FountainParser`** to convert screenplay files into
+  `FountainLineBlock` structures.
+- Feed those blocks into `ScriptExecutionEngine.parseAndTrigger` to dispatch
+  orchestration triggers.
 - Inject tool responses, reflections and SSE chunks directly below the
   directive that caused them.
 - The main stage becomes a Teatro-styled scrolling page using a monospaced
