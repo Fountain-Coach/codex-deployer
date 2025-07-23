@@ -8,6 +8,10 @@ public struct DirectiveBlockView: View {
         self.block = block
     }
 
+    public init(_ block: FountainLineBlock) {
+        self.block = block
+    }
+
     @ViewBuilder
     public var body: some View {
         switch block {

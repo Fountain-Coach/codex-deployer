@@ -40,25 +40,11 @@ public struct ScriptEditorStageView: View {
     public var body: some View {
         ScrollView {
             ForEach(viewModel.blocks) { block in
-                DirectiveBlockView(block: block)
+                DirectiveBlockView(block)
             }
         }
         .onAppear { viewModel.run() }
     }
 }
 
-#Preview("Screenplay Editor Stage") {
-    ScriptEditorStageView()
-        .frame(width: 600, height: 800)
-}
-#endif
-
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-
-struct ScriptEditorStage_Previews: PreviewProvider {
-    static var previews: some View {
-        ScriptEditorStageView()
-    }
-}
 #endif
