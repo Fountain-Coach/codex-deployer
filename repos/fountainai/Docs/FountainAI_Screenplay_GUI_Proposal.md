@@ -100,11 +100,11 @@ SUMMARY:
 | `SUMMARY:`                 | Action                    |
 
 ### Phase 2: Editor Integration
-
-- Integrate `.fountain` editor into the main GUI (macOS app or web-based).
-- Left pane: screenplay script view.
-- Right pane: live trace, Typesense inspector, or reflection thread.
-
+- Integrate `.fountain` editor into a single scrolling document.
+- Each directive becomes a block rendered by `DirectiveBlockView`.
+- Tool output is inserted inline so `viewModel.blocks` drives a `ForEach` loop.
+- `ScreenplayMainStage` presents a vertical `ScrollView` with a `LazyVStack`.
+- No right pane – everything flows inside the script.
 ### Phase 3: Codex Integration
 
 - Implement `.fountain` → AST parser
@@ -136,6 +136,6 @@ SUMMARY:
 `.fountain`, GPT roles, screenplay editor, orchestration, semantic reasoning, tool calling, baseline, drift, reflection, function-calling, Codex, planner.
 
 ---
-````text
+`````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-````
+`````

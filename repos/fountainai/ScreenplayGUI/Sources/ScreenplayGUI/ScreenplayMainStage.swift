@@ -3,25 +3,23 @@ import SwiftUI
 
 /// Root stage combining the screenplay editor with future inspector panes.
 public struct ScreenplayMainStage: View {
-    @State private var script: String
-
-    public init(script: String = ScriptEditorStage.defaultScript) {
-        _script = State(initialValue: script)
-    }
+    @StateObject var viewModel = ScriptExecutionEngine()
 
     public var body: some View {
-        HStack(spacing: 0) {
-            ScriptEditorStageView(script: script)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            Divider()
-            VStack {
-                Text("Inspector")
-                    .font(.headline)
-                Spacer()
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 8) {
+                ForEach(viewModel.blocks) { block in
+                    DirectiveBlockView(block: block)
+                }
             }
-            .frame(width: 280)
-            .background(Color.gray.opacity(0.1))
+            .padding()
         }
+        .toolbar {
+            Button("Run Script") {
+                viewModel.run()
+            }
+        }
+        .onAppear { viewModel.run() }
     }
 }
 
