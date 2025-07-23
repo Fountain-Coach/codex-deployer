@@ -1,7 +1,18 @@
 import Foundation
+import SwiftUI
 
-public final class ScriptExecutionEngine {
-    public init() {}
+public final class ScriptExecutionEngine: ObservableObject {
+    @Published public var script: String
+    @Published public var blocks: [FountainDirective] = []
+
+    public init(script: String = ScriptEditorStage.defaultScript) {
+        self.script = script
+    }
+
+    public func run() {
+        blocks = execute(script: script)
+    }
+
 
     public func execute(script: String) -> [FountainDirective] {
         var blocks: [FountainDirective] = []

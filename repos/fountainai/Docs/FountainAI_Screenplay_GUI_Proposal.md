@@ -103,7 +103,9 @@ SUMMARY:
 - Integrate `.fountain` editor into a single scrolling document.
 - Each directive becomes a block rendered by `DirectiveBlockView`.
 - Tool output is inserted inline so `viewModel.blocks` drives a `ForEach` loop.
+- `ScreenplayMainStage` presents a vertical `ScrollView` with a `LazyVStack`.
 - No right pane – everything flows inside the script.
+
 ### Phase 3: Codex Integration
 
 - Implement `.fountain` → AST parser
