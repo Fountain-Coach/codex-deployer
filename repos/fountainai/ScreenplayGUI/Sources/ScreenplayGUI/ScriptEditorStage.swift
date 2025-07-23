@@ -39,7 +39,7 @@ public struct ScriptEditorStageView: View {
 }
 
 #if DEBUG
-@MainActor
+
 #Preview("Screenplay Editor Stage") {
     ScriptEditorStageView()
         .frame(width: 800, height: 900)

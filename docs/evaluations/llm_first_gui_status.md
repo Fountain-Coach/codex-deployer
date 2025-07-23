@@ -10,6 +10,7 @@ This document tracks progress on the chat-centric Typesense interface proposed i
 - The Typesense client generation script in `TeatroView` works but lacks live reload hooks.
 - `ScreenplayGUI` project scaffold added under `repos/fountainai/ScreenplayGUI`.
 - Main `ScriptEditorStage` view renders a single-page editor styled like a PDF.
+- Xcode preview now shows the editor as a sheet of paper on a desktop.
 
 ## Next Steps
 

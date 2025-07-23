@@ -7,17 +7,22 @@ let package = Package(
     name: "ScreenplayGUI",
     platforms: [.macOS(.v14)],
     products: [
-        .executable(name: "ScreenplayGUI", targets: ["ScreenplayGUI"])
+        .library(name: "ScreenplayGUI", targets: ["ScreenplayGUI"]),
+        .executable(name: "ScreenplayGUIApp", targets: ["ScreenplayGUIApp"])
     ],
     dependencies: [
         .package(path: "../../teatro")
     ],
     targets: [
-        .executableTarget(
+        .target(
             name: "ScreenplayGUI",
             dependencies: [
                 .product(name: "Teatro", package: "teatro")
             ]
+        ),
+        .executableTarget(
+            name: "ScreenplayGUIApp",
+            dependencies: ["ScreenplayGUI"]
         ),
         .testTarget(
             name: "ScreenplayGUITests",
