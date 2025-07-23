@@ -50,3 +50,13 @@ public struct ScriptEditorStageView: View {
         .frame(width: 800, height: 900)
 }
 #endif
+
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+
+struct ScriptEditorStage_Previews: PreviewProvider {
+    static var previews: some View {
+        ScriptEditorStageView()
+    }
+}
+#endif
