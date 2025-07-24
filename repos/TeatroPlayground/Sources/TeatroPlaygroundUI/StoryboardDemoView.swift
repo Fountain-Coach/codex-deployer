@@ -4,9 +4,11 @@ import Teatro
 
 /// Demonstrates planning app states with the Storyboard DSL.
 public struct StoryboardDemoView: View, Renderable {
+
     /// Preconfigured storyboard used to teach the DSL.
     /// Each step is deliberately simple so Codex can
     /// explain the purpose of every scene and transition.
+
     let storyboard: Storyboard
     public init() {
         storyboard = Storyboard {
@@ -62,7 +64,9 @@ public struct StoryboardDemoView: View, Renderable {
 import Teatro
 
 public struct StoryboardDemoView: Renderable {
+
     /// Console-only variant of the tutorial storyboard.
+
     let storyboard: Storyboard
     public init() {
         storyboard = Storyboard {
@@ -81,10 +85,12 @@ public struct StoryboardDemoView: Renderable {
                     Text("[secure field]")
                 }
             }
+
             Transition(style: .crossfade, frames: 3)
             Scene("Processing") {
                 Text("Logging in…")
             }
+
 
             Transition(style: .tween, frames: 8, easing: .easeInOut)
             Scene("Dashboard") {
