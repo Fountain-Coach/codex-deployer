@@ -15,12 +15,35 @@ public struct DirectiveBlockView: View {
     @SwiftUI.ViewBuilder
     public var body: some View {
         switch block {
-        case .line(let text, _):
+        case .line(let text, let type, _):
+            lineView(text: text, type: type)
+        case .injected(let inj):
+            injectedView(for: inj)
+        }
+    }
+
+    @SwiftUI.ViewBuilder
+    private func lineView(text: String, type: FountainElementType) -> some View {
+        switch type {
+        case .sceneHeading:
+            Text(text.uppercased())
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.vertical, 2)
+        case .character:
+            Text(text)
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.vertical, 2)
+        case .action:
+            Text(text)
+                .italic()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.vertical, 2)
+        default:
             Text(text)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, 2)
-        case .injected(let inj):
-            injectedView(for: inj)
         }
     }
 
