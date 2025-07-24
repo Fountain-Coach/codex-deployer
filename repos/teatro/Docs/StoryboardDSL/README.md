@@ -15,12 +15,14 @@ The Storyboard DSL describes sequences of `Scene` declarations separated by opti
 import Teatro
 
 // Define states and animations using the DSL
+
 let storyboard = Storyboard {
     Scene("Intro") {
         VStack(alignment: .center) {
             Text("Welcome", style: .bold)
         }
     }
+
     // Fade to the next state over ten frames
     Transition(style: .crossfade, frames: 10)
     Scene("End") {
@@ -29,11 +31,13 @@ let storyboard = Storyboard {
 }
 
 // Generate a preview prompt for Codex
+
 let prompt = CodexStoryboardPreviewer.prompt(storyboard)
 print(prompt)
 ```
 
 Running this code prints a multi‑line text prompt.  Each section begins with `Frame N:` followed by the rendered view.  The prompt can be fed back into Codex so the agent can reason about the sequence of states and transitions before producing a final UI or animation.
+
 
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
