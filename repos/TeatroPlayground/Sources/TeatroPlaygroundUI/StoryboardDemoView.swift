@@ -1,14 +1,10 @@
+import Teatro
 #if canImport(SwiftUI)
 import SwiftUI
-import Teatro
+#endif
 
-/// Demonstrates planning app states with the Storyboard DSL.
-public struct StoryboardDemoView: View, Renderable {
-
-    /// Preconfigured storyboard used to teach the DSL.
-    /// Each step is deliberately simple so Codex can
-    /// explain the purpose of every scene and transition.
-
+/// Builds a tutorial storyboard and renders it as a text prompt.
+public struct StoryboardPreviewRenderer: Renderable {
     let storyboard: Storyboard
     public init() {
         storyboard = Storyboard {
@@ -47,14 +43,18 @@ public struct StoryboardDemoView: View, Renderable {
         }
     }
 
-    // 🛠 Fixed: removed nonisolated to match actor context
-     nonisolated public func render() -> String {
+    public func render() -> String {
         CodexStoryboardPreviewer.prompt(storyboard)
     }
+}
 
+#if canImport(SwiftUI)
+/// SwiftUI wrapper that displays the storyboard preview.
+public struct StoryboardDemoView: View {
+    let renderer = StoryboardPreviewRenderer()
     public var body: some View {
         ScrollView {
-            Text(render())
+            Text(renderer.render())
                 .font(.system(.body, design: .monospaced))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
@@ -62,45 +62,6 @@ public struct StoryboardDemoView: View, Renderable {
     }
 }
 #else
-import Teatro
-
-public struct StoryboardDemoView: Renderable {
-
-    /// Console-only variant of the tutorial storyboard.
-
-    let storyboard: Storyboard
-    public init() {
-        storyboard = Storyboard {
-            Scene("Welcome") {
-                VStack(alignment: .center) {
-                    Text("Teatro Storyboards", style: .bold)
-                    Text("Plan your UI states step by step")
-                }
-            }
-            Transition(style: .crossfade, frames: 5)
-            Scene("Login") {
-                VStack(alignment: .leading, padding: 1) {
-                    Text("Name:")
-                    Text("[input field]")
-                    Text("Password:")
-                    Text("[secure field]")
-                }
-            }
-
-            Transition(style: .crossfade, frames: 3)
-            Scene("Processing") {
-                Text("Logging in…")
-            }
-
-
-            Transition(style: .tween, frames: 8, easing: .easeInOut)
-            Scene("Dashboard") {
-                Text("Logged in successfully", style: .italic)
-            }
-        }
-    }
-    public func render() -> String {
-        CodexStoryboardPreviewer.prompt(storyboard)
-    }
-}
+/// Console-only variant for non-SwiftUI environments.
+public typealias StoryboardDemoView = StoryboardPreviewRenderer
 #endif
