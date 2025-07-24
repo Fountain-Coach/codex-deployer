@@ -13,6 +13,7 @@ This repository contains the specification for Teatro, a modular Swift 6 view en
 - [Fountain Parser Implementation Plan](Docs/FountainScreenplayEngine/FountainParserImplementationPlan.md)
 - [View Implementation and Testing Plan](Docs/ViewImplementationPlan/README.md)
 - [Implementation Roadmap](Docs/ImplementationPlan/README.md)
+- [Storyboard DSL](Docs/StoryboardDSL/README.md)
 - [Summary](Docs/Summary/README.md)
 - [Addendum: Apple Platform Compatibility](Docs/Addendum/README.md)
 
