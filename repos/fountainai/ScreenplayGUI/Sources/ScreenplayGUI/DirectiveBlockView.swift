@@ -127,9 +127,9 @@ public struct DirectiveBlockView: View {
     private struct CharacterCueView: View {
         var text: String
         var body: some View {
-            Text(text)
+            Text(text.uppercased())
                 .bold()
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.vertical, 2)
         }
     }
@@ -138,7 +138,7 @@ public struct DirectiveBlockView: View {
         var text: String
         var body: some View {
             Text(text)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: 500, alignment: .center)
                 .padding(.vertical, 2)
         }
     }
@@ -148,7 +148,7 @@ public struct DirectiveBlockView: View {
         var body: some View {
             Text(text)
                 .italic()
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: 450, alignment: .center)
                 .padding(.vertical, 2)
         }
     }
@@ -156,8 +156,8 @@ public struct DirectiveBlockView: View {
     private struct TransitionView: View {
         var text: String
         var body: some View {
-            Text(text)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            Text(text.uppercased())
+                .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.vertical, 2)
         }
     }
@@ -166,7 +166,6 @@ public struct DirectiveBlockView: View {
         var text: String
         var body: some View {
             Text(text)
-                .italic()
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, 2)
         }
