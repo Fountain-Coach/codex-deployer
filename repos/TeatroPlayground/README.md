@@ -42,7 +42,6 @@ Transitions illustrate both crossfades and tweens. Select this entry to see the
 generated prompt and adapt the storyboard for your own apps.
 
 
-
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
 ````

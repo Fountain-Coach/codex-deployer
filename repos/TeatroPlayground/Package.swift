@@ -9,7 +9,7 @@ let package = Package(
         .executable(name: "TeatroPlayground", targets: ["TeatroPlayground"])
     ],
     dependencies: [
-        .package(path: "../teatro")
+        .package(url: "https://github.com/Fountain-Coach/teatro.git", from: "0.1.0")
     ],
     targets: [
         .target(
@@ -22,7 +22,8 @@ let package = Package(
         .executableTarget(
             name: "TeatroPlayground",
             dependencies: [
-                "TeatroPlaygroundUI"
+                "TeatroPlaygroundUI",
+                .product(name: "Teatro", package: "teatro")
             ],
             path: "Sources/TeatroPlayground"
         ),
