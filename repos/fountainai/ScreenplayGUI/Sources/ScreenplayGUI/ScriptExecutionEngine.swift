@@ -20,7 +20,7 @@ public final class ScriptExecutionEngine: ObservableObject {
         let parsed = parser.parse(script)
         blocks = []
         for (i, node) in parsed.enumerated() {
-            let block = FountainLineBlock.line(text: node.rawText, trigger: trigger(for: node))
+            let block = FountainLineBlock.line(text: node.rawText, type: node.type, trigger: trigger(for: node))
             blocks.append(block)
             if let trigger = block.trigger {
                 handle(trigger, after: i)
