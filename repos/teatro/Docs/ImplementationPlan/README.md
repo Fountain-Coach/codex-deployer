@@ -63,7 +63,7 @@ timelines, introduce a storyboard-like DSL within Teatro:
 5. **Testing** – Add unit tests for state parsing and ensure deterministic frame
    generation. **Covered in `StoryboardTests`.**
 
-See [Storyboard DSL](../StoryboardDSL/README.md) for usage details.
+See [Storyboard DSL](../StoryboardDSL/README.md) for a step-by-step example of generating a prompt for Codex using the DSL.
 
 ---
 

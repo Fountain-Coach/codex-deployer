@@ -1,11 +1,20 @@
 ## 11.7 Storyboard DSL
 
-The Storyboard DSL describes sequences of scenes and animated transitions in a declarative Swift syntax. It allows Codex to orchestrate multi-step interfaces or animations that play back frame by frame.
+The Storyboard DSL describes sequences of `Scene` declarations separated by optional `Transition` steps.  Each `Scene` wraps a view tree representing a single app state.  A `Transition` specifies how to move from one scene to the next—via cross‑fades or tweens—and how many frames the animation spans.
 
-### Usage
+### Overview
+
+1. **Scene** – Defines a named view state.  Scenes are declared inside a `Storyboard` builder block.
+2. **Transition** – Describes the animation between two scenes.  The DSL currently supports `crossfade` or `tween` styles with a frame count and optional easing curve.
+3. **Storyboard** – Collects scenes and transitions into a time line.  Calling `frames()` expands the storyboard into a flat array of renderable frames.
+4. **CodexStoryboardPreviewer** – Generates a plain‑text prompt that enumerates each frame.  This allows Codex to reason about the intended UI flow without needing a graphical renderer.
+
+### Example
 
 ```swift
 import Teatro
+
+// Define states and animations using the DSL
 
 let storyboard = Storyboard {
     Scene("Intro") {
@@ -13,17 +22,22 @@ let storyboard = Storyboard {
             Text("Welcome", style: .bold)
         }
     }
+
+    // Fade to the next state over ten frames
     Transition(style: .crossfade, frames: 10)
     Scene("End") {
         Text("Goodbye")
     }
 }
 
+// Generate a preview prompt for Codex
+
 let prompt = CodexStoryboardPreviewer.prompt(storyboard)
 print(prompt)
 ```
 
-This produces a text prompt that lists each frame and can be fed back to Codex for rendering or reasoning.
+Running this code prints a multi‑line text prompt.  Each section begins with `Frame N:` followed by the rendered view.  The prompt can be fed back into Codex so the agent can reason about the sequence of states and transitions before producing a final UI or animation.
+
 
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

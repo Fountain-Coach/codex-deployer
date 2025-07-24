@@ -17,6 +17,8 @@ This repository contains the specification for Teatro, a modular Swift 6 view en
 - [Summary](Docs/Summary/README.md)
 - [Addendum: Apple Platform Compatibility](Docs/Addendum/README.md)
 
+The new **Storyboard DSL** allows you to script view states and animated transitions in Swift.  See the guide for an example of generating a textual storyboard preview that can be sent back to Codex.
+
 The `Sources/` directory follows the structure suggested in the documentation and contains placeholders for implementation. `Tests/` remains empty until concrete code is added.
 
 ````text
