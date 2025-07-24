@@ -51,7 +51,7 @@ SCIENTIST
         Experiment(
             title: "Storyboard Demo",
             description: "Plan app states with the Storyboard DSL and Codex prompting.") {
-                StoryboardDemoView()
+                StoryboardPreviewRenderer()
         }
     ]
 }
