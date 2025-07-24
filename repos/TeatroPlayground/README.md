@@ -11,11 +11,8 @@ swift build
 swift run TeatroPlayground
 ```
 
-This project also relies on the [Teatro](../teatro) package being available at `../teatro`. If the folder is missing, clone the repository before building:
 
-```bash
-git clone https://github.com/fountain-coach/teatro ../teatro
-```
+The Teatro dependency is fetched directly from GitHub, so no manual clone is required.
 
 For live previews, open `ContentView.swift` in Xcode and use the SwiftUI preview canvas.
 
@@ -36,11 +33,12 @@ actual UI. The demo walks through a small flow:
 
 1. **Welcome** – Introduction screen.
 2. **Login** – Simple form showing placeholder fields.
-3. **Dashboard** – Confirmation view.
+3. **Processing** – Short loading scene.
+4. **Dashboard** – Confirmation view.
 
 Transitions illustrate both crossfades and tweens. Select this entry to see the
-generated prompt and adapt the storyboard for your own apps.
-
+generated prompt and adapt the storyboard for your own apps. A step-by-step
+tutorial lives in [docs/storyboard_tutorial.md](../docs/storyboard_tutorial.md).
 
 
 ````text

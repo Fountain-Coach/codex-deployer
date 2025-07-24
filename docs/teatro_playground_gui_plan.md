@@ -42,10 +42,11 @@ TeatroPlayground begins as a playground for Teatro components, but it will grow 
 
 `TeatroPlayground` now includes a **Storyboard Demo** experiment. It walks
 through defining `Scene` blocks and `Transition` steps, then generates a textual
-prompt via `CodexStoryboardPreviewer`. The demo covers three scenes
-(`Welcome`, `Login`, `Dashboard`) and shows both crossfade and tween
-transitions. Use this demo to plan app states and iterate on transitions
-before implementing real views.
+prompt via `CodexStoryboardPreviewer`. The demo covers four scenes
+(`Welcome`, `Login`, `Processing`, `Dashboard`) and shows both crossfade and
+tween transitions. Use this demo to plan app states and iterate on transitions
+before implementing real views. See
+[storyboard_tutorial.md](storyboard_tutorial.md) for a concise walkthrough.
 
 ---
 
