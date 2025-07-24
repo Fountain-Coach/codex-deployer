@@ -50,4 +50,14 @@ final class ScreenplayGUITests: XCTestCase {
         XCTAssertTrue(true)
 #endif
     }
+
+    func testStoryInputOverlayDefaultPlaceholder() {
+#if canImport(SwiftUI)
+        let overlay = StoryInputOverlay(text: .constant(""), onCommit: {})
+        let rendered = String(describing: overlay.body)
+        XCTAssertTrue(rendered.contains("What's your story?"))
+#else
+        XCTAssertTrue(true)
+#endif
+    }
 }

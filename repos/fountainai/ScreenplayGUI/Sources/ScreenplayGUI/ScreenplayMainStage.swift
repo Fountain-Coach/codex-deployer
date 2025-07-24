@@ -4,13 +4,15 @@ import SwiftUI
 /// Root stage presenting the screenplay as a single scrolling page.
 public struct ScreenplayMainStage: View {
     @StateObject var viewModel: ScriptExecutionEngine
+    @State private var overlayText: String = ""
+    @State private var showOverlay: Bool = true
 
     public init(script: String = ScriptEditorStage.defaultScript) {
         _viewModel = StateObject(wrappedValue: ScriptExecutionEngine(script: script))
     }
 
     public var body: some View {
-        ZStack {
+        ZStack(alignment: .bottomTrailing) {
             Color(white: 0.94).ignoresSafeArea()
             ScrollView {
                 LazyVStack(alignment: .leading) {
@@ -25,9 +27,30 @@ public struct ScreenplayMainStage: View {
                 .shadow(radius: 20)
                 .padding(.vertical, 60)
             }
+
+            if showOverlay {
+                Color.black.opacity(0.4).ignoresSafeArea()
+                    .transition(.opacity)
+                StoryInputOverlay(text: $overlayText, onCommit: submit)
+                    .frame(maxWidth: 400)
+                    .transition(.scale)
+            } else {
+                StoryInputOverlay(text: $overlayText, inlineMode: true, onCommit: submit)
+                    .padding()
+            }
         }
         .font(.system(.body, design: .monospaced))
-        .onAppear { viewModel.run() }
+        .onAppear {
+            viewModel.run()
+        }
+    }
+
+    private func submit() {
+        let line = "> BASELINE: \(overlayText)"
+        viewModel.script.append("\n" + line)
+        overlayText = ""
+        viewModel.run()
+        withAnimation { showOverlay = false }
     }
 }
 
