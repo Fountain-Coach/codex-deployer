@@ -109,3 +109,12 @@ public struct RendererShowcaseView: Renderable {
     }
 }
 #endif
+
+
+#if DEBUG
+#Preview("Renderer Showcase") {
+    RendererShowcaseView()
+        .frame(width: 800, height: 600)
+        .preferredColorScheme(.dark)
+}
+#endif

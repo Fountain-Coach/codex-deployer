@@ -65,3 +65,10 @@ public struct StoryboardDemoView: View {
 /// Console-only variant for non-SwiftUI environments.
 public typealias StoryboardDemoView = StoryboardPreviewRenderer
 #endif
+
+
+#if DEBUG
+#Preview("Storyboard Preview") {
+    StoryboardDemoView()
+}
+#endif
