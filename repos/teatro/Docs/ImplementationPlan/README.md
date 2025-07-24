@@ -44,6 +44,22 @@ This roadmap converts the critique and analysis of the Teatro View Engine into c
 2. **SwiftUI Preview Layer**
    - Prototype a simple SwiftUI wrapper to preview Teatro views on Apple platforms.
 
+## 11.6 Storyboard DSL and View State Transitions
+
+Codex deployments often orchestrate multi-step interfaces. To simplify complex
+timelines, introduce a storyboard-like DSL within Teatro:
+
+1. **Declarative Scene Graph** – A Swift builder API describing each state of
+   the interface. Scenes contain named views and optional metadata.
+2. **Transition Blocks** – Define tweens or crossfades between scenes using
+   easing functions and frame counts.
+3. **Codex Integration** – Allow GPT agents to emit storyboard files that can be
+   rendered frame-by-frame or previewed live on macOS.
+4. **Renderer Hooks** – Use existing `Animator` output on Linux and map to
+   SwiftUI animations on Apple platforms.
+5. **Testing** – Add unit tests for state parsing and ensure deterministic frame
+   generation.
+
 ---
 
 This document should evolve alongside the codebase. **Maintain and update this roadmap** as new features land or priorities shift to keep development focused and transparent.
@@ -52,3 +68,7 @@ This document should evolve alongside the codebase. **Maintain and update this r
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
