@@ -47,6 +47,11 @@ SCIENTIST
             title: "Renderer Showcase",
             description: "Outputs the demo view via Codex, HTML, SVG and PNG.") {
                 RendererShowcaseView()
+        },
+        Experiment(
+            title: "Storyboard Demo",
+            description: "Plan app states with the Storyboard DSL and Codex prompting.") {
+                StoryboardDemoView()
         }
     ]
 }

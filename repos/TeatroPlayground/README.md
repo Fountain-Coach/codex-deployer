@@ -29,6 +29,11 @@ view in action.
 The latest "Renderer Showcase" experiment now presents a dedicated SwiftUI view
 that previews the Codex, HTML, SVG and PNG renderers side by side.
 
+The new **Storyboard Demo** experiment teaches how to script app states using
+the Storyboard DSL. It prints a frame-by-frame prompt via
+`CodexStoryboardPreviewer` so you can iterate on transitions before coding the
+actual UI. Select this entry from the list to explore planning with Codex.
+
 
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

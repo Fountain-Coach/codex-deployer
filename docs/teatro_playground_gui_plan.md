@@ -38,6 +38,13 @@ TeatroPlayground begins as a playground for Teatro components, but it will grow 
 3. Iterate based on feedback, expanding the UI to cover additional services as FountainAI evolves.
 4. Open `repos/TeatroPlayground/` in Xcode to preview `ContentView` and begin UI experimentation.
 
+## Storyboard DSL Demo
+
+`TeatroPlayground` now includes a **Storyboard Demo** experiment. It walks
+through defining `Scene` blocks and `Transition` steps, then generates a textual
+prompt via `CodexStoryboardPreviewer`. Use this demo to plan app states and
+iterate on transitions before implementing real views.
+
 ---
 
 By approaching Teatro with a dedicated macOS app, we lower the entry barrier for experimentation and pave the way for deeper FountainAI integrations.
