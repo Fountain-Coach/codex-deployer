@@ -48,7 +48,7 @@ public struct StoryboardDemoView: View, Renderable {
     }
 
     // 🛠 Fixed: removed nonisolated to match actor context
-    public func render() -> String {
+     nonisolated public func render() -> String {
         CodexStoryboardPreviewer.prompt(storyboard)
     }
 
