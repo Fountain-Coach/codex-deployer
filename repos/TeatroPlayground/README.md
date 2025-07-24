@@ -32,7 +32,15 @@ that previews the Codex, HTML, SVG and PNG renderers side by side.
 The new **Storyboard Demo** experiment teaches how to script app states using
 the Storyboard DSL. It prints a frame-by-frame prompt via
 `CodexStoryboardPreviewer` so you can iterate on transitions before coding the
-actual UI. Select this entry from the list to explore planning with Codex.
+actual UI. The demo walks through a small flow:
+
+1. **Welcome** – Introduction screen.
+2. **Login** – Simple form showing placeholder fields.
+3. **Dashboard** – Confirmation view.
+
+Transitions illustrate both crossfades and tweens. Select this entry to see the
+generated prompt and adapt the storyboard for your own apps.
+
 
 
 ````text

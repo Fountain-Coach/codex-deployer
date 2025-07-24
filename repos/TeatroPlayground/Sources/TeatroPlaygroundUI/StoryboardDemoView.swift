@@ -7,12 +7,30 @@ public struct StoryboardDemoView: View, Renderable {
     let storyboard: Storyboard
     public init() {
         storyboard = Storyboard {
-            Scene("Start") {
-                Text("Welcome")
+            Scene("Welcome") {
+                VStack(alignment: .center) {
+                    Text("Teatro Storyboards", style: .bold)
+                    Text("Plan your UI states step by step")
+                }
             }
+
+            // Fade to the login form over five frames
             Transition(style: .crossfade, frames: 5)
-            Scene("End") {
-                Text("Goodbye")
+
+            Scene("Login") {
+                VStack(alignment: .leading, padding: 1) {
+                    Text("Name:")
+                    Text("[input field]")
+                    Text("Password:")
+                    Text("[secure field]")
+                }
+            }
+
+            // Tween the login screen into the dashboard
+            Transition(style: .tween, frames: 8, easing: .easeInOut)
+
+            Scene("Dashboard") {
+                Text("Logged in successfully", style: .italic)
             }
         }
     }
@@ -37,9 +55,25 @@ public struct StoryboardDemoView: Renderable {
     let storyboard: Storyboard
     public init() {
         storyboard = Storyboard {
-            Scene("Start") { Text("Welcome") }
+            Scene("Welcome") {
+                VStack(alignment: .center) {
+                    Text("Teatro Storyboards", style: .bold)
+                    Text("Plan your UI states step by step")
+                }
+            }
             Transition(style: .crossfade, frames: 5)
-            Scene("End") { Text("Goodbye") }
+            Scene("Login") {
+                VStack(alignment: .leading, padding: 1) {
+                    Text("Name:")
+                    Text("[input field]")
+                    Text("Password:")
+                    Text("[secure field]")
+                }
+            }
+            Transition(style: .tween, frames: 8, easing: .easeInOut)
+            Scene("Dashboard") {
+                Text("Logged in successfully", style: .italic)
+            }
         }
     }
     public func render() -> String {
