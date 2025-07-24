@@ -1,6 +1,8 @@
 import Foundation
-import SwiftUI
 import Teatro
+
+#if canImport(SwiftUI)
+import SwiftUI
 
 @MainActor
 public final class ScriptExecutionEngine: ObservableObject {
@@ -117,3 +119,4 @@ public final class ScriptExecutionEngine: ObservableObject {
         "[summary]"
     }
 }
+#endif

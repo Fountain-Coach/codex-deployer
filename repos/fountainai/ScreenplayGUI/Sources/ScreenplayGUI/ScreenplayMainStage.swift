@@ -3,9 +3,11 @@ import SwiftUI
 
 /// Root stage presenting the screenplay as a single scrolling page.
 public struct ScreenplayMainStage: View {
-    @StateObject var viewModel = ScriptExecutionEngine()
+    @StateObject var viewModel: ScriptExecutionEngine
 
-    public init() {}
+    public init(script: String = ScriptEditorStage.defaultScript) {
+        _viewModel = StateObject(wrappedValue: ScriptExecutionEngine(script: script))
+    }
 
     public var body: some View {
         ZStack {
@@ -29,12 +31,10 @@ public struct ScreenplayMainStage: View {
     }
 }
 
-#endif
-
 #Preview("DIN A4 - Portrait") {
     ZStack {
         Color.gray.opacity(0.1).ignoresSafeArea()
-        ScreenplayMainStage()
+        ScreenplayMainStage(script: ScriptEditorStage.placeholderScript)
             .frame(width: 794, height: 1123)
             .padding()
             .background(Color.white)
@@ -42,3 +42,4 @@ public struct ScreenplayMainStage: View {
             .shadow(radius: 1)
     }
 }
+#endif
