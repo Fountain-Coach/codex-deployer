@@ -9,6 +9,33 @@ public enum ScriptEditorStage {
     DEVELOPER
     Let's integrate Teatro!
     """
+
+    public static let placeholderScript = """
+    Title: Proof of Concept
+    Credit: Demo
+    Date: Today
+
+    #corpus: placeholder
+
+    EXT. LOCATION - DAY
+
+    > BASELINE: baseline.txt
+    > SSE: update.md
+    > tool_call: /echo
+
+    NARRATOR
+    This showcases every element type.
+
+    (aside)
+    We'll add transitions and more.
+
+    CUT TO:
+
+    INT. OFFICE - CONTINUOUS
+
+    SUMMARY:
+    - Baseline parsed.
+    """
 }
 
 #if canImport(SwiftUI)
