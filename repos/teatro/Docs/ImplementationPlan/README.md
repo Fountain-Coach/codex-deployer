@@ -50,15 +50,20 @@ Codex deployments often orchestrate multi-step interfaces. To simplify complex
 timelines, introduce a storyboard-like DSL within Teatro:
 
 1. **Declarative Scene Graph** – A Swift builder API describing each state of
-   the interface. Scenes contain named views and optional metadata.
+   the interface. Scenes contain named views and optional metadata. **Implemented
+   via `Storyboard` and `Scene`.**
 2. **Transition Blocks** – Define tweens or crossfades between scenes using
-   easing functions and frame counts.
+   easing functions and frame counts. **Implemented through `Transition`.**
 3. **Codex Integration** – Allow GPT agents to emit storyboard files that can be
-   rendered frame-by-frame or previewed live on macOS.
+   rendered frame-by-frame or previewed live on macOS. **Implemented via
+   `CodexStoryboardPreviewer` and the example in `Docs/StoryboardDSL`.**
 4. **Renderer Hooks** – Use existing `Animator` output on Linux and map to
-   SwiftUI animations on Apple platforms.
+   SwiftUI animations on Apple platforms. **Initial hooks provided through the
+   `Storyboard.frames()` API.**
 5. **Testing** – Add unit tests for state parsing and ensure deterministic frame
-   generation.
+   generation. **Covered in `StoryboardTests`.**
+
+See [Storyboard DSL](../StoryboardDSL/README.md) for a step-by-step example of generating a prompt for Codex using the DSL.
 
 ---
 
