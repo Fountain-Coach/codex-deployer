@@ -8,7 +8,7 @@ The Teatro View Engine includes a lightweight command-line interface (CLI) imple
 
 ```swift
 public enum RenderTarget: String {
-    case html, svg, png, markdown, codex
+    case html, svg, svgAnimated = "svg-animated", png, markdown, codex
 }
 ```
 
@@ -49,10 +49,15 @@ public struct RenderCLI {
 ```bash
 swift run RenderCLI html
 swift run RenderCLI svg
+swift run RenderCLI svg-animated
 swift run RenderCLI png
 swift run RenderCLI markdown
 swift run RenderCLI codex
 ```
+
+The `svg-animated` target converts a multi-scene `Storyboard` into a single
+animated `.svg` file. This differs from `svg` (static) and `png` (individual
+frame images) by embedding `<animate>` elements directly in the output.
 
 This CLI is ideal for:
 - Previewing scenes, tests, or examples from terminal
@@ -64,3 +69,7 @@ This CLI is ideal for:
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

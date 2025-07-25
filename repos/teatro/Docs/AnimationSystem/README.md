@@ -55,6 +55,14 @@ Once frames are rendered, you can use `convert` to create an animated `.gif`:
 convert -delay 50 -loop 0 Animations/timeline_*.png animated.gif
 ```
 
+### 5.2 SVG Timeline Export
+
+`SVGAnimator.renderAnimatedSVG(storyboard:)` generates a single animated SVG
+instead of a directory of PNG frames. Pass a `Storyboard` containing transitions
+(e.g. `.crossfade`) and each step is written as `<animate>` or
+`<animateTransform>` within the resulting SVG. This is convenient for embedding
+web previews or converting to `.gif` using rasterizers.
+
 ---
 
 This animation system works especially well for:
@@ -68,3 +76,7 @@ This animation system works especially well for:
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

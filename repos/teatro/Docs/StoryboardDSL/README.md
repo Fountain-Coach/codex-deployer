@@ -38,6 +38,14 @@ print(prompt)
 
 Running this code prints a multi‑line text prompt.  Each section begins with `Frame N:` followed by the rendered view.  The prompt can be fed back into Codex so the agent can reason about the sequence of states and transitions before producing a final UI or animation.
 
+The array returned by `storyboard.frames()` can now be passed to
+`SVGAnimator.renderAnimatedSVG(storyboard:)` to produce an animated vector
+timeline:
+
+```swift
+let svg = SVGAnimator.renderAnimatedSVG(storyboard: storyboard)
+```
+
 
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

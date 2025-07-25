@@ -13,8 +13,10 @@ The **Teatro View Engine** is a modular, fully declarative view system written i
 - **CLI Integration**  
   A command-line entry point allows rendering from terminal or scriptable pipelines.
 
-- **Timeline-Based Animation**  
+- **Timeline-Based Animation**
   Frame-by-frame rendering of view sequences for semantic drift, transitions, and GPT step-wise thinking.
+- 🆕 **Animated SVG Export**  
+  Teatro now supports generating `<svg>` files with embedded `<animate>` transitions via `SVGAnimator.renderAnimatedSVG(...)`. Ideal for previewing UI timelines, scene transitions, or GPT-driven visual reasoning.
 
 - **Music Rendering**  
   - **LilyPond:** Printable PDF sheet music from `LilyScore` views.
@@ -61,3 +63,7 @@ Teatro/
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
