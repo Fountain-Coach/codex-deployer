@@ -25,7 +25,23 @@ let package = Package(
         .testTarget(
             name: "TeatroTests",
             dependencies: ["Teatro"],
-            path: "Tests"
+            path: "Tests",
+            exclude: ["StoryboardDSLTests", "MIDITests", "RendererFileTests"]
+        ),
+        .testTarget(
+            name: "StoryboardDSLTests",
+            dependencies: ["Teatro"],
+            path: "Tests/StoryboardDSLTests"
+        ),
+        .testTarget(
+            name: "MIDITests",
+            dependencies: ["Teatro"],
+            path: "Tests/MIDITests"
+        ),
+        .testTarget(
+            name: "RendererFileTests",
+            dependencies: ["Teatro"],
+            path: "Tests/RendererFileTests"
         )
     ]
 )
