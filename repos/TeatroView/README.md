@@ -1,5 +1,7 @@
 # TeatroView – Typesense GUI
 
+![Swift](https://img.shields.io/badge/Swift-6.1-orange) ![SwiftPM](https://img.shields.io/badge/SwiftPM-compatible-brightgreen)
+
 TeatroView is an experimental GUI for [Typesense](https://typesense.org) built with the [Teatro](../teatro) view engine. It demonstrates how Teatro renders SwiftUI scenes while providing a simple interface to manage and search a Typesense instance.
 
 ## Build and Run
@@ -16,6 +18,17 @@ export TYPESENSE_URL=http://localhost:8108
 export TYPESENSE_API_KEY=xyz
 swift run TeatroView
 ```
+
+## Installation
+
+Use TeatroView as a dependency by adding the repository to your Package.swift file:
+
+```swift
+.package(url: "https://github.com/fountain-coach/teatro.git", from: "0.1.0")
+```
+
+Then add `TeatroView` to your target dependencies.
+
 
 Running `swift run TeatroView` builds the executable and launches a minimal navigation interface. Open the package in Xcode for SwiftUI previews or run from the command line as shown above.
 
