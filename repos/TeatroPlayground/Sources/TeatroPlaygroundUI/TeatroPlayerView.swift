@@ -2,6 +2,7 @@
 import SwiftUI
 import Combine
 import Teatro
+import TeatroPlaygroundCore
 
 /// Displays a sequence of Renderable frames and advances them using a MIDI
 /// sequence for timing.
@@ -62,6 +63,9 @@ public struct TeatroPlayerView: View {
 
     private func playFrom(_ index: Int) {
         guard index < midiSequence.notes.count else { return }
+#if canImport(AVFoundation)
+        MIDIAudioEngine.start()
+#endif
         isPlaying = true
         scheduleNextFrame(at: index)
     }
@@ -72,7 +76,11 @@ public struct TeatroPlayerView: View {
             return
         }
 
-        let duration = midiSequence.notes[index].duration
+        let note = midiSequence.notes[index]
+#if canImport(AVFoundation)
+        MIDIAudioEngine.play(note: note)
+#endif
+        let duration = note.duration
 
         withAnimation(.easeInOut(duration: duration)) {
             fadeIn.toggle()
