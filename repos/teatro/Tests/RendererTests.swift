@@ -21,4 +21,19 @@ final class RendererTests: XCTestCase {
         XCTAssertTrue(md.contains("```"))
         XCTAssertTrue(md.contains("Hi"))
     }
+
+    func testAnimatedSVGRenderer() {
+        let sb = Storyboard {
+            Scene("One") { Text("A") }
+            Transition(style: .crossfade, frames: 1)
+            Scene("Two") { Text("B") }
+        }
+
+        let svg = SVGAnimator.renderAnimatedSVG(storyboard: sb)
+
+        XCTAssertTrue(svg.contains("<svg"))
+        XCTAssertTrue(svg.contains("scene0"))
+        XCTAssertTrue(svg.contains("begin=\"0s\""))
+        XCTAssertTrue(svg.contains("begin=\"1s\""))
+    }
 }
