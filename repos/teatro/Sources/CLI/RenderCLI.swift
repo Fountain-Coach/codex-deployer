@@ -1,6 +1,6 @@
 import Teatro
 public enum RenderTarget: String {
-    case html, svg, png, markdown, codex
+    case html, svg, png, markdown, codex, svgAnimated
 }
 
 public struct RenderCLI {
@@ -25,6 +25,23 @@ public struct RenderCLI {
             print(MarkdownRenderer.render(view))
         case .codex:
             print(CodexPreviewer.preview(view))
+        case .svgAnimated:
+            let storyboard = Storyboard {
+                Scene("One") {
+                    VStack(alignment: .center) {
+                        Text("Teatro", style: .bold)
+                        Text("SVG Animation Demo")
+                    }
+                }
+                Transition(style: .crossfade, frames: 10)
+                Scene("Two") {
+                    VStack(alignment: .center) {
+                        Text("Scene Two")
+                    }
+                }
+            }
+
+            print(SVGAnimator.renderAnimatedSVG(storyboard: storyboard))
         }
     }
 }
