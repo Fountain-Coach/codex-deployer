@@ -20,6 +20,7 @@ Use `deploy/dispatcher_v2.py` as the default execution path under Docker or syst
 - [Code Reference](docs/handbook/code_reference.md) – links to inline API docs.
 - [History and Roadmap](docs/handbook/history.md) – how the project evolved and what's next.
 - [TeatroPlayground GUI Plan](docs/teatro_playground_gui_plan.md) – draft plan for a Teatro-based GUI.
+- [Teatro CLI Guide](repos/teatro/Docs/CLIIntegration/README.md) – how to render views from the command line.
 - [FountainAI Playground Guidelines](docs/fountainai_playground_guidelines.md) – rules for safe UI prototyping.
 - [Future Vision](docs/future_vision.md) – long-term FountainAI platform.
 
@@ -43,6 +44,6 @@ For an explanation of each variable and how to generate tokens, see the [setup g
 ## From Codex to FountainAI
 While deployment remains central, the repository now serves as the codex‑FountainAI maintainer and GPT contributor. For an overview of the broader FountainAI platform and its APIs, see [docs/future_vision.md](docs/future_vision.md).
 
-`````text
+``````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-`````
+``````
