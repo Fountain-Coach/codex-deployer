@@ -12,6 +12,7 @@ public struct TeatroPlayerView: View {
     @State private var currentIndex: Int = 0
     @State private var timerCancellable: Cancellable?
     @State private var isPlaying: Bool = false
+    @State private var fadeIn = false
 
     public init(frames: [Renderable], midiSequence: MIDISequence) {
         self.frames = frames
@@ -20,9 +21,7 @@ public struct TeatroPlayerView: View {
 
     public var body: some View {
         VStack(spacing: 20) {
-            Text(frames[currentIndex].render())
-                .font(.system(.body, design: .monospaced))
-                .padding()
+            AnimatedFrameView(content: frames[currentIndex].render(), fade: $fadeIn)
 
             HStack {
                 Button("Play") {
@@ -60,6 +59,11 @@ public struct TeatroPlayerView: View {
         }
 
         let duration = midiSequence.notes[index].duration
+
+        withAnimation(.easeInOut(duration: duration)) {
+            fadeIn.toggle()
+        }
+
         timerCancellable = Just(())
             .delay(for: .seconds(duration), scheduler: DispatchQueue.main)
             .sink { _ in
@@ -76,6 +80,19 @@ public struct TeatroPlayerView: View {
     private func stopPlayback() {
         timerCancellable?.cancel()
         isPlaying = false
+    }
+}
+
+private struct AnimatedFrameView: View {
+    let content: String
+    @Binding var fade: Bool
+
+    var body: some View {
+        Text(content)
+            .font(.system(.body, design: .monospaced))
+            .padding()
+            .opacity(fade ? 1.0 : 0.0)
+            .animation(.easeInOut(duration: 0.5), value: fade)
     }
 }
 #else
