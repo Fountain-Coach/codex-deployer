@@ -1,7 +1,8 @@
 import Teatro
 
 /// Renders a simple metrics animation.
-public struct VitalSignsAnimation: Renderable {
+@MainActor
+public struct VitalSignsAnimation: @preconcurrency Renderable {
     let storyboard: Storyboard
 
     public init() {

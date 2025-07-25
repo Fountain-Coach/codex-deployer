@@ -1,7 +1,20 @@
 # Teatro View Engine
+
+![Swift](https://img.shields.io/badge/Swift-6.1-orange) ![SwiftPM](https://img.shields.io/badge/SwiftPM-compatible-brightgreen)
 *A Declarative, Codex-Controllable Rendering Framework in Swift*
 This repository contains the specification for Teatro, a modular Swift 6 view engine. The original long-form documentation has been split into separate files under the `Docs` directory.
 ## Documentation
+
+## Installation
+
+Add the package to your Package.swift dependencies:
+
+```swift
+.package(url: "https://github.com/fountain-coach/teatro.git", from: "0.1.0")
+```
+
+Then include `Teatro` as a dependency in your target.
+
 - [Core Protocols](Docs/CoreProtocols/README.md)
 - [View Types](Docs/ViewTypes/README.md)
 - [Rendering Backends](Docs/RenderingBackends/README.md)

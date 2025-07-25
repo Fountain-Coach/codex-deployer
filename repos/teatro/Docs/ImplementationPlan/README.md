@@ -65,6 +65,13 @@ timelines, introduce a storyboard-like DSL within Teatro:
 
 See [Storyboard DSL](../StoryboardDSL/README.md) for a step-by-step example of generating a prompt for Codex using the DSL.
 
+## 11.7 Packaging and Release
+
+- Verify `Package.swift` manifests build on both Linux and macOS.
+- Create `.podspec` files and ensure they are not ignored.
+- Tag releases and submit them to the Swift Package Index.
+- Document the process in the project README files.
+
 ---
 
 This document should evolve alongside the codebase. **Maintain and update this roadmap** as new features land or priorities shift to keep development focused and transparent.

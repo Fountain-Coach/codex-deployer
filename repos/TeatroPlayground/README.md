@@ -1,5 +1,7 @@
 # TeatroPlayground – Official UX Playground for Teatro
 
+![Swift](https://img.shields.io/badge/Swift-6.1-orange) ![SwiftPM](https://img.shields.io/badge/SwiftPM-compatible-brightgreen)
+
 TeatroPlayground is the official UX playground for the [Teatro](../teatro) view engine. It bundles the `TeatroPlaygroundUI` library with a simple SwiftUI app so you can prototype and test Teatro components in a standalone environment.
 
 ## Build and Run
@@ -10,6 +12,15 @@ Run the package with Swift Package Manager:
 swift build
 swift run TeatroPlayground
 ```
+
+## Installation
+
+Add TeatroPlayground to your package dependencies if you want to embed the UI components:
+
+```swift
+.package(url: "https://github.com/fountain-coach/teatro.git", from: "0.1.0")
+```
+
 
 
 The Teatro dependency is fetched directly from GitHub, so no manual clone is required.
