@@ -8,20 +8,34 @@ import Teatro
 public struct TeatroPlayerView: View {
     public let frames: [Renderable]
     public let midiSequence: MIDISequence
+    public let comments: [String]?
 
     @State private var currentIndex: Int = 0
     @State private var timerCancellable: Cancellable?
     @State private var isPlaying: Bool = false
     @State private var fadeIn = false
 
-    public init(frames: [Renderable], midiSequence: MIDISequence) {
+    public init(frames: [Renderable], midiSequence: MIDISequence, comments: [String]? = nil) {
         self.frames = frames
         self.midiSequence = midiSequence
+        self.comments = comments
+        if let comments {
+            precondition(comments.count == frames.count, "Comments count must match frames count")
+        }
     }
 
     public var body: some View {
         VStack(spacing: 20) {
             AnimatedFrameView(content: frames[currentIndex].render(), fade: $fadeIn)
+
+            if let comments, currentIndex < comments.count {
+                Text(comments[currentIndex])
+                    .font(.caption)
+                    .italic()
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+            }
 
             HStack {
                 Button("Play") {
@@ -101,10 +115,15 @@ import Teatro
 public struct TeatroPlayerView {
     public let frames: [Renderable]
     public let midiSequence: MIDISequence
+    public let comments: [String]?
 
-    public init(frames: [Renderable], midiSequence: MIDISequence) {
+    public init(frames: [Renderable], midiSequence: MIDISequence, comments: [String]? = nil) {
         self.frames = frames
         self.midiSequence = midiSequence
+        self.comments = comments
+        if let comments {
+            precondition(comments.count == frames.count, "Comments count must match frames count")
+        }
     }
 }
 #endif
