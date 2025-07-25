@@ -52,6 +52,11 @@ SCIENTIST
             title: "Storyboard Demo",
             description: "Plan app states with the Storyboard DSL and Codex prompting.") {
                 StoryboardPreviewRenderer()
+        },
+        Experiment(
+            title: "Vital Signs",
+            description: "Metrics fading in with the Animator.") {
+                VitalSignsAnimation()
         }
     ]
 }

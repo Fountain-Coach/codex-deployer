@@ -111,7 +111,7 @@ public struct RendererShowcaseView: Renderable {
 #endif
 
 
-#if DEBUG
+#if canImport(SwiftUI) && DEBUG
 #Preview("Renderer Showcase") {
     RendererShowcaseView()
         .frame(width: 800, height: 600)

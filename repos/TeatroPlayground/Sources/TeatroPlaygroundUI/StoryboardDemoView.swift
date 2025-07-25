@@ -67,7 +67,7 @@ public typealias StoryboardDemoView = StoryboardPreviewRenderer
 #endif
 
 
-#if DEBUG
+#if canImport(SwiftUI) && DEBUG
 #Preview("Storyboard Preview") {
     StoryboardDemoView()
 }
