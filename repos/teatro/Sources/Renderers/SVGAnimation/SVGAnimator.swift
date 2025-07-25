@@ -12,7 +12,11 @@ public struct SVGAnimator {
     /// subsequent scenes fade in and out on a global timeline. The `begin`
     /// attribute is used to stagger the animations according to the frame
     /// index. Every frame lasts for one second.
-    public static func renderAnimatedSVG(storyboard: Storyboard) -> String {
+    public static func renderAnimatedSVG(
+        storyboard: Storyboard,
+        fadeInDuration: Double = 1.0,
+        fadeOutDuration: Double = 0.5
+    ) -> String {
         let frames = storyboard.frames()
         var groups: [String] = []
 
@@ -26,12 +30,12 @@ public struct SVGAnimator {
 
             let fadeIn = SVGAnimate(
                 attributeName: "opacity",
-                from: "0", to: "1", dur: 1.0, repeatCount: nil
+                from: "0", to: "1", dur: fadeInDuration, repeatCount: nil
             ).render().replacingOccurrences(of: ">", with: " begin=\"\(i)s\">", options: .literal)
 
             let fadeOut = SVGAnimate(
                 attributeName: "opacity",
-                from: "1", to: "0", dur: 0.5, repeatCount: nil
+                from: "1", to: "0", dur: fadeOutDuration, repeatCount: nil
             ).render().replacingOccurrences(of: ">", with: " begin=\"\(i + 1)s\">", options: .literal)
 
             let group = """

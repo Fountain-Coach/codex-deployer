@@ -39,6 +39,10 @@ The token is used for cloning repositories, pushing commits, and pulling updates
 | `FUNCTIONS_CACHE_PATH` | `functions-cache.json` | Path to persist cached function definitions for the Function Caller and Tools Factory. Used by `repos/fountainai/Generated/Server/Shared/TypesenseClient.swift`. |
 | `TOOLS_FACTORY_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Tools Factory service. Used by `repos/fountainai/Generated/Server/tools-factory/HTTPKernel.swift`. |
 | `PLANNER_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Planner service. Used by `repos/fountainai/Generated/Server/planner/HTTPKernel.swift`. |
+| `TEATRO_SVG_WIDTH` | `600` | Default width for `SVGRenderer` output. |
+| `TEATRO_SVG_HEIGHT` | `400` | Default height for `SVGRenderer` output. |
+| `TEATRO_IMAGE_WIDTH` | `800` | Default width for `ImageRenderer` when Cairo is available. |
+| `TEATRO_IMAGE_HEIGHT` | `600` | Default height for `ImageRenderer` when Cairo is available. |
 
 Environment variables can be managed using **GitHub Secrets** so that sensitive values are not stored in the repository. Create a new secret in your GitHub repository settings and reference it when running the deployer:
 
