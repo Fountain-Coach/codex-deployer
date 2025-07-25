@@ -46,7 +46,14 @@ timeline:
 let svg = SVGAnimator.renderAnimatedSVG(storyboard: storyboard)
 ```
 
+### Runtime Use
 
-````text
+`Storyboard.frames()` can now be played back with `TeatroPlayerView`. Provide a
+matching `MIDISequence` to drive timing and the view will render each frame in
+real-time. GPT prompts are encouraged to generate both the storyboard and its
+MIDI sequence so Codex can synchronize visuals and sound.
+
+
+`````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-````
+`````

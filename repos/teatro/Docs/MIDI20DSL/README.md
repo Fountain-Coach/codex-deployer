@@ -1,6 +1,9 @@
 ## 7. MIDI 2.0 DSL
 
 The Teatro View Engine includes a declarative Swift DSL for composing MIDI sequences. It enables Codex and GPT agents to structure musical timelines with precise note control, and render them to `.mid` files.
+`MIDISequence` can now also drive visual animations when paired with
+`TeatroPlayerView`. Each `MIDINote.duration` determines how long the matching
+frame stays on screen during playback.
 
 ---
 
@@ -92,9 +95,14 @@ MIDIRenderer.renderToFile(melody, to: "demo.mid")
 - This system can later support MIDI 2.0 features (per-note expression, UMP packets)
 - Compatible with future `MIDIPianoRoll` visual rendering
 - Pairs well with `Animator` for synchronizing scenes and sounds
+- Drives `TeatroPlayerView` animations when provided alongside a `Storyboard`
 
 
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

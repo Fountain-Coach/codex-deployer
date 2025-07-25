@@ -42,6 +42,9 @@ Although not strictly views, renderers are important for integration testing:
 
 ### 10.5 Animation System
 Implement `Animator` under `Sources/Renderers` or a dedicated `Sources/Animation` folder. Tests should create a series of views, call `Animator.renderFrames`, and confirm that the expected `.png` files appear in `Animations/`.
+"TeatroPlayerView" should be implemented under `TeatroPlaygroundUI`. It must
+sync `Storyboard` rendering with `MIDISequence` timing and include
+play/pause/reset controls plus support for semantic overlays.
 
 ### 10.6 Test Organization
 Create test files in `Tests/` following SwiftPM conventions:
@@ -52,6 +55,10 @@ Create test files in `Tests/` following SwiftPM conventions:
 - `RendererTests.swift` – verifies HTML/SVG output strings and image file creation (Cairo can be mocked if unavailable).
 - `RendererTests.swift` should include a test for `<g id="scene0">` and `<animate>` detection.
 - `CLITests.swift` – uses `Process` to run the CLI with different arguments and checks the output or generated files.
+
+Add runtime animation tests if needed—for example a smoke test that switches
+`TeatroPlayerView` scenes. Integration tests should cover MIDI-driven playback;
+unit tests for MIDI audio are not required.
 
 Each test should clean up temporary files after execution to keep the repository tidy.
 
@@ -67,6 +74,6 @@ Following this implementation and testing plan will produce a fully functional T
 Unauthorized copying or distribution is strictly prohibited.
 ```
 
-````text
+`````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-````
+`````

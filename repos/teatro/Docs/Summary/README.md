@@ -21,10 +21,12 @@ The **Teatro View Engine** is a modular, fully declarative view system written i
 - **Music Rendering**  
   - **LilyPond:** Printable PDF sheet music from `LilyScore` views.
   - **MIDI DSL:** MIDI 2.0-style sequencing via `MIDINote`, `MIDISequence`, and `MIDIRenderer`.
-
-- **Screenplay Rendering**  
-  - `.fountain` parsing into typed screenplay elements
-  - `FountainSceneView` enables GPT-authored scripts to be staged and animated
+  
+  - **Screenplay Rendering**
+    - `.fountain` parsing into typed screenplay elements
+    - `FountainSceneView` enables GPT-authored scripts to be staged and animated
+  - 🎬 **Teatro Animation Player**  
+    Play animated sequences of Teatro views in real-time, driven by MIDI timing. Includes visual transitions, frame-level commentary, and synchronized audio via AVFoundation.
 
 ---
 
@@ -34,9 +36,10 @@ All parts of the Teatro View Engine are designed to be:
 
 - Composable: All views conform to `Renderable`  
 - Introspectable: Every structure has deterministic `render()` output  
-- Animatable: Views can evolve across time via `Animator`  
-- GPT-friendly: DSLs like `.fountain`, LilyPond, and MIDI are natively supported  
+- Animatable: Views can evolve across time via `Animator`
+- GPT-friendly: DSLs like `.fountain`, LilyPond, and MIDI are natively supported
 - Extensible: Each layer can be expanded (e.g. to live UI, SVG animation, SVG timelines, MIDI2 UMP, etc.)
+- `TeatroPlayerView` is composable, introspectable, and driven by GPT-generated `Storyboard + MIDISequence` pairs.
 
 ---
 
@@ -64,6 +67,6 @@ Teatro/
 Unauthorized copying or distribution is strictly prohibited.
 ```
 
-````text
+`````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-````
+`````
