@@ -6,6 +6,7 @@ let package = Package(
     platforms: [.macOS(.v14)],
     products: [
         .library(name: "TeatroPlaygroundUI", targets: ["TeatroPlaygroundUI"]),
+        .library(name: "TeatroPlaygroundCore", targets: ["TeatroPlaygroundCore"]),
         .executable(name: "TeatroPlayground", targets: ["TeatroPlayground"])
     ],
     dependencies: [
@@ -13,9 +14,17 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "TeatroPlaygroundUI",
+            name: "TeatroPlaygroundCore",
             dependencies: [
                 .product(name: "Teatro", package: "teatro")
+            ],
+            path: "Sources/TeatroPlaygroundCore"
+        ),
+        .target(
+            name: "TeatroPlaygroundUI",
+            dependencies: [
+                .product(name: "Teatro", package: "teatro"),
+                "TeatroPlaygroundCore"
             ],
             path: "Sources/TeatroPlaygroundUI"
         ),
