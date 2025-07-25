@@ -109,6 +109,40 @@ public struct MarkdownRenderer {
     }
 }
 ```
+
+---
+
+### 3.6 Animated SVG Renderer
+
+`SVGAnimator` exposes `renderAnimatedSVG(storyboard:)` to produce a fully
+animated SVG timeline. Pass a `Storyboard` built with the
+[`StoryboardDSL`](../StoryboardDSL) and the method returns an SVG string
+containing `<animate>` tags for each transition.
+
+```swift
+let svg = SVGAnimator.renderAnimatedSVG(storyboard: storyboard)
+print(svg)
+```
+
+Example output snippet:
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg">
+  <g id="scene0">
+    <animate attribute-name="opacity" from="1" to="0" dur="0.5s" fill="freeze" />
+  </g>
+</svg>
+```
+
+Run via the CLI:
+
+```bash
+swift run RenderCLI svg-animated
+```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````

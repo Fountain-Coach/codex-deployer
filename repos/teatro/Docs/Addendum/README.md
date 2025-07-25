@@ -59,6 +59,7 @@ Yes — the **Teatro View Engine** is fully compatible with Apple platforms incl
 While Teatro is **optimized for Codex orchestration and Linux-based environments**, it is **fully portable to Apple systems**. With minor renderer adaptations and optional SwiftUI wrappers, Teatro can serve as the foundation for:
 - Native apps
 - Live previews
+- Animated SVGs can be displayed in `WKWebView` using `AnimatedSVGPreview.swift`.
 - Developer tools
 - Multimodal orchestration pipelines
 
@@ -81,3 +82,7 @@ This ensures that semantic rendering, narrative structuring, and musical composi
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
