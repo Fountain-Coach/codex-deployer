@@ -49,7 +49,24 @@ For a gentle introduction see [Introduction to Codex-Deployer](introduction.md).
 For implementation details see [dispatcher_v2.md](../dispatcher_v2.md).
 
 
+## Teatro Runtime Components
+
+Teatro’s runtime is split across two repositories. The playground app hosts
+[`TeatroPlayerView`](../../repos/TeatroPlayground/Sources/TeatroPlaygroundUI/TeatroPlayerView.swift)
+which consumes `Storyboard.frames()` alongside a `MIDISequence` to play back
+rendered scenes. The renderer library includes
+[`SVGAnimator`](../../repos/teatro/Sources/Renderers/SVGAnimation/SVGAnimator.swift)
+for generating animated SVG output.
+
+Usage examples are provided in
+[TeatroPlayground’s README](../../repos/TeatroPlayground/README.md).
+
+
 ```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
