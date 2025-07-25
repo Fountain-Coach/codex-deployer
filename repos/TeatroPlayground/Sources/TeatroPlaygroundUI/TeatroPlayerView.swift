@@ -10,7 +10,8 @@ public struct TeatroPlayerView: View {
     public let midiSequence: MIDISequence
 
     @State private var currentIndex: Int = 0
-    @State private var timer: AnyCancellable?
+    @State private var timerCancellable: Cancellable?
+    @State private var isPlaying: Bool = false
 
     public init(frames: [Renderable], midiSequence: MIDISequence) {
         self.frames = frames
@@ -18,44 +19,67 @@ public struct TeatroPlayerView: View {
     }
 
     public var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Text(frames[currentIndex].render())
                 .font(.system(.body, design: .monospaced))
                 .padding()
+
+            HStack {
+                Button("Play") {
+                    if !isPlaying { playFrom(currentIndex) }
+                }
+                .disabled(isPlaying || currentIndex >= frames.count - 1)
+
+                Button("Pause") {
+                    pausePlayback()
+                }
+                .disabled(!isPlaying)
+
+                Button("Reset") {
+                    stopPlayback()
+                    currentIndex = 0
+                }
+            }
+            .padding(.top)
         }
-        .onAppear(perform: startPlayback)
-        .onDisappear(perform: stopPlayback)
+        .onDisappear {
+            stopPlayback()
+        }
     }
 
-    private func startPlayback() {
-        guard frames.count > 1 else { return }
-        currentIndex = 0
-        scheduleNextFrame(at: 0)
+    private func playFrom(_ index: Int) {
+        guard index < midiSequence.notes.count else { return }
+        isPlaying = true
+        scheduleNextFrame(at: index)
     }
 
     private func scheduleNextFrame(at index: Int) {
-        guard index < midiSequence.notes.count else { return }
-        let delay = midiSequence.notes[index].duration
-        timer = Just(())
-            .delay(for: .seconds(delay), scheduler: DispatchQueue.main)
+        guard index + 1 < frames.count else {
+            isPlaying = false
+            return
+        }
+
+        let duration = midiSequence.notes[index].duration
+        timerCancellable = Just(())
+            .delay(for: .seconds(duration), scheduler: DispatchQueue.main)
             .sink { _ in
-                if currentIndex + 1 < frames.count {
-                    currentIndex += 1
-                    scheduleNextFrame(at: currentIndex)
-                } else {
-                    stopPlayback()
-                }
+                currentIndex += 1
+                scheduleNextFrame(at: currentIndex)
             }
     }
 
+    private func pausePlayback() {
+        timerCancellable?.cancel()
+        isPlaying = false
+    }
+
     private func stopPlayback() {
-        timer?.cancel()
-        timer = nil
+        timerCancellable?.cancel()
+        isPlaying = false
     }
 }
 #else
 import Teatro
-import Combine
 
 public struct TeatroPlayerView {
     public let frames: [Renderable]
