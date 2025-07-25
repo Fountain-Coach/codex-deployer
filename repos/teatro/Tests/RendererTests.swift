@@ -36,4 +36,29 @@ final class RendererTests: XCTestCase {
         XCTAssertTrue(svg.contains("begin=\"0s\""))
         XCTAssertTrue(svg.contains("begin=\"1s\""))
     }
+
+    func testSVGAnimatedStoryboardProducesExpectedOutput() {
+        let storyboard = Storyboard {
+            Scene("Intro") {
+                VStack(alignment: .center) {
+                    Text("Hello")
+                }
+            }
+            Transition(style: .crossfade, frames: 10)
+            Scene("End") {
+                VStack {
+                    Text("Goodbye")
+                }
+            }
+        }
+
+        let svg = SVGAnimator.renderAnimatedSVG(storyboard: storyboard)
+
+        XCTAssertTrue(svg.contains("<svg"), "Output should contain <svg> root element")
+        XCTAssertTrue(svg.contains("<g id=\"scene0\""), "First scene should have ID scene0")
+        XCTAssertTrue(svg.contains("<g id=\"scene1\""), "Second scene should have ID scene1")
+        XCTAssertTrue(svg.contains("attributeName=\"opacity\""), "Should include opacity animations")
+        XCTAssertTrue(svg.contains("begin=\"0s\""), "First scene should begin at 0s")
+        XCTAssertTrue(svg.contains("begin=\"1s\""), "Fade out or second scene should begin at 1s")
+    }
 }
