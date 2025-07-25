@@ -8,7 +8,7 @@ The Teatro View Engine includes a lightweight command-line interface (CLI) imple
 
 ```swift
 public enum RenderTarget: String {
-    case html, svg, svgAnimated = "svg-animated", png, markdown, codex
+    case html, svg, png, markdown, codex, svgAnimated
 }
 ```
 
@@ -37,6 +37,23 @@ public struct RenderCLI {
             print(MarkdownRenderer.render(view))
         case .codex:
             print(CodexPreviewer.preview(view))
+        case .svgAnimated:
+            let storyboard = Storyboard {
+                Scene("One") {
+                    VStack(alignment: .center) {
+                        Text("Teatro", style: .bold)
+                        Text("SVG Animation Demo")
+                    }
+                }
+                Transition(style: .crossfade, frames: 10)
+                Scene("Two") {
+                    VStack(alignment: .center) {
+                        Text("Scene Two")
+                    }
+                }
+            }
+
+            print(SVGAnimator.renderAnimatedSVG(storyboard: storyboard))
         }
     }
 }
@@ -49,11 +66,16 @@ public struct RenderCLI {
 ```bash
 swift run RenderCLI html
 swift run RenderCLI svg
-swift run RenderCLI svg-animated
+swift run RenderCLI svgAnimated
 swift run RenderCLI png
 swift run RenderCLI markdown
 swift run RenderCLI codex
 ```
+
+If no argument is provided, the CLI defaults to the `codex` renderer.
+
+The output width and height can be adjusted through environment variables:
+`TEATRO_SVG_WIDTH`, `TEATRO_SVG_HEIGHT`, `TEATRO_IMAGE_WIDTH`, and `TEATRO_IMAGE_HEIGHT`.
 
 The `svg-animated` target converts a multi-scene `Storyboard` into a single
 animated `.svg` file. This differs from `svg` (static) and `png` (individual
@@ -70,6 +92,6 @@ This CLI is ideal for:
 Unauthorized copying or distribution is strictly prohibited.
 ```
 
-````text
+`````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-````
+`````
