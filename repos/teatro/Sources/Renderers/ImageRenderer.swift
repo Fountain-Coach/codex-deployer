@@ -2,10 +2,22 @@
 import Cairo
 #endif
 
+import Foundation
+
 public struct ImageRenderer {
+    // Default image width in points. Override with `TEATRO_IMAGE_WIDTH`.
+    private static var width: Int {
+        Int(ProcessInfo.processInfo.environment["TEATRO_IMAGE_WIDTH"] ?? "800") ?? 800
+    }
+
+    // Default image height in points. Override with `TEATRO_IMAGE_HEIGHT`.
+    private static var height: Int {
+        Int(ProcessInfo.processInfo.environment["TEATRO_IMAGE_HEIGHT"] ?? "600") ?? 600
+    }
+
     public static func renderToPNG(_ view: Renderable, to path: String = "output.png") {
 #if canImport(Cairo)
-        let surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 800, 600)
+        let surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, Int32(width), Int32(height))
         let cr = cairo_create(surface)
 
         cairo_set_source_rgb(cr, 1, 1, 1)
@@ -25,8 +37,10 @@ public struct ImageRenderer {
         cairo_destroy(cr)
         cairo_surface_destroy(surface)
 #else
-        // Fallback stub for environments without Cairo
-        try? view.render().write(toFile: path + ".txt", atomically: true, encoding: .utf8)
+        // Fallback when Cairo is unavailable: generate an SVG next to the desired PNG path.
+        let svgPath = path.replacingOccurrences(of: ".png", with: ".svg")
+        let svg = SVGRenderer.render(view)
+        try? svg.write(toFile: svgPath, atomically: true, encoding: .utf8)
 #endif
     }
 }
