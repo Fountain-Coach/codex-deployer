@@ -6,7 +6,7 @@ them back in real time.
 ### Building frame and MIDI pairs
 
 1. Generate a `Storyboard` using the DSL.
-2. Create a matching `MIDISequence` where each `MIDINote.duration` equals the
+2. Create a matching `MIDISequence` where each `MIDI2Note.duration` equals the
    desired frame duration.
 
 ### Playing the storyboard
@@ -23,7 +23,7 @@ overlayed during playback.
 
 ### Enabling audio
 
-`TeatroPlayerView` uses `AVAudioUnitSampler` to produce live MIDI output. Ensure
+`TeatroPlayerView` uses `AVAudioUnitSampler` to produce live MIDI 2.0 output. Ensure
 an appropriate sound font is loaded when initializing the sampler.
 
 ````text

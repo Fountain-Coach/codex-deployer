@@ -4,9 +4,10 @@ This roadmap converts the critique and analysis of the Teatro View Engine into c
 
 ## 11.1 Finalize Placeholder Features
 
-1. **MIDI Encoder**
-   - Replace the text-based `MIDIRenderer` placeholder with a true MIDI encoder or integrate an open-source library.
-   - Generate valid `.mid` files and add basic tests that confirm file creation.
+1. **MIDI 2.0 Support**
+   - Introduce `MIDI2Note` and `UMPEncoder` to generate Universal MIDI Packets.
+   - Provide a `CsoundScore` view type and `CsoundRenderer` for `.csd` output.
+   - Extend `RenderCLI` with `csound` and `ump` targets and add tests for the generated files.
 2. **GIF Export**
    - Extend `Animator` with a helper for `.gif` generation using ImageMagick or a Swift wrapper.
    - Document required tools and provide a sample test that produces an animated gif from frame PNGs.
