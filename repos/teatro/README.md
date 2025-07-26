@@ -10,7 +10,7 @@ This repository contains the specification for Teatro, a modular Swift 6 view en
 Add the package to your Package.swift dependencies:
 
 ```swift
-.package(url: "https://github.com/fountain-coach/teatro.git", from: "0.1.0")
+.package(url: "https://github.com/fountain-coach/teatro.git", branch: "main")
 ```
 
 Then include `Teatro` as a dependency in your target.
