@@ -53,3 +53,34 @@ public struct VitalSignsAnimation: @preconcurrency Renderable {
         return CodexStoryboardPreviewer.prompt(storyboard)
     }
 }
+
+
+#if DEBUG
+import SwiftUI
+import Combine
+
+struct VitalSignsAnimationLivePreview: View {
+    let frames = VitalSignsAnimation().storyboard.frames()
+    @State private var frameIndex = 0
+
+    // Use Combine publisher instead of Timer directly
+    let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+
+    var body: some View {
+        ScrollView {
+            Text(frames[frameIndex].render())
+                .font(.system(.body, design: .monospaced))
+                .padding()
+        }
+        .onReceive(timer) { _ in
+            frameIndex = (frameIndex + 1) % frames.count
+        }
+    }
+}
+
+struct VitalSignsAnimationLivePreview_Previews: PreviewProvider {
+    static var previews: some View {
+        VitalSignsAnimationLivePreview()
+    }
+}
+#endif
