@@ -63,6 +63,35 @@ instead of a directory of PNG frames. Pass a `Storyboard` containing transitions
 `<animateTransform>` within the resulting SVG. This is convenient for embedding
 web previews or converting to `.gif` using rasterizers.
 
+### 5.2.1 SVG Animation Primitives
+
+The animated SVG backend is built from a few helper structs:
+
+```swift
+public struct SVGAnimate {
+    public let attributeName: String
+    public let from: String
+    public let to: String
+    public let dur: Double
+    public let repeatCount: String?
+    public func render() -> String { /* ... */ }
+}
+
+public struct SVGAnimateTransform {
+    public let type: String
+    public let from: String
+    public let to: String
+    public let dur: Double
+    public func render() -> String { /* ... */ }
+}
+
+public struct SVGDelta {
+    public let id: String
+    public let animations: [String]
+    public func render() -> String { animations.joined(separator: "\n") }
+}
+```
+
 ---
 
 This animation system works especially well for:
@@ -93,6 +122,6 @@ playback.
 Unauthorized copying or distribution is strictly prohibited.
 ```
 
-`````text
+``````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-`````
+``````

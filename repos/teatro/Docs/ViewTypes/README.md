@@ -114,6 +114,81 @@ public struct TeatroIcon: Renderable {
 ---
 
 ```
+
+### 2.6 Panel
+
+A rectangular container specifying width, height and optional corner radius.
+
+```swift
+public struct Panel: Renderable {
+    public let width: Int
+    public let height: Int
+    public let cornerRadius: Int
+    public let content: [Renderable]
+
+    public init(width: Int, height: Int, cornerRadius: Int = 0, @ViewBuilder content: () -> [Renderable]) {
+        self.width = width
+        self.height = height
+        self.cornerRadius = cornerRadius
+        self.content = content()
+    }
+
+    public func render() -> String {
+        "[Panel \(width)x\(height) r:\(cornerRadius)]\n" + content.map { $0.render() }.joined(separator: "\n")
+    }
+}
+```
+
+### 2.7 Dot, Rule and InputCursor
+
+Utility views for simple terminal style rendering.
+
+```swift
+public struct Dot: Renderable {
+    public let color: String
+    public let diameter: Int
+    public init(color: String = "black", diameter: Int = 10) { ... }
+    public func render() -> String { "\u{25CF}" }
+}
+
+public struct Rule: Renderable {
+    public init() {}
+    public func render() -> String { String(repeating: "-", count: 10) }
+}
+
+public struct InputCursor: Renderable {
+    public init() {}
+    public func render() -> String { "|" }
+}
+```
+
+### 2.8 DispatcherPrompt
+
+An example composite view combining the basic elements into a structured layout used by the Codex deployment loop.
+
+```swift
+public struct DispatcherPrompt: Renderable {
+    public init() {}
+    public func render() -> String {
+        Stage(title: "Dispatcher") {
+            Panel(width: 640, height: 900, cornerRadius: 12) {
+                VStack(alignment: .leading) {
+                    Dot(color: "green", diameter: 10)
+                    Rule()
+                    Text("<content>")
+                    Rule()
+                    InputCursor()
+                }
+            }
+        }.render()
+    }
+}
+```
+```
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
