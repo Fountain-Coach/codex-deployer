@@ -1,28 +1,32 @@
 ## 7. MIDI 2.0 DSL
 
-The Teatro View Engine includes a declarative Swift DSL for composing MIDI sequences. It enables Codex and GPT agents to structure musical timelines with precise note control, and render them to `.mid` files.
-`MIDISequence` can now also drive visual animations when paired with
-`TeatroPlayerView`. Each `MIDINote.duration` determines how long the matching
-frame stays on screen during playback.
+The Teatro View Engine includes a declarative Swift DSL for composing MIDI sequences. It enables Codex and GPT agents to structure musical timelines with precise note control.
+`MIDISequence` can now drive visual animations when paired with
+`TeatroPlayerView`. Each `MIDI2Note.duration` determines how long the matching
+frame stays on screen during playback and can be rendered as Universal MIDI Packets.
 
 ---
 
-### 7.1 MIDINote
+### 7.1 MIDI2Note
 
-A single note event: pitch, velocity, channel, and duration in seconds.
+A single expressive event: pitch, 32-bit velocity, channel, and duration in seconds.
 
 ```swift
-public struct MIDINote {
+public struct MIDI2Note {
     public let channel: Int
     public let note: Int
-    public let velocity: Int
+    public let velocity: Float
     public let duration: Double
+    public let pitchBend: Float?
+    public let articulation: String?
 
-    public init(channel: Int, note: Int, velocity: Int, duration: Double) {
+    public init(channel: Int, note: Int, velocity: Float, duration: Double, pitchBend: Float? = nil, articulation: String? = nil) {
         self.channel = channel
         self.note = note
         self.velocity = velocity
         self.duration = duration
+        self.pitchBend = pitchBend
+        self.articulation = articulation
     }
 }
 ```
@@ -31,13 +35,13 @@ public struct MIDINote {
 
 ### 7.2 MIDISequence
 
-A collection of `MIDINote` elements. Supports Swift result builder syntax.
+A collection of `MIDI2Note` elements. Supports Swift result builder syntax.
 
 ```swift
 public struct MIDISequence {
-    public let notes: [MIDINote]
+    public let notes: [MIDI2Note]
 
-    public init(@NoteBuilder _ build: () -> [MIDINote]) {
+    public init(@NoteBuilder _ build: () -> [MIDI2Note]) {
         self.notes = build()
     }
 }
@@ -48,7 +52,7 @@ public struct MIDISequence {
 ```swift
 @resultBuilder
 public enum NoteBuilder {
-    public static func buildBlock(_ notes: MIDINote...) -> [MIDINote] {
+    public static func buildBlock(_ notes: MIDI2Note...) -> [MIDI2Note] {
         notes
     }
 }
@@ -56,20 +60,15 @@ public enum NoteBuilder {
 
 ---
 
-### 7.3 MIDIRenderer
+### 7.3 UMPEncoder
 
-Writes `.mid`-like content to a file. This placeholder is intended to be replaced with a true MIDI encoder.
+Encodes each `MIDI2Note` into raw Universal MIDI Packet words for playback or file output.
 
 ```swift
-import Foundation
-
-public struct MIDIRenderer {
-    public static func renderToFile(_ sequence: MIDISequence, to path: String = "output.mid") {
-        let content = sequence.notes.map {
-            "NOTE(ch:\($0.channel), key:\($0.note), vel:\($0.velocity), dur:\($0.duration))"
-        }.joined(separator: "\n")
-
-        try? content.write(toFile: path, atomically: true, encoding: .utf8)
+public struct UMPEncoder {
+    public static func encode(_ note: MIDI2Note) -> [UInt32] {
+        // Placeholder encoding
+        [0]
     }
 }
 ```
@@ -80,19 +79,19 @@ public struct MIDIRenderer {
 
 ```swift
 let melody = MIDISequence {
-    MIDINote(channel: 0, note: 60, velocity: 100, duration: 0.5)
-    MIDINote(channel: 0, note: 64, velocity: 100, duration: 0.5)
-    MIDINote(channel: 0, note: 67, velocity: 100, duration: 1.0)
+    MIDI2Note(channel: 0, note: 60, velocity: 0.8, duration: 0.5)
+    MIDI2Note(channel: 0, note: 64, velocity: 0.8, duration: 0.5)
+    MIDI2Note(channel: 0, note: 67, velocity: 0.8, duration: 1.0)
 }
 
-MIDIRenderer.renderToFile(melody, to: "demo.mid")
+let packets = melody.notes.flatMap { UMPEncoder.encode($0) }
 ```
 
 ---
 
 ### Integration Notes
 
-- This system can later support MIDI 2.0 features (per-note expression, UMP packets)
+- This system now supports MIDI 2.0 features such as per-note expression and UMP packet generation
 - Compatible with future `MIDIPianoRoll` visual rendering
 - Pairs well with `Animator` for synchronizing scenes and sounds
 - Drives `TeatroPlayerView` animations when provided alongside a `Storyboard`

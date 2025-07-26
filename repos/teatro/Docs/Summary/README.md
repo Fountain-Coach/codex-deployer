@@ -20,7 +20,7 @@ The **Teatro View Engine** is a modular, fully declarative view system written i
 
 - **Music Rendering**  
   - **LilyPond:** Printable PDF sheet music from `LilyScore` views.
-  - **MIDI DSL:** MIDI 2.0-style sequencing via `MIDINote`, `MIDISequence`, and `MIDIRenderer`.
+  - **MIDI 2.0 Sandbox:** expressive sequencing via `MIDI2Note`, `MIDISequence`, `UMPEncoder`, and `CsoundScore`.
   
   - **Screenplay Rendering**
     - `.fountain` parsing into typed screenplay elements

@@ -26,6 +26,7 @@ Then include `Teatro` as a dependency in your target.
 - [Fountain Parser Implementation Plan](Docs/FountainScreenplayEngine/FountainParserImplementationPlan.md)
 - [View Implementation and Testing Plan](Docs/ViewImplementationPlan/README.md)
 - [Implementation Roadmap](Docs/ImplementationPlan/README.md)
+- [Proposals](Docs/Proposals)
 - [Storyboard DSL](Docs/StoryboardDSL/README.md)
 - [Summary](Docs/Summary/README.md)
 - [Addendum: Apple Platform Compatibility](Docs/Addendum/README.md)
