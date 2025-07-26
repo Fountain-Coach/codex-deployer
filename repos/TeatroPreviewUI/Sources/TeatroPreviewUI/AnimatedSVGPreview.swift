@@ -13,7 +13,6 @@ public struct AnimatedSVGPreview: NSViewRepresentable {
 
     public func makeNSView(context: Context) -> WKWebView {
         let webView = WKWebView()
-        webView.isOpaque = false
         webView.setValue(false, forKey: "drawsBackground")
         return webView
     }
