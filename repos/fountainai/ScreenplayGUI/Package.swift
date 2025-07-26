@@ -42,7 +42,7 @@ let package = Package(
     platforms: [.macOS(.v14)],
     products: products,
     dependencies: [
-        .package(path: "../../teatro")
+        .package(url: "https://github.com/fountain-coach/teatro.git", branch: "main")
     ],
     targets: targets
 )
