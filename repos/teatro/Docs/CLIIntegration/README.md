@@ -8,7 +8,7 @@ The Teatro View Engine includes a lightweight command-line interface (CLI) imple
 
 ```swift
 public enum RenderTarget: String {
-    case html, svg, png, markdown, codex, svgAnimated
+    case html, svg, png, markdown, codex, svgAnimated, csound, ump
 }
 ```
 
@@ -54,6 +54,13 @@ public struct RenderCLI {
             }
 
             print(SVGAnimator.renderAnimatedSVG(storyboard: storyboard))
+        case .csound:
+            let cs = CsoundScore(orchestra: "f 1 0 0 10 1", score: "i1 0 1 0.5")
+            CsoundRenderer.renderToFile(cs)
+        case .ump:
+            let notes = [MIDI2Note(channel: 0, note: 60, velocity: 0.8, duration: 1.0)]
+            let packets = notes.flatMap { UMPEncoder.encode($0) }
+            print(packets)
         }
     }
 }
@@ -70,6 +77,8 @@ swift run RenderCLI svgAnimated
 swift run RenderCLI png
 swift run RenderCLI markdown
 swift run RenderCLI codex
+swift run RenderCLI csound
+swift run RenderCLI ump
 ```
 
 If no argument is provided, the CLI defaults to the `codex` renderer.
@@ -79,7 +88,9 @@ The output width and height can be adjusted through environment variables:
 
 The `svg-animated` target converts a multi-scene `Storyboard` into a single
 animated `.svg` file. This differs from `svg` (static) and `png` (individual
-frame images) by embedding `<animate>` elements directly in the output.
+frame images) by embedding `<animate>` elements directly in the output. The
+`csound` and `ump` targets output Csound score files and Universal MIDI Packets
+respectively.
 
 This CLI is ideal for:
 - Previewing scenes, tests, or examples from terminal
@@ -92,6 +103,6 @@ This CLI is ideal for:
 Unauthorized copying or distribution is strictly prohibited.
 ```
 
-`````text
+``````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-`````
+``````
