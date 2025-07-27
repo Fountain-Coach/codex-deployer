@@ -32,4 +32,23 @@ final class TeatroSamplerTests: XCTestCase {
         XCTAssertEqual(midi1.note, 64)
         XCTAssertEqual(midi1.velocity, 127)
     }
+
+    func testCompatibilityBridgeCsound() {
+        let event = MIDI2NoteEvent(channel: 0, note: 60, velocity: 0.5,
+                                   pitch: 60, timbre: SIMD4<Float>(0,0,0,0),
+                                   articulation: "none", timestamp: 0)
+        let cs = MIDICompatibilityBridge.toCsoundScore(event)
+        let rendered = cs.render()
+        XCTAssertTrue(rendered.contains("i1"))
+        XCTAssertTrue(rendered.contains("261.626"))
+    }
+
+    func testCompatibilityBridgeLily() {
+        let event = MIDI2NoteEvent(channel: 0, note: 60, velocity: 0.8,
+                                   pitch: 60, timbre: SIMD4<Float>(0,0,0,0),
+                                   articulation: "none", timestamp: 0)
+        let lily = MIDICompatibilityBridge.toLilyScore(event)
+        let content = lily.render()
+        XCTAssertTrue(content.contains("c'4"))
+    }
 }
