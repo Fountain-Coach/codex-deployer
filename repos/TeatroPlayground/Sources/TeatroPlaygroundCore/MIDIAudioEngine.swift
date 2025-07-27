@@ -4,7 +4,9 @@ import AVFoundation
 import Teatro
 
 public struct MIDIAudioEngine {
+    @MainActor
     private static var engine: AVAudioEngine?
+    @MainActor
     private static var sampler: AVAudioUnitSampler?
 
     public static func start() {
