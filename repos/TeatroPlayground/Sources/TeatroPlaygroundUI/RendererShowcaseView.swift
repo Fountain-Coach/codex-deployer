@@ -17,7 +17,7 @@ public struct RendererShowcaseView: View, Renderable {
         }
     }
 
-    public func render() -> String {
+    public nonisolated func render() -> String {
         RendererShowcase().render()
     }
 
