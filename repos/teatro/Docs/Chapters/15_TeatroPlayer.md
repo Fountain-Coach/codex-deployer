@@ -23,8 +23,9 @@ overlayed during playback.
 
 ### Enabling audio
 
-`TeatroPlayerView` uses `AVAudioUnitSampler` to produce live MIDI 2.0 output. Ensure
-an appropriate sound font is loaded when initializing the sampler.
+`TeatroPlayerView` drives audio via `TeatroSampler`, a cross-platform actor-based
+MIDI 2.0 sampler. Provide a `SampleSource` when initializing the player to
+connect to your audio backend.
 
 
 

@@ -11,7 +11,7 @@ let package = Package(
     ],
     dependencies: [
         // Use the local Teatro package to access latest Storyboard APIs
-        .package(url: "https://github.com/fountain-coach/teatro.git", branch: "main")
+        .package(path: "../teatro")
     ],
     targets: [
         .target(
