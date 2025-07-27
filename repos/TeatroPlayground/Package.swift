@@ -10,7 +10,8 @@ let package = Package(
         .executable(name: "TeatroPlayground", targets: ["TeatroPlayground"])
     ],
     dependencies: [
-        .package(url: "https://github.com/fountain-coach/teatro.git", branch: "main")
+        // Use the local Teatro package to access latest Storyboard APIs
+        .package(path: "../teatro")
     ],
     targets: [
         .target(
