@@ -27,11 +27,11 @@ public struct MIDIAudioEngine {
         }
     }
 
-    public static func play(note: MIDINote) {
+    public static func play(note: MIDI2Note) {
         guard let sampler else { return }
 
         let midiNote = UInt8(note.note)
-        let velocity = UInt8(note.velocity)
+        let velocity = UInt8(max(0, min(127, Int(note.velocity * 127))))
         let channel = UInt8(note.channel)
 
         sampler.startNote(midiNote, withVelocity: velocity, onChannel: channel)
