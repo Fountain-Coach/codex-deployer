@@ -55,7 +55,7 @@ public struct VitalSignsAnimation: @preconcurrency Renderable {
 }
 
 
-#if DEBUG
+#if DEBUG && canImport(SwiftUI)
 import SwiftUI
 import Combine
 
