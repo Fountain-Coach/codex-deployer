@@ -1,0 +1,18 @@
+on_post_generate_file:
+  - pattern: "**/*.swift"
+    contains_any:
+      - "#Preview"
+      - "struct .*: View"
+    run: "python3 repos/teatro/scripts/setup_preview_target.py {file}"
+on_post_scaffold:
+  - pattern: "**/*.swift"
+    contains_any:
+      - "#Preview"
+      - "struct .*: View"
+    run: "python3 repos/teatro/scripts/setup_preview_target.py {file}"
+on_post_move_file:
+  - pattern: "**/*.swift"
+    contains_any:
+      - "#Preview"
+      - "struct .*: View"
+    run: "python3 repos/teatro/scripts/setup_preview_target.py {file}"
