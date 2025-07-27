@@ -22,6 +22,7 @@ Then include `Teatro` as a dependency in your target.
 - [Animation System](Docs/AnimationSystem/README.md)
 - [LilyPond Music Rendering](Docs/LilyPondMusicRendering/README.md)
 - [MIDI 2.0 DSL](Docs/MIDI20DSL/README.md)
+- [TeatroSampler](Docs/TeatroPlayer/README.md#enabling-audio)
 - [Fountain Screenplay Engine](Docs/FountainScreenplayEngine/README.md)
 - [Fountain Parser Implementation Plan](Docs/FountainScreenplayEngine/FountainParserImplementationPlan.md)
 - [View Implementation and Testing Plan](Docs/ViewImplementationPlan/README.md)
@@ -31,6 +32,8 @@ Then include `Teatro` as a dependency in your target.
 - [Summary](Docs/Summary/README.md)
 - [Addendum: Apple Platform Compatibility](Docs/Addendum/README.md)
 - [Mastering the Teatro Prompting Language for GUI Code Generation](https://chatgpt.com/share/68826ebf-64ac-8005-9b37-40d6e7187ea3)
+
+`TeatroSampler` provides cross-platform MIDI 2 playback for the animation player and bridges events to legacy formats when needed.
 
 The new **Storyboard DSL** allows you to script view states and animated transitions in Swift.  See the guide for an example of generating a textual storyboard preview that can be sent back to Codex.
 

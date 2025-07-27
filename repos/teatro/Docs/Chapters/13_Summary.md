@@ -18,15 +18,16 @@ The **Teatro View Engine** is a modular, fully declarative view system written i
 - 🆕 **Animated SVG Export**  
   Teatro now supports generating `<svg>` files with embedded `<animate>` transitions via `SVGAnimator.renderAnimatedSVG(...)`. Ideal for previewing UI timelines, scene transitions, or GPT-driven visual reasoning.
 
-- **Music Rendering**  
+- **Music Rendering**
   - **LilyPond:** Printable PDF sheet music from `LilyScore` views.
   - **MIDI 2.0 Sandbox:** expressive sequencing via `MIDI2Note`, `MIDISequence`, `UMPEncoder`, and `CsoundScore`.
+  - **TeatroSampler:** cross-platform MIDI 2 sampler with a compatibility bridge for legacy formats.
   
   - **Screenplay Rendering**
     - `.fountain` parsing into typed screenplay elements
     - `FountainSceneView` enables GPT-authored scripts to be staged and animated
-  - 🎬 **Teatro Animation Player**  
-    Play animated sequences of Teatro views in real-time, driven by MIDI timing. Includes visual transitions, frame-level commentary, and synchronized audio via AVFoundation.
+  - 🎬 **Teatro Animation Player**
+    Play animated sequences of Teatro views in real-time, driven by MIDI timing. Includes visual transitions, frame-level commentary, and synchronized audio via `TeatroSampler`.
 
 ---
 
