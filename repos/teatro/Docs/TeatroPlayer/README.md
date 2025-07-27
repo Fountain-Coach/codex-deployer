@@ -23,8 +23,8 @@ overlayed during playback.
 
 ### Enabling audio
 
-`TeatroPlayerView` uses `AVAudioUnitSampler` to produce live MIDI 2.0 output. Ensure
-an appropriate sound font is loaded when initializing the sampler.
+`TeatroPlayerView` relies on `TeatroSampler` for live MIDI 2.0 playback. Provide
+a `SampleSource` to connect to Csound, Faust, or any custom backend.
 
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
