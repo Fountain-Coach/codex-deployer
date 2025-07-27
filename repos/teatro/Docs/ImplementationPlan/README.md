@@ -8,6 +8,8 @@ This roadmap converts the critique and analysis of the Teatro View Engine into c
    - Introduce `MIDI2Note` and `UMPEncoder` to generate Universal MIDI Packets.
    - Provide a `CsoundScore` view type and `CsoundRenderer` for `.csd` output.
    - Extend `RenderCLI` with `csound` and `ump` targets and add tests for the generated files.
+   - Implement `TeatroSampler` for cross-platform MIDI 2 playback.
+   - Add `MIDICompatibilityBridge` to convert sampler events into `MIDINote`, `CsoundScore`, and `LilyScore`.
 2. **GIF Export**
    - Extend `Animator` with a helper for `.gif` generation using ImageMagick or a Swift wrapper.
    - Document required tools and provide a sample test that produces an animated gif from frame PNGs.
