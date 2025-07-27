@@ -78,7 +78,15 @@ public struct TeatroPlayerView: View {
 
         let note = midiSequence.notes[index]
 #if canImport(AVFoundation)
-        MIDIAudioEngine.play(note: note)
+        let midi2 = MIDI2Note(
+            channel: note.channel,
+            note: note.note,
+            velocity: Float(note.velocity) / 127.0,
+            duration: note.duration
+        )
+        Task {
+            await MIDIAudioEngine.play(note: midi2)
+        }
 #endif
         let duration = note.duration
 
