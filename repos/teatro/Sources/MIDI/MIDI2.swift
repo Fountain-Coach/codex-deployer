@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MIDI2Note {
+public struct MIDI2Note: Sendable, Equatable {
     public let channel: Int
     public let note: Int
     public let velocity: Float // 0.0 - 1.0

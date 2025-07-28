@@ -1,82 +1,50 @@
 import Foundation
 
-/// High level sampler orchestrating MIDI 2.0 note events.
-/// Voices are actor based and render audio via pluggable SampleSource
-/// implementations. This avoids platform specific audio frameworks and
-/// keeps the sampler cross‐platform.
-
-public struct MIDI2NoteEvent: Sendable, Equatable {
-    public var channel: Int
-    public var note: Int
-    public var velocity: Float
-    public var pitch: Float
-    public var timbre: SIMD4<Float>
-    public var articulation: String
-    public var timestamp: UInt64
-
-    public init(channel: Int, note: Int, velocity: Float, pitch: Float,
-                timbre: SIMD4<Float>, articulation: String, timestamp: UInt64) {
-        self.channel = channel
-        self.note = note
-        self.velocity = velocity
-        self.pitch = pitch
-        self.timbre = timbre
-        self.articulation = articulation
-        self.timestamp = timestamp
-    }
-}
-
+/// Shared protocol for all sampler implementations.
 public protocol SampleSource: Sendable {
-    mutating func render(buffer: inout [Float], frameCount: Int)
-    mutating func update(with event: MIDI2NoteEvent)
+    func trigger(_ note: MIDI2Note) async
+    func stopAll() async
+    func loadInstrument(_ path: String) async throws
 }
 
-public actor Voice {
-    public let id: UUID
-    var event: MIDI2NoteEvent
-    var sampler: SampleSource
-
-    init(id: UUID = UUID(), event: MIDI2NoteEvent, sampler: SampleSource) {
-        self.id = id
-        self.event = event
-        self.sampler = sampler
-    }
-
-    func update(_ newEvent: MIDI2NoteEvent) {
-        event = newEvent
-        sampler.update(with: newEvent)
-    }
-
-    func render(into buffer: inout [Float], frameCount: Int) {
-        sampler.render(buffer: &buffer, frameCount: frameCount)
-    }
+/// Available backend options for the sampler.
+public enum SamplerBackend {
+    case fluidsynth(sf2Path: String)
+    case csound(orchestra: String)
 }
 
-public actor TeatroSampler {
-    private var voices: [UUID: Voice] = [:]
+/// Main Teatro sampler actor routing note events to the selected backend.
+public actor TeatroSampler: SampleSource {
+    private let impl: SampleSource
 
-    public init() {}
-
-    @discardableResult
-    public func play(_ event: MIDI2NoteEvent, source: SampleSource) async -> UUID {
-        let voice = Voice(event: event, sampler: source)
-        voices[voice.id] = voice
-        return voice.id
+    /// Create a sampler using one of the supported backends.
+    public init(backend: SamplerBackend) async throws {
+        switch backend {
+        case .fluidsynth(let sf2):
+            let f = FluidSynthSampler()
+            try await f.loadInstrument(sf2)
+            self.impl = f
+        case .csound(let orc):
+            let c = CsoundSampler()
+            try await c.loadInstrument(orc)
+            self.impl = c
+        }
     }
 
-    public func updateVoice(id: UUID, with event: MIDI2NoteEvent) async {
-        await voices[id]?.update(event)
+    /// Internal initializer for unit tests to provide a custom implementation.
+    init(implementation: SampleSource) {
+        self.impl = implementation
     }
 
-    public func stopVoice(id: UUID) async {
-        voices.removeValue(forKey: id)
+    public func trigger(_ note: MIDI2Note) async {
+        await impl.trigger(note)
     }
 
-    public func activeVoices() async -> [UUID] {
-        Array(voices.keys)
+    public func stopAll() async {
+        await impl.stopAll()
     }
 
-    public func voiceCount() async -> Int {
-        voices.count
+    public func loadInstrument(_ path: String) async throws {
+        try await impl.loadInstrument(path)
     }
 }
