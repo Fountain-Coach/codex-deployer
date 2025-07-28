@@ -9,18 +9,29 @@ let package = Package(
             name: "Teatro",
             targets: ["Teatro"]
         ),
-        .executable(name: "RenderCLI", targets: ["RenderCLI"])
+        .executable(name: "RenderCLI", targets: ["RenderCLI"]),
+        .executable(name: "TeatroSamplerDemo", targets: ["TeatroSamplerDemo"])
     ],
     targets: [
         .target(
             name: "Teatro",
+            dependencies: ["CCsound", "CFluidSynth"],
             path: "Sources",
-            exclude: ["CLI"]
+            exclude: ["CLI", "TeatroSamplerDemo"]
         ),
         .executableTarget(
             name: "RenderCLI",
             dependencies: ["Teatro"],
             path: "Sources/CLI"
+        ),
+        .executableTarget(
+            name: "TeatroSamplerDemo",
+            dependencies: ["Teatro"],
+            path: "Sources/TeatroSamplerDemo",
+            resources: [
+                .copy("../../assets/sine.orc"),
+                .copy("../../assets/example.sf2")
+            ]
         ),
         .testTarget(
             name: "TeatroTests",
@@ -47,6 +58,14 @@ let package = Package(
             name: "SamplerTests",
             dependencies: ["Teatro"],
             path: "Tests/SamplerTests"
+        ),
+        .systemLibrary(
+            name: "CCsound",
+            path: "Sources/CCsound"
+        ),
+        .systemLibrary(
+            name: "CFluidSynth",
+            path: "Sources/CFluidSynth"
         )
     ]
 )
