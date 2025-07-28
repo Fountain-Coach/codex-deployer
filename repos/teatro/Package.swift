@@ -15,6 +15,7 @@ let package = Package(
     targets: [
         .target(
             name: "Teatro",
+            dependencies: ["CCsound", "CFluidSynth"],
             path: "Sources",
             exclude: ["CLI", "TeatroSamplerDemo"]
         ),
@@ -57,6 +58,14 @@ let package = Package(
             name: "SamplerTests",
             dependencies: ["Teatro"],
             path: "Tests/SamplerTests"
+        ),
+        .systemLibrary(
+            name: "CCsound",
+            path: "Sources/CCsound"
+        ),
+        .systemLibrary(
+            name: "CFluidSynth",
+            path: "Sources/CFluidSynth"
         )
     ]
 )
