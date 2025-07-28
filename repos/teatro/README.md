@@ -22,7 +22,7 @@ Then include `Teatro` as a dependency in your target.
 - [Animation System](Docs/AnimationSystem/README.md)
 - [LilyPond Music Rendering](Docs/LilyPondMusicRendering/README.md)
 - [MIDI 2.0 DSL](Docs/MIDI20DSL/README.md)
-- [TeatroSampler](Docs/TeatroPlayer/README.md#enabling-audio)
+- [TeatroSampler](Docs/TeatroSampler/README.md)
 - [Fountain Screenplay Engine](Docs/FountainScreenplayEngine/README.md)
 - [Fountain Parser Implementation Plan](Docs/FountainScreenplayEngine/FountainParserImplementationPlan.md)
 - [View Implementation and Testing Plan](Docs/ViewImplementationPlan/README.md)
