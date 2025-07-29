@@ -44,6 +44,7 @@ Follow these concrete steps to move `repos/fountainai` into the new modular layo
 7. **Refactor imports** – Replace old relative paths with module imports so the code compiles in its new locations.
 8. **Build and test** – Run `swift build` then `swift test -v` from the package root to verify all modules compile together.
 9. **Deprecate old repo** – Once tests pass, remove `repos/fountainai` and reference the new modules in documentation.
+The migration is now complete. All former contents of `repos/fountainai` live under `Sources/` and are built via the root `Package.swift`.
 
 ----
 ````text
