@@ -18,17 +18,27 @@ We plan to build an API gateway entirely in Swift to replace Kong. The goal is t
    - Integrate with our existing log aggregation setup (`docs/log_aggregation.md`). Expose Prometheus metrics on `/metrics` just like the LLM Gateway.
 5. **Request Transformation**
    - Allow lightweight header manipulation or JSON body validation directly in Swift.
+6. **Typesense Persistence**
+   - Use Typesense as the primary persistence layer. The cluster is defined by
+     our `repos/typesense-codex/openapi/openapi.yml` spec and accessed via
+     a Swift client generated through `clientgen-service`. Request metadata,
+     tokens and logs are stored as Typesense documents for fast retrieval.
 
 ## Implementation Outline
 - **Spec Definition**: Author an OpenAPI spec in `FountainAi/openAPI/v1/gateway.yml`. This defines endpoints for the gateway itself, such as health checks and metrics.
 - **Code Generation**: Use the existing `clientgen-service` to produce Swift servers and clients, following the process in `Sources/FountainOps/regenerate.sh`.
 - **Service Module**: Add a new SPM target `gateway-server` that compiles the generated server handlers.
 - **Configuration**: Read routing tables and rate limits from a YAML or JSON file stored in the repository. Updates can be rolled out declaratively via commits.
+- **Typesense Client Integration**: Generate a Swift client from the Typesense
+  OpenAPI specification and embed it into the `gateway-server` target for
+  persistence operations.
 
 ## Next Steps
 1. Draft the gateway OpenAPI specification with minimal routes.
 2. Extend `docker-compose.yml` to include the new service built from `Generated/Server/gateway`.
 3. Review existing docs on Kong (`docs/notes/kong_pitch.md`) to match feature parity where necessary.
+4. Run `clientgen-service` against the Typesense OpenAPI spec to generate
+   the persistence client and commit the resulting code.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
