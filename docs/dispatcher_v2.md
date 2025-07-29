@@ -1,6 +1,8 @@
 # Dispatcher v2.4
 
 `dispatcher_v2.py` is the second major iteration of the Codex deployment loop.
+**Deprecated:** this Python implementation will be replaced by a Swift-based
+orchestrator loop. Keep using it only until the new loop is documented.
 Version 2.4 extends the previous release with build result checks, log rotation,
 automatic patch application, a pull request workflow, and platform-aware compilation.
 
@@ -54,3 +56,8 @@ The dispatcher runs this script so local results match CI.
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

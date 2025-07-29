@@ -1,6 +1,11 @@
 """Dispatcher v2.4
 ===================
 
+.. deprecated:: 2025-07-29
+   This Python dispatcher is being phased out in favour of a Swift-based
+   orchestrator loop. Keep this file only for legacy deployments.
+   TODO: remove once the Swift orchestrator ships.
+
 An improved deployment dispatcher for Codex. Version 2.4 adds
 
 basic build result checking, log rotation, automatic patch
@@ -499,4 +504,7 @@ def loop() -> None:
 
 if __name__ == "__main__":
     loop()
+
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+
 

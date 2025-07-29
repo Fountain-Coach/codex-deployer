@@ -8,7 +8,7 @@ it consumes the variables listed in [../environment_variables.md](../environment
 
 ## Python Modules
 
-- [`deploy/dispatcher_v2.py`](../../deploy/dispatcher_v2.py) – main deployment loop
+- [`deploy/dispatcher_v2.py`](../../deploy/dispatcher_v2.py) – main deployment loop *(deprecated; to be replaced by the Swift orchestrator)*
 - [`analyze_swift_log.py`](../../analyze_swift_log.py) – build log analyzer
 
 View the dispatcher API with:
@@ -27,3 +27,9 @@ with `swift package generate-documentation` once the build pipeline is enabled.
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+
+

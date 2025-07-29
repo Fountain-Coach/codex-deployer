@@ -16,7 +16,7 @@ This introduction summarises the core concepts and explains how environment vari
 ## Core Concepts
 
 1. **Git as the source of truth** – All services live under `repos/` in this repository. The dispatcher pulls updates and commits any changes, so the repo history is the single point of reference.
-2. **Python dispatcher loop** – `deploy/dispatcher_v2.py` runs continuously under systemd or inside Docker. It builds services, runs tests, and writes logs under `deploy/logs/`.
+2. **Python dispatcher loop** – `deploy/dispatcher_v2.py` runs continuously under systemd or inside Docker. **Deprecated:** this loop will be replaced by a Swift orchestrator. It currently builds services, runs tests, and writes logs under `deploy/logs/`.
 3. **Semantic feedback** – After each cycle, JSON placed in `feedback/` can modify the code or restart services. This allows Codex to iterate automatically based on build results.
 4. **Cross-platform workflow** – The same loop works on macOS or Linux. Optional Docker Compose tests run when `DISPATCHER_RUN_E2E=1`.
 
@@ -57,3 +57,9 @@ The [handbook README](README.md) contains a complete table of contents with link
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+
+

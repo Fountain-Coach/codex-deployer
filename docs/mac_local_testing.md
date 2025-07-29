@@ -2,6 +2,7 @@
 
 This guide shows how to run the Codex deployer on a Mac so you can execute service tests locally.
 It builds a small Docker image and starts `dispatcher_v2.py` with environment variables exported from `dispatcher.env`.
+**Deprecated:** this Python workflow will be replaced by a Swift orchestrator loop.
 For a broader overview of available guides see [docs/handbook](handbook/README.md).
 See [environment_variables.md](environment_variables.md) for the full list of variables.
 
@@ -76,3 +77,8 @@ Press `Ctrl-C` in the terminal running the container to stop the dispatcher.
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+
