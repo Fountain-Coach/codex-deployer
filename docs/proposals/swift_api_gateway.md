@@ -8,17 +8,19 @@ We plan to build an API gateway entirely in Swift to replace Kong. The goal is t
 - **Full Ownership**: By avoiding Lua plugins or external gateways, we maintain complete oversight and quality assurance.
 
 ## Features
-1. **Routing and Load Balancing**
+1. **Automatic Let's Encrypt Certificate Management**
+   - Retrieve and renew TLS certificates via Let's Encrypt so the gateway serves HTTPS by default.
+2. **Routing and Load Balancing**
    - Route requests based on path and version to the appropriate backend service. Equivalent to Kong's routing but implemented with SwiftNIO.
-2. **Authentication**
+3. **Authentication**
    - Provide token-based authentication, verifying credentials before forwarding requests. Additional policies can be described in the OpenAPI security section.
-3. **Rate Limiting**
+4. **Rate Limiting**
    - Basic request quota tracking with in-memory or Redis counters to protect services.
-4. **Logging and Metrics**
+5. **Logging and Metrics**
    - Integrate with our existing log aggregation setup (`docs/log_aggregation.md`). Expose Prometheus metrics on `/metrics` just like the LLM Gateway.
-5. **Request Transformation**
+6. **Request Transformation**
    - Allow lightweight header manipulation or JSON body validation directly in Swift.
-6. **Typesense Persistence**
+7. **Typesense Persistence**
    - Use Typesense as the primary persistence layer. The cluster is defined by
      our `repos/typesense-codex/openapi/openapi.yml` spec and accessed via
      a Swift client generated through `clientgen-service`. Request metadata,
@@ -28,6 +30,7 @@ We plan to build an API gateway entirely in Swift to replace Kong. The goal is t
 - **Spec Definition**: Author an OpenAPI spec in `FountainAi/openAPI/v1/gateway.yml`. This defines endpoints for the gateway itself, such as health checks and metrics.
 - **Code Generation**: Use the existing `clientgen-service` to produce Swift servers and clients, following the process in `Sources/FountainOps/regenerate.sh`.
 - **Service Module**: Add a new SPM target `gateway-server` that compiles the generated server handlers.
+- **Certificate Management**: Automate HTTPS with Let's Encrypt using an ACME client and renewal timer.
 - **Configuration**: Read routing tables and rate limits from a YAML or JSON file stored in the repository. Updates can be rolled out declaratively via commits.
 - **Typesense Client Integration**: Generate a Swift client from the Typesense
   OpenAPI specification and embed it into the `gateway-server` target for
@@ -39,6 +42,7 @@ We plan to build an API gateway entirely in Swift to replace Kong. The goal is t
 3. Review existing docs on Kong (`docs/notes/kong_pitch.md`) to match feature parity where necessary.
 4. Run `clientgen-service` against the Typesense OpenAPI spec to generate
    the persistence client and commit the resulting code.
+5. Automate certificate issuance and renewal so HTTPS works out of the box.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
