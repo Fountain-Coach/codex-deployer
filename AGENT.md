@@ -37,7 +37,16 @@
 - All generated via `clientgen-service`  
 
 ## TARGET ENV
-- Runs on Hetzner VPS with mounted Docker socket  
-- Accessible over SSH + DNS  
+- Runs on Hetzner VPS with mounted Docker socket
+- Accessible over SSH + DNS
+
+## UI PROJECTS
+- FountainUI is now maintained in the [Teatro](https://github.com/Fountain-Coach/Teatro) repository.
+- All new UI projects should start from the [FountainAI-Teatro-Template](https://github.com/Fountain-Coach/FountainAI-Teatro-Template).
+
+---
+```text
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+```
 
 
