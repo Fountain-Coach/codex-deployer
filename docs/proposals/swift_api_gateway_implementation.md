@@ -18,8 +18,8 @@ The gateway must present valid HTTPS certificates at all times. We rely on Let's
 ## 3. Next Steps Toward a Kong-Like Gateway
 - Add middleware for authentication, rate limiting and request logging based on the configuration files.
 - Expose health and metrics endpoints defined in the OpenAPI spec.
-- Implement plugin-style hooks so future features (like request transformations) mirror Kong's extensibility model.
-- Document how to integrate other services using the generated Typesense client.
+ - Plugin-style hooks allow custom middleware (for example request transformations) to mirror Kong's extensibility model.
+ - [Integrating other services](../typesense_client_integration.md) explains how to use the generated Typesense client.
 - Generate server stubs from `gateway.yml` and integrate `CertificateManager` with the HTTP server.
 - Extend the OpenAPI spec with `/certificates` and `/certificates/renew` endpoints.
 

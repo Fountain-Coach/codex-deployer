@@ -2,7 +2,7 @@ import Foundation
 
 import Dispatch
 
-let server = GatewayServer()
+let server = GatewayServer(plugins: [LoggingPlugin()])
 Task { @MainActor in
     try await server.start(port: 8080)
 }
