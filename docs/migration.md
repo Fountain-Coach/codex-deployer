@@ -1,6 +1,6 @@
 # Repository Migration to Modular SPM Layout
 
-This repository hosts multiple service sources under `repos/`. To match the [Swift‑native modular design](../README.md) we will consolidate these projects into a single Swift package with distinct modules.
+This repository hosts multiple service sources under `repos/`. To match the [Swift‑native modular design](../README.md) we planned to consolidate these projects into a single Swift package with distinct modules. During the attempt we extracted the Teatro code into its own repository at [Fountain-Coach/Teatro](https://github.com/Fountain-Coach/Teatro) where it now builds and tests successfully. The old FountainUI sources remain in this repository under `legacy/` and will be replaced by a new implementation based on that external repository and the templated environment from [FountainAI-Teatro-Template](https://github.com/Fountain-Coach/FountainAI-Teatro-Template).
 
 ## Target Modules
 
@@ -17,8 +17,8 @@ The README lists the following Swift Package Manager modules:
 | Current repo path | Destination module | Notes |
 |------------------|--------------------|-------|
 | `repos/fountainai` | FountainCore / FountainCodex / FountainOps | Split: base types to FountainCore, runtime to FountainCodex, ops scripts to FountainOps |
-| `repos/teatro` | FountainUI | Teatro rendering engine |
-| `repos/TeatroView`, `repos/TeatroViewPreviewHost`, `repos/TeatroPlayground` | FountainUI | View components and sample apps |
+| `repos/teatro` | Extracted to external repo | Moved to [Teatro](https://github.com/Fountain-Coach/Teatro) |
+| `repos/TeatroView`, `repos/TeatroViewPreviewHost`, `repos/TeatroPlayground` | Legacy | Sources archived; new FountainUI will rebuild from the Teatro repo |
 | `repos/kong-codex` | FountainOps | Kong deployment automation |
 | `repos/typesense-codex` | FountainOps | Typesense setup utilities |
 | others | FountainAgents | Specialised agents or previews |
@@ -29,7 +29,7 @@ The README lists the following Swift Package Manager modules:
 2. **Copy sources** from the existing repos into the corresponding module, preserving history if possible.
 3. **Update `Package.swift`** to declare each module as a library or executable and wire up dependencies.
 4. **Adjust imports and paths** so that all modules build together using `swift build`.
-5. **Remove legacy repos** once the new structure compiles and tests succeed.
+5. **Archive FountainUI sources** under `legacy/` and rely on the external [Teatro](https://github.com/Fountain-Coach/Teatro) repository for rebuilding the UI.
 
 ## FountainAI Migration Plan
 
