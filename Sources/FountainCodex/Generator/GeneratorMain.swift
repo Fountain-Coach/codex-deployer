@@ -1,6 +1,6 @@
 import Foundation
 
-struct GeneratorCLI {
+public struct GeneratorCLI {
     static func run(args: [String]) throws {
         var inputPath: String?
         var outputPath: String?
@@ -25,7 +25,7 @@ struct GeneratorCLI {
         try ServerGenerator.emitServer(from: spec, to: outURL.appendingPathComponent("Server"))
     }
 
-    static func main() throws {
+    public static func main() throws {
         try run(args: Array(CommandLine.arguments.dropFirst()))
     }
 }
