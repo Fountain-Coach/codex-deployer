@@ -5,15 +5,23 @@ import Yams
 public enum SpecLoader {
     public static func load(from url: URL) throws -> OpenAPISpec {
         let data = try Data(contentsOf: url)
+        var sanitizedData = data
+        if let text = String(data: data, encoding: .utf8) {
+            let filtered = text
+                .split(separator: "\n")
+                .filter { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("©") }
+                .joined(separator: "\n")
+            sanitizedData = Data(filtered.utf8)
+        }
 
         // Attempt JSON decoding first
-        if let spec = try? JSONDecoder().decode(OpenAPISpec.self, from: data) {
+        if let spec = try? JSONDecoder().decode(OpenAPISpec.self, from: sanitizedData) {
             try SpecValidator.validate(spec)
             return spec
         }
 
         // Fallback to YAML decoding
-        guard let yamlString = String(data: data, encoding: .utf8) else {
+        guard let yamlString = String(data: sanitizedData, encoding: .utf8) else {
             throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Input data is not valid UTF-8"))
         }
         guard let loadedYaml = try Yams.load(yaml: yamlString) else {
