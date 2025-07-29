@@ -38,7 +38,7 @@ let package = Package(
         ),
         .executableTarget(
             name: "gateway-server",
-            dependencies: [],
+            dependencies: ["FountainCodex"],
             path: "Sources/GatewayApp"
         ),
         .testTarget(name: "FountainCoreTests", dependencies: ["FountainCore"], path: "Tests/FountainCoreTests"),
