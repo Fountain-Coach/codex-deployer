@@ -9,7 +9,7 @@ for spec in FountainAi/openAPI/*/*.yml; do
     service=$(basename "$spec" .yml)
     outDir="Generated/$service"
     rm -rf "$outDir"
-    swift run generator --input "$spec" --output "$outDir"
+    swift run clientgen-service --input "$spec" --output "$outDir"
 
     mkdir -p "Generated/Client/$service" "Generated/Server/$service"
     cp -r "$outDir/Client/." "Generated/Client/$service/"
