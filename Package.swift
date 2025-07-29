@@ -8,8 +8,7 @@ let package = Package(
     ],
     products: [
         .library(name: "FountainCore", targets: ["FountainCore"]),
-        .library(name: "FountainCodex", targets: ["FountainCodex"]),
-        .library(name: "FountainOps", targets: ["FountainOps"])
+        .library(name: "FountainCodex", targets: ["FountainCodex"])
     ],
     dependencies: [
         .package(url: "https://github.com/jpsim/Yams.git", from: "5.0.0"),
@@ -30,7 +29,6 @@ let package = Package(
             ],
             path: "Sources/FountainCodex"
         ),
-        .target(name: "FountainOps", path: "Sources/FountainOps"),
         .testTarget(name: "FountainCoreTests", dependencies: ["FountainCore"], path: "Tests/FountainCoreTests")
     ]
 )
