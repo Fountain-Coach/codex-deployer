@@ -59,6 +59,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /certificates:
+    get:
+      summary: Certificate Info
+      description: Returns metadata about the active TLS certificate.
+      operationId: certificateInfo
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateInfo'
+  /certificates/renew:
+    post:
+      summary: Trigger certificate renewal
+      description: Manually invoke the renewal process for the TLS certificate.
+      operationId: renewCertificate
+      responses:
+        '202':
+          description: Renewal triggered
+          content:
+            application/json:
+              schema:
+                type: object
   /routes:
     get:
       summary: List Configured Routes
@@ -198,5 +222,18 @@ components:
         error:
           type: string
           description: Description of the error
+    CertificateInfo:
+      type: object
+      required:
+        - notAfter
+        - issuer
+      properties:
+        notAfter:
+          type: string
+          format: date-time
+          description: Expiration date of the certificate
+        issuer:
+          type: string
+          description: Certificate issuer
 
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

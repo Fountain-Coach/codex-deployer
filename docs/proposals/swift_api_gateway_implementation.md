@@ -9,10 +9,10 @@ This document outlines the initial code structure for the Swift-based API gatewa
 - `Sources/GatewayApp/`: entry point bootstrapping NIO, loading configuration and starting the server with HTTPS enabled.
 
 ## 2. Certificate Management
-The gateway must present valid HTTPS certificates at all times. We rely on Let's Encrypt for issuance and renewal.
+The gateway must present valid HTTPS certificates at all times. We rely on Let's Encrypt for issuance and renewal and ship a helper script.
 1. On first launch, `renew-certs.sh` requests a certificate for the gateway's domain using the ACME HTTP challenge.
 2. The script stores the resulting files in a shared directory mounted into the Docker container.
-3. A Swift task monitors certificate expiry and invokes the script periodically (e.g. via `DispatchSourceTimer`).
+3. `CertificateManager` wraps a `DispatchSourceTimer` and periodically runs the script to renew certificates.
 4. If renewal succeeds, the gateway reloads its TLS configuration without downtime.
 
 ## 3. Next Steps Toward a Kong-Like Gateway
@@ -20,6 +20,8 @@ The gateway must present valid HTTPS certificates at all times. We rely on Let's
 - Expose health and metrics endpoints defined in the OpenAPI spec.
 - Implement plugin-style hooks so future features (like request transformations) mirror Kong's extensibility model.
 - Document how to integrate other services using the generated Typesense client.
+- Generate server stubs from `gateway.yml` and integrate `CertificateManager` with the HTTP server.
+- Extend the OpenAPI spec with `/certificates` and `/certificates/renew` endpoints.
 
 These steps follow the common patterns of gateways modelled after Kong while keeping the implementation fully Swift.
 
