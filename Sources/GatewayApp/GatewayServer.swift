@@ -8,22 +8,34 @@ public final class GatewayServer {
     private let server: NIOHTTPServer
     private let manager: CertificateManager
     private let group: EventLoopGroup
+    private let plugins: [GatewayPlugin]
 
-    public init(manager: CertificateManager = CertificateManager()) {
+    public init(manager: CertificateManager = CertificateManager(),
+                plugins: [GatewayPlugin] = []) {
         self.manager = manager
+        self.plugins = plugins
         self.group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-        let kernel = HTTPKernel { req in
-            switch (req.method, req.path) {
+        let kernel = HTTPKernel { [plugins] req in
+            var request = req
+            for plugin in plugins {
+                request = try await plugin.prepare(request)
+            }
+            var response: HTTPResponse
+            switch (request.method, request.path) {
             case ("GET", "/health"):
                 let json = try JSONEncoder().encode(["status": "ok"])
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
             case ("GET", "/metrics"):
                 let metrics: [String: [String]] = ["metrics": []]
                 let json = try JSONEncoder().encode(metrics)
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
             default:
-                return HTTPResponse(status: 404)
+                response = HTTPResponse(status: 404)
             }
+            for plugin in plugins.reversed() {
+                response = try await plugin.respond(response, for: request)
+            }
+            return response
         }
         self.server = NIOHTTPServer(kernel: kernel, group: group)
     }
