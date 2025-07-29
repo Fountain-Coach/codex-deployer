@@ -1,4 +1,6 @@
 #!/bin/bash
+# DEPRECATED: This script bootstraps the legacy Python dispatcher environment.
+# TODO: replace with setup steps for the Swift orchestrator loop.
 
 set -e
 
@@ -28,3 +30,7 @@ systemctl enable fountain-dispatcher
 systemctl start fountain-dispatcher
 
 echo "[BOOTSTRAP] Done. Codex deployment loop is now running."
+
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+
+

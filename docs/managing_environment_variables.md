@@ -1,6 +1,8 @@
 # Managing Environment Variables
 
 This guide explains how to configure the environment variables required by `dispatcher_v2.py`.
+**Deprecated:** the Python dispatcher is being retired. These settings remain for
+legacy deployments until the Swift orchestrator loop is documented.
 It complements [environment_variables.md](environment_variables.md) with step‑by‑step setup instructions.
 
 ## 1. Create `dispatcher.env`
@@ -103,3 +105,8 @@ Using a token avoids interactive Git prompts when cloning private repositories.
 © 2025 Contexter alias Benedikt Eickhoff, https://fountain.coach. All rights reserved.
 Unauthorized copying or distribution is strictly prohibited.
 ```
+
+````text
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+````
+

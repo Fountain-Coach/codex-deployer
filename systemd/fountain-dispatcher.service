@@ -1,9 +1,13 @@
 [Unit]
+# DEPRECATED: Python-based dispatcher service. This unit will be removed once
+# the Swift orchestrator loop ships.
 Description=Codex FountainAI Deployment Dispatcher
 After=network.target
 
 [Service]
 EnvironmentFile=/srv/deploy/dispatcher.env
+# TODO: replace the Python entry point below with the Swift orchestrator once
+# it is available.
 ExecStart=/usr/bin/python3 /srv/deploy/deploy/dispatcher_v2.py
 WorkingDirectory=/srv/deploy
 Restart=always
@@ -11,3 +15,6 @@ User=root
 
 [Install]
 WantedBy=multi-user.target
+
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+
