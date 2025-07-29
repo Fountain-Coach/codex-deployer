@@ -1,6 +1,0 @@
-[2025-07-14T02:58:26.779454] DISPATCHER_INTERVAL not set; using default 60
-[2025-07-14T02:58:26.779666] DISPATCHER_USE_PRS not set; pull request workflow enabled
-[2025-07-14T02:58:26.779790] DISPATCHER_BUILD_DOCKER not set; docker builds disabled
-[2025-07-14T02:58:26.779886] DISPATCHER_RUN_E2E not set; integration tests disabled
-[2025-07-14T02:58:26.780048] === New Cycle ===
-[2025-07-14T02:58:27.627322] Cloned fountainai -> swift-codex-openapi-kernel

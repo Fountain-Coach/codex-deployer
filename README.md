@@ -1,49 +1,134 @@
-# Codex-Deployer Handbook
+# 🧠 FountainAI Codex + Swift Modularity Proposal
 
-*Originally a Git-driven deployment companion for Swift services, now the codex‑FountainAI maintainer and GPT contributor.*
+> This document outlines the proposed Codex‑driven, Swift‑native architecture for FountainAI, synthesizing all system layers into a single, declarative orchestration model. It defines Codex’s role as a compiler‑agent, the modular Swift package layout, Hetzner‑native DevOps orchestration, and embedded reasoning logic for infrastructure and AI evolution.
 
-## Abstract
-Codex-Deployer unifies builds, logs, and semantic fixes in a single Git-bound loop. It primarily runs `deploy/dispatcher_v2.py` to build the local **FountainAI** sources vendored under `repos/`. The project began as a pragmatic helper for Codex but has grown into the codex‑FountainAI maintainer and GPT contributor. It still clears the path for FountainAI, a platform where large language models orchestrate tools, analyse knowledge drift, and learn from reflection. As the deployment loop compiles and patches code, it mirrors FountainAI's broader reasoning flow, where plans are executed step by step and every outcome informs the next iteration.
+---
 
-## Official Workflow
-Use `deploy/dispatcher_v2.py` as the default execution path under Docker or systemd. Configure it solely through environment variables defined in [docs/environment_variables.md](docs/environment_variables.md). Manual Xcode builds remain optional for troubleshooting.
+## 1. Overview
 
-## Table of Contents
-- [Introduction to Codex-Deployer](docs/handbook/introduction.md) – overview of the dispatcher and how environment variables shape the workflow.
-- [Architecture Overview](docs/handbook/architecture.md) – diagram of repositories and the build loop.
-- [Running on macOS with Docker](docs/mac_docker_tutorial.md) – instructions for local Docker setups.
-- [Local Testing on macOS](docs/mac_local_testing.md) – guidance for replicating the Linux build on macOS.
-- [Managing Environment Variables](docs/managing_environment_variables.md) – how to set up tokens and secrets.
-- [Environment Variables Reference](docs/environment_variables.md) – complete list of variables.
-- [Dispatcher v2 Overview](docs/dispatcher_v2.md) – inner workings of the Python loop.
-- [Pull Request Workflow](docs/pull_request_workflow.md) – how patches are proposed and merged.
-- [Code Reference](docs/handbook/code_reference.md) – links to inline API docs.
-- [History and Roadmap](docs/handbook/history.md) – how the project evolved and what's next.
-- [TeatroPlayground GUI Plan](docs/teatro_playground_gui_plan.md) – draft plan for a Teatro-based GUI.
-- [Teatro CLI Guide](repos/teatro/Docs/CLIIntegration/README.md) – how to render views from the command line.
-- [FountainAI Playground Guidelines](docs/fountainai_playground_guidelines.md) – rules for safe UI prototyping.
-- [Future Vision](docs/future_vision.md) – long-term FountainAI platform.
+We propose a fully declarative, Git‑driven architecture for FountainAI where Codex acts as the compiler, Git repositories function as pub/sub interfaces, and the runtime stack is composed of modular Swift libraries and services, orchestrated through Hetzner‑native infrastructure.
 
-## Quick start
-Clone the repository, copy the sample environment file, and start the dispatcher in Docker.
-```bash
-git clone https://github.com/fountain-coach/codex-deployer /srv/deploy
-cd /srv/deploy
-cp systemd/dispatcher.env dispatcher.env  # edit values
-export $(grep -v '^#' dispatcher.env | xargs)
-docker build -t codex-deployer-local .
-docker run --rm -it \
-  -v $(pwd):/srv/deploy \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  -e GITHUB_TOKEN -e OPENAI_API_KEY \
-  codex-deployer-local \
-  python3 /srv/deploy/deploy/dispatcher_v2.py
+---
+
+## 2. Core Principles
+
+### 🧠 Codex as Compiler
+
+Codex is not just a Copilot—it is a compilation agent that:
+
+- **Watches Git**: Treats the Git repo as a declarative program.  
+- **Acts on PRs**: Executes or generates PRs to evolve system state.  
+- **Writes Logs**: Emits structured logs into `/logs` for semantic feedback.  
+- **Reflects**: Reads `/feedback` to improve future behavior.  
+
+### 🌳 Swift‑Native Modularity
+
+The entire system is restructured into Swift Package Manager (SPM) modules:
+
+- **FountainCore**: Core types and protocols.  
+- **FountainCodex**: Agent runtime + dispatcher.  
+- **FountainUI**: Teatro view framework.  
+- **FountainOps**: Declarative ops layer (Hetzner, DNS, Kong, Typesense).  
+
+### 🛰️ Hetzner‑Native Orchestration
+
+- DNS managed via Hetzner DNS API  
+- Reverse proxies: Kong or Caddy (configured via SPM tools)  
+- GitHub runners: Replaced by long‑lived Hetzner VPS executing `dispatcher.py`  
+- Agents submit pull requests to evolve infrastructure  
+
+### 🧱 Infrastructure as Code via Git
+
+All system operations are modeled through commits:
+
+- **Deployments** = commit + PR  
+- **Upgrades** = file diff  
+- **Feedback** = write to `/feedback/`  
+
+---
+
+## 3. Repository Structure
+
+```text
+FountainCoach/
+├── Sources/
+│   ├── FountainCore/
+│   ├── FountainCodex/
+│   ├── FountainUI/
+│   ├── FountainOps/
+│   └── FountainAgents/
+├── Repos/ (external mirrors)
+├── dispatcher.py (runs on Hetzner)
+├── logs/
+├── feedback/
+└── Package.swift
 ```
-For an explanation of each variable and how to generate tokens, see the [setup guide](docs/managing_environment_variables.md).
 
-## From Codex to FountainAI
-While deployment remains central, the repository now serves as the codex‑FountainAI maintainer and GPT contributor. For an overview of the broader FountainAI platform and its APIs, see [docs/future_vision.md](docs/future_vision.md).
+---
 
-``````text
-©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-``````
+## 4. Codex Agent Definition (Inline)
+
+The following defines the `agent.md` for the Codex agent operating this system:
+
+### Codex Agent Definition: FountainAI Compiler
+
+#### IDENTITY
+- **Name**: FountainCodex  
+- **Role**: Declarative compiler for FountainAI  
+- **Persona**: Sober, relentless, structured  
+
+#### RESPONSIBILITIES
+- Watches tracked Git repositories for changes  
+- Pulls PRs, executes builds, triggers deployment scripts  
+- Commits logs to `/logs/`, reads reflections from `/feedback/`  
+- Coordinates with external agents (LLMs, Swift runtime)  
+
+#### EXAMPLE CYCLE
+1. Detect PR in `codex-deployer`  
+2. Run `swift build && swift test`  
+3. Update DNS via Hetzner REST API  
+4. Emit `/logs/build-<timestamp>.log`  
+5. Await response in `/feedback/`  
+
+#### CONTROL SURFACES
+- `/logs/*.log` — declarative output traces  
+- `/feedback/*.json` — structured response/reflection  
+- `dispatcher.py` — main interpreter  
+
+#### OPENAPI CLIENTS
+- Must use OpenAPI 3.1 spec to generate Swift clients  
+- All generated via `clientgen-service`  
+
+#### TARGET ENV
+- Runs on Hetzner VPS with mounted Docker socket  
+- Accessible over SSH + DNS  
+
+---
+
+## 5. DevOps Actions
+
+- Replace GitHub runners with Hetzner daemon  
+- Mount `/var/run/docker.sock` for local builds  
+- Move all DNS + proxy setup to Swift scripts  
+- Build SPM packages via `swift build` only  
+- Use OpenAPI client generator (`clientgen-service`)  
+- Define Codex orchestrator loop in Swift  
+- Refactor `/logs/` and `/feedback/` structure  
+- Publish Swift packages to internal registry  
+
+---
+
+## 6. Diagram Summary (optional for visual output)
+
+Rendered separately in visual pipeline.
+
+---
+
+## 7. Final Notes
+
+This proposal replaces Docker‑centric DevOps with a fully Swift‑native orchestration layer, defines Codex as a proper compiler interface over Git, and aligns all infrastructure agents as commit‑driven modules.
+
+Next step: enact this system via a Codex PR and launch a full end‑to‑end reflection cycle.
+
+©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+

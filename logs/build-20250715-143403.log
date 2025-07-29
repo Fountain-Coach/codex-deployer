@@ -1,7 +1,0 @@
-[2025-07-15T14:34:03.195302] === New Cycle ===
-error: 'fountainai': package 'fountainai' is using Swift tools version 6.1.0 but the installed version is 5.8.1
-
-[2025-07-15T14:34:03.196439] Starting swift build...
-[2025-07-15T14:34:03.606137] swift build failed with exit code 1
-[2025-07-15T14:34:04.383370] Failed to create PR for Fountain-Coach/codex-deployer: Unauthorized
-[2025-07-15T14:34:04.385876] Skipping merge wait; missing PR number or token
