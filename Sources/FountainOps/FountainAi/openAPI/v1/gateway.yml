@@ -1,0 +1,202 @@
+---
+openapi: 3.1.0
+info:
+  title: FountainAI Gateway
+  description: >
+    Swift-based API gateway providing HTTPS termination, routing,
+    authentication and metrics for FountainAI services.
+  version: 1.0.0
+servers:
+  - url: https://gateway.fountain.coach/api/v1
+paths:
+  /health:
+    get:
+      summary: Health
+      description: Returns 200 if the gateway is running.
+      operationId: gatewayHealth
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+  /metrics:
+    get:
+      summary: Metrics
+      description: Endpoint that serves Prometheus metrics.
+      operationId: gatewayMetrics
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+  /auth/token:
+    post:
+      summary: Issue Authentication Token
+      description: >
+        Verify client credentials and issue a JWT used for accessing
+        protected routes.
+      operationId: issueAuthToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CredentialRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /routes:
+    get:
+      summary: List Configured Routes
+      description: Returns all routing definitions active in the gateway.
+      operationId: listRoutes
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RouteInfo'
+    post:
+      summary: Add a new route
+      operationId: createRoute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteInfo'
+      responses:
+        '201':
+          description: Route created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteInfo'
+        '409':
+          description: Route already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /routes/{routeId}:
+    parameters:
+      - name: routeId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Unique identifier for the route
+    put:
+      summary: Update an existing route
+      operationId: updateRoute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteInfo'
+      responses:
+        '200':
+          description: Route updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteInfo'
+        '404':
+          description: Route not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete a route
+      operationId: deleteRoute
+      responses:
+        '204':
+          description: Route deleted
+        '404':
+          description: Route not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    CredentialRequest:
+      type: object
+      required:
+        - clientId
+        - clientSecret
+      properties:
+        clientId:
+          type: string
+          description: API client identifier
+        clientSecret:
+          type: string
+          description: API client secret
+    TokenResponse:
+      type: object
+      required:
+        - token
+        - expiresAt
+      properties:
+        token:
+          type: string
+          description: Bearer token for gateway access
+        expiresAt:
+          type: string
+          format: date-time
+          description: Expiration timestamp of the token
+    RouteInfo:
+      type: object
+      required:
+        - id
+        - path
+        - target
+        - methods
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the route
+        path:
+          type: string
+          description: URL path pattern for matching requests
+        target:
+          type: string
+          description: Upstream service address
+        methods:
+          type: array
+          items:
+            type: string
+            enum: [GET, POST, PUT, PATCH, DELETE]
+          description: HTTP methods forwarded to the upstream
+        rateLimit:
+          type: integer
+          description: Optional maximum requests per minute
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Description of the error
+
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
