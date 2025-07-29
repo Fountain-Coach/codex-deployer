@@ -31,6 +31,20 @@ The README lists the following Swift Package Manager modules:
 4. **Adjust imports and paths** so that all modules build together using `swift build`.
 5. **Remove legacy repos** once the new structure compiles and tests succeed.
 
+## FountainAI Migration Plan
+
+Follow these concrete steps to move `repos/fountainai` into the new modular layout:
+
+1. **Survey current contents** – Identify directories that contain base data models (`Generated`, `OpenAPI`), runtime code generation logic (`FountainAi`, `Makefile`, CLI tools) and deployment helpers (`Scripts`, Dockerfiles).
+2. **Create module roots** – Add `Sources/FountainCore`, `Sources/FountainCodex` and `Sources/FountainOps` to the root package.
+3. **Move base types** – Copy `Generated/Models.swift` and any reusable protocols or utilities into `Sources/FountainCore`.
+4. **Move runtime logic** – Place code generation routines, server kernels and executables under `Sources/FountainCodex`, adjusting imports to reference `FountainCore` where needed.
+5. **Move ops scripts** – Transfer Dockerfiles, deployment scripts and helpers to `Sources/FountainOps`.
+6. **Update `Package.swift`** – Declare each new target, wire their dependencies and ensure products are exposed as needed.
+7. **Refactor imports** – Replace old relative paths with module imports so the code compiles in its new locations.
+8. **Build and test** – Run `swift build` then `swift test -v` from the package root to verify all modules compile together.
+9. **Deprecate old repo** – Once tests pass, remove `repos/fountainai` and reference the new modules in documentation.
+
 ----
 ````text
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
