@@ -132,7 +132,9 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func retrieveanalyticsrules(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let rules = try await service.retrieveAnalyticsRules()
+        let data = try JSONEncoder().encode(rules)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func createanalyticsrule(_ request: HTTPRequest, body: AnalyticsRuleSchema?) async throws -> HTTPResponse {
         guard let schema = body else { return HTTPResponse(status: 400) }
