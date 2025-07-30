@@ -127,6 +127,10 @@ public final actor TypesenseService {
         try await client.send(deleteSearchSynonym(parameters: .init(collectionname: collection, synonymid: id)))
     }
 
+    public func indexDocument(collection: String, document: indexDocumentRequest, action: IndexAction? = nil, dirtyValues: DirtyValues? = nil) async throws -> Data {
+        try await client.send(indexDocument(parameters: .init(collectionname: collection, action: action, dirtyValues: dirtyValues), body: document))
+    }
+
     public func exportDocuments(collection: String, parameters: [String: String]? = nil) async throws -> Data {
         try await client.send(exportDocuments(parameters: .init(collectionname: collection, exportdocumentsparameters: parameters)))
     }
