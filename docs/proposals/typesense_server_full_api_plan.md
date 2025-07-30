@@ -54,8 +54,9 @@ The server currently supports the following endpoints (commit):
 - `GET /operations/schema_changes` – `76d8956`
 - `GET /collections/{collectionName}/synonyms/{synonymId}` – `5c2fb5d`
 - `GET /collections/{collectionName}/documents/export` – `2905227`
+- `POST /collections/{collectionName}/documents/import` – `11a3a92`
 
-Last updated at `2905227`.
+Last updated at `11a3a92`.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

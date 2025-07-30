@@ -110,6 +110,33 @@ public final actor TypesenseService {
     public func exportDocuments(collection: String, parameters: [String: String]? = nil) async throws -> Data {
         try await client.send(exportDocuments(parameters: .init(collectionname: collection, exportdocumentsparameters: parameters)))
     }
+
+    public func importDocuments(collection: String, data: Data, parameters: [String: String]? = nil) async throws -> Data {
+        struct Request: APIRequest {
+            typealias Body = NoBody
+            typealias Response = Data
+            let collection: String
+            let parameters: [String: String]?
+            var method: String { "POST" }
+            var path: String {
+                var path = "/collections/\(collection)/documents/import"
+                if let params = parameters, !params.isEmpty {
+                    let query = params.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
+                    path += "?" + query
+                }
+                return path
+            }
+            var body: Body? { nil }
+        }
+
+        var request = URLRequest(url: client.baseURL.appendingPathComponent(Request(collection: collection, parameters: parameters).path))
+        request.httpMethod = "POST"
+        for (header, value) in client.defaultHeaders { request.setValue(value, forHTTPHeaderField: header) }
+        request.httpBody = data
+        request.setValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
+        let (respData, _) = try await client.session.data(for: request)
+        return respData
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
