@@ -246,6 +246,10 @@ public final actor TypesenseService {
         try await client.send(retrieveMetrics())
     }
 
+    public func importStemmingDictionary(id: String, body: importStemmingDictionaryRequest) async throws -> Data {
+        try await client.send(importStemmingDictionary(parameters: .init(id: id), body: body))
+    }
+
     public func multiSearch(parameters: String, body: MultiSearchSearchesParameter) async throws -> MultiSearchResult {
         struct Request: APIRequest {
             typealias Body = MultiSearchSearchesParameter

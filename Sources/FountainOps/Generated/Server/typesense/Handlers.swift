@@ -259,7 +259,13 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func importstemmingdictionary(_ request: HTTPRequest, body: importStemmingDictionaryRequest?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        guard let content = body else { return HTTPResponse(status: 400) }
+        let comps = URLComponents(string: request.path)
+        guard let id = comps?.queryItems?.first(where: { $0.name == "id" })?.value else {
+            return HTTPResponse(status: 400)
+        }
+        let data = try await service.importStemmingDictionary(id: id, body: content)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/octet-stream"], body: data)
     }
     public func importdocuments(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let parts = request.path.split(separator: "/")
