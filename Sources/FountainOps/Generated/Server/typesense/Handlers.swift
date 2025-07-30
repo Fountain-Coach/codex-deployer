@@ -85,7 +85,12 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func getalias(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 2 else { return HTTPResponse(status: 404) }
+        let name = String(parts[1])
+        let alias = try await service.getAlias(name: name)
+        let data = try JSONEncoder().encode(alias)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func upsertalias(_ request: HTTPRequest, body: CollectionAliasSchema?) async throws -> HTTPResponse {
         guard let schema = body else { return HTTPResponse(status: 400) }
