@@ -217,7 +217,11 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func getkey(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 2, let id = Int(parts[1]) else { return HTTPResponse(status: 404) }
+        let key = try await service.getKey(id: id)
+        let data = try JSONEncoder().encode(key)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func deletekey(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)

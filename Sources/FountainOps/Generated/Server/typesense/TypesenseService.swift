@@ -58,6 +58,10 @@ public final actor TypesenseService {
         try await client.send(createKey(body: schema))
     }
 
+    public func getKey(id: Int) async throws -> ApiKey {
+        try await client.send(getKey(parameters: .init(keyid: id)))
+    }
+
     public func getAliases() async throws -> CollectionAliasesResponse {
         try await client.send(getAliases())
     }

@@ -44,12 +44,13 @@ The server currently supports the following endpoints (commit):
 - `GET /collections/{collectionName}/documents/search` – `55922a5`
 - `GET /keys` – `792ff5b`
 - `POST /keys` – `792ff5b`
+- `GET /keys/{keyId}` – `e6801c5`
 - `GET /aliases` – `384dc86`
 - `PUT /aliases/{aliasName}` – `1bce1dc`
 - `GET /aliases/{aliasName}` – `ca44a96`
 - `DELETE /aliases/{aliasName}` – `ebe309a`
 
-Last updated at `ebe309a`.
+Last updated at `e6801c5`.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
