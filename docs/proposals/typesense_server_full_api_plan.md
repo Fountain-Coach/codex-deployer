@@ -79,8 +79,9 @@ The server currently supports the following endpoints (commit):
 - `GET /metrics.json` – `ba0d4b3`
 - `GET /stemming/dictionaries` – `e2315ef`
 - `GET /stemming/dictionaries/{dictionaryId}` – `43a5db8`
+- `POST /stemming/dictionaries/import` – `caa51bd`
 
-Last updated at `43a5db8`.
+Last updated at `caa51bd`.
 
 
 ---
