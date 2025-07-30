@@ -49,8 +49,9 @@ The server currently supports the following endpoints (commit):
 - `PUT /aliases/{aliasName}` – `1bce1dc`
 - `GET /aliases/{aliasName}` – `ca44a96`
 - `DELETE /aliases/{aliasName}` – `ebe309a`
+- `GET /debug` – `4de0ad4`
 
-Last updated at `e6801c5`.
+Last updated at `4de0ad4`.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

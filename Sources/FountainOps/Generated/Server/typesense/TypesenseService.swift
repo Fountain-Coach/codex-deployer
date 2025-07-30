@@ -90,6 +90,10 @@ public final actor TypesenseService {
         }
         return try await client.send(Request(collection: collection, parameters: parameters))
     }
+
+    public func debug() async throws -> debugResponse {
+        try await client.send(debug())
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

@@ -211,7 +211,9 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func debug(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let info = try await service.debug()
+        let data = try JSONEncoder().encode(info)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func health(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
