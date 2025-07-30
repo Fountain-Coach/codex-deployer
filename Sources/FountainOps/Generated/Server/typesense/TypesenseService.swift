@@ -222,6 +222,18 @@ public final actor TypesenseService {
         try await client.send(retrieveAnalyticsRules())
     }
 
+    public func retrieveAnalyticsRule(name: String) async throws -> AnalyticsRuleSchema {
+        try await client.send(retrieveAnalyticsRule(parameters: .init(rulename: name)))
+    }
+
+    public func upsertAnalyticsRule(name: String, schema: AnalyticsRuleUpsertSchema) async throws -> AnalyticsRuleSchema {
+        try await client.send(upsertAnalyticsRule(parameters: .init(rulename: name), body: schema))
+    }
+
+    public func deleteAnalyticsRule(name: String) async throws -> AnalyticsRuleDeleteResponse {
+        try await client.send(deleteAnalyticsRule(parameters: .init(rulename: name)))
+    }
+
     public func multiSearch(parameters: String, body: MultiSearchSearchesParameter) async throws -> MultiSearchResult {
         struct Request: APIRequest {
             typealias Body = MultiSearchSearchesParameter
