@@ -111,6 +111,10 @@ public final actor TypesenseService {
         try await client.send(getSearchOverrides(parameters: .init(collectionname: collection)))
     }
 
+    public func getSearchOverride(collection: String, id: String) async throws -> SearchOverride {
+        try await client.send(getSearchOverride(parameters: .init(collectionname: collection, overrideid: id)))
+    }
+
     public func getSearchSynonyms(collection: String) async throws -> SearchSynonymsResponse {
         try await client.send(getSearchSynonyms(parameters: .init(collectionname: collection)))
     }
