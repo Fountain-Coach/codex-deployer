@@ -234,6 +234,10 @@ public final actor TypesenseService {
         try await client.send(deleteAnalyticsRule(parameters: .init(rulename: name)))
     }
 
+    public func listStemmingDictionaries() async throws -> listStemmingDictionariesResponse {
+        try await client.send(listStemmingDictionaries())
+    }
+
     public func retrieveMetrics() async throws -> retrieveMetricsResponse {
         try await client.send(retrieveMetrics())
     }
