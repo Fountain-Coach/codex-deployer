@@ -106,6 +106,10 @@ public final actor TypesenseService {
     public func getSearchSynonym(collection: String, id: String) async throws -> SearchSynonym {
         try await client.send(getSearchSynonym(parameters: .init(collectionname: collection, synonymid: id)))
     }
+
+    public func exportDocuments(collection: String, parameters: [String: String]? = nil) async throws -> Data {
+        try await client.send(exportDocuments(parameters: .init(collectionname: collection, exportdocumentsparameters: parameters)))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
