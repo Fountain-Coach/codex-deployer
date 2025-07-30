@@ -128,6 +128,15 @@ public struct Handlers {
         let data = try JSONEncoder().encode(collection)
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
+    public func updatecollection(_ request: HTTPRequest, body: CollectionUpdateSchema?) async throws -> HTTPResponse {
+        guard let schema = body else { return HTTPResponse(status: 400) }
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 2 else { return HTTPResponse(status: 404) }
+        let name = String(parts[1])
+        let updated = try await service.updateCollection(name: name, schema: schema)
+        let data = try JSONEncoder().encode(updated)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
     public func deletecollection(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let parts = request.path.split(separator: "/")
         guard parts.count >= 2 else { return HTTPResponse(status: 404) }
@@ -258,6 +267,17 @@ public struct Handlers {
         let collection = String(parts[1])
         let id = String(parts[3])
         let data = try await service.getDocument(collection: collection, id: id)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+    public func updatedocument(_ request: HTTPRequest, body: updateDocumentRequest?) async throws -> HTTPResponse {
+        guard let fields = body else { return HTTPResponse(status: 400) }
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 4 else { return HTTPResponse(status: 404) }
+        let collection = String(parts[1])
+        let id = String(parts[3])
+        let comps = URLComponents(string: request.path)
+        let dirty = comps?.queryItems?.first(where: { $0.name == "dirty_values" })?.value.flatMap { DirtyValues(rawValue: $0) }
+        let data = try await service.updateDocument(collection: collection, id: id, document: fields, dirtyValues: dirty)
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func deletedocument(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {

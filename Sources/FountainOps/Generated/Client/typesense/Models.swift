@@ -499,6 +499,10 @@ public typealias indexDocumentRequest = [String: String]
 
 public typealias updateDocumentsRequest = [String: String]
 
+public typealias updateDocumentRequest = [String: String]
+
+public typealias updateDocumentResponse = [String: String]
+
 public struct updateDocumentsResponse: Codable {
     public let num_updated: Int
 }
