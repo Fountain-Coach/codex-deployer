@@ -10,7 +10,16 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func exportdocuments(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 4 else { return HTTPResponse(status: 404) }
+        let collection = String(parts[1])
+        let comps = URLComponents(string: request.path)
+        var params: [String: String] = [:]
+        for item in comps?.queryItems ?? [] {
+            if let value = item.value { params[item.name] = value }
+        }
+        let data = try await service.exportDocuments(collection: collection, parameters: params.isEmpty ? nil : params)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/octet-stream"], body: data)
     }
     public func indexdocument(_ request: HTTPRequest, body: indexDocumentRequest?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
