@@ -98,6 +98,10 @@ public final actor TypesenseService {
     public func health() async throws -> HealthStatus {
         try await client.send(health())
     }
+
+    public func getSchemaChanges() async throws -> getSchemaChangesResponse {
+        try await client.send(getSchemaChanges())
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

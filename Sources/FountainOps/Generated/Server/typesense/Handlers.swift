@@ -199,7 +199,9 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func getschemachanges(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let changes = try await service.getSchemaChanges()
+        let data = try JSONEncoder().encode(changes)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func getsearchsynonym(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)

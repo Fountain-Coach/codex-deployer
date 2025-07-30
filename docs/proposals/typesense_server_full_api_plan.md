@@ -51,8 +51,9 @@ The server currently supports the following endpoints (commit):
 - `DELETE /aliases/{aliasName}` – `ebe309a`
 - `GET /debug` – `4de0ad4`
 - `GET /health` – `ce544f8`
+- `GET /operations/schema_changes` – `76d8956`
 
-Last updated at `ce544f8`.
+Last updated at `76d8956`.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
