@@ -65,7 +65,9 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func createanalyticsevent(_ request: HTTPRequest, body: AnalyticsEventCreateSchema?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        guard let schema = body else { return HTTPResponse(status: 400) }
+        let data = try await service.createAnalyticsEvent(schema: schema)
+        return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrieveanalyticsrule(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
