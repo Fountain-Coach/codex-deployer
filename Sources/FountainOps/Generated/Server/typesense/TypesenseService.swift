@@ -161,6 +161,10 @@ public final actor TypesenseService {
     public func updateConversationModel(id: String, schema: ConversationModelUpdateSchema) async throws -> ConversationModelSchema {
         try await client.send(updateConversationModel(parameters: .init(modelid: id), body: schema))
     }
+
+    public func deleteConversationModel(id: String) async throws -> ConversationModelSchema {
+        try await client.send(deleteConversationModel(parameters: .init(modelid: id)))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
