@@ -52,8 +52,9 @@ The server currently supports the following endpoints (commit):
 - `GET /debug` – `4de0ad4`
 - `GET /health` – `ce544f8`
 - `GET /operations/schema_changes` – `76d8956`
+- `GET /collections/{collectionName}/synonyms/{synonymId}` – `5c2fb5d`
 
-Last updated at `76d8956`.
+Last updated at `5c2fb5d`.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
