@@ -284,7 +284,9 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func retrieveallnlsearchmodels(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let models = try await service.retrieveAllNLSearchModels()
+        let data = try JSONEncoder().encode(models)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func createnlsearchmodel(_ request: HTTPRequest, body: NLSearchModelCreateSchema?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)

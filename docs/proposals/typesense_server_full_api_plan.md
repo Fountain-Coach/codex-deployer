@@ -80,8 +80,9 @@ The server currently supports the following endpoints (commit):
 - `GET /stemming/dictionaries` – `e2315ef`
 - `GET /stemming/dictionaries/{dictionaryId}` – `43a5db8`
 - `POST /stemming/dictionaries/import` – `caa51bd`
+- `GET /nl_search_models` – `d7e7891`
 
-Last updated at `caa51bd`.
+Last updated at `d7e7891`.
 
 
 ---

@@ -250,6 +250,10 @@ public final actor TypesenseService {
         try await client.send(importStemmingDictionary(parameters: .init(id: id), body: body))
     }
 
+    public func retrieveAllNLSearchModels() async throws -> retrieveAllNLSearchModelsResponse {
+        try await client.send(retrieveAllNLSearchModels())
+    }
+
     public func multiSearch(parameters: String, body: MultiSearchSearchesParameter) async throws -> MultiSearchResult {
         struct Request: APIRequest {
             typealias Body = MultiSearchSearchesParameter
