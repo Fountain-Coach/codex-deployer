@@ -497,6 +497,12 @@ public struct VoiceQueryModelCollectionConfig: Codable {
 
 public typealias indexDocumentRequest = [String: String]
 
+public typealias updateDocumentsRequest = [String: String]
+
+public struct updateDocumentsResponse: Codable {
+    public let num_updated: Int
+}
+
 public struct deleteDocumentsResponse: Codable {
     public let num_deleted: Int
 }

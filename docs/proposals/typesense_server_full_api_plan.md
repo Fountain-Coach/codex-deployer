@@ -69,8 +69,9 @@ The server currently supports the following endpoints (commit):
 - `PUT /collections/{collectionName}/synonyms/{synonymId}` – `d8b7a3e`
 - `POST /collections/{collectionName}/documents` – `28fb9e3`
 - `DELETE /collections/{collectionName}/documents` – `28fb9e3`
+- `PATCH /collections/{collectionName}/documents` – `181cab6`
 
-Last updated at `28fb9e3`.
+Last updated at `181cab6`.
 
 
 ---

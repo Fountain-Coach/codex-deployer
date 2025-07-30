@@ -54,6 +54,10 @@ public final actor TypesenseService {
         try await client.send(indexDocument(parameters: .init(collectionname: collection, action: action, dirtyValues: dirtyValues), body: document))
     }
 
+    public func updateDocuments(collection: String, document: updateDocumentsRequest, parameters: [String: String]? = nil) async throws -> updateDocumentsResponse {
+        try await client.send(updateDocuments(parameters: .init(collectionname: collection, updatedocumentsparameters: parameters), body: document))
+    }
+
     public func deleteDocuments(collection: String, parameters: [String: String]? = nil) async throws -> deleteDocumentsResponse {
         try await client.send(deleteDocuments(parameters: .init(collectionname: collection, deletedocumentsparameters: parameters)))
     }

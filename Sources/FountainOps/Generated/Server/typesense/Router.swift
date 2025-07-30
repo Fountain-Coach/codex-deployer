@@ -25,6 +25,9 @@ public struct Router {
         case ("POST", "/collections/{collectionName}/documents"):
             let body = try? JSONDecoder().decode(indexDocumentRequest.self, from: request.body)
             return try await handlers.indexdocument(request, body: body)
+        case ("PATCH", "/collections/{collectionName}/documents"):
+            let body = try? JSONDecoder().decode(updateDocumentsRequest.self, from: request.body)
+            return try await handlers.updatedocuments(request, body: body)
         case ("DELETE", "/collections/{collectionName}/documents"):
             let body = try? JSONDecoder().decode(NoBody.self, from: request.body)
             return try await handlers.deletedocuments(request, body: body)

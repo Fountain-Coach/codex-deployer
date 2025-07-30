@@ -41,6 +41,18 @@ public struct Handlers {
         let data = try await service.indexDocument(collection: collection, document: doc, action: action, dirtyValues: dirty)
         return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: data)
     }
+    public func updatedocuments(_ request: HTTPRequest, body: updateDocumentsRequest?) async throws -> HTTPResponse {
+        guard let fields = body else { return HTTPResponse(status: 400) }
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 3 else { return HTTPResponse(status: 404) }
+        let collection = String(parts[1])
+        let comps = URLComponents(string: request.path)
+        var params: [String: String] = [:]
+        for item in comps?.queryItems ?? [] { if let value = item.value { params[item.name] = value } }
+        let result = try await service.updateDocuments(collection: collection, document: fields, parameters: params.isEmpty ? nil : params)
+        let data = try JSONEncoder().encode(result)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
     public func deletedocuments(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let parts = request.path.split(separator: "/")
         guard parts.count >= 3 else { return HTTPResponse(status: 404) }
