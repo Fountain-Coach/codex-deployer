@@ -77,8 +77,9 @@ The server currently supports the following endpoints (commit):
 - `GET /analytics/rules` – `7916239`
 - `GET /analytics/rules/{ruleName}` – `1191af5`
 - `GET /metrics.json` – `ba0d4b3`
+- `GET /stemming/dictionaries` – `e2315ef`
 
-Last updated at `ba0d4b3`.
+Last updated at `e2315ef`.
 
 
 ---
