@@ -228,7 +228,13 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func getsearchoverride(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 4 else { return HTTPResponse(status: 404) }
+        let collection = String(parts[1])
+        let id = String(parts[3])
+        let override = try await service.getSearchOverride(collection: collection, id: id)
+        let data = try JSONEncoder().encode(override)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func upsertsearchoverride(_ request: HTTPRequest, body: SearchOverrideSchema?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
