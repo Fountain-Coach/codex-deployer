@@ -254,6 +254,22 @@ public final actor TypesenseService {
         try await client.send(retrieveAllNLSearchModels())
     }
 
+    public func createNLSearchModel(schema: NLSearchModelCreateSchema) async throws -> Data {
+        try await client.send(createNLSearchModel(body: schema))
+    }
+
+    public func retrieveNLSearchModel(id: String) async throws -> NLSearchModelSchema {
+        try await client.send(retrieveNLSearchModel(parameters: .init(modelid: id)))
+    }
+
+    public func updateNLSearchModel(id: String, schema: NLSearchModelUpdateSchema) async throws -> NLSearchModelSchema {
+        try await client.send(updateNLSearchModel(parameters: .init(modelid: id), body: schema))
+    }
+
+    public func deleteNLSearchModel(id: String) async throws -> NLSearchModelDeleteSchema {
+        try await client.send(deleteNLSearchModel(parameters: .init(modelid: id)))
+    }
+
     public func multiSearch(parameters: String, body: MultiSearchSearchesParameter) async throws -> MultiSearchResult {
         struct Request: APIRequest {
             typealias Body = MultiSearchSearchesParameter
