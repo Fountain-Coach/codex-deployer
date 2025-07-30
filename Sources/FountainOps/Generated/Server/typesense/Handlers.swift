@@ -7,7 +7,12 @@ public struct Handlers {
         self.service = service
     }
     public func getsearchoverrides(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 3 else { return HTTPResponse(status: 404) }
+        let collection = String(parts[1])
+        let overrides = try await service.getSearchOverrides(collection: collection)
+        let data = try JSONEncoder().encode(overrides)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func exportdocuments(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let parts = request.path.split(separator: "/")

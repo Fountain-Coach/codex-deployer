@@ -62,8 +62,9 @@ The server currently supports the following endpoints (commit):
 - `GET /conversations/models/{modelId}` – `361d89c`
 - `PUT /conversations/models/{modelId}` – `a1a5fea`
 - `DELETE /conversations/models/{modelId}` – `285ca93`
+- `GET /collections/{collectionName}/overrides` – `c2ae25a`
 
-Last updated at `285ca93`.
+Last updated at `c2ae25a`.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
