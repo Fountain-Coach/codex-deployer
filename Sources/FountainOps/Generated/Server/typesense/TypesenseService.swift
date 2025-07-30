@@ -58,6 +58,10 @@ public final actor TypesenseService {
         try await client.send(createKey(body: schema))
     }
 
+    public func getAliases() async throws -> CollectionAliasesResponse {
+        try await client.send(getAliases())
+    }
+
     public func search(collection: String, parameters: String) async throws -> SearchResult {
         struct Request: APIRequest {
             typealias Body = NoBody
