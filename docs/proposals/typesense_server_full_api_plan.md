@@ -58,8 +58,9 @@ The server currently supports the following endpoints (commit):
 - `GET /collections/{collectionName}/documents/{documentId}` – `637dca5`
 - `DELETE /collections/{collectionName}/documents/{documentId}` – `9a12fff`
 - `GET /conversations/models` – `fefbea0`
+- `POST /conversations/models` – `f66f5f3`
 
-Last updated at `fefbea0`.
+Last updated at `f66f5f3`.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
