@@ -71,8 +71,9 @@ The server currently supports the following endpoints (commit):
 - `POST /collections/{collectionName}/documents` – `28fb9e3`
 - `DELETE /collections/{collectionName}/documents` – `28fb9e3`
 - `PATCH /collections/{collectionName}/documents` – `181cab6`
+- `POST /multi_search` – `3e66160`
 
-Last updated at `6f97f80`.
+Last updated at `3e66160`.
 
 
 ---
