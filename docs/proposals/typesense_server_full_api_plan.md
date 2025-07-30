@@ -55,8 +55,9 @@ The server currently supports the following endpoints (commit):
 - `GET /collections/{collectionName}/synonyms/{synonymId}` – `5c2fb5d`
 - `GET /collections/{collectionName}/documents/export` – `2905227`
 - `POST /collections/{collectionName}/documents/import` – `11a3a92`
+- `GET /collections/{collectionName}/documents/{documentId}` – `637dca5`
 
-Last updated at `11a3a92`.
+Last updated at `637dca5`.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

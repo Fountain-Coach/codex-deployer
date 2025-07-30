@@ -137,6 +137,10 @@ public final actor TypesenseService {
         let (respData, _) = try await client.session.data(for: request)
         return respData
     }
+
+    public func getDocument(collection: String, id: String) async throws -> Data {
+        try await client.send(getDocument(parameters: .init(collectionname: collection, documentid: id)))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
