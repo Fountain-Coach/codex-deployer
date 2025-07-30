@@ -286,6 +286,46 @@ public final actor TypesenseService {
         }
         return try await client.send(Request(parameters: parameters, bodyParam: body))
     }
+
+    public func takeSnapshot(path: String) async throws -> Data {
+        try await client.send(takeSnapshot(parameters: .init(snapshotPath: path)))
+    }
+
+    public func retrieveAllPresets() async throws -> PresetsRetrieveSchema {
+        try await client.send(retrieveAllPresets())
+    }
+
+    public func retrievePreset(id: String) async throws -> PresetSchema {
+        try await client.send(retrievePreset(parameters: .init(presetid: id)))
+    }
+
+    public func upsertPreset(id: String, schema: PresetUpsertSchema) async throws -> PresetSchema {
+        try await client.send(upsertPreset(parameters: .init(presetid: id), body: schema))
+    }
+
+    public func deletePreset(id: String) async throws -> PresetDeleteSchema {
+        try await client.send(deletePreset(parameters: .init(presetid: id)))
+    }
+
+    public func retrieveAPIStats() async throws -> APIStatsResponse {
+        try await client.send(retrieveAPIStats())
+    }
+
+    public func retrieveStopwordsSets() async throws -> StopwordsSetsRetrieveAllSchema {
+        try await client.send(retrieveStopwordsSets())
+    }
+
+    public func retrieveStopwordsSet(id: String) async throws -> StopwordsSetRetrieveSchema {
+        try await client.send(retrieveStopwordsSet(parameters: .init(setid: id)))
+    }
+
+    public func upsertStopwordsSet(id: String, schema: StopwordsSetUpsertSchema) async throws -> StopwordsSetSchema {
+        try await client.send(upsertStopwordsSet(parameters: .init(setid: id), body: schema))
+    }
+
+    public func deleteStopwordsSet(id: String) async throws -> deleteStopwordsSetResponse {
+        try await client.send(deleteStopwordsSet(parameters: .init(setid: id)))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
