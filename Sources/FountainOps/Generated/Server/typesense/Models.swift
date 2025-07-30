@@ -270,6 +270,52 @@ public struct NLSearchModelBase: Codable {
     public let top_p: String
 }
 
+public struct NLSearchModelCreateSchema: Codable {
+    public let access_token: String
+    public let account_id: String
+    public let api_key: String
+    public let api_url: String
+    public let api_version: String
+    public let client_id: String
+    public let client_secret: String
+    public let max_bytes: Int
+    public let max_output_tokens: Int
+    public let model_name: String
+    public let project_id: String
+    public let refresh_token: String
+    public let region: String
+    public let stop_sequences: [String]
+    public let system_prompt: String
+    public let temperature: String
+    public let top_k: Int
+    public let top_p: String
+    public let id: String?
+}
+
+public struct NLSearchModelSchema: Codable {
+    public let access_token: String
+    public let account_id: String
+    public let api_key: String
+    public let api_url: String
+    public let api_version: String
+    public let client_id: String
+    public let client_secret: String
+    public let max_bytes: Int
+    public let max_output_tokens: Int
+    public let model_name: String
+    public let project_id: String
+    public let refresh_token: String
+    public let region: String
+    public let stop_sequences: [String]
+    public let system_prompt: String
+    public let temperature: String
+    public let top_k: Int
+    public let top_p: String
+    public let id: String
+}
+
+public typealias NLSearchModelUpdateSchema = NLSearchModelCreateSchema
+
 public struct NLSearchModelDeleteSchema: Codable {
     public let id: String
 }
