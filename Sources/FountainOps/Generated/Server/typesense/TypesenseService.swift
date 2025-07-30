@@ -209,6 +209,19 @@ public final actor TypesenseService {
     public func deleteConversationModel(id: String) async throws -> ConversationModelSchema {
         try await client.send(deleteConversationModel(parameters: .init(modelid: id)))
     }
+
+    public func multiSearch(parameters: String, body: MultiSearchSearchesParameter) async throws -> MultiSearchResult {
+        struct Request: APIRequest {
+            typealias Body = MultiSearchSearchesParameter
+            typealias Response = MultiSearchResult
+            let parameters: String
+            var body: Body? { bodyParam }
+            let bodyParam: Body
+            var method: String { "POST" }
+            var path: String { "/multi_search?multiSearchParameters=\(parameters)" }
+        }
+        return try await client.send(Request(parameters: parameters, bodyParam: body))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

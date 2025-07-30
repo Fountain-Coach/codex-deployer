@@ -189,7 +189,12 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func multisearch(_ request: HTTPRequest, body: MultiSearchSearchesParameter?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        guard let searches = body else { return HTTPResponse(status: 400) }
+        let comps = URLComponents(string: request.path)
+        let params = comps?.queryItems?.first(where: { $0.name == "multiSearchParameters" })?.value ?? "{}"
+        let result = try await service.multiSearch(parameters: params, body: searches)
+        let data = try JSONEncoder().encode(result)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrievenlsearchmodel(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
