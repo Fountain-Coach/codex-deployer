@@ -248,7 +248,12 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func getsearchsynonyms(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 3 else { return HTTPResponse(status: 404) }
+        let collection = String(parts[1])
+        let synonyms = try await service.getSearchSynonyms(collection: collection)
+        let data = try JSONEncoder().encode(synonyms)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func getschemachanges(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let changes = try await service.getSchemaChanges()
