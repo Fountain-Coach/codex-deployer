@@ -119,6 +119,14 @@ public final actor TypesenseService {
         try await client.send(getSearchSynonym(parameters: .init(collectionname: collection, synonymid: id)))
     }
 
+    public func upsertSearchSynonym(collection: String, id: String, schema: SearchSynonymSchema) async throws -> SearchSynonym {
+        try await client.send(upsertSearchSynonym(parameters: .init(collectionname: collection, synonymid: id), body: schema))
+    }
+
+    public func deleteSearchSynonym(collection: String, id: String) async throws -> SearchSynonymDeleteResponse {
+        try await client.send(deleteSearchSynonym(parameters: .init(collectionname: collection, synonymid: id)))
+    }
+
     public func exportDocuments(collection: String, parameters: [String: String]? = nil) async throws -> Data {
         try await client.send(exportDocuments(parameters: .init(collectionname: collection, exportdocumentsparameters: parameters)))
     }

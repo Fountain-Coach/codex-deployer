@@ -65,8 +65,9 @@ The server currently supports the following endpoints (commit):
 - `DELETE /conversations/models/{modelId}` – `285ca93`
 - `GET /collections/{collectionName}/overrides` – `c2ae25a`
 - `GET /collections/{collectionName}/synonyms` – `26244cd`
+- `PUT /collections/{collectionName}/synonyms/{synonymId}` – `d8b7a3e`
 
-Last updated at `26244cd`.
+Last updated at `d8b7a3e`.
 
 
 ---
