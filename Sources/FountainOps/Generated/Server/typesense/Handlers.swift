@@ -53,7 +53,9 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrieveallconversationmodels(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let models = try await service.retrieveAllConversationModels()
+        let data = try JSONEncoder().encode(models)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func createconversationmodel(_ request: HTTPRequest, body: ConversationModelCreateSchema?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
