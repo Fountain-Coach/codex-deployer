@@ -74,8 +74,9 @@ The server currently supports the following endpoints (commit):
 - `POST /multi_search` – `3e66160`
 - `POST /analytics/events` – `73c01a2`
 - `POST /analytics/rules` – `3110987`
+- `GET /analytics/rules` – `7916239`
 
-Last updated at `3110987`.
+Last updated at `7916239`.
 
 
 ---

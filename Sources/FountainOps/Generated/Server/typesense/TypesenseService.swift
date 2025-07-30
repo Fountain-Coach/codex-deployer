@@ -218,6 +218,10 @@ public final actor TypesenseService {
         try await client.send(createAnalyticsRule(body: schema))
     }
 
+    public func retrieveAnalyticsRules() async throws -> AnalyticsRulesRetrieveSchema {
+        try await client.send(retrieveAnalyticsRules())
+    }
+
     public func multiSearch(parameters: String, body: MultiSearchSearchesParameter) async throws -> MultiSearchResult {
         struct Request: APIRequest {
             typealias Body = MultiSearchSearchesParameter
