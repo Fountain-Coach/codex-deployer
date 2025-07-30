@@ -141,7 +141,12 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func deleteconversationmodel(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 3 else { return HTTPResponse(status: 404) }
+        let id = String(parts[2])
+        let model = try await service.deleteConversationModel(id: id)
+        let data = try JSONEncoder().encode(model)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func takesnapshot(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
