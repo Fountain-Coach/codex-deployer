@@ -145,6 +145,10 @@ public final actor TypesenseService {
     public func deleteDocument(collection: String, id: String) async throws -> Data {
         try await client.send(deleteDocument(parameters: .init(collectionname: collection, documentid: id)))
     }
+
+    public func retrieveAllConversationModels() async throws -> retrieveAllConversationModelsResponse {
+        try await client.send(retrieveAllConversationModels())
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
