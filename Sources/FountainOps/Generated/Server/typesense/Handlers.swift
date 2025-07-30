@@ -58,13 +58,22 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func deletecollection(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 2 else { return HTTPResponse(status: 404) }
+        let name = String(parts[1])
+        let collection = try await service.deleteCollection(name: name)
+        let data = try JSONEncoder().encode(collection)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func getkeys(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let keys = try await service.getKeys()
+        let data = try JSONEncoder().encode(keys)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func createkey(_ request: HTTPRequest, body: ApiKeySchema?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        guard let schema = body else { return HTTPResponse(status: 400) }
+        let data = try await service.createKey(schema: schema)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func vote(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
