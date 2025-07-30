@@ -35,15 +35,17 @@ Following this plan will turn the current stub into a full-fledged Typesense pro
 
 ### Progress
 
-The server currently supports the following endpoints:
+The server currently supports the following endpoints (commit):
 
-- `GET /collections`
-- `POST /collections`
-- `GET /collections/{collectionName}`
-- `DELETE /collections/{collectionName}`
-- `GET /collections/{collectionName}/documents/search`
-- `GET /keys`
-- `POST /keys`
+- `GET /collections` – `55922a5`
+- `POST /collections` – `55922a5`
+- `GET /collections/{collectionName}` – `9d2ad4f`
+- `DELETE /collections/{collectionName}` – `792ff5b`
+- `GET /collections/{collectionName}/documents/search` – `55922a5`
+- `GET /keys` – `792ff5b`
+- `POST /keys` – `792ff5b`
+
+Last updated at `44ccb44`.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
