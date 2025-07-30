@@ -238,6 +238,10 @@ public final actor TypesenseService {
         try await client.send(listStemmingDictionaries())
     }
 
+    public func getStemmingDictionary(id: String) async throws -> StemmingDictionary {
+        try await client.send(getStemmingDictionary(parameters: .init(dictionaryid: id)))
+    }
+
     public func retrieveMetrics() async throws -> retrieveMetricsResponse {
         try await client.send(retrieveMetrics())
     }

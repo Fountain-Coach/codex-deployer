@@ -246,7 +246,12 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func getstemmingdictionary(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 3 else { return HTTPResponse(status: 404) }
+        let id = String(parts[2])
+        let dictionary = try await service.getStemmingDictionary(id: id)
+        let data = try JSONEncoder().encode(dictionary)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrievemetrics(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let metrics = try await service.retrieveMetrics()
