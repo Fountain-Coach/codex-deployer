@@ -42,6 +42,10 @@ public final actor TypesenseService {
         try await client.send(createCollection(body: schema))
     }
 
+    public func getCollection(name: String) async throws -> CollectionResponse {
+        try await client.send(getCollection(parameters: .init(collectionname: name)))
+    }
+
     public func search(collection: String, parameters: String) async throws -> SearchResult {
         struct Request: APIRequest {
             typealias Body = NoBody
