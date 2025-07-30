@@ -60,8 +60,9 @@ The server currently supports the following endpoints (commit):
 - `GET /conversations/models` – `fefbea0`
 - `POST /conversations/models` – `f66f5f3`
 - `GET /conversations/models/{modelId}` – `361d89c`
+- `PUT /conversations/models/{modelId}` – `a1a5fea`
 
-Last updated at `361d89c`.
+Last updated at `a1a5fea`.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
