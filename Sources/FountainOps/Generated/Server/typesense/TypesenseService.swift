@@ -127,6 +127,14 @@ public final actor TypesenseService {
         try await client.send(getSearchOverride(parameters: .init(collectionname: collection, overrideid: id)))
     }
 
+    public func upsertSearchOverride(collection: String, id: String, schema: SearchOverrideSchema) async throws -> SearchOverride {
+        try await client.send(upsertSearchOverride(parameters: .init(collectionname: collection, overrideid: id), body: schema))
+    }
+
+    public func deleteSearchOverride(collection: String, id: String) async throws -> SearchOverrideDeleteResponse {
+        try await client.send(deleteSearchOverride(parameters: .init(collectionname: collection, overrideid: id)))
+    }
+
     public func getSearchSynonyms(collection: String) async throws -> SearchSynonymsResponse {
         try await client.send(getSearchSynonyms(parameters: .init(collectionname: collection)))
     }
