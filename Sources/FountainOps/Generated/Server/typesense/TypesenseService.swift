@@ -102,6 +102,10 @@ public final actor TypesenseService {
     public func getSchemaChanges() async throws -> getSchemaChangesResponse {
         try await client.send(getSchemaChanges())
     }
+
+    public func getSearchSynonym(collection: String, id: String) async throws -> SearchSynonym {
+        try await client.send(getSearchSynonym(parameters: .init(collectionname: collection, synonymid: id)))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

@@ -451,6 +451,14 @@ public struct SearchSynonymSchema: Codable {
     public let synonyms: [String]
 }
 
+public struct SearchSynonym: Codable {
+    public let locale: String
+    public let root: String
+    public let symbols_to_index: [String]
+    public let synonyms: [String]
+    public let id: String
+}
+
 public struct SearchSynonymsResponse: Codable {
     public let synonyms: [SearchSynonym]
 }
