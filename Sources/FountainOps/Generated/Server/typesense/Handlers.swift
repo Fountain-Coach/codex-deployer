@@ -247,7 +247,9 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func retrievemetrics(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let metrics = try await service.retrieveMetrics()
+        let data = try JSONEncoder().encode(metrics)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func importstemmingdictionary(_ request: HTTPRequest, body: importStemmingDictionaryRequest?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
