@@ -70,13 +70,29 @@ public struct Handlers {
         return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrieveanalyticsrule(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 3 else { return HTTPResponse(status: 404) }
+        let name = String(parts[2])
+        let rule = try await service.retrieveAnalyticsRule(name: name)
+        let data = try JSONEncoder().encode(rule)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func upsertanalyticsrule(_ request: HTTPRequest, body: AnalyticsRuleUpsertSchema?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        guard let schema = body else { return HTTPResponse(status: 400) }
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 3 else { return HTTPResponse(status: 404) }
+        let name = String(parts[2])
+        let rule = try await service.upsertAnalyticsRule(name: name, schema: schema)
+        let data = try JSONEncoder().encode(rule)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func deleteanalyticsrule(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 3 else { return HTTPResponse(status: 404) }
+        let name = String(parts[2])
+        let result = try await service.deleteAnalyticsRule(name: name)
+        let data = try JSONEncoder().encode(result)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func liststemmingdictionaries(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)

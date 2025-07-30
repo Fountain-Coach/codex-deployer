@@ -75,8 +75,9 @@ The server currently supports the following endpoints (commit):
 - `POST /analytics/events` – `73c01a2`
 - `POST /analytics/rules` – `3110987`
 - `GET /analytics/rules` – `7916239`
+- `GET /analytics/rules/{ruleName}` – `1191af5`
 
-Last updated at `7916239`.
+Last updated at `1191af5`.
 
 
 ---
