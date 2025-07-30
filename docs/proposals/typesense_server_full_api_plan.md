@@ -40,6 +40,7 @@ The server currently supports the following endpoints (commit):
 - `GET /collections` – `55922a5`
 - `POST /collections` – `55922a5`
 - `GET /collections/{collectionName}` – `9d2ad4f`
+- `PATCH /collections/{collectionName}` – `0eafb92`
 - `DELETE /collections/{collectionName}` – `792ff5b`
 - `GET /collections/{collectionName}/documents/search` – `55922a5`
 - `GET /keys` – `792ff5b`
@@ -57,6 +58,7 @@ The server currently supports the following endpoints (commit):
 - `GET /collections/{collectionName}/documents/export` – `2905227`
 - `POST /collections/{collectionName}/documents/import` – `11a3a92`
 - `GET /collections/{collectionName}/documents/{documentId}` – `637dca5`
+- `PATCH /collections/{collectionName}/documents/{documentId}` – `0eafb92`
 - `DELETE /collections/{collectionName}/documents/{documentId}` – `9a12fff`
 - `GET /conversations/models` – `fefbea0`
 - `POST /conversations/models` – `f66f5f3`
@@ -94,7 +96,7 @@ The server currently supports the following endpoints (commit):
 - `PUT /stopwords/{setId}` – `636fde0`
 - `DELETE /stopwords/{setId}` – `636fde0`
 
-Last updated at `636fde0`.
+Last updated at `0eafb92`.
 
 
 ---

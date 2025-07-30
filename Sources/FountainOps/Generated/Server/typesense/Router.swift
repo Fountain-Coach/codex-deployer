@@ -61,6 +61,9 @@ public struct Router {
         case ("GET", "/collections/{collectionName}"):
             let body = try? JSONDecoder().decode(NoBody.self, from: request.body)
             return try await handlers.getcollection(request, body: body)
+        case ("PATCH", "/collections/{collectionName}"):
+            let body = try? JSONDecoder().decode(CollectionUpdateSchema.self, from: request.body)
+            return try await handlers.updatecollection(request, body: body)
         case ("DELETE", "/collections/{collectionName}"):
             let body = try? JSONDecoder().decode(NoBody.self, from: request.body)
             return try await handlers.deletecollection(request, body: body)
@@ -115,6 +118,9 @@ public struct Router {
         case ("GET", "/collections/{collectionName}/documents/{documentId}"):
             let body = try? JSONDecoder().decode(NoBody.self, from: request.body)
             return try await handlers.getdocument(request, body: body)
+        case ("PATCH", "/collections/{collectionName}/documents/{documentId}"):
+            let body = try? JSONDecoder().decode(updateDocumentRequest.self, from: request.body)
+            return try await handlers.updatedocument(request, body: body)
         case ("DELETE", "/collections/{collectionName}/documents/{documentId}"):
             let body = try? JSONDecoder().decode(NoBody.self, from: request.body)
             return try await handlers.deletedocument(request, body: body)
