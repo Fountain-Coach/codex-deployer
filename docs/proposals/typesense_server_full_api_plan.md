@@ -33,5 +33,17 @@ This plan details how to implement every endpoint defined in `repos/typesense-co
 
 Following this plan will turn the current stub into a full-fledged Typesense proxy in Swift.
 
+### Progress
+
+The server currently supports the following endpoints:
+
+- `GET /collections`
+- `POST /collections`
+- `GET /collections/{collectionName}`
+- `DELETE /collections/{collectionName}`
+- `GET /collections/{collectionName}/documents/search`
+- `GET /keys`
+- `POST /keys`
+
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
