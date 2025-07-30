@@ -82,8 +82,9 @@ The server currently supports the following endpoints (commit):
 - `POST /stemming/dictionaries/import` – `caa51bd`
 - `GET /nl_search_models` – `d7e7891`
 - `POST /nl_search_models` – `f39a3bb`
+- `POST /operations/vote` – `2521109`
 
-Last updated at `f39a3bb`.
+Last updated at `2521109`.
 
 
 ---
