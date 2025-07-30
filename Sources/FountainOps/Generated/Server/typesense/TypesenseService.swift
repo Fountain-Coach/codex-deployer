@@ -270,6 +270,10 @@ public final actor TypesenseService {
         try await client.send(deleteNLSearchModel(parameters: .init(modelid: id)))
     }
 
+    public func vote() async throws -> SuccessStatus {
+        try await client.send(vote())
+    }
+
     public func multiSearch(parameters: String, body: MultiSearchSearchesParameter) async throws -> MultiSearchResult {
         struct Request: APIRequest {
             typealias Body = MultiSearchSearchesParameter

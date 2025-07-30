@@ -147,7 +147,9 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func vote(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let status = try await service.vote()
+        let data = try JSONEncoder().encode(status)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrieveanalyticsrules(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let rules = try await service.retrieveAnalyticsRules()
