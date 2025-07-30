@@ -135,7 +135,9 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func createanalyticsrule(_ request: HTTPRequest, body: AnalyticsRuleSchema?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        guard let schema = body else { return HTTPResponse(status: 400) }
+        let data = try await service.createAnalyticsRule(schema: schema)
+        return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: data)
     }
     public func getalias(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let parts = request.path.split(separator: "/")

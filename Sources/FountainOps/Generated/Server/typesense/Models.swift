@@ -52,6 +52,12 @@ public struct AnalyticsRuleUpsertSchema: Codable {
     public let type: String
 }
 
+public struct AnalyticsRuleSchema: Codable {
+    public let params: AnalyticsRuleParameters
+    public let type: String
+    public let name: String
+}
+
 public struct AnalyticsRulesRetrieveSchema: Codable {
     public let rules: [AnalyticsRuleSchema]
 }
