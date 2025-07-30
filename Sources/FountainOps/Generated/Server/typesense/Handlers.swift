@@ -27,10 +27,30 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/octet-stream"], body: data)
     }
     public func indexdocument(_ request: HTTPRequest, body: indexDocumentRequest?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        guard let doc = body else { return HTTPResponse(status: 400) }
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 3 else { return HTTPResponse(status: 404) }
+        let collection = String(parts[1])
+        let comps = URLComponents(string: request.path)
+        var action: IndexAction?
+        var dirty: DirtyValues?
+        for item in comps?.queryItems ?? [] {
+            if item.name == "action", let value = item.value { action = IndexAction(rawValue: value) }
+            if item.name == "dirty_values", let value = item.value { dirty = DirtyValues(rawValue: value) }
+        }
+        let data = try await service.indexDocument(collection: collection, document: doc, action: action, dirtyValues: dirty)
+        return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: data)
     }
     public func deletedocuments(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 3 else { return HTTPResponse(status: 404) }
+        let collection = String(parts[1])
+        let comps = URLComponents(string: request.path)
+        var params: [String: String] = [:]
+        for item in comps?.queryItems ?? [] { if let value = item.value { params[item.name] = value } }
+        let result = try await service.deleteDocuments(collection: collection, parameters: params.isEmpty ? nil : params)
+        let data = try JSONEncoder().encode(result)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func createanalyticsevent(_ request: HTTPRequest, body: AnalyticsEventCreateSchema?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)

@@ -50,6 +50,14 @@ public final actor TypesenseService {
         try await client.send(deleteCollection(parameters: .init(collectionname: name)))
     }
 
+    public func indexDocument(collection: String, document: indexDocumentRequest, action: IndexAction? = nil, dirtyValues: DirtyValues? = nil) async throws -> Data {
+        try await client.send(indexDocument(parameters: .init(collectionname: collection, action: action, dirtyValues: dirtyValues), body: document))
+    }
+
+    public func deleteDocuments(collection: String, parameters: [String: String]? = nil) async throws -> deleteDocumentsResponse {
+        try await client.send(deleteDocuments(parameters: .init(collectionname: collection, deletedocumentsparameters: parameters)))
+    }
+
     public func getKeys() async throws -> ApiKeysResponse {
         try await client.send(getKeys())
     }
