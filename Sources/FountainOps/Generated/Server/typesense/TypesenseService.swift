@@ -149,6 +149,10 @@ public final actor TypesenseService {
     public func retrieveAllConversationModels() async throws -> retrieveAllConversationModelsResponse {
         try await client.send(retrieveAllConversationModels())
     }
+
+    public func createConversationModel(schema: ConversationModelCreateSchema) async throws -> ConversationModelSchema {
+        try await client.send(createConversationModel(body: schema))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
