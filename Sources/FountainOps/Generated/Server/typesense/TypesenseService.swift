@@ -62,6 +62,10 @@ public final actor TypesenseService {
         try await client.send(getAliases())
     }
 
+    public func upsertAlias(name: String, schema: CollectionAliasSchema) async throws -> CollectionAlias {
+        try await client.send(upsertAlias(parameters: .init(aliasname: name), body: schema))
+    }
+
     public func search(collection: String, parameters: String) async throws -> SearchResult {
         struct Request: APIRequest {
             typealias Body = NoBody
