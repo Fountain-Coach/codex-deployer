@@ -212,7 +212,12 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func takesnapshot(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let comps = URLComponents(string: request.path)
+        guard let path = comps?.queryItems?.first(where: { $0.name == "snapshot_path" })?.value else {
+            return HTTPResponse(status: 400)
+        }
+        let data = try await service.takeSnapshot(path: path)
+        return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: data)
     }
     public func multisearch(_ request: HTTPRequest, body: MultiSearchSearchesParameter?) async throws -> HTTPResponse {
         guard let searches = body else { return HTTPResponse(status: 400) }
@@ -296,10 +301,14 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/octet-stream"], body: data)
     }
     public func retrieveallpresets(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let presets = try await service.retrieveAllPresets()
+        let data = try JSONEncoder().encode(presets)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrieveapistats(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let stats = try await service.retrieveAPIStats()
+        let data = try JSONEncoder().encode(stats)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrieveallnlsearchmodels(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let models = try await service.retrieveAllNLSearchModels()
@@ -345,22 +354,54 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrievestopwordsset(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 2 else { return HTTPResponse(status: 404) }
+        let id = String(parts[1])
+        let result = try await service.retrieveStopwordsSet(id: id)
+        let data = try JSONEncoder().encode(result)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func upsertstopwordsset(_ request: HTTPRequest, body: StopwordsSetUpsertSchema?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        guard let schema = body else { return HTTPResponse(status: 400) }
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 2 else { return HTTPResponse(status: 404) }
+        let id = String(parts[1])
+        let result = try await service.upsertStopwordsSet(id: id, schema: schema)
+        let data = try JSONEncoder().encode(result)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func deletestopwordsset(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 2 else { return HTTPResponse(status: 404) }
+        let id = String(parts[1])
+        let result = try await service.deleteStopwordsSet(id: id)
+        let data = try JSONEncoder().encode(result)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrievepreset(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 2 else { return HTTPResponse(status: 404) }
+        let id = String(parts[1])
+        let preset = try await service.retrievePreset(id: id)
+        let data = try JSONEncoder().encode(preset)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func upsertpreset(_ request: HTTPRequest, body: PresetUpsertSchema?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        guard let schema = body else { return HTTPResponse(status: 400) }
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 2 else { return HTTPResponse(status: 404) }
+        let id = String(parts[1])
+        let preset = try await service.upsertPreset(id: id, schema: schema)
+        let data = try JSONEncoder().encode(preset)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func deletepreset(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 2 else { return HTTPResponse(status: 404) }
+        let id = String(parts[1])
+        let result = try await service.deletePreset(id: id)
+        let data = try JSONEncoder().encode(result)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func getsearchsynonyms(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let parts = request.path.split(separator: "/")
@@ -438,7 +479,9 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrievestopwordssets(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let sets = try await service.retrieveStopwordsSets()
+        let data = try JSONEncoder().encode(sets)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
 }
 

@@ -83,8 +83,18 @@ The server currently supports the following endpoints (commit):
 - `GET /nl_search_models` – `d7e7891`
 - `POST /nl_search_models` – `f39a3bb`
 - `POST /operations/vote` – `2521109`
+- `POST /operations/snapshot` – `636fde0`
+- `GET /presets` – `636fde0`
+- `GET /presets/{presetId}` – `636fde0`
+- `PUT /presets/{presetId}` – `636fde0`
+- `DELETE /presets/{presetId}` – `636fde0`
+- `GET /stats.json` – `636fde0`
+- `GET /stopwords` – `636fde0`
+- `GET /stopwords/{setId}` – `636fde0`
+- `PUT /stopwords/{setId}` – `636fde0`
+- `DELETE /stopwords/{setId}` – `636fde0`
 
-Last updated at `2521109`.
+Last updated at `636fde0`.
 
 
 ---

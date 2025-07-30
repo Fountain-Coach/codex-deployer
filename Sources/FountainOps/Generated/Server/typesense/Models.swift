@@ -320,6 +320,15 @@ public struct NLSearchModelDeleteSchema: Codable {
     public let id: String
 }
 
+public struct PresetUpsertSchema: Codable {
+    public let value: [String: String]
+}
+
+public struct PresetSchema: Codable {
+    public let value: [String: String]
+    public let name: String
+}
+
 public struct PresetDeleteSchema: Codable {
     public let name: String
 }
