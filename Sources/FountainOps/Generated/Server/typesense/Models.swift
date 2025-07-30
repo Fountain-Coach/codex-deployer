@@ -333,6 +333,22 @@ public struct SearchOverrideSchema: Codable {
     public let stop_processing: Bool
 }
 
+public struct SearchOverride: Codable {
+    public let effective_from_ts: Int
+    public let effective_to_ts: Int
+    public let excludes: [SearchOverrideExclude]
+    public let filter_by: String
+    public let filter_curated_hits: Bool
+    public let includes: [SearchOverrideInclude]
+    public let metadata: [String: String]
+    public let remove_matched_tokens: Bool
+    public let replace_query: String
+    public let rule: SearchOverrideRule
+    public let sort_by: String
+    public let stop_processing: Bool
+    public let id: String
+}
+
 public struct SearchOverridesResponse: Codable {
     public let overrides: [SearchOverride]
 }
