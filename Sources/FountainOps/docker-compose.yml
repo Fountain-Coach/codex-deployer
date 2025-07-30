@@ -27,5 +27,9 @@ services:
     build:
       context: .
       dockerfile: Generated/Server/tools-factory/Dockerfile
+  typesense:
+    build:
+      context: .
+      dockerfile: Generated/Server/typesense/Dockerfile
 
 # © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
