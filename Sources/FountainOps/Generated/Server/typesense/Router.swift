@@ -8,6 +8,13 @@ public struct Router {
     }
 
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
+        if request.method == "GET" && request.path.starts(with: "/collections/") {
+            let parts = request.path.split(separator: "/")
+            if parts.count == 2 {
+                let body = try? JSONDecoder().decode(NoBody.self, from: request.body)
+                return try await handlers.getcollection(request, body: body)
+            }
+        }
         switch (request.method, request.path) {
         case ("GET", "/collections/{collectionName}/overrides"):
             let body = try? JSONDecoder().decode(NoBody.self, from: request.body)

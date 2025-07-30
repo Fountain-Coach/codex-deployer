@@ -50,7 +50,12 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func getcollection(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 2 else { return HTTPResponse(status: 404) }
+        let name = String(parts[1])
+        let collection = try await service.getCollection(name: name)
+        let data = try JSONEncoder().encode(collection)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func deletecollection(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
