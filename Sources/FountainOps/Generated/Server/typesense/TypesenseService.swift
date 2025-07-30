@@ -94,6 +94,10 @@ public final actor TypesenseService {
     public func debug() async throws -> debugResponse {
         try await client.send(debug())
     }
+
+    public func health() async throws -> HealthStatus {
+        try await client.send(health())
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
