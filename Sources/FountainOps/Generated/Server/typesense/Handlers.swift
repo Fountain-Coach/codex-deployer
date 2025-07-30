@@ -157,7 +157,9 @@ public struct Handlers {
         return HTTPResponse(status: 501)
     }
     public func getaliases(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let aliases = try await service.getAliases()
+        let data = try JSONEncoder().encode(aliases)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func retrievestopwordsset(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
