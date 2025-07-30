@@ -151,7 +151,12 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func deletedocument(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 4 else { return HTTPResponse(status: 404) }
+        let collection = String(parts[1])
+        let id = String(parts[3])
+        let data = try await service.deleteDocument(collection: collection, id: id)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
     }
     public func getstemmingdictionary(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
