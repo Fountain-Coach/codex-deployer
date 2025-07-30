@@ -62,6 +62,10 @@ public final actor TypesenseService {
         try await client.send(getKey(parameters: .init(keyid: id)))
     }
 
+    public func deleteKey(id: Int) async throws -> ApiKeyDeleteResponse {
+        try await client.send(deleteKey(parameters: .init(keyid: id)))
+    }
+
     public func getAliases() async throws -> CollectionAliasesResponse {
         try await client.send(getAliases())
     }
