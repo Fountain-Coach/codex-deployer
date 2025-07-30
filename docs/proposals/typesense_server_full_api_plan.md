@@ -73,8 +73,9 @@ The server currently supports the following endpoints (commit):
 - `PATCH /collections/{collectionName}/documents` – `181cab6`
 - `POST /multi_search` – `3e66160`
 - `POST /analytics/events` – `73c01a2`
+- `POST /analytics/rules` – `3110987`
 
-Last updated at `73c01a2`.
+Last updated at `3110987`.
 
 
 ---
