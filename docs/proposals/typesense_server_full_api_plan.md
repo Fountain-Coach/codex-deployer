@@ -45,8 +45,9 @@ The server currently supports the following endpoints (commit):
 - `GET /keys` – `792ff5b`
 - `POST /keys` – `792ff5b`
 - `GET /aliases` – `384dc86`
+- `PUT /aliases/{aliasName}` – `1bce1dc`
 
-Last updated at `384dc86`.
+Last updated at `1bce1dc`.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
