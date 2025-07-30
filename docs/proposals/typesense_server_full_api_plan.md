@@ -67,8 +67,9 @@ The server currently supports the following endpoints (commit):
 - `GET /collections/{collectionName}/overrides/{overrideId}` – `f875609`
 - `GET /collections/{collectionName}/synonyms` – `26244cd`
 - `PUT /collections/{collectionName}/synonyms/{synonymId}` – `d8b7a3e`
+- `POST /collections/{collectionName}/documents` – `3aec9e7`
 
-Last updated at `f875609`.
+Last updated at `3aec9e7`.
 
 
 ---

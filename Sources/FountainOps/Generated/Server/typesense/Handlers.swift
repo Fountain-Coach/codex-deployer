@@ -27,7 +27,19 @@ public struct Handlers {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/octet-stream"], body: data)
     }
     public func indexdocument(_ request: HTTPRequest, body: indexDocumentRequest?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 501)
+        guard let document = body else { return HTTPResponse(status: 400) }
+        let parts = request.path.split(separator: "/")
+        guard parts.count >= 3 else { return HTTPResponse(status: 404) }
+        let collection = String(parts[1])
+        let comps = URLComponents(string: request.path)
+        var action: IndexAction? = nil
+        var dirtyValues: DirtyValues? = nil
+        for item in comps?.queryItems ?? [] {
+            if item.name == "action", let v = item.value { action = IndexAction(rawValue: v) }
+            if item.name == "dirty_values", let v = item.value { dirtyValues = DirtyValues(rawValue: v) }
+        }
+        let data = try await service.indexDocument(collection: collection, document: document, action: action, dirtyValues: dirtyValues)
+        return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: data)
     }
     public func deletedocuments(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         return HTTPResponse(status: 501)
