@@ -9,7 +9,7 @@ For a repository overview and additional documentation see the
 All contributor guides live under `docs/handbook`. Start from the
 [main README](README.md) or the handbook index for tutorials and references.
 
-- Keep `docs/environment_variables.md` updated whenever new environment variables
+- Keep `../docs/environment_variables.md` updated whenever new environment variables
   are introduced or removed.
 - Reference that file in documentation and code comments when explaining
   configuration.
@@ -173,7 +173,7 @@ progressive fallback sequence:
 1. **No parallelism** – run `swift test --parallel false`.  
 2. **Cap concurrency** – retry with `--jobs 2` or the `SWIFTPM_NUM_JOBS`
    environment variable (see
-   [docs/environment_variables.md](docs/environment_variables.md)).  
+   [../docs/environment_variables.md](../docs/environment_variables.md)).  
 3. **Split targets** – loop over `swift test --filter <Target>` for each test
    module so heavy modules run in isolation.  
 4. **Skip heavy cases** – retry with `-DSKIP_SLOW_TESTS` to omit the slowest

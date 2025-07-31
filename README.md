@@ -34,7 +34,7 @@ The entire system is restructured into Swift Package Manager (SPM) modules:
 
 - DNS managed via Hetzner DNS API  
 - Reverse proxies: Kong or Caddy (configured via SPM tools)  
-- GitHub runners: Replaced by long‑lived Hetzner VPS executing `dispatcher.py`  
+- GitHub runners: Replaced by long‑lived Hetzner VPS running `FountainAiLauncher`
 - Agents submit pull requests to evolve infrastructure  
 
 ### 🧱 Infrastructure as Code via Git
@@ -58,7 +58,7 @@ FountainCoach/
 │   ├── FountainOps/
 │   └── FountainAgents/
 ├── Repos/ (external mirrors)
-├── dispatcher.py (runs on Hetzner)
+├── FountainAiLauncher/    # Swift orchestrator CLI
 ├── logs/
 ├── feedback/
 └── Package.swift
@@ -93,7 +93,7 @@ The following defines the `agent.md` for the Codex agent operating this system:
 #### CONTROL SURFACES
 - `/logs/*.log` — declarative output traces  
 - `/feedback/*.json` — structured response/reflection  
-- `dispatcher.py` — main interpreter  
+- `FountainAiLauncher` — Swift supervisor CLI
 
 #### OPENAPI CLIENTS
 - Must use OpenAPI 3.1 spec to generate Swift clients  

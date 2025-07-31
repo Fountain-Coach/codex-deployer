@@ -30,7 +30,7 @@
 ## CONTROL SURFACES
 - `/logs/*.log` — declarative output traces  
 - `/feedback/*.json` — structured response/reflection  
-- `dispatcher.py` — main interpreter  
+- `FountainAiLauncher` — Swift supervisor CLI
 
 ## OPENAPI CLIENTS
 - Must use OpenAPI 3.1 spec to generate Swift clients  

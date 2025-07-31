@@ -14,10 +14,10 @@ repository itself see the [main README](../../README.md).
 
 - [Introduction to Codex-Deployer](introduction.md) – start here for core concepts and platform overview
 - [Architecture Overview](architecture.md) – layout diagram and feature list
-- [Running on macOS with Docker](../mac_docker_tutorial.md)
-- [Local Testing on macOS](../mac_local_testing.md)
-- [Managing Environment Variables](../managing_environment_variables.md)
-- [Environment Variables Reference](../environment_variables.md)
+- [Running on macOS with Docker](../docs/mac_docker_tutorial.md)
+- [Local Testing on macOS](../docs/mac_local_testing.md)
+- [Managing Environment Variables](../docs/managing_environment_variables.md)
+- [Environment Variables Reference](../docs/environment_variables.md)
 
 ### Dispatcher Details
 
