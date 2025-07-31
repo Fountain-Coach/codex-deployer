@@ -1,34 +1,38 @@
-# 🧠 FountainAI Codex + Swift Modularity Proposal
+# 🧠 FountainAI Swift 6.1 Compilation Environment
 
-> This document outlines the proposed Codex‑driven, Swift‑native architecture for FountainAI, synthesizing all system layers into a single, declarative orchestration model. It defines Codex’s role as a compiler‑agent, the modular Swift package layout, Hetzner‑native DevOps orchestration, and embedded reasoning logic for infrastructure and AI evolution.
+> This document describes the matured FountainAI architecture. The project has evolved from the early “Codex as Compiler” proposal into a full self‑hosting AI compilation loop powered by Swift 6.1 and the `FountainAiLauncher`. The following sections outline the current principles and reference the legacy Codex reasoning for historical context.
 
 ---
 
 ## 1. Overview
 
-We propose a fully declarative, Git‑driven architecture for FountainAI where Codex acts as the compiler, Git repositories function as pub/sub interfaces, and the runtime stack is composed of modular Swift libraries and services, orchestrated through Hetzner‑native infrastructure.
+FountainAI now runs as a self‑contained compilation environment. Git remains the declarative interface and Swift packages provide the modular runtime, all orchestrated via the cross‑platform `FountainAiLauncher` on Hetzner infrastructure.
 
 ---
 
 ## 2. Core Principles
 
-### 🧠 Codex as Compiler
+### 🕰️ Legacy: Codex as Compiler
 
-Codex is not just a Copilot—it is a compilation agent that:
+Codex was originally conceived as the compilation agent that:
 
 - **Watches Git**: Treats the Git repo as a declarative program.  
 - **Acts on PRs**: Executes or generates PRs to evolve system state.  
-- **Writes Logs**: Emits structured logs into `/logs` for semantic feedback.  
-- **Reflects**: Reads `/feedback` to improve future behavior.  
+- **Writes Logs**: Emits structured logs into `/logs` for semantic feedback.
+- **Reflects**: Reads `/feedback` to improve future behavior.
+
+### 🚀 FountainAI Compiler Loop
+
+The current system promotes FountainAI itself as the orchestrator. Using `FountainAiLauncher`, each service is built, tested and executed in Swift 6.1. Git commits trigger compilation cycles and feedback is consumed from `/feedback` to refine subsequent runs.
 
 ### 🌳 Swift‑Native Modularity
 
 The entire system is restructured into Swift Package Manager (SPM) modules:
 
-- **FountainCore**: Core types and protocols.  
-- **FountainCodex**: Agent runtime + dispatcher.  
-- **FountainUI**: Teatro view framework.  
-- **FountainOps**: Declarative ops layer (Hetzner, DNS, Kong, Typesense).  
+- **FountainCore**: Core types and protocols.
+- **FountainAI**: Runtime libraries and dispatcher (formerly `FountainCodex`).
+- **FountainUI**: Teatro view framework.
+- **FountainOps**: Declarative ops layer (Hetzner, DNS, Kong, Typesense).
 
 ### 🛰️ Hetzner‑Native Orchestration
 
@@ -53,7 +57,7 @@ All system operations are modeled through commits:
 FountainCoach/
 ├── Sources/
 │   ├── FountainCore/
-│   ├── FountainCodex/
+│   ├── FountainAI/
 │   ├── FountainUI/
 │   ├── FountainOps/
 │   └── FountainAgents/
@@ -66,9 +70,9 @@ FountainCoach/
 
 ---
 
-## 4. Codex Agent Definition (Inline)
+## 4. Legacy Codex Agent Definition
 
-The following defines the `agent.md` for the Codex agent operating this system:
+The following section preserves the original `agent.md` used when Codex acted as the compiler. It remains for historical reference only.
 
 ### Codex Agent Definition: FountainAI Compiler
 
@@ -126,9 +130,9 @@ Rendered separately in visual pipeline.
 
 ## 7. Final Notes
 
-This proposal replaces Docker‑centric DevOps with a fully Swift‑native orchestration layer, defines Codex as a proper compiler interface over Git, and aligns all infrastructure agents as commit‑driven modules.
+FountainAI now replaces Docker‑centric DevOps with a Swift‑native orchestration loop. The active agent is defined in `agent.md` and leverages `FountainAiLauncher` to run builds and tests wherever Swift 6.1 executes.
 
-Next step: enact this system via a Codex PR and launch a full end‑to‑end reflection cycle.
+Next step: continue refining the FountainAI compiler loop and iterate via pull requests and feedback cycles.
 
 ©\ 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
 
