@@ -10,7 +10,7 @@ FountainAI is a self-hosting AI system built entirely in Swift 6.1. It compiles,
 - **Swift 6.1 First** – all modules use the Swift Package Manager
 - **Single Launcher** – `FountainAiLauncher` supervises every service
 - **Feedback Loop** – commits produce build logs and await feedback in `/feedback`
-- **Hetzner Native** – DNS and reverse proxy configuration managed via Swift scripts
+- **Linux Native** – DNS and reverse proxy configuration managed via Swift scripts
 
 ---
 
