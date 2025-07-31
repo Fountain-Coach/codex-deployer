@@ -80,6 +80,6 @@ public final class NIOHTTPServer: @unchecked Sendable {
 
 extension NIOHTTPServer.HTTPHandler: @unchecked Sendable {}
 
-extension ChannelHandlerContext: @unchecked Sendable {}
+extension ChannelHandlerContext: @unchecked @retroactive Sendable {}
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

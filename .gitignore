@@ -28,3 +28,6 @@ dispatcher.env
 # Editor swap files
 *.swp
 *.swo
+*.xcworkspacedata
+*.xcuserstate
+*.plist
