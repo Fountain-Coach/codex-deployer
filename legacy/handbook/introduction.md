@@ -22,9 +22,9 @@ This introduction summarises the core concepts and explains how environment vari
 
 ## Configuring the Environment
 
-The dispatcher relies heavily on environment variables for authentication and feature flags. The full list is documented in [environment_variables.md](../environment_variables.md). At minimum you will need a `GITHUB_TOKEN` and commit identity variables (`GIT_USER_NAME`, `GIT_USER_EMAIL`).
+The dispatcher relies heavily on environment variables for authentication and feature flags. The full list is documented in [environment_variables.md](../docs/environment_variables.md). At minimum you will need a `GITHUB_TOKEN` and commit identity variables (`GIT_USER_NAME`, `GIT_USER_EMAIL`).
 
-For a step-by-step walkthrough of creating `dispatcher.env` and exporting secrets, see [managing_environment_variables.md](../managing_environment_variables.md).
+For a step-by-step walkthrough of creating `dispatcher.env` and exporting secrets, see [managing_environment_variables.md](../docs/managing_environment_variables.md).
 
 ## Managing Platform Diversity
 
@@ -42,13 +42,13 @@ Two environment variables influence how cross-platform builds behave:
   When set, the dispatcher mounts `/var/run/docker.sock` so containers run on
   the host regardless of whether you are on Linux or macOS.
 
-Refer to [environment_variables.md](../environment_variables.md) for the full
+Refer to [environment_variables.md](../docs/environment_variables.md) for the full
 list of options.
 
 ## Next Steps
 
-- [Running on macOS with Docker](../mac_docker_tutorial.md) – build the development image and start the dispatcher locally.
-- [Local Testing on macOS](../mac_local_testing.md) – mirror the Linux workflow and execute compose-based service tests.
+- [Running on macOS with Docker](../docs/mac_docker_tutorial.md) – build the development image and start the dispatcher locally.
+- [Local Testing on macOS](../docs/mac_local_testing.md) – mirror the Linux workflow and execute compose-based service tests.
 - [Dispatcher v2 Overview](../dispatcher_v2.md) – deep dive into how the loop works and how pull requests are opened.
 
 The [handbook README](README.md) contains a complete table of contents with links to additional background material. For API details see [code_reference.md](code_reference.md).
