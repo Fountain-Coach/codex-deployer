@@ -24,7 +24,7 @@ final class HetznerDNSClientTests: XCTestCase {
         let client = HetznerDNSClient(token: "t", session: session)
         try await client.createRecord(zone: "z", name: "www", type: "A", value: "1.2.3.4")
         XCTAssertEqual(session.lastRequest?.httpMethod, "POST")
-        XCTAssertEqual(session.lastRequest?.url?.path, "/records")
+        XCTAssertEqual(session.lastRequest?.url?.path, "/api/v1/records")
         XCTAssertEqual(session.lastRequest?.value(forHTTPHeaderField: "Auth-API-Token"), "t")
     }
 
@@ -33,7 +33,7 @@ final class HetznerDNSClientTests: XCTestCase {
         let client = HetznerDNSClient(token: "x", session: session)
         try await client.deleteRecord(id: "123")
         XCTAssertEqual(session.lastRequest?.httpMethod, "DELETE")
-        XCTAssertEqual(session.lastRequest?.url?.path, "/records/123")
+        XCTAssertEqual(session.lastRequest?.url?.path, "/api/v1/records/123")
     }
 
     func testUpdateRecordRequest() async throws {
@@ -42,7 +42,7 @@ final class HetznerDNSClientTests: XCTestCase {
         let session = MockSession(data: data)
         let client = HetznerDNSClient(token: "t", session: session)
         try await client.updateRecord(id: "1", zone: "z", name: "www", type: "A", value: "2.2.2.2")
-        XCTAssertEqual(session.lastRequest?.url?.path, "/records/1")
+        XCTAssertEqual(session.lastRequest?.url?.path, "/api/v1/records/1")
         XCTAssertEqual(session.lastRequest?.httpMethod, "PUT")
     }
 }

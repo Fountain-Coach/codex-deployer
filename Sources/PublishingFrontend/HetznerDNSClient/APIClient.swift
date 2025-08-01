@@ -50,4 +50,5 @@ public extension APIClient {
         self.init(baseURL: baseURL, session: session, defaultHeaders: ["Authorization": "Bearer \(bearerToken)"])
     }
 }
-\n// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
