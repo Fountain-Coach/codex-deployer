@@ -2,6 +2,7 @@
 @preconcurrency import NIOHTTP1
 import Foundation
 
+/// Lightweight SwiftNIO based HTTP server used by FountainAI services.
 public final class NIOHTTPServer: @unchecked Sendable {
     let kernel: HTTPKernel
     let group: EventLoopGroup
@@ -35,6 +36,7 @@ public final class NIOHTTPServer: @unchecked Sendable {
         try await group.shutdownGracefully()
     }
 
+    /// Internal NIO channel handler translating NIO events into ``HTTPRequest``s.
     final class HTTPHandler: ChannelInboundHandler {
         typealias InboundIn = HTTPServerRequestPart
         typealias OutboundOut = HTTPServerResponsePart
@@ -47,6 +49,7 @@ public final class NIOHTTPServer: @unchecked Sendable {
             self.kernel = kernel
         }
 
+        /// Handles inbound HTTP request parts and dispatches them through the ``HTTPKernel``.
         func channelRead(context: ChannelHandlerContext, data: NIOAny) {
             switch unwrapInboundIn(data) {
             case .head(let h):
