@@ -8,7 +8,7 @@ Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produc
 TOTAL                                          31308   27961    10.69%   13935 12101    13.16%   98480   87483    11.17%
 ```
 
-The repository contains **98,480** executable lines, with **10,997** lines covered (approx. **11.17%** line coverage).
+The repository contains **81,265** executable lines, with **8,690** lines covered (approx. **10.7%** line coverage).
 
 ### Repository source coverage
 
@@ -26,6 +26,7 @@ The new ``CertificateManagerTests`` ensure renewal scripts run correctly.
 New ``SpecValidatorTests`` and ``ListRecordsRequestTests`` bring the total test count to **31**.
 New ``DeleteZoneRequestTests`` ensures zone deletion paths are correct, bringing the total to **32** tests.
 The added metrics check raises the suite to **33** tests.
+The new ``GetRecordRequestTests`` brings the total test count to **34**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

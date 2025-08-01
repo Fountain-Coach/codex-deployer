@@ -32,6 +32,7 @@ As modules gain documentation, brief summaries are added here.
 - **SpecValidator** – checks OpenAPI documents for duplicate IDs and unresolved references.
 - **listRecords** and **listPrimaryServers** – request types now include documentation.
 - **bulkUpdateRecords**, **deleteZone**, **updateZone**, **exportZoneFile** – additional DNS client requests documented.
+- **getRecord** and **updateRecord** – request types now include usage documentation.
 
 Documentation coverage will expand alongside test coverage.
 
