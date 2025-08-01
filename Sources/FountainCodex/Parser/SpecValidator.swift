@@ -1,6 +1,8 @@
 import Foundation
 
+/// Utility validating parsed ``OpenAPISpec`` models for common mistakes.
 public enum SpecValidator {
+    /// Error describing why a specification failed validation.
     public struct ValidationError: Error, Equatable, CustomStringConvertible {
         public let message: String
         public var description: String { message }
@@ -10,6 +12,9 @@ public enum SpecValidator {
         }
     }
 
+    /// Performs a series of assertions to ensure the specification is usable.
+    /// - Parameter spec: The specification model to verify.
+    /// - Throws: ``ValidationError`` when the document contains inconsistencies.
     public static func validate(_ spec: OpenAPISpec) throws {
         if spec.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             throw ValidationError("title cannot be empty")
