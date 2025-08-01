@@ -9,6 +9,12 @@ As modules gain documentation, brief summaries are added here.
 - **HetznerDNSClient** – Swift wrapper for the Hetzner DNS API with typed requests.
 - **AsyncHTTPClientDriver** and **URLSessionHTTPClient** – documented HTTP clients powering network requests.
 - **NIOHTTPServer** – documented server adapter built on SwiftNIO.
+- **LoggingPlugin** – prints requests and responses for debugging.
+- **GatewayPlugin** – protocol for request and response middleware.
+- **CertificateManager** – runs periodic certificate renewal scripts.
+- **SpecLoader** – parses OpenAPI specifications from JSON or YAML.
+- **ClientGenerator** and **ServerGenerator** – emit Swift client and server code from specs.
+- **GeneratorCLI** – command line interface for the code generators.
 
 Documentation coverage will expand alongside test coverage.
 
