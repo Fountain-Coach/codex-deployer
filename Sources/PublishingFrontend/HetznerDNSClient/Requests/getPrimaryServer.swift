@@ -11,7 +11,7 @@ public struct getPrimaryServer: APIRequest {
     public var parameters: getPrimaryServerParameters
     public var path: String {
         var path = "/primary_servers/{PrimaryServerID}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{PrimaryServerID}", with: String(parameters.primaryserverid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
@@ -23,3 +23,4 @@ public struct getPrimaryServer: APIRequest {
         self.body = body
     }
 }
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
