@@ -1,7 +1,7 @@
 
 # 🌊 FountainAI
 
-FountainAI is a self-hosting AI system built entirely in Swift 6.1. It compiles, tests and runs its services through the `FountainAiLauncher` without Docker or systemd. The previous architecture overview is archived in [`legacy/README.root-legacy.md`](legacy/README.root-legacy.md).
+FountainAI is a self-hosting AI system built entirely in Swift 6.1. It compiles, tests and runs its services through the `FountainAiLauncher` without Docker or systemd.
 
 ---
 
