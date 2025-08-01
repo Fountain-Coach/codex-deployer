@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SPEC="../../repos/typesense-codex/openapi/openapi.yml"
+SPEC="FountainAi/openAPI/typesense.yml"
 SERVICE="typesense"
 OUT_DIR="Generated/$SERVICE"
 

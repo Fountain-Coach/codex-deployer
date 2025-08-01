@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 ROOT_DIR="$(cd "$PACKAGE_DIR/../.." && pwd)"
 
-SPEC_PATH="$ROOT_DIR/repos/typesense-codex/openapi/openapi.yml"
+SPEC_PATH="$ROOT_DIR/repos/fountainai/Sources/FountainOps/FountainAi/openAPI/typesense.yml"
 OUTPUT_DIR="$PACKAGE_DIR/Sources/TypesenseClient"
 
 rm -rf "$OUTPUT_DIR"
@@ -21,3 +21,5 @@ mv "$TMP_DIR/Client" "$OUTPUT_DIR"
 rm -rf "$TMP_DIR"
 
 echo "Swift client generated in $OUTPUT_DIR"
+
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

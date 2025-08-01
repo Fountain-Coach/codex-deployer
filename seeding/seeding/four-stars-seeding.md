@@ -4,7 +4,7 @@ This file summarizes the analysis and recommendations for importing `the-four-st
 
 ## Source Overview
 
-- Location: `repos/typesense-codex/the-four-stars.txt`
+- Location: `repos/seeding/the-four-stars.txt`
 - Size: roughly 231k lines (about 1.4 million words)
 - Content: complete works of Shakespeare
 - Structure: each play begins with its title followed by act and scene markers using four asterisks.

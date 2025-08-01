@@ -8,7 +8,7 @@ This document summarizes the architectural patterns used across the Codex-powere
 |------------|---------|
 | `fountainai` (alias for `swift-codex-openapi-kernel`) | Swift and Python services providing the main logic layer |
 | `kong-codex` | Gateway configuration and plugin definitions |
-| `typesense-codex` | Typesense indexing schemas and bootstrapping logic |
+| `seeding` | Typesense indexing schemas and bootstrapping logic |
 | `codex-deployer` | Dispatcher loop, feedback handling, and deployment logic |
 | `teatro` | Teatro view engine and rendering framework |
 

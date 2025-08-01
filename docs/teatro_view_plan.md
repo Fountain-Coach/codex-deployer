@@ -1,12 +1,12 @@
 # TeatroView Feature Project
 
-TeatroView provides a graphical interface for Typesense using the Teatro view engine. It consumes the comprehensive OpenAPI specification shipped under `repos/typesense-codex/openapi/openapi.yml`.
+TeatroView provides a graphical interface for Typesense using the Teatro view engine. It consumes the comprehensive OpenAPI specification shipped under `repos/fountainai/Sources/FountainOps/FountainAi/openAPI/typesense.yml`.
 
 ## Objectives
 
 - Generate a Swift client from the OpenAPI file to access collections and search APIs.
 - Expose Teatro-based views for browsing collections, searching documents, and editing schemas.
-- Bootstrap default schemas by reusing `repos/typesense-codex/scripts/bootstrap_typesense.py`.
+- Bootstrap default schemas by reusing `repos/seeding/scripts/bootstrap_typesense.py`.
 - Package the app as an open-source project under `repos/TeatroView` so contributors can build and run it on macOS.
 
 ## Roadmap
