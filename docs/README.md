@@ -18,6 +18,7 @@ As modules gain documentation, brief summaries are added here.
 - **ClientGenerator** and **ServerGenerator** – emit Swift client and server code from specs.
 - **GeneratorCLI** – command line interface for the code generators.
 - **CreateRecord** – documented request wrapper for adding DNS records.
+- **HTTPRequest** and **HTTPResponse** – request/response models now fully documented.
 
 Documentation coverage will expand alongside test coverage.
 
