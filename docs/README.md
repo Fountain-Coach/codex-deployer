@@ -17,6 +17,7 @@ As modules gain documentation, brief summaries are added here.
 - **SpecLoader** – parses OpenAPI specifications from JSON or YAML.
 - **ClientGenerator** and **ServerGenerator** – emit Swift client and server code from specs.
 - **GeneratorCLI** – command line interface for the code generators.
+- **CreateRecord** – documented request wrapper for adding DNS records.
 
 Documentation coverage will expand alongside test coverage.
 
