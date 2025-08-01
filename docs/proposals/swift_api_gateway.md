@@ -21,8 +21,8 @@ We plan to build an API gateway entirely in Swift to replace Kong. The goal is t
 6. **Request Transformation**
    - Allow lightweight header manipulation or JSON body validation directly in Swift.
 7. **Typesense Persistence**
-   - Use Typesense as the primary persistence layer. The cluster is defined by
-     our `repos/typesense-codex/openapi/openapi.yml` spec and accessed via
+  - Use Typesense as the primary persistence layer. The cluster is defined by
+    our `repos/fountainai/Sources/FountainOps/FountainAi/openAPI/typesense.yml` spec and accessed via
      a Swift client generated through `clientgen-service`. Request metadata,
      tokens and logs are stored as Typesense documents for fast retrieval.
 

@@ -1,6 +1,6 @@
 # Typesense Server Full API Implementation Plan
 
-This plan details how to implement every endpoint defined in `repos/typesense-codex/openapi/openapi.yml` so the generated `typesense-server` can act as a complete proxy to a real Typesense cluster.
+This plan details how to implement every endpoint defined in `repos/fountainai/Sources/FountainOps/FountainAi/openAPI/typesense.yml` so the generated `typesense-server` can act as a complete proxy to a real Typesense cluster.
 
 ## 1. Regenerate Code from OpenAPI
 

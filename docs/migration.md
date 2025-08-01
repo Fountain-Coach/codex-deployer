@@ -20,7 +20,7 @@ The README lists the following Swift Package Manager modules:
 | `repos/teatro` | Extracted to external repo | Moved to [Teatro](https://github.com/Fountain-Coach/Teatro) |
 | `repos/TeatroView`, `repos/TeatroViewPreviewHost`, `repos/TeatroPlayground` | Legacy | Sources archived; new FountainUI will rebuild from the Teatro repo |
 | `repos/kong-codex` | FountainOps | Kong deployment automation |
-| `repos/typesense-codex` | FountainOps | Typesense setup utilities |
+| `repos/seeding` | FountainOps | Typesense setup utilities |
 | others | FountainAgents | Specialised agents or previews |
 
 ## Migration Steps

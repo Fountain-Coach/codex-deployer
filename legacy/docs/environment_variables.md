@@ -29,8 +29,8 @@ The token is used for cloning repositories, pushing commits, and pulling updates
 | Variable | Default | Purpose |
 |----------|---------|---------|
 | `OPENAI_API_BASE` | `https://api.openai.com/v1/chat/completions` | Override for the OpenAI API endpoint. Used by `repos/fountainai/Generated/Server/llm-gateway/Handlers.swift`. |
-| `TYPESENSE_URL` | _(none)_ | Base URL for a running Typesense instance. Used by `repos/typesense-codex/scripts/bootstrap_typesense.py`. |
-| `TYPESENSE_API_KEY` | _(none)_ | API key for Typesense. Used by `repos/typesense-codex/scripts/bootstrap_typesense.py`. |
+| `TYPESENSE_URL` | _(none)_ | Base URL for a running Typesense instance. Used by `repos/seeding/scripts/bootstrap_typesense.py`. |
+| `TYPESENSE_API_KEY` | _(none)_ | API key for Typesense. Used by `repos/seeding/scripts/bootstrap_typesense.py`. |
 | `LLM_GATEWAY_URL` | _(none)_ | Base URL for the LLM Gateway used by the Planner service. Used by `repos/fountainai/Generated/Server/planner/LLMGatewayClient.swift`. |
 | `FUNCTION_CALLER_URL` | _(none)_ | Base URL for the Function Caller service invoked by the Planner. Used by `repos/fountainai/Generated/Server/planner/LocalFunctionCallerClient.swift`. |
 | `BOOTSTRAP_AUTH_TOKEN` | _(none)_ | Optional bearer token required by the Bootstrap service. Used by `repos/fountainai/Generated/Server/bootstrap/HTTPKernel.swift`. |

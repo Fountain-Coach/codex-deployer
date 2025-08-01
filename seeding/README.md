@@ -1,4 +1,4 @@
-# 🧠 typesense-codex
+# 🧠 seeding
 
 Codex-managed Typesense schema + feedback registry for FountainAI.
 
