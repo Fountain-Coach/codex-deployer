@@ -4,6 +4,7 @@ import NIOHTTP1
 import FountainCodex
 
 /// HTTP gateway server that composes plugins for request handling.
+/// Provides built-in `/health` and `/metrics` endpoints used for monitoring.
 @MainActor
 public final class GatewayServer {
     private let server: NIOHTTPServer

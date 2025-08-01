@@ -27,6 +27,8 @@ As modules gain documentation, brief summaries are added here.
 - **publishing-frontend CLI** – documented main entrypoint starting the static server.
 - **clientgen-service CLI** – wrapper around GeneratorCLI is now documented.
 - **GatewayServerTests** – verifies the gateway's health endpoint.
+- **GatewayServer** – documentation now covers health and metrics endpoints.
+- **Service** and **Supervisor** – properties and lifecycle methods documented.
 - **SpecValidator** – checks OpenAPI documents for duplicate IDs and unresolved references.
 - **listRecords** and **listPrimaryServers** – request types now include documentation.
 - **bulkUpdateRecords**, **deleteZone**, **updateZone**, **exportZoneFile** – additional DNS client requests documented.
