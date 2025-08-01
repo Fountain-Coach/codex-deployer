@@ -45,6 +45,21 @@ final class HetznerDNSClientTests: XCTestCase {
         XCTAssertEqual(session.lastRequest?.url?.path, "/api/v1/records/1")
         XCTAssertEqual(session.lastRequest?.httpMethod, "PUT")
     }
+
+    func testCreateRecordSetsContentTypeHeader() async throws {
+        let response = RecordResponse(record: Record(created: "", id: "1", modified: "", name: "www", ttl: 60, type: "A", value: "1.1.1.1", zone_id: "z"))
+        let data = try JSONEncoder().encode(response)
+        let session = MockSession(data: data)
+        let client = HetznerDNSClient(token: "t", session: session)
+        try await client.createRecord(zone: "z", name: "www", type: "A", value: "1.1.1.1")
+        XCTAssertEqual(session.lastRequest?.value(forHTTPHeaderField: "Content-Type"), "application/json")
+    }
+
+    func testListZonesPathBuilder() {
+        let params = ListZonesParameters(name: "foo", searchName: "bar", page: 1, perPage: 5)
+        let req = ListZones(parameters: params)
+        XCTAssertEqual(req.path, "/zones?name=foo&search_name=bar&page=1&per_page=5")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

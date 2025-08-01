@@ -1,5 +1,7 @@
 import Foundation
 
+/// Parameters for filtering the list zones endpoint.
+/// When all fields are `nil`, the API returns every zone.
 public struct ListZonesParameters: Codable {
     public var name: String?
     public var searchName: String?
@@ -7,6 +9,8 @@ public struct ListZonesParameters: Codable {
     public var perPage: Int?
 }
 
+/// Request for fetching DNS zones from the Hetzner API.
+/// Builds a query string based on the provided parameters.
 public struct ListZones: APIRequest {
     public typealias Body = NoBody
     public typealias Response = ZonesResponse
@@ -29,3 +33,4 @@ public struct ListZones: APIRequest {
         self.body = body
     }
 }
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
