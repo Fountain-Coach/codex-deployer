@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31063   28253     9.05%   13773   12229    11.21%   97925   88227     9.90%
+TOTAL                                          31054   28461     8.35%   13766   12408     9.86%   97890   88577     9.51%
 ```
 
-The repository contains **97,925** executable lines, with **9,698** lines covered (approx. **9.90%** line coverage).
+The repository contains **97,890** executable lines, with **8,857** lines covered (approx. **9.51%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                            676     481    28.85%     234     142    39.32%    1543     964    37.52%
+TOTAL                                            543     421    22.47%     155     110    29.03%    1224     815    33.42%
 ```
 
-Within repository sources there are **1,543** lines, with **579** covered, giving **37.52%** line coverage.
+Within repository sources there are **1,224** lines, with **815** covered, giving **33.42%** line coverage.
 
 ## Action Plan
 

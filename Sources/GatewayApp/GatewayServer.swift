@@ -3,6 +3,7 @@ import NIO
 import NIOHTTP1
 import FountainCodex
 
+/// HTTP gateway server that composes plugins for request handling.
 @MainActor
 public final class GatewayServer {
     private let server: NIOHTTPServer
@@ -10,6 +11,10 @@ public final class GatewayServer {
     private let group: EventLoopGroup
     private let plugins: [GatewayPlugin]
 
+    /// Creates a new gateway server instance.
+    /// - Parameters:
+    ///   - manager: Certificate renewal manager.
+    ///   - plugins: Plugins applied before and after routing.
     public init(manager: CertificateManager = CertificateManager(),
                 plugins: [GatewayPlugin] = []) {
         self.manager = manager
@@ -40,11 +45,14 @@ public final class GatewayServer {
         self.server = NIOHTTPServer(kernel: kernel, group: group)
     }
 
+    /// Starts the gateway on the given port.
+    /// - Parameter port: TCP port to bind.
     public func start(port: Int = 8080) async throws {
         manager.start()
         _ = try await server.start(port: port)
     }
 
+    /// Stops the server and terminates certificate renewal.
     public func stop() async throws {
         manager.stop()
         try await server.stop()

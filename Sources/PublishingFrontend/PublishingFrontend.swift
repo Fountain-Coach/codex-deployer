@@ -4,21 +4,29 @@ import NIOHTTP1
 import FountainCodex
 import Yams
 
+/// Configuration for the ``PublishingFrontend`` server.
 public struct PublishingConfig: Codable {
     public var port: Int
     public var rootPath: String
 
+    /// Creates a new configuration with optional port and root path.
+    /// - Parameters:
+    ///   - port: Port to bind the HTTP server to.
+    ///   - rootPath: Directory containing static files to serve.
     public init(port: Int = 8085, rootPath: String = "./Public") {
         self.port = port
         self.rootPath = rootPath
     }
 }
 
+/// Lightweight HTTP server for serving generated documentation.
 public final class PublishingFrontend {
     private let server: NIOHTTPServer
     private let group: EventLoopGroup
     private let config: PublishingConfig
 
+    /// Creates a new server instance with the given configuration.
+    /// - Parameter config: Runtime configuration options.
     public init(config: PublishingConfig) {
         self.config = config
         self.group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
@@ -34,16 +42,19 @@ public final class PublishingFrontend {
     }
 
     @MainActor
+    /// Starts the HTTP server on the configured port.
     public func start() async throws {
         _ = try await server.start(port: config.port)
     }
 
     @MainActor
+    /// Stops the HTTP server and releases all resources.
     public func stop() async throws {
         try await server.stop()
     }
 }
 
+/// Loads the publishing configuration from `Configuration/publishing.yml`.
 public func loadPublishingConfig() throws -> PublishingConfig {
     let url = URL(fileURLWithPath: "Configuration/publishing.yml")
     let string = try String(contentsOf: url)
