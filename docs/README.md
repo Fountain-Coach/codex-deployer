@@ -23,6 +23,8 @@ As modules gain documentation, brief summaries are added here.
 - **URLSessionHTTPClientTests** – updated for Linux compatibility ensuring network client coverage.
 - **OpenAPISpec.swiftType** – documented helper converting schemas to Swift types.
 - **String.camelCased** – extension for transforming snake case identifiers.
+- **Agent.main** – entry point usage instructions are now documented.
+- **GatewayServerTests** – verifies the gateway's health endpoint.
 
 Documentation coverage will expand alongside test coverage.
 
