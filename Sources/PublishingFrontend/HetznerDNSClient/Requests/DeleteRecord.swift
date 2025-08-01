@@ -23,4 +23,5 @@ public struct DeleteRecord: APIRequest {
         self.body = body
     }
 }
-\n// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
