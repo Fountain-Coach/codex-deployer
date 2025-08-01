@@ -1,8 +1,6 @@
 
 # 🌊 FountainAI
 
-FountainAI is a self-hosting AI system built entirely in Swift 6.1. It compiles, tests and runs its services through the `FountainAiLauncher` without Docker or systemd.
-
 ## System Architecture
 
 FountainAI is a collection of Swift packages orchestrated by the `FountainAiLauncher` CLI. Each module provides a specific layer of the stack, from HTTP routing to DNS management.
