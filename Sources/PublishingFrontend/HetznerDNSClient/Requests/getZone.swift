@@ -11,7 +11,7 @@ public struct getZone: APIRequest {
     public var parameters: getZoneParameters
     public var path: String {
         var path = "/zones/{ZoneID}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{ZoneID}", with: String(parameters.zoneid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
@@ -23,3 +23,4 @@ public struct getZone: APIRequest {
         self.body = body
     }
 }
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

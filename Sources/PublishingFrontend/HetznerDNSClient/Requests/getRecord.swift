@@ -11,7 +11,7 @@ public struct getRecord: APIRequest {
     public var parameters: getRecordParameters
     public var path: String {
         var path = "/records/{RecordID}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{RecordID}", with: String(parameters.recordid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
@@ -23,3 +23,4 @@ public struct getRecord: APIRequest {
         self.body = body
     }
 }
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
