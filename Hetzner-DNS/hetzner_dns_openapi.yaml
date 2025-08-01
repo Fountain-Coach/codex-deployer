@@ -293,6 +293,7 @@ paths:
   /zones:
     get:
       summary: Get all zones
+      operationId: listZones
       description: Returns paginated zones associated with the user.
       parameters:
         - name: name
@@ -334,6 +335,7 @@ paths:
           description: Not acceptable
     post:
       summary: Create zone
+      operationId: createZone
       description: Creates a new DNS zone.
       requestBody:
         required: true
@@ -364,6 +366,14 @@ paths:
           type: string
     get:
       summary: Get zone
+      operationId: getZone
+      parameters:
+        - name: ZoneID
+          in: path
+          required: true
+          description: ID of the zone
+          schema:
+            type: string
       description: Returns an object containing all information about a zone.
       responses:
         '200':
@@ -382,6 +392,14 @@ paths:
           description: Not acceptable
     put:
       summary: Update zone
+      operationId: updateZone
+      parameters:
+        - name: ZoneID
+          in: path
+          required: true
+          description: ID of the zone
+          schema:
+            type: string
       description: Updates a zone.
       requestBody:
         required: true
@@ -410,6 +428,14 @@ paths:
           description: Unprocessable entity
     delete:
       summary: Delete zone
+      operationId: deleteZone
+      parameters:
+        - name: ZoneID
+          in: path
+          required: true
+          description: ID of the zone
+          schema:
+            type: string
       description: Deletes a zone.
       responses:
         '200':
@@ -432,6 +458,14 @@ paths:
           type: string
     post:
       summary: Import zone file (plain)
+      operationId: importZoneFile
+      parameters:
+        - name: ZoneID
+          in: path
+          required: true
+          description: ID of the zone to import records into
+          schema:
+            type: string
       description: Import a zone file in text/plain format.
       requestBody:
         required: true
@@ -463,6 +497,14 @@ paths:
           type: string
     get:
       summary: Export zone file
+      operationId: exportZoneFile
+      parameters:
+        - name: ZoneID
+          in: path
+          required: true
+          description: ID of the zone to export
+          schema:
+            type: string
       description: Export a zone file.
       responses:
         '200':
@@ -482,6 +524,7 @@ paths:
   /zones/file/validate:
     post:
       summary: Validate zone file (plain)
+      operationId: validateZoneFile
       description: Validate a zone file in text/plain format.
       requestBody:
         required: true
@@ -515,6 +558,7 @@ paths:
   /records:
     get:
       summary: Get all records
+      operationId: listRecords
       description: Returns all records associated with the user. Can be filtered by zone.
       parameters:
         - name: zone_id
@@ -547,6 +591,7 @@ paths:
           description: Not acceptable
     post:
       summary: Create record
+      operationId: createRecord
       description: Creates a new DNS record.
       requestBody:
         required: true
@@ -579,6 +624,14 @@ paths:
           type: string
     get:
       summary: Get record
+      operationId: getRecord
+      parameters:
+        - name: RecordID
+          in: path
+          required: true
+          description: Identifier of the record
+          schema:
+            type: string
       description: Returns a single record by identifier.
       responses:
         '200':
@@ -597,6 +650,14 @@ paths:
           description: Not acceptable
     put:
       summary: Update record
+      operationId: updateRecord
+      parameters:
+        - name: RecordID
+          in: path
+          required: true
+          description: Identifier of the record
+          schema:
+            type: string
       description: Updates a DNS record.
       requestBody:
         required: true
@@ -625,6 +686,14 @@ paths:
           description: Unprocessable entity
     delete:
       summary: Delete record
+      operationId: deleteRecord
+      parameters:
+        - name: RecordID
+          in: path
+          required: true
+          description: Identifier of the record
+          schema:
+            type: string
       description: Deletes a DNS record.
       responses:
         '200':
@@ -640,6 +709,7 @@ paths:
   /records/bulk:
     post:
       summary: Bulk create records
+      operationId: bulkCreateRecords
       description: Create multiple DNS records at once.
       requestBody:
         required: true
@@ -664,6 +734,7 @@ paths:
           description: Unprocessable entity
     put:
       summary: Bulk update records
+      operationId: bulkUpdateRecords
       description: Update multiple DNS records at once.
       requestBody:
         required: true
@@ -693,6 +764,7 @@ paths:
   /primary_servers:
     get:
       summary: Get all primary servers
+      operationId: listPrimaryServers
       description: Returns all primary servers associated with the user. Can be filtered by zone.
       parameters:
         - name: zone_id
@@ -715,6 +787,7 @@ paths:
           description: Not acceptable
     post:
       summary: Create primary server
+      operationId: createPrimaryServer
       description: Creates a new primary server for a zone.
       requestBody:
         required: true
@@ -745,6 +818,14 @@ paths:
           type: string
     get:
       summary: Get primary server
+      operationId: getPrimaryServer
+      parameters:
+        - name: PrimaryServerID
+          in: path
+          required: true
+          description: Identifier of the primary server
+          schema:
+            type: string
       description: Returns information about a primary server.
       responses:
         '200':
@@ -763,6 +844,14 @@ paths:
           description: Not acceptable
     put:
       summary: Update primary server
+      operationId: updatePrimaryServer
+      parameters:
+        - name: PrimaryServerID
+          in: path
+          required: true
+          description: Identifier of the primary server
+          schema:
+            type: string
       description: Updates a primary server.
       requestBody:
         required: true
@@ -791,6 +880,14 @@ paths:
           description: Unprocessable entity
     delete:
       summary: Delete primary server
+      operationId: deletePrimaryServer
+      parameters:
+        - name: PrimaryServerID
+          in: path
+          required: true
+          description: Identifier of the primary server
+          schema:
+            type: string
       description: Deletes a primary server.
       responses:
         '200':
