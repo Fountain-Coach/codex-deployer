@@ -10,7 +10,8 @@ let package = Package(
         .library(name: "FountainCore", targets: ["FountainCore"]),
         .library(name: "FountainCodex", targets: ["FountainCodex"]),
         .executable(name: "clientgen-service", targets: ["clientgen-service"]),
-        .executable(name: "gateway-server", targets: ["gateway-server"])
+        .executable(name: "gateway-server", targets: ["gateway-server"]),
+        .executable(name: "publishing-frontend", targets: ["publishing-frontend"])
     ],
     dependencies: [
         .package(url: "https://github.com/jpsim/Yams.git", from: "5.0.0"),
@@ -38,11 +39,23 @@ let package = Package(
         ),
         .executableTarget(
             name: "gateway-server",
-            dependencies: ["FountainCodex"],
+            dependencies: ["FountainCodex", "PublishingFrontend"],
             path: "Sources/GatewayApp"
         ),
+        .target(
+            name: "PublishingFrontend",
+            dependencies: ["FountainCodex", "Yams"],
+            path: "Sources/PublishingFrontend"
+        ),
+        .executableTarget(
+            name: "publishing-frontend",
+            dependencies: ["PublishingFrontend"],
+            path: "Sources/publishing-frontend"
+        ),
         .testTarget(name: "FountainCoreTests", dependencies: ["FountainCore"], path: "Tests/FountainCoreTests"),
-        .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests")
+        .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
+        .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
+        .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend"], path: "Tests/DNSTests")
     ]
 )
 

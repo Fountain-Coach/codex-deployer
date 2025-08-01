@@ -8,6 +8,7 @@ let services: [Service] = [
     Service(name: "Persistence Service", binaryPath: "/usr/local/bin/persistence-service", port: 8005, healthPath: "/metrics"),
     Service(name: "LLM Gateway", binaryPath: "/usr/local/bin/llm-gateway", port: 8006, healthPath: "/metrics"),
     Service(name: "Gateway", binaryPath: "/usr/local/bin/fountain-gateway", port: 8010, healthPath: "/metrics"),
+    Service(name: "Publishing Frontend", binaryPath: "/usr/local/bin/publishing-frontend", port: 8085, healthPath: "/metrics"),
     Service(name: "Typesense Proxy", binaryPath: "/usr/local/bin/typesense-proxy", port: 8100, healthPath: "/metrics")
 ]
 
