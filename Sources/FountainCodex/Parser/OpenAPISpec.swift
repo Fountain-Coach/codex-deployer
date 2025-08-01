@@ -174,6 +174,8 @@ public struct OpenAPISpec: Codable {
 }
 
 extension OpenAPISpec.Schema.Property {
+    /// Returns the Swift type that best represents the property schema.
+    /// Falls back to `String` when no explicit type information is available.
     public var swiftType: String {
         if let ref {
             return ref.components(separatedBy: "/").last ?? ref
@@ -203,6 +205,9 @@ extension OpenAPISpec.Schema.Property {
 }
 
 extension OpenAPISpec.Schema {
+    /// Provides the Swift type represented by the schema itself.
+    /// When referencing other schemas the last path component of the
+    /// reference is used as the type name.
     public var swiftType: String {
         if let ref {
             return ref.components(separatedBy: "/").last ?? ref

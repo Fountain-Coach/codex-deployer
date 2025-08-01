@@ -21,6 +21,8 @@ As modules gain documentation, brief summaries are added here.
 - **HTTPRequest** and **HTTPResponse** – request/response models now fully documented.
 - **APIClient** – initializer and URLSession extension now documented for clarity.
 - **URLSessionHTTPClientTests** – updated for Linux compatibility ensuring network client coverage.
+- **OpenAPISpec.swiftType** – documented helper converting schemas to Swift types.
+- **String.camelCased** – extension for transforming snake case identifiers.
 
 Documentation coverage will expand alongside test coverage.
 

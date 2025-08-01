@@ -6,6 +6,7 @@ import FoundationNetworking
 @testable import FountainCodex
 
 final class NIOHTTPServerTests: XCTestCase {
+    /// Starts the server and verifies a simple request receives a response.
     func testServerResponds() async throws {
         let kernel = HTTPKernel { _ in HTTPResponse(status: 200, body: Data("hi".utf8)) }
         let server = NIOHTTPServer(kernel: kernel)

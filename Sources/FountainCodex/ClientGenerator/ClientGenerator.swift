@@ -182,14 +182,6 @@ public enum ClientGenerator {
     }
 }
 
-private extension String {
-    var camelCased: String {
-        guard !isEmpty else { return self }
-        let parts = split(separator: "_")
-        guard let first = parts.first else { return self }
-        let rest = parts.dropFirst().map { $0.capitalized }
-        return ([first.lowercased()] + rest).joined()
-    }
-}
+
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

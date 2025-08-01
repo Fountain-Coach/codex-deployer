@@ -179,7 +179,10 @@ public enum ServerGenerator {
     }
 }
 
-private extension String {
+extension String {
+    /// Returns the string converted from `snake_case` to `camelCase`.
+    /// Words are split on underscores with the first word lowercased and
+    /// remaining words capitalized before joining them together.
     var camelCased: String {
         guard !isEmpty else { return self }
         let parts = split(separator: "_")
