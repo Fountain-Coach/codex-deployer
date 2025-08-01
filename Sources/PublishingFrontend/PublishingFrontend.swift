@@ -58,7 +58,7 @@ public final class PublishingFrontend {
 /// - Returns: Parsed ``PublishingConfig`` instance.
 public func loadPublishingConfig() throws -> PublishingConfig {
     let url = URL(fileURLWithPath: "Configuration/publishing.yml")
-    let string = try String(contentsOf: url)
+    let string = try String(contentsOf: url, encoding: .utf8)
     let yaml = try Yams.load(yaml: string) as? [String: Any] ?? [:]
     let data = try JSONSerialization.data(withJSONObject: yaml)
     return try JSONDecoder().decode(PublishingConfig.self, from: data)

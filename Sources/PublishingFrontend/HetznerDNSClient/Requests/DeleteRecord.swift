@@ -13,7 +13,7 @@ public struct DeleteRecord: APIRequest {
     public var parameters: DeleteRecordParameters
     public var path: String {
         var path = "/records/{RecordID}"
-        var query: [String] = []
+        let query: [String] = []
         path = path.replacingOccurrences(of: "{RecordID}", with: String(parameters.recordid))
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
