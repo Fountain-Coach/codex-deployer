@@ -1,0 +1,805 @@
+openapi: 3.0.3
+info:
+  title: Hetzner DNS API
+  version: "1.1.1"
+  description: |
+    This OpenAPI document describes the public Hetzner DNS API endpoints documented on
+    <https://dns.hetzner.com/api-docs>.  The API allows management of DNS zones, records and
+    primary servers.  All endpoints require an API token sent via the `Auth-API-Token` header.
+  contact:
+    name: Hetzner Online GmbH
+    email: support@hetzner.com
+servers:
+  - url: https://dns.hetzner.com/api/v1
+    description: Production API server
+security:
+  - AuthApiToken: []
+components:
+  securitySchemes:
+    AuthApiToken:
+      type: apiKey
+      in: header
+      name: Auth-API-Token
+      description: API token created in the Hetzner DNS console
+  schemas:
+    Zone:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the zone
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        legacy_dns_host:
+          type: string
+          nullable: true
+        legacy_ns:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        ns:
+          type: array
+          items:
+            type: string
+        owner:
+          type: string
+        paused:
+          type: boolean
+        permission:
+          type: string
+        project:
+          type: string
+        registrar:
+          type: string
+        status:
+          type: string
+          enum: [verified, pending, failed]
+          description: Verification status of the zone
+        ttl:
+          type: integer
+          format: int64
+          description: Default TTL for the zone
+        verified:
+          type: string
+          format: date-time
+        records_count:
+          type: integer
+        is_secondary_dns:
+          type: boolean
+        txt_verification:
+          type: object
+          properties:
+            name:
+              type: string
+            token:
+              type: string
+    ZoneCreateRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          description: Name of the zone to create
+        ttl:
+          type: integer
+          format: int64
+          description: Default TTL for the zone
+    ZoneUpdateRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        ttl:
+          type: integer
+          format: int64
+    ZoneResponse:
+      type: object
+      properties:
+        zone:
+          $ref: '#/components/schemas/Zone'
+    ZonesResponse:
+      type: object
+      properties:
+        zones:
+          type: array
+          items:
+            $ref: '#/components/schemas/Zone'
+        meta:
+          type: object
+          properties:
+            pagination:
+              type: object
+              properties:
+                page:
+                  type: integer
+                per_page:
+                  type: integer
+                last_page:
+                  type: integer
+                total_entries:
+                  type: integer
+    Record:
+      type: object
+      properties:
+        id:
+          type: string
+        zone_id:
+          type: string
+        type:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        ttl:
+          type: integer
+          format: int64
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    RecordCreate:
+      type: object
+      required: [zone_id, type, name, value]
+      properties:
+        zone_id:
+          type: string
+        type:
+          type: string
+          description: Type of the DNS record
+          enum: [A, AAAA, NS, MX, CNAME, RP, TXT, SOA, HINFO, SRV, DANE, TLSA, DS, CAA]
+        name:
+          type: string
+        value:
+          type: string
+        ttl:
+          type: integer
+          format: int64
+          description: TTL for the record
+    RecordUpdate:
+      allOf:
+        - $ref: '#/components/schemas/RecordCreate'
+        - type: object
+          required: [id]
+          properties:
+            id:
+              type: string
+              description: Identifier of the record being updated
+    RecordResponse:
+      type: object
+      properties:
+        record:
+          $ref: '#/components/schemas/Record'
+    RecordsResponse:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/Record'
+    BulkRecordsCreateRequest:
+      type: object
+      required: [records]
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecordCreate'
+    BulkRecordsCreateResponse:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/Record'
+        valid_records:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecordCreate'
+        invalid_records:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecordCreate'
+    BulkRecordsUpdateRequest:
+      type: object
+      required: [records]
+      properties:
+        records:
+          type: array
+          items:
+            type: object
+            required: [id, zone_id, type, name, value]
+            properties:
+              id:
+                type: string
+              zone_id:
+                type: string
+              type:
+                type: string
+                enum: [A, AAAA, NS, MX, CNAME, RP, TXT, SOA, HINFO, SRV, DANE, TLSA, DS, CAA]
+              name:
+                type: string
+              value:
+                type: string
+              ttl:
+                type: integer
+                format: int64
+    BulkRecordsUpdateResponse:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/Record'
+        failed_records:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecordUpdate'
+    PrimaryServer:
+      type: object
+      properties:
+        id:
+          type: string
+        zone_id:
+          type: string
+        address:
+          type: string
+        port:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    PrimaryServerCreate:
+      type: object
+      required: [zone_id, address, port]
+      properties:
+        zone_id:
+          type: string
+        address:
+          type: string
+          description: IPv4 or IPv6 address of the primary server
+        port:
+          type: integer
+          minimum: 1
+          maximum: 65535
+    PrimaryServerUpdate:
+      allOf:
+        - $ref: '#/components/schemas/PrimaryServerCreate'
+    PrimaryServerResponse:
+      type: object
+      properties:
+        primary_server:
+          $ref: '#/components/schemas/PrimaryServer'
+    PrimaryServersResponse:
+      type: object
+      properties:
+        primary_servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrimaryServer'
+paths:
+  /zones:
+    get:
+      summary: Get all zones
+      description: Returns paginated zones associated with the user.
+      parameters:
+        - name: name
+          in: query
+          description: Full name of a zone. Returns an array with the results or 404 if not found.
+          schema:
+            type: string
+        - name: search_name
+          in: query
+          description: Partial zone name to search for.
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number to fetch (starting at 1).
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: per_page
+          in: query
+          description: Number of zones per page (max 100).
+          schema:
+            type: integer
+            maximum: 100
+            default: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZonesResponse'
+        '400':
+          description: Pagination selectors are mutually exclusive
+        '401':
+          description: Unauthorized
+        '406':
+          description: Not acceptable
+    post:
+      summary: Create zone
+      description: Creates a new DNS zone.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ZoneCreateRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZoneResponse'
+        '401':
+          description: Unauthorized
+        '406':
+          description: Not acceptable
+        '422':
+          description: Unprocessable entity
+  /zones/{ZoneID}:
+    parameters:
+      - name: ZoneID
+        in: path
+        required: true
+        description: ID of the zone
+        schema:
+          type: string
+    get:
+      summary: Get zone
+      description: Returns an object containing all information about a zone.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZoneResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '406':
+          description: Not acceptable
+    put:
+      summary: Update zone
+      description: Updates a zone.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ZoneUpdateRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZoneResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '406':
+          description: Not acceptable
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable entity
+    delete:
+      summary: Delete zone
+      description: Deletes a zone.
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '406':
+          description: Not acceptable
+  /zones/{ZoneID}/import:
+    parameters:
+      - name: ZoneID
+        in: path
+        required: true
+        description: ID of the zone to import records into
+        schema:
+          type: string
+    post:
+      summary: Import zone file (plain)
+      description: Import a zone file in text/plain format.
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: Zone file content
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZoneResponse'
+        '401':
+          description: Unauthorized
+        '406':
+          description: Not acceptable
+        '422':
+          description: Unprocessable entity
+  /zones/{ZoneID}/export:
+    parameters:
+      - name: ZoneID
+        in: path
+        required: true
+        description: ID of the zone to export
+        schema:
+          type: string
+    get:
+      summary: Export zone file
+      description: Export a zone file.
+      responses:
+        '200':
+          description: Successful response (zone file)
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable entity
+  /zones/file/validate:
+    post:
+      summary: Validate zone file (plain)
+      description: Validate a zone file in text/plain format.
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: Zone file content to validate
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  parsed_records:
+                    type: integer
+                  valid_records:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Record'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable entity
+  /records:
+    get:
+      summary: Get all records
+      description: Returns all records associated with the user. Can be filtered by zone.
+      parameters:
+        - name: zone_id
+          in: query
+          description: Filter records by zone identifier
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number to fetch (starting at 1)
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: per_page
+          in: query
+          description: Number of records per page
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordsResponse'
+        '401':
+          description: Unauthorized
+        '406':
+          description: Not acceptable
+    post:
+      summary: Create record
+      description: Creates a new DNS record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordCreate'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '406':
+          description: Not acceptable
+        '422':
+          description: Unprocessable entity
+  /records/{RecordID}:
+    parameters:
+      - name: RecordID
+        in: path
+        required: true
+        description: Identifier of the record
+        schema:
+          type: string
+    get:
+      summary: Get record
+      description: Returns a single record by identifier.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '406':
+          description: Not acceptable
+    put:
+      summary: Update record
+      description: Updates a DNS record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordCreate'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '406':
+          description: Not acceptable
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable entity
+    delete:
+      summary: Delete record
+      description: Deletes a DNS record.
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '406':
+          description: Not acceptable
+  /records/bulk:
+    post:
+      summary: Bulk create records
+      description: Create multiple DNS records at once.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRecordsCreateRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkRecordsCreateResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '406':
+          description: Not acceptable
+        '422':
+          description: Unprocessable entity
+    put:
+      summary: Bulk update records
+      description: Update multiple DNS records at once.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRecordsUpdateRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkRecordsUpdateResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '406':
+          description: Not acceptable
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable entity
+  /primary_servers:
+    get:
+      summary: Get all primary servers
+      description: Returns all primary servers associated with the user. Can be filtered by zone.
+      parameters:
+        - name: zone_id
+          in: query
+          description: Filter by zone identifier
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrimaryServersResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '406':
+          description: Not acceptable
+    post:
+      summary: Create primary server
+      description: Creates a new primary server for a zone.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrimaryServerCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrimaryServerResponse'
+        '401':
+          description: Unauthorized
+        '406':
+          description: Not acceptable
+        '422':
+          description: Unprocessable entity
+  /primary_servers/{PrimaryServerID}:
+    parameters:
+      - name: PrimaryServerID
+        in: path
+        required: true
+        description: Identifier of the primary server
+        schema:
+          type: string
+    get:
+      summary: Get primary server
+      description: Returns information about a primary server.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrimaryServerResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '406':
+          description: Not acceptable
+    put:
+      summary: Update primary server
+      description: Updates a primary server.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrimaryServerCreate'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrimaryServerResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '406':
+          description: Not acceptable
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable entity
+    delete:
+      summary: Delete primary server
+      description: Deletes a primary server.
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '406':
+          description: Not acceptable
