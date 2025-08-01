@@ -1,0 +1,19 @@
+import XCTest
+@testable import FountainCodex
+
+final class HTTPKernelTests: XCTestCase {
+    func testKernelRoutesRequest() async throws {
+        let kernel = HTTPKernel { req in
+            if req.path == "/hello" {
+                return HTTPResponse(status: 200, body: Data("world".utf8))
+            }
+            return HTTPResponse(status: 404)
+        }
+        let request = HTTPRequest(method: "GET", path: "/hello")
+        let response = try await kernel.handle(request)
+        XCTAssertEqual(response.status, 200)
+        XCTAssertEqual(String(data: response.body, encoding: .utf8), "world")
+    }
+}
+
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
