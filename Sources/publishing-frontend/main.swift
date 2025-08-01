@@ -2,6 +2,9 @@ import Foundation
 import Dispatch
 import PublishingFrontend
 
+/// CLI entry point launching ``PublishingFrontend``.
+/// Loads configuration and starts the server on the main run loop.
+
 let config = try loadPublishingConfig()
 let app = PublishingFrontend(config: config)
 Task { @MainActor in

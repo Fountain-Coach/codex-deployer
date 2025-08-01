@@ -2,8 +2,11 @@ import Foundation
 
 /// Manages periodic execution of a certificate renewal script.
 public final class CertificateManager {
+    /// Dispatch timer scheduling periodic renewals.
     private var timer: DispatchSourceTimer?
+    /// Absolute path to the renewal script executed.
     private let scriptPath: String
+    /// Delay between script executions.
     private let interval: TimeInterval
 
     /// Creates a new manager with optional script path and repeat interval.
