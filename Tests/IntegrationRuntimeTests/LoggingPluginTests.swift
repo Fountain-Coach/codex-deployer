@@ -1,5 +1,6 @@
 import XCTest
-@testable import GatewayApp
+@testable import gateway_server
+@testable import FountainCodex
 
 final class LoggingPluginTests: XCTestCase {
     func testLoggingPluginPassThrough() async throws {
