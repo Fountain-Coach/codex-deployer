@@ -1,6 +1,11 @@
 import Foundation
 
+/// Generates a lightweight Swift server from an ``OpenAPISpec``.
 public enum ServerGenerator {
+    /// Generates server sources for the supplied specification.
+    /// - Parameters:
+    ///   - spec: Parsed OpenAPI document.
+    ///   - url: Destination directory for generated sources.
     public static func emitServer(from spec: OpenAPISpec, to url: URL) throws {
         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         try emitHTTPRequest(to: url)
@@ -162,6 +167,7 @@ public enum ServerGenerator {
         try (output + "\n").write(to: url.appendingPathComponent("HTTPServer.swift"), atomically: true, encoding: .utf8)
     }
 
+    /// Determines the Swift type used for an operation's request body.
     private static func bodyType(for op: OpenAPISpec.Operation) -> String {
         guard let schema = op.requestBody?.content["application/json"]?.schema else {
             return "NoBody"

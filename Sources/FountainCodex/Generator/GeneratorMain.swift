@@ -1,6 +1,9 @@
 import Foundation
 
+/// Command line interface for code generation utilities.
 public struct GeneratorCLI {
+    /// Parses command line arguments and runs generators.
+    /// - Parameter args: Raw argument array excluding the executable name.
     static func run(args: [String]) throws {
         var inputPath: String?
         var outputPath: String?
@@ -25,6 +28,7 @@ public struct GeneratorCLI {
         try ServerGenerator.emitServer(from: spec, to: outURL.appendingPathComponent("Server"))
     }
 
+    /// Entry point used by the executable target.
     public static func main() throws {
         try run(args: Array(CommandLine.arguments.dropFirst()))
     }

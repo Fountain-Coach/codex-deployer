@@ -1,15 +1,21 @@
 import Foundation
 
+/// Manages periodic execution of a certificate renewal script.
 public final class CertificateManager {
     private var timer: DispatchSourceTimer?
     private let scriptPath: String
     private let interval: TimeInterval
 
+    /// Creates a new manager with optional script path and repeat interval.
+    /// - Parameters:
+    ///   - scriptPath: Shell script used for renewal.
+    ///   - interval: Time between renewals in seconds.
     public init(scriptPath: String = "./Scripts/renew-certs.sh", interval: TimeInterval = 86_400) {
         self.scriptPath = scriptPath
         self.interval = interval
     }
 
+    /// Starts automatic certificate renewal on a timer.
     public func start() {
         let timer = DispatchSource.makeTimerSource()
         timer.schedule(deadline: .now(), repeating: interval)
@@ -26,11 +32,13 @@ public final class CertificateManager {
         timer.resume()
     }
 
+    /// Stops the timer and cancels future renewals.
     public func stop() {
         timer?.cancel()
         timer = nil
     }
 
+    /// Immediately runs the renewal script once.
     public func triggerNow() {
         let task = Process()
         task.executableURL = URL(fileURLWithPath: scriptPath)

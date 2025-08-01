@@ -1,8 +1,11 @@
 import Foundation
 import Yams
 
-
+/// Parses an OpenAPI specification from JSON or YAML.
 public enum SpecLoader {
+    /// Reads and validates a specification file.
+    /// - Parameter url: Location of the spec on disk.
+    /// - Returns: Parsed ``OpenAPISpec`` instance.
     public static func load(from url: URL) throws -> OpenAPISpec {
         let data = try Data(contentsOf: url)
         var sanitizedData = data

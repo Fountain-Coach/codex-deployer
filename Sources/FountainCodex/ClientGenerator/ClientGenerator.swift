@@ -1,6 +1,11 @@
 import Foundation
 
+/// Generates Swift client code from an ``OpenAPISpec``.
 public enum ClientGenerator {
+    /// Writes a client library to the given output directory.
+    /// - Parameters:
+    ///   - spec: Parsed OpenAPI document.
+    ///   - url: Destination directory for generated sources.
     public static func emitClient(from spec: OpenAPISpec, to url: URL) throws {
         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
 
@@ -91,6 +96,7 @@ public enum ClientGenerator {
         }
     }
 
+    /// Returns the Swift type representing the request body for an operation.
     private static func bodyType(for op: OpenAPISpec.Operation) -> String {
         guard let schema = op.requestBody?.content["application/json"]?.schema else {
             return "NoBody"
@@ -101,6 +107,7 @@ public enum ClientGenerator {
         return schema.swiftType
     }
 
+    /// Returns the Swift type representing the response body for an operation.
     private static func responseType(for op: OpenAPISpec.Operation) -> String {
         guard let schema = op.responses?["200"]?.content?["application/json"]?.schema else {
             return "Data"
@@ -111,6 +118,7 @@ public enum ClientGenerator {
         return schema.swiftType
     }
 
+    /// Emits a Swift request type for the given OpenAPI operation.
     private static func emitRequest(operation op: OpenAPISpec.Operation, method: String, path: String, in dir: URL) throws {
         let bodyType = bodyType(for: op)
         let responseType = responseType(for: op)
