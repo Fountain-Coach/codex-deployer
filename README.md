@@ -38,7 +38,6 @@ The project adopts several common patterns which can be seen in the implementati
 
 ![image_gen: Sequence of FountainAiLauncher starting services which communicate through the gateway]
 
-For further discussion of these patterns, see [docs/design_patterns.md](docs/design_patterns.md) and related planning documents throughout the repository.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
