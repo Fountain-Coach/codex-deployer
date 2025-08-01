@@ -1,11 +1,15 @@
 import XCTest
+import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 import NIOCore
 import NIOHTTP1
 @testable import FountainCodex
 
 final class URLSessionHTTPClientTests: XCTestCase {
     private class MockURLProtocol: URLProtocol {
-        static var handler: ((URLRequest) -> (HTTPURLResponse, Data))?
+        nonisolated(unsafe) static var handler: (@Sendable (URLRequest) -> (HTTPURLResponse, Data))?
         override class func canInit(with request: URLRequest) -> Bool { true }
         override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
         override func startLoading() {

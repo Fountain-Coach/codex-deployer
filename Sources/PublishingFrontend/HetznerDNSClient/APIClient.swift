@@ -3,21 +3,32 @@ import Foundation
 import FoundationNetworking
 #endif
 
+/// Abstraction over ``URLSession`` for easier testing.
 public protocol HTTPSession {
+    /// Performs the given request and returns the server response.
+    /// - Parameter request: Request to execute.
+    /// - Returns: The response data and URL response.
     func data(for request: URLRequest) async throws -> (Data, URLResponse)
 }
 
 extension URLSession: HTTPSession {
+    /// Conformance allowing ``APIClient`` to depend on ``HTTPSession``.
     public func data(for request: URLRequest) async throws -> (Data, URLResponse) {
         try await self.data(for: request, delegate: nil)
     }
 }
 
+/// Minimal HTTP client for executing ``APIRequest`` values.
 public struct APIClient {
     let baseURL: URL
     let session: HTTPSession
     let defaultHeaders: [String: String]
 
+    /// Creates a new client with optional session and headers.
+    /// - Parameters:
+    ///   - baseURL: Base API endpoint.
+    ///   - session: Underlying HTTP session implementation.
+    ///   - defaultHeaders: Headers applied to every request.
     public init(baseURL: URL, session: HTTPSession = URLSession.shared, defaultHeaders: [String: String] = [:]) {
         self.baseURL = baseURL
         self.session = session
@@ -49,6 +60,11 @@ public struct APIClient {
 }
 
 public extension APIClient {
+    /// Convenience initializer using a bearer token for authorization.
+    /// - Parameters:
+    ///   - baseURL: Base API endpoint.
+    ///   - bearerToken: Token inserted as the `Authorization` header.
+    ///   - session: Optional custom session.
     init(baseURL: URL, bearerToken: String, session: HTTPSession = URLSession.shared) {
         self.init(baseURL: baseURL, session: session, defaultHeaders: ["Authorization": "Bearer \(bearerToken)"])
     }

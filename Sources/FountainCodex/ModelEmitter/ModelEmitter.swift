@@ -1,11 +1,20 @@
 import Foundation
 
+/// Emits Swift model types derived from an ``OpenAPISpec``.
 public enum ModelEmitter {
+    /// Generates model source files for the given specification.
+    /// - Parameters:
+    ///   - spec: Parsed OpenAPI document.
+    ///   - url: Destination directory for generated files.
     public static func emit(from spec: OpenAPISpec, to url: URL) throws {
         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
 
         var output = "// Models for \(spec.title)\n\n"
 
+        /// Appends Swift type declarations derived from a schema.
+        /// - Parameters:
+        ///   - name: Generated type name.
+        ///   - schema: Source schema definition.
         func appendSchema(_ name: String, _ schema: OpenAPISpec.Schema) {
             if let enumValues = schema.enumValues, schema.type == "string" {
                 output += "public enum \(name): String, Codable {\n"

@@ -31,6 +31,19 @@ final class APIClientTests: XCTestCase {
         XCTAssertEqual(result, "hello")
         XCTAssertEqual(session.request?.value(forHTTPHeaderField: "X-Test"), "1")
     }
+
+    func testBearerInitializerSetsHeader() async throws {
+        struct Ping: APIRequest {
+            typealias Response = NoBody
+            var method: String { "GET" }
+            var path: String { "/ping" }
+            var body: NoBody? = nil
+        }
+        let session = MockSession(responseData: Data())
+        let client = APIClient(baseURL: URL(string: "http://localhost")!, bearerToken: "abc", session: session)
+        _ = try await client.send(Ping())
+        XCTAssertEqual(session.request?.value(forHTTPHeaderField: "Authorization"), "Bearer abc")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

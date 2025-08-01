@@ -19,6 +19,8 @@ As modules gain documentation, brief summaries are added here.
 - **GeneratorCLI** – command line interface for the code generators.
 - **CreateRecord** – documented request wrapper for adding DNS records.
 - **HTTPRequest** and **HTTPResponse** – request/response models now fully documented.
+- **APIClient** – initializer and URLSession extension now documented for clarity.
+- **URLSessionHTTPClientTests** – updated for Linux compatibility ensuring network client coverage.
 
 Documentation coverage will expand alongside test coverage.
 
