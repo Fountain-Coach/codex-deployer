@@ -20,7 +20,7 @@ TOTAL                                            543     421    22.47%     155  
 
 Within repository sources there are **1,224** lines, with **815** covered, giving **33.42%** line coverage.
 
-Additional tests for `HetznerDNSClient` raise coverage slightly by exercising request headers and query generation.
+Additional tests for `HetznerDNSClient` and `PublishingFrontend` raise coverage slightly by exercising request headers, query generation, and configuration parsing.
 
 ## Action Plan
 

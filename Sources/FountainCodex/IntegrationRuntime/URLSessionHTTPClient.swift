@@ -5,13 +5,24 @@ import FoundationNetworking
 import NIOCore
 import NIOHTTP1
 
+/// Simple HTTP client backed by ``URLSession``.
 public struct URLSessionHTTPClient: HTTPClientProtocol {
+    /// ``URLSession`` instance used to perform requests.
     let session: URLSession
 
+    /// Creates a new client with the provided session.
+    /// - Parameter session: The session to send requests with.
     public init(session: URLSession = .shared) {
         self.session = session
     }
 
+    /// Performs an HTTP request using `URLSession`.
+    /// - Parameters:
+    ///   - method: HTTP method to execute.
+    ///   - url: Target URL string.
+    ///   - headers: Headers for the request.
+    ///   - body: Optional request payload.
+    /// - Returns: A tuple of response body and headers.
     public func execute(method: HTTPMethod, url: String, headers: HTTPHeaders = HTTPHeaders(), body: ByteBuffer?) async throws -> (ByteBuffer, HTTPHeaders) {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = method.rawValue
