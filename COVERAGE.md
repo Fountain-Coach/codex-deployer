@@ -24,6 +24,7 @@ Coverage results are recalculated after each test run to monitor progress. The p
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
 The new ``CertificateManagerTests`` ensure renewal scripts run correctly.
 New ``SpecValidatorTests`` and ``ListRecordsRequestTests`` bring the total test count to **31**.
+New ``DeleteZoneRequestTests`` ensures zone deletion paths are correct, bringing the total to **32** tests.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
