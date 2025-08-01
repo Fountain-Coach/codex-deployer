@@ -23,9 +23,11 @@
 
 ## OPERATION CYCLE
 1. Detect PRs or new commits
-2. Execute Swift build, test, and run cycles
-3. Write `/logs/build-<timestamp>.log`
-4. Await `/feedback/*.json` for improvement cues
+2. Build with optimization flags using `swift build -c release -Xswiftc -O -Xswiftc -warnings-as-errors`
+3. Run tests with coverage via `swift test -c release --enable-code-coverage`
+4. Launch executables through `swift run` under `FountainAiLauncher`
+5. Write `/logs/build-<timestamp>.log`
+6. Await `/feedback/*.json` for improvement cues
 
 ---
 ```text
