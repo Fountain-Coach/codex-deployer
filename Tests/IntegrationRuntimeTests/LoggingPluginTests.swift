@@ -3,6 +3,7 @@ import XCTest
 @testable import FountainCodex
 
 final class LoggingPluginTests: XCTestCase {
+    /// Verifies requests and responses pass through the ``LoggingPlugin``.
     func testLoggingPluginPassThrough() async throws {
         let plugin = LoggingPlugin()
         let req = HTTPRequest(method: "GET", path: "/")

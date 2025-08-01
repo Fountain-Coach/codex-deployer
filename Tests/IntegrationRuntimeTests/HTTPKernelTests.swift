@@ -2,6 +2,7 @@ import XCTest
 @testable import FountainCodex
 
 final class HTTPKernelTests: XCTestCase {
+    /// Ensures the ``HTTPKernel`` routes requests to the correct handler.
     func testKernelRoutesRequest() async throws {
         let kernel = HTTPKernel { req in
             if req.path == "/hello" {

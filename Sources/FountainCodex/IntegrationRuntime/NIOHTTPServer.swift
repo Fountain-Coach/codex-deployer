@@ -45,6 +45,8 @@ public final class NIOHTTPServer: @unchecked Sendable {
         var head: HTTPRequestHead?
         var body: ByteBuffer?
 
+        /// Creates a new handler bound to the provided ``HTTPKernel``.
+        /// - Parameter kernel: Kernel responsible for routing requests.
         init(kernel: HTTPKernel) {
             self.kernel = kernel
         }
