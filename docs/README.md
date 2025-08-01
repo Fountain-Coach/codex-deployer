@@ -1,0 +1,3 @@
+# placeholder...
+
+for index of documentation based on inline code comments enforced by root agent.md
