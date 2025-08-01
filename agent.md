@@ -18,6 +18,8 @@
 - Run `swift build`, `swift test`, and `swift run` to validate and launch services
 - Use `FountainAiLauncher` to supervise all Swift executables
 - Commit logs to `/logs/` and read reflections from `/feedback/`
+- Maintain **100%** unit, integration, and end-to-end test coverage. Track progress in `COVERAGE.md` at the repository root.
+- Ensure every function includes inline documentation comments and generate structured docs under `docs/`.
 
 ## OPERATION CYCLE
 1. Detect PRs or new commits
