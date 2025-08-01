@@ -6,6 +6,7 @@ As modules gain documentation, brief summaries are added here.
 ## Current Highlights
 - **PublishingFrontend** – lightweight static HTTP server for serving the `/Public` directory.
 - **HTTPKernel** – simple asynchronous router used by the gateway and publishing frontend.
+- **HetznerDNSClient** – Swift wrapper for the Hetzner DNS API with typed requests.
 
 Documentation coverage will expand alongside test coverage.
 

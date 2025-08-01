@@ -1,9 +1,11 @@
 import Foundation
 
+/// Identifies the DNS record to remove.
 public struct DeleteRecordParameters: Codable {
     public let recordid: String
 }
 
+/// Request wrapper for deleting a specific DNS record.
 public struct DeleteRecord: APIRequest {
     public typealias Body = NoBody
     public typealias Response = NoBody

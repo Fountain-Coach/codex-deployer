@@ -24,6 +24,9 @@ public struct APIClient {
         self.defaultHeaders = defaultHeaders
     }
 
+    /// Executes an ``APIRequest`` and decodes the server response.
+    /// - Parameter request: The request to perform.
+    /// - Returns: The decoded response value for ``R.Response``.
     public func send<R: APIRequest>(_ request: R) async throws -> R.Response {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(request.path))
         urlRequest.httpMethod = request.method
