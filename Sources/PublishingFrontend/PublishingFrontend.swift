@@ -55,6 +55,7 @@ public final class PublishingFrontend {
 }
 
 /// Loads the publishing configuration from `Configuration/publishing.yml`.
+/// - Returns: Parsed ``PublishingConfig`` instance.
 public func loadPublishingConfig() throws -> PublishingConfig {
     let url = URL(fileURLWithPath: "Configuration/publishing.yml")
     let string = try String(contentsOf: url)

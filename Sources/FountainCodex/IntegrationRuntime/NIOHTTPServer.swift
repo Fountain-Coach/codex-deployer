@@ -12,6 +12,9 @@ public final class NIOHTTPServer: @unchecked Sendable {
         self.group = group
     }
 
+    /// Starts the HTTP server.
+    /// - Parameter port: Port to bind the server on.
+    /// - Returns: The actual bound port.
     @discardableResult
     public func start(port: Int) async throws -> Int {
         let bootstrap = ServerBootstrap(group: group)
@@ -26,6 +29,7 @@ public final class NIOHTTPServer: @unchecked Sendable {
         return self.channel?.localAddress?.port ?? port
     }
 
+    /// Stops the server and releases allocated resources.
     public func stop() async throws {
         try await channel?.close().get()
         try await group.shutdownGracefully()
