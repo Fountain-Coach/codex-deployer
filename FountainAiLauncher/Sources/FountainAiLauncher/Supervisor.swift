@@ -2,8 +2,10 @@ import Foundation
 
 /// Manages child service processes and keeps them alive.
 public final class Supervisor {
+    /// Running child processes keyed by service name.
     private var processes: [String: Process] = [:]
 
+    /// Creates a new empty supervisor.
     public init() {}
 
     @discardableResult
@@ -23,13 +25,14 @@ public final class Supervisor {
     }
 
     /// Starts a collection of services sequentially.
+    /// - Parameter services: Array of ``Service`` descriptors.
     public func start(services: [Service]) throws {
         for service in services {
             try start(service: service)
         }
     }
 
-    /// Terminates all running services.
+    /// Terminates all running services and clears internal state.
     public func terminateAll() {
         for (_, process) in processes {
             if process.isRunning {

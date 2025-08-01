@@ -2,10 +2,15 @@ import Foundation
 
 /// Describes an executable service managed by ``Supervisor``.
 public struct Service {
+    /// Human readable identifier used by ``Supervisor``.
     public let name: String
+    /// Absolute path to the executable binary on disk.
     public let binaryPath: String
+    /// Arguments passed to the process on launch.
     public let arguments: [String]
+    /// Optional port used for health checks.
     public let port: Int?
+    /// Optional HTTP path of the health check endpoint.
     public let healthPath: String?
 
     /// Creates a new service descriptor.
