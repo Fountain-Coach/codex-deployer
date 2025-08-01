@@ -28,6 +28,7 @@
 4. Launch executables through `swift run` under `FountainAiLauncher`
 5. Write `/logs/build-<timestamp>.log`
 6. Await `/feedback/*.json` for improvement cues
+7. Use git history to maintain COVERAGE.md and /docs README.md 
 
 ---
 ```text
