@@ -2,6 +2,12 @@ import AsyncHTTPClient
 import NIOCore
 import NIOHTTP1
 
+/// HTTP client adapter backed by ``AsyncHTTPClient``.
+///
+/// This driver conforms to ``HTTPClientProtocol`` by forwarding requests
+/// to an instance of ``AsyncHTTPClient``. It is mainly used in tests and
+/// generated clients where a lightweight, event-loop based HTTP client
+/// is desirable.
 public final class AsyncHTTPClientDriver: HTTPClientProtocol, @unchecked Sendable {
     /// Underlying async HTTP client used for requests.
     let client: HTTPClient

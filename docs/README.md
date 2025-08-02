@@ -8,7 +8,7 @@ As modules gain documentation, brief summaries are added here.
 - **HTTPKernel** – simple asynchronous router used by the gateway and publishing frontend.
 - **HetznerDNSClient** – Swift wrapper for the Hetzner DNS API with typed requests.
 - **DNSProvider** – abstraction over DNS APIs with stubs for Route53.
-- **AsyncHTTPClientDriver** and **URLSessionHTTPClient** – documented HTTP clients powering network requests.
+- **AsyncHTTPClientDriver** and **URLSessionHTTPClient** – documented HTTP clients powering network requests. The former now includes top-level class docs and dedicated tests verifying request execution.
 - **NIOHTTPServer** – documented server adapter built on SwiftNIO.
 - **HTTPHandler** – internal request dispatcher within `NIOHTTPServer` is now thoroughly documented.
 - **LoggingPlugin** – prints requests and responses for debugging.
