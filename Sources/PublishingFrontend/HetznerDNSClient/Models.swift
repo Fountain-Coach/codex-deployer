@@ -1,6 +1,8 @@
 // Models for Hetzner DNS API
 
+/// Request body for creating multiple DNS records in a single batch.
 public struct BulkRecordsCreateRequest: Codable {
+    /// New records to be created atomically.
     public let records: [RecordCreate]
 }
 
@@ -118,8 +120,13 @@ public struct ZonesResponse: Codable {
     public let zones: [Zone]
 }
 
+/// Response for validating a DNS zone file.
 public struct validateZoneFileResponse: Codable {
+    /// Number of records parsed from the zone file.
     public let parsed_records: Int
+    /// Records that passed validation checks.
     public let valid_records: [Record]
 }
+
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
 
