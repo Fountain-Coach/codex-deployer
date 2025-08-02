@@ -29,6 +29,23 @@ final class HetznerDNSModelsTests: XCTestCase {
         let decoded = try JSONDecoder().decode(ZoneResponse.self, from: data)
         XCTAssertEqual(decoded.zone.id, "1")
     }
+
+    /// Round-trip encoding for `BulkRecordsUpdateRequest` maintains field data.
+    func testBulkRecordsUpdateRequestCodable() throws {
+        let request = BulkRecordsUpdateRequest(records: [["id": "1", "value": "v"]])
+        let data = try JSONEncoder().encode(request)
+        let decoded = try JSONDecoder().decode(BulkRecordsUpdateRequest.self, from: data)
+        XCTAssertEqual(decoded.records.first?["id"], "1")
+    }
+
+    /// Decoding `PrimaryServersResponse` retrieves embedded server details.
+    func testPrimaryServersResponseDecodes() throws {
+        let json = """
+        {"primary_servers":[{"address":"a","created":"c","id":"1","modified":"m","port":53,"zone_id":"z"}]}
+        """.data(using: .utf8)!
+        let response = try JSONDecoder().decode(PrimaryServersResponse.self, from: json)
+        XCTAssertEqual(response.primary_servers.first?.port, 53)
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
