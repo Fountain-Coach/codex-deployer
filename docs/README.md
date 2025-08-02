@@ -37,6 +37,8 @@ As modules gain documentation, brief summaries are added here.
 - **PublishingConfig.port** and **rootPath** – documented properties clarifying server binding and static directory.
 - **Todo.id** and **Todo.name** – documented properties clarifying task identifiers and titles.
 - **OpenAPISpec** – root model now documents components, servers, security schemes, and requirements.
+- **Route53Client** – stub methods now describe the unimplemented error responses.
+- **FountainOps Todo** – generated model now documents its properties.
 
 Documentation coverage will expand alongside test coverage.
 
