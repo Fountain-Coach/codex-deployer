@@ -1,23 +1,32 @@
 import Foundation
 
+/// Root OpenAPI description loaded from specification files.
 public struct OpenAPISpec: Codable {
-    /// Components container storing reusable objects.
+    /// Reusable schema and security definitions.
     public struct Components: Codable {
+        /// Map of schema names to definitions.
         public var schemas: [String: Schema]
+        /// Optional authentication schemes keyed by name.
         public var securitySchemes: [String: SecurityScheme]?
     }
 
-    /// Top-level server description.
+    /// Describes a server hosting the API.
     public struct Server: Codable {
+        /// Base URL of the server.
         public var url: String
+        /// Optional human readable description.
         public var description: String?
     }
 
-    /// Supported authentication scheme.
+    /// Authentication mechanism supported by the API.
     public struct SecurityScheme: Codable {
+        /// Type of the scheme such as `http` or `apiKey`.
         public var type: String
+        /// HTTP authentication scheme (e.g. `bearer`).
         public var scheme: String?
+        /// Name of the header or query parameter carrying credentials.
         public var name: String?
+        /// Location where the credential is transmitted.
         public var location: String?
 
         enum CodingKeys: String, CodingKey {
@@ -26,15 +35,23 @@ public struct OpenAPISpec: Codable {
         }
     }
 
-    /// Security requirements applied to an operation.
+    /// Lists required security schemes for an operation.
     public struct SecurityRequirement: Codable {
+        /// Mapping of scheme names to required scopes.
         public var schemes: [String: [String]]
 
+        /// Creates a requirement with the given scheme map.
+        public init(schemes: [String: [String]]) {
+            self.schemes = schemes
+        }
+
+        /// Creates a requirement by decoding a simple dictionary.
         public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
             schemes = try container.decode([String: [String]].self)
         }
 
+        /// Encodes the requirement as a dictionary.
         public func encode(to encoder: Encoder) throws {
             var container = encoder.singleValueContainer()
             try container.encode(schemes)
