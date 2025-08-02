@@ -1,5 +1,6 @@
 import Foundation
 
+/// Placeholder type representing an empty request body.
 public struct NoBody: Codable {}
 
 /// Represents an HTTP request flowing through ``HTTPKernel`` powered servers.
