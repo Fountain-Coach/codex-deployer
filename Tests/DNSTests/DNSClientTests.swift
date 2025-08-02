@@ -41,6 +41,28 @@ final class DNSClientTests: XCTestCase {
             // expected
         }
     }
+
+    func testRoute53ListZonesErrorDetails() async throws {
+        let client = Route53Client()
+        do {
+            _ = try await client.listZones()
+            XCTFail("expected failure")
+        } catch let error as NSError {
+            XCTAssertEqual(error.domain, "Route53")
+            XCTAssertEqual(error.code, 501)
+        }
+    }
+
+    func testRoute53DeleteRecordErrorDetails() async throws {
+        let client = Route53Client()
+        do {
+            try await client.deleteRecord(id: "1")
+            XCTFail("expected failure")
+        } catch let error as NSError {
+            XCTAssertEqual(error.domain, "Route53")
+            XCTAssertEqual(error.code, 501)
+        }
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
