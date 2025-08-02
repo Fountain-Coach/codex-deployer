@@ -3,6 +3,7 @@ import FountainCodex
 
 /// Serves static files from disk when requests are not handled elsewhere.
 public struct PublishingFrontendPlugin: GatewayPlugin {
+    /// Directory on disk containing files to be served.
     let rootPath: String
 
     /// Creates a new plugin pointing at the given directory.
