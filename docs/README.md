@@ -34,6 +34,7 @@ As modules gain documentation, brief summaries are added here.
 - **bulkUpdateRecords**, **deleteZone**, **updateZone**, **exportZoneFile** – additional DNS client requests documented.
 - **getRecord** and **updateRecord** – request types now include usage documentation.
 - **PublishingConfig.port** and **rootPath** – documented properties clarifying server binding and static directory.
+- **Todo.id** and **Todo.name** – documented properties clarifying task identifiers and titles.
 
 Documentation coverage will expand alongside test coverage.
 

@@ -8,6 +8,13 @@ final class FountainCoreTests: XCTestCase {
         XCTAssertEqual(todo.id, 1)
         XCTAssertEqual(todo.name, "Task")
     }
+
+    func testTodoEncodingRoundTrip() throws {
+        let original = Todo(id: 42, name: "Answer")
+        let data = try JSONEncoder().encode(original)
+        let decoded = try JSONDecoder().decode(Todo.self, from: data)
+        XCTAssertEqual(decoded, original)
+    }
 }
 
 

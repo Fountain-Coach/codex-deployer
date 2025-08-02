@@ -1,8 +1,11 @@
 // Models for Sample API
 
 /// Simple task model used in unit tests.
-public struct Todo: Codable {
+/// Represents an item with identifier and title.
+public struct Todo: Codable, Equatable {
+    /// Unique identifier for the task.
     public let id: Int
+    /// Human-readable title for the task.
     public let name: String
 }
 
