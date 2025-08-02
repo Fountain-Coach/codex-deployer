@@ -16,6 +16,8 @@ public enum ServerGenerator {
         try emitKernel(to: url)
     }
 
+    /// Writes a minimal `HTTPRequest` type used by generated servers.
+    /// - Parameter url: Directory to place the generated source file in.
     private static func emitHTTPRequest(to url: URL) throws {
         let output = """
         import Foundation
@@ -39,6 +41,8 @@ public enum ServerGenerator {
         try (output + "\n").write(to: url.appendingPathComponent("HTTPRequest.swift"), atomically: true, encoding: .utf8)
     }
 
+    /// Writes a minimal `HTTPResponse` type used by generated servers.
+    /// - Parameter url: Directory to place the generated source file in.
     private static func emitHTTPResponse(to url: URL) throws {
         let output = """
         import Foundation
@@ -58,6 +62,10 @@ public enum ServerGenerator {
         try (output + "\n").write(to: url.appendingPathComponent("HTTPResponse.swift"), atomically: true, encoding: .utf8)
     }
 
+    /// Emits a default `Handlers` struct with stubs for each operation.
+    /// - Parameters:
+    ///   - spec: Source specification describing server operations.
+    ///   - url: Directory where the file should be generated.
     private static func emitHandlers(from spec: OpenAPISpec, to url: URL) throws {
         var output = "import Foundation\n\npublic struct Handlers {\n    public init() {}\n"
         if let paths = spec.paths {
@@ -80,6 +88,10 @@ public enum ServerGenerator {
         try output.write(to: url.appendingPathComponent("Handlers.swift"), atomically: true, encoding: .utf8)
     }
 
+    /// Emits a routing table that dispatches requests to generated handlers.
+    /// - Parameters:
+    ///   - spec: Source specification describing paths and methods.
+    ///   - url: Directory where the file should be generated.
     private static func emitRouter(from spec: OpenAPISpec, to url: URL) throws {
         var output = "import Foundation\n\npublic struct Router {\n    public var handlers: Handlers\n\n    public init(handlers: Handlers = Handlers()) {\n        self.handlers = handlers\n    }\n\n    public func route(_ request: HTTPRequest) async throws -> HTTPResponse {\n        switch (request.method, request.path) {\n"
         if let paths = spec.paths {
@@ -102,6 +114,8 @@ public enum ServerGenerator {
         try output.write(to: url.appendingPathComponent("Router.swift"), atomically: true, encoding: .utf8)
     }
 
+    /// Emits an `HTTPKernel` that wires the router into a service boundary.
+    /// - Parameter url: Directory to place the generated source file in.
     private static func emitKernel(to url: URL) throws {
         let output = """
         import Foundation
@@ -121,6 +135,8 @@ public enum ServerGenerator {
         try (output + "\n").write(to: url.appendingPathComponent("HTTPKernel.swift"), atomically: true, encoding: .utf8)
     }
 
+    /// Emits a lightweight `URLProtocol`-based HTTP server for testing.
+    /// - Parameter url: Directory to place the generated source file in.
     private static func emitHTTPServer(to url: URL) throws {
         let output = """
         import Foundation

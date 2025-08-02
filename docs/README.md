@@ -44,6 +44,7 @@ As modules gain documentation, brief summaries are added here.
 - **GatewayServer** – internal components like the certificate manager and plugin stack are now described.
 - **APIClient.baseURL**, **session**, and **defaultHeaders** – stored properties document connection details.
 - **HetznerDNSClient.api** – underlying HTTP client property now documented.
+- **ServerGenerator emit helpers** – private functions now describe generated source responsibilities.
 
 Documentation coverage will expand alongside test coverage.
 
