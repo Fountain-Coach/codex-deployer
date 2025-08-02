@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31341   28161    10.15%   13963 12278    12.07%   98519   87809    10.87%
+TOTAL                                          31354   26696    14.86%   13972 11558    17.28%   98547   81789    17.01%
 ```
 
-The repository contains **98,519** executable lines, with **10,710** lines covered (approx. **10.87%** line coverage).
+The repository contains **98,547** executable lines, with **16,758** lines covered (approx. **17.01%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                            963     406    57.84%     431   117    72.85%    2172     800    63.17%
+TOTAL                                            976     400    59.02%     440   114    74.09%    2200     785    64.32%
 ```
 
-Within repository sources there are **2,172** lines, with **1,372** covered, giving **63.17%** line coverage.
+Within repository sources there are **2,200** lines, with **1,415** covered, giving **64.32%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -31,6 +31,7 @@ The added ``PublishingConfigDefaultValues`` test raises the suite to **35** test
 The new ``TodoEncodingRoundTrip`` test brings the total test count to **36**.
 The new ``SecurityRequirementTests`` bring the total test count to **38**.
 The new ``HTTPResponseDefaultsTests`` increase the total test count to **40**.
+The new ``AsyncHTTPClientDriverTests`` bring the total test count to **41**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
