@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31548   26662    15.49%   14123 11536    18.32%   98920  81706    17.40%
+TOTAL                                          31568   26664    15.53%   14135 11536    18.39%   98950  81708    17.42%
 ```
 
-The repository contains **98,920** executable lines, with **17,214** lines covered (approx. **17.40%** line coverage).
+The repository contains **98,950** executable lines, with **17,242** lines covered (approx. **17.42%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                          1170     368    68.55%     591    93    84.26%    2573     707    72.52%
+TOTAL                                          1190     370    68.91%     603    93    84.58%    2603     709    72.76%
 ```
 
-Within repository sources there are **2,573** lines, with **1,866** covered, giving **72.52%** line coverage.
+Within repository sources there are **2,603** lines, with **1,894** covered, giving **72.76%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -40,6 +40,7 @@ The new ``NIOHTTPServer`` port reuse and concurrency tests and Hetzner DNS model
 The new ``importZoneFile`` and ``exportZoneFile`` request tests raise the total test count to **66**.
 The new ``getZone`` and ``listPrimaryServers`` request tests raise the total test count to **69**.
 The new ``PublishingFrontendPlugin`` pass-through and non-GET tests raise the total test count to **71**.
+The new ``Route53Client`` error detail tests raise the total test count to **73**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

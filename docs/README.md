@@ -20,6 +20,7 @@ As modules gain documentation, brief summaries are added here.
 - **CreateRecord** – documented request wrapper for adding DNS records.
 - **HTTPRequest** and **HTTPResponse** – request/response models now fully documented.
 - **NoBody** – placeholder type for empty request bodies is now documented.
+- **APIRequest** – protocol now documents HTTP method, path, and body fields.
 - **APIClient** – initializer and URLSession extension now documented for clarity.
 - **URLSessionHTTPClientTests** – updated for Linux compatibility ensuring network client coverage.
 - **OpenAPISpec.swiftType** – documented helper converting schemas to Swift types.
