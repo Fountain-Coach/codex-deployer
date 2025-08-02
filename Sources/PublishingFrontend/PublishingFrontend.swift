@@ -6,7 +6,9 @@ import Yams
 
 /// Configuration for the ``PublishingFrontend`` server.
 public struct PublishingConfig: Codable {
+    /// TCP port the server listens on.
     public var port: Int
+    /// Directory containing static files served by the frontend.
     public var rootPath: String
 
     /// Creates a new configuration with optional port and root path.

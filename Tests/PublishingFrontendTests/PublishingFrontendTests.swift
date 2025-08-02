@@ -38,6 +38,12 @@ final class PublishingFrontendTests: XCTestCase {
         XCTAssertEqual(config.port, 1234)
         XCTAssertEqual(config.rootPath, "/tmp/Public")
     }
+
+    func testPublishingConfigDefaultValues() throws {
+        let config = PublishingConfig()
+        XCTAssertEqual(config.port, 8085)
+        XCTAssertEqual(config.rootPath, "./Public")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
