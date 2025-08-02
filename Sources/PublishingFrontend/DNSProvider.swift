@@ -17,6 +17,7 @@ public protocol DNSProvider {
 
 /// Concrete ``DNSProvider`` that talks to the Hetzner DNS API.
 public struct HetznerDNSClient: DNSProvider {
+    /// HTTP client used for communication with Hetzner's API.
     let api: APIClient
 
     /// Creates a new client with the given API token and session.

@@ -44,6 +44,23 @@ final class APIClientTests: XCTestCase {
         _ = try await client.send(Ping())
         XCTAssertEqual(session.request?.value(forHTTPHeaderField: "Authorization"), "Bearer abc")
     }
+
+    func testRawDataResponse() async throws {
+        struct DataEcho: APIRequest {
+            struct Payload: Encodable { let msg: String }
+            typealias Body = Payload
+            typealias Response = Data
+            var method: String { "POST" }
+            var path: String { "/echo" }
+            var body: Payload? = Payload(msg: "hi")
+        }
+        let expected = Data([1, 2, 3])
+        let session = MockSession(responseData: expected)
+        let client = APIClient(baseURL: URL(string: "http://localhost")!, session: session)
+        let result: Data = try await client.send(DataEcho())
+        XCTAssertEqual(result, expected)
+        XCTAssertEqual(session.request?.value(forHTTPHeaderField: "Content-Type"), "application/json")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

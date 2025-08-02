@@ -20,8 +20,11 @@ extension URLSession: HTTPSession {
 
 /// Minimal HTTP client for executing ``APIRequest`` values.
 public struct APIClient {
+    /// Root endpoint used for all requests.
     let baseURL: URL
+    /// Transport layer performing network calls.
     let session: HTTPSession
+    /// Headers automatically attached to every request.
     let defaultHeaders: [String: String]
 
     /// Creates a new client with optional session and headers.
