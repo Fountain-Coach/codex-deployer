@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31315   28166    10.06%   13942 12280    11.92%   98473   87817    10.82%
+TOTAL                                          31329   28161    10.11%   13953 12278    12.00%   98499   87809    10.85%
 ```
 
-The repository contains **98,473** executable lines, with **10,656** lines covered (approx. **10.82%** line coverage).
+The repository contains **98,499** executable lines, with **10,690** lines covered (approx. **10.85%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                            937     411    56.14%     410   119    70.98%    2126     808    61.99%
+TOTAL                                            951     406    57.31%     421   117    72.21%    2152     800    62.83%
 ```
 
-Within repository sources there are **2,126** lines, with **1,318** covered, giving **61.99%** line coverage.
+Within repository sources there are **2,152** lines, with **1,352** covered, giving **62.83%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -29,6 +29,7 @@ The added metrics check raises the suite to **33** tests.
 The new ``GetRecordRequestTests`` brings the total test count to **34**.
 The added ``PublishingConfigDefaultValues`` test raises the suite to **35** tests.
 The new ``TodoEncodingRoundTrip`` test brings the total test count to **36**.
+The new ``SecurityRequirementTests`` bring the total test count to **38**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
