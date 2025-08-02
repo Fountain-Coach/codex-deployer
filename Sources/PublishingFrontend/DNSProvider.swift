@@ -58,14 +58,26 @@ public struct HetznerDNSClient: DNSProvider {
 public struct Route53Client: DNSProvider {
     /// Creates a new client instance.
     public init() {}
-    /// :nodoc: Currently unimplemented.
-    public func listZones() async throws -> [String] { throw NSError(domain: "Route53", code: 501) }
-    /// :nodoc: Currently unimplemented.
-    public func createRecord(zone: String, name: String, type: String, value: String) async throws { throw NSError(domain: "Route53", code: 501) }
-    /// :nodoc: Currently unimplemented.
-    public func updateRecord(id: String, zone: String, name: String, type: String, value: String) async throws { throw NSError(domain: "Route53", code: 501) }
-    /// :nodoc: Currently unimplemented.
-    public func deleteRecord(id: String) async throws { throw NSError(domain: "Route53", code: 501) }
+    /// Lists zones available to the AWS Route53 account.
+    /// - Throws: An ``NSError`` with domain `"Route53"` and code `501`.
+    public func listZones() async throws -> [String] {
+        throw NSError(domain: "Route53", code: 501)
+    }
+    /// Attempts to create a DNS record within Route53.
+    /// - Throws: An ``NSError`` with domain `"Route53"` and code `501`.
+    public func createRecord(zone: String, name: String, type: String, value: String) async throws {
+        throw NSError(domain: "Route53", code: 501)
+    }
+    /// Attempts to update a DNS record within Route53.
+    /// - Throws: An ``NSError`` with domain `"Route53"` and code `501`.
+    public func updateRecord(id: String, zone: String, name: String, type: String, value: String) async throws {
+        throw NSError(domain: "Route53", code: 501)
+    }
+    /// Attempts to delete a DNS record in Route53.
+    /// - Throws: An ``NSError`` with domain `"Route53"` and code `501`.
+    public func deleteRecord(id: String) async throws {
+        throw NSError(domain: "Route53", code: 501)
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
