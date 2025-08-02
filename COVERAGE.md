@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31579   26658    15.58%   14143 11532    18.46%   98969  81689    17.46%
+TOTAL                                          31596   26664    15.61%   14151 11536    18.48%   99009 81708    17.47%
 ```
 
-The repository contains **98,969** executable lines, with **17,280** lines covered (approx. **17.46%** line coverage).
+The repository contains **99,009** executable lines, with **17,301** lines covered (approx. **17.47%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                           590     294    50.17%     173     57    67.05%    1362     545    60.00%
+TOTAL                                           590     294    50.17%     173     57    67.05%    1362     545    59.99%
 ```
 
-Within repository sources there are **1,362** lines, with **817** covered, giving **60.00%** line coverage.
+Within repository sources there are **1,362** lines, with **817** covered, giving **59.99%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -42,6 +42,8 @@ The new ``getZone`` and ``listPrimaryServers`` request tests raise the total tes
 The new ``PublishingFrontendPlugin`` pass-through and non-GET tests raise the total test count to **71**.
 The new ``Route53Client`` error detail tests raise the total test count to **73**.
 The new ``BulkRecordsUpdateRequestCodable`` and ``PrimaryServersResponseDecodes`` tests raise the total test count to **75**.
+
+The new ``CertificateManager`` start and stop tests raise the total test count to **77**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
