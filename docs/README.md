@@ -34,6 +34,8 @@ As modules gain documentation, brief summaries are added here.
 - **listRecords** and **listPrimaryServers** – request types now include documentation.
 - **bulkUpdateRecords**, **deleteZone**, **updateZone**, **exportZoneFile**, **importZoneFile** – additional DNS client requests documented.
 - **getRecord** and **updateRecord** – request types now include usage documentation.
+- **getZone** – request type now documents zone retrieval parameters.
+- **listPrimaryServersParameters.zoneId** – optional zone filter now clarified.
 - **PublishingConfig.port** and **rootPath** – documented properties clarifying server binding and static directory.
 - **Todo.id** and **Todo.name** – documented properties clarifying task identifiers and titles.
 - **OpenAPISpec** – root model now documents components, servers, security schemes, and requirements.

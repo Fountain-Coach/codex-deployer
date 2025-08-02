@@ -2,6 +2,7 @@ import Foundation
 
 /// Parameters controlling ``listPrimaryServers``.
 public struct listPrimaryServersParameters: Codable {
+    /// Optional zone identifier to filter servers.
     public var zoneId: String?
 }
 

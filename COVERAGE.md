@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31523   26699    15.30%   14103 11551    18.10%   98868  81872    17.19%
+TOTAL                                          31535   26682    15.39%   14115 11544    18.21%   98894  81824    17.26%
 ```
 
-The repository contains **98,868** executable lines, with **16,996** lines covered (approx. **17.19%** line coverage).
+The repository contains **98,894** executable lines, with **17,070** lines covered (approx. **17.26%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                          1145     379    66.90%     571    97    83.01%    2521     730    71.04%
+TOTAL                                          1157     371    67.93%     583    93    84.05%    2547     708    72.20%
 ```
 
-Within repository sources there are **2,521** lines, with **1,791** covered, giving **71.04%** line coverage.
+Within repository sources there are **2,547** lines, with **1,839** covered, giving **72.20%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -38,6 +38,7 @@ The new ``validateZoneFile`` and ``updatePrimaryServer`` request tests raise the
 The new ``TodoEquality`` and ``TodoDecodingFailsForMissingName`` tests bring the total test count to **57**.
 The new ``NIOHTTPServer`` port reuse and concurrency tests and Hetzner DNS model round-trip checks bring the total test count to **62**.
 The new ``importZoneFile`` and ``exportZoneFile`` request tests raise the total test count to **66**.
+The new ``getZone`` and ``listPrimaryServers`` request tests raise the total test count to **69**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
