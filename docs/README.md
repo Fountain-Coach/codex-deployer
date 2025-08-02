@@ -32,7 +32,7 @@ As modules gain documentation, brief summaries are added here.
 - **Service** and **Supervisor** – properties and lifecycle methods documented.
 - **SpecValidator** – checks OpenAPI documents for duplicate IDs and unresolved references.
 - **listRecords** and **listPrimaryServers** – request types now include documentation.
-- **bulkUpdateRecords**, **deleteZone**, **updateZone**, **exportZoneFile** – additional DNS client requests documented.
+- **bulkUpdateRecords**, **deleteZone**, **updateZone**, **exportZoneFile**, **importZoneFile** – additional DNS client requests documented.
 - **getRecord** and **updateRecord** – request types now include usage documentation.
 - **PublishingConfig.port** and **rootPath** – documented properties clarifying server binding and static directory.
 - **Todo.id** and **Todo.name** – documented properties clarifying task identifiers and titles.
