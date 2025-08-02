@@ -15,6 +15,17 @@ final class FountainCoreTests: XCTestCase {
         let decoded = try JSONDecoder().decode(Todo.self, from: data)
         XCTAssertEqual(decoded, original)
     }
+
+    func testTodoEquality() {
+        let a = Todo(id: 1, name: "A")
+        let b = Todo(id: 1, name: "A")
+        XCTAssertEqual(a, b)
+    }
+
+    func testTodoDecodingFailsForMissingName() {
+        let json = #"{"id":1}"#.data(using: .utf8)!
+        XCTAssertThrowsError(try JSONDecoder().decode(Todo.self, from: json))
+    }
 }
 
 
