@@ -19,6 +19,8 @@ public final class CertificateManager {
     }
 
     /// Starts automatic certificate renewal on a timer.
+    /// Invokes the configured shell script every ``interval`` seconds on a
+    /// background queue until ``stop()`` is called.
     public func start() {
         let timer = DispatchSource.makeTimerSource()
         timer.schedule(deadline: .now(), repeating: interval)
@@ -36,12 +38,14 @@ public final class CertificateManager {
     }
 
     /// Stops the timer and cancels future renewals.
+    /// Safe to call multiple times; subsequent calls have no effect.
     public func stop() {
         timer?.cancel()
         timer = nil
     }
 
-    /// Immediately runs the renewal script once.
+    /// Immediately runs the renewal script once outside the normal schedule.
+    /// Any error is printed to standard output.
     public func triggerNow() {
         let task = Process()
         task.executableURL = URL(fileURLWithPath: scriptPath)
