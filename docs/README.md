@@ -40,6 +40,9 @@ As modules gain documentation, brief summaries are added here.
 - **Route53Client** – stub methods now describe the unimplemented error responses.
 - **FountainOps Todo** – generated model now documents its properties.
 - **createPrimaryServer** and **getPrimaryServer** – request types now document server creation and retrieval.
+- **GatewayServer** – internal components like the certificate manager and plugin stack are now described.
+- **APIClient.baseURL**, **session**, and **defaultHeaders** – stored properties document connection details.
+- **HetznerDNSClient.api** – underlying HTTP client property now documented.
 
 Documentation coverage will expand alongside test coverage.
 

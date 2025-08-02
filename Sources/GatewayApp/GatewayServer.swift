@@ -7,9 +7,13 @@ import FountainCodex
 /// Provides built-in `/health` and `/metrics` endpoints used for monitoring.
 @MainActor
 public final class GatewayServer {
+    /// Underlying HTTP server handling TCP connections.
     private let server: NIOHTTPServer
+    /// Manages periodic certificate renewal scripts.
     private let manager: CertificateManager
+    /// Event loop group powering the SwiftNIO server.
     private let group: EventLoopGroup
+    /// Middleware components executed around request routing.
     private let plugins: [GatewayPlugin]
 
     /// Creates a new gateway server instance.
