@@ -50,6 +50,7 @@ As modules gain documentation, brief summaries are added here.
 - **ServerGenerator emit helpers** – private functions now describe generated source responsibilities.
 - **BulkRecordsCreateRequest** and **validateZoneFileResponse** – documented models for batch record creation and zone validation feedback.
 - **PublishingFrontendPlugin.rootPath** – documented property describing the static file directory.
+- **BulkRecordsUpdateRequest**, **BulkRecordsUpdateResponse**, **RecordUpdate**, and **PrimaryServer** – documented models covering batch record updates and primary server metadata.
 
 Documentation coverage will expand alongside test coverage.
 

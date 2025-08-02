@@ -6,36 +6,59 @@ public struct BulkRecordsCreateRequest: Codable {
     public let records: [RecordCreate]
 }
 
+/// Response returned after attempting to create multiple records.
 public struct BulkRecordsCreateResponse: Codable {
+    /// Records deemed invalid and rejected by the API.
     public let invalid_records: [RecordCreate]
+    /// Records actually created.
     public let records: [Record]
+    /// Records that passed validation and were accepted.
     public let valid_records: [RecordCreate]
 }
 
+/// Request body for updating multiple DNS records in one call.
 public struct BulkRecordsUpdateRequest: Codable {
+    /// Key-value pairs describing records to update.
     public let records: [[String: String]]
 }
 
+/// Response body for bulk record update operations.
 public struct BulkRecordsUpdateResponse: Codable {
+    /// Records that failed to update.
     public let failed_records: [RecordUpdate]
+    /// Records successfully updated.
     public let records: [Record]
 }
 
+/// Details about a specific record update attempt.
 public struct RecordUpdate: Codable {
+    /// Identifier of the record to update.
     public let id: String
+    /// Hostname associated with the record.
     public let name: String
+    /// Time to live value for the record.
     public let ttl: Int
+    /// DNS record type, such as `A` or `TXT`.
     public let type: String
+    /// New value written for the record.
     public let value: String
+    /// Identifier of the zone owning the record.
     public let zone_id: String
 }
 
+/// Metadata describing a primary DNS server.
 public struct PrimaryServer: Codable {
+    /// IP address of the server.
     public let address: String
+    /// Creation timestamp.
     public let created: String
+    /// Server identifier.
     public let id: String
+    /// Last modification timestamp.
     public let modified: String
+    /// Port used for communication.
     public let port: Int
+    /// Identifier of the zone served.
     public let zone_id: String
 }
 
