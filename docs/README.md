@@ -39,6 +39,7 @@ As modules gain documentation, brief summaries are added here.
 - **OpenAPISpec** – root model now documents components, servers, security schemes, and requirements.
 - **Route53Client** – stub methods now describe the unimplemented error responses.
 - **FountainOps Todo** – generated model now documents its properties.
+- **createPrimaryServer** and **getPrimaryServer** – request types now document server creation and retrieval.
 
 Documentation coverage will expand alongside test coverage.
 
