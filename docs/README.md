@@ -35,6 +35,7 @@ As modules gain documentation, brief summaries are added here.
 - **SpecValidator** – checks OpenAPI documents for duplicate IDs and unresolved references.
 - **listRecords** and **listPrimaryServers** – request types now include documentation.
 - **bulkUpdateRecords**, **deleteZone**, **updateZone**, **exportZoneFile**, **importZoneFile** – additional DNS client requests documented.
+- **bulkCreateRecords** and **createZone** – request types now document bulk record creation and zone provisioning.
 - **getRecord** and **updateRecord** – request types now include usage documentation.
 - **getZone** – request type now documents zone retrieval parameters.
 - **listPrimaryServersParameters.zoneId** – optional zone filter now clarified.

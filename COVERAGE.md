@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31667   26647    15.85%   14204 11535    18.79%   99150 81688    17.61%
+TOTAL                                          31683   26635    15.93%   14220 11525    18.95%   99178 81659    17.66%
 ```
 
-The repository contains **99,150** executable lines, with **17,462** lines covered (approx. **17.61%** line coverage).
+The repository contains **99,178** executable lines, with **17,519** lines covered (approx. **17.66%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                           590     289    51.02%     173     56    67.63%    1362     541    60.28%
+TOTAL                                           590     283    52.03%     173     50    71.10%    1362     531    61.01%
 ```
 
-Within repository sources there are **1,362** lines, with **821** covered, giving **60.28%** line coverage.
+Within repository sources there are **1,362** lines, with **831** covered, giving **61.01%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -49,6 +49,8 @@ The new ``PrimaryServerCreateCodable``, ``RecordResponseDecodes``, and ``ZoneCre
 The new ``HTTPRequestTests`` verifying defaults and mutation raise the total test count to **84**.
 
 The new ``TodoDecodingFailsForMissingID``, ``LoadPublishingConfigFailsForMissingFile``, and ``ServerSetsContentTypeHeader`` tests raise the total test count to **87**.
+
+The new ``bulkCreateRecords`` and ``createZone`` request tests raise the total test count to **91**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
