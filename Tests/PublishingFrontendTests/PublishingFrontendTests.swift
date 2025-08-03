@@ -1,4 +1,8 @@
 import XCTest
+import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 @testable import PublishingFrontend
 
 final class PublishingFrontendTests: XCTestCase {
@@ -43,6 +47,39 @@ final class PublishingFrontendTests: XCTestCase {
         let config = PublishingConfig()
         XCTAssertEqual(config.port, 8085)
         XCTAssertEqual(config.rootPath, "./Public")
+    }
+
+    @MainActor
+    func testServerReturns404ForMissingFile() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("missing-public")
+        try? FileManager.default.removeItem(at: dir)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        var cfg = PublishingConfig()
+        cfg.rootPath = dir.path
+        cfg.port = 9100
+        let frontend = PublishingFrontend(config: cfg)
+        try await frontend.start()
+        let url = URL(string: "http://127.0.0.1:\(cfg.port)/nope.html")!
+        let (_, response) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 404)
+        try await frontend.stop()
+    }
+
+    @MainActor
+    func testServerRejectsNonGetRequests() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("nonget-public")
+        try? FileManager.default.removeItem(at: dir)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        var cfg = PublishingConfig()
+        cfg.rootPath = dir.path
+        cfg.port = 9101
+        let frontend = PublishingFrontend(config: cfg)
+        try await frontend.start()
+        var request = URLRequest(url: URL(string: "http://127.0.0.1:\(cfg.port)/")!)
+        request.httpMethod = "POST"
+        let (_, response) = try await URLSession.shared.data(for: request)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 405)
+        try await frontend.stop()
     }
 }
 

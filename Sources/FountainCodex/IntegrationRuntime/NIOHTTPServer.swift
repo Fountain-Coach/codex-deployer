@@ -4,8 +4,11 @@ import Foundation
 
 /// Lightweight SwiftNIO based HTTP server used by FountainAI services.
 public final class NIOHTTPServer: @unchecked Sendable {
+    /// Router transforming requests into responses.
     let kernel: HTTPKernel
+    /// Event loop group powering the NIO server.
     let group: EventLoopGroup
+    /// Active server channel once bound to a port.
     var channel: Channel?
 
     public init(kernel: HTTPKernel, group: EventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)) {
@@ -41,8 +44,11 @@ public final class NIOHTTPServer: @unchecked Sendable {
         typealias InboundIn = HTTPServerRequestPart
         typealias OutboundOut = HTTPServerResponsePart
 
+        /// Kernel responsible for routing incoming requests.
         let kernel: HTTPKernel
+        /// Stored request head while waiting for the body.
         var head: HTTPRequestHead?
+        /// Accumulated body bytes for the current request.
         var body: ByteBuffer?
 
         /// Creates a new handler bound to the provided ``HTTPKernel``.

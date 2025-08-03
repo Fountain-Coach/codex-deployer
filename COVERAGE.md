@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31596   26664    15.61%   14151 11536    18.48%   99009 81708    17.47%
+TOTAL                                          31612   26644    15.72%   14159 11532    18.55%   99044 81679    17.53%
 ```
 
-The repository contains **99,009** executable lines, with **17,301** lines covered (approx. **17.47%** line coverage).
+The repository contains **99,044** executable lines, with **17,365** lines covered (approx. **17.53%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                           590     294    50.17%     173     57    67.05%    1362     545    59.99%
+TOTAL                                           590     289    51.02%     173     56    67.63%    1362     541    60.28%
 ```
 
-Within repository sources there are **1,362** lines, with **817** covered, giving **59.99%** line coverage.
+Within repository sources there are **1,362** lines, with **821** covered, giving **60.28%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -44,6 +44,7 @@ The new ``Route53Client`` error detail tests raise the total test count to **73*
 The new ``BulkRecordsUpdateRequestCodable`` and ``PrimaryServersResponseDecodes`` tests raise the total test count to **75**.
 
 The new ``CertificateManager`` start and stop tests raise the total test count to **77**.
+The new server 404 and non-GET tests raise the total test count to **79**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
