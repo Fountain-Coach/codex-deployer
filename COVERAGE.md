@@ -5,10 +5,10 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31652   26674    15.73%   14194 11547    18.65%   99114 81834    17.43%
+TOTAL                                          31667   26647    15.85%   14204 11535    18.79%   99150 81688    17.61%
 ```
 
-The repository contains **99,114** executable lines, with **17,280** lines covered (approx. **17.43%** line coverage).
+The repository contains **99,150** executable lines, with **17,462** lines covered (approx. **17.61%** line coverage).
 
 ### Repository source coverage
 
@@ -47,6 +47,8 @@ The new ``CertificateManager`` start and stop tests raise the total test count t
 The new server 404 and non-GET tests raise the total test count to **79**.
 The new ``PrimaryServerCreateCodable``, ``RecordResponseDecodes``, and ``ZoneCreateRequestCodable`` tests raise the total test count to **82**.
 The new ``HTTPRequestTests`` verifying defaults and mutation raise the total test count to **84**.
+
+The new ``TodoDecodingFailsForMissingID``, ``LoadPublishingConfigFailsForMissingFile``, and ``ServerSetsContentTypeHeader`` tests raise the total test count to **87**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

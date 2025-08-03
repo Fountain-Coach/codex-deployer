@@ -49,6 +49,17 @@ final class PublishingFrontendTests: XCTestCase {
         XCTAssertEqual(config.rootPath, "./Public")
     }
 
+    /// Ensures loading the configuration without a file fails.
+    func testLoadPublishingConfigFailsForMissingFile() {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("nocfg", isDirectory: true)
+        try? FileManager.default.removeItem(at: dir)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let cwd = FileManager.default.currentDirectoryPath
+        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        XCTAssertThrowsError(try loadPublishingConfig())
+    }
+
     @MainActor
     func testServerReturns404ForMissingFile() async throws {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("missing-public")
@@ -79,6 +90,25 @@ final class PublishingFrontendTests: XCTestCase {
         request.httpMethod = "POST"
         let (_, response) = try await URLSession.shared.data(for: request)
         XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 405)
+        try await frontend.stop()
+    }
+
+    @MainActor
+    /// Verifies the server sets an HTML content type for served files.
+    func testServerSetsContentTypeHeader() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("ctype-public")
+        try? FileManager.default.removeItem(at: dir)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let indexURL = dir.appendingPathComponent("index.html")
+        try "hello".write(to: indexURL, atomically: true, encoding: .utf8)
+        var cfg = PublishingConfig()
+        cfg.rootPath = dir.path
+        cfg.port = 9102
+        let frontend = PublishingFrontend(config: cfg)
+        try await frontend.start()
+        let url = URL(string: "http://127.0.0.1:\(cfg.port)/")!
+        let (_, response) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((response as? HTTPURLResponse)?.value(forHTTPHeaderField: "Content-Type"), "text/html")
         try await frontend.stop()
     }
 }

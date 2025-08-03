@@ -51,6 +51,7 @@ As modules gain documentation, brief summaries are added here.
 - **ServerGenerator emit helpers** – private functions now describe generated source responsibilities.
 - **BulkRecordsCreateRequest** and **validateZoneFileResponse** – documented models for batch record creation and zone validation feedback.
 - **PublishingFrontendPlugin.rootPath** – documented property describing the static file directory.
+- **PublishingFrontend.server**, **group**, and **config** – internal properties now describe server instance, event loop management, and runtime configuration.
 - **BulkRecordsUpdateRequest**, **BulkRecordsUpdateResponse**, **RecordUpdate**, and **PrimaryServer** – documented models covering batch record updates and primary server metadata.
 - **PrimaryServerCreate**, **PrimaryServerResponse**, **PrimaryServersResponse**, **Record**, **RecordCreate**, **RecordResponse**, **RecordsResponse**, **Zone**, **ZoneCreateRequest**, **ZoneResponse**, **ZoneUpdateRequest**, and **ZonesResponse** – additional Hetzner DNS models now fully documented.
 - **CertificateManager.start**, **stop**, and **triggerNow** – document timer scheduling, cancellation semantics, and on-demand execution.
