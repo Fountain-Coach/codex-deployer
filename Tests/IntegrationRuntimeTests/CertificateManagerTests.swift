@@ -52,6 +52,8 @@ final class CertificateManagerTests: XCTestCase {
         manager.start()
         sleep(1)
         manager.stop()
+        // Allow any in-flight executions to finish before measuring.
+        sleep(1)
         let first = try String(contentsOf: logURL, encoding: .utf8).split(separator: "\n").count
         sleep(1)
         let second = try String(contentsOf: logURL, encoding: .utf8).split(separator: "\n").count
