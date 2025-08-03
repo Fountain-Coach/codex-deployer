@@ -26,6 +26,12 @@ final class FountainCoreTests: XCTestCase {
         let json = #"{"id":1}"#.data(using: .utf8)!
         XCTAssertThrowsError(try JSONDecoder().decode(Todo.self, from: json))
     }
+
+    /// Ensures decoding fails when the `id` field is absent.
+    func testTodoDecodingFailsForMissingID() {
+        let json = #"{"name":"Task"}"#.data(using: .utf8)!
+        XCTAssertThrowsError(try JSONDecoder().decode(Todo.self, from: json))
+    }
 }
 
 
