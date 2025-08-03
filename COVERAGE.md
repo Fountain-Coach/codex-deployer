@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31758   26538    16.44%   14282 11493    19.53%   99347 81296    18.17%
+TOTAL                                          31766   26565    16.37%   14290 11503    19.50%   99364 81455    18.02%
 ```
 
-The repository contains **99,347** executable lines, with **18,051** lines covered (approx. **18.17%** line coverage).
+The repository contains **99,364** executable lines, with **17,909** lines covered (approx. **18.02%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                           590     273    53.73%     173     49    71.68%    1366     520    61.93%
+TOTAL                                           590     269    54.41%     173     46    73.41%    1366     508    62.81%
 ```
 
-Within repository sources there are **1,366** lines, with **846** covered, giving **61.93%** line coverage.
+Within repository sources there are **1,366** lines, with **858** covered, giving **62.81%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -60,6 +60,8 @@ The new ``TodosNotEqualWithDifferentID`` and ``TodoEncodingProducesExpectedJSON`
 
 The new ``SpecValidator`` missing parameter, required flag, and security scheme tests raise the total test count to **101**.
 The new ``GatewayPlugin`` default behavior tests and ``PublishingFrontendPlugin`` header check raise the total test count to **103**.
+
+The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
