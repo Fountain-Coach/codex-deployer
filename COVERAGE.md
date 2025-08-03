@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31683   26635    15.93%   14220 11525    18.95%   99178 81659    17.66%
+TOTAL                                          31702   26543    16.27%   14231 11495    19.23%   99218 81298    18.06%
 ```
 
-The repository contains **99,178** executable lines, with **17,519** lines covered (approx. **17.66%** line coverage).
+The repository contains **99,218** executable lines, with **17,920** lines covered (approx. **18.06%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                           590     283    52.03%     173     50    71.10%    1362     531    61.01%
+TOTAL                                           590     281    52.37%     173     50    71.10%    1362     528    61.23%
 ```
 
-Within repository sources there are **1,362** lines, with **831** covered, giving **61.01%** line coverage.
+Within repository sources there are **1,362** lines, with **834** covered, giving **61.23%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -51,6 +51,8 @@ The new ``HTTPRequestTests`` verifying defaults and mutation raise the total tes
 The new ``TodoDecodingFailsForMissingID``, ``LoadPublishingConfigFailsForMissingFile``, and ``ServerSetsContentTypeHeader`` tests raise the total test count to **87**.
 
 The new ``bulkCreateRecords`` and ``createZone`` request tests raise the total test count to **91**.
+
+The new ``AsyncHTTPClientDriver`` body transmission test and ``HTTPKernel`` error propagation test raise the total test count to **93**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

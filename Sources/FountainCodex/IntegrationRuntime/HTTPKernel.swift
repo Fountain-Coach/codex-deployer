@@ -13,6 +13,7 @@ public struct HTTPKernel: @unchecked Sendable {
 
     /// Passes a request through the router and returns the response.
     /// - Parameter request: Incoming request object.
+    /// - Throws: Rethrows any error produced by the routing closure.
     public func handle(_ request: HTTPRequest) async throws -> HTTPResponse {
         try await router(request)
     }
