@@ -47,6 +47,7 @@ As modules gain documentation, brief summaries are added here.
 - **createPrimaryServer** and **getPrimaryServer** – request types now document server creation and retrieval.
 - **validateZoneFile** and **updatePrimaryServer** – request types now document zone file validation and primary server updates.
 - **GatewayServer** – internal components like the certificate manager and plugin stack are now described.
+- **GatewayServer.start** and **stop** – documentation now explains certificate manager activation and graceful shutdown.
 - **APIClient.baseURL**, **session**, and **defaultHeaders** – stored properties document connection details.
 - **HetznerDNSClient.api** – underlying HTTP client property now documented.
 - **ServerGenerator emit helpers** – private functions now describe generated source responsibilities.
