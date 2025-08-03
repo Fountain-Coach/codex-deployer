@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31637   26666    15.71%   14179 11543    18.59%   99084 81812    17.43%
+TOTAL                                          31652   26674    15.73%   14194 11547    18.65%   99114 81834    17.43%
 ```
 
-The repository contains **99,084** executable lines, with **17,272** lines covered (approx. **17.43%** line coverage).
+The repository contains **99,114** executable lines, with **17,280** lines covered (approx. **17.43%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                           749     348    53.54%     296     88    70.27%    1680     689    58.99%
+TOTAL                                           590     289    51.02%     173     56    67.63%    1362     541    60.28%
 ```
 
-Within repository sources there are **1,680** lines, with **991** covered, giving **58.99%** line coverage.
+Within repository sources there are **1,362** lines, with **821** covered, giving **60.28%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -46,6 +46,7 @@ The new ``BulkRecordsUpdateRequestCodable`` and ``PrimaryServersResponseDecodes`
 The new ``CertificateManager`` start and stop tests raise the total test count to **77**.
 The new server 404 and non-GET tests raise the total test count to **79**.
 The new ``PrimaryServerCreateCodable``, ``RecordResponseDecodes``, and ``ZoneCreateRequestCodable`` tests raise the total test count to **82**.
+The new ``HTTPRequestTests`` verifying defaults and mutation raise the total test count to **84**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

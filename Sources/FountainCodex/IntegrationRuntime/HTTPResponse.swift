@@ -3,8 +3,11 @@ import Foundation
 /// Standard HTTP response returned by ``HTTPKernel`` handlers.
 /// Provides mutable status, headers and response body.
 public struct HTTPResponse: Sendable {
+    /// HTTP status code sent back to the client.
     public var status: Int
+    /// Headers included with the response.
     public var headers: [String: String]
+    /// Raw payload returned as the message body.
     public var body: Data
 
     /// Creates a new response value.

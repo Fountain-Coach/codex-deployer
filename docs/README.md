@@ -54,6 +54,8 @@ As modules gain documentation, brief summaries are added here.
 - **BulkRecordsUpdateRequest**, **BulkRecordsUpdateResponse**, **RecordUpdate**, and **PrimaryServer** – documented models covering batch record updates and primary server metadata.
 - **PrimaryServerCreate**, **PrimaryServerResponse**, **PrimaryServersResponse**, **Record**, **RecordCreate**, **RecordResponse**, **RecordsResponse**, **Zone**, **ZoneCreateRequest**, **ZoneResponse**, **ZoneUpdateRequest**, and **ZonesResponse** – additional Hetzner DNS models now fully documented.
 - **CertificateManager.start**, **stop**, and **triggerNow** – document timer scheduling, cancellation semantics, and on-demand execution.
+- **HTTPRequest.method**, **path**, **headers**, and **body** – properties now describe their respective roles.
+- **HTTPResponse.status**, **headers**, and **body** – properties now clarify response components.
 
 Documentation coverage will expand alongside test coverage.
 
