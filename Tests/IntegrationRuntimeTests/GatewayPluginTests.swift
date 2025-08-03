@@ -2,16 +2,27 @@ import XCTest
 @testable import gateway_server
 @testable import FountainCodex
 
-final class GatewayPluginDefaultTests: XCTestCase {
-    func testDefaultImplementationsPassThrough() async throws {
-        struct Dummy: GatewayPlugin {}
-        let plugin = Dummy()
-        let request = HTTPRequest(method: "GET", path: "/foo")
-        let prepared = try await plugin.prepare(request)
-        XCTAssertEqual(prepared.path, request.path)
-        let response = HTTPResponse(status: 201)
-        let output = try await plugin.respond(response, for: request)
-        XCTAssertEqual(output.status, response.status)
+final class GatewayPluginTests: XCTestCase {
+    /// Simple plugin that relies on default implementations.
+    struct DummyPlugin: GatewayPlugin {}
+
+    /// Ensures the default `prepare` returns the original request untouched.
+    func testDefaultPrepareReturnsSameRequest() async throws {
+        let plugin = DummyPlugin()
+        let request = HTTPRequest(method: "GET", path: "/orig")
+        let result = try await plugin.prepare(request)
+        XCTAssertEqual(result.method, request.method)
+        XCTAssertEqual(result.path, request.path)
+    }
+
+    /// Ensures the default `respond` returns the response without modification.
+    func testDefaultRespondReturnsSameResponse() async throws {
+        let plugin = DummyPlugin()
+        let response = HTTPResponse(status: 204, body: Data())
+        let request = HTTPRequest(method: "GET", path: "/")
+        let result = try await plugin.respond(response, for: request)
+        XCTAssertEqual(result.status, response.status)
+        XCTAssertEqual(result.body, response.body)
     }
 }
 

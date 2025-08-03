@@ -39,6 +39,19 @@ final class PublishingFrontendPluginTests: XCTestCase {
         let resp = try await plugin.respond(HTTPResponse(status: 404), for: req)
         XCTAssertEqual(resp.status, 404)
     }
+
+    /// Served files include a `Content-Type` header.
+    func testPluginSetsContentTypeHeader() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("static-header")
+        try? FileManager.default.removeItem(at: dir)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let fileURL = dir.appendingPathComponent("index.html")
+        try "hi".write(to: fileURL, atomically: true, encoding: .utf8)
+        let plugin = PublishingFrontendPlugin(rootPath: dir.path)
+        let req = HTTPRequest(method: "GET", path: "/")
+        let resp = try await plugin.respond(HTTPResponse(status: 404, headers: [:]), for: req)
+        XCTAssertEqual(resp.headers["Content-Type"], "text/html")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

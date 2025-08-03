@@ -5,10 +5,10 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31745   26544    16.38%   14272 11497    19.44%   99323 81315    18.13%
+TOTAL                                          31758   26538    16.44%   14282 11493    19.53%   99347 81296    18.17%
 ```
 
-The repository contains **99,323** executable lines, with **18,008** lines covered (approx. **18.13%** line coverage).
+The repository contains **99,347** executable lines, with **18,051** lines covered (approx. **18.17%** line coverage).
 
 ### Repository source coverage
 
@@ -59,6 +59,7 @@ The new ``HTTPRequest`` initializer and ``HTTPResponse`` mutation tests raise th
 The new ``TodosNotEqualWithDifferentID`` and ``TodoEncodingProducesExpectedJSON`` tests bring the total test count to **98**.
 
 The new ``SpecValidator`` missing parameter, required flag, and security scheme tests raise the total test count to **101**.
+The new ``GatewayPlugin`` default behavior tests and ``PublishingFrontendPlugin`` header check raise the total test count to **103**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
