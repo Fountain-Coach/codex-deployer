@@ -32,6 +32,23 @@ final class FountainCoreTests: XCTestCase {
         let json = #"{"name":"Task"}"#.data(using: .utf8)!
         XCTAssertThrowsError(try JSONDecoder().decode(Todo.self, from: json))
     }
+
+    func testTodosNotEqualWithDifferentID() {
+        let a = Todo(id: 1, name: "A")
+        let b = Todo(id: 2, name: "A")
+        XCTAssertNotEqual(a, b)
+    }
+
+    func testTodoEncodingProducesExpectedJSON() throws {
+        let todo = Todo(id: 7, name: "Seven")
+        let encoder = JSONEncoder()
+        if #available(macOS 10.13, *) {
+            encoder.outputFormatting = [.sortedKeys]
+        }
+        let json = try encoder.encode(todo)
+        let string = String(data: json, encoding: .utf8)
+        XCTAssertEqual(string, "{\"id\":7,\"name\":\"Seven\"}")
+    }
 }
 
 

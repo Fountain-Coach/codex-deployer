@@ -12,6 +12,7 @@ As modules gain documentation, brief summaries are added here.
 - **NIOHTTPServer** – documented server adapter built on SwiftNIO.
 - **NIOHTTPServer.kernel**, **group**, and **channel** – internal server properties now described.
 - **HTTPHandler** – internal request dispatcher within `NIOHTTPServer` is now thoroughly documented.
+- **NIOHTTPServer.init** – initializer now documents kernel and event loop group parameters.
 - **LoggingPlugin** – prints requests and responses for debugging.
 - **GatewayPlugin** – protocol for request and response middleware.
 - **CertificateManager** – runs periodic certificate renewal scripts.
@@ -60,6 +61,7 @@ As modules gain documentation, brief summaries are added here.
 - **HTTPRequest.method**, **path**, **headers**, and **body** – properties now describe their respective roles.
 - **HTTPResponse.status**, **headers**, and **body** – properties now clarify response components.
 - **HTTPKernel.handle** – now documents error propagation from routing closures.
+- **run-tests.sh** – helper script bundling release build and coverage test steps.
 
 Documentation coverage will expand alongside test coverage.
 

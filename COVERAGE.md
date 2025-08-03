@@ -5,10 +5,10 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31720   26578    16.21%   14249 11508    19.24%   99253 81478    17.91%
+TOTAL                                          31730   26577    16.24%   14257 11507    19.29%   99274 81475    17.93%
 ```
 
-The repository contains **99,253** executable lines, with **17,775** lines covered (approx. **17.91%** line coverage).
+The repository contains **99,274** executable lines, with **17,799** lines covered (approx. **17.93%** line coverage).
 
 ### Repository source coverage
 
@@ -55,6 +55,8 @@ The new ``bulkCreateRecords`` and ``createZone`` request tests raise the total t
 The new ``AsyncHTTPClientDriver`` body transmission test and ``HTTPKernel`` error propagation test raise the total test count to **93**.
 
 The new ``HTTPRequest`` initializer and ``HTTPResponse`` mutation tests raise the total test count to **96**.
+
+The new ``TodosNotEqualWithDifferentID`` and ``TodoEncodingProducesExpectedJSON`` tests bring the total test count to **98**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
