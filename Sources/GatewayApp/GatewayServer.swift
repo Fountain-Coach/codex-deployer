@@ -51,6 +51,7 @@ public final class GatewayServer {
     }
 
     /// Starts the gateway on the given port.
+    /// Begins certificate renewal scheduling before binding the SwiftNIO server.
     /// - Parameter port: TCP port to bind.
     public func start(port: Int = 8080) async throws {
         manager.start()
@@ -58,6 +59,7 @@ public final class GatewayServer {
     }
 
     /// Stops the server and terminates certificate renewal.
+    /// Cancels the certificate manager timer and shuts down the server.
     public func stop() async throws {
         manager.stop()
         try await server.stop()
