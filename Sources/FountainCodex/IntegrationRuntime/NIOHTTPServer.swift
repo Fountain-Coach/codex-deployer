@@ -11,6 +11,10 @@ public final class NIOHTTPServer: @unchecked Sendable {
     /// Active server channel once bound to a port.
     var channel: Channel?
 
+    /// Creates a new server wrapping the given kernel and event loop group.
+    /// - Parameters:
+    ///   - kernel: Router handling incoming requests.
+    ///   - group: Event loop group providing NIO threads. Defaults to a single-threaded group.
     public init(kernel: HTTPKernel, group: EventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)) {
         self.kernel = kernel
         self.group = group
