@@ -23,8 +23,11 @@ public struct PublishingConfig: Codable {
 
 /// Lightweight HTTP server for serving generated documentation.
 public final class PublishingFrontend {
+    /// Underlying HTTP server handling requests.
     private let server: NIOHTTPServer
+    /// Event loop group driving asynchronous operations.
     private let group: EventLoopGroup
+    /// Runtime configuration specifying port and root path.
     private let config: PublishingConfig
 
     /// Creates a new server instance with the given configuration.
