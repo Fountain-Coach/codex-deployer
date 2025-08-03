@@ -1,0 +1,36 @@
+[0/1] Planning build
+Building for production...
+[0/4] Write swift-version--4EAD98957C2213E4.txt
+[2/6] Compiling FountainCore Models.swift
+[3/10] Compiling RealModule AlgebraicField.swift
+[4/11] Compiling _NIOBase64 Base64.swift
+[5/12] Compiling _NIODataStructures Heap.swift
+[6/13] Compiling NIOConcurrencyHelpers NIOAtomic.swift
+[7/13] Compiling InternalCollectionsUtilities FixedWidthInteger+roundUpToPowerOfTwo.swift
+[8/14] Compiling Atomics OptionalRawRepresentable.swift
+[9/14] Compiling DequeModule Deque+Codable.swift
+[10/15] Compiling Algorithms AdjacentPairs.swift
+[11/19] Compiling Logging Locks.swift
+[12/19] Compiling Yams AliasDereferencingStrategy.swift
+[13/19] Compiling NIOCore AddressedEnvelope.swift
+[14/21] Compiling NIOEmbedded AsyncTestingChannel.swift
+[15/21] Compiling NIOPosix BSDSocketAPICommon.swift
+[16/22] Compiling NIO Exports.swift
+[17/26] Compiling NIOFoundationCompat ByteBuffer-foundation.swift
+[18/26] Compiling NIOTLS ApplicationProtocolNegotiationHandler.swift
+[19/28] Compiling NIOSOCKS SOCKSClientHandler.swift
+[20/28] Compiling NIOTransportServices AcceptHandler.swift
+[21/28] Compiling NIOHTTP1 ByteCollectionUtils.swift
+[22/30] Compiling NIOSSL AndroidCABundle.swift
+[23/30] Compiling NIOHTTPCompression HTTPCompression.swift
+[24/30] Compiling NIOHPACK DynamicHeaderTable.swift
+[25/31] Compiling NIOHTTP2 ConnectionStateMachine.swift
+[26/32] Compiling AsyncHTTPClient AnyAsyncSequence.swift
+[27/33] Compiling FountainCodex ClientGenerator.swift
+[27/33] Write Objects.LinkFileList
+[28/34] Linking clientgen-service
+[30/34] Compiling PublishingFrontend DNSProvider.swift
+[30/34] Write Objects.LinkFileList
+[32/34] Linking publishing-frontend
+[33/34] Linking gateway-server
+Build complete! (149.50s)

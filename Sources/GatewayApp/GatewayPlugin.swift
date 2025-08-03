@@ -11,8 +11,14 @@ public protocol GatewayPlugin: Sendable {
 
 public extension GatewayPlugin {
     /// Default no-op implementation for request preparation.
+    /// - Parameter request: Incoming request passed to the plugin.
+    /// - Returns: The unmodified request for continued processing.
     func prepare(_ request: HTTPRequest) async throws -> HTTPRequest { request }
     /// Default no-op implementation for response processing.
+    /// - Parameters:
+    ///   - response: Response produced by subsequent handlers.
+    ///   - request: Original request that generated the response.
+    /// - Returns: The response passed through unchanged.
     func respond(_ response: HTTPResponse, for request: HTTPRequest) async throws -> HTTPResponse { response }
 }
 
