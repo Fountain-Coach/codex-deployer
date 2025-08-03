@@ -58,6 +58,7 @@ As modules gain documentation, brief summaries are added here.
 - **CertificateManager.start**, **stop**, and **triggerNow** – document timer scheduling, cancellation semantics, and on-demand execution.
 - **HTTPRequest.method**, **path**, **headers**, and **body** – properties now describe their respective roles.
 - **HTTPResponse.status**, **headers**, and **body** – properties now clarify response components.
+- **HTTPKernel.handle** – now documents error propagation from routing closures.
 
 Documentation coverage will expand alongside test coverage.
 

@@ -15,6 +15,18 @@ final class HTTPKernelTests: XCTestCase {
         XCTAssertEqual(response.status, 200)
         XCTAssertEqual(String(data: response.body, encoding: .utf8), "world")
     }
+
+    /// Ensures errors thrown by the route are propagated to the caller.
+    func testKernelPropagatesErrors() async {
+        enum SampleError: Error { case boom }
+        let kernel = HTTPKernel { _ in throw SampleError.boom }
+        do {
+            _ = try await kernel.handle(HTTPRequest(method: "GET", path: "/"))
+            XCTFail("Expected error")
+        } catch {
+            XCTAssertTrue(error is SampleError)
+        }
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
