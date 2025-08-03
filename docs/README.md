@@ -15,6 +15,7 @@ As modules gain documentation, brief summaries are added here.
 - **NIOHTTPServer.init** – initializer now documents kernel and event loop group parameters.
 - **LoggingPlugin** – prints requests and responses for debugging.
 - **GatewayPlugin** – protocol for request and response middleware.
+- **GatewayPlugin.prepare** and **respond** – default implementations now explain parameters and return values.
 - **CertificateManager** – runs periodic certificate renewal scripts.
 - **SpecLoader** – parses OpenAPI specifications from JSON or YAML.
 - **ClientGenerator** and **ServerGenerator** – emit Swift client and server code from specs.
@@ -63,6 +64,7 @@ As modules gain documentation, brief summaries are added here.
 - **HTTPResponse.status**, **headers**, and **body** – properties now clarify response components.
 - **HTTPKernel.handle** – now documents error propagation from routing closures.
 - **run-tests.sh** – helper script bundling release build and coverage test steps.
+- **PublishingFrontendPlugin.respond** – documents parameters and emitted `Content-Type` header when serving files.
 
 Documentation coverage will expand alongside test coverage.
 
