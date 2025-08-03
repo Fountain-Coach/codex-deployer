@@ -20,6 +20,8 @@ public enum SpecValidator {
             throw ValidationError("title cannot be empty")
         }
 
+        /// Recursively verifies that referenced schemas exist within components.
+        /// - Parameter schema: Schema to verify for unresolved references.
         func validateSchema(_ schema: OpenAPISpec.Schema) throws {
             if let ref = schema.ref {
                 let name = ref.components(separatedBy: "/").last ?? ref
@@ -65,6 +67,7 @@ public enum SpecValidator {
                         if param.location.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                             throw ValidationError("parameter location cannot be empty in \(param.name)")
                         }
+                        // Path parameters must always be marked as required.
                         if param.location == "path" && param.required != true {
                             throw ValidationError("path parameter \(param.name) must be required")
                         }
@@ -76,6 +79,7 @@ public enum SpecValidator {
                     let segments = path.split(separator: "/")
                     for seg in segments where seg.hasPrefix("{") && seg.hasSuffix("}") {
                         let name = String(seg.dropFirst().dropLast())
+                        // Ensure each placeholder segment has a matching path parameter.
                         let match = op.parameters?.first { $0.name == name && $0.location == "path" }
                         if match == nil {
                             throw ValidationError("missing parameter \(name) for path \(path)")

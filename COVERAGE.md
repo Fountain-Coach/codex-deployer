@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31730   26577    16.24%   14257 11507    19.29%   99274 81475    17.93%
+TOTAL                                          31745   26544    16.38%   14272 11497    19.44%   99323 81315    18.13%
 ```
 
-The repository contains **99,274** executable lines, with **17,799** lines covered (approx. **17.93%** line coverage).
+The repository contains **99,323** executable lines, with **18,008** lines covered (approx. **18.13%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                           590     281    52.37%     173     50    71.10%    1362     528    61.23%
+TOTAL                                           590     273    53.73%     173     49    71.68%    1366     520    61.93%
 ```
 
-Within repository sources there are **1,362** lines, with **834** covered, giving **61.23%** line coverage.
+Within repository sources there are **1,366** lines, with **846** covered, giving **61.93%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -57,6 +57,8 @@ The new ``AsyncHTTPClientDriver`` body transmission test and ``HTTPKernel`` erro
 The new ``HTTPRequest`` initializer and ``HTTPResponse`` mutation tests raise the total test count to **96**.
 
 The new ``TodosNotEqualWithDifferentID`` and ``TodoEncodingProducesExpectedJSON`` tests bring the total test count to **98**.
+
+The new ``SpecValidator`` missing parameter, required flag, and security scheme tests raise the total test count to **101**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
