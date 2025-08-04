@@ -10,8 +10,8 @@ public struct LoggingPlugin: GatewayPlugin {
     /// - Parameter request: The request about to be routed.
     /// - Returns: The unmodified request for further processing.
     public func prepare(_ request: HTTPRequest) async throws -> HTTPRequest {
-        print("-> \(request.method) \(request.path)")
-        return request
+        print("-> \(request.method) \(request.path)") // emit request line for debugging
+        return request // forward the request unchanged
     }
 
     /// Logs the response returned by the router.
@@ -20,8 +20,8 @@ public struct LoggingPlugin: GatewayPlugin {
     ///   - request: The original request that produced the response.
     /// - Returns: The response passed through unchanged.
     public func respond(_ response: HTTPResponse, for request: HTTPRequest) async throws -> HTTPResponse {
-        print("<- \(response.status) for \(request.path)")
-        return response
+        print("<- \(response.status) for \(request.path)") // log response status
+        return response // propagate original response
     }
 }
 

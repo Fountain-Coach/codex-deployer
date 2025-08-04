@@ -5,10 +5,10 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          32029   26203    18.19%   14509 11248    22.48%   99966 80748    19.22%
+TOTAL                                          32061   26287    18.01%   14527 11401    21.52%   99999 80550    19.45%
 ```
 
-The repository contains **99,966** executable lines, with **19,218** lines covered (approx. **19.22%** line coverage).
+The repository contains **99,999** executable lines, with **19,449** lines covered (approx. **19.45%** line coverage).
 
 ### Repository source coverage
 
@@ -88,5 +88,6 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``LoadPublishingConfigFailsForInvalidYAML`` and ``LoadPublishingConfigFailsForNonNumericPort`` tests raise the total test count to **145**.
 - The new ``UpdateRecordSetsAuthHeader`` and ``DeleteRecordSetsAuthHeader`` tests raise the total test count to **147**.
 - The new ``AsyncHTTPClientDriver`` unreachable host test and metrics endpoint header and body tests raise the total test count to **150**.
+- The new ``LoggingPlugin`` header and body preservation tests raise the total test count to **152**.
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
