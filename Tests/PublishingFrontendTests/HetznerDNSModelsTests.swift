@@ -75,6 +75,25 @@ final class HetznerDNSModelsTests: XCTestCase {
         XCTAssertEqual(decoded.name, "example.com")
         XCTAssertEqual(decoded.ttl, 60)
     }
+
+    /// Round-trip encoding for `ZoneUpdateRequest` preserves updated values.
+    func testZoneUpdateRequestCodable() throws {
+        let request = ZoneUpdateRequest(name: "updated.com", ttl: 120)
+        let data = try JSONEncoder().encode(request)
+        let decoded = try JSONDecoder().decode(ZoneUpdateRequest.self, from: data)
+        XCTAssertEqual(decoded.name, "updated.com")
+        XCTAssertEqual(decoded.ttl, 120)
+    }
+
+    /// Decoding `ZonesResponse` retrieves embedded zone list and metadata.
+    func testZonesResponseDecodes() throws {
+        let json = """
+        {"meta":{"page":"1"},"zones":[{"created":"c","id":"1","is_secondary_dns":false,"legacy_dns_host":"h","legacy_ns":[],"modified":"m","name":"n","ns":[],"owner":"o","paused":false,"permission":"p","project":"pr","records_count":0,"registrar":"reg","status":"s","ttl":60,"txt_verification":{},"verified":"v"}]}
+        """.data(using: .utf8)!
+        let response = try JSONDecoder().decode(ZonesResponse.self, from: json)
+        XCTAssertEqual(response.zones.count, 1)
+        XCTAssertEqual(response.meta["page"], "1")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

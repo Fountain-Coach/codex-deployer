@@ -138,9 +138,13 @@ public struct OpenAPISpec: Codable {
 
     /// Parameter object representing path or query parameters.
     public struct Parameter: Codable {
+        /// Original parameter name as declared in the specification.
         public var name: String
+        /// Location where the parameter is supplied such as `path` or `query`.
         public var location: String
+        /// Indicates whether the parameter must be present on requests.
         public var required: Bool?
+        /// Schema describing the expected parameter data type.
         public var schema: Schema?
 
         enum CodingKeys: String, CodingKey {
