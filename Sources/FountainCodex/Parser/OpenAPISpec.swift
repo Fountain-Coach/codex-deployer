@@ -254,12 +254,12 @@ extension OpenAPISpec.Schema {
 }
 
 extension OpenAPISpec.Parameter {
-    /// Swift identifier-safe name for the parameter.
+    /// Swift identifier-safe name for the parameter, replacing hyphens with underscores.
     public var swiftName: String {
         name.replacingOccurrences(of: "-", with: "_")
     }
 
-    /// Swift type inferred from the associated schema, defaulting to `String`.
+    /// Swift type inferred from the associated schema, defaulting to `String` when unspecified.
     public var swiftType: String {
         schema?.swiftType ?? "String"
     }
