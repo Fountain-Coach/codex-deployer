@@ -201,9 +201,12 @@ extension String {
     /// remaining words capitalized before joining them together.
     var camelCased: String {
         guard !isEmpty else { return self }
+        // Break the identifier into components separated by underscores.
         let parts = split(separator: "_")
+        // Lowercase the first component and capitalize the remaining ones.
         guard let first = parts.first else { return self }
         let rest = parts.dropFirst().map { $0.capitalized }
+        // Recombine the parts into a single camelCase string.
         return ([first.lowercased()] + rest).joined()
     }
 }

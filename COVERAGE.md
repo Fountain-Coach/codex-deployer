@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31782   26533    16.52%   14306 11485    19.72%   99392 81299    18.20%
+TOTAL                                          31812   26510    16.67%   14328 11480    19.88%   99461 81210    18.35%
 ```
 
-The repository contains **99,392** executable lines, with **18,093** lines covered (approx. **18.20%** line coverage).
+The repository contains **99,461** executable lines, with **18,251** lines covered (approx. **18.35%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                           590     262    55.59%     173     40    76.88%    1366     491    64.06%
+TOTAL                                           590     260    55.93%     173     40    76.88%    1369     490    64.21%
 ```
 
-Within repository sources there are **1,366** lines, with **875** covered, giving **64.06%** line coverage.
+Within repository sources there are **1,369** lines, with **879** covered, giving **64.21%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -65,6 +65,8 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 
 - The new ``bulkUpdateRecords`` and ``updateZone`` request tests raise the total test count to **109**.
 - The new ``GatewayServer`` unknown-path and plugin-order tests raise the total test count to **111**.
+
+- The new ``CamelCasedEmptyString`` and ``CamelCasedMultipleUnderscores`` tests raise the total test count to **113**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
