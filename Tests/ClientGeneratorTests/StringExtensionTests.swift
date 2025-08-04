@@ -27,6 +27,16 @@ final class StringExtensionTests: XCTestCase {
     func testCamelCasedNumbers() {
         XCTAssertEqual("api_v2_endpoint".camelCased, "apiV2Endpoint")
     }
+
+    /// Trailing underscores are dropped during conversion.
+    func testCamelCasedTrailingUnderscore() {
+        XCTAssertEqual("value_".camelCased, "value")
+    }
+
+    /// Uppercase input is normalized with the first segment lowercased.
+    func testCamelCasedUppercaseInput() {
+        XCTAssertEqual("FOO_BAR".camelCased, "fooBar")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

@@ -199,6 +199,7 @@ extension String {
     /// Returns the string converted from `snake_case` to `camelCase`.
     /// Words are split on underscores with the first word lowercased and
     /// remaining words capitalized before joining them together.
+    /// Empty segments from leading or trailing underscores are ignored.
     var camelCased: String {
         guard !isEmpty else { return self }
         // Break the identifier into components separated by underscores.
