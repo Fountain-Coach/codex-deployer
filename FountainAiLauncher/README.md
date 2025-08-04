@@ -32,6 +32,7 @@ This launcher replaces Docker, `systemd`, and `launchd` with a single, lightweig
 | Persistence Service    | `persistence-service`  | 8005  | Typesense-backed corpus storage |
 | **LLM Gateway**        | `llm-gateway`          | 8006  | Connects to external LLMs (OpenAI, Claude) |
 | **Gateway**            | `fountain-gateway`     | 8010  | HTTPS, authentication, route proxying |
+| Publishing Frontend    | `publishing-frontend`  | 8085  | Serves static publishing assets |
 | Typesense Proxy        | `typesense-proxy`      | 8100  | Swift-native wrapper around Typesense |
 
 ---
@@ -55,6 +56,24 @@ FountainAiLauncher/
 
 ---
 
+## 🔧 Required Service Binaries
+
+The launcher expects the following executables to exist on disk. Install each service to the path shown or adjust `main.swift` if your binaries live elsewhere.
+
+| Service Name         | Expected Path                             |
+|----------------------|-------------------------------------------|
+| Awareness Service    | `/usr/local/bin/awareness-service`        |
+| Bootstrap Service    | `/usr/local/bin/bootstrap-service`        |
+| Planner Service      | `/usr/local/bin/planner-service`          |
+| Function Caller      | `/usr/local/bin/function-caller`          |
+| Persistence Service  | `/usr/local/bin/persistence-service`      |
+| LLM Gateway          | `/usr/local/bin/llm-gateway`              |
+| Gateway              | `/usr/local/bin/fountain-gateway`         |
+| Publishing Frontend  | `/usr/local/bin/publishing-frontend`      |
+| Typesense Proxy      | `/usr/local/bin/typesense-proxy`          |
+
+---
+
 ## 🛠️ Usage
 
 ```bash
@@ -71,4 +90,3 @@ fountainai-launcher
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

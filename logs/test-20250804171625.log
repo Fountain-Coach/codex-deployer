@@ -1,0 +1,1591 @@
+Building for debugging...
+[0/507] Write sources
+[32/507] Compiling _AtomicsShims.c
+[33/507] Compiling writer.c
+[34/507] Compiling reader.c
+[35/507] Compiling parser.c
+[36/507] Compiling scanner.c
+[37/507] Compiling _NumericsShims _NumericsShims.c
+[38/507] Write swift-version--4EAD98957C2213E4.txt
+[39/507] Compiling CNIOWindows shim.c
+[40/507] Compiling CNIOWindows WSAStartup.c
+[41/507] Compiling CNIOWASI CNIOWASI.c
+[42/507] Compiling emitter.c
+[43/507] Compiling api.c
+[45/540] Emitting module Logging
+[46/540] Compiling InternalCollectionsUtilities Debugging.swift
+[47/540] Compiling InternalCollectionsUtilities Descriptions.swift
+[48/540] Compiling InternalCollectionsUtilities RandomAccessCollection+Offsets.swift
+[49/540] Compiling InternalCollectionsUtilities UInt+reversed.swift
+[50/540] Compiling InternalCollectionsUtilities _UnsafeBitSet+Index.swift
+[51/540] Compiling InternalCollectionsUtilities _UnsafeBitSet+_Word.swift
+[52/542] Compiling _NIODataStructures PriorityQueue.swift
+[53/542] Compiling InternalCollectionsUtilities FixedWidthInteger+roundUpToPowerOfTwo.swift
+[54/542] Compiling InternalCollectionsUtilities Integer rank.swift
+[55/544] Emitting module _NIOBase64
+[56/544] Compiling _NIOBase64 Base64.swift
+[57/545] Compiling InternalCollectionsUtilities UnsafeBufferPointer+Extras.swift
+[58/545] Compiling InternalCollectionsUtilities UnsafeMutableBufferPointer+Extras.swift
+[59/545] Emitting module InternalCollectionsUtilities
+[62/545] Compiling InternalCollectionsUtilities UInt+first and last set bit.swift
+[63/545] Compiling _NIODataStructures _TinyArray.swift
+[64/545] Compiling InternalCollectionsUtilities _UnsafeBitSet.swift
+[65/545] Compiling InternalCollectionsUtilities _SortedCollection.swift
+[66/545] Compiling InternalCollectionsUtilities _UniqueCollection.swift
+[69/546] Emitting module RealModule
+[76/546] Compiling RealModule Real.swift
+[77/546] Compiling RealModule RealFunctions.swift
+[79/581] Compiling FountainCore Models.swift
+[80/581] Emitting module FountainCore
+[81/582] Compiling _NIODataStructures Heap.swift
+[82/582] Emitting module _NIODataStructures
+[84/583] Compiling DequeModule Deque+Equatable.swift
+[85/583] Compiling DequeModule Deque+ExpressibleByArrayLiteral.swift
+[86/583] Compiling DequeModule Deque+Extras.swift
+[87/586] Compiling Logging MetadataProvider.swift
+[89/586] Compiling Logging Logging.swift
+[90/586] Compiling Logging LogHandler.swift
+[91/586] Compiling Logging Locks.swift
+[91/587] Wrapping AST for _NIOBase64 for debugging
+[93/587] Emitting module DequeModule
+[95/587] Compiling DequeModule Deque+Hashable.swift
+[96/587] Compiling DequeModule Deque+Testing.swift
+[97/587] Compiling DequeModule Deque._Storage.swift
+[98/587] Compiling DequeModule Deque._UnsafeHandle.swift
+[99/587] Compiling DequeModule Deque.swift
+[100/587] Compiling DequeModule _DequeBuffer.swift
+[101/587] Compiling DequeModule Deque+Codable.swift
+[102/587] Compiling DequeModule Deque+Collection.swift
+[103/587] Compiling DequeModule Deque+CustomReflectable.swift
+[104/587] Compiling DequeModule Deque+Descriptions.swift
+[104/589] Wrapping AST for _NIODataStructures for debugging
+[105/589] Wrapping AST for RealModule for debugging
+[106/589] Wrapping AST for Logging for debugging
+[108/589] Compiling DequeModule _DequeBufferHeader.swift
+[109/589] Compiling DequeModule _DequeSlot.swift
+[110/589] Compiling DequeModule _UnsafeWrappedBuffer.swift
+[111/590] Wrapping AST for FountainCore for debugging
+[112/590] Wrapping AST for InternalCollectionsUtilities for debugging
+[113/590] Compiling CNIOPosix event_loop_id.c
+[114/590] Compiling CNIOLinux liburing_shims.c
+[115/590] Compiling CNIOLinux shim.c
+[116/590] Wrapping AST for DequeModule for debugging
+[117/590] Compiling CNIOLLHTTP c_nio_http.c
+[118/590] Compiling CNIOExtrasZlib empty.c
+[119/590] Compiling CNIOLLHTTP c_nio_api.c
+[120/590] Compiling CNIODarwin shim.c
+[121/590] Compiling CNIOLLHTTP c_nio_llhttp.c
+[122/590] Compiling fiat_p256_adx_sqr.S
+[123/590] Compiling fiat_p256_adx_mul.S
+[124/590] Compiling CNIOBoringSSLShims shims.c
+[125/590] Compiling fiat_curve25519_adx_square.S
+[126/590] Compiling fiat_curve25519_adx_mul.S
+[128/590] Emitting module Yams
+[129/594] Emitting module FountainCoreTests
+[129/594] Compiling tls13_server.cc
+[130/594] Compiling tls_record.cc
+[145/594] Compiling Yams Tag.swift
+[146/594] Compiling Yams YamlAnchorProviding.swift
+[147/594] Compiling Yams YamlError.swift
+[148/594] Compiling Yams YamlTagProviding.swift
+[152/594] Compiling Yams String+Yams.swift
+[152/595] Compiling tls_method.cc
+[154/595] Compiling FountainCoreTests FountainCoreTests.swift
+[156/596] Wrapping AST for FountainCoreTests for debugging
+[157/596] Wrapping AST for Yams for debugging
+[158/596] Compiling tls13_client.cc
+[159/596] Compiling tls13_enc.cc
+[160/596] Compiling tls13_both.cc
+[161/596] Compiling t1_enc.cc
+[162/596] Compiling ssl_x509.cc
+[163/596] Compiling ssl_versions.cc
+[164/596] Compiling ssl_transcript.cc
+[165/596] Compiling ssl_stat.cc
+[166/596] Compiling ssl_session.cc
+[167/596] Compiling ssl_privkey.cc
+[168/596] Compiling ssl_file.cc
+[169/596] Compiling ssl_key_share.cc
+[170/596] Compiling ssl_lib.cc
+[171/596] Compiling ssl_credential.cc
+[172/596] Compiling ssl_cipher.cc
+[173/596] Compiling ssl_buffer.cc
+[174/596] Compiling ssl_cert.cc
+[175/596] Compiling ssl_asn1.cc
+[176/596] Compiling ssl_aead_ctx.cc
+[177/596] Compiling s3_pkt.cc
+[178/596] Compiling s3_lib.cc
+[179/596] Compiling s3_both.cc
+[180/596] Compiling handshake_server.cc
+[181/596] Compiling handshake_client.cc
+[182/596] Compiling handshake.cc
+[183/596] Compiling handoff.cc
+[184/596] Compiling extensions.cc
+[185/596] Compiling encrypted_client_hello.cc
+[186/596] Compiling dtls_record.cc
+[187/596] Compiling dtls_method.cc
+[188/596] Compiling d1_srtp.cc
+[189/596] Compiling md5-x86_64-linux.S
+[190/596] Compiling bio_ssl.cc
+[191/596] Compiling d1_pkt.cc
+[192/596] Compiling md5-x86_64-apple.S
+[193/596] Compiling md5-586-linux.S
+[194/596] Compiling md5-586-apple.S
+[195/596] Compiling d1_lib.cc
+[196/596] Compiling chacha20_poly1305_x86_64-apple.S
+[197/596] Compiling chacha20_poly1305_x86_64-linux.S
+[198/596] Compiling chacha20_poly1305_armv8-win.S
+[199/596] Compiling chacha20_poly1305_armv8-linux.S
+[200/596] Compiling err_data.cc
+[201/596] Compiling chacha20_poly1305_armv8-apple.S
+[202/596] Compiling chacha-x86_64-linux.S
+[203/596] Compiling chacha-x86_64-apple.S
+[204/596] Compiling chacha-x86-linux.S
+[205/596] Compiling chacha-x86-apple.S
+[206/596] Compiling chacha-armv8-win.S
+[207/596] Compiling d1_both.cc
+[208/596] Compiling chacha-armv8-linux.S
+[209/596] Compiling chacha-armv8-apple.S
+[210/596] Compiling chacha-armv4-linux.S
+[211/596] Compiling aes128gcmsiv-x86_64-linux.S
+[212/596] Compiling aes128gcmsiv-x86_64-apple.S
+[213/596] Compiling x86_64-mont5-apple.S
+[214/596] Compiling x86_64-mont-linux.S
+[214/596] Compiling x86_64-mont5-linux.S
+[216/596] Compiling x86_64-mont-apple.S
+[217/596] Compiling x86-mont-linux.S
+[218/596] Compiling x86-mont-apple.S
+[219/596] Compiling vpaes-x86_64-apple.S
+[220/596] Compiling vpaes-x86_64-linux.S
+[221/596] Compiling vpaes-x86-linux.S
+[222/596] Compiling vpaes-x86-apple.S
+[223/596] Compiling vpaes-armv8-linux.S
+[224/596] Compiling vpaes-armv8-win.S
+[225/596] Compiling vpaes-armv8-apple.S
+[226/596] Compiling vpaes-armv7-linux.S
+[227/596] Compiling sha512-x86_64-linux.S
+[228/596] Compiling sha512-x86_64-apple.S
+[229/596] Compiling sha512-armv8-win.S
+[230/596] Compiling sha512-armv8-linux.S
+[231/596] Compiling sha512-armv8-apple.S
+[232/596] Compiling sha512-armv4-linux.S
+[233/596] Compiling sha512-586-linux.S
+[234/596] Compiling sha512-586-apple.S
+[235/596] Compiling sha256-x86_64-apple.S
+[236/596] Compiling sha256-x86_64-linux.S
+[237/596] Compiling sha256-armv8-win.S
+[238/596] Compiling sha256-armv8-linux.S
+[239/596] Compiling sha256-armv8-apple.S
+[240/596] Compiling sha256-586-linux.S
+[241/596] Compiling sha256-armv4-linux.S
+[242/596] Compiling sha256-586-apple.S
+[243/596] Compiling sha1-x86_64-apple.S
+[244/596] Compiling sha1-x86_64-linux.S
+[245/596] Compiling sha1-armv8-linux.S
+[246/596] Compiling sha1-armv8-win.S
+[247/596] Compiling sha1-armv8-apple.S
+[248/596] Compiling sha1-armv4-large-linux.S
+[249/596] Compiling sha1-586-linux.S
+[250/596] Compiling rdrand-x86_64-apple.S
+[250/596] Compiling rsaz-avx2-linux.S
+[252/596] Compiling sha1-586-apple.S
+[253/596] Compiling rsaz-avx2-apple.S
+[254/596] Compiling rdrand-x86_64-linux.S
+[255/596] Compiling p256_beeu-armv8-asm-apple.S
+[256/596] Compiling p256_beeu-x86_64-asm-apple.S
+[257/596] Compiling p256_beeu-armv8-asm-linux.S
+[258/596] Compiling p256_beeu-x86_64-asm-linux.S
+[258/596] Compiling p256_beeu-armv8-asm-win.S
+[260/596] Compiling p256-x86_64-asm-apple.S
+[260/596] Compiling p256-armv8-asm-apple.S
+[262/596] Compiling p256-armv8-asm-win.S
+[263/596] Compiling p256-armv8-asm-linux.S
+[264/596] Compiling p256-x86_64-asm-linux.S
+[265/596] Compiling ghashv8-armv8-linux.S
+[266/596] Compiling ghashv8-armv8-win.S
+[267/596] Compiling ghashv8-armv8-apple.S
+[268/596] Compiling ghashv8-armv7-linux.S
+[269/596] Compiling ghash-x86_64-linux.S
+[270/596] Compiling ghash-x86-linux.S
+[271/596] Compiling ghash-x86_64-apple.S
+[272/596] Compiling ghash-x86-apple.S
+[273/596] Compiling ghash-ssse3-x86_64-linux.S
+[274/596] Compiling ghash-ssse3-x86_64-apple.S
+[275/596] Compiling ghash-ssse3-x86-linux.S
+[276/596] Compiling ghash-ssse3-x86-apple.S
+[277/596] Compiling ghash-neon-armv8-win.S
+[278/596] Compiling ghash-neon-armv8-linux.S
+[279/596] Compiling ghash-neon-armv8-apple.S
+[280/596] Compiling ghash-armv4-linux.S
+[281/596] Compiling co-586-linux.S
+[282/596] Compiling co-586-apple.S
+[283/596] Compiling bsaes-armv7-linux.S
+[284/596] Compiling bn-armv8-win.S
+[285/596] Compiling bn-armv8-linux.S
+[286/596] Compiling bn-armv8-apple.S
+[287/596] Compiling bn-586-apple.S
+[288/596] Compiling bn-586-linux.S
+[289/596] Compiling armv8-mont-win.S
+[290/596] Compiling armv8-mont-apple.S
+[291/596] Compiling armv8-mont-linux.S
+[292/596] Compiling armv4-mont-linux.S
+[293/596] Compiling aesv8-gcm-armv8-win.S
+[294/596] Compiling aesv8-gcm-armv8-linux.S
+[295/596] Compiling aesv8-armv8-win.S
+[296/596] Compiling aesv8-gcm-armv8-apple.S
+[297/596] Compiling aesv8-armv8-linux.S
+[298/596] Compiling aesv8-armv8-apple.S
+[299/596] Compiling aesv8-armv7-linux.S
+[300/596] Compiling aesni-x86_64-linux.S
+[301/596] Compiling aesni-x86_64-apple.S
+[302/596] Compiling aesni-x86-linux.S
+[303/596] Compiling aesni-x86-apple.S
+[304/596] Compiling aesni-gcm-x86_64-linux.S
+[305/596] Compiling aesni-gcm-x86_64-apple.S
+[306/596] Compiling aes-gcm-avx2-x86_64-apple.S
+[307/596] Compiling aes-gcm-avx2-x86_64-linux.S
+[308/596] Compiling aes-gcm-avx10-x86_64-linux.S
+[309/596] Compiling aes-gcm-avx10-x86_64-apple.S
+[310/596] Compiling x_x509a.cc
+[311/596] Compiling x_val.cc
+[312/596] Compiling x_spki.cc
+[313/596] Compiling x_x509.cc
+[314/596] Compiling x_sig.cc
+[315/596] Compiling x_exten.cc
+[316/596] Compiling x_pubkey.cc
+[317/596] Compiling x_name.cc
+[318/596] Compiling x_req.cc
+[319/596] Compiling x_crl.cc
+[320/596] Compiling x_algor.cc
+[321/596] Compiling x509spki.cc
+[322/596] Compiling x_attrib.cc
+[323/596] Compiling x509rset.cc
+[324/596] Compiling x_all.cc
+[325/596] Compiling x509cset.cc
+[326/596] Compiling x509name.cc
+[327/596] Compiling x509_vpm.cc
+[328/596] Compiling x509_vfy.cc
+[329/596] Compiling x509_v3.cc
+[330/596] Compiling x509_txt.cc
+[331/596] Compiling x509_set.cc
+[332/596] Compiling x509_trs.cc
+[333/596] Compiling x509_req.cc
+[334/596] Compiling x509_obj.cc
+[335/596] Compiling x509_lu.cc
+[336/596] Compiling x509_def.cc
+[337/596] Compiling x509_ext.cc
+[338/596] Compiling x509_d2.cc
+[339/596] Compiling x509_cmp.cc
+[340/596] Compiling x509.cc
+[341/596] Compiling x509_att.cc
+[342/596] Compiling v3_skey.cc
+[343/596] Compiling v3_utl.cc
+[344/596] Compiling v3_purp.cc
+[345/596] Compiling v3_prn.cc
+[346/596] Compiling v3_pcons.cc
+[347/596] Compiling v3_pmaps.cc
+[348/596] Compiling v3_ocsp.cc
+[349/596] Compiling v3_ncons.cc
+[350/596] Compiling v3_lib.cc
+[351/596] Compiling v3_int.cc
+[352/596] Compiling v3_info.cc
+[353/596] Compiling v3_ia5.cc
+[354/596] Compiling v3_genn.cc
+[355/596] Compiling v3_extku.cc
+[356/596] Compiling v3_enum.cc
+[357/596] Compiling v3_crld.cc
+[358/596] Compiling v3_cpols.cc
+[359/596] Compiling v3_conf.cc
+[360/596] Compiling v3_bitst.cc
+[361/596] Compiling v3_bcons.cc
+[362/596] Compiling v3_akeya.cc
+[363/596] Compiling v3_alt.cc
+[364/596] Compiling v3_akey.cc
+[365/596] Compiling t_x509a.cc
+[366/596] Compiling t_x509.cc
+[367/596] Compiling t_crl.cc
+[368/596] Compiling t_req.cc
+[369/596] Compiling rsa_pss.cc
+[370/596] Compiling i2d_pr.cc
+[371/596] Compiling name_print.cc
+[372/596] Compiling policy.cc
+[373/596] Compiling by_file.cc
+[374/596] Compiling by_dir.cc
+[375/596] Compiling algorithm.cc
+[375/596] Compiling asn1_gen.cc
+[377/596] Compiling a_verify.cc
+[378/596] Compiling a_sign.cc
+[379/596] Compiling a_digest.cc
+[380/596] Compiling trust_token.cc
+[381/596] Compiling pmbtoken.cc
+[382/596] Compiling voprf.cc
+[383/596] Compiling thread_win.cc
+[384/596] Compiling thread.cc
+[385/596] Compiling thread_none.cc
+[386/596] Compiling thread_pthread.cc
+[387/596] Compiling stack.cc
+[388/596] Compiling spake2plus.cc
+[389/596] Compiling siphash.cc
+[390/596] Compiling sha512.cc
+[391/596] Compiling slhdsa.cc
+[392/596] Compiling sha256.cc
+[393/596] Compiling sha1.cc
+[394/596] Compiling rsa_extra.cc
+[395/596] Compiling rsa_print.cc
+[396/596] Compiling rsa_crypt.cc
+[397/596] Compiling rsa_asn1.cc
+[398/596] Compiling rc4.cc
+[399/596] Compiling refcount.cc
+[400/596] Compiling windows.cc
+[401/596] Compiling trusty.cc
+[402/596] Compiling urandom.cc
+[403/596] Compiling rand.cc
+[404/596] Compiling passive.cc
+[405/596] Compiling ios.cc
+[406/596] Compiling getentropy.cc
+[407/596] Compiling forkunsafe.cc
+[408/596] Compiling deterministic.cc
+[409/596] Compiling fork_detect.cc
+[410/596] Compiling poly1305_arm_asm.S
+[411/596] Compiling pool.cc
+[412/596] Compiling poly1305_arm.cc
+[413/596] Compiling poly1305_vec.cc
+[414/596] Compiling poly1305.cc
+[415/596] Compiling pkcs7.cc
+[416/596] Compiling pkcs8_x509.cc
+[417/596] Compiling pkcs8.cc
+[418/596] Compiling p5_pbev2.cc
+[419/596] Compiling pkcs7_x509.cc
+[420/596] Compiling pem_x509.cc
+[421/596] Compiling pem_xaux.cc
+[422/596] Compiling pem_pkey.cc
+[423/596] Compiling pem_pk8.cc
+[424/596] Compiling pem_oth.cc
+[425/596] Compiling pem_info.cc
+[426/596] Compiling pem_lib.cc
+[427/596] Compiling obj_xref.cc
+[428/596] Compiling pem_all.cc
+[429/596] Compiling obj.cc
+[430/596] Compiling mldsa.cc
+[431/596] Compiling mlkem.cc
+[432/596] Compiling mem.cc
+[433/596] Compiling md5.cc
+[434/596] Compiling md4.cc
+[435/596] Compiling poly_rq_mul.S
+[436/596] Compiling fips_shared_support.cc
+[437/596] Compiling lhash.cc
+[438/596] Compiling kyber.cc
+[439/596] Compiling hrss.cc
+[440/596] Compiling ex_data.cc
+[441/596] Compiling hpke.cc
+[442/596] Compiling sign.cc
+[443/596] Compiling scrypt.cc
+[444/596] Compiling pbkdf.cc
+[445/596] Compiling print.cc
+[446/596] Compiling p_x25519_asn1.cc
+[447/596] Compiling p_x25519.cc
+[448/596] Compiling p_rsa_asn1.cc
+[449/596] Compiling p_rsa.cc
+[450/596] Compiling p_hkdf.cc
+[451/596] Compiling p_ed25519_asn1.cc
+[452/596] Compiling p_ed25519.cc
+[453/596] Compiling p_ec_asn1.cc
+[454/596] Compiling p_ec.cc
+[455/596] Compiling p_dh_asn1.cc
+[456/596] Compiling p_dsa_asn1.cc
+[457/596] Compiling p_dh.cc
+[458/596] Compiling evp_ctx.cc
+[459/596] Compiling evp.cc
+[460/596] Compiling err.cc
+[461/596] Compiling evp_asn1.cc
+[462/596] Compiling engine.cc
+[463/596] Compiling bcm.cc
+[464/596] Compiling ecdh.cc
+[465/596] Compiling ecdsa_asn1.cc
+[466/596] Compiling hash_to_curve.cc
+[467/596] Compiling ec_derive.cc
+[468/596] Compiling ec_asn1.cc
+[469/596] Compiling dsa_asn1.cc
+[470/596] Compiling dsa.cc
+[471/596] Compiling params.cc
+[472/596] Compiling digest_extra.cc
+[473/596] Compiling dh_asn1.cc
+[474/596] Compiling x25519-asm-arm.S
+[475/596] Compiling des.cc
+[476/596] Compiling spake25519.cc
+[477/596] Compiling curve25519.cc
+[478/596] Compiling crypto.cc
+[479/596] Compiling cpu_intel.cc
+[480/596] Compiling cpu_arm_linux.cc
+[481/596] Compiling curve25519_64_adx.cc
+[482/596] Compiling cpu_arm_freebsd.cc
+[483/596] Compiling cpu_aarch64_win.cc
+[484/596] Compiling cpu_aarch64_openbsd.cc
+[485/596] Compiling cpu_aarch64_sysreg.cc
+[486/596] Compiling cpu_aarch64_linux.cc
+[487/596] Compiling cpu_aarch64_fuchsia.cc
+[488/596] Compiling cpu_aarch64_apple.cc
+[489/596] Compiling conf.cc
+[490/596] Compiling tls_cbc.cc
+[491/596] Compiling get_cipher.cc
+[492/596] Compiling e_tls.cc
+[493/596] Compiling e_rc4.cc
+[494/596] Compiling e_rc2.cc
+[495/596] Compiling e_null.cc
+[496/596] Compiling e_des.cc
+[497/596] Compiling e_chacha20poly1305.cc
+[498/596] Compiling e_aesgcmsiv.cc
+[499/596] Compiling derive_key.cc
+[500/596] Compiling e_aesctrhmac.cc
+[501/596] Compiling chacha.cc
+[502/596] Compiling unicode.cc
+[503/596] Compiling ber.cc
+[504/596] Compiling cbb.cc
+[505/596] Compiling cbs.cc
+[506/596] Compiling asn1_compat.cc
+[507/596] Compiling buf.cc
+[508/596] Compiling blake2.cc
+[508/596] Compiling bn_asn1.cc
+[510/596] Compiling convert.cc
+[511/596] Compiling socket_helper.cc
+[512/596] Compiling socket.cc
+[513/596] Compiling printf.cc
+[514/596] Compiling pair.cc
+[515/596] Compiling hexdump.cc
+[516/596] Compiling file.cc
+[517/596] Compiling fd.cc
+[518/596] Compiling errno.cc
+[519/596] Compiling connect.cc
+[520/596] Compiling bio_mem.cc
+[521/596] Compiling bio.cc
+[522/596] Compiling base64.cc
+[523/596] Compiling tasn_utl.cc
+[524/596] Compiling tasn_typ.cc
+[525/596] Compiling tasn_new.cc
+[526/596] Compiling tasn_fre.cc
+[527/596] Compiling tasn_enc.cc
+[528/596] Compiling posix_time.cc
+[529/596] Compiling f_string.cc
+[530/596] Compiling tasn_dec.cc
+[531/596] Compiling f_int.cc
+[532/596] Compiling asn_pack.cc
+[533/596] Compiling asn1_par.cc
+[534/596] Compiling a_utctm.cc
+[535/596] Compiling a_type.cc
+[536/596] Compiling asn1_lib.cc
+[537/596] Compiling a_time.cc
+[538/596] Compiling a_strnid.cc
+[539/596] Compiling a_octet.cc
+[540/596] Compiling a_strex.cc
+[541/596] Compiling a_object.cc
+[542/596] Compiling a_mbstr.cc
+[543/596] Compiling a_i2d_fp.cc
+[544/596] Compiling a_int.cc
+[545/596] Compiling a_gentm.cc
+[546/596] Compiling a_dup.cc
+[547/596] Compiling a_d2i_fp.cc
+[548/596] Compiling CAsyncHTTPClient CAsyncHTTPClient.c
+[548/596] Write sources
+[552/596] Compiling a_bool.cc
+[553/596] Compiling a_bitstr.cc
+[555/636] Compiling Algorithms RandomSample.swift
+[556/636] Compiling Algorithms Reductions.swift
+[557/636] Compiling Algorithms Rotate.swift
+[558/636] Compiling Algorithms Split.swift
+[559/639] Compiling Atomics UnsafeAtomicLazyReference.swift
+[560/639] Compiling Atomics IntegerOperations.swift
+[561/639] Compiling Atomics Unmanaged extensions.swift
+[562/639] Compiling Algorithms Compacted.swift
+[563/639] Compiling Algorithms Cycle.swift
+[564/639] Compiling Algorithms Joined.swift
+[565/639] Compiling Algorithms Keyed.swift
+[566/639] Compiling Algorithms AdjacentPairs.swift
+[567/639] Compiling Algorithms Chain.swift
+[568/639] Compiling Algorithms Chunked.swift
+[569/639] Compiling Algorithms Combinations.swift
+[570/639] Compiling Algorithms Product.swift
+[581/644] Emitting module Atomics
+[582/644] Compiling Algorithms MinMax.swift
+[583/644] Compiling Algorithms Partition.swift
+[584/644] Compiling Algorithms Permutations.swift
+[589/645] Compiling Algorithms Grouped.swift
+[590/645] Compiling Algorithms Indexed.swift
+[591/645] Compiling Algorithms Intersperse.swift
+[597/645] Compiling Algorithms Stride.swift
+[598/645] Compiling Algorithms Suffix.swift
+[599/645] Compiling Algorithms Trim.swift
+[600/645] Compiling Algorithms Unique.swift
+[601/645] Compiling Algorithms Windows.swift
+[602/645] Compiling c-atomics.c
+[603/645] Wrapping AST for Atomics for debugging
+[604/645] Compiling c-nioatomics.c
+[606/645] Emitting module Algorithms
+[607/651] Wrapping AST for Algorithms for debugging
+[609/651] Compiling NIOConcurrencyHelpers atomics.swift
+[610/651] Compiling NIOConcurrencyHelpers NIOLockedValueBox.swift
+[611/651] Compiling NIOConcurrencyHelpers NIOLock.swift
+[612/651] Emitting module NIOConcurrencyHelpers
+[613/651] Compiling NIOConcurrencyHelpers NIOAtomic.swift
+[614/652] Compiling NIOConcurrencyHelpers lock.swift
+[615/653] Wrapping AST for NIOConcurrencyHelpers for debugging
+[617/709] Compiling NIOCore Codec.swift
+[618/709] Compiling NIOCore ConvenienceOptionSupport.swift
+[619/709] Compiling NIOCore DeadChannel.swift
+[620/709] Compiling NIOCore DispatchQueue+WithFuture.swift
+[621/709] Compiling NIOCore EventLoop+Deprecated.swift
+[622/709] Compiling NIOCore EventLoop+SerialExecutor.swift
+[623/709] Compiling NIOCore EventLoop.swift
+[624/709] Compiling NIOCore EventLoopFuture+AssumeIsolated.swift
+[625/709] Compiling NIOCore EventLoopFuture+Deprecated.swift
+[626/709] Compiling NIOCore EventLoopFuture+WithEventLoop.swift
+[627/709] Compiling NIOCore EventLoopFuture.swift
+[628/709] Compiling NIOCore FileDescriptor.swift
+[629/709] Compiling NIOCore FileHandle.swift
+[630/709] Compiling NIOCore FileRegion.swift
+[631/709] Compiling NIOCore GlobalSingletons.swift
+[632/709] Compiling NIOCore IO.swift
+[633/709] Compiling NIOCore IOData.swift
+[634/709] Compiling NIOCore IPProtocol.swift
+[635/709] Compiling NIOCore IntegerBitPacking.swift
+[636/709] Compiling NIOCore IntegerTypes.swift
+[637/709] Compiling NIOCore Interfaces.swift
+[638/709] Compiling NIOCore Linux.swift
+[639/709] Compiling NIOCore MarkedCircularBuffer.swift
+[640/709] Compiling NIOCore MulticastChannel.swift
+[641/709] Compiling NIOCore NIOAny.swift
+[642/709] Compiling NIOCore NIOCloseOnErrorHandler.swift
+[643/709] Compiling NIOCore NIOCoreSendableMetatype.swift
+[644/722] Compiling NIOCore AddressedEnvelope.swift
+[645/722] Compiling NIOCore AsyncAwaitSupport.swift
+[646/722] Compiling NIOCore AsyncChannel.swift
+[647/722] Compiling NIOCore AsyncChannelHandler.swift
+[648/722] Compiling NIOCore AsyncChannelInboundStream.swift
+[649/722] Compiling NIOCore AsyncChannelOutboundWriter.swift
+[650/722] Compiling NIOCore NIOAsyncSequenceProducer.swift
+[651/722] Compiling NIOCore NIOAsyncSequenceProducerStrategies.swift
+[652/722] Compiling NIOCore NIOAsyncWriter.swift
+[653/722] Compiling NIOCore NIOThrowingAsyncSequenceProducer.swift
+[654/722] Compiling NIOCore BSDSocketAPI.swift
+[655/722] Compiling NIOCore ByteBuffer-aux.swift
+[656/722] Compiling NIOCore ByteBuffer-binaryEncodedLengthPrefix.swift
+[657/722] Compiling NIOCore ByteBuffer-conversions.swift
+[658/722] Compiling NIOCore NIOLoopBound.swift
+[659/722] Compiling NIOCore NIOPooledRecvBufferAllocator.swift
+[660/722] Compiling NIOCore NIOScheduledCallback.swift
+[661/722] Compiling NIOCore NIOSendable.swift
+[662/722] Compiling NIOCore RecvByteBufferAllocator.swift
+[663/722] Compiling NIOCore SingleStepByteToMessageDecoder.swift
+[664/722] Compiling NIOCore SocketAddresses.swift
+[665/722] Compiling NIOCore SocketOptionProvider.swift
+[666/722] Compiling NIOCore SystemCallHelpers.swift
+[667/722] Compiling NIOCore TimeAmount+Duration.swift
+[668/722] Compiling NIOCore TypeAssistedChannelHandler.swift
+[669/722] Compiling NIOCore UniversalBootstrapSupport.swift
+[670/722] Compiling NIOCore Utilities.swift
+[671/722] Emitting module NIOCore
+[672/722] Compiling NIOCore ByteBuffer-core.swift
+[673/722] Compiling NIOCore ByteBuffer-hex.swift
+[674/722] Compiling NIOCore ByteBuffer-int.swift
+[675/722] Compiling NIOCore ByteBuffer-lengthPrefix.swift
+[676/722] Compiling NIOCore ByteBuffer-multi-int.swift
+[677/722] Compiling NIOCore ByteBuffer-quicBinaryEncodingStrategy.swift
+[678/722] Compiling NIOCore ByteBuffer-views.swift
+[679/722] Compiling NIOCore Channel.swift
+[680/722] Compiling NIOCore ChannelHandler.swift
+[681/722] Compiling NIOCore ChannelHandlers.swift
+[682/722] Compiling NIOCore ChannelInvoker.swift
+[683/722] Compiling NIOCore ChannelOption.swift
+[684/722] Compiling NIOCore ChannelPipeline.swift
+[685/722] Compiling NIOCore CircularBuffer.swift
+[686/727] Wrapping AST for NIOCore for debugging
+[688/771] Compiling NIOEmbedded Embedded.swift
+[689/771] Compiling NIOEmbedded AsyncTestingChannel.swift
+[690/771] Emitting module NIOEmbedded
+[691/771] Compiling NIOEmbedded AsyncTestingEventLoop.swift
+[692/772] Wrapping AST for NIOEmbedded for debugging
+[694/772] Compiling NIOPosix Selectable.swift
+[695/772] Compiling NIOPosix SelectableChannel.swift
+[696/772] Compiling NIOPosix SelectableEventLoop.swift
+[697/772] Compiling NIOPosix SelectorEpoll.swift
+[698/772] Compiling NIOPosix SelectorGeneric.swift
+[699/772] Compiling NIOPosix SelectorKqueue.swift
+[700/772] Compiling NIOPosix SelectorUring.swift
+[701/772] Compiling NIOPosix ServerSocket.swift
+[702/772] Compiling NIOPosix Socket.swift
+[703/772] Compiling NIOPosix SocketChannel.swift
+[704/782] Compiling NIOPosix NIOThreadPool.swift
+[705/782] Compiling NIOPosix NonBlockingFileIO.swift
+[706/782] Compiling NIOPosix PendingDatagramWritesManager.swift
+[707/782] Compiling NIOPosix PendingWritesManager.swift
+[708/782] Compiling NIOPosix PipeChannel.swift
+[709/782] Compiling NIOPosix PipePair.swift
+[710/782] Compiling NIOPosix Pool.swift
+[711/782] Compiling NIOPosix PosixSingletons+ConcurrencyTakeOver.swift
+[712/782] Compiling NIOPosix PosixSingletons.swift
+[713/782] Compiling NIOPosix RawSocketBootstrap.swift
+[714/782] Compiling NIOPosix Resolver.swift
+[715/782] Emitting module NIOPosix
+[716/782] Compiling NIOPosix FileDescriptor.swift
+[717/782] Compiling NIOPosix GetaddrinfoResolver.swift
+[718/782] Compiling NIOPosix HappyEyeballs.swift
+[719/782] Compiling NIOPosix IO.swift
+[720/782] Compiling NIOPosix IntegerBitPacking.swift
+[721/782] Compiling NIOPosix IntegerTypes.swift
+[722/782] Compiling NIOPosix Linux.swift
+[723/782] Compiling NIOPosix LinuxCPUSet.swift
+[724/782] Compiling NIOPosix LinuxUring.swift
+[725/782] Compiling NIOPosix MultiThreadedEventLoopGroup.swift
+[726/782] Compiling NIOPosix NIOPosixSendableMetatype.swift
+[727/782] Compiling NIOPosix BSDSocketAPICommon.swift
+[728/782] Compiling NIOPosix BSDSocketAPIPosix.swift
+[729/782] Compiling NIOPosix BSDSocketAPIWindows.swift
+[730/782] Compiling NIOPosix BaseSocket.swift
+[731/782] Compiling NIOPosix BaseSocketChannel+SocketOptionProvider.swift
+[732/782] Compiling NIOPosix BaseSocketChannel.swift
+[733/782] Compiling NIOPosix BaseStreamSocketChannel.swift
+[734/782] Compiling NIOPosix Bootstrap.swift
+[735/782] Compiling NIOPosix ControlMessage.swift
+[736/782] Compiling NIOPosix DatagramVectorReadManager.swift
+[737/782] Compiling NIOPosix Errors+Any.swift
+[738/782] Compiling NIOPosix SocketProtocols.swift
+[739/782] Compiling NIOPosix StructuredConcurrencyHelpers.swift
+[740/782] Compiling NIOPosix System.swift
+[741/782] Compiling NIOPosix Thread.swift
+[742/782] Compiling NIOPosix ThreadPosix.swift
+[743/782] Compiling NIOPosix ThreadWindows.swift
+[744/782] Compiling NIOPosix UnsafeTransfer.swift
+[745/782] Compiling NIOPosix Utilities.swift
+[746/782] Compiling NIOPosix VsockAddress.swift
+[747/782] Compiling NIOPosix VsockChannelEvents.swift
+[748/783] Wrapping AST for NIOPosix for debugging
+[750/785] Compiling NIO Exports.swift
+[751/785] Emitting module NIO
+[752/786] Wrapping AST for NIO for debugging
+[754/822] Emitting module NIOSOCKS
+[755/824] Emitting module NIOTLS
+[756/825] Compiling NIOTLS SNIHandler.swift
+[757/825] Compiling NIOTLS TLSEvents.swift
+[758/825] Compiling NIOTLS ProtocolNegotiationHandlerStateMachine.swift
+[759/825] Compiling NIOTLS ApplicationProtocolNegotiationHandler.swift
+[760/825] Compiling NIOTLS NIOTypedApplicationProtocolNegotiationHandler.swift
+[761/825] Compiling NIOSOCKS ClientStateMachine.swift
+[762/825] Compiling NIOSOCKS ServerStateMachine.swift
+[763/825] Emitting module NIOHTTP1
+[764/829] Compiling NIOFoundationCompat Codable+ByteBuffer.swift
+[765/829] Compiling NIOFoundationCompat WaitSpinningRunLoop.swift
+[766/829] Compiling NIOFoundationCompat JSONSerialization+ByteBuffer.swift
+[768/829] Compiling NIOHTTP1 HTTPServerProtocolErrorHandler.swift
+[769/829] Compiling NIOHTTP1 HTTPServerUpgradeHandler.swift
+[770/829] Compiling NIOHTTP1 HTTPTypedPipelineSetup.swift
+[771/829] Compiling NIOHTTP1 HTTPTypes.swift
+[772/829] Compiling NIOHTTP1 NIOHTTPClientUpgradeHandler.swift
+[773/829] Compiling NIOFoundationCompat ByteBuffer-foundation.swift
+[774/829] Emitting module NIOFoundationCompat
+[774/857] Wrapping AST for NIOTLS for debugging
+[776/857] Compiling NIOSSL AndroidCABundle.swift
+[777/857] Compiling NIOSSL ByteBufferBIO.swift
+[778/857] Compiling NIOSSL CustomPrivateKey.swift
+[782/857] Compiling NIOSSL IdentityVerification.swift
+[783/857] Compiling NIOSSL NIOSSLServerHandler.swift
+[784/857] Compiling NIOSSL ObjectIdentifier.swift
+[786/878] Wrapping AST for NIOFoundationCompat for debugging
+[788/878] Compiling NIOTransportServices NIOTSNetworkEvents.swift
+[789/878] Compiling NIOTransportServices NIOTSSingletons.swift
+[790/878] Compiling NIOTransportServices SocketAddress+NWEndpoint.swift
+[791/878] Compiling NIOTransportServices StateManagedChannel.swift
+[792/878] Compiling NIOTransportServices AcceptHandler.swift
+[793/878] Compiling NIOTransportServices NIOTSDatagramConnectionBootstrap.swift
+[794/878] Compiling NIOTransportServices NIOTSDatagramConnectionChannel.swift
+[795/878] Compiling NIOTransportServices NIOTSDatagramListenerBootstrap.swift
+[796/878] Compiling NIOTransportServices NIOTSDatagramListenerChannel.swift
+[797/882] Compiling NIOTransportServices NIOTSErrors.swift
+[798/882] Compiling NIOTransportServices NIOTSEventLoop.swift
+[799/882] Compiling NIOTransportServices NIOTSEventLoopGroup.swift
+[800/882] Compiling NIOTransportServices NIOTSListenerBootstrap.swift
+[801/882] Compiling NIOTransportServices NIOTSListenerChannel.swift
+[801/882] Wrapping AST for NIOSOCKS for debugging
+[806/882] Compiling NIOTransportServices StateManagedListenerChannel.swift
+[807/882] Compiling NIOTransportServices StateManagedNWConnectionChannel.swift
+[808/882] Compiling NIOTransportServices TCPOptions+SocketChannelOption.swift
+[809/882] Compiling NIOTransportServices UDPOptions+SocketChannelOption.swift
+[810/882] Emitting module NIOTransportServices
+[815/882] Compiling NIOTransportServices NIOFilterEmptyWritesHandler.swift
+[816/882] Compiling NIOTransportServices NIOTSBootstraps.swift
+[817/882] Compiling NIOTransportServices NIOTSChannelOptions.swift
+[818/882] Compiling NIOTransportServices NIOTSConnectionBootstrap.swift
+[819/882] Compiling NIOTransportServices NIOTSConnectionChannel.swift
+[826/884] Wrapping AST for NIOTransportServices for debugging
+[828/884] Wrapping AST for NIOHTTP1 for debugging
+[836/906] Compiling NIOHTTPCompression HTTPRequestCompressor.swift
+[837/906] Compiling NIOHTTPCompression HTTPRequestDecompressor.swift
+[838/907] Compiling NIOHPACK DynamicHeaderTable.swift
+[839/907] Compiling NIOHPACK HPACKDecoder.swift
+[840/907] Compiling NIOHPACK HPACKEncoder.swift
+[841/907] Compiling NIOHPACK HeaderTables.swift
+[842/907] Compiling NIOHPACK HuffmanCoding.swift
+[843/907] Compiling NIOHPACK HPACKErrors.swift
+[844/907] Compiling NIOHPACK HPACKHeader.swift
+[845/907] Emitting module NIOSSL
+[846/907] Compiling NIOHPACK HuffmanTables.swift
+[847/907] Compiling NIOHPACK IndexedHeaderTable.swift
+[853/907] Emitting module NIOHTTPCompression
+[854/907] Compiling NIOHTTPCompression HTTPResponseDecompressor.swift
+[857/907] Emitting module NIOHPACK
+[858/909] Compiling NIOHTTPCompression HTTPResponseCompressor.swift
+[872/910] Compiling NIOSSL SSLErrors.swift
+[873/910] Compiling NIOSSL SSLInit.swift
+[874/910] Compiling NIOSSL SSLPKCS12Bundle.swift
+[874/910] Wrapping AST for NIOHTTPCompression for debugging
+[876/910] Compiling NIOHPACK IntegerCoding.swift
+[877/910] Compiling NIOHPACK StaticHeaderTable.swift
+[878/911] Wrapping AST for NIOHPACK for debugging
+[880/911] Compiling NIOSSL RNG.swift
+[881/911] Compiling NIOSSL SafeCompare.swift
+[882/911] Compiling NIOSSL Zeroization.swift
+[883/911] Compiling NIOSSL TLSConfiguration.swift
+[884/911] Compiling NIOSSL UniversalBootstrapSupport.swift
+[885/911] Compiling NIOSSL UnsafeKeyAndChainTarget.swift
+[886/967] Wrapping AST for NIOSSL for debugging
+[888/967] Compiling NIOHTTP2 SendingRstStreamState.swift
+[889/967] Compiling NIOHTTP2 SendingWindowUpdateState.swift
+[890/967] Compiling NIOHTTP2 HTTP2SettingsState.swift
+[891/967] Compiling NIOHTTP2 HasExtendedConnectSettings.swift
+[892/967] Compiling NIOHTTP2 HasFlowControlWindows.swift
+[893/967] Compiling NIOHTTP2 HasLocalSettings.swift
+[894/967] Compiling NIOHTTP2 HasRemoteSettings.swift
+[895/967] Compiling NIOHTTP2 LocallyQuiescingState.swift
+[896/967] Compiling NIOHTTP2 QuiescingState.swift
+[897/967] Compiling NIOHTTP2 RemotelyQuiescingState.swift
+[898/967] Compiling NIOHTTP2 SendAndReceiveGoawayState.swift
+[899/967] Compiling NIOHTTP2 StateMachineResult.swift
+[900/967] Compiling NIOHTTP2 ContentLengthVerifier.swift
+[901/967] Compiling NIOHTTP2 DOSHeuristics.swift
+[902/980] Emitting module NIOHTTP2
+[903/980] Compiling NIOHTTP2 ConnectionStateMachine.swift
+[904/980] Compiling NIOHTTP2 ConnectionStreamsState.swift
+[905/980] Compiling NIOHTTP2 MayReceiveFrames.swift
+[906/980] Compiling NIOHTTP2 ReceivingDataState.swift
+[907/980] Compiling NIOHTTP2 ReceivingGoAwayState.swift
+[908/980] Compiling NIOHTTP2 ReceivingHeadersState.swift
+[909/980] Compiling NIOHTTP2 ReceivingPushPromiseState.swift
+[910/980] Compiling NIOHTTP2 ReceivingRstStreamState.swift
+[911/980] Compiling NIOHTTP2 ReceivingWindowUpdateState.swift
+[912/980] Compiling NIOHTTP2 MaySendFrames.swift
+[913/980] Compiling NIOHTTP2 SendingDataState.swift
+[914/980] Compiling NIOHTTP2 SendingGoawayState.swift
+[915/980] Compiling NIOHTTP2 SendingHeadersState.swift
+[916/980] Compiling NIOHTTP2 SendingPushPromiseState.swift
+[917/980] Compiling NIOHTTP2 HTTP2StreamMultiplexer.swift
+[918/980] Compiling NIOHTTP2 HTTP2ToHTTP1Codec.swift
+[919/980] Compiling NIOHTTP2 HTTP2UserEvents.swift
+[920/980] Compiling NIOHTTP2 InboundEventBuffer.swift
+[921/980] Compiling NIOHTTP2 InboundWindowManager.swift
+[922/980] Compiling NIOHTTP2 MultiplexerAbstractChannel.swift
+[923/980] Compiling NIOHTTP2 NIOHTTP2FrameDelegate.swift
+[924/980] Compiling NIOHTTP2 StreamChannelFlowController.swift
+[925/980] Compiling NIOHTTP2 StreamChannelList.swift
+[926/980] Compiling NIOHTTP2 StreamMap.swift
+[927/980] Compiling NIOHTTP2 StreamStateMachine.swift
+[928/980] Compiling NIOHTTP2 UnsafeTransfer.swift
+[929/980] Compiling NIOHTTP2 WatermarkedFlowController.swift
+[930/980] Compiling NIOHTTP2 HTTP2ErrorCode.swift
+[931/980] Compiling NIOHTTP2 HTTP2FlowControlWindow.swift
+[932/980] Compiling NIOHTTP2 HTTP2Frame.swift
+[933/980] Compiling NIOHTTP2 HTTP2FrameEncoder.swift
+[934/980] Compiling NIOHTTP2 HTTP2FrameParser.swift
+[935/980] Compiling NIOHTTP2 HTTP2PingData.swift
+[936/980] Compiling NIOHTTP2 HTTP2PipelineHelpers.swift
+[937/980] Compiling NIOHTTP2 HTTP2Settings.swift
+[938/980] Compiling NIOHTTP2 HTTP2Stream.swift
+[939/980] Compiling NIOHTTP2 HTTP2StreamChannel+OutboundStreamMultiplexer.swift
+[940/980] Compiling NIOHTTP2 HTTP2StreamChannel.swift
+[941/980] Compiling NIOHTTP2 HTTP2StreamDelegate.swift
+[942/980] Compiling NIOHTTP2 HTTP2StreamID.swift
+[943/980] Compiling NIOHTTP2 Error+Any.swift
+[944/980] Compiling NIOHTTP2 ConcurrentStreamBuffer.swift
+[945/980] Compiling NIOHTTP2 ControlFrameBuffer.swift
+[946/980] Compiling NIOHTTP2 OutboundFlowControlBuffer.swift
+[947/980] Compiling NIOHTTP2 OutboundFrameBuffer.swift
+[948/980] Compiling NIOHTTP2 GlitchesMonitor.swift
+[949/980] Compiling NIOHTTP2 HPACKHeaders+Validation.swift
+[950/980] Compiling NIOHTTP2 HTTP2ChannelHandler+InboundStreamMultiplexer.swift
+[951/980] Compiling NIOHTTP2 HTTP2ChannelHandler+InlineStreamMultiplexer.swift
+[952/980] Compiling NIOHTTP2 HTTP2ChannelHandler.swift
+[953/980] Compiling NIOHTTP2 HTTP2CommonInboundStreamMultiplexer.swift
+[954/980] Compiling NIOHTTP2 HTTP2ConnectionStateChange.swift
+[955/980] Compiling NIOHTTP2 HTTP2Error.swift
+[956/981] Wrapping AST for NIOHTTP2 for debugging
+[958/1036] Emitting module AsyncHTTPClient
+[959/1049] Compiling AsyncHTTPClient AnyAsyncSequence.swift
+[960/1049] Compiling AsyncHTTPClient AnyAsyncSequenceProucerDelete.swift
+[961/1049] Compiling AsyncHTTPClient AsyncLazySequence.swift
+[962/1049] Compiling AsyncHTTPClient HTTPClient+execute.swift
+[963/1049] Compiling AsyncHTTPClient HTTPClient+shutdown.swift
+[964/1049] Compiling AsyncHTTPClient HTTPClientRequest+Prepared.swift
+[965/1049] Compiling AsyncHTTPClient HTTPClientRequest+auth.swift
+[966/1049] Compiling AsyncHTTPClient HTTPClientRequest.swift
+[967/1049] Compiling AsyncHTTPClient HTTPClientResponse.swift
+[968/1049] Compiling AsyncHTTPClient SingleIteratorPrecondition.swift
+[969/1049] Compiling AsyncHTTPClient Transaction+StateMachine.swift
+[970/1049] Compiling AsyncHTTPClient Transaction.swift
+[971/1049] Compiling AsyncHTTPClient Base64.swift
+[972/1049] Compiling AsyncHTTPClient BasicAuth.swift
+[973/1049] Compiling AsyncHTTPClient NWErrorHandler.swift
+[974/1049] Compiling AsyncHTTPClient NWWaitingHandler.swift
+[975/1049] Compiling AsyncHTTPClient TLSConfiguration.swift
+[976/1049] Compiling AsyncHTTPClient RedirectState.swift
+[977/1049] Compiling AsyncHTTPClient RequestBag+StateMachine.swift
+[978/1049] Compiling AsyncHTTPClient RequestBag.swift
+[979/1049] Compiling AsyncHTTPClient RequestValidation.swift
+[980/1049] Compiling AsyncHTTPClient SSLContextCache.swift
+[981/1049] Compiling AsyncHTTPClient Scheme.swift
+[982/1049] Compiling AsyncHTTPClient Singleton.swift
+[983/1049] Compiling AsyncHTTPClient StringConvertibleInstances.swift
+[984/1049] Compiling AsyncHTTPClient StructuredConcurrencyHelpers.swift
+[985/1049] Compiling AsyncHTTPClient Utils.swift
+[986/1049] Compiling AsyncHTTPClient HTTPConnectionPool+Manager.swift
+[987/1049] Compiling AsyncHTTPClient HTTPConnectionPool.swift
+[988/1049] Compiling AsyncHTTPClient HTTPExecutableRequest.swift
+[989/1049] Compiling AsyncHTTPClient HTTPRequestStateMachine+Demand.swift
+[990/1049] Compiling AsyncHTTPClient HTTPRequestStateMachine.swift
+[991/1049] Compiling AsyncHTTPClient RequestBodyLength.swift
+[992/1049] Compiling AsyncHTTPClient RequestFramingMetadata.swift
+[993/1049] Compiling AsyncHTTPClient RequestOptions.swift
+[994/1049] Compiling AsyncHTTPClient HTTPConnectionPool+Backoff.swift
+[995/1049] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP1Connections.swift
+[996/1049] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP1StateMachine.swift
+[997/1049] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP2Connections.swift
+[998/1049] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP2StateMachine.swift
+[999/1049] Compiling AsyncHTTPClient HTTPConnectionPool+RequestQueue.swift
+[1000/1049] Compiling AsyncHTTPClient HTTPConnectionPool+StateMachine.swift
+[1001/1049] Compiling AsyncHTTPClient ConnectionTarget.swift
+[1002/1049] Compiling AsyncHTTPClient DeconstructedURL.swift
+[1003/1049] Compiling AsyncHTTPClient FileDownloadDelegate.swift
+[1004/1049] Compiling AsyncHTTPClient FoundationExtensions.swift
+[1005/1049] Compiling AsyncHTTPClient HTTPClient+HTTPCookie.swift
+[1006/1049] Compiling AsyncHTTPClient HTTPClient+Proxy.swift
+[1007/1049] Compiling AsyncHTTPClient HTTPClient+StructuredConcurrency.swift
+[1008/1049] Compiling AsyncHTTPClient HTTPClient.swift
+[1009/1049] Compiling AsyncHTTPClient HTTPHandler.swift
+[1010/1049] Compiling AsyncHTTPClient LRUCache.swift
+[1011/1049] Compiling AsyncHTTPClient NIOLoopBound+Execute.swift
+[1012/1049] Compiling AsyncHTTPClient BestEffortHashableTLSConfiguration.swift
+[1013/1049] Compiling AsyncHTTPClient Configuration+BrowserLike.swift
+[1014/1049] Compiling AsyncHTTPClient ConnectionPool.swift
+[1015/1049] Compiling AsyncHTTPClient HTTP1ProxyConnectHandler.swift
+[1016/1049] Compiling AsyncHTTPClient SOCKSEventsHandler.swift
+[1017/1049] Compiling AsyncHTTPClient TLSEventsHandler.swift
+[1018/1049] Compiling AsyncHTTPClient HTTP1ClientChannelHandler.swift
+[1019/1049] Compiling AsyncHTTPClient HTTP1Connection.swift
+[1020/1049] Compiling AsyncHTTPClient HTTP1ConnectionStateMachine.swift
+[1021/1049] Compiling AsyncHTTPClient HTTP2ClientRequestHandler.swift
+[1022/1049] Compiling AsyncHTTPClient HTTP2Connection.swift
+[1023/1049] Compiling AsyncHTTPClient HTTP2IdleHandler.swift
+[1024/1049] Compiling AsyncHTTPClient HTTPConnectionEvent.swift
+[1025/1049] Compiling AsyncHTTPClient HTTPConnectionPool+Factory.swift
+[1026/1050] Wrapping AST for AsyncHTTPClient for debugging
+[1028/1063] Emitting module FountainCodex
+[1029/1066] Compiling FountainCodex ClientGenerator.swift
+[1030/1066] Compiling FountainCodex GeneratorMain.swift
+[1031/1066] Compiling FountainCodex AsyncHTTPClientDriver.swift
+[1032/1066] Compiling FountainCodex HTTPResponse.swift
+[1033/1066] Compiling FountainCodex NIOHTTPServer.swift
+[1034/1066] Compiling FountainCodex URLSessionHTTPClient.swift
+[1035/1066] Compiling FountainCodex HTTPClientProtocol.swift
+[1036/1066] Compiling FountainCodex HTTPKernel.swift
+[1037/1066] Compiling FountainCodex HTTPRequest.swift
+[1038/1066] Compiling FountainCodex SpecValidator.swift
+[1039/1066] Compiling FountainCodex ServerGenerator.swift
+[1040/1066] Compiling FountainCodex agent.swift
+[1041/1066] Compiling FountainCodex ModelEmitter.swift
+[1042/1066] Compiling FountainCodex OpenAPISpec.swift
+[1043/1066] Compiling FountainCodex SpecLoader.swift
+[1044/1067] Wrapping AST for FountainCodex for debugging
+[1046/1097] Emitting module clientgen_service
+[1047/1097] Compiling clientgen_service main.swift
+[1048/1097] Emitting module ClientGeneratorTests
+[1049/1098] Compiling PublishingFrontend getZone.swift
+[1050/1098] Compiling PublishingFrontend importZoneFile.swift
+[1051/1099] Compiling ClientGeneratorTests SpecValidatorTests.swift
+[1052/1099] Compiling ClientGeneratorTests SpecLoaderTests.swift
+/workspace/codex-deployer/Tests/ClientGeneratorTests/SpecLoaderTests.swift:28:29: warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+26 |     func testLoadThrowsForEmptyFile() {
+27 |         let url = FileManager.default.temporaryDirectory.appendingPathComponent("empty.yml")
+28 |         FileManager.default.createFile(atPath: url.path, contents: Data())
+   |                             `- warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+29 |         XCTAssertThrowsError(try SpecLoader.load(from: url))
+30 |     }
+
+/workspace/codex-deployer/Tests/ClientGeneratorTests/SpecLoaderTests.swift:37:29: warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+35 |         let bytes: [UInt8] = [0xFF]
+36 |         let data = Data(bytes)
+37 |         FileManager.default.createFile(atPath: url.path, contents: data)
+   |                             `- warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+38 |         XCTAssertThrowsError(try SpecLoader.load(from: url))
+39 |     }
+[1053/1099] Compiling PublishingFrontend getPrimaryServer.swift
+/workspace/codex-deployer/Tests/ClientGeneratorTests/ClientGeneratorTests.swift:52:28: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+50 |         try ClientGenerator.emitClient(from: spec, to: outDir)
+51 |         let requestFile = outDir.appendingPathComponent("Requests/GetZone.swift")
+52 |         let contents = try String(contentsOf: requestFile)
+   |                            `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+53 |         XCTAssertTrue(contents.contains("detail"))
+54 |         XCTAssertTrue(contents.contains("query.append(\"detail"))
+[1054/1099] Compiling PublishingFrontend getRecord.swift
+/workspace/codex-deployer/Tests/ClientGeneratorTests/ClientGeneratorTests.swift:52:28: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+50 |         try ClientGenerator.emitClient(from: spec, to: outDir)
+51 |         let requestFile = outDir.appendingPathComponent("Requests/GetZone.swift")
+52 |         let contents = try String(contentsOf: requestFile)
+   |                            `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+53 |         XCTAssertTrue(contents.contains("detail"))
+54 |         XCTAssertTrue(contents.contains("query.append(\"detail"))
+[1055/1099] Compiling ClientGeneratorTests StringExtensionTests.swift
+[1056/1099] Compiling PublishingFrontend createPrimaryServer.swift
+[1057/1099] Compiling PublishingFrontend createZone.swift
+[1058/1099] Compiling PublishingFrontend deletePrimaryServer.swift
+[1059/1099] Compiling PublishingFrontend deleteZone.swift
+[1060/1099] Compiling PublishingFrontend exportZoneFile.swift
+[1061/1099] Compiling PublishingFrontend DeleteRecord.swift
+[1062/1099] Compiling PublishingFrontend ListZones.swift
+[1063/1099] Compiling PublishingFrontend UpdateRecord.swift
+[1064/1099] Compiling PublishingFrontend bulkCreateRecords.swift
+[1065/1099] Compiling PublishingFrontend bulkUpdateRecords.swift
+[1067/1105] Wrapping AST for clientgen-service for debugging
+[1068/1105] Write Objects.LinkFileList
+[1069/1105] Wrapping AST for ClientGeneratorTests for debugging
+[1071/1105] Compiling PublishingFrontend listRecords.swift
+[1072/1105] Compiling PublishingFrontend updatePrimaryServer.swift
+[1073/1105] Compiling PublishingFrontend updateZone.swift
+[1074/1105] Compiling PublishingFrontend validateZoneFile.swift
+[1075/1105] Compiling PublishingFrontend PublishingFrontend.swift
+[1080/1105] Compiling PublishingFrontend listPrimaryServers.swift
+[1081/1105] Emitting module PublishingFrontend
+[1082/1105] Compiling PublishingFrontend DNSProvider.swift
+[1083/1105] Compiling PublishingFrontend APIClient.swift
+[1084/1105] Compiling PublishingFrontend APIRequest.swift
+[1085/1105] Compiling PublishingFrontend Models.swift
+[1086/1105] Compiling PublishingFrontend CreateRecord.swift
+[1088/1131] Compiling PublishingFrontendTests HetznerDNSModelsTests.swift
+[1089/1131] Compiling publishing_frontend main.swift
+[1090/1131] Emitting module publishing_frontend
+[1091/1131] Emitting module PublishingFrontendTests
+[1092/1131] Compiling gateway_server LoggingPlugin.swift
+[1093/1131] Compiling gateway_server PublishingFrontendPlugin.swift
+[1094/1133] Compiling PublishingFrontendTests Route53ClientTests.swift
+[1096/1133] Compiling DNSTests DeletePrimaryServerRequestTests.swift
+[1097/1133] Compiling DNSTests DeleteRecordRequestTests.swift
+[1098/1133] Compiling DNSTests DeleteZoneRequestTests.swift
+[1101/1133] Compiling gateway_server GatewayServer.swift
+[1102/1133] Emitting module gateway_server
+[1103/1135] Compiling DNSTests GetPrimaryServerRequestTests.swift
+[1104/1135] Compiling DNSTests GetRecordRequestTests.swift
+[1105/1135] Compiling DNSTests GetZoneRequestTests.swift
+[1106/1135] Emitting module DNSTests
+[1107/1135] Compiling DNSTests APIClientTests.swift
+[1108/1135] Compiling DNSTests CreatePrimaryServerRequestTests.swift
+[1109/1135] Compiling DNSTests DNSClientTests.swift
+[1110/1135] Compiling DNSTests HetznerDNSClientTests.swift
+[1111/1135] Compiling DNSTests ListPrimaryServersRequestTests.swift
+[1112/1135] Compiling PublishingFrontendTests HetznerDNSRequestTests.swift
+[1113/1135] Compiling PublishingFrontendTests PublishingFrontendTests.swift
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:39:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 37 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+ 38 |         let cwd = FileManager.default.currentDirectoryPath
+ 39 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 40 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 41 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:40:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 38 |         let cwd = FileManager.default.currentDirectoryPath
+ 39 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 40 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 41 |         let config = try loadPublishingConfig()
+ 42 |         XCTAssertEqual(config.port, 1234)
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:65:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 63 |         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+ 64 |         let cwd = FileManager.default.currentDirectoryPath
+ 65 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 66 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 67 |         XCTAssertThrowsError(try loadPublishingConfig())
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:66:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 64 |         let cwd = FileManager.default.currentDirectoryPath
+ 65 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 66 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 67 |         XCTAssertThrowsError(try loadPublishingConfig())
+ 68 |     }
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:79:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 77 |         try "port: [123".write(to: fileURL, atomically: true, encoding: .utf8)
+ 78 |         let cwd = FileManager.default.currentDirectoryPath
+ 79 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 80 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 81 |         XCTAssertThrowsError(try loadPublishingConfig())
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:80:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 78 |         let cwd = FileManager.default.currentDirectoryPath
+ 79 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 80 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 81 |         XCTAssertThrowsError(try loadPublishingConfig())
+ 82 |     }
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:97:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 95 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+ 96 |         let cwd = FileManager.default.currentDirectoryPath
+ 97 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 98 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 99 |         XCTAssertThrowsError(try loadPublishingConfig())
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:98:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 96 |         let cwd = FileManager.default.currentDirectoryPath
+ 97 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 98 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 99 |         XCTAssertThrowsError(try loadPublishingConfig())
+100 |     }
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:114:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+112 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+113 |         let cwd = FileManager.default.currentDirectoryPath
+114 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+115 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+116 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:115:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+113 |         let cwd = FileManager.default.currentDirectoryPath
+114 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+115 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+116 |         let config = try loadPublishingConfig()
+117 |         XCTAssertEqual(config.port, 1234)
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:133:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+131 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+132 |         let cwd = FileManager.default.currentDirectoryPath
+133 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+134 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+135 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:134:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+132 |         let cwd = FileManager.default.currentDirectoryPath
+133 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+134 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+135 |         let config = try loadPublishingConfig()
+136 |         XCTAssertEqual(config.port, 8085)
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:221:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+219 |         try "".write(to: fileURL, atomically: true, encoding: .utf8)
+220 |         let cwd = FileManager.default.currentDirectoryPath
+221 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+222 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+223 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:222:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+220 |         let cwd = FileManager.default.currentDirectoryPath
+221 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+222 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+223 |         let config = try loadPublishingConfig()
+224 |         XCTAssertEqual(config.port, 8085)
+[1114/1136] Compiling gateway_server main.swift
+[1115/1137] Linking clientgen-service
+[1116/1137] Wrapping AST for PublishingFrontend for debugging
+[1118/1137] Compiling DNSTests ListRecordsRequestTests.swift
+[1119/1137] Compiling DNSTests UpdateRecordRequestTests.swift
+[1120/1138] Wrapping AST for publishing-frontend for debugging
+[1121/1138] Write Objects.LinkFileList
+[1123/1138] Wrapping AST for PublishingFrontendTests for debugging
+[1124/1138] Wrapping AST for gateway-server for debugging
+[1125/1138] Write Objects.LinkFileList
+[1126/1138] Wrapping AST for DNSTests for debugging
+[1127/1138] Linking publishing-frontend
+[1128/1138] Linking gateway-server
+[1130/1148] Emitting module IntegrationRuntimeTests
+[1131/1150] Compiling IntegrationRuntimeTests HTTPRequestTests.swift
+[1132/1150] Compiling IntegrationRuntimeTests HTTPResponseDefaultsTests.swift
+[1133/1150] Compiling IntegrationRuntimeTests LoggingPluginTests.swift
+[1134/1150] Compiling IntegrationRuntimeTests NIOHTTPServerTests.swift
+[1135/1150] Compiling IntegrationRuntimeTests GatewayServerTests.swift
+[1136/1150] Compiling IntegrationRuntimeTests HTTPKernelTests.swift
+[1137/1150] Compiling IntegrationRuntimeTests AsyncHTTPClientDriverTests.swift
+[1138/1150] Compiling IntegrationRuntimeTests CertificateManagerTests.swift
+[1139/1150] Compiling IntegrationRuntimeTests GatewayPluginTests.swift
+[1140/1150] Compiling IntegrationRuntimeTests PublishingFrontendPluginTests.swift
+[1141/1150] Compiling IntegrationRuntimeTests URLSessionHTTPClientTests.swift
+[1142/1151] /workspace/codex-deployer/.build/x86_64-unknown-linux-gnu/debug/FountainCoachPackageDiscoveredTests.derived/all-discovered-tests.swift
+[1143/1151] Write sources
+[1144/1151] Wrapping AST for IntegrationRuntimeTests for debugging
+[1146/1157] Compiling FountainCoachPackageDiscoveredTests IntegrationRuntimeTests.swift
+[1147/1157] Compiling FountainCoachPackageDiscoveredTests PublishingFrontendTests.swift
+[1148/1158] Compiling FountainCoachPackageDiscoveredTests FountainCoreTests.swift
+[1149/1158] Emitting module FountainCoachPackageDiscoveredTests
+[1150/1158] Compiling FountainCoachPackageDiscoveredTests ClientGeneratorTests.swift
+[1151/1158] Compiling FountainCoachPackageDiscoveredTests DNSTests.swift
+[1152/1158] Compiling FountainCoachPackageDiscoveredTests all-discovered-tests.swift
+[1153/1159] /workspace/codex-deployer/.build/x86_64-unknown-linux-gnu/debug/FountainCoachPackageTests.derived/runner.swift
+[1154/1159] Write sources
+[1155/1159] Wrapping AST for FountainCoachPackageDiscoveredTests for debugging
+[1157/1161] Emitting module FountainCoachPackageTests
+[1158/1161] Compiling FountainCoachPackageTests runner.swift
+[1159/1162] Wrapping AST for FountainCoachPackageTests for debugging
+[1160/1162] Write Objects.LinkFileList
+[1161/1162] Linking FountainCoachPackageTests.xctest
+Build complete! (129.02s)
+Test Suite 'All tests' started at 2025-08-04 17:22:14.298
+Test Suite 'debug.xctest' started at 2025-08-04 17:22:14.314
+Test Suite 'ClientGeneratorTests' started at 2025-08-04 17:22:14.314
+Test Case 'ClientGeneratorTests.testClientFilesGenerated' started at 2025-08-04 17:22:14.314
+Test Case 'ClientGeneratorTests.testClientFilesGenerated' passed (0.011 seconds)
+Test Case 'ClientGeneratorTests.testEmitRequestGeneratesQueryParameter' started at 2025-08-04 17:22:14.325
+Test Case 'ClientGeneratorTests.testEmitRequestGeneratesQueryParameter' passed (0.006 seconds)
+Test Suite 'ClientGeneratorTests' passed at 2025-08-04 17:22:14.332
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.018 (0.018) seconds
+Test Suite 'OpenAPIParameterTests' started at 2025-08-04 17:22:14.332
+Test Case 'OpenAPIParameterTests.testSwiftNameReplacesHyphenWithUnderscore' started at 2025-08-04 17:22:14.332
+Test Case 'OpenAPIParameterTests.testSwiftNameReplacesHyphenWithUnderscore' passed (0.001 seconds)
+Test Case 'OpenAPIParameterTests.testSwiftTypeUsesSchemaOrDefaultsToString' started at 2025-08-04 17:22:14.333
+Test Case 'OpenAPIParameterTests.testSwiftTypeUsesSchemaOrDefaultsToString' passed (0.0 seconds)
+Test Suite 'OpenAPIParameterTests' passed at 2025-08-04 17:22:14.333
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'OpenAPISwiftTypeTests' started at 2025-08-04 17:22:14.333
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertyObjectSwiftType' started at 2025-08-04 17:22:14.333
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertyObjectSwiftType' passed (0.0 seconds)
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertySwiftType' started at 2025-08-04 17:22:14.333
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertySwiftType' passed (0.0 seconds)
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertyUnknownTypeDefaultsToString' started at 2025-08-04 17:22:14.333
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertyUnknownTypeDefaultsToString' passed (0.0 seconds)
+Test Case 'OpenAPISwiftTypeTests.testSchemaRefSwiftType' started at 2025-08-04 17:22:14.333
+Test Case 'OpenAPISwiftTypeTests.testSchemaRefSwiftType' passed (0.0 seconds)
+Test Suite 'OpenAPISwiftTypeTests' passed at 2025-08-04 17:22:14.334
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'SecurityRequirementTests' started at 2025-08-04 17:22:14.334
+Test Case 'SecurityRequirementTests.testDecodesSchemesFromJSON' started at 2025-08-04 17:22:14.334
+Test Case 'SecurityRequirementTests.testDecodesSchemesFromJSON' passed (0.0 seconds)
+Test Case 'SecurityRequirementTests.testEncodesSchemesToJSON' started at 2025-08-04 17:22:14.334
+Test Case 'SecurityRequirementTests.testEncodesSchemesToJSON' passed (0.001 seconds)
+Test Suite 'SecurityRequirementTests' passed at 2025-08-04 17:22:14.335
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'SpecLoaderTests' started at 2025-08-04 17:22:14.335
+Test Case 'SpecLoaderTests.testLoadThrowsForEmptyFile' started at 2025-08-04 17:22:14.335
+Test Case 'SpecLoaderTests.testLoadThrowsForEmptyFile' passed (0.004 seconds)
+Test Case 'SpecLoaderTests.testLoadThrowsForInvalidUTF8' started at 2025-08-04 17:22:14.338
+Test Case 'SpecLoaderTests.testLoadThrowsForInvalidUTF8' passed (0.001 seconds)
+Test Case 'SpecLoaderTests.testLoadsJSONRemovingCopyright' started at 2025-08-04 17:22:14.340
+Test Case 'SpecLoaderTests.testLoadsJSONRemovingCopyright' passed (0.008 seconds)
+Test Case 'SpecLoaderTests.testLoadsYAMLAndNormalizesInfoTitle' started at 2025-08-04 17:22:14.348
+Test Case 'SpecLoaderTests.testLoadsYAMLAndNormalizesInfoTitle' passed (0.003 seconds)
+Test Suite 'SpecLoaderTests' passed at 2025-08-04 17:22:14.351
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.016 (0.016) seconds
+Test Suite 'SpecValidatorTests' started at 2025-08-04 17:22:14.351
+Test Case 'SpecValidatorTests.testDuplicateOperationIdThrows' started at 2025-08-04 17:22:14.351
+Test Case 'SpecValidatorTests.testDuplicateOperationIdThrows' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testEmptyParameterLocationThrows' started at 2025-08-04 17:22:14.352
+Test Case 'SpecValidatorTests.testEmptyParameterLocationThrows' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testEmptyParameterNameThrows' started at 2025-08-04 17:22:14.352
+Test Case 'SpecValidatorTests.testEmptyParameterNameThrows' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testEmptyTitleThrows' started at 2025-08-04 17:22:14.352
+Test Case 'SpecValidatorTests.testEmptyTitleThrows' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testMissingPathParameterThrows' started at 2025-08-04 17:22:14.352
+Test Case 'SpecValidatorTests.testMissingPathParameterThrows' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testPathParameterMustBeRequired' started at 2025-08-04 17:22:14.352
+Test Case 'SpecValidatorTests.testPathParameterMustBeRequired' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testUnknownSecuritySchemeThrows' started at 2025-08-04 17:22:14.353
+Test Case 'SpecValidatorTests.testUnknownSecuritySchemeThrows' passed (0.001 seconds)
+Test Case 'SpecValidatorTests.testUnresolvedSchemaReferenceThrows' started at 2025-08-04 17:22:14.353
+Test Case 'SpecValidatorTests.testUnresolvedSchemaReferenceThrows' passed (0.0 seconds)
+Test Suite 'SpecValidatorTests' passed at 2025-08-04 17:22:14.353
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'StringExtensionTests' started at 2025-08-04 17:22:14.353
+Test Case 'StringExtensionTests.testCamelCased' started at 2025-08-04 17:22:14.353
+Test Case 'StringExtensionTests.testCamelCased' passed (0.0 seconds)
+Test Case 'StringExtensionTests.testCamelCasedEmptyString' started at 2025-08-04 17:22:14.354
+Test Case 'StringExtensionTests.testCamelCasedEmptyString' passed (0.0 seconds)
+Test Case 'StringExtensionTests.testCamelCasedLeadingUnderscore' started at 2025-08-04 17:22:14.354
+Test Case 'StringExtensionTests.testCamelCasedLeadingUnderscore' passed (0.0 seconds)
+Test Case 'StringExtensionTests.testCamelCasedMultipleUnderscores' started at 2025-08-04 17:22:14.354
+Test Case 'StringExtensionTests.testCamelCasedMultipleUnderscores' passed (0.0 seconds)
+Test Case 'StringExtensionTests.testCamelCasedNumbers' started at 2025-08-04 17:22:14.354
+Test Case 'StringExtensionTests.testCamelCasedNumbers' passed (0.0 seconds)
+Test Case 'StringExtensionTests.testCamelCasedTrailingUnderscore' started at 2025-08-04 17:22:14.354
+Test Case 'StringExtensionTests.testCamelCasedTrailingUnderscore' passed (0.1 seconds)
+Test Case 'StringExtensionTests.testCamelCasedUppercaseInput' started at 2025-08-04 17:22:14.455
+Test Case 'StringExtensionTests.testCamelCasedUppercaseInput' passed (0.0 seconds)
+Test Suite 'StringExtensionTests' passed at 2025-08-04 17:22:14.455
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.101 (0.101) seconds
+Test Suite 'APIClientTests' started at 2025-08-04 17:22:14.455
+Test Case 'APIClientTests.testBearerInitializerSetsHeader' started at 2025-08-04 17:22:14.455
+Test Case 'APIClientTests.testBearerInitializerSetsHeader' passed (0.001 seconds)
+Test Case 'APIClientTests.testNoBodyResponseReturnsInstance' started at 2025-08-04 17:22:14.456
+Test Case 'APIClientTests.testNoBodyResponseReturnsInstance' passed (0.0 seconds)
+Test Case 'APIClientTests.testRawDataResponse' started at 2025-08-04 17:22:14.456
+Test Case 'APIClientTests.testRawDataResponse' passed (0.001 seconds)
+Test Case 'APIClientTests.testRequestWithoutBodyOmitsContentType' started at 2025-08-04 17:22:14.457
+Test Case 'APIClientTests.testRequestWithoutBodyOmitsContentType' passed (0.0 seconds)
+Test Case 'APIClientTests.testSendDecodesResponse' started at 2025-08-04 17:22:14.458
+Test Case 'APIClientTests.testSendDecodesResponse' passed (0.0 seconds)
+Test Suite 'APIClientTests' passed at 2025-08-04 17:22:14.458
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'CreatePrimaryServerRequestTests' started at 2025-08-04 17:22:14.458
+Test Case 'CreatePrimaryServerRequestTests.testMethodIsPOST' started at 2025-08-04 17:22:14.458
+Test Case 'CreatePrimaryServerRequestTests.testMethodIsPOST' passed (0.0 seconds)
+Test Case 'CreatePrimaryServerRequestTests.testPathIsCorrect' started at 2025-08-04 17:22:14.458
+Test Case 'CreatePrimaryServerRequestTests.testPathIsCorrect' passed (0.0 seconds)
+Test Suite 'CreatePrimaryServerRequestTests' passed at 2025-08-04 17:22:14.458
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'DNSClientTests' started at 2025-08-04 17:22:14.458
+Test Case 'DNSClientTests.testRoute53CreateRecordErrorDetails' started at 2025-08-04 17:22:14.458
+Test Case 'DNSClientTests.testRoute53CreateRecordErrorDetails' passed (0.001 seconds)
+Test Case 'DNSClientTests.testRoute53CreateRecordStub' started at 2025-08-04 17:22:14.459
+Test Case 'DNSClientTests.testRoute53CreateRecordStub' passed (0.0 seconds)
+Test Case 'DNSClientTests.testRoute53DeleteRecordErrorDetails' started at 2025-08-04 17:22:14.459
+Test Case 'DNSClientTests.testRoute53DeleteRecordErrorDetails' passed (0.0 seconds)
+Test Case 'DNSClientTests.testRoute53DeleteRecordStub' started at 2025-08-04 17:22:14.459
+Test Case 'DNSClientTests.testRoute53DeleteRecordStub' passed (0.0 seconds)
+Test Case 'DNSClientTests.testRoute53ListZonesErrorDetails' started at 2025-08-04 17:22:14.459
+Test Case 'DNSClientTests.testRoute53ListZonesErrorDetails' passed (0.101 seconds)
+Test Case 'DNSClientTests.testRoute53Stub' started at 2025-08-04 17:22:14.560
+Test Case 'DNSClientTests.testRoute53Stub' passed (0.0 seconds)
+Test Case 'DNSClientTests.testRoute53UpdateRecordErrorDetails' started at 2025-08-04 17:22:14.561
+Test Case 'DNSClientTests.testRoute53UpdateRecordErrorDetails' passed (0.0 seconds)
+Test Case 'DNSClientTests.testRoute53UpdateRecordStub' started at 2025-08-04 17:22:14.561
+Test Case 'DNSClientTests.testRoute53UpdateRecordStub' passed (0.0 seconds)
+Test Suite 'DNSClientTests' passed at 2025-08-04 17:22:14.561
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.103 (0.103) seconds
+Test Suite 'DeletePrimaryServerRequestTests' started at 2025-08-04 17:22:14.561
+Test Case 'DeletePrimaryServerRequestTests.testMethodIsDELETE' started at 2025-08-04 17:22:14.561
+Test Case 'DeletePrimaryServerRequestTests.testMethodIsDELETE' passed (0.0 seconds)
+Test Case 'DeletePrimaryServerRequestTests.testPathIsCorrect' started at 2025-08-04 17:22:14.561
+Test Case 'DeletePrimaryServerRequestTests.testPathIsCorrect' passed (0.0 seconds)
+Test Suite 'DeletePrimaryServerRequestTests' passed at 2025-08-04 17:22:14.562
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'DeleteRecordRequestTests' started at 2025-08-04 17:22:14.562
+Test Case 'DeleteRecordRequestTests.testDeleteRecordBuildsPathAndMethod' started at 2025-08-04 17:22:14.562
+Test Case 'DeleteRecordRequestTests.testDeleteRecordBuildsPathAndMethod' passed (0.0 seconds)
+Test Suite 'DeleteRecordRequestTests' passed at 2025-08-04 17:22:14.562
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'DeleteZoneRequestTests' started at 2025-08-04 17:22:14.562
+Test Case 'DeleteZoneRequestTests.testPathBuilderEncodesZoneId' started at 2025-08-04 17:22:14.562
+Test Case 'DeleteZoneRequestTests.testPathBuilderEncodesZoneId' passed (0.0 seconds)
+Test Suite 'DeleteZoneRequestTests' passed at 2025-08-04 17:22:14.562
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'GetPrimaryServerRequestTests' started at 2025-08-04 17:22:14.562
+Test Case 'GetPrimaryServerRequestTests.testMethodIsGET' started at 2025-08-04 17:22:14.562
+Test Case 'GetPrimaryServerRequestTests.testMethodIsGET' passed (0.0 seconds)
+Test Case 'GetPrimaryServerRequestTests.testPathBuilderReplacesId' started at 2025-08-04 17:22:14.562
+Test Case 'GetPrimaryServerRequestTests.testPathBuilderReplacesId' passed (0.0 seconds)
+Test Suite 'GetPrimaryServerRequestTests' passed at 2025-08-04 17:22:14.562
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'GetRecordRequestTests' started at 2025-08-04 17:22:14.562
+Test Case 'GetRecordRequestTests.testPathBuilderReplacesRecordId' started at 2025-08-04 17:22:14.562
+Test Case 'GetRecordRequestTests.testPathBuilderReplacesRecordId' passed (0.0 seconds)
+Test Suite 'GetRecordRequestTests' passed at 2025-08-04 17:22:14.562
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'GetZoneRequestTests' started at 2025-08-04 17:22:14.562
+Test Case 'GetZoneRequestTests.testPathBuilderReplacesZoneId' started at 2025-08-04 17:22:14.562
+Test Case 'GetZoneRequestTests.testPathBuilderReplacesZoneId' passed (0.101 seconds)
+Test Suite 'GetZoneRequestTests' passed at 2025-08-04 17:22:14.663
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.101 (0.101) seconds
+Test Suite 'HetznerDNSClientTests' started at 2025-08-04 17:22:14.663
+Test Case 'HetznerDNSClientTests.testCreateRecordEncodesBody' started at 2025-08-04 17:22:14.663
+Test Case 'HetznerDNSClientTests.testCreateRecordEncodesBody' passed (0.002 seconds)
+Test Case 'HetznerDNSClientTests.testCreateRecordRequest' started at 2025-08-04 17:22:14.665
+Test Case 'HetznerDNSClientTests.testCreateRecordRequest' passed (0.0 seconds)
+Test Case 'HetznerDNSClientTests.testCreateRecordSetsContentTypeHeader' started at 2025-08-04 17:22:14.666
+Test Case 'HetznerDNSClientTests.testCreateRecordSetsContentTypeHeader' passed (0.0 seconds)
+Test Case 'HetznerDNSClientTests.testDeleteRecordRequest' started at 2025-08-04 17:22:14.666
+Test Case 'HetznerDNSClientTests.testDeleteRecordRequest' passed (0.0 seconds)
+Test Case 'HetznerDNSClientTests.testDeleteRecordSetsAuthHeader' started at 2025-08-04 17:22:14.666
+Test Case 'HetznerDNSClientTests.testDeleteRecordSetsAuthHeader' passed (0.0 seconds)
+Test Case 'HetznerDNSClientTests.testListZonesPathBuilder' started at 2025-08-04 17:22:14.666
+Test Case 'HetznerDNSClientTests.testListZonesPathBuilder' passed (0.0 seconds)
+Test Case 'HetznerDNSClientTests.testListZonesReturnsIDs' started at 2025-08-04 17:22:14.667
+Test Case 'HetznerDNSClientTests.testListZonesReturnsIDs' passed (0.001 seconds)
+Test Case 'HetznerDNSClientTests.testListZonesSetsAuthHeader' started at 2025-08-04 17:22:14.668
+Test Case 'HetznerDNSClientTests.testListZonesSetsAuthHeader' passed (0.0 seconds)
+Test Case 'HetznerDNSClientTests.testUpdateRecordRequest' started at 2025-08-04 17:22:14.668
+Test Case 'HetznerDNSClientTests.testUpdateRecordRequest' passed (0.001 seconds)
+Test Case 'HetznerDNSClientTests.testUpdateRecordSetsAuthHeader' started at 2025-08-04 17:22:14.669
+Test Case 'HetznerDNSClientTests.testUpdateRecordSetsAuthHeader' passed (0.0 seconds)
+Test Suite 'HetznerDNSClientTests' passed at 2025-08-04 17:22:14.669
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.006 (0.006) seconds
+Test Suite 'ListPrimaryServersRequestTests' started at 2025-08-04 17:22:14.669
+Test Case 'ListPrimaryServersRequestTests.testPathBuilderAddsZoneIdQueryWhenProvided' started at 2025-08-04 17:22:14.669
+Test Case 'ListPrimaryServersRequestTests.testPathBuilderAddsZoneIdQueryWhenProvided' passed (0.101 seconds)
+Test Case 'ListPrimaryServersRequestTests.testPathBuilderWithoutZoneIdHasNoQuery' started at 2025-08-04 17:22:14.770
+Test Case 'ListPrimaryServersRequestTests.testPathBuilderWithoutZoneIdHasNoQuery' passed (0.0 seconds)
+Test Suite 'ListPrimaryServersRequestTests' passed at 2025-08-04 17:22:14.770
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.101 (0.101) seconds
+Test Suite 'ListRecordsRequestTests' started at 2025-08-04 17:22:14.770
+Test Case 'ListRecordsRequestTests.testPathBuilderEncodesQuery' started at 2025-08-04 17:22:14.770
+Test Case 'ListRecordsRequestTests.testPathBuilderEncodesQuery' passed (0.0 seconds)
+Test Suite 'ListRecordsRequestTests' passed at 2025-08-04 17:22:14.770
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'UpdateRecordRequestTests' started at 2025-08-04 17:22:14.770
+Test Case 'UpdateRecordRequestTests.testUpdateRecordBuildsPathAndMethod' started at 2025-08-04 17:22:14.770
+Test Case 'UpdateRecordRequestTests.testUpdateRecordBuildsPathAndMethod' passed (0.0 seconds)
+Test Case 'UpdateRecordRequestTests.testUpdateRecordStoresBody' started at 2025-08-04 17:22:14.771
+Test Case 'UpdateRecordRequestTests.testUpdateRecordStoresBody' passed (0.0 seconds)
+Test Suite 'UpdateRecordRequestTests' passed at 2025-08-04 17:22:14.771
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'AsyncHTTPClientDriverTests' started at 2025-08-04 17:22:14.771
+Test Case 'AsyncHTTPClientDriverTests.testExecuteFailsForUnreachableHost' started at 2025-08-04 17:22:14.771
+Test Case 'AsyncHTTPClientDriverTests.testExecuteFailsForUnreachableHost' passed (5.009 seconds)
+Test Case 'AsyncHTTPClientDriverTests.testExecutePerformsRequest' started at 2025-08-04 17:22:19.780
+Test Case 'AsyncHTTPClientDriverTests.testExecutePerformsRequest' passed (0.011 seconds)
+Test Case 'AsyncHTTPClientDriverTests.testExecuteSendsBody' started at 2025-08-04 17:22:19.791
+Test Case 'AsyncHTTPClientDriverTests.testExecuteSendsBody' passed (0.004 seconds)
+Test Suite 'AsyncHTTPClientDriverTests' passed at 2025-08-04 17:22:19.795
+	 Executed 3 tests, with 0 failures (0 unexpected) in 5.024 (5.024) seconds
+Test Suite 'CertificateManagerTests' started at 2025-08-04 17:22:19.795
+Test Case 'CertificateManagerTests.testStartSchedulesRepeatedRuns' started at 2025-08-04 17:22:19.795
+Test Case 'CertificateManagerTests.testStartSchedulesRepeatedRuns' passed (1.078 seconds)
+Test Case 'CertificateManagerTests.testStopCancelsFutureRuns' started at 2025-08-04 17:22:20.873
+Test Case 'CertificateManagerTests.testStopCancelsFutureRuns' passed (3.003 seconds)
+Test Case 'CertificateManagerTests.testTriggerNowRunsScript' started at 2025-08-04 17:22:23.876
+Test Case 'CertificateManagerTests.testTriggerNowRunsScript' passed (1.004 seconds)
+Test Suite 'CertificateManagerTests' passed at 2025-08-04 17:22:24.881
+	 Executed 3 tests, with 0 failures (0 unexpected) in 5.085 (5.085) seconds
+Test Suite 'GatewayPluginTests' started at 2025-08-04 17:22:24.881
+Test Case 'GatewayPluginTests.testDefaultPrepareReturnsSameRequest' started at 2025-08-04 17:22:24.881
+Test Case 'GatewayPluginTests.testDefaultPrepareReturnsSameRequest' passed (0.101 seconds)
+Test Case 'GatewayPluginTests.testDefaultRespondReturnsSameResponse' started at 2025-08-04 17:22:24.981
+Test Case 'GatewayPluginTests.testDefaultRespondReturnsSameResponse' passed (0.0 seconds)
+Test Suite 'GatewayPluginTests' passed at 2025-08-04 17:22:24.982
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.101 (0.101) seconds
+Test Suite 'GatewayServerTests' started at 2025-08-04 17:22:24.982
+Test Case 'GatewayServerTests.testHealthEndpointResponds' started at 2025-08-04 17:22:24.982
+Test Case 'GatewayServerTests.testHealthEndpointResponds' passed (0.11 seconds)
+Test Case 'GatewayServerTests.testHealthEndpointSetsJSONContentType' started at 2025-08-04 17:22:25.092
+Test Case 'GatewayServerTests.testHealthEndpointSetsJSONContentType' passed (0.104 seconds)
+Test Case 'GatewayServerTests.testMetricsEndpointResponds' started at 2025-08-04 17:22:25.196
+Test Case 'GatewayServerTests.testMetricsEndpointResponds' passed (0.104 seconds)
+Test Case 'GatewayServerTests.testMetricsEndpointReturnsEmptyArray' started at 2025-08-04 17:22:25.300
+Test Case 'GatewayServerTests.testMetricsEndpointReturnsEmptyArray' passed (0.104 seconds)
+Test Case 'GatewayServerTests.testMetricsEndpointSetsJSONContentType' started at 2025-08-04 17:22:25.404
+Test Case 'GatewayServerTests.testMetricsEndpointSetsJSONContentType' passed (0.104 seconds)
+Test Case 'GatewayServerTests.testPluginCanRewriteRequestAndResponse' started at 2025-08-04 17:22:25.507
+Test Case 'GatewayServerTests.testPluginCanRewriteRequestAndResponse' passed (0.104 seconds)
+Test Case 'GatewayServerTests.testPluginsPrepareInRegistrationOrder' started at 2025-08-04 17:22:25.611
+Test Case 'GatewayServerTests.testPluginsPrepareInRegistrationOrder' passed (0.104 seconds)
+Test Case 'GatewayServerTests.testPluginsRespondInReverseOrder' started at 2025-08-04 17:22:25.716
+Test Case 'GatewayServerTests.testPluginsRespondInReverseOrder' passed (0.104 seconds)
+Test Case 'GatewayServerTests.testUnknownPathReturns404' started at 2025-08-04 17:22:25.820
+Test Case 'GatewayServerTests.testUnknownPathReturns404' passed (0.104 seconds)
+Test Suite 'GatewayServerTests' passed at 2025-08-04 17:22:25.923
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.941 (0.941) seconds
+Test Suite 'HTTPKernelTests' started at 2025-08-04 17:22:25.923
+Test Case 'HTTPKernelTests.testKernelPropagatesErrors' started at 2025-08-04 17:22:25.923
+Test Case 'HTTPKernelTests.testKernelPropagatesErrors' passed (0.0 seconds)
+Test Case 'HTTPKernelTests.testKernelRoutesRequest' started at 2025-08-04 17:22:25.924
+Test Case 'HTTPKernelTests.testKernelRoutesRequest' passed (0.0 seconds)
+Test Suite 'HTTPKernelTests' passed at 2025-08-04 17:22:25.924
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'HTTPRequestTests' started at 2025-08-04 17:22:25.924
+Test Case 'HTTPRequestTests.testRequestDefaults' started at 2025-08-04 17:22:25.924
+Test Case 'HTTPRequestTests.testRequestDefaults' passed (0.0 seconds)
+Test Case 'HTTPRequestTests.testRequestInitializerStoresValues' started at 2025-08-04 17:22:25.924
+Test Case 'HTTPRequestTests.testRequestInitializerStoresValues' passed (0.0 seconds)
+Test Case 'HTTPRequestTests.testRequestMutation' started at 2025-08-04 17:22:25.925
+Test Case 'HTTPRequestTests.testRequestMutation' passed (0.0 seconds)
+Test Suite 'HTTPRequestTests' passed at 2025-08-04 17:22:25.925
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'HTTPResponseDefaultsTests' started at 2025-08-04 17:22:25.925
+Test Case 'HTTPResponseDefaultsTests.testNoBodyCodable' started at 2025-08-04 17:22:25.925
+Test Case 'HTTPResponseDefaultsTests.testNoBodyCodable' passed (0.001 seconds)
+Test Case 'HTTPResponseDefaultsTests.testResponseBodyMutation' started at 2025-08-04 17:22:25.925
+Test Case 'HTTPResponseDefaultsTests.testResponseBodyMutation' passed (0.0 seconds)
+Test Case 'HTTPResponseDefaultsTests.testResponseDefaults' started at 2025-08-04 17:22:25.926
+Test Case 'HTTPResponseDefaultsTests.testResponseDefaults' passed (0.0 seconds)
+Test Case 'HTTPResponseDefaultsTests.testResponseHeadersMutation' started at 2025-08-04 17:22:25.926
+Test Case 'HTTPResponseDefaultsTests.testResponseHeadersMutation' passed (0.0 seconds)
+Test Case 'HTTPResponseDefaultsTests.testResponseInitializerStoresValues' started at 2025-08-04 17:22:25.926
+Test Case 'HTTPResponseDefaultsTests.testResponseInitializerStoresValues' passed (0.0 seconds)
+Test Case 'HTTPResponseDefaultsTests.testResponseStatusMutation' started at 2025-08-04 17:22:25.926
+Test Case 'HTTPResponseDefaultsTests.testResponseStatusMutation' passed (0.0 seconds)
+Test Suite 'HTTPResponseDefaultsTests' passed at 2025-08-04 17:22:25.926
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'LoggingPluginTests' started at 2025-08-04 17:22:25.926
+Test Case 'LoggingPluginTests.testLoggingPluginPassThrough' started at 2025-08-04 17:22:25.926
+-> GET /
+<- 200 for /
+Test Case 'LoggingPluginTests.testLoggingPluginPassThrough' passed (0.0 seconds)
+Test Case 'LoggingPluginTests.testPreparePreservesHeadersAndBody' started at 2025-08-04 17:22:25.926
+-> POST /data
+Test Case 'LoggingPluginTests.testPreparePreservesHeadersAndBody' passed (0.0 seconds)
+Test Case 'LoggingPluginTests.testRespondPreservesHeadersAndBody' started at 2025-08-04 17:22:25.927
+<- 201 for /
+Test Case 'LoggingPluginTests.testRespondPreservesHeadersAndBody' passed (0.0 seconds)
+Test Suite 'LoggingPluginTests' passed at 2025-08-04 17:22:25.927
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'NIOHTTPServerTests' started at 2025-08-04 17:22:25.927
+Test Case 'NIOHTTPServerTests.testServerHandlesConcurrentRequests' started at 2025-08-04 17:22:25.927
+Test Case 'NIOHTTPServerTests.testServerHandlesConcurrentRequests' passed (0.004 seconds)
+Test Case 'NIOHTTPServerTests.testServerReleasesPortOnStop' started at 2025-08-04 17:22:25.930
+Test Case 'NIOHTTPServerTests.testServerReleasesPortOnStop' passed (0.002 seconds)
+Test Case 'NIOHTTPServerTests.testServerResponds' started at 2025-08-04 17:22:25.932
+Test Case 'NIOHTTPServerTests.testServerResponds' passed (0.003 seconds)
+Test Suite 'NIOHTTPServerTests' passed at 2025-08-04 17:22:25.935
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.008 (0.008) seconds
+Test Suite 'PublishingFrontendPluginTests' started at 2025-08-04 17:22:25.935
+Test Case 'PublishingFrontendPluginTests.testPluginIgnoresNonGETRequests' started at 2025-08-04 17:22:25.935
+Test Case 'PublishingFrontendPluginTests.testPluginIgnoresNonGETRequests' passed (0.099 seconds)
+Test Case 'PublishingFrontendPluginTests.testPluginPassThroughWhenFileMissing' started at 2025-08-04 17:22:26.034
+Test Case 'PublishingFrontendPluginTests.testPluginPassThroughWhenFileMissing' passed (0.001 seconds)
+Test Case 'PublishingFrontendPluginTests.testPluginPreservesHeadersOnPassThrough' started at 2025-08-04 17:22:26.035
+Test Case 'PublishingFrontendPluginTests.testPluginPreservesHeadersOnPassThrough' passed (0.0 seconds)
+Test Case 'PublishingFrontendPluginTests.testPluginServesFile' started at 2025-08-04 17:22:26.035
+Test Case 'PublishingFrontendPluginTests.testPluginServesFile' passed (0.001 seconds)
+Test Case 'PublishingFrontendPluginTests.testPluginServesNestedFile' started at 2025-08-04 17:22:26.037
+Test Case 'PublishingFrontendPluginTests.testPluginServesNestedFile' passed (0.003 seconds)
+Test Case 'PublishingFrontendPluginTests.testPluginSetsContentTypeHeader' started at 2025-08-04 17:22:26.040
+Test Case 'PublishingFrontendPluginTests.testPluginSetsContentTypeHeader' passed (0.002 seconds)
+Test Suite 'PublishingFrontendPluginTests' passed at 2025-08-04 17:22:26.041
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.106 (0.106) seconds
+Test Suite 'URLSessionHTTPClientTests' started at 2025-08-04 17:22:26.041
+Test Case 'URLSessionHTTPClientTests.testExecuteCollectsMultipleHeaders' started at 2025-08-04 17:22:26.041
+Test Case 'URLSessionHTTPClientTests.testExecuteCollectsMultipleHeaders' passed (0.001 seconds)
+Test Case 'URLSessionHTTPClientTests.testExecuteHandlesEmptyBody' started at 2025-08-04 17:22:26.043
+Test Case 'URLSessionHTTPClientTests.testExecuteHandlesEmptyBody' passed (0.001 seconds)
+Test Case 'URLSessionHTTPClientTests.testExecutePerformsRequest' started at 2025-08-04 17:22:26.043
+Test Case 'URLSessionHTTPClientTests.testExecutePerformsRequest' passed (0.001 seconds)
+Test Suite 'URLSessionHTTPClientTests' passed at 2025-08-04 17:22:26.044
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'FountainCoreTests' started at 2025-08-04 17:22:26.044
+Test Case 'FountainCoreTests.testTodoDecoding' started at 2025-08-04 17:22:26.044
+Test Case 'FountainCoreTests.testTodoDecoding' passed (0.101 seconds)
+Test Case 'FountainCoreTests.testTodoDecodingFailsForMissingID' started at 2025-08-04 17:22:26.145
+Test Case 'FountainCoreTests.testTodoDecodingFailsForMissingID' passed (0.0 seconds)
+Test Case 'FountainCoreTests.testTodoDecodingFailsForMissingName' started at 2025-08-04 17:22:26.145
+Test Case 'FountainCoreTests.testTodoDecodingFailsForMissingName' passed (0.0 seconds)
+Test Case 'FountainCoreTests.testTodoEncodingProducesExpectedJSON' started at 2025-08-04 17:22:26.146
+Test Case 'FountainCoreTests.testTodoEncodingProducesExpectedJSON' passed (0.0 seconds)
+Test Case 'FountainCoreTests.testTodoEncodingRoundTrip' started at 2025-08-04 17:22:26.146
+Test Case 'FountainCoreTests.testTodoEncodingRoundTrip' passed (0.0 seconds)
+Test Case 'FountainCoreTests.testTodoEquality' started at 2025-08-04 17:22:26.146
+Test Case 'FountainCoreTests.testTodoEquality' passed (0.0 seconds)
+Test Case 'FountainCoreTests.testTodosNotEqualWithDifferentID' started at 2025-08-04 17:22:26.146
+Test Case 'FountainCoreTests.testTodosNotEqualWithDifferentID' passed (0.0 seconds)
+Test Case 'FountainCoreTests.testTodosNotEqualWithDifferentName' started at 2025-08-04 17:22:26.147
+Test Case 'FountainCoreTests.testTodosNotEqualWithDifferentName' passed (0.0 seconds)
+Test Suite 'FountainCoreTests' passed at 2025-08-04 17:22:26.147
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.103 (0.103) seconds
+Test Suite 'HetznerDNSModelsTests' started at 2025-08-04 17:22:26.147
+Test Case 'HetznerDNSModelsTests.testBulkRecordsCreateRequestCodable' started at 2025-08-04 17:22:26.147
+Test Case 'HetznerDNSModelsTests.testBulkRecordsCreateRequestCodable' passed (0.001 seconds)
+Test Case 'HetznerDNSModelsTests.testBulkRecordsUpdateRequestCodable' started at 2025-08-04 17:22:26.147
+Test Case 'HetznerDNSModelsTests.testBulkRecordsUpdateRequestCodable' passed (0.001 seconds)
+Test Case 'HetznerDNSModelsTests.testPrimaryServerCreateCodable' started at 2025-08-04 17:22:26.148
+Test Case 'HetznerDNSModelsTests.testPrimaryServerCreateCodable' passed (0.0 seconds)
+Test Case 'HetznerDNSModelsTests.testPrimaryServersResponseDecodes' started at 2025-08-04 17:22:26.149
+Test Case 'HetznerDNSModelsTests.testPrimaryServersResponseDecodes' passed (0.001 seconds)
+Test Case 'HetznerDNSModelsTests.testRecordResponseDecodes' started at 2025-08-04 17:22:26.149
+Test Case 'HetznerDNSModelsTests.testRecordResponseDecodes' passed (0.0 seconds)
+Test Case 'HetznerDNSModelsTests.testValidateZoneFileResponseDecodes' started at 2025-08-04 17:22:26.150
+Test Case 'HetznerDNSModelsTests.testValidateZoneFileResponseDecodes' passed (0.0 seconds)
+Test Case 'HetznerDNSModelsTests.testZoneCreateRequestCodable' started at 2025-08-04 17:22:26.150
+Test Case 'HetznerDNSModelsTests.testZoneCreateRequestCodable' passed (0.0 seconds)
+Test Case 'HetznerDNSModelsTests.testZoneResponseDecoding' started at 2025-08-04 17:22:26.150
+Test Case 'HetznerDNSModelsTests.testZoneResponseDecoding' passed (0.001 seconds)
+Test Case 'HetznerDNSModelsTests.testZoneUpdateRequestCodable' started at 2025-08-04 17:22:26.151
+Test Case 'HetznerDNSModelsTests.testZoneUpdateRequestCodable' passed (0.0 seconds)
+Test Case 'HetznerDNSModelsTests.testZonesResponseDecodes' started at 2025-08-04 17:22:26.151
+Test Case 'HetznerDNSModelsTests.testZonesResponseDecodes' passed (0.0 seconds)
+Test Suite 'HetznerDNSModelsTests' passed at 2025-08-04 17:22:26.151
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+Test Suite 'HetznerDNSRequestTests' started at 2025-08-04 17:22:26.151
+Test Case 'HetznerDNSRequestTests.testBulkCreateRecordsMethodIsPost' started at 2025-08-04 17:22:26.151
+Test Case 'HetznerDNSRequestTests.testBulkCreateRecordsMethodIsPost' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testBulkCreateRecordsPath' started at 2025-08-04 17:22:26.152
+Test Case 'HetznerDNSRequestTests.testBulkCreateRecordsPath' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testBulkUpdateRecordsMethodIsPut' started at 2025-08-04 17:22:26.152
+Test Case 'HetznerDNSRequestTests.testBulkUpdateRecordsMethodIsPut' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testBulkUpdateRecordsPath' started at 2025-08-04 17:22:26.152
+Test Case 'HetznerDNSRequestTests.testBulkUpdateRecordsPath' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testCreateZoneMethodIsPost' started at 2025-08-04 17:22:26.152
+Test Case 'HetznerDNSRequestTests.testCreateZoneMethodIsPost' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testCreateZonePath' started at 2025-08-04 17:22:26.152
+Test Case 'HetznerDNSRequestTests.testCreateZonePath' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testExportZoneFileMethodIsGet' started at 2025-08-04 17:22:26.152
+Test Case 'HetznerDNSRequestTests.testExportZoneFileMethodIsGet' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testExportZoneFilePathIncludesZoneID' started at 2025-08-04 17:22:26.152
+Test Case 'HetznerDNSRequestTests.testExportZoneFilePathIncludesZoneID' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testImportZoneFileMethodIsPost' started at 2025-08-04 17:22:26.152
+Test Case 'HetznerDNSRequestTests.testImportZoneFileMethodIsPost' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testImportZoneFilePathIncludesZoneID' started at 2025-08-04 17:22:26.153
+Test Case 'HetznerDNSRequestTests.testImportZoneFilePathIncludesZoneID' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testUpdatePrimaryServerMethodIsPut' started at 2025-08-04 17:22:26.153
+Test Case 'HetznerDNSRequestTests.testUpdatePrimaryServerMethodIsPut' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testUpdatePrimaryServerPathIncludesID' started at 2025-08-04 17:22:26.153
+Test Case 'HetznerDNSRequestTests.testUpdatePrimaryServerPathIncludesID' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testUpdateZoneMethodIsPut' started at 2025-08-04 17:22:26.153
+Test Case 'HetznerDNSRequestTests.testUpdateZoneMethodIsPut' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testUpdateZonePathIncludesID' started at 2025-08-04 17:22:26.153
+Test Case 'HetznerDNSRequestTests.testUpdateZonePathIncludesID' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testValidateZoneFileMethodIsPost' started at 2025-08-04 17:22:26.153
+Test Case 'HetznerDNSRequestTests.testValidateZoneFileMethodIsPost' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testValidateZoneFilePath' started at 2025-08-04 17:22:26.154
+Test Case 'HetznerDNSRequestTests.testValidateZoneFilePath' passed (0.0 seconds)
+Test Suite 'HetznerDNSRequestTests' passed at 2025-08-04 17:22:26.154
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'PublishingFrontendTests' started at 2025-08-04 17:22:26.154
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForInvalidYAML' started at 2025-08-04 17:22:26.154
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForInvalidYAML' passed (0.003 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForMissingFile' started at 2025-08-04 17:22:26.156
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForMissingFile' passed (0.0 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForNonNumericPort' started at 2025-08-04 17:22:26.157
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForNonNumericPort' passed (0.102 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigParsesYaml' started at 2025-08-04 17:22:26.259
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigParsesYaml' passed (0.005 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultPortWhenMissing' started at 2025-08-04 17:22:26.264
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultPortWhenMissing' passed (0.003 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultRootPathWhenMissing' started at 2025-08-04 17:22:26.266
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultRootPathWhenMissing' passed (0.002 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultsWhenFileEmpty' started at 2025-08-04 17:22:26.268
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultsWhenFileEmpty' passed (0.001 seconds)
+Test Case 'PublishingFrontendTests.testPublishingConfigCustomValues' started at 2025-08-04 17:22:26.269
+Test Case 'PublishingFrontendTests.testPublishingConfigCustomValues' passed (0.0 seconds)
+Test Case 'PublishingFrontendTests.testPublishingConfigDefaultValues' started at 2025-08-04 17:22:26.269
+Test Case 'PublishingFrontendTests.testPublishingConfigDefaultValues' passed (0.0 seconds)
+Test Case 'PublishingFrontendTests.testServerRejectsNonGetRequests' started at 2025-08-04 17:22:26.269
+Test Case 'PublishingFrontendTests.testServerRejectsNonGetRequests' passed (0.004 seconds)
+Test Case 'PublishingFrontendTests.testServerReturns404ForMissingFile' started at 2025-08-04 17:22:26.272
+Test Case 'PublishingFrontendTests.testServerReturns404ForMissingFile' passed (0.003 seconds)
+Test Case 'PublishingFrontendTests.testServerServesIndex' started at 2025-08-04 17:22:26.276
+Test Case 'PublishingFrontendTests.testServerServesIndex' passed (0.004 seconds)
+Test Case 'PublishingFrontendTests.testServerServesNestedFile' started at 2025-08-04 17:22:26.280
+Test Case 'PublishingFrontendTests.testServerServesNestedFile' passed (0.005 seconds)
+Test Case 'PublishingFrontendTests.testServerSetsContentTypeHeader' started at 2025-08-04 17:22:26.285
+Test Case 'PublishingFrontendTests.testServerSetsContentTypeHeader' passed (0.004 seconds)
+Test Suite 'PublishingFrontendTests' passed at 2025-08-04 17:22:26.289
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.135 (0.135) seconds
+Test Suite 'Route53ClientTests' started at 2025-08-04 17:22:26.289
+Test Case 'Route53ClientTests.testCreateRecordThrows' started at 2025-08-04 17:22:26.289
+Test Case 'Route53ClientTests.testCreateRecordThrows' passed (0.001 seconds)
+Test Case 'Route53ClientTests.testDeleteRecordThrows' started at 2025-08-04 17:22:26.290
+Test Case 'Route53ClientTests.testDeleteRecordThrows' passed (0.0 seconds)
+Test Case 'Route53ClientTests.testListZonesThrows' started at 2025-08-04 17:22:26.290
+Test Case 'Route53ClientTests.testListZonesThrows' passed (0.0 seconds)
+Test Case 'Route53ClientTests.testUpdateRecordThrows' started at 2025-08-04 17:22:26.290
+Test Case 'Route53ClientTests.testUpdateRecordThrows' passed (0.0 seconds)
+Test Suite 'Route53ClientTests' passed at 2025-08-04 17:22:26.291
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'debug.xctest' passed at 2025-08-04 17:22:26.291
+	 Executed 162 tests, with 0 failures (0 unexpected) in 11.973 (11.973) seconds
+Test Suite 'All tests' passed at 2025-08-04 17:22:26.291
+	 Executed 162 tests, with 0 failures (0 unexpected) in 11.973 (11.973) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.1 (43b6f88e2f2712e)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests passed after 0.001 seconds.
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
