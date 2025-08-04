@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          32112   26324    18.02%   14564 11415    21.62%  100116 80731    19.36%
+TOTAL                                          32130   26304    18.13%   14574 11407    21.73%  100155 80656    19.47%
 ```
 
-The repository contains **100,116** executable lines, with **19,385** lines covered (approx. **19.36%** line coverage).
+The repository contains **100,155** executable lines, with **19,499** lines covered (approx. **19.47%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts` and test targets, the totals are:
 
 ```
-TOTAL                                           591     210    64.47%     174     31    82.18%    1383     415    69.99%
+TOTAL                                           591     209    64.64%     174     30    82.76%    1383     414    70.07%
 ```
 
-Within repository sources there are **1,383** lines, with **968** covered, giving **69.99%** line coverage.
+Within repository sources there are **1,383** lines, with **969** covered, giving **70.07%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -93,5 +93,6 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``PublishingFrontendPlugin`` nested-file and header-preservation tests raise the total test count to **154**.
 - The new ``LoadPublishingConfigUsesDefaultRootPathWhenMissing`` and ``LoadPublishingConfigUsesDefaultPortWhenMissing`` tests raise the total test count to **156**.
 - The new ``APIClient`` NoBody and header omission tests raise the total test count to **158**.
+- The new ``ServerServesNestedFile`` and ``LoadPublishingConfigUsesDefaultsWhenFileEmpty`` tests raise the total test count to **160**.
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

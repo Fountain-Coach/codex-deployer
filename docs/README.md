@@ -85,6 +85,7 @@ As modules gain documentation, brief summaries are added here.
 - **renew-certs.sh** – script obtaining TLS certificates via `certbot` with configurable environment variables.
 - **loadPublishingConfig** – documents error handling for missing files, invalid YAML, and defaulting of absent keys.
 - **APIClient.send** – documents special handling for `Data` and `NoBody` responses.
+- **SimpleHTTPRuntime** – low-level planner runtime now documents its connection acceptance, request parsing, and response serialization flow.
 
 Documentation coverage will expand alongside test coverage.
 
