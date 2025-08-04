@@ -60,6 +60,7 @@ public final class PublishingFrontend {
 }
 
 /// Loads the publishing configuration from `Configuration/publishing.yml`.
+/// - Throws: If the file is missing, contains invalid YAML, or fails decoding into ``PublishingConfig``.
 /// - Returns: Parsed ``PublishingConfig`` instance.
 public func loadPublishingConfig() throws -> PublishingConfig {
     let url = URL(fileURLWithPath: "Configuration/publishing.yml")
