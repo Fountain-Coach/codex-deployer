@@ -64,6 +64,7 @@ The new ``GatewayPlugin`` default behavior tests and ``PublishingFrontendPlugin`
 The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105**.
 
 - The new ``bulkUpdateRecords`` and ``updateZone`` request tests raise the total test count to **109**.
+- The new ``GatewayServer`` unknown-path and plugin-order tests raise the total test count to **111**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
