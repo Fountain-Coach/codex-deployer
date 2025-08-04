@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31812   26510    16.67%   14328 11480    19.88%   99461 81210    18.35%
+TOTAL                                          31820   26516    16.67%   14336 11481    19.91%   99477 81241    18.33%
 ```
 
-The repository contains **99,461** executable lines, with **18,251** lines covered (approx. **18.35%** line coverage).
+The repository contains **99,477** executable lines, with **18,236** lines covered (approx. **18.33%** line coverage).
 
 ### Repository source coverage
 
-Ignoring third-party packages under `.build/checkouts`, the totals are:
+Ignoring third-party packages under `.build/checkouts` and test targets, the totals are:
 
 ```
-TOTAL                                           590     260    55.93%     173     40    76.88%    1369     490    64.21%
+TOTAL                                           782     319    59.21%     329     72    78.12%    1722     638    62.95%
 ```
 
-Within repository sources there are **1,369** lines, with **879** covered, giving **64.21%** line coverage.
+Within repository sources there are **1,722** lines, with **1,084** covered, giving **62.95%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -67,6 +67,8 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``GatewayServer`` unknown-path and plugin-order tests raise the total test count to **111**.
 
 - The new ``CamelCasedEmptyString`` and ``CamelCasedMultipleUnderscores`` tests raise the total test count to **113**.
+
+- The new ``HTTPResponseStatusMutation`` and ``HTTPResponseBodyMutation`` tests raise the total test count to **115**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
