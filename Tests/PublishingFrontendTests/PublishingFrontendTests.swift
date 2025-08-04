@@ -49,6 +49,13 @@ final class PublishingFrontendTests: XCTestCase {
         XCTAssertEqual(config.rootPath, "./Public")
     }
 
+    /// Verifies custom initializer values are stored.
+    func testPublishingConfigCustomValues() throws {
+        let config = PublishingConfig(port: 123, rootPath: "/tmp/Docs")
+        XCTAssertEqual(config.port, 123)
+        XCTAssertEqual(config.rootPath, "/tmp/Docs")
+    }
+
     /// Ensures loading the configuration without a file fails.
     func testLoadPublishingConfigFailsForMissingFile() {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("nocfg", isDirectory: true)

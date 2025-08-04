@@ -19,6 +19,16 @@ final class FountainAiLauncherTests: XCTestCase {
         process.waitUntilExit()
         XCTAssertFalse(process.isRunning)
     }
+
+    /// Verifies the ``Service`` initializer assigns all properties correctly.
+    func testServiceInitializerStoresArguments() {
+        let service = Service(name: "Demo", binaryPath: "/bin/echo", arguments: ["hi"], port: 42, healthPath: "/health")
+        XCTAssertEqual(service.name, "Demo")
+        XCTAssertEqual(service.binaryPath, "/bin/echo")
+        XCTAssertEqual(service.arguments, ["hi"])
+        XCTAssertEqual(service.port, 42)
+        XCTAssertEqual(service.healthPath, "/health")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
