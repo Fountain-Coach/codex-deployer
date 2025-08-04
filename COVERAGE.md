@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31927   26506    16.98%   14423 11475    20.44%   99717 81229    18.54%
+TOTAL                                          31933   26509    16.99%   14429 11479    20.44%   99736 81244    18.54%
 ```
 
-The repository contains **99,717** executable lines, with **18,488** lines covered (approx. **18.54%** line coverage).
+The repository contains **99,736** executable lines, with **18,492** lines covered (approx. **18.54%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts` and test targets, the totals are:
 
 ```
-TOTAL                                           590     249    57.80%     173     34    80.35%    1377     477    65.36%
+TOTAL                                           590     247    58.14%     173     34    80.35%    1380     473    65.72%
 ```
 
-Within repository sources there are **1,377** lines, with **900** covered, giving **65.36%** line coverage.
+Within repository sources there are **1,380** lines, with **907** covered, giving **65.72%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -76,6 +76,7 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``DeleteRecordRequest`` and ``UpdateRecordRequest`` tests raise the total test count to **125**.
 - The new ``SchemaProperty`` dictionary and fallback tests raise the total test count to **127**.
 - The new ``URLSessionHTTPClient`` empty-body and multi-header tests raise the total test count to **129**.
+- The new ``SpecLoader`` empty-file and invalid UTF-8 tests raise the total test count to **131**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

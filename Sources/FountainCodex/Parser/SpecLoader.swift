@@ -18,13 +18,15 @@ public enum SpecLoader {
             sanitizedData = Data(filtered.utf8)
         }
 
-        // Attempt JSON decoding first
+        // Attempt JSON decoding first. Successful parses are validated and
+        // returned immediately. Any failure falls through to YAML handling.
         if let spec = try? JSONDecoder().decode(OpenAPISpec.self, from: sanitizedData) {
             try SpecValidator.validate(spec)
             return spec
         }
 
-        // Fallback to YAML decoding
+        // Fallback to YAML decoding when JSON parsing fails.
+        // Non-UTF8 data or empty YAML documents produce explicit errors.
         guard let yamlString = String(data: sanitizedData, encoding: .utf8) else {
             throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Input data is not valid UTF-8"))
         }
@@ -35,7 +37,7 @@ public enum SpecLoader {
         }
         var yamlObject = loadedYaml
 
-        // If using OpenAPI 3.x with `info.title`, normalize to `title`
+        // If using OpenAPI 3.x with `info.title`, normalize to a top-level `title`.
         if var dict = yamlObject as? [String: Any] {
             if dict["title"] == nil,
                let info = dict["info"] as? [String: Any],
@@ -45,6 +47,7 @@ public enum SpecLoader {
             yamlObject = dict
         }
 
+        // Convert the YAML representation into JSON data for decoding.
         let jsonData = try JSONSerialization.data(withJSONObject: yamlObject, options: [])
         let spec = try JSONDecoder().decode(OpenAPISpec.self, from: jsonData)
         try SpecValidator.validate(spec)

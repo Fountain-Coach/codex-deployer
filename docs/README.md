@@ -73,6 +73,7 @@ As modules gain documentation, brief summaries are added here.
 - **GatewayServer.plugins** – documents plugin execution order for request preparation and response processing.
 - **GatewayServer.init** – clarifies plugin invocation order for preparation and response phases.
 - **SpecLoader.load** – documents removal of copyright lines before decoding.
+- **SpecLoader.load** – clarifies JSON fallback and error reporting for invalid input data.
 - **OpenAPISpec.Parameter.swiftName** and **swiftType** – document parameter name sanitization and schema type defaults.
 - **ListZonesParameters.name**, **searchName**, **page**, and **perPage** – document zone filtering and pagination options.
 - **OpenAPISpec.Schema.Property.swiftType** – inline comments clarify array and object mappings and default behavior.
