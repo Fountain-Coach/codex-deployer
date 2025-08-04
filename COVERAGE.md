@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31943   26508    17.01%   14439 11479    20.50%   99754 81242    18.56%
+TOTAL                                          31959   26475    17.16%   14451 11476    20.59%   99797 81189    18.65%
 ```
 
-The repository contains **99,754** executable lines, with **18,512** lines covered (approx. **18.56%** line coverage).
+The repository contains **99,797** executable lines, with **18,608** lines covered (approx. **18.65%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts` and test targets, the totals are:
 
 ```
-TOTAL                                           590     247    58.14%     173     34    80.35%    1380     473    65.72%
+TOTAL                                           590     213    63.90%     173     31    82.08%    1380     418    69.71%
 ```
 
-Within repository sources there are **1,380** lines, with **907** covered, giving **65.72%** line coverage.
+Within repository sources there are **1,380** lines, with **962** covered, giving **69.71%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -79,6 +79,8 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``SpecLoader`` empty-file and invalid UTF-8 tests raise the total test count to **131**.
 
 - The new ``ServiceInitializerStoresArguments``, ``PublishingConfigCustomValues``, and ``TodosNotEqualWithDifferentName`` tests raise the total test count to **133**.
+
+- The new ``CamelCasedLeadingUnderscore``, ``CamelCasedNumbers``, and ``EmitRequestGeneratesQueryParameter`` tests raise the total test count to **136**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

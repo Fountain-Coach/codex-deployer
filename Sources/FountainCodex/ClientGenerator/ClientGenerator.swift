@@ -118,7 +118,12 @@ public enum ClientGenerator {
         return schema.swiftType
     }
 
-    /// Emits a Swift request type for the given OpenAPI operation.
+    /// Emits a Swift ``APIRequest`` implementation for an OpenAPI operation.
+    /// - Parameters:
+    ///   - op: Operation describing parameters and payloads.
+    ///   - method: HTTP verb to assign to the request.
+    ///   - path: Endpoint path template from the specification.
+    ///   - dir: Destination directory for the generated Swift file.
     private static func emitRequest(operation op: OpenAPISpec.Operation, method: String, path: String, in dir: URL) throws {
         let bodyType = bodyType(for: op)
         let responseType = responseType(for: op)

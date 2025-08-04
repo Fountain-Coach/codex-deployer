@@ -78,6 +78,8 @@ As modules gain documentation, brief summaries are added here.
 - **ListZonesParameters.name**, **searchName**, **page**, and **perPage** – document zone filtering and pagination options.
 - **OpenAPISpec.Schema.Property.swiftType** – inline comments clarify array and object mappings and default behavior.
 - **services array** – startup service list in `FountainAiLauncher` now documented.
+- **ClientGenerator.emitRequest** – documents generation of request types handling path and query parameters.
+- **renew-certs.sh** – script obtaining TLS certificates via `certbot` with configurable environment variables.
 
 Documentation coverage will expand alongside test coverage.
 

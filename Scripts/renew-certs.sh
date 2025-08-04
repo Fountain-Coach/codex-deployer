@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Acquires or renews TLS certificates using certbot.
+# Environment variables allow overriding domain, email, and storage paths.
 set -euo pipefail
 
 CERTBOT=${CERTBOT:-certbot}

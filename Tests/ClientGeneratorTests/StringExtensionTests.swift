@@ -17,6 +17,16 @@ final class StringExtensionTests: XCTestCase {
     func testCamelCasedMultipleUnderscores() {
         XCTAssertEqual("one_two_three".camelCased, "oneTwoThree")
     }
+
+    /// Leading underscores are removed during conversion.
+    func testCamelCasedLeadingUnderscore() {
+        XCTAssertEqual("_hidden_name".camelCased, "hiddenName")
+    }
+
+    /// Numeric components remain intact when camelCasing.
+    func testCamelCasedNumbers() {
+        XCTAssertEqual("api_v2_endpoint".camelCased, "apiV2Endpoint")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
