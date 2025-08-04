@@ -1,5 +1,6 @@
 import Foundation
 
+/// Services launched by the supervisor at application start.
 let services: [Service] = [
     Service(name: "Awareness Service", binaryPath: "/usr/local/bin/awareness-service", port: 8001, healthPath: "/metrics"),
     Service(name: "Bootstrap Service", binaryPath: "/usr/local/bin/bootstrap-service", port: 8002, healthPath: "/metrics"),

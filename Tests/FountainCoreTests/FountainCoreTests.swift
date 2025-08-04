@@ -39,6 +39,13 @@ final class FountainCoreTests: XCTestCase {
         XCTAssertNotEqual(a, b)
     }
 
+    /// Ensures differing names result in inequality even with identical IDs.
+    func testTodosNotEqualWithDifferentName() {
+        let a = Todo(id: 1, name: "A")
+        let b = Todo(id: 1, name: "B")
+        XCTAssertNotEqual(a, b)
+    }
+
     func testTodoEncodingProducesExpectedJSON() throws {
         let todo = Todo(id: 7, name: "Seven")
         let encoder = JSONEncoder()
