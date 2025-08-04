@@ -41,6 +41,36 @@ final class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertEqual(data.getString(at: 0, length: data.readableBytes), "pong")
         XCTAssertEqual(headers.first(name: "X-Reply"), "ok")
     }
+
+    func testExecuteHandlesEmptyBody() async throws {
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [MockURLProtocol.self]
+        let session = URLSession(configuration: config)
+        MockURLProtocol.handler = { request in
+            XCTAssertEqual(request.httpMethod, "GET")
+            XCTAssertNil(request.httpBody)
+            let resp = HTTPURLResponse(url: request.url!, statusCode: 204, httpVersion: nil, headerFields: [:])!
+            return (resp, Data())
+        }
+        let client = URLSessionHTTPClient(session: session)
+        let (data, headers) = try await client.execute(method: .GET, url: "http://localhost", body: nil)
+        XCTAssertEqual(data.readableBytes, 0)
+        XCTAssertTrue(headers.isEmpty)
+    }
+
+    func testExecuteCollectsMultipleHeaders() async throws {
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [MockURLProtocol.self]
+        let session = URLSession(configuration: config)
+        MockURLProtocol.handler = { request in
+            let resp = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: ["X-A": "a", "X-B": "b"])!
+            return (resp, Data())
+        }
+        let client = URLSessionHTTPClient(session: session)
+        let (_, headers) = try await client.execute(method: .GET, url: "http://localhost", body: nil)
+        XCTAssertEqual(headers.first(name: "X-A"), "a")
+        XCTAssertEqual(headers.first(name: "X-B"), "b")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

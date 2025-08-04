@@ -24,6 +24,7 @@ public final class AsyncHTTPClientDriver: HTTPClientProtocol, @unchecked Sendabl
     ///   - url: Absolute URL string of the resource.
     ///   - headers: Request headers to send.
     ///   - body: Optional request body buffer.
+    /// - Returns: Tuple containing the response body and header fields.
     public func execute(method: HTTPMethod, url: String, headers: HTTPHeaders = HTTPHeaders(), body: ByteBuffer?) async throws -> (ByteBuffer, HTTPHeaders) {
         var request = HTTPClientRequest(url: url)
         request.method = method
@@ -37,6 +38,7 @@ public final class AsyncHTTPClientDriver: HTTPClientProtocol, @unchecked Sendabl
     }
 
     /// Gracefully shuts down the underlying client.
+    /// Call this after all requests complete to free resources.
     public func shutdown() async throws {
         try await client.shutdown()
     }
