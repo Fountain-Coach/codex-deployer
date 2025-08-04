@@ -65,6 +65,30 @@ final class HetznerDNSRequestTests: XCTestCase {
         let req = createZone()
         XCTAssertEqual(req.path, "/zones")
     }
+
+    /// Verifies the bulk record update request uses PUT.
+    func testBulkUpdateRecordsMethodIsPut() {
+        let req = bulkUpdateRecords()
+        XCTAssertEqual(req.method, "PUT")
+    }
+
+    /// Ensures the bulk record update request hits the correct endpoint.
+    func testBulkUpdateRecordsPath() {
+        let req = bulkUpdateRecords()
+        XCTAssertEqual(req.path, "/records/bulk")
+    }
+
+    /// Verifies the update zone request uses PUT.
+    func testUpdateZoneMethodIsPut() {
+        let req = updateZone(parameters: updateZoneParameters(zoneid: "abc"))
+        XCTAssertEqual(req.method, "PUT")
+    }
+
+    /// Ensures the update zone request path includes the zone ID.
+    func testUpdateZonePathIncludesID() {
+        let req = updateZone(parameters: updateZoneParameters(zoneid: "abc"))
+        XCTAssertEqual(req.path, "/zones/abc")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

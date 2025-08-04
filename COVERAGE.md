@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31766   26565    16.37%   14290 11503    19.50%   99364 81455    18.02%
+TOTAL                                          31782   26533    16.52%   14306 11485    19.72%   99392 81299    18.20%
 ```
 
-The repository contains **99,364** executable lines, with **17,909** lines covered (approx. **18.02%** line coverage).
+The repository contains **99,392** executable lines, with **18,093** lines covered (approx. **18.20%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts`, the totals are:
 
 ```
-TOTAL                                           590     269    54.41%     173     46    73.41%    1366     508    62.81%
+TOTAL                                           590     262    55.59%     173     40    76.88%    1366     491    64.06%
 ```
 
-Within repository sources there are **1,366** lines, with **858** covered, giving **62.81%** line coverage.
+Within repository sources there are **1,366** lines, with **875** covered, giving **64.06%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -62,6 +62,8 @@ The new ``SpecValidator`` missing parameter, required flag, and security scheme 
 The new ``GatewayPlugin`` default behavior tests and ``PublishingFrontendPlugin`` header check raise the total test count to **103**.
 
 The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105**.
+
+- The new ``bulkUpdateRecords`` and ``updateZone`` request tests raise the total test count to **109**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
