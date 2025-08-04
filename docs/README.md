@@ -67,6 +67,7 @@ As modules gain documentation, brief summaries are added here.
 - **run-tests.sh** – helper script bundling release build and coverage test steps.
 - **PublishingFrontendPlugin.respond** – documents parameters and emitted `Content-Type` header when serving files.
 - **bulkUpdateRecords.method** and **path**, **updateZone.method** and **path** – request properties now describe HTTP verbs and endpoint resolution.
+- **GatewayServer.plugins** – documents plugin execution order for request preparation and response processing.
 
 Documentation coverage will expand alongside test coverage.
 

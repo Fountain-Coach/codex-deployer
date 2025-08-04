@@ -64,6 +64,51 @@ final class GatewayServerTests: XCTestCase {
         XCTAssertEqual(body?["status"], "ok")
         try await server.stop()
     }
+
+    @MainActor
+    /// Unknown paths should yield a `404` status.
+    func testUnknownPathReturns404() async throws {
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9103) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let url = URL(string: "http://127.0.0.1:9103/unknown")!
+        let (_, response) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 404)
+        try await server.stop()
+    }
+
+    @MainActor
+    /// Plugins should receive the response in reverse order of registration.
+    func testPluginsRespondInReverseOrder() async throws {
+        actor OrderCollector {
+            private var names: [String] = []
+            func record(_ name: String) { names.append(name) }
+            func snapshot() -> [String] { names }
+        }
+        struct RecordingPlugin: GatewayPlugin {
+            let name: String
+            let collector: OrderCollector
+            func respond(_ response: HTTPResponse, for request: HTTPRequest) async throws -> HTTPResponse {
+                await collector.record(name)
+                return response
+            }
+        }
+        let collector = OrderCollector()
+        let plugins: [GatewayPlugin] = [
+            RecordingPlugin(name: "A", collector: collector),
+            RecordingPlugin(name: "B", collector: collector)
+        ]
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: plugins)
+        Task { try await server.start(port: 9104) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let url = URL(string: "http://127.0.0.1:9104/health")!
+        _ = try await URLSession.shared.data(from: url)
+        try await server.stop()
+        let order = await collector.snapshot()
+        XCTAssertEqual(order, ["B", "A"])
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

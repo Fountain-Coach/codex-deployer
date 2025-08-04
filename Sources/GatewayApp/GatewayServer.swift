@@ -14,6 +14,8 @@ public final class GatewayServer {
     /// Event loop group powering the SwiftNIO server.
     private let group: EventLoopGroup
     /// Middleware components executed around request routing.
+    /// Plugins run in registration order during ``GatewayPlugin.prepare(_:)``
+    /// and in reverse order during ``GatewayPlugin.respond(_:for:)``.
     private let plugins: [GatewayPlugin]
 
     /// Creates a new gateway server instance.
