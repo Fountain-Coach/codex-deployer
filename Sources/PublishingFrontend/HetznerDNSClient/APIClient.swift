@@ -39,6 +39,8 @@ public struct APIClient {
     }
 
     /// Executes an ``APIRequest`` and decodes the server response.
+    /// When ``R.Response`` is ``Data``, the raw bytes are returned directly.
+    /// If ``R.Response`` is ``NoBody``, the response payload is discarded and an empty instance is provided.
     /// - Parameter request: The request to perform.
     /// - Returns: The decoded response value for ``R.Response``.
     public func send<R: APIRequest>(_ request: R) async throws -> R.Response {
