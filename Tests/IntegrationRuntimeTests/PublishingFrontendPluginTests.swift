@@ -52,6 +52,34 @@ final class PublishingFrontendPluginTests: XCTestCase {
         let resp = try await plugin.respond(HTTPResponse(status: 404, headers: [:]), for: req)
         XCTAssertEqual(resp.headers["Content-Type"], "text/html")
     }
+
+    /// Serves files located in nested directories relative to ``rootPath``.
+    func testPluginServesNestedFile() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("static-nested")
+        try? FileManager.default.removeItem(at: dir)
+        let nested = dir.appendingPathComponent("pages")
+        try FileManager.default.createDirectory(at: nested, withIntermediateDirectories: true)
+        let fileURL = nested.appendingPathComponent("about.html")
+        try "nested".write(to: fileURL, atomically: true, encoding: .utf8)
+        let plugin = PublishingFrontendPlugin(rootPath: dir.path)
+        let req = HTTPRequest(method: "GET", path: "/pages/about.html")
+        let resp = try await plugin.respond(HTTPResponse(status: 404), for: req)
+        XCTAssertEqual(resp.status, 200)
+        XCTAssertEqual(String(data: resp.body, encoding: .utf8), "nested")
+    }
+
+    /// Preserves existing headers when passing through a missing file response.
+    func testPluginPreservesHeadersOnPassThrough() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("static-headers")
+        try? FileManager.default.removeItem(at: dir)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let plugin = PublishingFrontendPlugin(rootPath: dir.path)
+        let req = HTTPRequest(method: "GET", path: "/missing.html")
+        let original = HTTPResponse(status: 404, headers: ["X-Test": "1"])
+        let resp = try await plugin.respond(original, for: req)
+        XCTAssertEqual(resp.status, 404)
+        XCTAssertEqual(resp.headers["X-Test"], "1")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

@@ -89,5 +89,7 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``UpdateRecordSetsAuthHeader`` and ``DeleteRecordSetsAuthHeader`` tests raise the total test count to **147**.
 - The new ``AsyncHTTPClientDriver`` unreachable host test and metrics endpoint header and body tests raise the total test count to **150**.
 - The new ``LoggingPlugin`` header and body preservation tests raise the total test count to **152**.
+
+- The new ``PublishingFrontendPlugin`` nested-file and header-preservation tests raise the total test count to **154**.
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
