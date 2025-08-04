@@ -63,6 +63,30 @@ final class DNSClientTests: XCTestCase {
             XCTAssertEqual(error.code, 501)
         }
     }
+
+    /// Verifies Route53 stub create record throws unimplemented error details.
+    func testRoute53CreateRecordErrorDetails() async throws {
+        let client = Route53Client()
+        do {
+            try await client.createRecord(zone: "z", name: "n", type: "A", value: "v")
+            XCTFail("expected failure")
+        } catch let error as NSError {
+            XCTAssertEqual(error.domain, "Route53")
+            XCTAssertEqual(error.code, 501)
+        }
+    }
+
+    /// Verifies Route53 stub update record throws unimplemented error details.
+    func testRoute53UpdateRecordErrorDetails() async throws {
+        let client = Route53Client()
+        do {
+            try await client.updateRecord(id: "1", zone: "z", name: "n", type: "A", value: "v")
+            XCTFail("expected failure")
+        } catch let error as NSError {
+            XCTAssertEqual(error.domain, "Route53")
+            XCTAssertEqual(error.code, 501)
+        }
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

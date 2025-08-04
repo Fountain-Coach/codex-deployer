@@ -3,9 +3,13 @@ import Foundation
 /// Parameters for filtering the list zones endpoint.
 /// When all fields are `nil`, the API returns every zone.
 public struct ListZonesParameters: Codable {
+    /// Filter results by an exact zone name.
     public var name: String?
+    /// Match zones containing the given search substring.
     public var searchName: String?
+    /// Page number for paginated responses starting at one.
     public var page: Int?
+    /// Number of zones to return per page.
     public var perPage: Int?
 }
 

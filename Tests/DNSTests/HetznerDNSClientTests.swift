@@ -60,6 +60,19 @@ final class HetznerDNSClientTests: XCTestCase {
         let req = ListZones(parameters: params)
         XCTAssertEqual(req.path, "/zones?name=foo&search_name=bar&page=1&per_page=5")
     }
+
+    /// Ensures `listZones` returns zone identifiers and builds a GET request.
+    func testListZonesReturnsIDs() async throws {
+        let zone = Zone(created: "", id: "z1", is_secondary_dns: false, legacy_dns_host: "", legacy_ns: [], modified: "", name: "example.com", ns: [], owner: "", paused: false, permission: "", project: "", records_count: 0, registrar: "", status: "", ttl: 60, txt_verification: [:], verified: "")
+        let response = ZonesResponse(meta: [:], zones: [zone])
+        let data = try JSONEncoder().encode(response)
+        let session = MockSession(data: data)
+        let client = HetznerDNSClient(token: "t", session: session)
+        let ids = try await client.listZones()
+        XCTAssertEqual(ids, ["z1"])
+        XCTAssertEqual(session.lastRequest?.url?.path, "/api/v1/zones")
+        XCTAssertEqual(session.lastRequest?.httpMethod, "GET")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
