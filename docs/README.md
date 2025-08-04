@@ -30,9 +30,10 @@ As modules gain documentation, brief summaries are added here.
 - **URLSessionHTTPClientTests** – updated for Linux compatibility ensuring network client coverage.
 - **OpenAPISpec.swiftType** – documented helper converting schemas to Swift types.
 - **String.camelCased** – extension for transforming snake case identifiers; now documents that leading, trailing, and consecutive underscores are ignored and numeric segments are preserved, with comments explaining underscore splitting and recombination logic for clarity.
-- **Agent.main** – entry point usage instructions are now documented.
+- **FountainAiLauncher CLI** – supervisor entrypoint launching configured services is now documented.
 - **publishing-frontend CLI** – documented main entrypoint starting the static server.
 - **clientgen-service CLI** – wrapper around GeneratorCLI is now documented.
+- **gateway-server CLI** – documented gateway server entrypoint exposing the HTTP gateway.
 - **GatewayServerTests** – verifies the gateway's health endpoint.
 - **GatewayServer** – documentation now covers health and metrics endpoints.
 - **Service** and **Supervisor** – properties and lifecycle methods documented.
