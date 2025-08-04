@@ -66,6 +66,7 @@ As modules gain documentation, brief summaries are added here.
 - **HTTPKernel.handle** – now documents error propagation from routing closures.
 - **run-tests.sh** – helper script bundling release build and coverage test steps.
 - **PublishingFrontendPlugin.respond** – documents parameters and emitted `Content-Type` header when serving files.
+- **bulkUpdateRecords.method** and **path**, **updateZone.method** and **path** – request properties now describe HTTP verbs and endpoint resolution.
 
 Documentation coverage will expand alongside test coverage.
 

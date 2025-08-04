@@ -12,8 +12,11 @@ public struct updateZone: APIRequest {
     public typealias Body = ZoneUpdateRequest
     /// Response containing the updated zone representation.
     public typealias Response = ZoneResponse
+    /// HTTP method used when updating a DNS zone.
     public var method: String { "PUT" }
+    /// Identifier parameters selecting which zone to modify.
     public var parameters: updateZoneParameters
+    /// API path with the zone identifier substituted.
     public var path: String {
         var path = "/zones/{ZoneID}"
         let query: [String] = []
@@ -21,6 +24,7 @@ public struct updateZone: APIRequest {
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
     }
+    /// Optional request body describing updated zone configuration.
     public var body: Body?
 
     /// Creates a new zone update request.
