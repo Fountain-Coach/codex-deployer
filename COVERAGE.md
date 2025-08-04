@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31820   26516    16.67%   14336 11481    19.91%   99477 81241    18.33%
+TOTAL                                          31830   26522    16.68%   14346 11483    19.96%   99499 81247    18.34%
 ```
 
-The repository contains **99,477** executable lines, with **18,236** lines covered (approx. **18.33%** line coverage).
+The repository contains **99,499** executable lines, with **18,252** lines covered (approx. **18.34%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts` and test targets, the totals are:
 
 ```
-TOTAL                                           782     319    59.21%     329     72    78.12%    1722     638    62.95%
+TOTAL                                           590     256    56.61%     173     37    78.61%    1369     483    64.72%
 ```
 
-Within repository sources there are **1,722** lines, with **1,084** covered, giving **62.95%** line coverage.
+Within repository sources there are **1,369** lines, with **886** covered, giving **64.72%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -69,6 +69,8 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``CamelCasedEmptyString`` and ``CamelCasedMultipleUnderscores`` tests raise the total test count to **113**.
 
 - The new ``HTTPResponseStatusMutation`` and ``HTTPResponseBodyMutation`` tests raise the total test count to **115**.
+
+- The new ``OpenAPIParameter`` name and type tests raise the total test count to **117**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

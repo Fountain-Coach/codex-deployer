@@ -4,6 +4,7 @@ import Yams
 /// Parses an OpenAPI specification from JSON or YAML.
 public enum SpecLoader {
     /// Reads and validates a specification file.
+    /// Strips copyright lines prefixed with "©" before decoding.
     /// - Parameter url: Location of the spec on disk.
     /// - Returns: Parsed ``OpenAPISpec`` instance.
     public static func load(from url: URL) throws -> OpenAPISpec {
