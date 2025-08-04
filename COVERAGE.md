@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31959   26475    17.16%   14451 11476    20.59%   99797 81189    18.65%
+TOTAL                                          31974   26506    17.10%   14466 11488    20.59%   99839 81363    18.51%
 ```
 
-The repository contains **99,797** executable lines, with **18,608** lines covered (approx. **18.65%** line coverage).
+The repository contains **99,839** executable lines, with **18,476** lines covered (approx. **18.51%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts` and test targets, the totals are:
 
 ```
-TOTAL                                           590     213    63.90%     173     31    82.08%    1380     418    69.71%
+TOTAL                                           590     210    64.41%     173     31    82.08%    1380     415    69.93%
 ```
 
-Within repository sources there are **1,380** lines, with **962** covered, giving **69.71%** line coverage.
+Within repository sources there are **1,380** lines, with **965** covered, giving **69.93%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -81,6 +81,8 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``ServiceInitializerStoresArguments``, ``PublishingConfigCustomValues``, and ``TodosNotEqualWithDifferentName`` tests raise the total test count to **133**.
 
 - The new ``CamelCasedLeadingUnderscore``, ``CamelCasedNumbers``, and ``EmitRequestGeneratesQueryParameter`` tests raise the total test count to **136**.
+
+- The new ``SpecValidator`` empty title, parameter name, and parameter location tests raise the total test count to **139**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
