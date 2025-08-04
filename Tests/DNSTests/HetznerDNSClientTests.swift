@@ -5,6 +5,7 @@ import FoundationNetworking
 #endif
 @testable import PublishingFrontend
 
+/// Tests covering request building and header injection for ``HetznerDNSClient``.
 final class HetznerDNSClientTests: XCTestCase {
     final class MockSession: HTTPSession {
         var lastRequest: URLRequest?
@@ -72,6 +73,25 @@ final class HetznerDNSClientTests: XCTestCase {
         XCTAssertEqual(ids, ["z1"])
         XCTAssertEqual(session.lastRequest?.url?.path, "/api/v1/zones")
         XCTAssertEqual(session.lastRequest?.httpMethod, "GET")
+    }
+
+    /// Ensures `updateRecord` attaches the auth token and JSON content type.
+    func testUpdateRecordSetsAuthHeader() async throws {
+        let response = RecordResponse(record: Record(created: "", id: "1", modified: "", name: "www", ttl: 60, type: "A", value: "2.2.2.2", zone_id: "z"))
+        let data = try JSONEncoder().encode(response)
+        let session = MockSession(data: data)
+        let client = HetznerDNSClient(token: "tok", session: session)
+        try await client.updateRecord(id: "1", zone: "z", name: "www", type: "A", value: "2.2.2.2")
+        XCTAssertEqual(session.lastRequest?.value(forHTTPHeaderField: "Auth-API-Token"), "tok")
+        XCTAssertEqual(session.lastRequest?.value(forHTTPHeaderField: "Content-Type"), "application/json")
+    }
+
+    /// Ensures `deleteRecord` includes the auth token header.
+    func testDeleteRecordSetsAuthHeader() async throws {
+        let session = MockSession(data: Data())
+        let client = HetznerDNSClient(token: "secret", session: session)
+        try await client.deleteRecord(id: "42")
+        XCTAssertEqual(session.lastRequest?.value(forHTTPHeaderField: "Auth-API-Token"), "secret")
     }
 }
 

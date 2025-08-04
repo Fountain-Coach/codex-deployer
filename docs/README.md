@@ -56,6 +56,7 @@ As modules gain documentation, brief summaries are added here.
 - **GatewayServer.start** and **stop** – documentation now explains certificate manager activation and graceful shutdown.
 - **APIClient.baseURL**, **session**, and **defaultHeaders** – stored properties document connection details.
 - **HetznerDNSClient.api** – underlying HTTP client property now documented.
+- **HetznerDNSClient.init** – notes automatic `Auth-API-Token` header injection for all requests.
 - **ServerGenerator emit helpers** – private functions now describe generated source responsibilities.
 - **BulkRecordsCreateRequest** and **validateZoneFileResponse** – documented models for batch record creation and zone validation feedback.
 - **PublishingFrontendPlugin.rootPath** – documented property describing the static file directory.

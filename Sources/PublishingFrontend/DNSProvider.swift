@@ -21,6 +21,7 @@ public struct HetznerDNSClient: DNSProvider {
     let api: APIClient
 
     /// Creates a new client with the given API token and session.
+    /// The token is attached as an `Auth-API-Token` header on every request.
     public init(token: String, session: HTTPSession = URLSession.shared) {
         self.api = APIClient(
             baseURL: URL(string: "https://dns.hetzner.com/api/v1")!,
