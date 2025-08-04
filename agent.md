@@ -18,7 +18,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 |------------------------|------------------------------------------|------------------------------------------------------------------|--------|------------------------------------------|-------------------|
 | Route53 DNS client     | `Route53Client`                          | Implement DNS operations instead of throwing `Error.unimplemented` | ❌     | Requires AWS DNS API spec and credentials | parser, cli       |
 | Generated server handlers | `Sources/*/Handlers`                  | Replace placeholder `HTTPResponse()` returns with functional logic | ✅     | None                                   | server, cli       |
-| Supervisor binary paths | `FountainAiLauncher`                   | Package or document required external binaries for supervisor     | ⚠️     | External binaries not included            | deployment, docs  |
+| Supervisor binary paths | `FountainAiLauncher`                   | Document required external binaries for supervisor     | ✅     | None                                   | deployment, docs  |
 | Linter configuration   | root                                     | Introduce SwiftLint setup                 | ✅     | None                                     | ci, linter        |
 | CI pipeline            | root                                     | Add CI workflow to run tests and coverage                        | ❌     | Choose CI platform                        | ci, test          |
 | Test coverage          | various                                  | Expand tests for under-tested modules (e.g., stubs)              | ⚠️     | Missing implementations, time             | test              |
@@ -59,4 +59,3 @@ It is the canonical manifest governing all self-driven improvement and orchestra
 Every generated or updated file must end with:
 
 > © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-
