@@ -67,6 +67,38 @@ final class PublishingFrontendTests: XCTestCase {
         XCTAssertThrowsError(try loadPublishingConfig())
     }
 
+    /// Ensures invalid YAML content results in a decoding error.
+    func testLoadPublishingConfigFailsForInvalidYAML() throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("badcfg", isDirectory: true)
+        let configDir = dir.appendingPathComponent("Configuration", isDirectory: true)
+        try? FileManager.default.removeItem(at: dir)
+        try FileManager.default.createDirectory(at: configDir, withIntermediateDirectories: true)
+        let fileURL = configDir.appendingPathComponent("publishing.yml")
+        try "port: [123".write(to: fileURL, atomically: true, encoding: .utf8)
+        let cwd = FileManager.default.currentDirectoryPath
+        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        XCTAssertThrowsError(try loadPublishingConfig())
+    }
+
+    /// Ensures non-numeric port values fail decoding.
+    func testLoadPublishingConfigFailsForNonNumericPort() throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("badportcfg", isDirectory: true)
+        let configDir = dir.appendingPathComponent("Configuration", isDirectory: true)
+        try? FileManager.default.removeItem(at: dir)
+        try FileManager.default.createDirectory(at: configDir, withIntermediateDirectories: true)
+        let fileURL = configDir.appendingPathComponent("publishing.yml")
+        let yaml = """
+        port: not_a_number
+        rootPath: /tmp/Public
+        """
+        try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+        let cwd = FileManager.default.currentDirectoryPath
+        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        XCTAssertThrowsError(try loadPublishingConfig())
+    }
+
     @MainActor
     func testServerReturns404ForMissingFile() async throws {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("missing-public")

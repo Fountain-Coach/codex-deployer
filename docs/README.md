@@ -81,6 +81,7 @@ As modules gain documentation, brief summaries are added here.
 - **services array** – startup service list in `FountainAiLauncher` now documented.
 - **ClientGenerator.emitRequest** – documents generation of request types handling path and query parameters.
 - **renew-certs.sh** – script obtaining TLS certificates via `certbot` with configurable environment variables.
+- **loadPublishingConfig** – documents error handling for missing files and invalid YAML.
 
 Documentation coverage will expand alongside test coverage.
 
