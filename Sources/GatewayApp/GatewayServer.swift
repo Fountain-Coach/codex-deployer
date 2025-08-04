@@ -22,6 +22,8 @@ public final class GatewayServer {
     /// - Parameters:
     ///   - manager: Certificate renewal manager.
     ///   - plugins: Plugins applied before and after routing.
+    ///     Plugins are invoked in the order provided for ``GatewayPlugin.prepare(_:)``
+    ///     and in reverse order for ``GatewayPlugin.respond(_:for:)``.
     public init(manager: CertificateManager = CertificateManager(),
                 plugins: [GatewayPlugin] = []) {
         self.manager = manager

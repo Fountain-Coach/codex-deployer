@@ -109,6 +109,52 @@ final class GatewayServerTests: XCTestCase {
         let order = await collector.snapshot()
         XCTAssertEqual(order, ["B", "A"])
     }
+
+    @MainActor
+    /// Plugins should run `prepare` in registration order.
+    func testPluginsPrepareInRegistrationOrder() async throws {
+        actor OrderCollector {
+            private var names: [String] = []
+            func record(_ name: String) { names.append(name) }
+            func snapshot() -> [String] { names }
+        }
+        struct RecordingPlugin: GatewayPlugin {
+            let name: String
+            let collector: OrderCollector
+            func prepare(_ request: HTTPRequest) async throws -> HTTPRequest {
+                await collector.record(name)
+                return request
+            }
+        }
+        let collector = OrderCollector()
+        let plugins: [GatewayPlugin] = [
+            RecordingPlugin(name: "A", collector: collector),
+            RecordingPlugin(name: "B", collector: collector)
+        ]
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: plugins)
+        Task { try await server.start(port: 9105) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let url = URL(string: "http://127.0.0.1:9105/health")!
+        _ = try await URLSession.shared.data(from: url)
+        try await server.stop()
+        let order = await collector.snapshot()
+        XCTAssertEqual(order, ["A", "B"])
+    }
+
+    @MainActor
+    /// Health endpoint should emit the JSON content type header.
+    func testHealthEndpointSetsJSONContentType() async throws {
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9106) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let url = URL(string: "http://127.0.0.1:9106/health")!
+        let (_, response) = try await URLSession.shared.data(from: url)
+        let header = (response as? HTTPURLResponse)?.value(forHTTPHeaderField: "Content-Type")
+        XCTAssertEqual(header, "application/json")
+        try await server.stop()
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
