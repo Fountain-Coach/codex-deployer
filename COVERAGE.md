@@ -5,10 +5,10 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31982   26475    17.22%   14474 11475    20.72%   99851 81192    18.69%
+TOTAL                                          31997   26468    17.28%   14486 11475    20.79%   99876 81178    18.72%
 ```
 
-The repository contains **99,851** executable lines, with **18,659** lines covered (approx. **18.69%** line coverage).
+The repository contains **99,876** executable lines, with **18,698** lines covered (approx. **18.72%** line coverage).
 
 ### Repository source coverage
 
@@ -84,5 +84,6 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 
 - The new ``SpecValidator`` empty title, parameter name, and parameter location tests raise the total test count to **139**.
 - The new ``CamelCasedTrailingUnderscore`` and ``CamelCasedUppercaseInput`` tests raise the total test count to **141**.
+- The new ``ZoneUpdateRequestCodable`` and ``ZonesResponseDecodes`` tests raise the total test count to **143**.
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

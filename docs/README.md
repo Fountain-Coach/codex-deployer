@@ -75,6 +75,7 @@ As modules gain documentation, brief summaries are added here.
 - **SpecLoader.load** – documents removal of copyright lines before decoding.
 - **SpecLoader.load** – clarifies JSON fallback and error reporting for invalid input data.
 - **OpenAPISpec.Parameter.swiftName** and **swiftType** – document parameter name sanitization and schema type defaults.
+- **OpenAPISpec.Parameter.name**, **location**, **required**, and **schema** – properties now clarify identifiers, where parameters appear, necessity, and data typing.
 - **ListZonesParameters.name**, **searchName**, **page**, and **perPage** – document zone filtering and pagination options.
 - **OpenAPISpec.Schema.Property.swiftType** – inline comments clarify array and object mappings and default behavior.
 - **services array** – startup service list in `FountainAiLauncher` now documented.
