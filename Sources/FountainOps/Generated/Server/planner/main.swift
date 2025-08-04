@@ -8,17 +8,25 @@ import Darwin
 
 import PlannerService
 
+/// Minimal synchronous HTTP runtime used by the planner service.
+/// Accepts TCP connections and forwards requests to ``kernel``.
 final class SimpleHTTPRuntime: @unchecked Sendable {
     enum RuntimeError: Error { case socket, bind, listen }
+    /// Handler invoked for each parsed HTTP request.
     let kernel: HTTPKernel
+    /// TCP port the runtime binds its listening socket to.
     let port: Int32
+    /// File descriptor of the listening socket.
     private var serverFD: Int32 = -1
 
+    /// Creates a new runtime binding to ``port``.
     init(kernel: HTTPKernel, port: Int32 = 8080) {
         self.kernel = kernel
         self.port = port
     }
 
+    /// Opens a listening socket and starts accepting connections.
+    /// - Throws: ``RuntimeError`` when socket operations fail.
     func start() throws {
         #if os(Linux)
         let socketType: Int32 = Int32(SOCK_STREAM.rawValue)
@@ -44,6 +52,7 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
         DispatchQueue.global().async { [weak self] in self?.acceptLoop() }
     }
 
+    /// Accepts incoming client sockets and dispatches them for handling.
     private func acceptLoop() {
         while true {
             var addr = sockaddr()
@@ -57,6 +66,9 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
         }
     }
 
+    /// Processes a single client connection.
+    /// Reads the request, invokes ``kernel``, and writes the response.
+    /// - Parameter fd: File descriptor of the accepted client socket.
     private func handle(fd: Int32) {
         var buffer = [UInt8](repeating: 0, count: 4096)
         let n = read(fd, &buffer, buffer.count)
@@ -71,6 +83,9 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
         }
     }
 
+    /// Parses raw HTTP data into a minimal ``HTTPRequest``.
+    /// - Parameter data: Raw bytes read from the socket.
+    /// - Returns: Parsed request or `nil` if decoding fails.
     private func parseRequest(_ data: Data) -> HTTPRequest? {
         guard let string = String(data: data, encoding: .utf8) else { return nil }
         let parts = string.components(separatedBy: "\r\n\r\n")
@@ -83,6 +98,9 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
         return HTTPRequest(method: method, path: path)
     }
 
+    /// Serializes an ``HTTPResponse`` into raw HTTP/1.1 bytes.
+    /// - Parameter resp: Response to encode.
+    /// - Returns: Byte buffer ready for transmission over a socket.
     private func serialize(_ resp: HTTPResponse) -> Data {
         var text = "HTTP/1.1 \(resp.status) OK\r\n"
         text += "Content-Length: \(resp.body.count)\r\n"
@@ -103,4 +121,4 @@ do {
     print("Failed to start server: \(error)")
 }
 
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

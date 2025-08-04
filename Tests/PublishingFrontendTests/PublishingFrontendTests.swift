@@ -188,6 +188,42 @@ final class PublishingFrontendTests: XCTestCase {
         XCTAssertEqual((response as? HTTPURLResponse)?.value(forHTTPHeaderField: "Content-Type"), "text/html")
         try await frontend.stop()
     }
+
+    @MainActor
+    /// Serves files within nested subdirectories.
+    func testServerServesNestedFile() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("nested-public")
+        let subdir = dir.appendingPathComponent("docs")
+        try? FileManager.default.removeItem(at: dir)
+        try FileManager.default.createDirectory(at: subdir, withIntermediateDirectories: true)
+        let fileURL = subdir.appendingPathComponent("file.txt")
+        try "hi".write(to: fileURL, atomically: true, encoding: .utf8)
+        var cfg = PublishingConfig()
+        cfg.rootPath = dir.path
+        cfg.port = 9103
+        let frontend = PublishingFrontend(config: cfg)
+        try await frontend.start()
+        let url = URL(string: "http://127.0.0.1:\(cfg.port)/docs/file.txt")!
+        let data = try Data(contentsOf: url)
+        XCTAssertEqual(String(data: data, encoding: .utf8), "hi")
+        try await frontend.stop()
+    }
+
+    /// Uses defaults when the configuration file is empty.
+    func testLoadPublishingConfigUsesDefaultsWhenFileEmpty() throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("empty-cfg", isDirectory: true)
+        let configDir = dir.appendingPathComponent("Configuration", isDirectory: true)
+        try? FileManager.default.removeItem(at: dir)
+        try FileManager.default.createDirectory(at: configDir, withIntermediateDirectories: true)
+        let fileURL = configDir.appendingPathComponent("publishing.yml")
+        try "".write(to: fileURL, atomically: true, encoding: .utf8)
+        let cwd = FileManager.default.currentDirectoryPath
+        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        let config = try loadPublishingConfig()
+        XCTAssertEqual(config.port, 8085)
+        XCTAssertEqual(config.rootPath, "./Public")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
