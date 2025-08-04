@@ -31,6 +31,7 @@ Please analyze this repository and report the current status quo in terms of:
 7. Known gaps or TODOs
 
 Output a structured status report in Markdown.
+```
 
 💡 Why? This lets Codex build an accurate map of what exists, what’s incomplete, and what’s missing — based on real code, not assumptions.
 
