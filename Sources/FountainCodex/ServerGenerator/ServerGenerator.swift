@@ -71,16 +71,16 @@ public enum ServerGenerator {
         if let paths = spec.paths {
             for (_, item) in paths {
                 if let op = item.get {
-                    output += "    public func \(op.operationId.camelCased)(_ request: HTTPRequest, body: \(bodyType(for: op))?) async throws -> HTTPResponse {\n        return HTTPResponse()\n    }\n"
+                    output += "    public func \(op.operationId.camelCased)(_ request: HTTPRequest, body: \(bodyType(for: op))?) async throws -> HTTPResponse {\n        return HTTPResponse(status: 501, headers: [\"Content-Type\": \"text/plain\"], body: Data(\"not implemented\".utf8))\n    }\n"
                 }
                 if let op = item.post {
-                    output += "    public func \(op.operationId.camelCased)(_ request: HTTPRequest, body: \(bodyType(for: op))?) async throws -> HTTPResponse {\n        return HTTPResponse()\n    }\n"
+                    output += "    public func \(op.operationId.camelCased)(_ request: HTTPRequest, body: \(bodyType(for: op))?) async throws -> HTTPResponse {\n        return HTTPResponse(status: 501, headers: [\"Content-Type\": \"text/plain\"], body: Data(\"not implemented\".utf8))\n    }\n"
                 }
                 if let op = item.put {
-                    output += "    public func \(op.operationId.camelCased)(_ request: HTTPRequest, body: \(bodyType(for: op))?) async throws -> HTTPResponse {\n        return HTTPResponse()\n    }\n"
+                    output += "    public func \(op.operationId.camelCased)(_ request: HTTPRequest, body: \(bodyType(for: op))?) async throws -> HTTPResponse {\n        return HTTPResponse(status: 501, headers: [\"Content-Type\": \"text/plain\"], body: Data(\"not implemented\".utf8))\n    }\n"
                 }
                 if let op = item.delete {
-                    output += "    public func \(op.operationId.camelCased)(_ request: HTTPRequest, body: \(bodyType(for: op))?) async throws -> HTTPResponse {\n        return HTTPResponse()\n    }\n"
+                    output += "    public func \(op.operationId.camelCased)(_ request: HTTPRequest, body: \(bodyType(for: op))?) async throws -> HTTPResponse {\n        return HTTPResponse(status: 501, headers: [\"Content-Type\": \"text/plain\"], body: Data(\"not implemented\".utf8))\n    }\n"
                 }
             }
         }

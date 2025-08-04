@@ -1,0 +1,642 @@
+[0/1] Planning build
+Building for debugging...
+[0/20] Write sources
+[5/50] Write swift-version--4EAD98957C2213E4.txt
+[7/55] Emitting module FountainCoreTests
+[8/55] Compiling ClientGeneratorTests SpecValidatorTests.swift
+[9/56] Compiling DNSTests DeletePrimaryServerRequestTests.swift
+[10/56] Compiling DNSTests DeleteRecordRequestTests.swift
+[11/56] Compiling DNSTests DeleteZoneRequestTests.swift
+[12/58] Compiling FountainCoreTests FountainCoreTests.swift
+[13/59] Emitting module DNSTests
+[14/59] Compiling PublishingFrontendTests Route53ClientTests.swift
+[15/59] Compiling PublishingFrontendTests HetznerDNSModelsTests.swift
+[16/59] Compiling DNSTests DNSClientTests.swift
+[17/59] Compiling DNSTests GetPrimaryServerRequestTests.swift
+[18/59] Compiling DNSTests GetRecordRequestTests.swift
+[19/60] Emitting module PublishingFrontendTests
+[20/61] Compiling PublishingFrontendTests HetznerDNSRequestTests.swift
+[21/61] Compiling PublishingFrontendTests PublishingFrontendTests.swift
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:39:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 37 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+ 38 |         let cwd = FileManager.default.currentDirectoryPath
+ 39 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 40 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 41 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:40:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 38 |         let cwd = FileManager.default.currentDirectoryPath
+ 39 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 40 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 41 |         let config = try loadPublishingConfig()
+ 42 |         XCTAssertEqual(config.port, 1234)
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:65:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 63 |         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+ 64 |         let cwd = FileManager.default.currentDirectoryPath
+ 65 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 66 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 67 |         XCTAssertThrowsError(try loadPublishingConfig())
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:66:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 64 |         let cwd = FileManager.default.currentDirectoryPath
+ 65 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 66 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 67 |         XCTAssertThrowsError(try loadPublishingConfig())
+ 68 |     }
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:79:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 77 |         try "port: [123".write(to: fileURL, atomically: true, encoding: .utf8)
+ 78 |         let cwd = FileManager.default.currentDirectoryPath
+ 79 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 80 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 81 |         XCTAssertThrowsError(try loadPublishingConfig())
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:80:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 78 |         let cwd = FileManager.default.currentDirectoryPath
+ 79 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 80 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 81 |         XCTAssertThrowsError(try loadPublishingConfig())
+ 82 |     }
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:97:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 95 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+ 96 |         let cwd = FileManager.default.currentDirectoryPath
+ 97 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 98 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 99 |         XCTAssertThrowsError(try loadPublishingConfig())
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:98:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 96 |         let cwd = FileManager.default.currentDirectoryPath
+ 97 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 98 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 99 |         XCTAssertThrowsError(try loadPublishingConfig())
+100 |     }
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:114:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+112 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+113 |         let cwd = FileManager.default.currentDirectoryPath
+114 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+115 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+116 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:115:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+113 |         let cwd = FileManager.default.currentDirectoryPath
+114 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+115 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+116 |         let config = try loadPublishingConfig()
+117 |         XCTAssertEqual(config.port, 1234)
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:133:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+131 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+132 |         let cwd = FileManager.default.currentDirectoryPath
+133 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+134 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+135 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:134:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+132 |         let cwd = FileManager.default.currentDirectoryPath
+133 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+134 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+135 |         let config = try loadPublishingConfig()
+136 |         XCTAssertEqual(config.port, 8085)
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:221:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+219 |         try "".write(to: fileURL, atomically: true, encoding: .utf8)
+220 |         let cwd = FileManager.default.currentDirectoryPath
+221 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+222 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+223 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:222:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+220 |         let cwd = FileManager.default.currentDirectoryPath
+221 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+222 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+223 |         let config = try loadPublishingConfig()
+224 |         XCTAssertEqual(config.port, 8085)
+[22/61] Emitting module IntegrationRuntimeTests
+[23/61] Compiling DNSTests APIClientTests.swift
+/workspace/codex-deployer/Tests/ClientGeneratorTests/ClientGeneratorTests.swift:52:28: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+50 |         try ClientGenerator.emitClient(from: spec, to: outDir)
+51 |         let requestFile = outDir.appendingPathComponent("Requests/GetZone.swift")
+52 |         let contents = try String(contentsOf: requestFile)
+   |                            `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+53 |         XCTAssertTrue(contents.contains("detail"))
+54 |         XCTAssertTrue(contents.contains("query.append(\"detail"))
+[24/61] Compiling DNSTests CreatePrimaryServerRequestTests.swift
+/workspace/codex-deployer/Tests/ClientGeneratorTests/ClientGeneratorTests.swift:52:28: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+50 |         try ClientGenerator.emitClient(from: spec, to: outDir)
+51 |         let requestFile = outDir.appendingPathComponent("Requests/GetZone.swift")
+52 |         let contents = try String(contentsOf: requestFile)
+   |                            `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+53 |         XCTAssertTrue(contents.contains("detail"))
+54 |         XCTAssertTrue(contents.contains("query.append(\"detail"))
+[25/61] Compiling ClientGeneratorTests SpecLoaderTests.swift
+/workspace/codex-deployer/Tests/ClientGeneratorTests/SpecLoaderTests.swift:28:29: warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+26 |     func testLoadThrowsForEmptyFile() {
+27 |         let url = FileManager.default.temporaryDirectory.appendingPathComponent("empty.yml")
+28 |         FileManager.default.createFile(atPath: url.path, contents: Data())
+   |                             `- warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+29 |         XCTAssertThrowsError(try SpecLoader.load(from: url))
+30 |     }
+
+/workspace/codex-deployer/Tests/ClientGeneratorTests/SpecLoaderTests.swift:37:29: warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+35 |         let bytes: [UInt8] = [0xFF]
+36 |         let data = Data(bytes)
+37 |         FileManager.default.createFile(atPath: url.path, contents: data)
+   |                             `- warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+38 |         XCTAssertThrowsError(try SpecLoader.load(from: url))
+39 |     }
+[28/61] Emitting module ClientGeneratorTests
+[30/62] Compiling DNSTests HetznerDNSClientTests.swift
+[31/62] Compiling DNSTests ListPrimaryServersRequestTests.swift
+[34/62] Compiling DNSTests GetZoneRequestTests.swift
+[39/62] Wrapping AST for FountainCoreTests for debugging
+[46/62] Compiling DNSTests ListRecordsRequestTests.swift
+[47/62] Compiling DNSTests UpdateRecordRequestTests.swift
+[48/63] Compiling ClientGeneratorTests StringExtensionTests.swift
+[49/64] Compiling IntegrationRuntimeTests PublishingFrontendPluginTests.swift
+[50/64] Compiling IntegrationRuntimeTests URLSessionHTTPClientTests.swift
+[52/65] Wrapping AST for PublishingFrontendTests for debugging
+[54/65] /workspace/codex-deployer/.build/x86_64-unknown-linux-gnu/debug/FountainCoachPackageDiscoveredTests.derived/all-discovered-tests.swift
+[55/65] Write sources
+[56/65] Wrapping AST for DNSTests for debugging
+[57/65] Wrapping AST for ClientGeneratorTests for debugging
+[58/65] Wrapping AST for IntegrationRuntimeTests for debugging
+[60/71] Compiling FountainCoachPackageDiscoveredTests PublishingFrontendTests.swift
+[61/72] Emitting module FountainCoachPackageDiscoveredTests
+[62/72] Compiling FountainCoachPackageDiscoveredTests FountainCoreTests.swift
+[63/72] Compiling FountainCoachPackageDiscoveredTests ClientGeneratorTests.swift
+[64/72] Compiling FountainCoachPackageDiscoveredTests DNSTests.swift
+[65/72] Compiling FountainCoachPackageDiscoveredTests IntegrationRuntimeTests.swift
+[66/72] Compiling FountainCoachPackageDiscoveredTests all-discovered-tests.swift
+[67/73] /workspace/codex-deployer/.build/x86_64-unknown-linux-gnu/debug/FountainCoachPackageTests.derived/runner.swift
+[68/73] Write sources
+[69/73] Wrapping AST for FountainCoachPackageDiscoveredTests for debugging
+[71/75] Compiling FountainCoachPackageTests runner.swift
+[72/75] Emitting module FountainCoachPackageTests
+[73/76] Wrapping AST for FountainCoachPackageTests for debugging
+[74/76] Write Objects.LinkFileList
+[75/76] Linking FountainCoachPackageTests.xctest
+Build complete! (20.45s)
+Test Suite 'All tests' started at 2025-08-04 16:22:36.798
+Test Suite 'debug.xctest' started at 2025-08-04 16:22:36.818
+Test Suite 'FountainCoreTests' started at 2025-08-04 16:22:36.818
+Test Case 'FountainCoreTests.testTodoDecoding' started at 2025-08-04 16:22:36.818
+Test Case 'FountainCoreTests.testTodoDecoding' passed (0.006 seconds)
+Test Case 'FountainCoreTests.testTodoDecodingFailsForMissingID' started at 2025-08-04 16:22:36.824
+Test Case 'FountainCoreTests.testTodoDecodingFailsForMissingID' passed (0.0 seconds)
+Test Case 'FountainCoreTests.testTodoDecodingFailsForMissingName' started at 2025-08-04 16:22:36.825
+Test Case 'FountainCoreTests.testTodoDecodingFailsForMissingName' passed (0.0 seconds)
+Test Case 'FountainCoreTests.testTodoEncodingProducesExpectedJSON' started at 2025-08-04 16:22:36.825
+Test Case 'FountainCoreTests.testTodoEncodingProducesExpectedJSON' passed (0.001 seconds)
+Test Case 'FountainCoreTests.testTodoEncodingRoundTrip' started at 2025-08-04 16:22:36.826
+Test Case 'FountainCoreTests.testTodoEncodingRoundTrip' passed (0.0 seconds)
+Test Case 'FountainCoreTests.testTodoEquality' started at 2025-08-04 16:22:36.827
+Test Case 'FountainCoreTests.testTodoEquality' passed (0.0 seconds)
+Test Case 'FountainCoreTests.testTodosNotEqualWithDifferentID' started at 2025-08-04 16:22:36.827
+Test Case 'FountainCoreTests.testTodosNotEqualWithDifferentID' passed (0.0 seconds)
+Test Case 'FountainCoreTests.testTodosNotEqualWithDifferentName' started at 2025-08-04 16:22:36.827
+Test Case 'FountainCoreTests.testTodosNotEqualWithDifferentName' passed (0.0 seconds)
+Test Suite 'FountainCoreTests' passed at 2025-08-04 16:22:36.827
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.009 (0.009) seconds
+Test Suite 'APIClientTests' started at 2025-08-04 16:22:36.827
+Test Case 'APIClientTests.testBearerInitializerSetsHeader' started at 2025-08-04 16:22:36.827
+Test Case 'APIClientTests.testBearerInitializerSetsHeader' passed (0.002 seconds)
+Test Case 'APIClientTests.testNoBodyResponseReturnsInstance' started at 2025-08-04 16:22:36.829
+Test Case 'APIClientTests.testNoBodyResponseReturnsInstance' passed (0.102 seconds)
+Test Case 'APIClientTests.testRawDataResponse' started at 2025-08-04 16:22:36.931
+Test Case 'APIClientTests.testRawDataResponse' passed (0.001 seconds)
+Test Case 'APIClientTests.testRequestWithoutBodyOmitsContentType' started at 2025-08-04 16:22:36.932
+Test Case 'APIClientTests.testRequestWithoutBodyOmitsContentType' passed (0.001 seconds)
+Test Case 'APIClientTests.testSendDecodesResponse' started at 2025-08-04 16:22:36.933
+Test Case 'APIClientTests.testSendDecodesResponse' passed (0.001 seconds)
+Test Suite 'APIClientTests' passed at 2025-08-04 16:22:36.934
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.106 (0.106) seconds
+Test Suite 'CreatePrimaryServerRequestTests' started at 2025-08-04 16:22:36.934
+Test Case 'CreatePrimaryServerRequestTests.testMethodIsPOST' started at 2025-08-04 16:22:36.934
+Test Case 'CreatePrimaryServerRequestTests.testMethodIsPOST' passed (0.0 seconds)
+Test Case 'CreatePrimaryServerRequestTests.testPathIsCorrect' started at 2025-08-04 16:22:36.934
+Test Case 'CreatePrimaryServerRequestTests.testPathIsCorrect' passed (0.0 seconds)
+Test Suite 'CreatePrimaryServerRequestTests' passed at 2025-08-04 16:22:36.934
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'DNSClientTests' started at 2025-08-04 16:22:36.934
+Test Case 'DNSClientTests.testRoute53CreateRecordErrorDetails' started at 2025-08-04 16:22:36.934
+Test Case 'DNSClientTests.testRoute53CreateRecordErrorDetails' passed (0.001 seconds)
+Test Case 'DNSClientTests.testRoute53CreateRecordStub' started at 2025-08-04 16:22:36.935
+Test Case 'DNSClientTests.testRoute53CreateRecordStub' passed (0.0 seconds)
+Test Case 'DNSClientTests.testRoute53DeleteRecordErrorDetails' started at 2025-08-04 16:22:36.935
+Test Case 'DNSClientTests.testRoute53DeleteRecordErrorDetails' passed (0.0 seconds)
+Test Case 'DNSClientTests.testRoute53DeleteRecordStub' started at 2025-08-04 16:22:36.936
+Test Case 'DNSClientTests.testRoute53DeleteRecordStub' passed (0.0 seconds)
+Test Case 'DNSClientTests.testRoute53ListZonesErrorDetails' started at 2025-08-04 16:22:36.936
+Test Case 'DNSClientTests.testRoute53ListZonesErrorDetails' passed (0.0 seconds)
+Test Case 'DNSClientTests.testRoute53Stub' started at 2025-08-04 16:22:36.936
+Test Case 'DNSClientTests.testRoute53Stub' passed (0.0 seconds)
+Test Case 'DNSClientTests.testRoute53UpdateRecordErrorDetails' started at 2025-08-04 16:22:36.937
+Test Case 'DNSClientTests.testRoute53UpdateRecordErrorDetails' passed (0.101 seconds)
+Test Case 'DNSClientTests.testRoute53UpdateRecordStub' started at 2025-08-04 16:22:37.037
+Test Case 'DNSClientTests.testRoute53UpdateRecordStub' passed (0.0 seconds)
+Test Suite 'DNSClientTests' passed at 2025-08-04 16:22:37.038
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.104 (0.104) seconds
+Test Suite 'DeletePrimaryServerRequestTests' started at 2025-08-04 16:22:37.038
+Test Case 'DeletePrimaryServerRequestTests.testMethodIsDELETE' started at 2025-08-04 16:22:37.038
+Test Case 'DeletePrimaryServerRequestTests.testMethodIsDELETE' passed (0.0 seconds)
+Test Case 'DeletePrimaryServerRequestTests.testPathIsCorrect' started at 2025-08-04 16:22:37.038
+Test Case 'DeletePrimaryServerRequestTests.testPathIsCorrect' passed (0.002 seconds)
+Test Suite 'DeletePrimaryServerRequestTests' passed at 2025-08-04 16:22:37.040
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'DeleteRecordRequestTests' started at 2025-08-04 16:22:37.040
+Test Case 'DeleteRecordRequestTests.testDeleteRecordBuildsPathAndMethod' started at 2025-08-04 16:22:37.040
+Test Case 'DeleteRecordRequestTests.testDeleteRecordBuildsPathAndMethod' passed (0.0 seconds)
+Test Suite 'DeleteRecordRequestTests' passed at 2025-08-04 16:22:37.040
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'DeleteZoneRequestTests' started at 2025-08-04 16:22:37.040
+Test Case 'DeleteZoneRequestTests.testPathBuilderEncodesZoneId' started at 2025-08-04 16:22:37.040
+Test Case 'DeleteZoneRequestTests.testPathBuilderEncodesZoneId' passed (0.0 seconds)
+Test Suite 'DeleteZoneRequestTests' passed at 2025-08-04 16:22:37.041
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'GetPrimaryServerRequestTests' started at 2025-08-04 16:22:37.041
+Test Case 'GetPrimaryServerRequestTests.testMethodIsGET' started at 2025-08-04 16:22:37.041
+Test Case 'GetPrimaryServerRequestTests.testMethodIsGET' passed (0.0 seconds)
+Test Case 'GetPrimaryServerRequestTests.testPathBuilderReplacesId' started at 2025-08-04 16:22:37.041
+Test Case 'GetPrimaryServerRequestTests.testPathBuilderReplacesId' passed (0.0 seconds)
+Test Suite 'GetPrimaryServerRequestTests' passed at 2025-08-04 16:22:37.041
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'GetRecordRequestTests' started at 2025-08-04 16:22:37.041
+Test Case 'GetRecordRequestTests.testPathBuilderReplacesRecordId' started at 2025-08-04 16:22:37.041
+Test Case 'GetRecordRequestTests.testPathBuilderReplacesRecordId' passed (0.0 seconds)
+Test Suite 'GetRecordRequestTests' passed at 2025-08-04 16:22:37.041
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'GetZoneRequestTests' started at 2025-08-04 16:22:37.041
+Test Case 'GetZoneRequestTests.testPathBuilderReplacesZoneId' started at 2025-08-04 16:22:37.041
+Test Case 'GetZoneRequestTests.testPathBuilderReplacesZoneId' passed (0.0 seconds)
+Test Suite 'GetZoneRequestTests' passed at 2025-08-04 16:22:37.042
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'HetznerDNSClientTests' started at 2025-08-04 16:22:37.042
+Test Case 'HetznerDNSClientTests.testCreateRecordEncodesBody' started at 2025-08-04 16:22:37.042
+Test Case 'HetznerDNSClientTests.testCreateRecordEncodesBody' passed (0.002 seconds)
+Test Case 'HetznerDNSClientTests.testCreateRecordRequest' started at 2025-08-04 16:22:37.044
+Test Case 'HetznerDNSClientTests.testCreateRecordRequest' passed (0.001 seconds)
+Test Case 'HetznerDNSClientTests.testCreateRecordSetsContentTypeHeader' started at 2025-08-04 16:22:37.044
+Test Case 'HetznerDNSClientTests.testCreateRecordSetsContentTypeHeader' passed (0.0 seconds)
+Test Case 'HetznerDNSClientTests.testDeleteRecordRequest' started at 2025-08-04 16:22:37.045
+Test Case 'HetznerDNSClientTests.testDeleteRecordRequest' passed (0.001 seconds)
+Test Case 'HetznerDNSClientTests.testDeleteRecordSetsAuthHeader' started at 2025-08-04 16:22:37.045
+Test Case 'HetznerDNSClientTests.testDeleteRecordSetsAuthHeader' passed (0.0 seconds)
+Test Case 'HetznerDNSClientTests.testListZonesPathBuilder' started at 2025-08-04 16:22:37.046
+Test Case 'HetznerDNSClientTests.testListZonesPathBuilder' passed (0.001 seconds)
+Test Case 'HetznerDNSClientTests.testListZonesReturnsIDs' started at 2025-08-04 16:22:37.046
+Test Case 'HetznerDNSClientTests.testListZonesReturnsIDs' passed (0.002 seconds)
+Test Case 'HetznerDNSClientTests.testListZonesSetsAuthHeader' started at 2025-08-04 16:22:37.048
+Test Case 'HetznerDNSClientTests.testListZonesSetsAuthHeader' passed (0.001 seconds)
+Test Case 'HetznerDNSClientTests.testUpdateRecordRequest' started at 2025-08-04 16:22:37.049
+Test Case 'HetznerDNSClientTests.testUpdateRecordRequest' passed (0.001 seconds)
+Test Case 'HetznerDNSClientTests.testUpdateRecordSetsAuthHeader' started at 2025-08-04 16:22:37.050
+Test Case 'HetznerDNSClientTests.testUpdateRecordSetsAuthHeader' passed (0.001 seconds)
+Test Suite 'HetznerDNSClientTests' passed at 2025-08-04 16:22:37.050
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.009 (0.009) seconds
+Test Suite 'ListPrimaryServersRequestTests' started at 2025-08-04 16:22:37.051
+Test Case 'ListPrimaryServersRequestTests.testPathBuilderAddsZoneIdQueryWhenProvided' started at 2025-08-04 16:22:37.051
+Test Case 'ListPrimaryServersRequestTests.testPathBuilderAddsZoneIdQueryWhenProvided' passed (0.0 seconds)
+Test Case 'ListPrimaryServersRequestTests.testPathBuilderWithoutZoneIdHasNoQuery' started at 2025-08-04 16:22:37.051
+Test Case 'ListPrimaryServersRequestTests.testPathBuilderWithoutZoneIdHasNoQuery' passed (0.0 seconds)
+Test Suite 'ListPrimaryServersRequestTests' passed at 2025-08-04 16:22:37.051
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'ListRecordsRequestTests' started at 2025-08-04 16:22:37.051
+Test Case 'ListRecordsRequestTests.testPathBuilderEncodesQuery' started at 2025-08-04 16:22:37.051
+Test Case 'ListRecordsRequestTests.testPathBuilderEncodesQuery' passed (0.0 seconds)
+Test Suite 'ListRecordsRequestTests' passed at 2025-08-04 16:22:37.051
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'UpdateRecordRequestTests' started at 2025-08-04 16:22:37.051
+Test Case 'UpdateRecordRequestTests.testUpdateRecordBuildsPathAndMethod' started at 2025-08-04 16:22:37.051
+Test Case 'UpdateRecordRequestTests.testUpdateRecordBuildsPathAndMethod' passed (0.0 seconds)
+Test Case 'UpdateRecordRequestTests.testUpdateRecordStoresBody' started at 2025-08-04 16:22:37.052
+Test Case 'UpdateRecordRequestTests.testUpdateRecordStoresBody' passed (0.0 seconds)
+Test Suite 'UpdateRecordRequestTests' passed at 2025-08-04 16:22:37.052
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'AsyncHTTPClientDriverTests' started at 2025-08-04 16:22:37.052
+Test Case 'AsyncHTTPClientDriverTests.testExecuteFailsForUnreachableHost' started at 2025-08-04 16:22:37.052
+Test Case 'AsyncHTTPClientDriverTests.testExecuteFailsForUnreachableHost' passed (5.011 seconds)
+Test Case 'AsyncHTTPClientDriverTests.testExecutePerformsRequest' started at 2025-08-04 16:22:42.063
+Test Case 'AsyncHTTPClientDriverTests.testExecutePerformsRequest' passed (0.015 seconds)
+Test Case 'AsyncHTTPClientDriverTests.testExecuteSendsBody' started at 2025-08-04 16:22:42.078
+Test Case 'AsyncHTTPClientDriverTests.testExecuteSendsBody' passed (0.006 seconds)
+Test Suite 'AsyncHTTPClientDriverTests' passed at 2025-08-04 16:22:42.084
+	 Executed 3 tests, with 0 failures (0 unexpected) in 5.032 (5.032) seconds
+Test Suite 'CertificateManagerTests' started at 2025-08-04 16:22:42.084
+Test Case 'CertificateManagerTests.testStartSchedulesRepeatedRuns' started at 2025-08-04 16:22:42.084
+Test Case 'CertificateManagerTests.testStartSchedulesRepeatedRuns' passed (1.015 seconds)
+Test Case 'CertificateManagerTests.testStopCancelsFutureRuns' started at 2025-08-04 16:22:43.100
+Test Case 'CertificateManagerTests.testStopCancelsFutureRuns' passed (3.009 seconds)
+Test Case 'CertificateManagerTests.testTriggerNowRunsScript' started at 2025-08-04 16:22:46.109
+Test Case 'CertificateManagerTests.testTriggerNowRunsScript' passed (1.004 seconds)
+Test Suite 'CertificateManagerTests' passed at 2025-08-04 16:22:47.113
+	 Executed 3 tests, with 0 failures (0 unexpected) in 5.029 (5.029) seconds
+Test Suite 'GatewayPluginTests' started at 2025-08-04 16:22:47.113
+Test Case 'GatewayPluginTests.testDefaultPrepareReturnsSameRequest' started at 2025-08-04 16:22:47.113
+Test Case 'GatewayPluginTests.testDefaultPrepareReturnsSameRequest' passed (0.0 seconds)
+Test Case 'GatewayPluginTests.testDefaultRespondReturnsSameResponse' started at 2025-08-04 16:22:47.114
+Test Case 'GatewayPluginTests.testDefaultRespondReturnsSameResponse' passed (0.0 seconds)
+Test Suite 'GatewayPluginTests' passed at 2025-08-04 16:22:47.114
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'GatewayServerTests' started at 2025-08-04 16:22:47.114
+Test Case 'GatewayServerTests.testHealthEndpointResponds' started at 2025-08-04 16:22:47.114
+Test Case 'GatewayServerTests.testHealthEndpointResponds' passed (0.115 seconds)
+Test Case 'GatewayServerTests.testHealthEndpointSetsJSONContentType' started at 2025-08-04 16:22:47.229
+Test Case 'GatewayServerTests.testHealthEndpointSetsJSONContentType' passed (0.106 seconds)
+Test Case 'GatewayServerTests.testMetricsEndpointResponds' started at 2025-08-04 16:22:47.335
+Test Case 'GatewayServerTests.testMetricsEndpointResponds' passed (0.106 seconds)
+Test Case 'GatewayServerTests.testMetricsEndpointReturnsEmptyArray' started at 2025-08-04 16:22:47.440
+Test Case 'GatewayServerTests.testMetricsEndpointReturnsEmptyArray' passed (0.106 seconds)
+Test Case 'GatewayServerTests.testMetricsEndpointSetsJSONContentType' started at 2025-08-04 16:22:47.546
+Test Case 'GatewayServerTests.testMetricsEndpointSetsJSONContentType' passed (0.106 seconds)
+Test Case 'GatewayServerTests.testPluginCanRewriteRequestAndResponse' started at 2025-08-04 16:22:47.652
+Test Case 'GatewayServerTests.testPluginCanRewriteRequestAndResponse' passed (0.106 seconds)
+Test Case 'GatewayServerTests.testPluginsPrepareInRegistrationOrder' started at 2025-08-04 16:22:47.758
+Test Case 'GatewayServerTests.testPluginsPrepareInRegistrationOrder' passed (0.106 seconds)
+Test Case 'GatewayServerTests.testPluginsRespondInReverseOrder' started at 2025-08-04 16:22:47.864
+Test Case 'GatewayServerTests.testPluginsRespondInReverseOrder' passed (0.106 seconds)
+Test Case 'GatewayServerTests.testUnknownPathReturns404' started at 2025-08-04 16:22:47.970
+Test Case 'GatewayServerTests.testUnknownPathReturns404' passed (0.106 seconds)
+Test Suite 'GatewayServerTests' passed at 2025-08-04 16:22:48.076
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.961 (0.961) seconds
+Test Suite 'HTTPKernelTests' started at 2025-08-04 16:22:48.076
+Test Case 'HTTPKernelTests.testKernelPropagatesErrors' started at 2025-08-04 16:22:48.076
+Test Case 'HTTPKernelTests.testKernelPropagatesErrors' passed (0.0 seconds)
+Test Case 'HTTPKernelTests.testKernelRoutesRequest' started at 2025-08-04 16:22:48.076
+Test Case 'HTTPKernelTests.testKernelRoutesRequest' passed (0.0 seconds)
+Test Suite 'HTTPKernelTests' passed at 2025-08-04 16:22:48.076
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'HTTPRequestTests' started at 2025-08-04 16:22:48.076
+Test Case 'HTTPRequestTests.testRequestDefaults' started at 2025-08-04 16:22:48.076
+Test Case 'HTTPRequestTests.testRequestDefaults' passed (0.0 seconds)
+Test Case 'HTTPRequestTests.testRequestInitializerStoresValues' started at 2025-08-04 16:22:48.077
+Test Case 'HTTPRequestTests.testRequestInitializerStoresValues' passed (0.101 seconds)
+Test Case 'HTTPRequestTests.testRequestMutation' started at 2025-08-04 16:22:48.177
+Test Case 'HTTPRequestTests.testRequestMutation' passed (0.0 seconds)
+Test Suite 'HTTPRequestTests' passed at 2025-08-04 16:22:48.178
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.101 (0.101) seconds
+Test Suite 'HTTPResponseDefaultsTests' started at 2025-08-04 16:22:48.178
+Test Case 'HTTPResponseDefaultsTests.testNoBodyCodable' started at 2025-08-04 16:22:48.178
+Test Case 'HTTPResponseDefaultsTests.testNoBodyCodable' passed (0.001 seconds)
+Test Case 'HTTPResponseDefaultsTests.testResponseBodyMutation' started at 2025-08-04 16:22:48.178
+Test Case 'HTTPResponseDefaultsTests.testResponseBodyMutation' passed (0.0 seconds)
+Test Case 'HTTPResponseDefaultsTests.testResponseDefaults' started at 2025-08-04 16:22:48.179
+Test Case 'HTTPResponseDefaultsTests.testResponseDefaults' passed (0.0 seconds)
+Test Case 'HTTPResponseDefaultsTests.testResponseHeadersMutation' started at 2025-08-04 16:22:48.179
+Test Case 'HTTPResponseDefaultsTests.testResponseHeadersMutation' passed (0.0 seconds)
+Test Case 'HTTPResponseDefaultsTests.testResponseInitializerStoresValues' started at 2025-08-04 16:22:48.179
+Test Case 'HTTPResponseDefaultsTests.testResponseInitializerStoresValues' passed (0.001 seconds)
+Test Case 'HTTPResponseDefaultsTests.testResponseStatusMutation' started at 2025-08-04 16:22:48.180
+Test Case 'HTTPResponseDefaultsTests.testResponseStatusMutation' passed (0.0 seconds)
+Test Suite 'HTTPResponseDefaultsTests' passed at 2025-08-04 16:22:48.180
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'LoggingPluginTests' started at 2025-08-04 16:22:48.180
+Test Case 'LoggingPluginTests.testLoggingPluginPassThrough' started at 2025-08-04 16:22:48.180
+-> GET /
+<- 200 for /
+Test Case 'LoggingPluginTests.testLoggingPluginPassThrough' passed (0.0 seconds)
+Test Case 'LoggingPluginTests.testPreparePreservesHeadersAndBody' started at 2025-08-04 16:22:48.180
+-> POST /data
+Test Case 'LoggingPluginTests.testPreparePreservesHeadersAndBody' passed (0.0 seconds)
+Test Case 'LoggingPluginTests.testRespondPreservesHeadersAndBody' started at 2025-08-04 16:22:48.181
+<- 201 for /
+Test Case 'LoggingPluginTests.testRespondPreservesHeadersAndBody' passed (0.0 seconds)
+Test Suite 'LoggingPluginTests' passed at 2025-08-04 16:22:48.181
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'NIOHTTPServerTests' started at 2025-08-04 16:22:48.181
+Test Case 'NIOHTTPServerTests.testServerHandlesConcurrentRequests' started at 2025-08-04 16:22:48.181
+Test Case 'NIOHTTPServerTests.testServerHandlesConcurrentRequests' passed (0.008 seconds)
+Test Case 'NIOHTTPServerTests.testServerReleasesPortOnStop' started at 2025-08-04 16:22:48.189
+Test Case 'NIOHTTPServerTests.testServerReleasesPortOnStop' passed (0.003 seconds)
+Test Case 'NIOHTTPServerTests.testServerResponds' started at 2025-08-04 16:22:48.192
+Test Case 'NIOHTTPServerTests.testServerResponds' passed (0.004 seconds)
+Test Suite 'NIOHTTPServerTests' passed at 2025-08-04 16:22:48.196
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.015 (0.015) seconds
+Test Suite 'PublishingFrontendPluginTests' started at 2025-08-04 16:22:48.196
+Test Case 'PublishingFrontendPluginTests.testPluginIgnoresNonGETRequests' started at 2025-08-04 16:22:48.196
+Test Case 'PublishingFrontendPluginTests.testPluginIgnoresNonGETRequests' passed (0.004 seconds)
+Test Case 'PublishingFrontendPluginTests.testPluginPassThroughWhenFileMissing' started at 2025-08-04 16:22:48.200
+Test Case 'PublishingFrontendPluginTests.testPluginPassThroughWhenFileMissing' passed (0.101 seconds)
+Test Case 'PublishingFrontendPluginTests.testPluginPreservesHeadersOnPassThrough' started at 2025-08-04 16:22:48.300
+Test Case 'PublishingFrontendPluginTests.testPluginPreservesHeadersOnPassThrough' passed (0.001 seconds)
+Test Case 'PublishingFrontendPluginTests.testPluginServesFile' started at 2025-08-04 16:22:48.301
+Test Case 'PublishingFrontendPluginTests.testPluginServesFile' passed (0.002 seconds)
+Test Case 'PublishingFrontendPluginTests.testPluginServesNestedFile' started at 2025-08-04 16:22:48.303
+Test Case 'PublishingFrontendPluginTests.testPluginServesNestedFile' passed (0.002 seconds)
+Test Case 'PublishingFrontendPluginTests.testPluginSetsContentTypeHeader' started at 2025-08-04 16:22:48.305
+Test Case 'PublishingFrontendPluginTests.testPluginSetsContentTypeHeader' passed (0.002 seconds)
+Test Suite 'PublishingFrontendPluginTests' passed at 2025-08-04 16:22:48.307
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.111 (0.111) seconds
+Test Suite 'URLSessionHTTPClientTests' started at 2025-08-04 16:22:48.307
+Test Case 'URLSessionHTTPClientTests.testExecuteCollectsMultipleHeaders' started at 2025-08-04 16:22:48.307
+Test Case 'URLSessionHTTPClientTests.testExecuteCollectsMultipleHeaders' passed (0.002 seconds)
+Test Case 'URLSessionHTTPClientTests.testExecuteHandlesEmptyBody' started at 2025-08-04 16:22:48.309
+Test Case 'URLSessionHTTPClientTests.testExecuteHandlesEmptyBody' passed (0.001 seconds)
+Test Case 'URLSessionHTTPClientTests.testExecutePerformsRequest' started at 2025-08-04 16:22:48.310
+Test Case 'URLSessionHTTPClientTests.testExecutePerformsRequest' passed (0.001 seconds)
+Test Suite 'URLSessionHTTPClientTests' passed at 2025-08-04 16:22:48.311
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'HetznerDNSModelsTests' started at 2025-08-04 16:22:48.311
+Test Case 'HetznerDNSModelsTests.testBulkRecordsCreateRequestCodable' started at 2025-08-04 16:22:48.311
+Test Case 'HetznerDNSModelsTests.testBulkRecordsCreateRequestCodable' passed (0.001 seconds)
+Test Case 'HetznerDNSModelsTests.testBulkRecordsUpdateRequestCodable' started at 2025-08-04 16:22:48.312
+Test Case 'HetznerDNSModelsTests.testBulkRecordsUpdateRequestCodable' passed (0.001 seconds)
+Test Case 'HetznerDNSModelsTests.testPrimaryServerCreateCodable' started at 2025-08-04 16:22:48.313
+Test Case 'HetznerDNSModelsTests.testPrimaryServerCreateCodable' passed (0.001 seconds)
+Test Case 'HetznerDNSModelsTests.testPrimaryServersResponseDecodes' started at 2025-08-04 16:22:48.313
+Test Case 'HetznerDNSModelsTests.testPrimaryServersResponseDecodes' passed (0.001 seconds)
+Test Case 'HetznerDNSModelsTests.testRecordResponseDecodes' started at 2025-08-04 16:22:48.314
+Test Case 'HetznerDNSModelsTests.testRecordResponseDecodes' passed (0.0 seconds)
+Test Case 'HetznerDNSModelsTests.testValidateZoneFileResponseDecodes' started at 2025-08-04 16:22:48.315
+Test Case 'HetznerDNSModelsTests.testValidateZoneFileResponseDecodes' passed (0.0 seconds)
+Test Case 'HetznerDNSModelsTests.testZoneCreateRequestCodable' started at 2025-08-04 16:22:48.315
+Test Case 'HetznerDNSModelsTests.testZoneCreateRequestCodable' passed (0.101 seconds)
+Test Case 'HetznerDNSModelsTests.testZoneResponseDecoding' started at 2025-08-04 16:22:48.416
+Test Case 'HetznerDNSModelsTests.testZoneResponseDecoding' passed (0.001 seconds)
+Test Case 'HetznerDNSModelsTests.testZoneUpdateRequestCodable' started at 2025-08-04 16:22:48.417
+Test Case 'HetznerDNSModelsTests.testZoneUpdateRequestCodable' passed (0.001 seconds)
+Test Case 'HetznerDNSModelsTests.testZonesResponseDecodes' started at 2025-08-04 16:22:48.417
+Test Case 'HetznerDNSModelsTests.testZonesResponseDecodes' passed (0.0 seconds)
+Test Suite 'HetznerDNSModelsTests' passed at 2025-08-04 16:22:48.418
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.107 (0.107) seconds
+Test Suite 'HetznerDNSRequestTests' started at 2025-08-04 16:22:48.418
+Test Case 'HetznerDNSRequestTests.testBulkCreateRecordsMethodIsPost' started at 2025-08-04 16:22:48.418
+Test Case 'HetznerDNSRequestTests.testBulkCreateRecordsMethodIsPost' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testBulkCreateRecordsPath' started at 2025-08-04 16:22:48.418
+Test Case 'HetznerDNSRequestTests.testBulkCreateRecordsPath' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testBulkUpdateRecordsMethodIsPut' started at 2025-08-04 16:22:48.418
+Test Case 'HetznerDNSRequestTests.testBulkUpdateRecordsMethodIsPut' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testBulkUpdateRecordsPath' started at 2025-08-04 16:22:48.419
+Test Case 'HetznerDNSRequestTests.testBulkUpdateRecordsPath' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testCreateZoneMethodIsPost' started at 2025-08-04 16:22:48.419
+Test Case 'HetznerDNSRequestTests.testCreateZoneMethodIsPost' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testCreateZonePath' started at 2025-08-04 16:22:48.419
+Test Case 'HetznerDNSRequestTests.testCreateZonePath' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testExportZoneFileMethodIsGet' started at 2025-08-04 16:22:48.419
+Test Case 'HetznerDNSRequestTests.testExportZoneFileMethodIsGet' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testExportZoneFilePathIncludesZoneID' started at 2025-08-04 16:22:48.420
+Test Case 'HetznerDNSRequestTests.testExportZoneFilePathIncludesZoneID' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testImportZoneFileMethodIsPost' started at 2025-08-04 16:22:48.420
+Test Case 'HetznerDNSRequestTests.testImportZoneFileMethodIsPost' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testImportZoneFilePathIncludesZoneID' started at 2025-08-04 16:22:48.421
+Test Case 'HetznerDNSRequestTests.testImportZoneFilePathIncludesZoneID' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testUpdatePrimaryServerMethodIsPut' started at 2025-08-04 16:22:48.421
+Test Case 'HetznerDNSRequestTests.testUpdatePrimaryServerMethodIsPut' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testUpdatePrimaryServerPathIncludesID' started at 2025-08-04 16:22:48.421
+Test Case 'HetznerDNSRequestTests.testUpdatePrimaryServerPathIncludesID' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testUpdateZoneMethodIsPut' started at 2025-08-04 16:22:48.421
+Test Case 'HetznerDNSRequestTests.testUpdateZoneMethodIsPut' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testUpdateZonePathIncludesID' started at 2025-08-04 16:22:48.421
+Test Case 'HetznerDNSRequestTests.testUpdateZonePathIncludesID' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testValidateZoneFileMethodIsPost' started at 2025-08-04 16:22:48.422
+Test Case 'HetznerDNSRequestTests.testValidateZoneFileMethodIsPost' passed (0.0 seconds)
+Test Case 'HetznerDNSRequestTests.testValidateZoneFilePath' started at 2025-08-04 16:22:48.422
+Test Case 'HetznerDNSRequestTests.testValidateZoneFilePath' passed (0.0 seconds)
+Test Suite 'HetznerDNSRequestTests' passed at 2025-08-04 16:22:48.422
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'PublishingFrontendTests' started at 2025-08-04 16:22:48.422
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForInvalidYAML' started at 2025-08-04 16:22:48.422
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForInvalidYAML' passed (0.008 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForMissingFile' started at 2025-08-04 16:22:48.431
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForMissingFile' passed (0.001 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForNonNumericPort' started at 2025-08-04 16:22:48.431
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigFailsForNonNumericPort' passed (0.005 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigParsesYaml' started at 2025-08-04 16:22:48.436
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigParsesYaml' passed (0.003 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultPortWhenMissing' started at 2025-08-04 16:22:48.440
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultPortWhenMissing' passed (0.003 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultRootPathWhenMissing' started at 2025-08-04 16:22:48.442
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultRootPathWhenMissing' passed (0.002 seconds)
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultsWhenFileEmpty' started at 2025-08-04 16:22:48.445
+Test Case 'PublishingFrontendTests.testLoadPublishingConfigUsesDefaultsWhenFileEmpty' passed (0.001 seconds)
+Test Case 'PublishingFrontendTests.testPublishingConfigCustomValues' started at 2025-08-04 16:22:48.446
+Test Case 'PublishingFrontendTests.testPublishingConfigCustomValues' passed (0.0 seconds)
+Test Case 'PublishingFrontendTests.testPublishingConfigDefaultValues' started at 2025-08-04 16:22:48.446
+Test Case 'PublishingFrontendTests.testPublishingConfigDefaultValues' passed (0.0 seconds)
+Test Case 'PublishingFrontendTests.testServerRejectsNonGetRequests' started at 2025-08-04 16:22:48.446
+Test Case 'PublishingFrontendTests.testServerRejectsNonGetRequests' passed (0.005 seconds)
+Test Case 'PublishingFrontendTests.testServerReturns404ForMissingFile' started at 2025-08-04 16:22:48.451
+Test Case 'PublishingFrontendTests.testServerReturns404ForMissingFile' passed (0.004 seconds)
+Test Case 'PublishingFrontendTests.testServerServesIndex' started at 2025-08-04 16:22:48.455
+Test Case 'PublishingFrontendTests.testServerServesIndex' passed (0.009 seconds)
+Test Case 'PublishingFrontendTests.testServerServesNestedFile' started at 2025-08-04 16:22:48.464
+Test Case 'PublishingFrontendTests.testServerServesNestedFile' passed (0.006 seconds)
+Test Case 'PublishingFrontendTests.testServerSetsContentTypeHeader' started at 2025-08-04 16:22:48.471
+Test Case 'PublishingFrontendTests.testServerSetsContentTypeHeader' passed (0.027 seconds)
+Test Suite 'PublishingFrontendTests' passed at 2025-08-04 16:22:48.498
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.075 (0.075) seconds
+Test Suite 'Route53ClientTests' started at 2025-08-04 16:22:48.498
+Test Case 'Route53ClientTests.testCreateRecordThrows' started at 2025-08-04 16:22:48.498
+Test Case 'Route53ClientTests.testCreateRecordThrows' passed (0.0 seconds)
+Test Case 'Route53ClientTests.testDeleteRecordThrows' started at 2025-08-04 16:22:48.498
+Test Case 'Route53ClientTests.testDeleteRecordThrows' passed (0.0 seconds)
+Test Case 'Route53ClientTests.testListZonesThrows' started at 2025-08-04 16:22:48.498
+Test Case 'Route53ClientTests.testListZonesThrows' passed (0.0 seconds)
+Test Case 'Route53ClientTests.testUpdateRecordThrows' started at 2025-08-04 16:22:48.499
+Test Case 'Route53ClientTests.testUpdateRecordThrows' passed (0.0 seconds)
+Test Suite 'Route53ClientTests' passed at 2025-08-04 16:22:48.499
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'ClientGeneratorTests' started at 2025-08-04 16:22:48.499
+Test Case 'ClientGeneratorTests.testClientFilesGenerated' started at 2025-08-04 16:22:48.499
+Test Case 'ClientGeneratorTests.testClientFilesGenerated' passed (0.12 seconds)
+Test Case 'ClientGeneratorTests.testEmitRequestGeneratesQueryParameter' started at 2025-08-04 16:22:48.619
+Test Case 'ClientGeneratorTests.testEmitRequestGeneratesQueryParameter' passed (0.009 seconds)
+Test Suite 'ClientGeneratorTests' passed at 2025-08-04 16:22:48.628
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.129 (0.129) seconds
+Test Suite 'OpenAPIParameterTests' started at 2025-08-04 16:22:48.628
+Test Case 'OpenAPIParameterTests.testSwiftNameReplacesHyphenWithUnderscore' started at 2025-08-04 16:22:48.628
+Test Case 'OpenAPIParameterTests.testSwiftNameReplacesHyphenWithUnderscore' passed (0.0 seconds)
+Test Case 'OpenAPIParameterTests.testSwiftTypeUsesSchemaOrDefaultsToString' started at 2025-08-04 16:22:48.628
+Test Case 'OpenAPIParameterTests.testSwiftTypeUsesSchemaOrDefaultsToString' passed (0.0 seconds)
+Test Suite 'OpenAPIParameterTests' passed at 2025-08-04 16:22:48.629
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'OpenAPISwiftTypeTests' started at 2025-08-04 16:22:48.629
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertyObjectSwiftType' started at 2025-08-04 16:22:48.629
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertyObjectSwiftType' passed (0.0 seconds)
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertySwiftType' started at 2025-08-04 16:22:48.629
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertySwiftType' passed (0.0 seconds)
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertyUnknownTypeDefaultsToString' started at 2025-08-04 16:22:48.629
+Test Case 'OpenAPISwiftTypeTests.testSchemaPropertyUnknownTypeDefaultsToString' passed (0.0 seconds)
+Test Case 'OpenAPISwiftTypeTests.testSchemaRefSwiftType' started at 2025-08-04 16:22:48.629
+Test Case 'OpenAPISwiftTypeTests.testSchemaRefSwiftType' passed (0.0 seconds)
+Test Suite 'OpenAPISwiftTypeTests' passed at 2025-08-04 16:22:48.630
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'SecurityRequirementTests' started at 2025-08-04 16:22:48.630
+Test Case 'SecurityRequirementTests.testDecodesSchemesFromJSON' started at 2025-08-04 16:22:48.630
+Test Case 'SecurityRequirementTests.testDecodesSchemesFromJSON' passed (0.001 seconds)
+Test Case 'SecurityRequirementTests.testEncodesSchemesToJSON' started at 2025-08-04 16:22:48.630
+Test Case 'SecurityRequirementTests.testEncodesSchemesToJSON' passed (0.0 seconds)
+Test Suite 'SecurityRequirementTests' passed at 2025-08-04 16:22:48.631
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'SpecLoaderTests' started at 2025-08-04 16:22:48.631
+Test Case 'SpecLoaderTests.testLoadThrowsForEmptyFile' started at 2025-08-04 16:22:48.631
+Test Case 'SpecLoaderTests.testLoadThrowsForEmptyFile' passed (0.0 seconds)
+Test Case 'SpecLoaderTests.testLoadThrowsForInvalidUTF8' started at 2025-08-04 16:22:48.631
+Test Case 'SpecLoaderTests.testLoadThrowsForInvalidUTF8' passed (0.003 seconds)
+Test Case 'SpecLoaderTests.testLoadsJSONRemovingCopyright' started at 2025-08-04 16:22:48.634
+Test Case 'SpecLoaderTests.testLoadsJSONRemovingCopyright' passed (0.102 seconds)
+Test Case 'SpecLoaderTests.testLoadsYAMLAndNormalizesInfoTitle' started at 2025-08-04 16:22:48.736
+Test Case 'SpecLoaderTests.testLoadsYAMLAndNormalizesInfoTitle' passed (0.007 seconds)
+Test Suite 'SpecLoaderTests' passed at 2025-08-04 16:22:48.743
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.112 (0.112) seconds
+Test Suite 'SpecValidatorTests' started at 2025-08-04 16:22:48.743
+Test Case 'SpecValidatorTests.testDuplicateOperationIdThrows' started at 2025-08-04 16:22:48.743
+Test Case 'SpecValidatorTests.testDuplicateOperationIdThrows' passed (0.001 seconds)
+Test Case 'SpecValidatorTests.testEmptyParameterLocationThrows' started at 2025-08-04 16:22:48.744
+Test Case 'SpecValidatorTests.testEmptyParameterLocationThrows' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testEmptyParameterNameThrows' started at 2025-08-04 16:22:48.744
+Test Case 'SpecValidatorTests.testEmptyParameterNameThrows' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testEmptyTitleThrows' started at 2025-08-04 16:22:48.744
+Test Case 'SpecValidatorTests.testEmptyTitleThrows' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testMissingPathParameterThrows' started at 2025-08-04 16:22:48.744
+Test Case 'SpecValidatorTests.testMissingPathParameterThrows' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testPathParameterMustBeRequired' started at 2025-08-04 16:22:48.745
+Test Case 'SpecValidatorTests.testPathParameterMustBeRequired' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testUnknownSecuritySchemeThrows' started at 2025-08-04 16:22:48.745
+Test Case 'SpecValidatorTests.testUnknownSecuritySchemeThrows' passed (0.0 seconds)
+Test Case 'SpecValidatorTests.testUnresolvedSchemaReferenceThrows' started at 2025-08-04 16:22:48.745
+Test Case 'SpecValidatorTests.testUnresolvedSchemaReferenceThrows' passed (0.0 seconds)
+Test Suite 'SpecValidatorTests' passed at 2025-08-04 16:22:48.746
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'StringExtensionTests' started at 2025-08-04 16:22:48.746
+Test Case 'StringExtensionTests.testCamelCased' started at 2025-08-04 16:22:48.746
+Test Case 'StringExtensionTests.testCamelCased' passed (0.0 seconds)
+Test Case 'StringExtensionTests.testCamelCasedEmptyString' started at 2025-08-04 16:22:48.746
+Test Case 'StringExtensionTests.testCamelCasedEmptyString' passed (0.0 seconds)
+Test Case 'StringExtensionTests.testCamelCasedLeadingUnderscore' started at 2025-08-04 16:22:48.746
+Test Case 'StringExtensionTests.testCamelCasedLeadingUnderscore' passed (0.0 seconds)
+Test Case 'StringExtensionTests.testCamelCasedMultipleUnderscores' started at 2025-08-04 16:22:48.746
+Test Case 'StringExtensionTests.testCamelCasedMultipleUnderscores' passed (0.0 seconds)
+Test Case 'StringExtensionTests.testCamelCasedNumbers' started at 2025-08-04 16:22:48.746
+Test Case 'StringExtensionTests.testCamelCasedNumbers' passed (0.0 seconds)
+Test Case 'StringExtensionTests.testCamelCasedTrailingUnderscore' started at 2025-08-04 16:22:48.747
+Test Case 'StringExtensionTests.testCamelCasedTrailingUnderscore' passed (0.0 seconds)
+Test Case 'StringExtensionTests.testCamelCasedUppercaseInput' started at 2025-08-04 16:22:48.747
+Test Case 'StringExtensionTests.testCamelCasedUppercaseInput' passed (0.0 seconds)
+Test Suite 'StringExtensionTests' passed at 2025-08-04 16:22:48.747
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'debug.xctest' passed at 2025-08-04 16:22:48.747
+	 Executed 162 tests, with 0 failures (0 unexpected) in 11.924 (11.924) seconds
+Test Suite 'All tests' passed at 2025-08-04 16:22:48.748
+	 Executed 162 tests, with 0 failures (0 unexpected) in 11.924 (11.924) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.1 (43b6f88e2f2712e)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests passed after 0.001 seconds.
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

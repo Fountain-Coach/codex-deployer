@@ -17,7 +17,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Feature                | File(s) or Area                          | Action                                                           | Status | Blockers                                | Tags              |
 |------------------------|------------------------------------------|------------------------------------------------------------------|--------|------------------------------------------|-------------------|
 | Route53 DNS client     | `Route53Client`                          | Implement DNS operations instead of throwing `Error.unimplemented` | ❌     | Requires AWS DNS API spec and credentials | parser, cli       |
-| Generated server handlers | `Sources/*/Handlers`                  | Replace placeholder `HTTPResponse()` returns with functional logic | ⚠️     | Concrete business logic not defined       | server, cli       |
+| Generated server handlers | `Sources/*/Handlers`                  | Replace placeholder `HTTPResponse()` returns with functional logic | ✅     | None                                   | server, cli       |
 | Supervisor binary paths | `FountainAiLauncher`                   | Package or document required external binaries for supervisor     | ⚠️     | External binaries not included            | deployment, docs  |
 | Linter configuration   | root                                     | Introduce SwiftLint setup                 | ✅     | None                                     | ci, linter        |
 | CI pipeline            | root                                     | Add CI workflow to run tests and coverage                        | ❌     | Choose CI platform                        | ci, test          |
