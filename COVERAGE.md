@@ -87,5 +87,6 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``ZoneUpdateRequestCodable`` and ``ZonesResponseDecodes`` tests raise the total test count to **143**.
 - The new ``LoadPublishingConfigFailsForInvalidYAML`` and ``LoadPublishingConfigFailsForNonNumericPort`` tests raise the total test count to **145**.
 - The new ``UpdateRecordSetsAuthHeader`` and ``DeleteRecordSetsAuthHeader`` tests raise the total test count to **147**.
+- The new ``AsyncHTTPClientDriver`` unreachable host test and metrics endpoint header and body tests raise the total test count to **150**.
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
