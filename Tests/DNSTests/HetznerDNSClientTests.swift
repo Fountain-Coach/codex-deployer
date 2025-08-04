@@ -56,6 +56,21 @@ final class HetznerDNSClientTests: XCTestCase {
         XCTAssertEqual(session.lastRequest?.value(forHTTPHeaderField: "Content-Type"), "application/json")
     }
 
+    /// Ensures `createRecord` encodes the expected JSON body.
+    func testCreateRecordEncodesBody() async throws {
+        let response = RecordResponse(record: Record(created: "", id: "1", modified: "", name: "www", ttl: 60, type: "TXT", value: "txt", zone_id: "z"))
+        let data = try JSONEncoder().encode(response)
+        let session = MockSession(data: data)
+        let client = HetznerDNSClient(token: "t", session: session)
+        try await client.createRecord(zone: "z", name: "www", type: "TXT", value: "txt")
+        let body = session.lastRequest?.httpBody ?? Data()
+        let decoded = try JSONDecoder().decode(RecordCreate.self, from: body)
+        XCTAssertEqual(decoded.name, "www")
+        XCTAssertEqual(decoded.type, "TXT")
+        XCTAssertEqual(decoded.value, "txt")
+        XCTAssertEqual(decoded.zone_id, "z")
+    }
+
     func testListZonesPathBuilder() {
         let params = ListZonesParameters(name: "foo", searchName: "bar", page: 1, perPage: 5)
         let req = ListZones(parameters: params)
@@ -73,6 +88,17 @@ final class HetznerDNSClientTests: XCTestCase {
         XCTAssertEqual(ids, ["z1"])
         XCTAssertEqual(session.lastRequest?.url?.path, "/api/v1/zones")
         XCTAssertEqual(session.lastRequest?.httpMethod, "GET")
+    }
+
+    /// Ensures `listZones` attaches the auth token header.
+    func testListZonesSetsAuthHeader() async throws {
+        let zone = Zone(created: "", id: "z1", is_secondary_dns: false, legacy_dns_host: "", legacy_ns: [], modified: "", name: "example.com", ns: [], owner: "", paused: false, permission: "", project: "", records_count: 0, registrar: "", status: "", ttl: 60, txt_verification: [:], verified: "")
+        let response = ZonesResponse(meta: [:], zones: [zone])
+        let data = try JSONEncoder().encode(response)
+        let session = MockSession(data: data)
+        let client = HetznerDNSClient(token: "token", session: session)
+        _ = try await client.listZones()
+        XCTAssertEqual(session.lastRequest?.value(forHTTPHeaderField: "Auth-API-Token"), "token")
     }
 
     /// Ensures `updateRecord` attaches the auth token and JSON content type.
