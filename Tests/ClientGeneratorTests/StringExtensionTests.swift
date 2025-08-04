@@ -7,6 +7,16 @@ final class StringExtensionTests: XCTestCase {
         XCTAssertEqual("hello_world".camelCased, "helloWorld")
         XCTAssertEqual("AlreadyCamel".camelCased, "alreadycamel")
     }
+
+    /// Empty strings remain unchanged.
+    func testCamelCasedEmptyString() {
+        XCTAssertEqual("".camelCased, "")
+    }
+
+    /// Multiple underscores create capitalized boundaries.
+    func testCamelCasedMultipleUnderscores() {
+        XCTAssertEqual("one_two_three".camelCased, "oneTwoThree")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

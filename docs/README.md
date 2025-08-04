@@ -27,7 +27,7 @@ As modules gain documentation, brief summaries are added here.
 - **APIClient** – initializer and URLSession extension now documented for clarity.
 - **URLSessionHTTPClientTests** – updated for Linux compatibility ensuring network client coverage.
 - **OpenAPISpec.swiftType** – documented helper converting schemas to Swift types.
-- **String.camelCased** – extension for transforming snake case identifiers.
+- **String.camelCased** – extension for transforming snake case identifiers; implementation now comments underscore splitting and recombination logic for clarity.
 - **Agent.main** – entry point usage instructions are now documented.
 - **publishing-frontend CLI** – documented main entrypoint starting the static server.
 - **clientgen-service CLI** – wrapper around GeneratorCLI is now documented.
