@@ -16,7 +16,7 @@ public struct DeleteRecord: APIRequest {
     public var method: String { "DELETE" }
     /// Parameters identifying which record to delete.
     public var parameters: DeleteRecordParameters
-    /// API endpoint path with the record ID substituted.
+    /// API endpoint path where `{RecordID}` is replaced with ``DeleteRecordParameters.recordid``.
     public var path: String {
         var path = "/records/{RecordID}"
         let query: [String] = []

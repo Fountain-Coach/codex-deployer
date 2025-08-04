@@ -18,7 +18,7 @@ public struct UpdateRecord: APIRequest {
     public var method: String { "PUT" }
     /// Parameters describing which record to update.
     public var parameters: UpdateRecordParameters
-    /// Constructed path for the request.
+    /// API endpoint path with `{RecordID}` replaced by ``UpdateRecordParameters.recordid``.
     public var path: String {
         var path = "/records/{RecordID}"
         let query: [String] = []
@@ -26,7 +26,7 @@ public struct UpdateRecord: APIRequest {
         if !query.isEmpty { path += "?" + query.joined(separator: "&") }
         return path
     }
-    /// Request body containing record data.
+    /// Request body containing updated record data.
     public var body: Body?
 
     /// Creates a new request.

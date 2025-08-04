@@ -38,6 +38,7 @@ As modules gain documentation, brief summaries are added here.
 - **SpecValidator.validateSchema** – documents recursive schema reference checks and path placeholder enforcement.
 - **listRecords** and **listPrimaryServers** – request types now include documentation.
 - **bulkUpdateRecords**, **deleteZone**, **updateZone**, **exportZoneFile**, **importZoneFile** – additional DNS client requests documented.
+- **UpdateRecord** and **DeleteRecord** – request types now detail record identifier substitution within their paths.
 - **bulkCreateRecords** and **createZone** – request types now document bulk record creation and zone provisioning.
 - **getRecord** and **updateRecord** – request types now include usage documentation.
 - **getZone** – request type now documents zone retrieval parameters.

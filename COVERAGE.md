@@ -5,10 +5,10 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31882   26550    16.72%   14380 11491    20.09%   99602 81426    18.25%
+TOTAL                                          31901   26510    16.90%   14399 11475    20.31%   99641 81230    18.48%
 ```
 
-The repository contains **99,602** executable lines, with **18,176** lines covered (approx. **18.25%** line coverage).
+The repository contains **99,641** executable lines, with **18,411** lines covered (approx. **18.48%** line coverage).
 
 ### Repository source coverage
 
@@ -73,6 +73,7 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``OpenAPIParameter`` name and type tests raise the total test count to **117**.
 - The new ``GatewayServer`` prepare-order and health content-type tests raise the total test count to **119**.
 - The new ``listZones`` identifier retrieval and ``Route53Client`` error detail tests raise the total test count to **122**.
+- The new ``DeleteRecordRequest`` and ``UpdateRecordRequest`` tests raise the total test count to **125**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
