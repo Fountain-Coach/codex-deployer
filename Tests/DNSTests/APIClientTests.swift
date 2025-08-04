@@ -61,6 +61,36 @@ final class APIClientTests: XCTestCase {
         XCTAssertEqual(result, expected)
         XCTAssertEqual(session.request?.value(forHTTPHeaderField: "Content-Type"), "application/json")
     }
+
+    /// Returns a ``NoBody`` instance when the response type is ``NoBody``.
+    func testNoBodyResponseReturnsInstance() async throws {
+        struct Ping: APIRequest {
+            typealias Response = NoBody
+            var method: String { "GET" }
+            var path: String { "/ping" }
+            var body: NoBody? = nil
+        }
+        let session = MockSession(responseData: Data("ignored".utf8))
+        let client = APIClient(baseURL: URL(string: "http://localhost")!, session: session)
+        let result: NoBody = try await client.send(Ping())
+        _ = result
+        XCTAssertNil(session.request?.value(forHTTPHeaderField: "Content-Type"))
+    }
+
+    /// Ensures requests without bodies omit the `Content-Type` header.
+    func testRequestWithoutBodyOmitsContentType() async throws {
+        struct Echo: APIRequest {
+            typealias Response = String
+            var method: String { "GET" }
+            var path: String { "/echo" }
+            var body: NoBody? = nil
+        }
+        let data = try JSONEncoder().encode("ok")
+        let session = MockSession(responseData: data)
+        let client = APIClient(baseURL: URL(string: "http://localhost")!, session: session)
+        _ = try await client.send(Echo())
+        XCTAssertNil(session.request?.value(forHTTPHeaderField: "Content-Type"))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
