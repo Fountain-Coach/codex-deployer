@@ -99,6 +99,44 @@ final class PublishingFrontendTests: XCTestCase {
         XCTAssertThrowsError(try loadPublishingConfig())
     }
 
+    /// Ensures missing `rootPath` falls back to the default value.
+    func testLoadPublishingConfigUsesDefaultRootPathWhenMissing() throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("missing-root", isDirectory: true)
+        let configDir = dir.appendingPathComponent("Configuration", isDirectory: true)
+        try? FileManager.default.removeItem(at: dir)
+        try FileManager.default.createDirectory(at: configDir, withIntermediateDirectories: true)
+        let fileURL = configDir.appendingPathComponent("publishing.yml")
+        let yaml = """
+        port: 1234
+        """
+        try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+        let cwd = FileManager.default.currentDirectoryPath
+        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        let config = try loadPublishingConfig()
+        XCTAssertEqual(config.port, 1234)
+        XCTAssertEqual(config.rootPath, "./Public")
+    }
+
+    /// Ensures missing `port` falls back to the default value.
+    func testLoadPublishingConfigUsesDefaultPortWhenMissing() throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("missing-port", isDirectory: true)
+        let configDir = dir.appendingPathComponent("Configuration", isDirectory: true)
+        try? FileManager.default.removeItem(at: dir)
+        try FileManager.default.createDirectory(at: configDir, withIntermediateDirectories: true)
+        let fileURL = configDir.appendingPathComponent("publishing.yml")
+        let yaml = """
+        rootPath: /tmp/Public
+        """
+        try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+        let cwd = FileManager.default.currentDirectoryPath
+        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        let config = try loadPublishingConfig()
+        XCTAssertEqual(config.port, 8085)
+        XCTAssertEqual(config.rootPath, "/tmp/Public")
+    }
+
     @MainActor
     func testServerReturns404ForMissingFile() async throws {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("missing-public")
