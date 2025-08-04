@@ -197,26 +197,34 @@ extension OpenAPISpec.Schema.Property {
         if let ref {
             return ref.components(separatedBy: "/").last ?? ref
         }
+        // Composite schemas (`allOf`/`oneOf`) inherit the type of the first entry.
         if let first = allOf?.first ?? oneOf?.first {
             return first.swiftType
         }
+        // Without an explicit type we default to `String`.
         guard let type else { return "String" }
         switch type {
         case "string": return "String"
         case "integer": return "Int"
         case "boolean": return "Bool"
         case "array":
+            // Use the element's Swift type when provided, otherwise an array of strings.
             if let itemType = items?.swiftType {
                 return "[\(itemType)]"
             } else {
                 return "[String]"
             }
         case "object":
+            // Represent JSON objects as dictionaries keyed by string.
             if let additional = additionalProperties {
+                // When `additionalProperties` defines a schema, expose its Swift type.
                 return "[String: \(additional.swiftType)]"
             }
+            // Fallback to a simple string dictionary.
             return "[String: String]"
-        default: return "String"
+        default:
+            // Any unknown schema types are treated as strings.
+            return "String"
         }
     }
 }

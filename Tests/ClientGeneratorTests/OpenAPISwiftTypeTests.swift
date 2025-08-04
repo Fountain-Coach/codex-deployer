@@ -18,6 +18,22 @@ final class OpenAPISwiftTypeTests: XCTestCase {
         schema.ref = "#/components/schemas/Todo"
         XCTAssertEqual(schema.swiftType, "Todo")
     }
+
+    /// Maps object properties with `additionalProperties` to dictionaries.
+    func testSchemaPropertyObjectSwiftType() {
+        let prop = OpenAPISpec.Schema.Property()
+        prop.type = "object"
+        let value = OpenAPISpec.Schema()
+        value.type = "integer"
+        prop.additionalProperties = value
+        XCTAssertEqual(prop.swiftType, "[String: Int]")
+    }
+
+    /// Defaults to `String` when no type information is present.
+    func testSchemaPropertyUnknownTypeDefaultsToString() {
+        let prop = OpenAPISpec.Schema.Property()
+        XCTAssertEqual(prop.swiftType, "String")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

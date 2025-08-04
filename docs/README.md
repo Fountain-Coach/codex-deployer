@@ -74,6 +74,7 @@ As modules gain documentation, brief summaries are added here.
 - **SpecLoader.load** – documents removal of copyright lines before decoding.
 - **OpenAPISpec.Parameter.swiftName** and **swiftType** – document parameter name sanitization and schema type defaults.
 - **ListZonesParameters.name**, **searchName**, **page**, and **perPage** – document zone filtering and pagination options.
+- **OpenAPISpec.Schema.Property.swiftType** – inline comments clarify array and object mappings and default behavior.
 
 Documentation coverage will expand alongside test coverage.
 
