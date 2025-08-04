@@ -41,6 +41,7 @@ Output a structured status report in Markdown.
 
 Use the status report to prompt:
 
+```
 Now create a machine-readable task matrix from this status report.
 
 Each row should represent a discrete unit of implementation or alignment.  
@@ -52,8 +53,7 @@ Use emoji for `Status`: ✅ (done), ⏳ (todo), ⚠️ (partial), ❌ (missing)
 Use `Tags` to group related work: parser, cli, docs, test, ci, etc.
 
 📌 Save this result as agent.md at the repo root.
-
-⸻
+```
 
 🛠 Step 4: Use the Matrix to Drive Execution
 
