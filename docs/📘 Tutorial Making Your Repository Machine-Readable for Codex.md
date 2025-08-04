@@ -59,6 +59,7 @@ Use `Tags` to group related work: parser, cli, docs, test, ci, etc.
 
 Now you can ask Codex:
 
+```
 Please select any 2 rows tagged `parser` and fully implement them.
 
 Each task must:
@@ -67,6 +68,7 @@ Each task must:
 - Pass `swift test` or `pytest`
 - Update `agent.md` Status
 - Append a commit log
+```
 
 This enforces vertical slice completion and avoids shallow “next step” traps.
 
