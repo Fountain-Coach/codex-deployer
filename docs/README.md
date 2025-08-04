@@ -15,6 +15,7 @@ As modules gain documentation, brief summaries are added here.
 - **HTTPHandler** – internal request dispatcher within `NIOHTTPServer` is now thoroughly documented.
 - **NIOHTTPServer.init** – initializer now documents kernel and event loop group parameters.
 - **LoggingPlugin** – prints requests and responses for debugging.
+- **LoggingPlugin.prepare** and **respond** – inline comments explain logging without mutating headers or bodies.
 - **GatewayPlugin** – protocol for request and response middleware.
 - **GatewayPlugin.prepare** and **respond** – default implementations now explain parameters and return values.
 - **CertificateManager** – runs periodic certificate renewal scripts.
