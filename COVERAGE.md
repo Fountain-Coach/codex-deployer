@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          32061   26287    18.01%   14527 11401    21.52%   99999 80550    19.45%
+TOTAL                                          32097   26285    18.11%   14552 11399    21.67%  100080 80540    19.52%
 ```
 
-The repository contains **99,999** executable lines, with **19,449** lines covered (approx. **19.45%** line coverage).
+The repository contains **100,080** executable lines, with **19,540** lines covered (approx. **19.52%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts` and test targets, the totals are:
 
 ```
-TOTAL                                           590     210    64.41%     173     31    82.08%    1380     415    69.93%
+TOTAL                                           591     210    64.47%     174     31    82.18%    1383     415    69.99%
 ```
 
-Within repository sources there are **1,380** lines, with **965** covered, giving **69.93%** line coverage.
+Within repository sources there are **1,383** lines, with **968** covered, giving **69.99%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -91,5 +91,6 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``LoggingPlugin`` header and body preservation tests raise the total test count to **152**.
 
 - The new ``PublishingFrontendPlugin`` nested-file and header-preservation tests raise the total test count to **154**.
+- The new ``LoadPublishingConfigUsesDefaultRootPathWhenMissing`` and ``LoadPublishingConfigUsesDefaultPortWhenMissing`` tests raise the total test count to **156**.
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

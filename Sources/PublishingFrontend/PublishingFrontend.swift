@@ -60,13 +60,16 @@ public final class PublishingFrontend {
 }
 
 /// Loads the publishing configuration from `Configuration/publishing.yml`.
+/// Missing `port` or `rootPath` keys fall back to the defaults `8085` and `./Public`.
 /// - Throws: If the file is missing, contains invalid YAML, or fails decoding into ``PublishingConfig``.
 /// - Returns: Parsed ``PublishingConfig`` instance.
 public func loadPublishingConfig() throws -> PublishingConfig {
     let url = URL(fileURLWithPath: "Configuration/publishing.yml")
     let string = try String(contentsOf: url, encoding: .utf8)
     let yaml = try Yams.load(yaml: string) as? [String: Any] ?? [:]
-    let data = try JSONSerialization.data(withJSONObject: yaml)
+    let defaults: [String: Any] = ["port": 8085, "rootPath": "./Public"]
+    let merged = defaults.merging(yaml) { _, new in new }
+    let data = try JSONSerialization.data(withJSONObject: merged)
     return try JSONDecoder().decode(PublishingConfig.self, from: data)
 }
 
