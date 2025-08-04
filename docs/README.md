@@ -69,7 +69,7 @@ As modules gain documentation, brief summaries are added here.
 - **HTTPResponse.status**, **headers**, and **body** – properties now clarify response components.
 - **HetznerDNSClient.createRecord**, **updateRecord**, and **deleteRecord** – methods now detail parameters for zone, record name, type, and value.
 - **HTTPKernel.handle** – now documents error propagation from routing closures.
-- **run-tests.sh** – helper script bundling release build and coverage test steps.
+- **run-tests.sh** – helper script bundling release build and coverage test steps with inline comments explaining log generation.
 - **PublishingFrontendPlugin.respond** – documents parameters and emitted `Content-Type` header when serving files.
 - **bulkUpdateRecords.method** and **path**, **updateZone.method** and **path** – request properties now describe HTTP verbs and endpoint resolution.
 - **GatewayServer.plugins** – documents plugin execution order for request preparation and response processing.
