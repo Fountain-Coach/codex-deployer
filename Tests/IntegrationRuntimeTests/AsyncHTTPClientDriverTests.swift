@@ -41,6 +41,18 @@ final class AsyncHTTPClientDriverTests: XCTestCase {
         try await client.shutdown()
         try await server.stop()
     }
+
+    /// Ensures network failures surface as thrown errors.
+    func testExecuteFailsForUnreachableHost() async throws {
+        let client = AsyncHTTPClientDriver()
+        do {
+            _ = try await client.execute(method: .GET, url: "http://127.0.0.1:1", body: nil)
+            XCTFail("Expected error")
+        } catch {
+            XCTAssertNotNil(error)
+        }
+        try await client.shutdown()
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

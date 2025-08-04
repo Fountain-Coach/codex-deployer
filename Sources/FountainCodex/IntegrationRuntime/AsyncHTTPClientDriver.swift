@@ -19,12 +19,16 @@ public final class AsyncHTTPClientDriver: HTTPClientProtocol, @unchecked Sendabl
     }
 
     /// Executes an HTTP request and returns the response payload and headers.
+    ///
+    /// Any networking or decoding failures are surfaced to the caller allowing
+    /// tests to verify proper error handling behavior.
     /// - Parameters:
     ///   - method: HTTP verb to use when contacting the server.
     ///   - url: Absolute URL string of the resource.
     ///   - headers: Request headers to send.
     ///   - body: Optional request body buffer.
     /// - Returns: Tuple containing the response body and header fields.
+    /// - Throws: If the request cannot be executed or a network error occurs.
     public func execute(method: HTTPMethod, url: String, headers: HTTPHeaders = HTTPHeaders(), body: ByteBuffer?) async throws -> (ByteBuffer, HTTPHeaders) {
         var request = HTTPClientRequest(url: url)
         request.method = method
