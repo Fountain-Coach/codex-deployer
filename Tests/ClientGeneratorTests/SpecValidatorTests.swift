@@ -59,6 +59,36 @@ final class SpecValidatorTests: XCTestCase {
             XCTAssertTrue("\(error)".contains("unknown security scheme"))
         }
     }
+
+    /// Ensures an empty specification title triggers validation failure.
+    func testEmptyTitleThrows() throws {
+        let spec = OpenAPISpec(title: "   ", servers: nil, components: nil, paths: nil)
+        XCTAssertThrowsError(try SpecValidator.validate(spec)) { error in
+            XCTAssertTrue("\(error)".contains("title cannot be empty"))
+        }
+    }
+
+    /// Ensures parameters must declare a non-empty name.
+    func testEmptyParameterNameThrows() throws {
+        let param = OpenAPISpec.Parameter(name: "  ", location: "query", required: false, schema: nil)
+        let op = OpenAPISpec.Operation(operationId: "get", parameters: [param], requestBody: nil, responses: nil, security: nil)
+        let item = OpenAPISpec.PathItem(get: op, post: nil, put: nil, delete: nil)
+        let spec = OpenAPISpec(title: "API", servers: nil, components: nil, paths: ["/": item])
+        XCTAssertThrowsError(try SpecValidator.validate(spec)) { error in
+            XCTAssertTrue("\(error)".contains("parameter name cannot be empty"))
+        }
+    }
+
+    /// Ensures parameters must declare where they appear in the request.
+    func testEmptyParameterLocationThrows() throws {
+        let param = OpenAPISpec.Parameter(name: "id", location: "   ", required: false, schema: nil)
+        let op = OpenAPISpec.Operation(operationId: "get", parameters: [param], requestBody: nil, responses: nil, security: nil)
+        let item = OpenAPISpec.PathItem(get: op, post: nil, put: nil, delete: nil)
+        let spec = OpenAPISpec(title: "API", servers: nil, components: nil, paths: ["/": item])
+        XCTAssertThrowsError(try SpecValidator.validate(spec)) { error in
+            XCTAssertTrue("\(error)".contains("parameter location cannot be empty"))
+        }
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
