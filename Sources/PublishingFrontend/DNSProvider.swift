@@ -36,12 +36,25 @@ public struct HetznerDNSClient: DNSProvider {
     }
 
     /// Adds an ``A`` or ``TXT`` record to the zone.
+    /// - Parameters:
+    ///   - zone: Target zone identifier the record belongs to.
+    ///   - name: Record name without the zone suffix.
+    ///   - type: DNS record type such as `"A"` or `"TXT"`.
+    ///   - value: DNS record value to store.
+    /// - Throws: Rethrows networking errors from ``APIClient``.
     public func createRecord(zone: String, name: String, type: String, value: String) async throws {
         let body = RecordCreate(name: name, ttl: 60, type: type, value: value, zone_id: zone)
         _ = try await api.send(CreateRecord(body: body))
     }
 
     /// Updates a DNS record's value.
+    /// - Parameters:
+    ///   - id: Identifier of the record to update.
+    ///   - zone: Zone containing the record.
+    ///   - name: Record name without the zone suffix.
+    ///   - type: DNS record type such as `"A"` or `"TXT"`.
+    ///   - value: New DNS record value.
+    /// - Throws: Rethrows networking errors from ``APIClient``.
     public func updateRecord(id: String, zone: String, name: String, type: String, value: String) async throws {
         let params = UpdateRecordParameters(recordid: id)
         let body = RecordCreate(name: name, ttl: 60, type: type, value: value, zone_id: zone)
@@ -49,6 +62,8 @@ public struct HetznerDNSClient: DNSProvider {
     }
 
     /// Removes a DNS record from the zone.
+    /// - Parameter id: Identifier of the record to delete.
+    /// - Throws: Rethrows networking errors from ``APIClient``.
     public func deleteRecord(id: String) async throws {
         let params = DeleteRecordParameters(recordid: id)
         _ = try await api.send(DeleteRecord(parameters: params))

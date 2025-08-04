@@ -33,6 +33,20 @@ final class HTTPResponseDefaultsTests: XCTestCase {
         response.headers["X-Test"] = "1"
         XCTAssertEqual(response.headers["X-Test"], "1")
     }
+
+    /// Ensures the status code can be changed after initialization.
+    func testResponseStatusMutation() {
+        var response = HTTPResponse()
+        response.status = 418
+        XCTAssertEqual(response.status, 418)
+    }
+
+    /// Confirms the response body is mutable.
+    func testResponseBodyMutation() {
+        var response = HTTPResponse()
+        response.body = Data("hi".utf8)
+        XCTAssertEqual(String(data: response.body, encoding: .utf8), "hi")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
