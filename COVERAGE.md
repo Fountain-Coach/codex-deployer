@@ -5,20 +5,20 @@
 Running `swift test --enable-code-coverage` and analysing with `llvm-cov` produced the following totals:
 
 ```
-TOTAL                                          31901   26510    16.90%   14399 11475    20.31%   99641 81230    18.48%
+TOTAL                                          31909   26513    16.91%   14407 11479    20.32%   99667 81249    18.48%
 ```
 
-The repository contains **99,641** executable lines, with **18,411** lines covered (approx. **18.48%** line coverage).
+The repository contains **99,667** executable lines, with **18,418** lines covered (approx. **18.48%** line coverage).
 
 ### Repository source coverage
 
 Ignoring third-party packages under `.build/checkouts` and test targets, the totals are:
 
 ```
-TOTAL                                           590     252    57.29%     173     34    80.35%    1369     477    65.16%
+TOTAL                                           590     249    57.80%     173     34    80.35%    1377     477    65.36%
 ```
 
-Within repository sources there are **1,369** lines, with **892** covered, giving **65.16%** line coverage.
+Within repository sources there are **1,377** lines, with **900** covered, giving **65.36%** line coverage.
 
 Coverage results are recalculated after each test run to monitor progress. The project strives for ever more comprehensive test suites across all modules. Recent additions include unit tests for ``APIClient``. New tests now verify ``URLSessionHTTPClient`` behavior and the ``Supervisor`` process termination logic.
 Additional tests now cover ``OpenAPISpec.swiftType`` and the ``camelCased`` string helper. A new ``GatewayServerTests`` suite raises total tests to **27**.
@@ -74,6 +74,7 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``GatewayServer`` prepare-order and health content-type tests raise the total test count to **119**.
 - The new ``listZones`` identifier retrieval and ``Route53Client`` error detail tests raise the total test count to **122**.
 - The new ``DeleteRecordRequest`` and ``UpdateRecordRequest`` tests raise the total test count to **125**.
+- The new ``SchemaProperty`` dictionary and fallback tests raise the total test count to **127**.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
