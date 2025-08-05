@@ -186,7 +186,7 @@ final class GatewayServerTests: XCTestCase {
 
     @MainActor
     /// Zone creation should validate request schema.
-    func testZoneEndpointValidatesSchema() async throws {
+      func testZoneEndpointValidatesSchema() async throws {
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
         let server = GatewayServer(manager: manager, plugins: [])
         Task { try await server.start(port: 9109) }
@@ -204,6 +204,76 @@ final class GatewayServerTests: XCTestCase {
         request.httpBody = Data("{}".utf8)
         (_, response) = try await URLSession.shared.data(for: request)
         XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 400)
+        try await server.stop()
+    }
+
+    @MainActor
+    func testZoneLifecycle() async throws {
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9110) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let base = URL(string: "http://127.0.0.1:9110")!
+        struct ZoneCreate: Encodable { let name: String }
+        var request = URLRequest(url: base.appendingPathComponent("zones"))
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONEncoder().encode(ZoneCreate(name: "example"))
+        var (data, response) = try await URLSession.shared.data(for: request)
+        struct Zone: Decodable { let id: String; let name: String }
+        let created = try JSONDecoder().decode(Zone.self, from: data)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 201)
+        let listURL = base.appendingPathComponent("zones")
+        (data, response) = try await URLSession.shared.data(from: listURL)
+        struct ZonesResponse: Decodable { let zones: [Zone] }
+        var zones = try JSONDecoder().decode(ZonesResponse.self, from: data)
+        XCTAssertEqual(zones.zones.count, 1)
+        let deleteURL = base.appendingPathComponent("zones/\(created.id)")
+        var deleteReq = URLRequest(url: deleteURL)
+        deleteReq.httpMethod = "DELETE"
+        (_, response) = try await URLSession.shared.data(for: deleteReq)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 204)
+        (data, _) = try await URLSession.shared.data(from: listURL)
+        zones = try JSONDecoder().decode(ZonesResponse.self, from: data)
+        XCTAssertEqual(zones.zones.count, 0)
+        try await server.stop()
+    }
+
+    @MainActor
+    func testRecordLifecycle() async throws {
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9111) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let base = URL(string: "http://127.0.0.1:9111")!
+        struct ZoneCreate: Encodable { let name: String }
+        var zoneReq = URLRequest(url: base.appendingPathComponent("zones"))
+        zoneReq.httpMethod = "POST"
+        zoneReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        zoneReq.httpBody = try JSONEncoder().encode(ZoneCreate(name: "example"))
+        var (data, _) = try await URLSession.shared.data(for: zoneReq)
+        struct Zone: Decodable { let id: String }
+        let zone = try JSONDecoder().decode(Zone.self, from: data)
+        struct RecordRequest: Encodable { let name: String; let type: String; let value: String }
+        var recordReq = URLRequest(url: base.appendingPathComponent("zones/\(zone.id)/records"))
+        recordReq.httpMethod = "POST"
+        recordReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        recordReq.httpBody = try JSONEncoder().encode(RecordRequest(name: "www", type: "A", value: "1.1.1.1"))
+        (data, _) = try await URLSession.shared.data(for: recordReq)
+        struct Record: Decodable { let id: String }
+        let record = try JSONDecoder().decode(Record.self, from: data)
+        let listURL = base.appendingPathComponent("zones/\(zone.id)/records")
+        (data, _) = try await URLSession.shared.data(from: listURL)
+        struct RecordsResponse: Decodable { let records: [Record] }
+        var records = try JSONDecoder().decode(RecordsResponse.self, from: data)
+        XCTAssertEqual(records.records.count, 1)
+        let deleteURL = base.appendingPathComponent("zones/\(zone.id)/records/\(record.id)")
+        var deleteReq = URLRequest(url: deleteURL)
+        deleteReq.httpMethod = "DELETE"
+        (_, _) = try await URLSession.shared.data(for: deleteReq)
+        (data, _) = try await URLSession.shared.data(from: listURL)
+        records = try JSONDecoder().decode(RecordsResponse.self, from: data)
+        XCTAssertEqual(records.records.count, 0)
         try await server.stop()
     }
 }

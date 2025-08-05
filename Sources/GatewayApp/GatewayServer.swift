@@ -19,10 +19,17 @@ public final class GatewayServer {
     /// and in reverse order during ``GatewayPlugin.respond(_:for:)``.
     private let plugins: [GatewayPlugin]
 
-    /// Lightweight zone model used for request validation.
-    private struct ZoneRequest: Codable {
-        let name: String
-    }
+    /// In-memory zone model.
+    private struct Zone: Codable { let id: UUID; let name: String }
+    private struct ZonesResponse: Codable { let zones: [Zone] }
+    private struct ZoneCreateRequest: Codable { let name: String }
+
+    /// DNS record model supporting core record types.
+    private enum RecordType: String, Codable { case A, AAAA, CNAME, MX, TXT, SRV, CAA }
+    private struct Record: Codable { let id: UUID; let name: String; let type: RecordType; let value: String }
+    private struct RecordRequest: Codable { let name: String; let type: RecordType; let value: String }
+    private struct RecordsResponse: Codable { let records: [Record] }
+
 
     /// Creates a new gateway server instance.
     /// - Parameters:
@@ -35,27 +42,97 @@ public final class GatewayServer {
         self.manager = manager
         self.plugins = plugins
         self.group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+        var zones: [UUID: Zone] = [:]
+        var records: [UUID: [UUID: Record]] = [:]
         let kernel = HTTPKernel { [plugins] req in
             var request = req
             for plugin in plugins {
                 request = try await plugin.prepare(request)
             }
+            let segments = request.path.split(separator: "/", omittingEmptySubsequences: true)
             var response: HTTPResponse
-            switch (request.method, request.path) {
-            case ("GET", "/health"):
+            switch (request.method, segments) {
+            case ("GET", ["health"]):
                 let json = try JSONEncoder().encode(["status": "ok"])
                 response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
-            case ("GET", "/metrics"):
+            case ("GET", ["metrics"]):
                 let metrics: [String: [String]] = ["metrics": []]
                 let json = try JSONEncoder().encode(metrics)
                 response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
-            case ("POST", "/zones"):
+            case ("GET", ["zones"]):
+                let json = try JSONEncoder().encode(ZonesResponse(zones: Array(zones.values)))
+                response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+            case ("POST", ["zones"]):
                 do {
-                    let zone = try JSONDecoder().decode(ZoneRequest.self, from: request.body)
+                    let req = try JSONDecoder().decode(ZoneCreateRequest.self, from: request.body)
+                    let zone = Zone(id: UUID(), name: req.name)
+                    zones[zone.id] = zone
                     let json = try JSONEncoder().encode(zone)
                     response = HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
                 } catch {
                     response = HTTPResponse(status: 400)
+                }
+            case ("DELETE", let seg) where seg.count == 2 && seg[0] == "zones":
+                let zoneId = seg[1]
+                if let id = UUID(uuidString: String(zoneId)), zones.removeValue(forKey: id) != nil {
+                    records[id] = nil
+                    response = HTTPResponse(status: 204)
+                } else {
+                    response = HTTPResponse(status: 404)
+                }
+            case ("GET", let seg) where seg.count == 3 && seg[0] == "zones" && seg[2] == "records":
+                let zoneId = seg[1]
+                if let id = UUID(uuidString: String(zoneId)), zones[id] != nil {
+                    let recs = Array(records[id]?.values ?? [:].values)
+                    let json = try JSONEncoder().encode(RecordsResponse(records: recs))
+                    response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                } else {
+                    response = HTTPResponse(status: 404)
+                }
+            case ("POST", let seg) where seg.count == 3 && seg[0] == "zones" && seg[2] == "records":
+                let zoneId = seg[1]
+                guard let id = UUID(uuidString: String(zoneId)), zones[id] != nil else {
+                    response = HTTPResponse(status: 404)
+                    break
+                }
+                do {
+                    let req = try JSONDecoder().decode(RecordRequest.self, from: request.body)
+                    let record = Record(id: UUID(), name: req.name, type: req.type, value: req.value)
+                    var zoneRecords = records[id] ?? [:]
+                    zoneRecords[record.id] = record
+                    records[id] = zoneRecords
+                    let json = try JSONEncoder().encode(record)
+                    response = HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
+                } catch {
+                    response = HTTPResponse(status: 400)
+                }
+            case ("PUT", let seg) where seg.count == 4 && seg[0] == "zones" && seg[2] == "records":
+                let zoneId = seg[1]
+                let recordId = seg[3]
+                guard let zid = UUID(uuidString: String(zoneId)),
+                      let rid = UUID(uuidString: String(recordId)),
+                      records[zid]?[rid] != nil else {
+                    response = HTTPResponse(status: 404)
+                    break
+                }
+                do {
+                    let req = try JSONDecoder().decode(RecordRequest.self, from: request.body)
+                    let record = Record(id: rid, name: req.name, type: req.type, value: req.value)
+                    records[zid]![rid] = record
+                    let json = try JSONEncoder().encode(record)
+                    response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                } catch {
+                    response = HTTPResponse(status: 400)
+                }
+            case ("DELETE", let seg) where seg.count == 4 && seg[0] == "zones" && seg[2] == "records":
+                let zoneId = seg[1]
+                let recordId = seg[3]
+                if let zid = UUID(uuidString: String(zoneId)),
+                   let rid = UUID(uuidString: String(recordId)),
+                   records[zid]?.removeValue(forKey: rid) != nil {
+                    response = HTTPResponse(status: 204)
+                } else {
+                    response = HTTPResponse(status: 404)
                 }
             default:
                 response = HTTPResponse(status: 404)
