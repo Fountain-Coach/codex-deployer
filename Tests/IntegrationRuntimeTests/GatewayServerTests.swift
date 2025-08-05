@@ -183,6 +183,29 @@ final class GatewayServerTests: XCTestCase {
         XCTAssertEqual(body?["metrics"], [])
         try await server.stop()
     }
+
+    @MainActor
+    /// Zone creation should validate request schema.
+    func testZoneEndpointValidatesSchema() async throws {
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9109) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let url = URL(string: "http://127.0.0.1:9109/zones")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        struct Zone: Encodable { let name: String }
+        request.httpBody = try JSONEncoder().encode(Zone(name: "example"))
+        var (data, response) = try await URLSession.shared.data(for: request)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 201)
+        let body = try JSONSerialization.jsonObject(with: data) as? [String: String]
+        XCTAssertEqual(body?["name"], "example")
+        request.httpBody = Data("{}".utf8)
+        (_, response) = try await URLSession.shared.data(for: request)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 400)
+        try await server.stop()
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
