@@ -21,7 +21,8 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Record management         | HTTP API                    | Support A/AAAA/CNAME/MX/TXT/SRV/CAA records              | ❌     | Implement handlers                  | api, dns         |
 | Reload trigger            | DNS engine                  | Hot-reload zone data on change or API call               | ❌     | File watcher & reload endpoint      | dns, runtime     |
 | Git integration           | Zone store                  | Version zone files in Git                                | ❌     | GitOps pipeline design              | gitops, dns      |
-| OpenAPI spec              | API spec                    | Ship full OpenAPI 3.1 definition                         | ❌     | Finalize schema                     | docs, api        |
+| OpenAPI spec              | API spec                    | Ship full OpenAPI 3.1 definition                         | ✅
+	| None                               | docs, api        |
 | DNSSEC (optional)         | DNS engine                  | Sign internal zones with DNSSEC                          | ❌     | Crypto library selection            | security, dns    |
 | DNS engine                | SwiftNIO UDP/TCP            | Parse queries and respond from zone cache                | ❌     | DNS parser implementation           | swift, networking|
 | Zone manager              | Zone storage                | Maintain in-memory cache & disk serialization            | ❌     | Yams integration                    | storage, concurrency |

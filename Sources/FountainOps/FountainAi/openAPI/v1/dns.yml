@@ -1,0 +1,196 @@
+---
+openapi: 3.1.0
+info:
+  title: Fountain Internal DNS API
+  description: >
+    API for managing internal DNS zones and records.
+  version: 1.0.0
+servers:
+  - url: http://dns.fountain.coach/api/v1
+paths:
+  /zones:
+    get:
+      summary: List Zones
+      operationId: listZones
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZonesResponse'
+    post:
+      summary: Create Zone
+      operationId: createZone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ZoneCreateRequest'
+      responses:
+        '201':
+          description: Zone Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zone'
+  /zones/{zoneId}:
+    parameters:
+      - name: zoneId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Zone identifier
+    delete:
+      summary: Delete Zone
+      operationId: deleteZone
+      responses:
+        '204':
+          description: Zone Deleted
+  /zones/{zoneId}/records:
+    parameters:
+      - name: zoneId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Zone identifier
+    get:
+      summary: List Records
+      operationId: listRecords
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordsResponse'
+    post:
+      summary: Create Record
+      operationId: createRecord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordRequest'
+      responses:
+        '201':
+          description: Record Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+  /zones/{zoneId}/records/{recordId}:
+    parameters:
+      - name: zoneId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Zone identifier
+      - name: recordId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Record identifier
+    put:
+      summary: Update Record
+      operationId: updateRecord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordRequest'
+      responses:
+        '200':
+          description: Record Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+    delete:
+      summary: Delete Record
+      operationId: deleteRecord
+      responses:
+        '204':
+          description: Record Deleted
+components:
+  schemas:
+    Zone:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          description: Zone identifier
+        name:
+          type: string
+          description: DNS zone name
+    ZoneCreateRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          description: DNS zone name
+    ZonesResponse:
+      type: object
+      required: [zones]
+      properties:
+        zones:
+          type: array
+          items:
+            $ref: '#/components/schemas/Zone'
+    Record:
+      type: object
+      required: [id, name, type, value]
+      properties:
+        id:
+          type: string
+          description: Record identifier
+        name:
+          type: string
+          description: Record name
+        type:
+          type: string
+          enum: [A, AAAA, CNAME, MX, TXT, SRV, CAA]
+          description: DNS record type
+        value:
+          type: string
+          description: Record data
+    RecordRequest:
+      type: object
+      required: [name, type, value]
+      properties:
+        name:
+          type: string
+          description: Record name
+        type:
+          type: string
+          enum: [A, AAAA, CNAME, MX, TXT, SRV, CAA]
+          description: DNS record type
+        value:
+          type: string
+          description: Record data
+    RecordsResponse:
+      type: object
+      required: [records]
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/Record'
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+          description: Description of the error
+
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

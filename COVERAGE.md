@@ -40,7 +40,6 @@ The new ``NIOHTTPServer`` port reuse and concurrency tests bring the total test 
 The new ``importZoneFile`` and ``exportZoneFile`` request tests raise the total test count to **66**.
 The new ``getZone`` and ``listPrimaryServers`` request tests raise the total test count to **69**.
 The new ``PublishingFrontendPlugin`` pass-through and non-GET tests raise the total test count to **71**.
-The new ``Route53Client`` error detail tests raise the total test count to **73**.
 The new ``BulkRecordsUpdateRequestCodable`` and ``PrimaryServersResponseDecodes`` tests raise the total test count to **75**.
 
 The new ``CertificateManager`` start and stop tests raise the total test count to **77**.
@@ -72,7 +71,6 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 
 - The new ``OpenAPIParameter`` name and type tests raise the total test count to **117**.
 - The new ``GatewayServer`` prepare-order and health content-type tests raise the total test count to **119**.
-- The new ``listZones`` identifier retrieval and ``Route53Client`` error detail tests raise the total test count to **122**.
 - The new ``DeleteRecordRequest`` and ``UpdateRecordRequest`` tests raise the total test count to **125**.
 - The new ``SchemaProperty`` dictionary and fallback tests raise the total test count to **127**.
 - The new ``URLSessionHTTPClient`` empty-body and multi-header tests raise the total test count to **129**.
@@ -95,7 +93,6 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``APIClient`` NoBody and header omission tests raise the total test count to **158**.
 - The new ``ServerServesNestedFile`` and ``LoadPublishingConfigUsesDefaultsWhenFileEmpty`` tests raise the total test count to **160**.
 - The new ``CreateRecordEncodesBody`` and ``ListZonesSetsAuthHeader`` tests raise the total test count to **162**.
-- The new ``Route53Client`` error description and user-info tests raise the total test count to **164**.
 - The new ``ServiceDefaults`` test raises the total test count to **165**.
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
