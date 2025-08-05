@@ -56,6 +56,7 @@ public final class PublishingFrontend {
     /// Stops the HTTP server and releases all resources.
     public func stop() async throws {
         try await server.stop()
+        try await group.shutdownGracefully()
     }
 }
 
