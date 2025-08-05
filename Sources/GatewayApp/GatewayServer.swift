@@ -5,6 +5,7 @@ import FountainCodex
 
 /// HTTP gateway server that composes plugins for request handling.
 /// Provides built-in `/health` and `/metrics` endpoints used for monitoring.
+/// Additionally exposes control plane endpoints with basic schema validation.
 @MainActor
 public final class GatewayServer {
     /// Underlying HTTP server handling TCP connections.
@@ -17,6 +18,11 @@ public final class GatewayServer {
     /// Plugins run in registration order during ``GatewayPlugin.prepare(_:)``
     /// and in reverse order during ``GatewayPlugin.respond(_:for:)``.
     private let plugins: [GatewayPlugin]
+
+    /// Lightweight zone model used for request validation.
+    private struct ZoneRequest: Codable {
+        let name: String
+    }
 
     /// Creates a new gateway server instance.
     /// - Parameters:
@@ -43,6 +49,14 @@ public final class GatewayServer {
                 let metrics: [String: [String]] = ["metrics": []]
                 let json = try JSONEncoder().encode(metrics)
                 response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+            case ("POST", "/zones"):
+                do {
+                    let zone = try JSONDecoder().decode(ZoneRequest.self, from: request.body)
+                    let json = try JSONEncoder().encode(zone)
+                    response = HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
+                } catch {
+                    response = HTTPResponse(status: 400)
+                }
             default:
                 response = HTTPResponse(status: 404)
             }
