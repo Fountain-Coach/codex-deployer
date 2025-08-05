@@ -39,6 +39,41 @@ final class ZoneManagerTests: XCTestCase {
         let records = await manager.allRecords()
         XCTAssertEqual(records.count, 10)
     }
+
+    func testReloadUpdatesCache() async throws {
+        let file = temporaryFile()
+        try "example.com: 1.1.1.1\n".write(to: file, atomically: true, encoding: .utf8)
+        let manager = try ZoneManager(fileURL: file)
+        try "example.com: 2.2.2.2\n".write(to: file, atomically: true, encoding: .utf8)
+        await manager.reload()
+        let ip = await manager.ip(for: "example.com")
+        XCTAssertEqual(ip, "2.2.2.2")
+    }
+
+    func testSetCommitsChangesToGit() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let file = dir.appendingPathComponent("zones.yaml")
+        try "".write(to: file, atomically: true, encoding: .utf8)
+        let initTask = Process()
+        initTask.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        initTask.currentDirectoryURL = dir
+        initTask.arguments = ["init"]
+        try initTask.run()
+        initTask.waitUntilExit()
+        let manager = try ZoneManager(fileURL: file)
+        try await manager.set(name: "example.com", ip: "3.3.3.3")
+        let logTask = Process()
+        logTask.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        logTask.currentDirectoryURL = dir
+        logTask.arguments = ["log", "--oneline"]
+        let pipe = Pipe()
+        logTask.standardOutput = pipe
+        try logTask.run()
+        logTask.waitUntilExit()
+        let output = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+        XCTAssertTrue(output.contains("Update zone file"))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

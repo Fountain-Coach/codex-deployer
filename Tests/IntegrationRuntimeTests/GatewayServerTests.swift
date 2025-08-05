@@ -276,6 +276,26 @@ final class GatewayServerTests: XCTestCase {
         XCTAssertEqual(records.records.count, 0)
         try await server.stop()
     }
+
+    @MainActor
+    func testReloadEndpointTriggersZoneManager() async throws {
+        let dir = FileManager.default.temporaryDirectory
+        let file = dir.appendingPathComponent(UUID().uuidString)
+        try "example.com: 1.1.1.1\n".write(to: file, atomically: true, encoding: .utf8)
+        let zoneManager = try ZoneManager(fileURL: file)
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
+        Task { try await server.start(port: 9112) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        try "example.com: 2.2.2.2\n".write(to: file, atomically: true, encoding: .utf8)
+        var request = URLRequest(url: URL(string: "http://127.0.0.1:9112/zones/reload")!)
+        request.httpMethod = "POST"
+        let (_, response) = try await URLSession.shared.data(for: request)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 204)
+        let ip = await zoneManager.ip(for: "example.com")
+        XCTAssertEqual(ip, "2.2.2.2")
+        try await server.stop()
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
