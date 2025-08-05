@@ -1,7 +1,4 @@
 import Foundation
-#if canImport(FoundationNetworking)
-import FoundationNetworking
-#endif
 
 /// Abstraction over DNS providers used for certificate challenges and routing.
 public protocol DNSProvider {
@@ -13,62 +10,6 @@ public protocol DNSProvider {
     func updateRecord(id: String, zone: String, name: String, type: String, value: String) async throws
     /// Deletes a DNS record by identifier.
     func deleteRecord(id: String) async throws
-}
-
-/// Concrete ``DNSProvider`` that talks to the Hetzner DNS API.
-public struct HetznerDNSClient: DNSProvider {
-    /// HTTP client used for communication with Hetzner's API.
-    let api: APIClient
-
-    /// Creates a new client with the given API token and session.
-    /// The token is attached as an `Auth-API-Token` header on every request.
-    public init(token: String, session: HTTPSession = URLSession.shared) {
-        self.api = APIClient(
-            baseURL: URL(string: "https://dns.hetzner.com/api/v1")!,
-            session: session,
-            defaultHeaders: ["Auth-API-Token": token]
-        )
-    }
-
-    /// Returns all zone identifiers the token has access to.
-    public func listZones() async throws -> [String] {
-        let response = try await api.send(ListZones(parameters: ListZonesParameters()))
-        return response.zones.map { $0.id }
-    }
-
-    /// Adds an ``A`` or ``TXT`` record to the zone.
-    /// - Parameters:
-    ///   - zone: Target zone identifier the record belongs to.
-    ///   - name: Record name without the zone suffix.
-    ///   - type: DNS record type such as `"A"` or `"TXT"`.
-    ///   - value: DNS record value to store.
-    /// - Throws: Rethrows networking errors from ``APIClient``.
-    public func createRecord(zone: String, name: String, type: String, value: String) async throws {
-        let body = RecordCreate(name: name, ttl: 60, type: type, value: value, zone_id: zone)
-        _ = try await api.send(CreateRecord(body: body))
-    }
-
-    /// Updates a DNS record's value.
-    /// - Parameters:
-    ///   - id: Identifier of the record to update.
-    ///   - zone: Zone containing the record.
-    ///   - name: Record name without the zone suffix.
-    ///   - type: DNS record type such as `"A"` or `"TXT"`.
-    ///   - value: New DNS record value.
-    /// - Throws: Rethrows networking errors from ``APIClient``.
-    public func updateRecord(id: String, zone: String, name: String, type: String, value: String) async throws {
-        let params = UpdateRecordParameters(recordid: id)
-        let body = RecordCreate(name: name, ttl: 60, type: type, value: value, zone_id: zone)
-        _ = try await api.send(UpdateRecord(parameters: params, body: body))
-    }
-
-    /// Removes a DNS record from the zone.
-    /// - Parameter id: Identifier of the record to delete.
-    /// - Throws: Rethrows networking errors from ``APIClient``.
-    public func deleteRecord(id: String) async throws {
-        let params = DeleteRecordParameters(recordid: id)
-        _ = try await api.send(DeleteRecord(parameters: params))
-    }
 }
 
 /// Stub implementation used during development.
