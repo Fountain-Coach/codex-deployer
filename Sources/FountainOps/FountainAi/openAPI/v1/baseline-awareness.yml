@@ -229,6 +229,32 @@ paths:
                 type: object
         '422':
           description: Validation Error
+  /corpus/history/stream:
+    get:
+      summary: Stream History Analytics
+      operationId: streamHistoryAnalytics
+      description: Stream historical analytics of the corpus.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+        '422':
+          description: Validation Error
+  /metrics:
+    get:
+      summary: Metrics
+      description: Endpoint that serves Prometheus metrics.
+      operationId: metrics_metrics_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            text/plain:
+              schema:
+                type: string
 components:
   schemas:
     BaselineRequest:
