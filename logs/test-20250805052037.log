@@ -1,0 +1,51 @@
+Building for debugging...
+[0/15] Write sources
+[2/15] Write swift-version--4EAD98957C2213E4.txt
+[4/19] Compiling FountainAiLauncher main.swift
+[5/19] Emitting module FountainAiLauncher
+[6/19] Compiling FountainAiLauncher Supervisor.swift
+[7/19] Compiling FountainAiLauncher Service.swift
+[8/20] Wrapping AST for FountainAiLauncher for debugging
+[9/20] Write Objects.LinkFileList
+[10/20] Linking FountainAiLauncher
+[12/22] Emitting module FountainAiLauncherTests
+[13/22] Compiling FountainAiLauncherTests FountainAiLauncherTests.swift
+[14/23] /workspace/codex-deployer/FountainAiLauncher/.build/x86_64-unknown-linux-gnu/debug/FountainAiLauncherPackageDiscoveredTests.derived/all-discovered-tests.swift
+[15/23] Write sources
+[16/23] Wrapping AST for FountainAiLauncherTests for debugging
+[18/26] Compiling FountainAiLauncherPackageDiscoveredTests all-discovered-tests.swift
+[19/26] Emitting module FountainAiLauncherPackageDiscoveredTests
+[20/26] Compiling FountainAiLauncherPackageDiscoveredTests FountainAiLauncherTests.swift
+[21/27] /workspace/codex-deployer/FountainAiLauncher/.build/x86_64-unknown-linux-gnu/debug/FountainAiLauncherPackageTests.derived/runner.swift
+[22/27] Write sources
+[23/27] Wrapping AST for FountainAiLauncherPackageDiscoveredTests for debugging
+[25/29] Emitting module FountainAiLauncherPackageTests
+[26/29] Compiling FountainAiLauncherPackageTests runner.swift
+[27/30] Wrapping AST for FountainAiLauncherPackageTests for debugging
+[28/30] Write Objects.LinkFileList
+[29/30] Linking FountainAiLauncherPackageTests.xctest
+Build complete! (22.47s)
+Test Suite 'All tests' started at 2025-08-05 05:21:03.756
+Test Suite 'debug.xctest' started at 2025-08-05 05:21:03.763
+Test Suite 'FountainAiLauncherTests' started at 2025-08-05 05:21:03.763
+Test Case 'FountainAiLauncherTests.testServiceDefaults' started at 2025-08-05 05:21:03.763
+Test Case 'FountainAiLauncherTests.testServiceDefaults' passed (0.005 seconds)
+Test Case 'FountainAiLauncherTests.testServiceInitializerStoresArguments' started at 2025-08-05 05:21:03.767
+Test Case 'FountainAiLauncherTests.testServiceInitializerStoresArguments' passed (0.001 seconds)
+Test Case 'FountainAiLauncherTests.testServiceLaunch' started at 2025-08-05 05:21:03.768
+Started Echo (pid: 10618)
+Test Case 'FountainAiLauncherTests.testServiceLaunch' passed (0.057 seconds)
+Test Case 'FountainAiLauncherTests.testTerminateAllStopsProcesses' started at 2025-08-05 05:21:03.825
+Started Sleep (pid: 10619)
+Test Case 'FountainAiLauncherTests.testTerminateAllStopsProcesses' passed (0.054 seconds)
+Test Suite 'FountainAiLauncherTests' passed at 2025-08-05 05:21:03.880
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.117 (0.117) seconds
+Test Suite 'debug.xctest' passed at 2025-08-05 05:21:03.880
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.117 (0.117) seconds
+Test Suite 'All tests' passed at 2025-08-05 05:21:03.880
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.117 (0.117) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.1 (43b6f88e2f2712e)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests passed after 0.001 seconds.
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

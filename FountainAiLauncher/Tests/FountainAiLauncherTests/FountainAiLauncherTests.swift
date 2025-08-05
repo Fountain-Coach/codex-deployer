@@ -29,6 +29,14 @@ final class FountainAiLauncherTests: XCTestCase {
         XCTAssertEqual(service.port, 42)
         XCTAssertEqual(service.healthPath, "/health")
     }
+
+    /// Ensures default initializer uses empty arguments and no health settings.
+    func testServiceDefaults() {
+        let service = Service(name: "Bare", binaryPath: "/bin/echo")
+        XCTAssertTrue(service.arguments.isEmpty)
+        XCTAssertNil(service.port)
+        XCTAssertNil(service.healthPath)
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
