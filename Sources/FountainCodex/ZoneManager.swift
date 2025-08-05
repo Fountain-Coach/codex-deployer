@@ -11,13 +11,17 @@ import Darwin
 public actor ZoneManager {
     private var cache: [String: String]
     private let fileURL: URL
+    private let signer: DNSSECSigner?
     private var timer: DispatchSourceTimer?
     private var lastModified: Date
 
     /// Loads the zone cache from the provided YAML file if it exists.
-    /// - Parameter fileURL: Location of the YAML zone file on disk.
-    public init(fileURL: URL) throws {
+    /// - Parameters:
+    ///   - fileURL: Location of the YAML zone file on disk.
+    ///   - signer: Optional DNSSEC signer used to generate zone signatures.
+    public init(fileURL: URL, signer: DNSSECSigner? = nil) throws {
         self.fileURL = fileURL
+        self.signer = signer
         if let data = try? Data(contentsOf: fileURL),
            let string = String(data: data, encoding: .utf8),
            let loaded = try Yams.load(yaml: string) as? [String: String] {
@@ -54,6 +58,10 @@ public actor ZoneManager {
     private func persist() throws {
         let yaml = try Yams.dump(object: cache)
         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+        if let signer {
+            let sig = try signer.sign(zone: yaml)
+            try Data(sig).write(to: fileURL.appendingPathExtension("sig"))
+        }
         gitCommit(message: "Update zone file")
     }
 
@@ -82,6 +90,8 @@ public actor ZoneManager {
 
     private func gitCommit(message: String) {
         let dir = fileURL.deletingLastPathComponent()
+        guard FileManager.default.fileExists(atPath: dir.appendingPathComponent(".git").path) else { return }
+
         let add = Process()
         add.executableURL = URL(fileURLWithPath: "/usr/bin/git")
         add.currentDirectoryURL = dir

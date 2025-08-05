@@ -1,0 +1,1379 @@
+[0/1] Planning build
+Building for debugging...
+[0/879] Write sources
+[12/879] Write swift-version--4EAD98957C2213E4.txt
+[13/879] Compiling deterministic.cc
+[14/879] Compiling _NumericsShims _NumericsShims.c
+[15/879] Write sources
+[17/879] Compiling forkunsafe.cc
+[18/879] Compiling fork_detect.cc
+[19/880] Compiling _AtomicsShims.c
+[20/880] Write sources
+[23/880] Compiling pool.cc
+[24/880] Write sources
+[40/882] Emitting module FountainCore
+[42/885] Emitting module _NIOBase64
+[43/886] Emitting module _NIODataStructures
+[44/888] Emitting module Logging
+[47/889] Emitting module RealModule
+[48/891] Wrapping AST for _NIOBase64 for debugging
+[50/891] Wrapping AST for _NIODataStructures for debugging
+[51/891] Write sources
+[53/891] Compiling writer.c
+[54/891] Wrapping AST for Logging for debugging
+[55/891] Wrapping AST for FountainCore for debugging
+[57/891] Emitting module FountainCoreTests
+[57/892] Compiling reader.c
+[58/892] Wrapping AST for RealModule for debugging
+[60/892] Emitting module InternalCollectionsUtilities
+[61/893] Compiling scanner.c
+[62/893] Compiling parser.c
+[64/893] Compiling CNIOWindows shim.c
+[65/893] Compiling api.c
+[66/893] Compiling CNIOWindows WSAStartup.c
+[67/893] Compiling emitter.c
+[68/893] Compiling CNIOWASI CNIOWASI.c
+[69/893] Wrapping AST for FountainCoreTests for debugging
+[70/893] Compiling CNIOPosix event_loop_id.c
+[71/893] Wrapping AST for InternalCollectionsUtilities for debugging
+[72/894] Compiling CNIOLinux liburing_shims.c
+[73/894] Compiling CNIOLinux shim.c
+[74/894] Compiling CNIOLLHTTP c_nio_http.c
+[75/894] Compiling CNIOExtrasZlib empty.c
+[76/895] Compiling CNIOLLHTTP c_nio_api.c
+[77/895] Compiling CNIODarwin shim.c
+[78/895] Compiling CNIOLLHTTP c_nio_llhttp.c
+[79/895] Compiling fiat_p256_adx_sqr.S
+[80/895] Compiling fiat_p256_adx_mul.S
+[81/895] Compiling fiat_curve25519_adx_square.S
+[82/895] Compiling CNIOBoringSSLShims shims.c
+[83/895] Compiling fiat_curve25519_adx_mul.S
+[85/895] Emitting module DequeModule
+[87/896] Emitting module Yams
+[88/897] Wrapping AST for DequeModule for debugging
+[89/897] Wrapping AST for Yams for debugging
+[90/897] Compiling tls_method.cc
+[91/897] Compiling tls_record.cc
+[92/897] Compiling tls13_server.cc
+[93/897] Compiling tls13_enc.cc
+[94/897] Compiling tls13_client.cc
+[95/897] Compiling tls13_both.cc
+[96/897] Compiling t1_enc.cc
+[97/897] Compiling ssl_x509.cc
+[98/897] Compiling ssl_versions.cc
+[99/897] Compiling ssl_transcript.cc
+[100/897] Compiling ssl_stat.cc
+[101/897] Compiling ssl_session.cc
+[102/897] Compiling ssl_privkey.cc
+[103/897] Compiling ssl_lib.cc
+[104/897] Compiling ssl_key_share.cc
+[105/897] Compiling ssl_file.cc
+[106/897] Compiling ssl_credential.cc
+[107/897] Compiling ssl_cipher.cc
+[108/897] Compiling ssl_buffer.cc
+[109/897] Compiling ssl_cert.cc
+[110/897] Compiling ssl_asn1.cc
+[111/897] Compiling ssl_aead_ctx.cc
+[112/897] Compiling s3_pkt.cc
+[113/897] Compiling s3_lib.cc
+[114/897] Compiling s3_both.cc
+[115/897] Compiling handshake_server.cc
+[116/897] Compiling handshake.cc
+[117/897] Compiling handshake_client.cc
+[118/897] Compiling handoff.cc
+[119/897] Compiling encrypted_client_hello.cc
+[120/897] Compiling extensions.cc
+[121/897] Compiling dtls_method.cc
+[122/897] Compiling dtls_record.cc
+[123/897] Compiling d1_srtp.cc
+[124/897] Compiling md5-x86_64-linux.S
+[125/897] Compiling bio_ssl.cc
+[126/897] Compiling md5-x86_64-apple.S
+[127/897] Compiling md5-586-linux.S
+[128/897] Compiling md5-586-apple.S
+[129/897] Compiling d1_pkt.cc
+[130/897] Compiling chacha20_poly1305_x86_64-linux.S
+[131/897] Compiling err_data.cc
+[132/897] Compiling chacha20_poly1305_x86_64-apple.S
+[133/897] Compiling chacha20_poly1305_armv8-win.S
+[134/897] Compiling chacha20_poly1305_armv8-apple.S
+[135/897] Compiling chacha20_poly1305_armv8-linux.S
+[136/897] Compiling d1_lib.cc
+[137/897] Compiling d1_both.cc
+[138/897] Compiling chacha-x86_64-linux.S
+[139/897] Compiling chacha-x86-linux.S
+[140/897] Compiling chacha-x86_64-apple.S
+[141/897] Compiling chacha-x86-apple.S
+[142/897] Compiling chacha-armv8-win.S
+[143/897] Compiling chacha-armv8-linux.S
+[144/897] Compiling chacha-armv4-linux.S
+[145/897] Compiling chacha-armv8-apple.S
+[146/897] Compiling aes128gcmsiv-x86_64-apple.S
+[146/897] Compiling aes128gcmsiv-x86_64-linux.S
+[148/897] Compiling x86_64-mont5-linux.S
+[149/897] Compiling x86_64-mont5-apple.S
+[150/897] Compiling x86_64-mont-linux.S
+[151/897] Compiling x86_64-mont-apple.S
+[152/897] Compiling x86-mont-linux.S
+[153/897] Compiling x86-mont-apple.S
+[154/897] Compiling vpaes-x86_64-linux.S
+[155/897] Compiling vpaes-x86_64-apple.S
+[156/897] Compiling vpaes-x86-linux.S
+[157/897] Compiling vpaes-x86-apple.S
+[158/897] Compiling vpaes-armv8-win.S
+[159/897] Compiling vpaes-armv8-linux.S
+[160/897] Compiling vpaes-armv8-apple.S
+[161/897] Compiling vpaes-armv7-linux.S
+[162/897] Compiling sha512-x86_64-linux.S
+[163/897] Compiling sha512-x86_64-apple.S
+[164/897] Compiling sha512-armv8-win.S
+[165/897] Compiling sha512-armv8-linux.S
+[166/897] Compiling sha512-armv8-apple.S
+[167/897] Compiling sha512-armv4-linux.S
+[168/897] Compiling sha512-586-linux.S
+[169/897] Compiling sha512-586-apple.S
+[170/897] Compiling sha256-x86_64-linux.S
+[171/897] Compiling sha256-x86_64-apple.S
+[172/897] Compiling sha256-armv8-win.S
+[173/897] Compiling sha256-armv8-linux.S
+[174/897] Compiling sha256-armv8-apple.S
+[175/897] Compiling sha256-armv4-linux.S
+[176/897] Compiling sha256-586-linux.S
+[177/897] Compiling sha256-586-apple.S
+[178/897] Compiling sha1-x86_64-linux.S
+[179/897] Compiling sha1-x86_64-apple.S
+[180/897] Compiling sha1-armv8-win.S
+[181/897] Compiling sha1-armv8-linux.S
+[182/897] Compiling sha1-armv8-apple.S
+[183/897] Compiling sha1-armv4-large-linux.S
+[184/897] Compiling sha1-586-apple.S
+[185/897] Compiling sha1-586-linux.S
+[186/897] Compiling rsaz-avx2-linux.S
+[187/897] Compiling rsaz-avx2-apple.S
+[188/897] Compiling rdrand-x86_64-apple.S
+[189/897] Compiling rdrand-x86_64-linux.S
+[190/897] Compiling p256_beeu-x86_64-asm-linux.S
+[191/897] Compiling p256_beeu-x86_64-asm-apple.S
+[192/897] Compiling p256_beeu-armv8-asm-win.S
+[193/897] Compiling p256_beeu-armv8-asm-apple.S
+[194/897] Compiling p256_beeu-armv8-asm-linux.S
+[195/897] Compiling p256-x86_64-asm-linux.S
+[196/897] Compiling p256-x86_64-asm-apple.S
+[197/897] Compiling p256-armv8-asm-win.S
+[198/897] Compiling p256-armv8-asm-linux.S
+[199/897] Compiling p256-armv8-asm-apple.S
+[200/897] Compiling ghashv8-armv8-win.S
+[201/897] Compiling ghashv8-armv8-linux.S
+[202/897] Compiling ghashv8-armv8-apple.S
+[203/897] Compiling ghash-x86_64-linux.S
+[204/897] Compiling ghashv8-armv7-linux.S
+[205/897] Compiling ghash-x86_64-apple.S
+[206/897] Compiling ghash-x86-linux.S
+[207/897] Compiling ghash-x86-apple.S
+[208/897] Compiling ghash-ssse3-x86_64-linux.S
+[209/897] Compiling ghash-ssse3-x86_64-apple.S
+[210/897] Compiling ghash-ssse3-x86-apple.S
+[211/897] Compiling ghash-ssse3-x86-linux.S
+[212/897] Compiling ghash-neon-armv8-win.S
+[213/897] Compiling ghash-neon-armv8-linux.S
+[214/897] Compiling ghash-neon-armv8-apple.S
+[215/897] Compiling ghash-armv4-linux.S
+[216/897] Compiling co-586-linux.S
+[217/897] Compiling co-586-apple.S
+[218/897] Compiling bsaes-armv7-linux.S
+[219/897] Compiling bn-armv8-win.S
+[220/897] Compiling bn-armv8-apple.S
+[221/897] Compiling bn-armv8-linux.S
+[222/897] Compiling bn-586-linux.S
+[223/897] Compiling bn-586-apple.S
+[224/897] Compiling armv8-mont-win.S
+[225/897] Compiling armv8-mont-apple.S
+[226/897] Compiling armv8-mont-linux.S
+[227/897] Compiling armv4-mont-linux.S
+[228/897] Compiling aesv8-gcm-armv8-win.S
+[229/897] Compiling aesv8-gcm-armv8-linux.S
+[230/897] Compiling aesv8-gcm-armv8-apple.S
+[231/897] Compiling aesv8-armv8-win.S
+[232/897] Compiling aesv8-armv8-linux.S
+[233/897] Compiling aesv8-armv8-apple.S
+[234/897] Compiling aesv8-armv7-linux.S
+[235/897] Compiling aesni-x86_64-linux.S
+[236/897] Compiling aesni-x86_64-apple.S
+[237/897] Compiling aesni-x86-linux.S
+[238/897] Compiling aesni-x86-apple.S
+[239/897] Compiling aesni-gcm-x86_64-linux.S
+[240/897] Compiling aesni-gcm-x86_64-apple.S
+[241/897] Compiling aes-gcm-avx2-x86_64-linux.S
+[242/897] Compiling aes-gcm-avx2-x86_64-apple.S
+[243/897] Compiling aes-gcm-avx10-x86_64-linux.S
+[244/897] Compiling aes-gcm-avx10-x86_64-apple.S
+[245/897] Compiling x_x509a.cc
+[246/897] Compiling x_sig.cc
+[247/897] Compiling x_x509.cc
+[248/897] Compiling x_val.cc
+[249/897] Compiling x_spki.cc
+[250/897] Compiling x_exten.cc
+[251/897] Compiling x_pubkey.cc
+[252/897] Compiling x_req.cc
+[253/897] Compiling x_name.cc
+[254/897] Compiling x_crl.cc
+[255/897] Compiling x_attrib.cc
+[256/897] Compiling x_algor.cc
+[257/897] Compiling x509spki.cc
+[258/897] Compiling x_all.cc
+[259/897] Compiling x509rset.cc
+[260/897] Compiling x509cset.cc
+[261/897] Compiling x509name.cc
+[262/897] Compiling x509_vpm.cc
+[263/897] Compiling x509_v3.cc
+[264/897] Compiling x509_vfy.cc
+[265/897] Compiling x509_txt.cc
+[266/897] Compiling x509_trs.cc
+[267/897] Compiling x509_set.cc
+[268/897] Compiling x509_req.cc
+[269/897] Compiling x509_obj.cc
+[270/897] Compiling x509_lu.cc
+[271/897] Compiling x509_ext.cc
+[272/897] Compiling x509_def.cc
+[273/897] Compiling x509_d2.cc
+[274/897] Compiling x509_cmp.cc
+[275/897] Compiling x509_att.cc
+[276/897] Compiling x509.cc
+[277/897] Compiling v3_utl.cc
+[278/897] Compiling v3_skey.cc
+[279/897] Compiling v3_purp.cc
+[280/897] Compiling v3_prn.cc
+[281/897] Compiling v3_pmaps.cc
+[282/897] Compiling v3_ocsp.cc
+[283/897] Compiling v3_ncons.cc
+[284/897] Compiling v3_pcons.cc
+[285/897] Compiling v3_lib.cc
+[286/897] Compiling v3_int.cc
+[287/897] Compiling v3_info.cc
+[288/897] Compiling v3_ia5.cc
+[289/897] Compiling v3_genn.cc
+[290/897] Compiling v3_extku.cc
+[291/897] Compiling v3_enum.cc
+[292/897] Compiling v3_crld.cc
+[293/897] Compiling v3_conf.cc
+[294/897] Compiling v3_cpols.cc
+[295/897] Compiling v3_bitst.cc
+[296/897] Compiling v3_bcons.cc
+[297/897] Compiling v3_alt.cc
+[298/897] Compiling v3_akeya.cc
+[299/897] Compiling v3_akey.cc
+[300/897] Compiling t_x509.cc
+[301/897] Compiling t_x509a.cc
+[302/897] Compiling t_req.cc
+[303/897] Compiling t_crl.cc
+[304/897] Compiling rsa_pss.cc
+[305/897] Compiling name_print.cc
+[306/897] Compiling i2d_pr.cc
+[307/897] Compiling policy.cc
+[308/897] Compiling by_file.cc
+[309/897] Compiling by_dir.cc
+[310/897] Compiling asn1_gen.cc
+[311/897] Compiling algorithm.cc
+[312/897] Compiling a_verify.cc
+[313/897] Compiling a_sign.cc
+[314/897] Compiling voprf.cc
+[315/897] Compiling a_digest.cc
+[316/897] Compiling trust_token.cc
+[317/897] Compiling pmbtoken.cc
+[318/897] Compiling thread_win.cc
+[319/897] Compiling thread_pthread.cc
+[320/897] Compiling thread_none.cc
+[321/897] Compiling thread.cc
+[322/897] Compiling stack.cc
+[323/897] Compiling siphash.cc
+[324/897] Compiling slhdsa.cc
+[325/897] Compiling sha512.cc
+[326/897] Compiling spake2plus.cc
+[327/897] Compiling sha256.cc
+[328/897] Compiling sha1.cc
+[329/897] Compiling rsa_extra.cc
+[330/897] Compiling rsa_print.cc
+[331/897] Compiling rsa_crypt.cc
+[332/897] Compiling rc4.cc
+[333/897] Compiling rsa_asn1.cc
+[334/897] Compiling windows.cc
+[335/897] Compiling refcount.cc
+[336/897] Compiling urandom.cc
+[337/897] Compiling trusty.cc
+[338/897] Compiling rand.cc
+[339/897] Compiling getentropy.cc
+[340/897] Compiling ios.cc
+[341/897] Compiling passive.cc
+[342/897] Compiling poly1305_arm_asm.S
+[343/897] Compiling poly1305.cc
+[344/897] Compiling poly1305_arm.cc
+[345/897] Compiling poly1305_vec.cc
+[346/897] Compiling pkcs8.cc
+[347/897] Compiling pkcs8_x509.cc
+[348/897] Compiling pkcs7.cc
+[349/897] Compiling pkcs7_x509.cc
+[350/897] Compiling p5_pbev2.cc
+[351/897] Compiling pem_xaux.cc
+[352/897] Compiling pem_x509.cc
+[353/897] Compiling pem_pkey.cc
+[354/897] Compiling pem_oth.cc
+[355/897] Compiling pem_pk8.cc
+[356/897] Compiling obj_xref.cc
+[357/897] Compiling pem_lib.cc
+[358/897] Compiling pem_info.cc
+[359/897] Compiling pem_all.cc
+[360/897] Compiling obj.cc
+[361/897] Compiling mlkem.cc
+[362/897] Compiling mldsa.cc
+[363/897] Compiling md5.cc
+[364/897] Compiling mem.cc
+[365/897] Compiling md4.cc
+[366/897] Compiling lhash.cc
+[367/897] Compiling fips_shared_support.cc
+[368/897] Compiling poly_rq_mul.S
+[369/897] Compiling kyber.cc
+[370/897] Compiling hrss.cc
+[371/897] Compiling ex_data.cc
+[372/897] Compiling hpke.cc
+[373/897] Compiling sign.cc
+[374/897] Compiling scrypt.cc
+[375/897] Compiling pbkdf.cc
+[376/897] Compiling print.cc
+[377/897] Compiling p_x25519.cc
+[378/897] Compiling p_x25519_asn1.cc
+[379/897] Compiling p_rsa_asn1.cc
+[380/897] Compiling p_rsa.cc
+[381/897] Compiling p_ed25519_asn1.cc
+[382/897] Compiling p_hkdf.cc
+[383/897] Compiling p_ed25519.cc
+[384/897] Compiling p_ec_asn1.cc
+[385/897] Compiling p_ec.cc
+[386/897] Compiling p_dsa_asn1.cc
+[387/897] Compiling p_dh_asn1.cc
+[388/897] Compiling p_dh.cc
+[389/897] Compiling evp_ctx.cc
+[390/897] Compiling evp.cc
+[391/897] Compiling evp_asn1.cc
+[392/897] Compiling err.cc
+[393/897] Compiling bcm.cc
+[394/897] Compiling engine.cc
+[395/897] Compiling ecdh.cc
+[396/897] Compiling ecdsa_asn1.cc
+[397/897] Compiling ec_derive.cc
+[398/897] Compiling hash_to_curve.cc
+[399/897] Compiling ec_asn1.cc
+[400/897] Compiling params.cc
+[401/897] Compiling dsa_asn1.cc
+[402/897] Compiling dsa.cc
+[403/897] Compiling digest_extra.cc
+[404/897] Compiling dh_asn1.cc
+[405/897] Compiling x25519-asm-arm.S
+[406/897] Compiling des.cc
+[407/897] Compiling spake25519.cc
+[408/897] Compiling crypto.cc
+[409/897] Compiling curve25519.cc
+[410/897] Compiling cpu_arm_linux.cc
+[411/897] Compiling cpu_intel.cc
+[412/897] Compiling curve25519_64_adx.cc
+[413/897] Compiling cpu_arm_freebsd.cc
+[414/897] Compiling cpu_aarch64_win.cc
+[415/897] Compiling cpu_aarch64_openbsd.cc
+[416/897] Compiling cpu_aarch64_sysreg.cc
+[417/897] Compiling cpu_aarch64_linux.cc
+[418/897] Compiling cpu_aarch64_fuchsia.cc
+[419/897] Compiling cpu_aarch64_apple.cc
+[420/897] Compiling conf.cc
+[421/897] Compiling get_cipher.cc
+[422/897] Compiling tls_cbc.cc
+[423/897] Compiling e_tls.cc
+[424/897] Compiling e_rc4.cc
+[425/897] Compiling e_rc2.cc
+[426/897] Compiling e_null.cc
+[427/897] Compiling e_des.cc
+[428/897] Compiling e_aesgcmsiv.cc
+[429/897] Compiling e_chacha20poly1305.cc
+[430/897] Compiling derive_key.cc
+[431/897] Compiling e_aesctrhmac.cc
+[432/897] Compiling chacha.cc
+[433/897] Compiling unicode.cc
+[434/897] Compiling cbs.cc
+[435/897] Compiling ber.cc
+[436/897] Compiling cbb.cc
+[437/897] Compiling asn1_compat.cc
+[438/897] Compiling buf.cc
+[439/897] Compiling bn_asn1.cc
+[440/897] Compiling convert.cc
+[441/897] Compiling blake2.cc
+[442/897] Compiling socket_helper.cc
+[443/897] Compiling socket.cc
+[444/897] Compiling printf.cc
+[445/897] Compiling pair.cc
+[446/897] Compiling hexdump.cc
+[447/897] Compiling fd.cc
+[448/897] Compiling file.cc
+[449/897] Compiling errno.cc
+[450/897] Compiling connect.cc
+[451/897] Compiling bio_mem.cc
+[452/897] Compiling base64.cc
+[453/897] Compiling bio.cc
+[454/897] Compiling tasn_typ.cc
+[455/897] Compiling tasn_utl.cc
+[456/897] Compiling tasn_new.cc
+[457/897] Compiling tasn_fre.cc
+[458/897] Compiling tasn_enc.cc
+[459/897] Compiling posix_time.cc
+[460/897] Compiling tasn_dec.cc
+[461/897] Compiling f_string.cc
+[462/897] Compiling f_int.cc
+[463/897] Compiling asn_pack.cc
+[464/897] Compiling asn1_par.cc
+[465/897] Compiling a_utctm.cc
+[466/897] Compiling asn1_lib.cc
+[467/897] Compiling a_type.cc
+[468/897] Compiling a_time.cc
+[469/897] Compiling a_octet.cc
+[470/897] Compiling a_strnid.cc
+[471/897] Compiling a_strex.cc
+[472/897] Compiling a_mbstr.cc
+[473/897] Compiling a_object.cc
+[474/897] Compiling a_i2d_fp.cc
+[475/897] Compiling a_int.cc
+[476/897] Compiling a_gentm.cc
+[477/897] Compiling a_dup.cc
+[478/897] Compiling a_d2i_fp.cc
+[479/897] Compiling a_bool.cc
+[480/897] Compiling CCryptoBoringSSLShims shims.c
+[481/897] Compiling a_bitstr.cc
+[482/897] Compiling fiat_p256_adx_sqr.S
+[483/897] Compiling fiat_p256_adx_mul.S
+[484/897] Compiling fiat_curve25519_adx_square.S
+[485/897] Compiling fiat_curve25519_adx_mul.S
+[486/897] Compiling md5-x86_64-linux.S
+[487/897] Compiling md5-x86_64-apple.S
+[488/897] Compiling md5-586-linux.S
+[489/897] Compiling md5-586-apple.S
+[490/897] Compiling chacha20_poly1305_x86_64-linux.S
+[491/897] Compiling chacha20_poly1305_x86_64-apple.S
+[492/897] Compiling chacha20_poly1305_armv8-win.S
+[493/897] Compiling err_data.cc
+[494/897] Compiling chacha20_poly1305_armv8-linux.S
+[495/897] Compiling chacha20_poly1305_armv8-apple.S
+[496/897] Compiling chacha-x86_64-linux.S
+[497/897] Compiling chacha-x86_64-apple.S
+[498/897] Compiling chacha-x86-linux.S
+[499/897] Compiling chacha-x86-apple.S
+[500/897] Compiling chacha-armv8-win.S
+[501/897] Compiling chacha-armv8-linux.S
+[502/897] Compiling chacha-armv8-apple.S
+[503/897] Compiling chacha-armv4-linux.S
+[504/897] Compiling aes128gcmsiv-x86_64-apple.S
+[504/897] Compiling aes128gcmsiv-x86_64-linux.S
+[506/897] Compiling x86_64-mont5-linux.S
+[507/897] Compiling x86_64-mont5-apple.S
+[508/897] Compiling x86_64-mont-linux.S
+[509/897] Compiling x86_64-mont-apple.S
+[510/897] Compiling x86-mont-linux.S
+[511/897] Compiling x86-mont-apple.S
+[512/897] Compiling vpaes-x86_64-linux.S
+[513/897] Compiling c-nioatomics.c
+[514/897] Compiling vpaes-x86-linux.S
+[515/897] Compiling vpaes-x86_64-apple.S
+[516/897] Compiling vpaes-x86-apple.S
+[517/897] Compiling vpaes-armv8-win.S
+[518/897] Compiling vpaes-armv8-linux.S
+[519/897] Compiling vpaes-armv8-apple.S
+[520/897] Compiling c-atomics.c
+[521/897] Compiling vpaes-armv7-linux.S
+[522/897] Compiling sha512-x86_64-linux.S
+[523/897] Compiling sha512-armv8-win.S
+[524/897] Compiling sha512-x86_64-apple.S
+[525/897] Compiling sha512-armv8-linux.S
+[526/897] Compiling sha512-armv8-apple.S
+[527/898] Compiling sha512-armv4-linux.S
+[528/898] Compiling sha512-586-linux.S
+[529/898] Compiling sha512-586-apple.S
+[530/898] Compiling sha256-x86_64-linux.S
+[531/898] Compiling sha256-armv8-win.S
+[532/898] Compiling sha256-x86_64-apple.S
+[533/898] Compiling sha256-armv8-linux.S
+[534/898] Compiling sha256-armv8-apple.S
+[535/898] Compiling sha256-armv4-linux.S
+[536/898] Compiling sha256-586-linux.S
+[537/898] Compiling sha256-586-apple.S
+[538/898] Compiling sha1-armv8-win.S
+[539/898] Compiling sha1-x86_64-apple.S
+[540/898] Compiling sha1-x86_64-linux.S
+[541/898] Compiling sha1-armv8-linux.S
+[543/898] Emitting module NIOConcurrencyHelpers
+[543/899] Compiling sha1-586-linux.S
+[543/899] Compiling sha1-armv4-large-linux.S
+[545/899] Compiling sha1-armv8-apple.S
+[546/899] Compiling sha1-586-apple.S
+[548/899] Compiling rdrand-x86_64-linux.S
+[549/899] Compiling rsaz-avx2-linux.S
+[550/899] Compiling rsaz-avx2-apple.S
+[551/899] Compiling rdrand-x86_64-apple.S
+[552/899] Compiling p256_beeu-x86_64-asm-linux.S
+[553/899] Compiling p256_beeu-x86_64-asm-apple.S
+[554/899] Wrapping AST for NIOConcurrencyHelpers for debugging
+[555/899] Compiling p256_beeu-armv8-asm-linux.S
+[556/899] Compiling p256_beeu-armv8-asm-win.S
+[557/899] Compiling p256_beeu-armv8-asm-apple.S
+[558/899] Compiling p256-x86_64-asm-apple.S
+[559/899] Compiling p256-x86_64-asm-linux.S
+[560/899] Compiling p256-armv8-asm-win.S
+[561/899] Compiling p256-armv8-asm-linux.S
+[562/899] Compiling p256-armv8-asm-apple.S
+[563/899] Compiling ghashv8-armv8-win.S
+[564/899] Compiling ghashv8-armv8-linux.S
+[565/899] Compiling ghashv8-armv8-apple.S
+[566/899] Compiling ghashv8-armv7-linux.S
+[567/899] Compiling ghash-x86_64-linux.S
+[568/899] Compiling ghash-x86-apple.S
+[569/899] Compiling ghash-x86_64-apple.S
+[570/899] Compiling ghash-ssse3-x86_64-linux.S
+[571/899] Compiling ghash-x86-linux.S
+[572/899] Compiling ghash-ssse3-x86_64-apple.S
+[573/899] Compiling ghash-ssse3-x86-linux.S
+[574/899] Compiling ghash-ssse3-x86-apple.S
+[575/899] Compiling ghash-neon-armv8-win.S
+[576/899] Compiling ghash-neon-armv8-linux.S
+[577/899] Compiling ghash-neon-armv8-apple.S
+[578/899] Compiling ghash-armv4-linux.S
+[579/899] Compiling co-586-linux.S
+[580/899] Compiling co-586-apple.S
+[581/899] Compiling bsaes-armv7-linux.S
+[582/899] Compiling bn-armv8-win.S
+[583/899] Compiling bn-armv8-linux.S
+[584/899] Compiling bn-586-linux.S
+[585/899] Compiling bn-armv8-apple.S
+[586/899] Compiling bn-586-apple.S
+[587/899] Compiling armv8-mont-win.S
+[588/899] Compiling armv8-mont-linux.S
+[589/899] Compiling armv8-mont-apple.S
+[590/899] Compiling armv4-mont-linux.S
+[591/899] Compiling aesv8-gcm-armv8-win.S
+[592/899] Compiling aesv8-gcm-armv8-linux.S
+[593/899] Compiling aesv8-gcm-armv8-apple.S
+[594/899] Compiling aesv8-armv8-win.S
+[595/899] Compiling aesv8-armv8-linux.S
+[596/899] Compiling aesv8-armv8-apple.S
+[597/899] Compiling aesv8-armv7-linux.S
+[598/899] Compiling aesni-x86-linux.S
+[599/899] Compiling aesni-x86_64-linux.S
+[600/899] Compiling aesni-x86_64-apple.S
+[601/899] Compiling aesni-x86-apple.S
+[602/899] Compiling aesni-gcm-x86_64-linux.S
+[603/899] Compiling aesni-gcm-x86_64-apple.S
+[604/899] Compiling aes-gcm-avx2-x86_64-linux.S
+[605/899] Compiling aes-gcm-avx512-x86_64-linux.S
+[606/899] Compiling aes-gcm-avx512-x86_64-apple.S
+[607/899] Compiling aes-gcm-avx2-x86_64-apple.S
+[608/899] Compiling xwing.cc
+[609/899] Compiling x_x509a.cc
+[610/899] Compiling x_x509.cc
+[611/899] Compiling x_val.cc
+[612/899] Compiling x_spki.cc
+[613/899] Compiling x_sig.cc
+[614/899] Compiling x_req.cc
+[615/899] Compiling x_name.cc
+[616/899] Compiling x_exten.cc
+[617/899] Compiling x_pubkey.cc
+[618/899] Compiling x_crl.cc
+[619/899] Compiling x_attrib.cc
+[620/899] Compiling x_algor.cc
+[621/899] Compiling x_all.cc
+[622/899] Compiling x509spki.cc
+[623/899] Compiling x509rset.cc
+[624/899] Compiling x509name.cc
+[625/899] Compiling x509cset.cc
+[626/899] Compiling x509_vpm.cc
+[627/899] Compiling x509_vfy.cc
+[628/899] Compiling x509_v3.cc
+[629/899] Compiling x509_txt.cc
+[630/899] Compiling x509_set.cc
+[631/899] Compiling x509_trs.cc
+[632/899] Compiling x509_req.cc
+[633/899] Compiling x509_obj.cc
+[634/899] Compiling x509_lu.cc
+[635/899] Compiling x509_def.cc
+[636/899] Compiling x509_d2.cc
+[637/899] Compiling x509_ext.cc
+[638/899] Compiling x509_cmp.cc
+[639/899] Compiling x509_att.cc
+[640/899] Compiling x509.cc
+[641/899] Compiling v3_skey.cc
+[642/899] Compiling v3_utl.cc
+[643/899] Compiling v3_purp.cc
+[644/899] Compiling v3_prn.cc
+[645/899] Compiling v3_pmaps.cc
+[646/899] Compiling v3_pcons.cc
+[647/899] Compiling v3_ocsp.cc
+[648/899] Compiling v3_ncons.cc
+[649/899] Compiling v3_lib.cc
+[650/899] Compiling v3_int.cc
+[651/899] Compiling v3_info.cc
+[652/899] Compiling v3_genn.cc
+[653/899] Compiling v3_ia5.cc
+[654/899] Compiling v3_extku.cc
+[655/899] Compiling v3_enum.cc
+[656/899] Compiling v3_crld.cc
+[657/899] Compiling v3_cpols.cc
+[658/899] Compiling v3_conf.cc
+[659/899] Compiling v3_bitst.cc
+[660/899] Compiling v3_bcons.cc
+[661/899] Compiling v3_akeya.cc
+[662/899] Compiling v3_alt.cc
+[663/899] Compiling v3_akey.cc
+[664/899] Compiling t_x509a.cc
+[665/899] Compiling t_x509.cc
+[666/899] Compiling t_crl.cc
+[667/899] Compiling t_req.cc
+[668/899] Compiling rsa_pss.cc
+[669/899] Compiling policy.cc
+[670/899] Compiling name_print.cc
+[671/899] Compiling i2d_pr.cc
+[672/899] Compiling by_file.cc
+[673/899] Compiling by_dir.cc
+[674/899] Compiling asn1_gen.cc
+[675/899] Compiling a_verify.cc
+[676/899] Compiling algorithm.cc
+[677/899] Compiling a_sign.cc
+[678/899] Compiling a_digest.cc
+[679/899] Compiling trust_token.cc
+[680/899] Compiling voprf.cc
+[681/899] Compiling pmbtoken.cc
+[682/899] Compiling thread_win.cc
+[683/899] Compiling thread_pthread.cc
+[684/899] Compiling thread_none.cc
+[685/899] Compiling thread.cc
+[686/899] Compiling stack.cc
+[687/899] Compiling sha512.cc
+[688/899] Compiling siphash.cc
+[689/899] Compiling spake2plus.cc
+[690/899] Compiling slhdsa.cc
+[691/899] Compiling sha256.cc
+[692/899] Compiling sha1.cc
+[693/899] Compiling rsa_extra.cc
+[694/899] Compiling rsa_print.cc
+[695/899] Compiling rsa_crypt.cc
+[696/899] Compiling rsa_asn1.cc
+[697/899] Compiling rc4.cc
+[698/899] Compiling refcount.cc
+[699/899] Compiling windows.cc
+[700/899] Compiling trusty.cc
+[701/899] Compiling rand.cc
+[702/899] Compiling urandom.cc
+[703/899] Compiling passive.cc
+[704/899] Compiling ios.cc
+[705/899] Compiling getentropy.cc
+[706/899] Compiling deterministic.cc
+[707/899] Compiling forkunsafe.cc
+[708/899] Compiling fork_detect.cc
+[709/899] Compiling poly1305_arm_asm.S
+[710/899] Compiling pool.cc
+[711/899] Compiling poly1305_arm.cc
+[712/899] Compiling poly1305.cc
+[713/899] Compiling poly1305_vec.cc
+[714/899] Compiling pkcs7.cc
+[715/899] Compiling pkcs8_x509.cc
+[716/899] Compiling pkcs8.cc
+[717/899] Compiling p5_pbev2.cc
+[718/899] Compiling pkcs7_x509.cc
+[719/899] Compiling pem_x509.cc
+[720/899] Compiling pem_xaux.cc
+[721/899] Compiling pem_pk8.cc
+[722/899] Compiling pem_pkey.cc
+[723/899] Compiling pem_oth.cc
+[724/899] Compiling obj_xref.cc
+[725/899] Compiling pem_info.cc
+[726/899] Compiling obj.cc
+[727/899] Compiling mlkem.cc
+[728/899] Compiling pem_lib.cc
+[729/899] Compiling pem_all.cc
+[730/899] Compiling mldsa.cc
+[731/899] Compiling mem.cc
+[732/899] Compiling lhash.cc
+[733/899] Compiling md5.cc
+[734/899] Compiling md4.cc
+[735/899] Compiling poly_rq_mul.S
+[736/899] Compiling fips_shared_support.cc
+[737/899] Compiling kyber.cc
+[738/899] Compiling fuzzer_mode.cc
+[739/899] Compiling hrss.cc
+[740/899] Compiling hpke.cc
+[741/899] Compiling ex_data.cc
+[742/899] Compiling scrypt.cc
+[743/899] Compiling sign.cc
+[744/899] Compiling pbkdf.cc
+[745/899] Compiling print.cc
+[746/899] Compiling p_x25519.cc
+[747/899] Compiling p_x25519_asn1.cc
+[748/899] Compiling p_rsa_asn1.cc
+[749/899] Compiling p_rsa.cc
+[750/899] Compiling p_hkdf.cc
+[751/899] Compiling p_ed25519_asn1.cc
+[752/899] Compiling p_ed25519.cc
+[753/899] Compiling p_ec.cc
+[754/899] Compiling p_ec_asn1.cc
+[755/899] Compiling p_dh_asn1.cc
+[756/899] Compiling p_dsa_asn1.cc
+[757/899] Compiling p_dh.cc
+[758/899] Compiling evp_ctx.cc
+[759/899] Compiling evp.cc
+[760/899] Compiling err.cc
+[761/899] Compiling evp_asn1.cc
+[762/899] Compiling engine.cc
+[763/899] Compiling bcm.cc
+[764/899] Compiling ecdsa_p1363.cc
+[765/899] Compiling ecdh.cc
+[766/899] Compiling ecdsa_asn1.cc
+[767/899] Compiling hash_to_curve.cc
+[768/899] Compiling ec_derive.cc
+[769/899] Compiling ec_asn1.cc
+[770/899] Compiling dsa_asn1.cc
+[771/899] Compiling dsa.cc
+[772/899] Compiling params.cc
+[773/899] Compiling digest_extra.cc
+[774/899] Compiling dh_asn1.cc
+[775/899] Compiling x25519-asm-arm.S
+[776/899] Compiling des.cc
+[777/899] Compiling spake25519.cc
+[778/899] Compiling curve25519.cc
+[779/899] Compiling crypto.cc
+[780/899] Compiling cpu_intel.cc
+[781/899] Compiling cpu_arm_linux.cc
+[782/899] Compiling curve25519_64_adx.cc
+[783/899] Compiling cpu_arm_freebsd.cc
+[784/899] Compiling cpu_aarch64_win.cc
+[785/899] Compiling cpu_aarch64_openbsd.cc
+[786/899] Compiling cpu_aarch64_sysreg.cc
+[787/899] Compiling cpu_aarch64_linux.cc
+[788/899] Compiling cpu_aarch64_fuchsia.cc
+[789/899] Compiling cpu_aarch64_apple.cc
+[790/899] Compiling conf.cc
+[791/899] Compiling tls_cbc.cc
+[792/899] Compiling get_cipher.cc
+[793/899] Compiling e_tls.cc
+[794/899] Compiling e_rc4.cc
+[795/899] Compiling cms.cc
+[796/899] Compiling e_rc2.cc
+[797/899] Compiling e_des.cc
+[798/899] Compiling e_null.cc
+[799/899] Compiling e_chacha20poly1305.cc
+[800/899] Compiling e_aesgcmsiv.cc
+[801/899] Compiling e_aeseax.cc
+[802/899] Compiling derive_key.cc
+[803/899] Compiling e_aesctrhmac.cc
+[804/899] Compiling chacha.cc
+[805/899] Compiling unicode.cc
+[806/899] Compiling ber.cc
+[807/899] Compiling cbs.cc
+[808/899] Compiling cbb.cc
+[809/899] Compiling buf.cc
+[810/899] Compiling asn1_compat.cc
+[811/899] Compiling sqrt.cc
+[812/899] Compiling div.cc
+[813/899] Compiling exponentiation.cc
+[814/899] Compiling bn_asn1.cc
+[815/899] Compiling blake2.cc
+[816/899] Compiling printf.cc
+[817/899] Compiling convert.cc
+[818/899] Compiling pair.cc
+[819/899] Compiling hexdump.cc
+[820/899] Compiling file.cc
+[821/899] Compiling fd.cc
+[822/899] Compiling errno.cc
+[823/899] Compiling bio_mem.cc
+[824/899] Compiling bio.cc
+[825/899] Compiling base64.cc
+[826/899] Compiling tasn_typ.cc
+[827/899] Compiling tasn_utl.cc
+[828/899] Compiling tasn_fre.cc
+[829/899] Compiling tasn_new.cc
+[830/899] Compiling tasn_enc.cc
+[831/899] Compiling posix_time.cc
+[832/899] Compiling f_string.cc
+[833/899] Compiling tasn_dec.cc
+[834/899] Compiling f_int.cc
+[835/899] Compiling asn_pack.cc
+[836/899] Compiling asn1_par.cc
+[837/899] Compiling asn1_lib.cc
+[838/899] Compiling a_utctm.cc
+[839/899] Compiling a_type.cc
+[840/899] Compiling a_time.cc
+[841/899] Compiling a_strnid.cc
+[842/899] Compiling a_octet.cc
+[843/899] Compiling a_strex.cc
+[844/899] Compiling a_mbstr.cc
+[845/899] Compiling a_object.cc
+[846/899] Compiling a_int.cc
+[847/899] Compiling a_i2d_fp.cc
+[848/899] Compiling a_dup.cc
+[849/899] Compiling a_gentm.cc
+[850/899] Compiling a_d2i_fp.cc
+[851/899] Write sources
+[854/899] Compiling CAsyncHTTPClient CAsyncHTTPClient.c
+[855/900] Compiling aes.cc
+[856/900] Compiling a_bool.cc
+[857/901] Compiling a_bitstr.cc
+[859/902] Emitting module CryptoBoringWrapper
+[860/903] Wrapping AST for CryptoBoringWrapper for debugging
+[862/904] Emitting module Atomics
+[863/905] Wrapping AST for Atomics for debugging
+[865/918] Emitting module Algorithms
+[866/919] Emitting module Crypto
+[868/920] Wrapping AST for Algorithms for debugging
+[869/920] Wrapping AST for Crypto for debugging
+[871/920] Compiling NIOCore ChannelHandlers.swift
+[872/920] Compiling NIOCore ChannelInvoker.swift
+[873/920] Compiling NIOCore ChannelOption.swift
+[874/920] Compiling NIOCore ByteBuffer-views.swift
+[875/920] Compiling NIOCore Channel.swift
+[876/920] Compiling NIOCore ChannelHandler.swift
+[877/920] Compiling NIOCore ByteBuffer-lengthPrefix.swift
+[878/920] Compiling NIOCore ByteBuffer-multi-int.swift
+[879/920] Compiling NIOCore ByteBuffer-quicBinaryEncodingStrategy.swift
+[880/928] Compiling NIOCore AsyncChannelInboundStream.swift
+[881/928] Compiling NIOCore AsyncChannelOutboundWriter.swift
+[882/928] Compiling NIOCore Codec.swift
+[883/931] Compiling NIOCore AsyncAwaitSupport.swift
+[884/931] Compiling NIOCore AsyncChannel.swift
+[885/931] Compiling NIOCore AsyncChannelHandler.swift
+[886/933] Compiling NIOCore NIOCloseOnErrorHandler.swift
+[887/933] Compiling NIOCore SingleStepByteToMessageDecoder.swift
+[888/935] Compiling NIOCore ConvenienceOptionSupport.swift
+[889/935] Compiling NIOCore DeadChannel.swift
+[890/935] Compiling NIOCore MulticastChannel.swift
+[891/941] Compiling NIOCore SocketOptionProvider.swift
+[892/941] Compiling NIOCore UniversalBootstrapSupport.swift
+[893/947] Compiling NIOCore ChannelPipeline.swift
+[894/947] Compiling NIOCore CircularBuffer.swift
+[895/953] Emitting module NIOCore
+[896/953] Compiling NIOCore ByteBuffer-core.swift
+[897/953] Compiling NIOCore ByteBuffer-hex.swift
+[898/953] Compiling NIOCore ByteBuffer-int.swift
+[899/965] Compiling NIOCore FileRegion.swift
+[900/965] Compiling NIOCore GlobalSingletons.swift
+[901/965] Compiling NIOCore IO.swift
+[902/965] Compiling NIOCore IOData.swift
+[903/965] Compiling NIOCore IPProtocol.swift
+[904/965] Compiling NIOCore IntegerBitPacking.swift
+[905/966] Compiling NIOCore AddressedEnvelope.swift
+[906/966] Compiling NIOCore NIOAsyncSequenceProducer.swift
+[907/966] Compiling NIOCore NIOAsyncWriter.swift
+[908/966] Compiling NIOCore NIOThrowingAsyncSequenceProducer.swift
+[909/966] Compiling NIOCore BSDSocketAPI.swift
+[910/966] Compiling NIOCore ByteBuffer-aux.swift
+[911/967] Compiling NIOCore NIOAsyncSequenceProducerStrategies.swift
+[912/968] Compiling NIOCore EventLoopFuture+WithEventLoop.swift
+[913/969] Compiling NIOCore NIOScheduledCallback.swift
+[914/969] Compiling NIOCore NIOSendable.swift
+[915/969] Compiling NIOCore RecvByteBufferAllocator.swift
+[916/969] Compiling NIOCore SocketAddresses.swift
+[917/969] Compiling NIOCore SystemCallHelpers.swift
+[918/969] Compiling NIOCore TimeAmount+Duration.swift
+[919/969] Compiling NIOCore TypeAssistedChannelHandler.swift
+[920/969] Compiling NIOCore ByteBuffer-binaryEncodedLengthPrefix.swift
+[921/969] Compiling NIOCore ByteBuffer-conversions.swift
+[922/969] Compiling NIOCore EventLoop.swift
+[923/969] Compiling NIOCore EventLoopFuture+AssumeIsolated.swift
+[924/969] Compiling NIOCore EventLoopFuture.swift
+[925/969] Compiling NIOCore FileHandle.swift
+[926/969] Compiling NIOCore IntegerTypes.swift
+[927/969] Compiling NIOCore Interfaces.swift
+[928/969] Compiling NIOCore Linux.swift
+[929/969] Compiling NIOCore MarkedCircularBuffer.swift
+[930/969] Compiling NIOCore NIOAny.swift
+[931/969] Compiling NIOCore NIOPooledRecvBufferAllocator.swift
+[932/969] Compiling NIOCore Utilities.swift
+[933/974] Wrapping AST for NIOCore for debugging
+[935/1018] Emitting module NIOEmbedded
+[936/1018] Compiling NIOEmbedded AsyncTestingEventLoop.swift
+[937/1018] Compiling NIOEmbedded AsyncTestingChannel.swift
+[938/1018] Compiling NIOEmbedded Embedded.swift
+[939/1019] Emitting module NIOPosix
+[941/1029] Compiling NIOPosix FileDescriptor.swift
+[942/1029] Compiling NIOPosix GetaddrinfoResolver.swift
+[943/1029] Compiling NIOPosix HappyEyeballs.swift
+[944/1029] Compiling NIOPosix IO.swift
+[945/1029] Compiling NIOPosix IntegerBitPacking.swift
+[946/1029] Compiling NIOPosix IntegerTypes.swift
+[947/1029] Compiling NIOPosix Linux.swift
+[948/1029] Compiling NIOPosix LinuxCPUSet.swift
+[949/1029] Compiling NIOPosix LinuxUring.swift
+[950/1029] Compiling NIOPosix MultiThreadedEventLoopGroup.swift
+[951/1029] Compiling NIOPosix NIOPosixSendableMetatype.swift
+[951/1029] Wrapping AST for NIOEmbedded for debugging
+[953/1029] Compiling NIOPosix NIOThreadPool.swift
+[954/1029] Compiling NIOPosix NonBlockingFileIO.swift
+[955/1029] Compiling NIOPosix PendingDatagramWritesManager.swift
+[956/1029] Compiling NIOPosix PendingWritesManager.swift
+[957/1029] Compiling NIOPosix PipeChannel.swift
+[958/1029] Compiling NIOPosix PipePair.swift
+[959/1029] Compiling NIOPosix Pool.swift
+[960/1029] Compiling NIOPosix PosixSingletons+ConcurrencyTakeOver.swift
+[961/1029] Compiling NIOPosix PosixSingletons.swift
+[962/1029] Compiling NIOPosix RawSocketBootstrap.swift
+[963/1029] Compiling NIOPosix Resolver.swift
+[964/1029] Compiling NIOPosix Selectable.swift
+[965/1029] Compiling NIOPosix SelectableChannel.swift
+[966/1029] Compiling NIOPosix SelectableEventLoop.swift
+[967/1029] Compiling NIOPosix SelectorEpoll.swift
+[968/1029] Compiling NIOPosix SelectorGeneric.swift
+[969/1029] Compiling NIOPosix SelectorKqueue.swift
+[970/1029] Compiling NIOPosix SelectorUring.swift
+[971/1029] Compiling NIOPosix ServerSocket.swift
+[972/1029] Compiling NIOPosix Socket.swift
+[973/1029] Compiling NIOPosix SocketChannel.swift
+[974/1029] Compiling NIOPosix SocketProtocols.swift
+[975/1029] Compiling NIOPosix StructuredConcurrencyHelpers.swift
+[976/1029] Compiling NIOPosix System.swift
+[977/1029] Compiling NIOPosix Thread.swift
+[978/1029] Compiling NIOPosix ThreadPosix.swift
+[979/1029] Compiling NIOPosix ThreadWindows.swift
+[980/1029] Compiling NIOPosix UnsafeTransfer.swift
+[981/1029] Compiling NIOPosix Utilities.swift
+[982/1029] Compiling NIOPosix VsockAddress.swift
+[983/1029] Compiling NIOPosix VsockChannelEvents.swift
+[984/1029] Compiling NIOPosix BSDSocketAPICommon.swift
+[985/1029] Compiling NIOPosix BSDSocketAPIPosix.swift
+[986/1029] Compiling NIOPosix BSDSocketAPIWindows.swift
+[987/1029] Compiling NIOPosix BaseSocket.swift
+[988/1029] Compiling NIOPosix BaseSocketChannel+SocketOptionProvider.swift
+[989/1029] Compiling NIOPosix BaseSocketChannel.swift
+[990/1029] Compiling NIOPosix BaseStreamSocketChannel.swift
+[991/1029] Compiling NIOPosix Bootstrap.swift
+[992/1029] Compiling NIOPosix ControlMessage.swift
+[993/1029] Compiling NIOPosix DatagramVectorReadManager.swift
+[994/1029] Compiling NIOPosix Errors+Any.swift
+[995/1030] Wrapping AST for NIOPosix for debugging
+[997/1032] Emitting module NIO
+[998/1032] Compiling NIO Exports.swift
+[999/1033] Wrapping AST for NIO for debugging
+[1001/1069] Compiling NIOFoundationCompat WaitSpinningRunLoop.swift
+[1002/1069] Compiling NIOFoundationCompat JSONSerialization+ByteBuffer.swift
+[1003/1069] Compiling NIOSOCKS Messages.swift
+[1004/1069] Compiling NIOSOCKS SOCKSRequest.swift
+[1005/1069] Emitting module NIOSOCKS
+[1006/1071] Compiling NIOSOCKS SOCKSClientHandler.swift
+[1007/1071] Compiling NIOSOCKS SOCKSServerHandshakeHandler.swift
+[1008/1071] Compiling NIOSOCKS AuthenticationMethod.swift
+[1009/1071] Compiling NIOSOCKS ClientGreeting.swift
+[1010/1071] Compiling NIOSOCKS Errors.swift
+[1011/1071] Compiling NIOSOCKS Helpers.swift
+[1012/1071] Compiling NIOSOCKS SOCKSResponse.swift
+[1013/1071] Compiling NIOSOCKS SelectedAuthenticationMethod.swift
+[1014/1071] Emitting module NIOTLS
+[1015/1071] Compiling NIOTLS SNIHandler.swift
+[1016/1071] Compiling NIOTLS ProtocolNegotiationHandlerStateMachine.swift
+[1017/1071] Compiling NIOTLS ApplicationProtocolNegotiationHandler.swift
+[1018/1071] Compiling NIOTLS NIOTypedApplicationProtocolNegotiationHandler.swift
+[1019/1072] Compiling NIOFoundationCompat ByteBuffer-foundation.swift
+[1020/1072] Compiling NIOFoundationCompat Codable+ByteBuffer.swift
+[1021/1072] Emitting module NIOFoundationCompat
+[1027/1076] Emitting module NIOHTTP1
+[1028/1076] Compiling NIOTLS TLSEvents.swift
+[1029/1077] Wrapping AST for NIOFoundationCompat for debugging
+[1031/1077] Compiling NIOSOCKS ClientStateMachine.swift
+[1032/1077] Compiling NIOSOCKS ServerStateMachine.swift
+[1032/1098] Wrapping AST for NIOTLS for debugging
+[1034/1125] Compiling NIOSSL ByteBufferBIO.swift
+[1035/1125] Compiling NIOSSL CustomPrivateKey.swift
+[1036/1125] Compiling NIOSSL IdentityVerification.swift
+[1038/1125] Compiling NIOSSL LinuxCABundle.swift
+[1039/1125] Compiling NIOSSL NIOSSLClientHandler.swift
+[1040/1125] Compiling NIOSSL NIOSSLHandler+Configuration.swift
+[1041/1125] Compiling NIOSSL SSLConnection.swift
+[1042/1125] Compiling NIOSSL SSLContext.swift
+[1043/1125] Compiling NIOSSL SSLErrors.swift
+[1044/1125] Compiling NIOSSL SSLInit.swift
+[1045/1125] Compiling NIOSSL SSLCertificate.swift
+[1046/1125] Compiling NIOSSL SSLCertificateExtensions.swift
+[1047/1125] Compiling NIOSSL AndroidCABundle.swift
+[1050/1129] Emitting module NIOTransportServices
+[1050/1129] Wrapping AST for NIOSOCKS for debugging
+[1056/1129] Compiling NIOSSL SSLCertificateName.swift
+[1057/1129] Compiling NIOSSL NIOSSLHandler.swift
+[1058/1129] Compiling NIOSSL NIOSSLServerHandler.swift
+[1059/1129] Compiling NIOSSL ObjectIdentifier.swift
+[1060/1129] Compiling NIOSSL PosixPort.swift
+[1061/1129] Compiling NIOSSL SSLCallbacks.swift
+[1062/1129] Compiling NIOTransportServices StateManagedListenerChannel.swift
+[1063/1129] Compiling NIOTransportServices StateManagedNWConnectionChannel.swift
+[1064/1129] Compiling NIOTransportServices TCPOptions+SocketChannelOption.swift
+[1065/1129] Compiling NIOTransportServices UDPOptions+SocketChannelOption.swift
+[1073/1131] Wrapping AST for NIOTransportServices for debugging
+[1075/1147] Wrapping AST for NIOHTTP1 for debugging
+[1077/1147] Emitting module NIOSSL
+[1078/1153] Compiling NIOHTTPCompression HTTPRequestDecompressor.swift
+[1079/1154] Compiling NIOHTTPCompression HTTPResponseCompressor.swift
+[1080/1154] Compiling NIOHTTPCompression HTTPRequestCompressor.swift
+[1081/1154] Compiling NIOHPACK HuffmanTables.swift
+[1082/1154] Compiling NIOHPACK IndexedHeaderTable.swift
+[1085/1156] Emitting module NIOHTTPCompression
+[1086/1156] Compiling NIOHTTPCompression HTTPResponseDecompressor.swift
+[1087/1157] Compiling NIOHPACK IntegerCoding.swift
+[1088/1157] Compiling NIOHPACK StaticHeaderTable.swift
+[1089/1157] Compiling NIOHPACK HeaderTables.swift
+[1090/1157] Compiling NIOHPACK HuffmanCoding.swift
+[1098/1157] Compiling NIOHPACK DynamicHeaderTable.swift
+[1099/1157] Compiling NIOHPACK HPACKDecoder.swift
+[1100/1157] Compiling NIOHPACK HPACKEncoder.swift
+[1101/1157] Emitting module NIOHPACK
+[1102/1157] Compiling NIOHPACK HPACKErrors.swift
+[1103/1157] Compiling NIOHPACK HPACKHeader.swift
+[1105/1158] Wrapping AST for NIOHTTPCompression for debugging
+[1106/1170] Wrapping AST for NIOHPACK for debugging
+[1108/1213] Compiling NIOHTTP2 SendingHeadersState.swift
+[1109/1213] Compiling NIOHTTP2 SendingPushPromiseState.swift
+[1110/1213] Compiling NIOHTTP2 HTTP2ErrorCode.swift
+[1111/1213] Compiling NIOHTTP2 HTTP2FlowControlWindow.swift
+[1112/1213] Compiling NIOHTTP2 HTTP2Frame.swift
+[1113/1213] Compiling NIOHTTP2 HTTP2FrameEncoder.swift
+[1114/1213] Compiling NIOHTTP2 SendingRstStreamState.swift
+[1115/1213] Compiling NIOHTTP2 SendingWindowUpdateState.swift
+[1116/1213] Compiling NIOHTTP2 HTTP2SettingsState.swift
+[1117/1213] Compiling NIOHTTP2 HasExtendedConnectSettings.swift
+[1118/1213] Compiling NIOHTTP2 HasFlowControlWindows.swift
+[1119/1213] Compiling NIOHTTP2 HasLocalSettings.swift
+[1120/1213] Compiling NIOHTTP2 HasRemoteSettings.swift
+[1121/1213] Compiling NIOHTTP2 ReceivingPushPromiseState.swift
+[1122/1213] Compiling NIOHTTP2 ReceivingRstStreamState.swift
+[1123/1213] Compiling NIOHTTP2 ReceivingWindowUpdateState.swift
+[1124/1213] Compiling NIOHTTP2 MaySendFrames.swift
+[1125/1213] Compiling NIOHTTP2 SendingDataState.swift
+[1126/1213] Compiling NIOHTTP2 SendingGoawayState.swift
+[1127/1213] Compiling NIOHTTP2 ConnectionStateMachine.swift
+[1128/1213] Compiling NIOHTTP2 ConnectionStreamsState.swift
+[1129/1213] Compiling NIOHTTP2 MayReceiveFrames.swift
+[1130/1213] Compiling NIOHTTP2 ReceivingDataState.swift
+[1131/1213] Compiling NIOHTTP2 ReceivingGoAwayState.swift
+[1132/1213] Compiling NIOHTTP2 ReceivingHeadersState.swift
+[1134/1214] Emitting module NIOHTTP2
+[1134/1227] Wrapping AST for NIOSSL for debugging
+[1143/1227] Compiling NIOHTTP2 LocallyQuiescingState.swift
+[1144/1227] Compiling NIOHTTP2 QuiescingState.swift
+[1145/1227] Compiling NIOHTTP2 RemotelyQuiescingState.swift
+[1146/1227] Compiling NIOHTTP2 SendAndReceiveGoawayState.swift
+[1147/1227] Compiling NIOHTTP2 StateMachineResult.swift
+[1148/1227] Compiling NIOHTTP2 ContentLengthVerifier.swift
+[1149/1227] Compiling NIOHTTP2 DOSHeuristics.swift
+[1150/1227] Compiling NIOHTTP2 HTTP2StreamMultiplexer.swift
+[1151/1227] Compiling NIOHTTP2 HTTP2ToHTTP1Codec.swift
+[1152/1227] Compiling NIOHTTP2 HTTP2UserEvents.swift
+[1153/1227] Compiling NIOHTTP2 InboundEventBuffer.swift
+[1154/1227] Compiling NIOHTTP2 InboundWindowManager.swift
+[1155/1227] Compiling NIOHTTP2 MultiplexerAbstractChannel.swift
+[1156/1227] Compiling NIOHTTP2 NIOHTTP2FrameDelegate.swift
+[1157/1227] Compiling NIOHTTP2 StreamChannelFlowController.swift
+[1158/1227] Compiling NIOHTTP2 StreamChannelList.swift
+[1159/1227] Compiling NIOHTTP2 StreamMap.swift
+[1160/1227] Compiling NIOHTTP2 StreamStateMachine.swift
+[1161/1227] Compiling NIOHTTP2 UnsafeTransfer.swift
+[1162/1227] Compiling NIOHTTP2 WatermarkedFlowController.swift
+[1177/1227] Compiling NIOHTTP2 Error+Any.swift
+[1178/1227] Compiling NIOHTTP2 ConcurrentStreamBuffer.swift
+[1179/1227] Compiling NIOHTTP2 ControlFrameBuffer.swift
+[1180/1227] Compiling NIOHTTP2 OutboundFlowControlBuffer.swift
+[1181/1227] Compiling NIOHTTP2 OutboundFrameBuffer.swift
+[1182/1227] Compiling NIOHTTP2 GlitchesMonitor.swift
+[1183/1227] Compiling NIOHTTP2 HPACKHeaders+Validation.swift
+[1184/1227] Compiling NIOHTTP2 HTTP2ChannelHandler+InboundStreamMultiplexer.swift
+[1185/1227] Compiling NIOHTTP2 HTTP2ChannelHandler+InlineStreamMultiplexer.swift
+[1186/1227] Compiling NIOHTTP2 HTTP2ChannelHandler.swift
+[1187/1227] Compiling NIOHTTP2 HTTP2CommonInboundStreamMultiplexer.swift
+[1188/1227] Compiling NIOHTTP2 HTTP2ConnectionStateChange.swift
+[1189/1227] Compiling NIOHTTP2 HTTP2Error.swift
+[1194/1227] Compiling NIOHTTP2 HTTP2FrameParser.swift
+[1195/1227] Compiling NIOHTTP2 HTTP2PingData.swift
+[1196/1227] Compiling NIOHTTP2 HTTP2PipelineHelpers.swift
+[1197/1227] Compiling NIOHTTP2 HTTP2Settings.swift
+[1198/1227] Compiling NIOHTTP2 HTTP2Stream.swift
+[1199/1227] Compiling NIOHTTP2 HTTP2StreamChannel+OutboundStreamMultiplexer.swift
+[1200/1227] Compiling NIOHTTP2 HTTP2StreamChannel.swift
+[1201/1227] Compiling NIOHTTP2 HTTP2StreamDelegate.swift
+[1202/1227] Compiling NIOHTTP2 HTTP2StreamID.swift
+[1203/1228] Wrapping AST for NIOHTTP2 for debugging
+[1205/1283] Emitting module AsyncHTTPClient
+[1206/1296] Compiling AsyncHTTPClient AnyAsyncSequence.swift
+[1207/1296] Compiling AsyncHTTPClient AnyAsyncSequenceProucerDelete.swift
+[1208/1296] Compiling AsyncHTTPClient AsyncLazySequence.swift
+[1209/1296] Compiling AsyncHTTPClient HTTPClient+execute.swift
+[1210/1296] Compiling AsyncHTTPClient HTTPClient+shutdown.swift
+[1211/1296] Compiling AsyncHTTPClient HTTPClientRequest+Prepared.swift
+[1212/1296] Compiling AsyncHTTPClient HTTPClientRequest+auth.swift
+[1213/1296] Compiling AsyncHTTPClient HTTPClientRequest.swift
+[1214/1296] Compiling AsyncHTTPClient HTTPClientResponse.swift
+[1215/1296] Compiling AsyncHTTPClient SingleIteratorPrecondition.swift
+[1216/1296] Compiling AsyncHTTPClient Transaction+StateMachine.swift
+[1217/1296] Compiling AsyncHTTPClient Transaction.swift
+[1218/1296] Compiling AsyncHTTPClient Base64.swift
+[1219/1296] Compiling AsyncHTTPClient BasicAuth.swift
+[1220/1296] Compiling AsyncHTTPClient BestEffortHashableTLSConfiguration.swift
+[1221/1296] Compiling AsyncHTTPClient Configuration+BrowserLike.swift
+[1222/1296] Compiling AsyncHTTPClient ConnectionPool.swift
+[1223/1296] Compiling AsyncHTTPClient HTTP1ProxyConnectHandler.swift
+[1224/1296] Compiling AsyncHTTPClient SOCKSEventsHandler.swift
+[1225/1296] Compiling AsyncHTTPClient TLSEventsHandler.swift
+[1226/1296] Compiling AsyncHTTPClient HTTP1ClientChannelHandler.swift
+[1227/1296] Compiling AsyncHTTPClient HTTP1Connection.swift
+[1228/1296] Compiling AsyncHTTPClient HTTP1ConnectionStateMachine.swift
+[1229/1296] Compiling AsyncHTTPClient HTTP2ClientRequestHandler.swift
+[1230/1296] Compiling AsyncHTTPClient HTTP2Connection.swift
+[1231/1296] Compiling AsyncHTTPClient HTTP2IdleHandler.swift
+[1232/1296] Compiling AsyncHTTPClient HTTPConnectionEvent.swift
+[1233/1296] Compiling AsyncHTTPClient HTTPConnectionPool+Factory.swift
+[1234/1296] Compiling AsyncHTTPClient NWErrorHandler.swift
+[1235/1296] Compiling AsyncHTTPClient NWWaitingHandler.swift
+[1236/1296] Compiling AsyncHTTPClient TLSConfiguration.swift
+[1237/1296] Compiling AsyncHTTPClient RedirectState.swift
+[1238/1296] Compiling AsyncHTTPClient RequestBag+StateMachine.swift
+[1239/1296] Compiling AsyncHTTPClient RequestBag.swift
+[1240/1296] Compiling AsyncHTTPClient RequestValidation.swift
+[1241/1296] Compiling AsyncHTTPClient SSLContextCache.swift
+[1242/1296] Compiling AsyncHTTPClient Scheme.swift
+[1243/1296] Compiling AsyncHTTPClient Singleton.swift
+[1244/1296] Compiling AsyncHTTPClient StringConvertibleInstances.swift
+[1245/1296] Compiling AsyncHTTPClient StructuredConcurrencyHelpers.swift
+[1246/1296] Compiling AsyncHTTPClient Utils.swift
+[1247/1296] Compiling AsyncHTTPClient HTTPConnectionPool+Manager.swift
+[1248/1296] Compiling AsyncHTTPClient HTTPConnectionPool.swift
+[1249/1296] Compiling AsyncHTTPClient HTTPExecutableRequest.swift
+[1250/1296] Compiling AsyncHTTPClient HTTPRequestStateMachine+Demand.swift
+[1251/1296] Compiling AsyncHTTPClient HTTPRequestStateMachine.swift
+[1252/1296] Compiling AsyncHTTPClient RequestBodyLength.swift
+[1253/1296] Compiling AsyncHTTPClient RequestFramingMetadata.swift
+[1254/1296] Compiling AsyncHTTPClient RequestOptions.swift
+[1255/1296] Compiling AsyncHTTPClient HTTPConnectionPool+Backoff.swift
+[1256/1296] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP1Connections.swift
+[1257/1296] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP1StateMachine.swift
+[1258/1296] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP2Connections.swift
+[1259/1296] Compiling AsyncHTTPClient HTTPConnectionPool+HTTP2StateMachine.swift
+[1260/1296] Compiling AsyncHTTPClient HTTPConnectionPool+RequestQueue.swift
+[1261/1296] Compiling AsyncHTTPClient HTTPConnectionPool+StateMachine.swift
+[1262/1296] Compiling AsyncHTTPClient ConnectionTarget.swift
+[1263/1296] Compiling AsyncHTTPClient DeconstructedURL.swift
+[1264/1296] Compiling AsyncHTTPClient FileDownloadDelegate.swift
+[1265/1296] Compiling AsyncHTTPClient FoundationExtensions.swift
+[1266/1296] Compiling AsyncHTTPClient HTTPClient+HTTPCookie.swift
+[1267/1296] Compiling AsyncHTTPClient HTTPClient+Proxy.swift
+[1268/1296] Compiling AsyncHTTPClient HTTPClient+StructuredConcurrency.swift
+[1269/1296] Compiling AsyncHTTPClient HTTPClient.swift
+[1270/1296] Compiling AsyncHTTPClient HTTPHandler.swift
+[1271/1296] Compiling AsyncHTTPClient LRUCache.swift
+[1272/1296] Compiling AsyncHTTPClient NIOLoopBound+Execute.swift
+[1273/1297] Wrapping AST for AsyncHTTPClient for debugging
+[1275/1313] Compiling FountainCodex AsyncHTTPClientDriver.swift
+[1276/1313] Compiling FountainCodex HTTPClientProtocol.swift
+[1277/1313] Compiling FountainCodex HTTPKernel.swift
+[1278/1313] Compiling FountainCodex HTTPRequest.swift
+[1279/1316] Emitting module FountainCodex
+[1280/1316] Compiling FountainCodex ClientGenerator.swift
+[1281/1316] Compiling FountainCodex DNSEngine.swift
+[1282/1316] Compiling FountainCodex DNSSECSigner.swift
+[1283/1316] Compiling FountainCodex GeneratorMain.swift
+[1284/1316] Compiling FountainCodex HTTPResponse.swift
+[1285/1316] Compiling FountainCodex NIOHTTPServer.swift
+[1286/1316] Compiling FountainCodex URLSessionHTTPClient.swift
+[1287/1316] Compiling FountainCodex ModelEmitter.swift
+[1288/1316] Compiling FountainCodex ServerGenerator.swift
+[1289/1316] Compiling FountainCodex ZoneManager.swift
+[1290/1316] Compiling FountainCodex agent.swift
+[1291/1316] Compiling FountainCodex OpenAPISpec.swift
+[1292/1316] Compiling FountainCodex SpecLoader.swift
+[1293/1316] Compiling FountainCodex SpecValidator.swift
+[1294/1317] Wrapping AST for FountainCodex for debugging
+[1296/1331] Emitting module clientgen_service
+[1297/1331] Compiling clientgen_service main.swift
+[1298/1331] Emitting module ClientGeneratorTests
+[1299/1332] Compiling ClientGeneratorTests ClientGeneratorTests.swift
+/workspace/codex-deployer/Tests/ClientGeneratorTests/ClientGeneratorTests.swift:52:28: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+50 |         try ClientGenerator.emitClient(from: spec, to: outDir)
+51 |         let requestFile = outDir.appendingPathComponent("Requests/GetZone.swift")
+52 |         let contents = try String(contentsOf: requestFile)
+   |                            `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+53 |         XCTAssertTrue(contents.contains("detail"))
+54 |         XCTAssertTrue(contents.contains("query.append(\"detail"))
+[1300/1332] Compiling ClientGeneratorTests OpenAPIParameterTests.swift
+/workspace/codex-deployer/Tests/ClientGeneratorTests/ClientGeneratorTests.swift:52:28: warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+50 |         try ClientGenerator.emitClient(from: spec, to: outDir)
+51 |         let requestFile = outDir.appendingPathComponent("Requests/GetZone.swift")
+52 |         let contents = try String(contentsOf: requestFile)
+   |                            `- warning: 'init(contentsOf:)' is deprecated: Use `init(contentsOf:encoding:)` instead
+53 |         XCTAssertTrue(contents.contains("detail"))
+54 |         XCTAssertTrue(contents.contains("query.append(\"detail"))
+[1301/1332] Emitting module PublishingFrontend
+[1302/1332] Compiling PublishingFrontend APIRequest.swift
+[1303/1332] Compiling PublishingFrontend APIClient.swift
+[1304/1332] Compiling ClientGeneratorTests OpenAPISwiftTypeTests.swift
+[1305/1332] Compiling ClientGeneratorTests SecurityRequirementTests.swift
+[1306/1333] Compiling ClientGeneratorTests SpecValidatorTests.swift
+[1307/1333] Compiling ClientGeneratorTests SpecLoaderTests.swift
+/workspace/codex-deployer/Tests/ClientGeneratorTests/SpecLoaderTests.swift:28:29: warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+26 |     func testLoadThrowsForEmptyFile() {
+27 |         let url = FileManager.default.temporaryDirectory.appendingPathComponent("empty.yml")
+28 |         FileManager.default.createFile(atPath: url.path, contents: Data())
+   |                             `- warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+29 |         XCTAssertThrowsError(try SpecLoader.load(from: url))
+30 |     }
+
+/workspace/codex-deployer/Tests/ClientGeneratorTests/SpecLoaderTests.swift:37:29: warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+35 |         let bytes: [UInt8] = [0xFF]
+36 |         let data = Data(bytes)
+37 |         FileManager.default.createFile(atPath: url.path, contents: data)
+   |                             `- warning: result of call to 'createFile(atPath:contents:attributes:)' is unused
+38 |         XCTAssertThrowsError(try SpecLoader.load(from: url))
+39 |     }
+[1308/1333] Compiling PublishingFrontend DNSProvider.swift
+[1309/1333] Compiling PublishingFrontend PublishingFrontend.swift
+[1312/1334] Compiling ClientGeneratorTests StringExtensionTests.swift
+[1312/1335] Wrapping AST for clientgen-service for debugging
+[1314/1350] Write Objects.LinkFileList
+[1316/1350] Emitting module publishing_frontend
+[1316/1350] Wrapping AST for PublishingFrontend for debugging
+[1318/1350] Emitting module DNSTests
+[1319/1351] Compiling publishing_frontend main.swift
+[1320/1351] Compiling DNSTests DNSSECSignerTests.swift
+[1321/1351] Compiling gateway_server LoggingPlugin.swift
+[1322/1352] Compiling gateway_server PublishingFrontendPlugin.swift
+[1323/1352] Compiling DNSTests DNSEngineTests.swift
+[1324/1352] Compiling DNSTests APIClientTests.swift
+[1325/1352] Compiling DNSTests ZoneManagerDNSSECTests.swift
+/workspace/codex-deployer/Tests/DNSTests/ZoneManagerDNSSECTests.swift:14:27: error: sending 'signer.some' risks causing data races
+12 |         let file = temporaryFile()
+13 |         let signer = DNSSECSigner(privateKey: .init())
+14 |         let manager = try ZoneManager(fileURL: file, signer: signer)
+   |                           |- error: sending 'signer.some' risks causing data races
+   |                           `- note: sending 'signer.some' to actor-isolated callee risks causing data races between actor-isolated and local nonisolated uses
+15 |         try await manager.set(name: "example.com", ip: "9.9.9.9")
+16 |         let sigURL = file.appendingPathExtension("sig")
+17 |         let sigData = try Data(contentsOf: sigURL)
+18 |         let yaml = try String(contentsOf: file, encoding: .utf8)
+19 |         XCTAssertTrue(signer.verify(zone: yaml, signature: sigData))
+   |                       `- note: access can happen concurrently
+20 |     }
+21 | }
+[1326/1353] Emitting module PublishingFrontendTests
+[1327/1353] Compiling PublishingFrontendTests PublishingFrontendTests.swift
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:39:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 37 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+ 38 |         let cwd = FileManager.default.currentDirectoryPath
+ 39 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 40 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 41 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:40:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 38 |         let cwd = FileManager.default.currentDirectoryPath
+ 39 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 40 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 41 |         let config = try loadPublishingConfig()
+ 42 |         XCTAssertEqual(config.port, 1234)
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:65:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 63 |         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+ 64 |         let cwd = FileManager.default.currentDirectoryPath
+ 65 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 66 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 67 |         XCTAssertThrowsError(try loadPublishingConfig())
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:66:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 64 |         let cwd = FileManager.default.currentDirectoryPath
+ 65 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 66 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 67 |         XCTAssertThrowsError(try loadPublishingConfig())
+ 68 |     }
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:79:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 77 |         try "port: [123".write(to: fileURL, atomically: true, encoding: .utf8)
+ 78 |         let cwd = FileManager.default.currentDirectoryPath
+ 79 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 80 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 81 |         XCTAssertThrowsError(try loadPublishingConfig())
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:80:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 78 |         let cwd = FileManager.default.currentDirectoryPath
+ 79 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 80 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 81 |         XCTAssertThrowsError(try loadPublishingConfig())
+ 82 |     }
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:97:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 95 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+ 96 |         let cwd = FileManager.default.currentDirectoryPath
+ 97 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 98 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+ 99 |         XCTAssertThrowsError(try loadPublishingConfig())
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:98:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 96 |         let cwd = FileManager.default.currentDirectoryPath
+ 97 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+ 98 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+ 99 |         XCTAssertThrowsError(try loadPublishingConfig())
+100 |     }
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:114:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+112 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+113 |         let cwd = FileManager.default.currentDirectoryPath
+114 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+115 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+116 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:115:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+113 |         let cwd = FileManager.default.currentDirectoryPath
+114 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+115 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+116 |         let config = try loadPublishingConfig()
+117 |         XCTAssertEqual(config.port, 1234)
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:133:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+131 |         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+132 |         let cwd = FileManager.default.currentDirectoryPath
+133 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+134 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+135 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:134:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+132 |         let cwd = FileManager.default.currentDirectoryPath
+133 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+134 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+135 |         let config = try loadPublishingConfig()
+136 |         XCTAssertEqual(config.port, 8085)
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:221:37: warning: result of call to 'changeCurrentDirectoryPath' is unused
+219 |         try "".write(to: fileURL, atomically: true, encoding: .utf8)
+220 |         let cwd = FileManager.default.currentDirectoryPath
+221 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+    |                                     `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+222 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+223 |         let config = try loadPublishingConfig()
+
+/workspace/codex-deployer/Tests/PublishingFrontendTests/PublishingFrontendTests.swift:222:29: warning: result of call to 'changeCurrentDirectoryPath' is unused
+220 |         let cwd = FileManager.default.currentDirectoryPath
+221 |         defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
+222 |         FileManager.default.changeCurrentDirectoryPath(dir.path)
+    |                             `- warning: result of call to 'changeCurrentDirectoryPath' is unused
+223 |         let config = try loadPublishingConfig()
+224 |         XCTAssertEqual(config.port, 8085)
+[1329/1354] Compiling gateway_server main.swift
+[1331/1354] Compiling DNSTests ZoneManagerTests.swift
+[1331/1354] Wrapping AST for ClientGeneratorTests for debugging
+[1332/1354] Emitting module gateway_server
+[1333/1354] Compiling gateway_server CertificateManager.swift
+[1334/1354] Compiling gateway_server GatewayPlugin.swift
+[1334/1354] Linking clientgen-service
+[1334/1354] Wrapping AST for publishing-frontend for debugging
+error: fatalError
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

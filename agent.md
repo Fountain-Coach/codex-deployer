@@ -22,7 +22,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Reload trigger            | DNS engine                   | Hot-reload zone data on change or API call               | ✅     | None                                | dns, runtime          |
 | Git integration           | Zone store                   | Version zone files in Git                                | ✅     | None                                | gitops, dns           |
 | OpenAPI spec              | API spec                     | Ship full OpenAPI 3.1 definition                         | ✅     | None                                | docs, api             |
-| DNSSEC (optional)         | DNS engine                   | Sign internal zones with DNSSEC                          | ❌     | Crypto library selection            | security, dns         |
+| DNSSEC (optional)         | DNS engine                   | Sign internal zones with DNSSEC                          | ✅     | None                                | security, dns         |
 | DNS engine                | SwiftNIO UDP/TCP             | Parse queries and respond from zone cache                | ✅     | None                                | swift, networking     |
 | Zone manager              | Zone storage                 | Maintain in-memory cache & disk serialization            | ✅     | None                                | storage, concurrency  |
 | HTTP server               | SwiftNIO HTTP                | Serve control plane with schema validation               | ✅     | None                                | api, server           |
