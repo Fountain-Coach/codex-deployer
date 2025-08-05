@@ -16,7 +16,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 
 | Feature / Component       | File(s) or Area              | Action                                                   | Status | Blockers                            | Tags                  |
 |---------------------------|------------------------------|----------------------------------------------------------|--------|-------------------------------------|-----------------------|
-| Zone delegation           | DNS provider config          | Configure NS records for `internal.fountain.coach`       | ❌     | Provider setup required             | dns, infra            |
+| Zone delegation           | DNS provider config          | Configure NS records for `internal.fountain.coach`       | ✅     | None                                | dns, infra            |
 | Zone management           | HTTP API                     | Implement create/list/delete zone endpoints              | ✅     |
  None                                | api, dns              |
 | Record management         | HTTP API                     | Support A/AAAA/CNAME/MX/TXT/SRV/CAA records              | ✅     |
