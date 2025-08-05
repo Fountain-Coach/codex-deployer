@@ -55,7 +55,7 @@ let package = Package(
         .testTarget(name: "FountainCoreTests", dependencies: ["FountainCore"], path: "Tests/FountainCoreTests"),
         .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
         .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
-        .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend"], path: "Tests/DNSTests"),
+        .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainCodex"], path: "Tests/DNSTests"),
         .testTarget(name: "IntegrationRuntimeTests", dependencies: ["gateway-server", "FountainCodex"], path: "Tests/IntegrationRuntimeTests")
     ]
 )
