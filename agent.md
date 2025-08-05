@@ -27,9 +27,9 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Zone manager              | Zone storage                 | Maintain in-memory cache & disk serialization            | ✅     | None                                | storage, concurrency  |
 | HTTP server               | SwiftNIO HTTP                | Serve control plane with schema validation               | ✅     | None                                | api, server           |
 | ACME client               | Certificate automation       | Handle DNS-01 challenge via API                          | ✅     | None                                | security, cert        |
-| Testing                   | Tests                        | EmbeddedChannel unit & integration tests                 | ❌     | Test harness setup                  | test                  |
-| Performance               | DNS engine                   | Optimize caching & concurrency                           | ❌     | Benchmarking                        | perf                  |
-| Metrics & logging         | Observability                | Expose Prometheus counters & structured logs             | ❌     | Metrics system selection            | observability         |
+| Testing                   | Tests                        | EmbeddedChannel unit & integration tests                 | ✅     | None                                | test                  |
+| Performance               | DNS engine                   | Optimize caching & concurrency                           | ✅     | None                                | perf                  |
+| Metrics & logging         | Observability                | Expose Prometheus counters & structured logs             | ✅     | None                                | observability         |
 
 ---
 

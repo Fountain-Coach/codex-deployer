@@ -1,25 +1,40 @@
 import NIOCore
+import Logging
+import NIOConcurrencyHelpers
 
 /// Minimal DNS engine capable of parsing A record queries and responding from an in-memory zone cache.
 public struct DNSEngine {
-    /// Mapping of fully qualified domain names to IPv4 addresses.
-    public var zoneCache: [String: String]
+    /// Thread-safe mapping of fully qualified domain names to IPv4 addresses.
+    private let zoneCache: NIOLockedValueBox<[String: String]>
+    private let logger = Logger(label: "DNSEngine")
 
     /// Creates a new engine with the provided zone cache.
     /// - Parameter zoneCache: Dictionary of domain names to IPv4 addresses.
     public init(zoneCache: [String: String]) {
-        self.zoneCache = zoneCache
+        self.zoneCache = NIOLockedValueBox(zoneCache)
+    }
+
+    /// Updates or inserts a record in the zone cache.
+    public func updateRecord(name: String, ip: String) {
+        zoneCache.withLockedValue { $0[name] = ip }
     }
 
     /// Parses an incoming DNS query and constructs a response if the record exists in the cache.
     /// - Parameter buffer: Byte buffer containing the DNS query.
     /// - Returns: A byte buffer with the DNS response or `nil` if the record is unknown or parsing fails.
     public func handleQuery(buffer: inout ByteBuffer) -> ByteBuffer? {
-        guard let parser = DNSParser(buffer: &buffer),
-              let ip = zoneCache[parser.name] else {
+        guard let parser = DNSParser(buffer: &buffer) else {
+            logger.warning("Failed to parse query")
+            Task { await DNSMetrics.shared.record(query: "invalid", hit: false) }
             return nil
         }
-        return parser.makeResponse(ip: ip)
+        let response = zoneCache.withLockedValue { cache -> ByteBuffer? in
+            guard let ip = cache[parser.name] else { return nil }
+            return parser.makeResponse(ip: ip)
+        }
+        Task { await DNSMetrics.shared.record(query: parser.name, hit: response != nil) }
+        logger.info("dns_query", metadata: ["name": .string(parser.name), "hit": .string(String(response != nil))])
+        return response
     }
 }
 
