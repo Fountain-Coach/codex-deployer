@@ -1,6 +1,7 @@
 import XCTest
 @testable import FountainCodex
 import Yams
+import Foundation
 
 final class ZoneManagerTests: XCTestCase {
     func temporaryFile() -> URL {
@@ -44,6 +45,7 @@ final class ZoneManagerTests: XCTestCase {
         let file = temporaryFile()
         try "example.com: 1.1.1.1\n".write(to: file, atomically: true, encoding: .utf8)
         let manager = try ZoneManager(fileURL: file)
+        try await Task.sleep(nanoseconds: 1_000_000_000)
         try "example.com: 2.2.2.2\n".write(to: file, atomically: true, encoding: .utf8)
         await manager.reload()
         let ip = await manager.ip(for: "example.com")
