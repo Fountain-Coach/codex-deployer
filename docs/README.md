@@ -62,7 +62,7 @@ As modules gain documentation, brief summaries are added here.
 - **OpenAPISpec.Schema.Property.swiftType** – inline comments clarify array and object mappings and default behavior.
 - **services array** – startup service list in `FountainAiLauncher` now documented.
 - **ClientGenerator.emitRequest** – documents generation of request types handling path and query parameters.
-- **renew-certs.sh** – script obtaining TLS certificates via `certbot` with configurable environment variables.
+- **renew-certs.sh** – script obtaining TLS certificates via `certbot` using DNS-01 challenge and API hooks with configurable environment variables.
 - **loadPublishingConfig** – documents error handling for missing files, invalid YAML, and defaulting of absent keys.
 - **APIClient.send** – documents special handling for `Data` and `NoBody` responses.
 - **SimpleHTTPRuntime** – low-level planner runtime now documents its connection acceptance, request parsing, and response serialization flow.
