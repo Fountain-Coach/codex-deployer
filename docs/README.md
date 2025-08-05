@@ -6,7 +6,7 @@ As modules gain documentation, brief summaries are added here.
 ## Current Highlights
 - **PublishingFrontend** – lightweight static HTTP server for serving the `/Public` directory.
 - **HTTPKernel** – simple asynchronous router used by the gateway and publishing frontend.
-- **DNSProvider** – abstraction over DNS APIs with stubs for Route53.
+- **DNSProvider** – abstraction over DNS APIs.
 - **AsyncHTTPClientDriver** and **URLSessionHTTPClient** – documented HTTP clients powering network requests. The former now includes top-level class docs and dedicated tests verifying request execution.
 - **AsyncHTTPClientDriver.execute** – documents the returned response buffer, headers, and network error propagation.
 - **NIOHTTPServer** – documented server adapter built on SwiftNIO.
@@ -40,7 +40,6 @@ As modules gain documentation, brief summaries are added here.
 - **PublishingConfig.port** and **rootPath** – documented properties clarifying server binding and static directory.
 - **Todo.id** and **Todo.name** – documented properties clarifying task identifiers and titles.
 - **OpenAPISpec** – root model now documents components, servers, security schemes, and requirements.
-- **Route53Client** – stub methods now describe the unimplemented error responses and detail parameter roles for record operations.
 - **FountainOps Todo** – generated model now documents its properties.
 - **GatewayServer** – internal components like the certificate manager and plugin stack are now described.
 - **GatewayServer.start** and **stop** – documentation now explains certificate manager activation and graceful shutdown.
