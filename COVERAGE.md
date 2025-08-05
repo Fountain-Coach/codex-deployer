@@ -95,5 +95,6 @@ The new ``DeletePrimaryServerRequestTests`` raise the total test count to **105*
 - The new ``APIClient`` NoBody and header omission tests raise the total test count to **158**.
 - The new ``ServerServesNestedFile`` and ``LoadPublishingConfigUsesDefaultsWhenFileEmpty`` tests raise the total test count to **160**.
 - The new ``CreateRecordEncodesBody`` and ``ListZonesSetsAuthHeader`` tests raise the total test count to **162**.
+- The new ``Route53Client`` error description and user-info tests raise the total test count to **164**.
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

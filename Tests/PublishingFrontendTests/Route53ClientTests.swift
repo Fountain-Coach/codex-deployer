@@ -49,6 +49,19 @@ final class Route53ClientTests: XCTestCase {
             XCTAssertEqual(ns.code, 501)
         }
     }
+
+    /// Ensures thrown errors contain descriptions and lack additional user info.
+    func testErrorProvidesDetails() async {
+        let client = Route53Client()
+        do {
+            _ = try await client.listZones()
+            XCTFail("Expected error")
+        } catch {
+            let ns = error as NSError
+            XCTAssertFalse(ns.localizedDescription.isEmpty)
+            XCTAssertTrue(ns.userInfo.isEmpty)
+        }
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

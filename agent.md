@@ -1,6 +1,6 @@
 # 🧠 Repository Agent Manifest
 
-**Last Updated:** August 04, 2025  
+**Last Updated:** August 05, 2025  
 **Scope:** Full-repository self-improvement and orchestration  
 **Purpose:** Serve as a machine-actionable contract and coordination center for Codex-driven implementation, testing, and maintenance across all project modules.
 
@@ -21,7 +21,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Supervisor binary paths | `FountainAiLauncher`                   | Document required external binaries for supervisor     | ✅     | None                                   | deployment, docs  |
 | Linter configuration   | root                                     | Introduce SwiftLint setup                 | ✅     | None                                     | ci, linter        |
 | CI pipeline            | root                                     | Add CI workflow to run tests and coverage                        | ❌     | Choose CI platform                        | ci, test          |
-| Test coverage          | various                                  | Expand tests for under-tested modules (e.g., stubs)              | ⚠️     | Missing implementations, time             | test              |
+| Test coverage          | various                                  | Expand tests for under-tested modules (e.g., stubs)              | ⚠️     | Additional modules still lack tests             | test              |
 | Documentation sync     | `docs` vs `code`                         | Update developer docs with actual CLI entrypoints and generators | ✅     | None                                   | docs, cli         |
 | OpenAPI specs          | `Sources/FountainOps/FountainAi/openAPI`| Ensure specs reflect implemented endpoints                       | ✅     | None           | parser, docs      |
 
