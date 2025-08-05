@@ -71,6 +71,18 @@ final class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertEqual(headers.first(name: "X-A"), "a")
         XCTAssertEqual(headers.first(name: "X-B"), "b")
     }
+
+    func testExecuteThrowsOnInvalidURL() async {
+        let client = URLSessionHTTPClient()
+        do {
+            _ = try await client.execute(method: .GET, url: "not a url", body: nil)
+            XCTFail("Expected to throw")
+        } catch let error as URLError {
+            XCTAssertEqual(error.code, .badURL)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

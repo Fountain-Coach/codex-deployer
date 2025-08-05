@@ -24,7 +24,10 @@ public struct URLSessionHTTPClient: HTTPClientProtocol {
     ///   - body: Optional request payload.
     /// - Returns: A tuple of response body and headers.
     public func execute(method: HTTPMethod, url: String, headers: HTTPHeaders = HTTPHeaders(), body: ByteBuffer?) async throws -> (ByteBuffer, HTTPHeaders) {
-        var request = URLRequest(url: URL(string: url)!)
+        guard let requestURL = URL(string: url), requestURL.scheme != nil else {
+            throw URLError(.badURL)
+        }
+        var request = URLRequest(url: requestURL)
         request.httpMethod = method.rawValue
         for header in headers {
             request.addValue(header.value, forHTTPHeaderField: header.name)
