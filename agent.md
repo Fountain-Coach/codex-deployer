@@ -17,10 +17,8 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Feature / Component       | File(s) or Area              | Action                                                   | Status | Blockers                            | Tags                  |
 |---------------------------|------------------------------|----------------------------------------------------------|--------|-------------------------------------|-----------------------|
 | Zone delegation           | DNS provider config          | Configure NS records for `internal.fountain.coach`       | ✅     | None                                | dns, infra            |
-| Zone management           | HTTP API                     | Implement create/list/delete zone endpoints              | ✅     |
- None                                | api, dns              |
-| Record management         | HTTP API                     | Support A/AAAA/CNAME/MX/TXT/SRV/CAA records              | ✅     |
- None                                | api, dns              |
+| Zone management           | HTTP API                     | Implement create/list/delete zone endpoints              | ✅     | None                                | api, dns              |
+| Record management         | HTTP API                     | Support A/AAAA/CNAME/MX/TXT/SRV/CAA records              | ✅     | None                                | api, dns              |
 | Reload trigger            | DNS engine                   | Hot-reload zone data on change or API call               | ❌     | File watcher & reload endpoint      | dns, runtime          |
 | Git integration           | Zone store                   | Version zone files in Git                                | ❌     | GitOps pipeline design              | gitops, dns           |
 | OpenAPI spec              | API spec                     | Ship full OpenAPI 3.1 definition                         | ✅     | None                                | docs, api             |
