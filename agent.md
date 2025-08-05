@@ -1,7 +1,7 @@
 # 🧠 Repository Agent Manifest
 
-**Last Updated:** August 05, 2025  
-**Scope:** Full-repository self-improvement and orchestration  
+**Last Updated:** August 05, 2025
+**Scope:** Full-repository self-improvement and orchestration
 **Purpose:** Serve as a machine-actionable contract and coordination center for Codex-driven implementation, testing, and maintenance across all project modules.
 
 ---
@@ -14,16 +14,22 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 
 ## 📋 Task Matrix
 
-| Feature                | File(s) or Area                          | Action                                                           | Status | Blockers                                | Tags              |
-|------------------------|------------------------------------------|------------------------------------------------------------------|--------|------------------------------------------|-------------------|
-| Route53 DNS client     | `Route53Client`                          | Implement DNS operations instead of throwing `Error.unimplemented` | ❌     | Requires AWS DNS API spec and credentials | parser, cli       |
-| Generated server handlers | `Sources/*/Handlers`                  | Replace placeholder `HTTPResponse()` returns with functional logic | ✅     | None                                   | server, cli       |
-| Supervisor binary paths | `FountainAiLauncher`                   | Document required external binaries for supervisor     | ✅     | None                                   | deployment, docs  |
-| Linter configuration   | root                                     | Introduce SwiftLint setup                 | ✅     | None                                     | ci, linter        |
-| CI pipeline            | root                                     | Add CI workflow to run tests and coverage       | ✅     | None                                      | ci, test          |
-| Test coverage          | various                                  | Added invalid URL test for `URLSessionHTTPClient`; continue expanding coverage | ⚠️     | More modules remain untested                     | test              |
-| Documentation sync     | `docs` vs `code`                         | Update developer docs with actual CLI entrypoints and generators | ✅     | None                                   | docs, cli         |
-| OpenAPI specs          | `Sources/FountainOps/FountainAi/openAPI`| Ensure specs reflect implemented endpoints                       | ✅     | None           | parser, docs      |
+| Feature / Component       | File(s) or Area              | Action                                                   | Status | Blockers                            | Tags              |
+|---------------------------|-----------------------------|----------------------------------------------------------|--------|-------------------------------------|-------------------|
+| Zone delegation           | DNS provider config         | Configure NS records for `internal.fountain.coach`       | ❌     | Provider setup required             | dns, infra       |
+| Zone management           | HTTP API                    | Implement create/list/delete zone endpoints              | ❌     | Define zone storage format          | api, dns         |
+| Record management         | HTTP API                    | Support A/AAAA/CNAME/MX/TXT/SRV/CAA records              | ❌     | Implement handlers                  | api, dns         |
+| Reload trigger            | DNS engine                  | Hot-reload zone data on change or API call               | ❌     | File watcher & reload endpoint      | dns, runtime     |
+| Git integration           | Zone store                  | Version zone files in Git                                | ❌     | GitOps pipeline design              | gitops, dns      |
+| OpenAPI spec              | API spec                    | Ship full OpenAPI 3.1 definition                         | ❌     | Finalize schema                     | docs, api        |
+| DNSSEC (optional)         | DNS engine                  | Sign internal zones with DNSSEC                          | ❌     | Crypto library selection            | security, dns    |
+| DNS engine                | SwiftNIO UDP/TCP            | Parse queries and respond from zone cache                | ❌     | DNS parser implementation           | swift, networking|
+| Zone manager              | Zone storage                | Maintain in-memory cache & disk serialization            | ❌     | Yams integration                    | storage, concurrency |
+| HTTP server               | SwiftNIO HTTP               | Serve control plane with schema validation               | ❌     | Endpoint wiring                     | api, server      |
+| ACME client               | Certificate automation      | Handle DNS-01 challenge via API                          | ❌     | Choose ACME client                  | security, cert   |
+| Testing                   | Tests                       | EmbeddedChannel unit & integration tests                 | ❌     | Test harness setup                  | test             |
+| Performance               | DNS engine                  | Optimize caching & concurrency                           | ❌     | Benchmarking                        | perf             |
+| Metrics & logging         | Observability               | Expose Prometheus counters & structured logs             | ❌     | Metrics system selection            | observability    |
 
 ---
 
@@ -50,11 +56,11 @@ After each cycle:
 
 ## 📁 Placement
 
-This file must be placed at the **repository root** as `agent.md`.  
+This file must be placed at the **repository root** as `agent.md`.
 It is the canonical manifest governing all self-driven improvement and orchestration logic.
 
 ## COPYRIGHT POLICY 🔐
 
-**Mandatory Footer:**  
+**Mandatory Footer:**
 Every generated or updated file must end with:
 > © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
