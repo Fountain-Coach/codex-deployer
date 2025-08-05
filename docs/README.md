@@ -17,7 +17,7 @@ As modules gain documentation, brief summaries are added here.
 - **LoggingPlugin.prepare** and **respond** – inline comments explain logging without mutating headers or bodies.
 - **GatewayPlugin** – protocol for request and response middleware.
 - **GatewayPlugin.prepare** and **respond** – default implementations now explain parameters and return values.
-- **CertificateManager** – runs periodic certificate renewal scripts.
+- **CertificateManager** – runs periodic renewal scripts and issues certificates via ACME DNS-01 challenges.
 - **SpecLoader** – parses OpenAPI specifications from JSON or YAML.
 - **ClientGenerator** and **ServerGenerator** – emit Swift client and server code from specs.
 - **GeneratorCLI** – command line interface for the code generators.
