@@ -36,7 +36,7 @@ The new ``CreatePrimaryServerRequestTests`` and ``GetPrimaryServerRequestTests``
 Additional plugin rewrite and raw data tests raise the total test count to **51**.
 The new ``validateZoneFile`` and ``updatePrimaryServer`` request tests raise the total test count to **55**.
 The new ``TodoEquality`` and ``TodoDecodingFailsForMissingName`` tests bring the total test count to **57**.
-The new ``NIOHTTPServer`` port reuse and concurrency tests and Hetzner DNS model round-trip checks bring the total test count to **62**.
+The new ``NIOHTTPServer`` port reuse and concurrency tests bring the total test count to **62**.
 The new ``importZoneFile`` and ``exportZoneFile`` request tests raise the total test count to **66**.
 The new ``getZone`` and ``listPrimaryServers`` request tests raise the total test count to **69**.
 The new ``PublishingFrontendPlugin`` pass-through and non-GET tests raise the total test count to **71**.
