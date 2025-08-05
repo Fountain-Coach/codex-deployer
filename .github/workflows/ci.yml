@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: '6.1'
+      - name: Build
+        run: swift build
+      - name: Test
+        run: swift test --enable-code-coverage
+
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
