@@ -23,7 +23,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Git integration           | Zone store                   | Version zone files in Git                                | ❌     | GitOps pipeline design              | gitops, dns           |
 | OpenAPI spec              | API spec                     | Ship full OpenAPI 3.1 definition                         | ✅     | None                                | docs, api             |
 | DNSSEC (optional)         | DNS engine                   | Sign internal zones with DNSSEC                          | ❌     | Crypto library selection            | security, dns         |
-| DNS engine                | SwiftNIO UDP/TCP             | Parse queries and respond from zone cache                | ❌     | DNS parser implementation           | swift, networking     |
+| DNS engine                | SwiftNIO UDP/TCP             | Parse queries and respond from zone cache                | ✅     | None                                | swift, networking     |
 | Zone manager              | Zone storage                 | Maintain in-memory cache & disk serialization            | ❌     | Yams integration                    | storage, concurrency  |
 | HTTP server               | SwiftNIO HTTP                | Serve control plane with schema validation               | ❌     | Endpoint wiring                     | api, server           |
 | ACME client               | Certificate automation       | Handle DNS-01 challenge via API                          | ❌     | Choose ACME client                  | security, cert        |
