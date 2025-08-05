@@ -87,6 +87,18 @@ final class DNSClientTests: XCTestCase {
             XCTAssertEqual(error.code, 501)
         }
     }
+
+    /// Ensures Route53 errors include descriptions and no extra user info.
+    func testRoute53DeleteRecordErrorDescription() async throws {
+        let client = Route53Client()
+        do {
+            try await client.deleteRecord(id: "1")
+            XCTFail("expected failure")
+        } catch let error as NSError {
+            XCTAssertFalse(error.localizedDescription.isEmpty)
+            XCTAssertTrue(error.userInfo.isEmpty)
+        }
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
