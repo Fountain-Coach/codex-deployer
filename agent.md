@@ -23,7 +23,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | CI pipeline            | root                                     | Add CI workflow to run tests and coverage                        | ❌     | Choose CI platform                        | ci, test          |
 | Test coverage          | various                                  | Expand tests for under-tested modules (e.g., stubs)              | ⚠️     | Missing implementations, time             | test              |
 | Documentation sync     | `docs` vs `code`                         | Update developer docs with actual CLI entrypoints and generators | ✅     | None                                   | docs, cli         |
-| OpenAPI specs          | `Sources/FountainOps/FountainAi/openAPI`| Ensure specs reflect implemented endpoints                       | ⚠️     | Spec changes vs code divergence           | parser, docs      |
+| OpenAPI specs          | `Sources/FountainOps/FountainAi/openAPI`| Ensure specs reflect implemented endpoints                       | ✅     | None           | parser, docs      |
 
 ---
 
