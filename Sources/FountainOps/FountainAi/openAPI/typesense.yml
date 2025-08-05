@@ -20,7 +20,7 @@ servers:
         default: "8108"
         description: The port of your Typesense server
 externalDocs:
-  description: Find out more about Typsesense
+  description: Find out more about Typesense
   url: https://typesense.org
 security:
   - api_key_header: []
