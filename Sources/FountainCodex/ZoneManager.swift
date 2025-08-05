@@ -1,10 +1,18 @@
 import Foundation
 import Yams
+import Dispatch
+#if os(Linux)
+import Glibc
+#else
+import Darwin
+#endif
 
 /// Actor responsible for managing DNS zone records with persistent YAML storage.
 public actor ZoneManager {
     private var cache: [String: String]
     private let fileURL: URL
+    private var timer: DispatchSourceTimer?
+    private var lastModified: Date
 
     /// Loads the zone cache from the provided YAML file if it exists.
     /// - Parameter fileURL: Location of the YAML zone file on disk.
@@ -17,6 +25,9 @@ public actor ZoneManager {
         } else {
             self.cache = [:]
         }
+        let attrs = try? FileManager.default.attributesOfItem(atPath: fileURL.path)
+        self.lastModified = (attrs?[.modificationDate] as? Date) ?? Date()
+        Task { await self.startWatching() }
     }
 
     /// Returns the IPv4 address associated with the given domain name.
@@ -43,6 +54,53 @@ public actor ZoneManager {
     private func persist() throws {
         let yaml = try Yams.dump(object: cache)
         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
+        gitCommit(message: "Update zone file")
+    }
+
+    /// Reloads the zone cache from disk when the file has changed.
+    public func reload() {
+        let attrs = try? FileManager.default.attributesOfItem(atPath: fileURL.path)
+        if let mod = attrs?[.modificationDate] as? Date,
+           mod > lastModified,
+           let data = try? Data(contentsOf: fileURL),
+           let string = String(data: data, encoding: .utf8),
+           let loaded = try? Yams.load(yaml: string) as? [String: String] {
+            cache = loaded
+            lastModified = mod
+        }
+    }
+
+    private func startWatching() {
+        let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
+        timer.schedule(deadline: .now() + 1, repeating: 1)
+        timer.setEventHandler(handler: { @Sendable [weak self] in
+            Task { await self?.reload() }
+        })
+        timer.resume()
+        self.timer = timer
+    }
+
+    private func gitCommit(message: String) {
+        let dir = fileURL.deletingLastPathComponent()
+        let add = Process()
+        add.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        add.currentDirectoryURL = dir
+        add.arguments = ["add", fileURL.lastPathComponent]
+        try? add.run()
+        add.waitUntilExit()
+
+        let commit = Process()
+        commit.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        commit.currentDirectoryURL = dir
+        commit.arguments = ["commit", "-m", message]
+        commit.environment = [
+            "GIT_AUTHOR_NAME": "Codex",
+            "GIT_AUTHOR_EMAIL": "codex@example.com",
+            "GIT_COMMITTER_NAME": "Codex",
+            "GIT_COMMITTER_EMAIL": "codex@example.com"
+        ]
+        try? commit.run()
+        commit.waitUntilExit()
     }
 }
 

@@ -18,6 +18,7 @@ public final class GatewayServer {
     /// Plugins run in registration order during ``GatewayPlugin.prepare(_:)``
     /// and in reverse order during ``GatewayPlugin.respond(_:for:)``.
     private let plugins: [GatewayPlugin]
+    private let zoneManager: ZoneManager?
 
     /// In-memory zone model.
     private struct Zone: Codable { let id: UUID; let name: String }
@@ -38,13 +39,15 @@ public final class GatewayServer {
     ///     Plugins are invoked in the order provided for ``GatewayPlugin.prepare(_:)``
     ///     and in reverse order for ``GatewayPlugin.respond(_:for:)``.
     public init(manager: CertificateManager = CertificateManager(),
-                plugins: [GatewayPlugin] = []) {
+                plugins: [GatewayPlugin] = [],
+                zoneManager: ZoneManager? = nil) {
         self.manager = manager
         self.plugins = plugins
+        self.zoneManager = zoneManager
         self.group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
         var zones: [UUID: Zone] = [:]
         var records: [UUID: [UUID: Record]] = [:]
-        let kernel = HTTPKernel { [plugins] req in
+        let kernel = HTTPKernel { [plugins, zoneManager] req in
             var request = req
             for plugin in plugins {
                 request = try await plugin.prepare(request)
@@ -71,6 +74,13 @@ public final class GatewayServer {
                     response = HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
                 } catch {
                     response = HTTPResponse(status: 400)
+                }
+            case ("POST", ["zones", "reload"]):
+                if let manager = zoneManager {
+                    await manager.reload()
+                    response = HTTPResponse(status: 204)
+                } else {
+                    response = HTTPResponse(status: 500)
                 }
             case ("DELETE", let seg) where seg.count == 2 && seg[0] == "zones":
                 let zoneId = seg[1]
