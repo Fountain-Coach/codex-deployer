@@ -17,7 +17,8 @@ let package = Package(
         .package(url: "https://github.com/jpsim/Yams.git", from: "5.0.0"),
         .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.21.0"),
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.63.0"),
-        .package(url: "https://github.com/apple/swift-crypto.git", from: "3.0.0")
+        .package(url: "https://github.com/apple/swift-crypto.git", from: "3.0.0"),
+        .package(url: "https://github.com/m-barthelemy/AcmeSwift.git", branch: "main")
     ],
     targets: [
         .target(name: "FountainCore", path: "Sources/FountainCore"),
@@ -41,7 +42,7 @@ let package = Package(
         ),
         .executableTarget(
             name: "gateway-server",
-            dependencies: ["FountainCodex", "PublishingFrontend"],
+            dependencies: ["FountainCodex", "PublishingFrontend", .product(name: "AcmeSwift", package: "AcmeSwift")],
             path: "Sources/GatewayApp"
         ),
         .target(
@@ -58,7 +59,7 @@ let package = Package(
         .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
         .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
         .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainCodex", .product(name: "Crypto", package: "swift-crypto")], path: "Tests/DNSTests"),
-        .testTarget(name: "IntegrationRuntimeTests", dependencies: ["gateway-server", "FountainCodex"], path: "Tests/IntegrationRuntimeTests")
+        .testTarget(name: "IntegrationRuntimeTests", dependencies: ["gateway-server", "FountainCodex", "PublishingFrontend"], path: "Tests/IntegrationRuntimeTests")
     ]
 )
 

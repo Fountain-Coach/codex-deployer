@@ -1,5 +1,6 @@
 import XCTest
 @testable import gateway_server
+import PublishingFrontend
 
 final class CertificateManagerTests: XCTestCase {
     /// Executes the renewal script immediately when `triggerNow` is invoked.
@@ -58,6 +59,41 @@ final class CertificateManagerTests: XCTestCase {
         sleep(1)
         let second = try String(contentsOf: logURL, encoding: .utf8).split(separator: "\n").count
         XCTAssertEqual(first, second)
+    }
+
+    /// Ensures ACME issuance publishes required DNS records.
+    func testIssueCertificatePublishesDNSRecord() async throws {
+        final class MockDNS: DNSProvider {
+            var records: [(String, String, String, String)] = []
+            func listZones() async throws -> [String] { [] }
+            func createRecord(zone: String, name: String, type: String, value: String) async throws {
+                records.append((zone, name, type, value))
+            }
+            func updateRecord(id: String, zone: String, name: String, type: String, value: String) async throws {}
+            func deleteRecord(id: String) async throws {}
+        }
+
+        struct MockACME: ACMEClient {
+            func createAccount(email: String) async throws {}
+            func createOrder(for domain: String) async throws -> ACMEOrder { ACMEOrder() }
+            func fetchDNSChallenges(order: ACMEOrder) async throws -> [DNSChallenge] {
+                [DNSChallenge(recordName: "_acme-challenge.example.com", recordValue: "token")]
+            }
+            func validate(order: ACMEOrder) async throws {}
+            func finalize(order: ACMEOrder, domains: [String]) async throws -> ACMEOrder { order }
+            func downloadCertificates(order: ACMEOrder) async throws -> [String] { ["cert"] }
+        }
+
+        let manager = CertificateManager()
+        let dns = MockDNS()
+        let certs = try await manager.issueCertificate(for: "example.com", email: "a@b.com", dns: dns, acme: MockACME())
+        XCTAssertEqual(certs, ["cert"])
+        XCTAssertEqual(dns.records.count, 1)
+        let rec = dns.records[0]
+        XCTAssertEqual(rec.0, "example.com")
+        XCTAssertEqual(rec.1, "_acme-challenge.example.com")
+        XCTAssertEqual(rec.2, "TXT")
+        XCTAssertEqual(rec.3, "token")
     }
 }
 
