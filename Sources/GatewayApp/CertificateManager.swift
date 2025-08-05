@@ -1,4 +1,5 @@
 import Foundation
+import PublishingFrontend
 
 /// Manages periodic execution of a certificate renewal script.
 public final class CertificateManager {
@@ -54,6 +55,25 @@ public final class CertificateManager {
         } catch {
             print("Certificate renewal failed: \(error)")
         }
+    }
+
+    /// Issues a certificate for the given domain using ACME DNS validation.
+    /// - Parameters:
+    ///   - domain: Fully-qualified domain name to secure.
+    ///   - email: Contact email for ACME account registration.
+    ///   - dns: Provider capable of creating TXT records via API.
+    ///   - acme: Client performing ACME interactions.
+    /// - Returns: PEM-encoded certificate chain.
+    public func issueCertificate(for domain: String, email: String, dns: DNSProvider, acme: ACMEClient) async throws -> [String] {
+        try await acme.createAccount(email: email)
+        var order = try await acme.createOrder(for: domain)
+        let challenges = try await acme.fetchDNSChallenges(order: order)
+        for challenge in challenges {
+            try await dns.createRecord(zone: domain, name: challenge.recordName, type: "TXT", value: challenge.recordValue)
+        }
+        try await acme.validate(order: order)
+        order = try await acme.finalize(order: order, domains: [domain])
+        return try await acme.downloadCertificates(order: order)
     }
 }
 
