@@ -21,7 +21,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Supervisor binary paths | `FountainAiLauncher`                   | Document required external binaries for supervisor     | ✅     | None                                   | deployment, docs  |
 | Linter configuration   | root                                     | Introduce SwiftLint setup                 | ✅     | None                                     | ci, linter        |
 | CI pipeline            | root                                     | Add CI workflow to run tests and coverage       | ✅     | None                                      | ci, test          |
-| Test coverage          | various                                  | Expand tests for under-tested modules (e.g., stubs)              | ⚠️     | Additional modules still lack tests             | test              |
+| Test coverage          | various                                  | Added Service defaults test; continue expanding coverage | ⚠️     | More modules remain untested                     | test              |
 | Documentation sync     | `docs` vs `code`                         | Update developer docs with actual CLI entrypoints and generators | ✅     | None                                   | docs, cli         |
 | OpenAPI specs          | `Sources/FountainOps/FountainAi/openAPI`| Ensure specs reflect implemented endpoints                       | ✅     | None           | parser, docs      |
 
@@ -57,5 +57,4 @@ It is the canonical manifest governing all self-driven improvement and orchestra
 
 **Mandatory Footer:**  
 Every generated or updated file must end with:
-
 > © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
