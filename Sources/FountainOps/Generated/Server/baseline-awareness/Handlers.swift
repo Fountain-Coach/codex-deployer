@@ -61,7 +61,7 @@ public struct Handlers {
         return HTTPResponse(body: data)
     }
 
-    public func streamhistoryanalytics(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
+    public func streamHistoryAnalytics(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let comps = URLComponents(string: request.path)
         let corpusId = comps?.queryItems?.first(where: { $0.name == "corpus_id" })?.value
         guard let id = corpusId else {
