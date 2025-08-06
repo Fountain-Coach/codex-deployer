@@ -296,6 +296,60 @@ final class GatewayServerTests: XCTestCase {
         XCTAssertEqual(ip, "2.2.2.2")
         try await server.stop()
     }
+
+    @MainActor
+    func testAuthTokenEndpointResponds() async throws {
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9113) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let base = URL(string: "http://127.0.0.1:9113")!
+        var request = URLRequest(url: base.appendingPathComponent("auth/token"))
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        struct Creds: Encodable { let clientId: String; let clientSecret: String }
+        request.httpBody = try JSONEncoder().encode(Creds(clientId: "admin", clientSecret: "password"))
+        let (data, response) = try await URLSession.shared.data(for: request)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 200)
+        let body = try JSONSerialization.jsonObject(with: data) as? [String: String]
+        XCTAssertNotNil(body?["token"])
+        try await server.stop()
+    }
+
+    @MainActor
+    func testRoutesCRUD() async throws {
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9114) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let base = URL(string: "http://127.0.0.1:9114")!
+        struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int? }
+        var create = URLRequest(url: base.appendingPathComponent("routes"))
+        create.httpMethod = "POST"
+        create.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let route = Route(id: "r1", path: "/foo", target: "http://upstream", methods: ["GET"], rateLimit: nil)
+        create.httpBody = try JSONEncoder().encode(route)
+        var (data, response) = try await URLSession.shared.data(for: create)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 201)
+        (data, response) = try await URLSession.shared.data(from: base.appendingPathComponent("routes"))
+        var list = try JSONDecoder().decode([Route].self, from: data)
+        XCTAssertEqual(list.count, 1)
+        var update = URLRequest(url: base.appendingPathComponent("routes/r1"))
+        update.httpMethod = "PUT"
+        update.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let updated = Route(id: "ignored", path: "/bar", target: "http://up", methods: ["POST"], rateLimit: 5)
+        update.httpBody = try JSONEncoder().encode(updated)
+        (data, response) = try await URLSession.shared.data(for: update)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 200)
+        var deleteReq = URLRequest(url: base.appendingPathComponent("routes/r1"))
+        deleteReq.httpMethod = "DELETE"
+        (_, response) = try await URLSession.shared.data(for: deleteReq)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 204)
+        (data, _) = try await URLSession.shared.data(from: base.appendingPathComponent("routes"))
+        list = try JSONDecoder().decode([Route].self, from: data)
+        XCTAssertEqual(list.count, 0)
+        try await server.stop()
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
