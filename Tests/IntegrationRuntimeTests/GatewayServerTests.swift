@@ -31,8 +31,8 @@ final class GatewayServerTests: XCTestCase {
         let url = URL(string: "http://127.0.0.1:9101/metrics")!
         let (data, response) = try await URLSession.shared.data(from: url)
         XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 200)
-        let body = try JSONSerialization.jsonObject(with: data) as? [String: [String]]
-        XCTAssertNotNil(body?["metrics"])
+        let body = String(decoding: data, as: UTF8.self)
+        XCTAssertTrue(body.contains("dns_queries_total"))
         try await server.stop()
     }
 
@@ -158,7 +158,7 @@ final class GatewayServerTests: XCTestCase {
 
     @MainActor
     /// Metrics endpoint should emit the JSON content type header.
-    func testMetricsEndpointSetsJSONContentType() async throws {
+    func testMetricsEndpointSetsTextContentType() async throws {
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
         let server = GatewayServer(manager: manager, plugins: [])
         Task { try await server.start(port: 9107) }
@@ -166,21 +166,23 @@ final class GatewayServerTests: XCTestCase {
         let url = URL(string: "http://127.0.0.1:9107/metrics")!
         let (_, response) = try await URLSession.shared.data(from: url)
         let header = (response as? HTTPURLResponse)?.value(forHTTPHeaderField: "Content-Type")
-        XCTAssertEqual(header, "application/json")
+        XCTAssertEqual(header, "text/plain")
         try await server.stop()
     }
 
     @MainActor
-    /// Metrics endpoint should return an empty metrics array by default.
-    func testMetricsEndpointReturnsEmptyArray() async throws {
+    /// Metrics endpoint should emit zero counters by default.
+    func testMetricsEndpointReturnsZeroCounters() async throws {
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
         let server = GatewayServer(manager: manager, plugins: [])
         Task { try await server.start(port: 9108) }
         try await Task.sleep(nanoseconds: 100_000_000)
         let url = URL(string: "http://127.0.0.1:9108/metrics")!
         let (data, _) = try await URLSession.shared.data(from: url)
-        let body = try JSONSerialization.jsonObject(with: data) as? [String: [String]]
-        XCTAssertEqual(body?["metrics"], [])
+        let body = String(decoding: data, as: UTF8.self)
+        XCTAssertTrue(body.contains("dns_queries_total 0"))
+        XCTAssertTrue(body.contains("dns_hits_total 0"))
+        XCTAssertTrue(body.contains("dns_misses_total 0"))
         try await server.stop()
     }
 

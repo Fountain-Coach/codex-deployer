@@ -75,9 +75,9 @@ public final class GatewayServer {
                 let json = try JSONEncoder().encode(["status": "ok"])
                 response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
             case ("GET", ["metrics"]):
-                let metrics: [String: [String]] = ["metrics": []]
-                let json = try JSONEncoder().encode(metrics)
-                response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                let exposition = await DNSMetrics.shared.exposition()
+                let body = Data(exposition.utf8)
+                response = HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
             case ("POST", ["auth", "token"]):
                 do {
                     let creds = try JSONDecoder().decode(CredentialRequest.self, from: request.body)

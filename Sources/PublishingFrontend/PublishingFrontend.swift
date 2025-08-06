@@ -29,11 +29,14 @@ public final class PublishingFrontend {
     private let group: EventLoopGroup
     /// Runtime configuration specifying port and root path.
     private let config: PublishingConfig
+    /// Actual port the server is bound to after start.
+    public private(set) var port: Int
 
     /// Creates a new server instance with the given configuration.
     /// - Parameter config: Runtime configuration options.
     public init(config: PublishingConfig) {
         self.config = config
+        self.port = config.port
         self.group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
         let kernel = HTTPKernel { [config] req in
             guard req.method == "GET" else { return HTTPResponse(status: 405) }
@@ -49,7 +52,7 @@ public final class PublishingFrontend {
     @MainActor
     /// Starts the HTTP server on the configured port.
     public func start() async throws {
-        _ = try await server.start(port: config.port)
+        port = try await server.start(port: config.port)
     }
 
     @MainActor

@@ -1,22 +1,49 @@
 import NIOCore
 import Logging
 import NIOConcurrencyHelpers
+import Foundation
 
 /// Minimal DNS engine capable of parsing A record queries and responding from an in-memory zone cache.
 public struct DNSEngine {
     /// Thread-safe mapping of fully qualified domain names to IPv4 addresses.
     private let zoneCache: NIOLockedValueBox<[String: String]>
     private let logger = Logger(label: "DNSEngine")
+    /// Optional DNSSEC signer used for zone signing and verification.
+    private let signer: DNSSECSigner?
 
     /// Creates a new engine with the provided zone cache.
-    /// - Parameter zoneCache: Dictionary of domain names to IPv4 addresses.
-    public init(zoneCache: [String: String]) {
+    /// - Parameters:
+    ///   - zoneCache: Dictionary of domain names to IPv4 addresses.
+    ///   - signer: Optional ``DNSSECSigner`` for zone signing.
+    public init(zoneCache: [String: String], signer: DNSSECSigner? = nil) {
         self.zoneCache = NIOLockedValueBox(zoneCache)
+        self.signer = signer
     }
 
     /// Updates or inserts a record in the zone cache.
     public func updateRecord(name: String, ip: String) {
         zoneCache.withLockedValue { $0[name] = ip }
+    }
+
+    /// Generates a signature for the current zone if a signer is configured.
+    /// - Returns: Signature bytes or `nil` when no signer is set.
+    public func signZone() throws -> Data? {
+        guard let signer else { return nil }
+        let zone = zoneCache.withLockedValue { cache in
+            cache.map { "\($0.key) \($0.value)" }.sorted().joined(separator: "\n")
+        }
+        return try signer.sign(zone: zone)
+    }
+
+    /// Verifies the provided signature against the current zone state.
+    /// - Parameter signature: Signature bytes to verify.
+    /// - Returns: `nil` if no signer is configured, otherwise the verification result.
+    public func verifyZone(signature: Data) -> Bool? {
+        guard let signer else { return nil }
+        let zone = zoneCache.withLockedValue { cache in
+            cache.map { "\($0.key) \($0.value)" }.sorted().joined(separator: "\n")
+        }
+        return signer.verify(zone: zone, signature: signature)
     }
 
     /// Parses an incoming DNS query and constructs a response if the record exists in the cache.

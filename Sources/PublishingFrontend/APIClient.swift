@@ -18,6 +18,31 @@ extension URLSession: HTTPSession {
     }
 }
 
+/// Representation of an error returned by an API request.
+/// Decodes a JSON body of the form `{ "error": "message" }` and
+/// carries the associated HTTP status code.
+public struct APIError: Error, Decodable {
+    /// HTTP status code returned by the server.
+    public let status: Int
+    /// Error message parsed from the server response.
+    public let message: String
+
+    private enum CodingKeys: String, CodingKey { case message = "error" }
+
+    /// Creates an instance with an explicit status code and message.
+    public init(status: Int, message: String) {
+        self.status = status
+        self.message = message
+    }
+
+    /// Decodes the `error` field from the response body.
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.status = 0
+        self.message = try container.decode(String.self, forKey: .message)
+    }
+}
+
 /// Minimal HTTP client for executing ``APIRequest`` values.
 public struct APIClient {
     /// Root endpoint used for all requests.
@@ -53,7 +78,14 @@ public struct APIClient {
             urlRequest.httpBody = try JSONEncoder().encode(body)
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
-        let (data, _) = try await session.data(for: urlRequest)
+        let (data, response) = try await session.data(for: urlRequest)
+        if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
+            if let decoded = try? JSONDecoder().decode(APIError.self, from: data) {
+                throw APIError(status: http.statusCode, message: decoded.message)
+            } else {
+                throw APIError(status: http.statusCode, message: String(decoding: data, as: UTF8.self))
+            }
+        }
         if R.Response.self == Data.self {
             return data as! R.Response
         }

@@ -160,10 +160,10 @@ final class PublishingFrontendTests: XCTestCase {
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         var cfg = PublishingConfig()
         cfg.rootPath = dir.path
-        cfg.port = 9101
+        cfg.port = 0
         let frontend = PublishingFrontend(config: cfg)
         try await frontend.start()
-        var request = URLRequest(url: URL(string: "http://127.0.0.1:\(cfg.port)/")!)
+        var request = URLRequest(url: URL(string: "http://127.0.0.1:\(frontend.port)/")!)
         request.httpMethod = "POST"
         let (_, response) = try await URLSession.shared.data(for: request)
         XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 405)

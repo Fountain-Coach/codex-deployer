@@ -1,0 +1,5 @@
+client errors: implemented APIError handling in APIClient.send
+DNSSEC: added signer integration and zone signing helpers
+metrics & logging: GatewayServer now exposes DNSMetrics exposition
+
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
