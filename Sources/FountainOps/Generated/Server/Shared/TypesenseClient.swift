@@ -7,6 +7,11 @@ private struct CorpusCreateRequest: Codable {
     let corpusId: String
 }
 
+private struct BaselineList: Codable {
+    let total: Int
+    let baselines: [Baseline]
+}
+
 /// Optional remote Typesense configuration loaded from the environment.
 /// When `TYPESENSE_URL` is set the client will persist data using HTTP
 /// requests instead of the in-memory store.
@@ -224,6 +229,20 @@ public actor TypesenseClient {
             return 0
         }
         return reflections[corpusId]?.count ?? 0
+    }
+
+    public func listBaselines(for corpusId: String) async -> [Baseline] {
+        if let _ = baseURL {
+            if let data = try? await request(path: "corpora/\(corpusId)/baselines", method: "GET", body: nil),
+               let resp = try? JSONDecoder().decode(BaselineList.self, from: data) {
+                return resp.baselines
+            }
+            return []
+        }
+        if let dict = baselines[corpusId] {
+            return Array(dict.values)
+        }
+        return []
     }
 
     public func baselineCount(for corpusId: String) async -> Int {
