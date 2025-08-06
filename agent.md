@@ -36,8 +36,8 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Certificate renewal | `Sources/GatewayApp/CertificateManager.swift` | Schedule/trigger renewal | ✅ | — | ops, tls |
 | DNSSEC | `Sources/FountainCodex/DNSSECSigner.swift` | Integrate signer into engine | ✅ | — | security, dns |
 | Metrics & logging | `GatewayServer`, `DNSMetrics` | Expose Prometheus-style metrics | ✅ | — | observability |
-| Integration tests | `Tests/*` | E2E tests for generated servers | ⏳ | Harness, fixtures | test |
-| DNS perf tests | `Tests/*` | UDP/TCP load & concurrency tests | ⏳ | Bench tools | test, dns |
+| Integration tests | `Tests/*` | E2E tests for generated servers | ✅ | — | test |
+| DNS perf tests | `Tests/*` | UDP/TCP load & concurrency tests | ✅ | — | test, dns |
 | SwiftLint in CI | `.swiftlint.yml`, `.github/workflows/*` | Add lint job to Actions | ⏳ | CI updates | ci, lint |
 | Coverage in CI | `.github/workflows/*` | Publish coverage artifacts/badge | ⏳ | Coverage tooling | ci, test |
 | opId→handler audit | repo-wide | Script to diff specs vs code | ⏳ | Tooling, conventions | tooling, docs |

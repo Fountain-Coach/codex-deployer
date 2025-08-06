@@ -173,6 +173,7 @@ final class GatewayServerTests: XCTestCase {
     @MainActor
     /// Metrics endpoint should emit zero counters by default.
     func testMetricsEndpointReturnsZeroCounters() async throws {
+        await DNSMetrics.shared.reset()
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
         let server = GatewayServer(manager: manager, plugins: [])
         Task { try await server.start(port: 9108) }
