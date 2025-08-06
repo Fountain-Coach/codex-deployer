@@ -24,7 +24,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Server generator | `Sources/FountainCodex/ServerGenerator/*` | Emit router/types/handler **stubs** | ✅ | — | generator, server |
 | DNS API handlers | `Sources/GatewayApp/GatewayServer.swift` | Keep CRUD for zones/records | ✅ | — | server, dns |
 | LLM Gateway | `openAPI/v2/llm-gateway.yml` | Implement `metrics_metrics_get`, `chatWithObjective` | ⏳ | Service design | server, llm |
-| Gateway Mgmt API | `openAPI/v1/gateway.yml` | Implement health/metrics/auth/routes ops | ⏳ | Auth, routing plan | server |
+| Gateway Mgmt API | `openAPI/v1/gateway.yml` | Implement health/metrics/auth/routes ops | ✅ | — | server |
 | Planner (v1) | `openAPI/v1/planner.yml` | Implement planner ops (reason/execute/list/etc.) | ⏳ | Orchestration runtime | server, planner |
 | Planner (v0) | `openAPI/v0/planner.yml` | Deprecate or alias to v1 | ⏳ | Version policy | docs, planner |
 | Tools Factory | `openAPI/v1/tools-factory.yml` | Implement list/register ops | ⏳ | Typesense dependency | server |

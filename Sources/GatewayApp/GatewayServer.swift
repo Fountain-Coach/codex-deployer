@@ -31,6 +31,21 @@ public final class GatewayServer {
     private struct RecordRequest: Codable { let name: String; let type: RecordType; let value: String }
     private struct RecordsResponse: Codable { let records: [Record] }
 
+    /// Authentication request and token response models.
+    private struct CredentialRequest: Codable { let clientId: String; let clientSecret: String }
+    private struct TokenResponse: Codable { let token: String; let expiresAt: String }
+    private struct ErrorResponse: Codable { let error: String }
+
+    /// Route description used for management operations.
+    private struct RouteInfo: Codable {
+        let id: String
+        var path: String
+        var target: String
+        var methods: [String]
+        var rateLimit: Int?
+    }
+
+
 
     /// Creates a new gateway server instance.
     /// - Parameters:
@@ -47,6 +62,7 @@ public final class GatewayServer {
         self.group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
         var zones: [UUID: Zone] = [:]
         var records: [UUID: [UUID: Record]] = [:]
+        var routes: [String: RouteInfo] = [:]
         let kernel = HTTPKernel { [plugins, zoneManager] req in
             var request = req
             for plugin in plugins {
@@ -62,6 +78,63 @@ public final class GatewayServer {
                 let metrics: [String: [String]] = ["metrics": []]
                 let json = try JSONEncoder().encode(metrics)
                 response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+            case ("POST", ["auth", "token"]):
+                do {
+                    let creds = try JSONDecoder().decode(CredentialRequest.self, from: request.body)
+                    if creds.clientId == "admin", creds.clientSecret == "password" {
+                        let formatter = ISO8601DateFormatter()
+                        let expires = formatter.string(from: Date().addingTimeInterval(3600))
+                        let token = UUID().uuidString
+                        let json = try JSONEncoder().encode(TokenResponse(token: token, expiresAt: expires))
+                        response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                    } else {
+                        let json = try JSONEncoder().encode(ErrorResponse(error: "invalid credentials"))
+                        response = HTTPResponse(status: 401, headers: ["Content-Type": "application/json"], body: json)
+                    }
+                } catch {
+                    response = HTTPResponse(status: 400)
+                }
+            case ("GET", ["routes"]):
+                let json = try JSONEncoder().encode(Array(routes.values))
+                response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+            case ("POST", ["routes"]):
+                do {
+                    let info = try JSONDecoder().decode(RouteInfo.self, from: request.body)
+                    if routes[info.id] == nil {
+                        routes[info.id] = info
+                        let json = try JSONEncoder().encode(info)
+                        response = HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
+                    } else {
+                        let json = try JSONEncoder().encode(ErrorResponse(error: "exists"))
+                        response = HTTPResponse(status: 409, headers: ["Content-Type": "application/json"], body: json)
+                    }
+                } catch {
+                    response = HTTPResponse(status: 400)
+                }
+            case ("PUT", let seg) where seg.count == 2 && seg[0] == "routes":
+                let id = String(seg[1])
+                guard routes[id] != nil else {
+                    let json = try JSONEncoder().encode(ErrorResponse(error: "not found"))
+                    response = HTTPResponse(status: 404, headers: ["Content-Type": "application/json"], body: json)
+                    break
+                }
+                do {
+                    let info = try JSONDecoder().decode(RouteInfo.self, from: request.body)
+                    let updated = RouteInfo(id: id, path: info.path, target: info.target, methods: info.methods, rateLimit: info.rateLimit)
+                    routes[id] = updated
+                    let json = try JSONEncoder().encode(updated)
+                    response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                } catch {
+                    response = HTTPResponse(status: 400)
+                }
+            case ("DELETE", let seg) where seg.count == 2 && seg[0] == "routes":
+                let id = String(seg[1])
+                if routes.removeValue(forKey: id) != nil {
+                    response = HTTPResponse(status: 204)
+                } else {
+                    let json = try JSONEncoder().encode(ErrorResponse(error: "not found"))
+                    response = HTTPResponse(status: 404, headers: ["Content-Type": "application/json"], body: json)
+                }
             case ("GET", ["zones"]):
                 let json = try JSONEncoder().encode(ZonesResponse(zones: Array(zones.values)))
                 response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
