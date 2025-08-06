@@ -38,8 +38,8 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Metrics & logging | `GatewayServer`, `DNSMetrics` | Expose Prometheus-style metrics | ✅ | — | observability |
 | Integration tests | `Tests/*` | E2E tests for generated servers | ✅ | — | test |
 | DNS perf tests | `Tests/*` | UDP/TCP load & concurrency tests | ✅ | — | test, dns |
-| SwiftLint in CI | `.swiftlint.yml`, `.github/workflows/*` | Add lint job to Actions | ⏳ | CI updates | ci, lint |
-| Coverage in CI | `.github/workflows/*` | Publish coverage artifacts/badge | ⏳ | Coverage tooling | ci, test |
+| SwiftLint in CI | `.swiftlint.yml`, `.github/workflows/*` | Add lint job to Actions | ✅ | — | ci, lint |
+| Coverage in CI | `.github/workflows/*` | Publish coverage artifacts/badge | ✅ | — | ci, test |
 | opId→handler audit | repo-wide | Script to diff specs vs code | ⏳ | Tooling, conventions | tooling, docs |
 | Spec↔code drift | specs & servers | Track/close gaps per service | ⏳ | Bandwidth | process |
 
