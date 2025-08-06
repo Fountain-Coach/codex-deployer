@@ -25,8 +25,8 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | DNS API handlers | `Sources/GatewayApp/GatewayServer.swift` | Keep CRUD for zones/records | ✅ | — | server, dns |
 | LLM Gateway | `openAPI/v2/llm-gateway.yml` | Implement `metrics_metrics_get`, `chatWithObjective` | ⏳ | Service design | server, llm |
 | Gateway Mgmt API | `openAPI/v1/gateway.yml` | Implement health/metrics/auth/routes ops | ✅ | — | server |
-| Planner (v1) | `openAPI/v1/planner.yml` | Implement planner ops (reason/execute/list/etc.) | ⏳ | Orchestration runtime | server, planner |
-| Planner (v0) | `openAPI/v0/planner.yml` | Deprecate or alias to v1 | ⏳ | Version policy | docs, planner |
+| Planner (v1) | `openAPI/v1/planner.yml` | Implement planner ops (reason/execute/list/etc.) | ⚠️ | Orchestration runtime | server, planner |
+| Planner (v0) | `openAPI/v0/planner.yml` | Deprecate or alias to v1 | ✅ | — | docs, planner |
 | Tools Factory | `openAPI/v1/tools-factory.yml` | Implement list/register ops | ⏳ | Typesense dependency | server |
 | Function Caller | `openAPI/v1/function-caller.yml` | Implement list/get/invoke/metrics | ⏳ | Invocation runtime | server |
 | Persistence API | `openAPI/v1/persist.yml` | Implement corpus/baseline/function/reflection ops | ⏳ | Backing store | server, storage |
