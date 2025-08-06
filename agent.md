@@ -27,8 +27,8 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Gateway Mgmt API | `openAPI/v1/gateway.yml` | Implement health/metrics/auth/routes ops | ✅ | — | server |
 | Planner (v1) | `openAPI/v1/planner.yml` | Implement planner ops (reason/execute/list/etc.) | ✅ | — | server, planner |
 | Planner (v0) | `openAPI/v0/planner.yml` | Deprecate or alias to v1 | ✅ | — | docs, planner |
-| Tools Factory | `openAPI/v1/tools-factory.yml` | Implement list/register ops | ⏳ | Typesense dependency | server |
-| Function Caller | `openAPI/v1/function-caller.yml` | Implement list/get/invoke/metrics | ⏳ | Invocation runtime | server |
+| Tools Factory | `openAPI/v1/tools-factory.yml` | Implement list/register ops | ✅ | — | server |
+| Function Caller | `openAPI/v1/function-caller.yml` | Implement list/get/invoke/metrics | ✅ | — | server |
 | Persistence API | `openAPI/v1/persist.yml` | Implement corpus/baseline/function/reflection ops | ⏳ | Backing store | server, storage |
 | Typesense API | `openAPI/typesense.yml` | Decide proxy vs native subset | ⏳ | Scope & security | server, design |
 | Static site | `Sources/PublishingFrontend/*`, `Configuration/publishing.yml` | Serve docs/static; keep defaults | ✅ | — | server, docs |

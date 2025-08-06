@@ -10,11 +10,11 @@ public struct Router {
 
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
         switch (request.method, request.path) {
-        case ("GET", "/functions/{function_id}"):
+        case ("GET", let path) where path.hasPrefix("/functions/") && !path.contains("/invoke"):
             return try await handlers.getFunctionDetails(request)
-        case ("GET", "/functions"):
+        case ("GET", let path) where path == "/functions" || path.hasPrefix("/functions?"):
             return try await handlers.listFunctions(request)
-        case ("POST", "/functions/{function_id}/invoke"):
+        case ("POST", let path) where path.hasSuffix("/invoke") && path.hasPrefix("/functions/"):
             return try await handlers.invokeFunction(request)
         case ("GET", "/metrics"):
             let text = await PrometheusAdapter.shared.exposition()
