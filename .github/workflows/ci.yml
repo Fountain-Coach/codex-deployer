@@ -6,6 +6,14 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: norio-nomura/action-swiftlint@v4
+        with:
+          args: --config .swiftlint.yml
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -17,5 +25,17 @@ jobs:
         run: swift build
       - name: Test
         run: swift test --enable-code-coverage
+      - name: Generate Coverage
+        run: |
+          llvm-cov-19 export -format=lcov .build/x86_64-unknown-linux-gnu/debug/FountainCoachPackageTests.xctest -instr-profile .build/x86_64-unknown-linux-gnu/debug/codecov/default.profdata > coverage.lcov
+          COVERAGE=$(lcov --summary coverage.lcov 2>/dev/null | grep lines | awk '{print $2}' | sed 's/%//')
+          curl -s "https://img.shields.io/badge/Coverage-${COVERAGE}%25-blue" -o coverage-badge.svg
+      - name: Upload Coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: |
+            coverage.lcov
+            coverage-badge.svg
 
 # © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
