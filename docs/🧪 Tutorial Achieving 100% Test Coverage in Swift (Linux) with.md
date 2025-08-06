@@ -143,3 +143,58 @@ You now have a fully automated workflow to:
 - Generate a Codex-readable action matrix  
 - Prompt Codex for precise test case stubs  
 - Reach and maintain 100% test coverage 🎯
+
+## Quick Cut and Paste Version
+
+```
+# 🧠 CONTEXT:
+# This is a Swift Package project running on Linux (Ubuntu).
+# Code coverage has been collected using Swift Package Manager (`swift test --enable-code-coverage`)
+# Raw profiles are in `.build/debug/codecov/`, and we want to use LLVM tools to analyze test coverage.
+
+# 🧰 OBJECTIVE:
+# 1. Run LLVM coverage tools to extract test coverage from the raw `.profraw` files
+# 2. Identify all functions, files, or lines that are not covered (fully or partially)
+# 3. Generate a machine-readable markdown task matrix of uncovered or partially covered areas
+# 4. Save the output as `agent.md` at the project root
+
+# 🧪 STEP 1: Merge coverage profile
+llvm-profdata merge -sparse .build/debug/codecov/*.profraw -o default.profdata
+
+# 📊 STEP 2: Export coverage data to JSON
+llvm-cov export \
+  .build/debug/<ExecutableOrTestTarget>.xctest \
+  -instr-profile=default.profdata \
+  -format=json > coverage.json
+
+# 📌 STEP 3: Analyze `coverage.json` and extract actionable items
+# For each uncovered or partially covered function, file, or line:
+# - Identify the function name, line number, and missed condition or path
+# - Propose the test input or behavior that would exercise the missed code
+
+# 🔧 STEP 4: Build a task matrix in this format:
+
+# | Feature | File(s) or Area | Action | Status | Blockers | Tags |
+# Use emoji for `Status`: ✅ (done), ⏳ (todo), ⚠️ (partial), ❌ (missing)
+# Use Tags like: `parser`, `cli`, `docs`, `test`, `ci`, etc.
+# Group related rows by file or module.
+
+# ✅ EXAMPLE OUTPUT ROWS:
+
+# | Feature             | File                 | Action                                     | Status | Blockers              | Tags     |
+# |---------------------|----------------------|--------------------------------------------|--------|------------------------|----------|
+# | Password validation | LoginManager.swift   | Add test for password length < 8           | ❌     |                        | test     |
+# | Audio failover      | AudioEngine.swift    | Simulate engine failure and test fallback  | ⚠️     | No mocking implemented | test     |
+# | Trim whitespace     | FountainParser.swift | Change `var` to `let` for immutable string | ✅     |                        | parser   |
+
+# 📝 STEP 5: Save this matrix as `agent.md` at the root of the project.
+
+# ✨ Notes:
+# - You are allowed to run shell commands, parse JSON, and write markdown
+# - Use concise and human-readable summaries in the `Action` column
+# - Infer `Tags` based on folder structure or filename keywords
+# - If test input is not obvious, suggest realistic cases (e.g., empty strings, nil, edge values)
+
+# 🎯 FINAL GOAL:
+# A fully structured `agent.md` file that documents test coverage gaps, aligned implementation needs, and their current status — ready to be consumed by Codex agents or GitHub workflows.
+```
