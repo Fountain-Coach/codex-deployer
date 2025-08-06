@@ -9,10 +9,14 @@ final class APIClientTests: XCTestCase {
     final class MockSession: HTTPSession {
         var request: URLRequest?
         let responseData: Data
-        init(responseData: Data) { self.responseData = responseData }
+        let status: Int
+        init(responseData: Data, status: Int = 200) {
+            self.responseData = responseData
+            self.status = status
+        }
         func data(for request: URLRequest) async throws -> (Data, URLResponse) {
             self.request = request
-            let resp = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            let resp = HTTPURLResponse(url: request.url!, statusCode: status, httpVersion: nil, headerFields: nil)!
             return (responseData, resp)
         }
     }
@@ -90,6 +94,26 @@ final class APIClientTests: XCTestCase {
         let client = APIClient(baseURL: URL(string: "http://localhost")!, session: session)
         _ = try await client.send(Echo())
         XCTAssertNil(session.request?.value(forHTTPHeaderField: "Content-Type"))
+    }
+
+    /// Decodes server-sent error bodies for non-2xx responses.
+    func testNon200ResponseThrowsAPIError() async throws {
+        struct Ping: APIRequest {
+            typealias Response = NoBody
+            var method: String { "GET" }
+            var path: String { "/ping" }
+            var body: NoBody? = nil
+        }
+        let data = try JSONEncoder().encode(["error": "bad"])
+        let session = MockSession(responseData: data, status: 401)
+        let client = APIClient(baseURL: URL(string: "http://localhost")!, session: session)
+        do {
+            let _: NoBody = try await client.send(Ping())
+            XCTFail("Expected error")
+        } catch let error as APIError {
+            XCTAssertEqual(error.status, 401)
+            XCTAssertEqual(error.message, "bad")
+        }
     }
 }
 

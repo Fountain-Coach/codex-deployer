@@ -20,7 +20,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Spec validation | `Sources/FountainCodex/Parser/SpecValidator.swift` | Keep unique ids & params checks | ✅ | — | parser |
 | Model emitter | `Sources/FountainCodex/ModelEmitter/*` | Generate Swift models from schemas | ✅ | — | generator |
 | Client generator | `Sources/FountainCodex/ClientGenerator/*` | Emit type-safe requests & client | ✅ | — | generator, cli |
-| Client errors | `Sources/FountainCodex/ClientGenerator/APIClient.swift` | Add non-200 error decoding | ⏳ | Error model, spec mapping | client, generator |
+| Client errors | `Sources/FountainCodex/ClientGenerator/APIClient.swift` | Add non-200 error decoding | ✅ | — | client, generator |
 | Server generator | `Sources/FountainCodex/ServerGenerator/*` | Emit router/types/handler **stubs** | ✅ | — | generator, server |
 | DNS API handlers | `Sources/GatewayApp/GatewayServer.swift` | Keep CRUD for zones/records | ✅ | — | server, dns |
 | LLM Gateway | `openAPI/v2/llm-gateway.yml` | Implement `metrics_metrics_get`, `chatWithObjective` | ✅ | — | server, llm |
@@ -34,8 +34,8 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Static site | `Sources/PublishingFrontend/*`, `Configuration/publishing.yml` | Serve docs/static; keep defaults | ✅ | — | server, docs |
 | Gateway plugins | `LoggingPlugin`, `PublishingFrontendPlugin` | Keep logging & HTML fallback | ✅ | — | server |
 | Certificate renewal | `Sources/GatewayApp/CertificateManager.swift` | Schedule/trigger renewal | ✅ | — | ops, tls |
-| DNSSEC | `Sources/FountainCodex/DNSSECSigner.swift` | Integrate signer into engine | ⚠️ | Wiring, keys | security, dns |
-| Metrics & logging | `GatewayServer`, `DNSMetrics` | Expose Prometheus-style metrics | ⚠️ | Exporters, counters | observability |
+| DNSSEC | `Sources/FountainCodex/DNSSECSigner.swift` | Integrate signer into engine | ✅ | — | security, dns |
+| Metrics & logging | `GatewayServer`, `DNSMetrics` | Expose Prometheus-style metrics | ✅ | — | observability |
 | Integration tests | `Tests/*` | E2E tests for generated servers | ⏳ | Harness, fixtures | test |
 | DNS perf tests | `Tests/*` | UDP/TCP load & concurrency tests | ⏳ | Bench tools | test, dns |
 | SwiftLint in CI | `.swiftlint.yml`, `.github/workflows/*` | Add lint job to Actions | ⏳ | CI updates | ci, lint |
