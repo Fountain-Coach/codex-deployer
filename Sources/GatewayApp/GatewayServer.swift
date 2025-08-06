@@ -9,7 +9,7 @@ import FountainCodex
 @MainActor
 public final class GatewayServer {
     /// Underlying HTTP server handling TCP connections.
-    private let server: NIOHTTPServer
+    private var server: NIOHTTPServer
     /// Manages periodic certificate renewal scripts.
     private let manager: CertificateManager
     /// Event loop group powering the SwiftNIO server.
@@ -19,6 +19,9 @@ public final class GatewayServer {
     /// and in reverse order during ``GatewayPlugin.respond(_:for:)``.
     private let plugins: [GatewayPlugin]
     private let zoneManager: ZoneManager?
+    private var zones: [UUID: Zone]
+    private var records: [UUID: [UUID: Record]]
+    private var routes: [String: RouteInfo]
 
     /// In-memory zone model.
     private struct Zone: Codable { let id: UUID; let name: String }
@@ -60,10 +63,11 @@ public final class GatewayServer {
         self.plugins = plugins
         self.zoneManager = zoneManager
         self.group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-        var zones: [UUID: Zone] = [:]
-        var records: [UUID: [UUID: Record]] = [:]
-        var routes: [String: RouteInfo] = [:]
-        let kernel = HTTPKernel { [plugins, zoneManager] req in
+        self.zones = [:]
+        self.records = [:]
+        self.routes = [:]
+        self.server = NIOHTTPServer(kernel: HTTPKernel { _ in HTTPResponse(status: 500) }, group: group)
+        let kernel = HTTPKernel { [plugins, zoneManager, self] req in
             var request = req
             for plugin in plugins {
                 request = try await plugin.prepare(request)
@@ -72,82 +76,30 @@ public final class GatewayServer {
             var response: HTTPResponse
             switch (request.method, segments) {
             case ("GET", ["health"]):
-                let json = try JSONEncoder().encode(["status": "ok"])
-                response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                response = self.gatewayHealth()
             case ("GET", ["metrics"]):
-                let exposition = await DNSMetrics.shared.exposition()
-                let body = Data(exposition.utf8)
-                response = HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+                response = await self.gatewayMetrics()
             case ("POST", ["auth", "token"]):
-                do {
-                    let creds = try JSONDecoder().decode(CredentialRequest.self, from: request.body)
-                    if creds.clientId == "admin", creds.clientSecret == "password" {
-                        let formatter = ISO8601DateFormatter()
-                        let expires = formatter.string(from: Date().addingTimeInterval(3600))
-                        let token = UUID().uuidString
-                        let json = try JSONEncoder().encode(TokenResponse(token: token, expiresAt: expires))
-                        response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
-                    } else {
-                        let json = try JSONEncoder().encode(ErrorResponse(error: "invalid credentials"))
-                        response = HTTPResponse(status: 401, headers: ["Content-Type": "application/json"], body: json)
-                    }
-                } catch {
-                    response = HTTPResponse(status: 400)
-                }
+                response = await self.issueAuthToken(request)
+            case ("GET", ["certificates"]):
+                response = self.certificateInfo()
+            case ("POST", ["certificates", "renew"]):
+                response = self.renewCertificate()
             case ("GET", ["routes"]):
-                let json = try JSONEncoder().encode(Array(routes.values))
-                response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                response = self.listRoutes()
             case ("POST", ["routes"]):
-                do {
-                    let info = try JSONDecoder().decode(RouteInfo.self, from: request.body)
-                    if routes[info.id] == nil {
-                        routes[info.id] = info
-                        let json = try JSONEncoder().encode(info)
-                        response = HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
-                    } else {
-                        let json = try JSONEncoder().encode(ErrorResponse(error: "exists"))
-                        response = HTTPResponse(status: 409, headers: ["Content-Type": "application/json"], body: json)
-                    }
-                } catch {
-                    response = HTTPResponse(status: 400)
-                }
+                response = self.createRoute(request)
             case ("PUT", let seg) where seg.count == 2 && seg[0] == "routes":
                 let id = String(seg[1])
-                guard routes[id] != nil else {
-                    let json = try JSONEncoder().encode(ErrorResponse(error: "not found"))
-                    response = HTTPResponse(status: 404, headers: ["Content-Type": "application/json"], body: json)
-                    break
-                }
-                do {
-                    let info = try JSONDecoder().decode(RouteInfo.self, from: request.body)
-                    let updated = RouteInfo(id: id, path: info.path, target: info.target, methods: info.methods, rateLimit: info.rateLimit)
-                    routes[id] = updated
-                    let json = try JSONEncoder().encode(updated)
-                    response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
-                } catch {
-                    response = HTTPResponse(status: 400)
-                }
+                response = self.updateRoute(id, request: request)
             case ("DELETE", let seg) where seg.count == 2 && seg[0] == "routes":
                 let id = String(seg[1])
-                if routes.removeValue(forKey: id) != nil {
-                    response = HTTPResponse(status: 204)
-                } else {
-                    let json = try JSONEncoder().encode(ErrorResponse(error: "not found"))
-                    response = HTTPResponse(status: 404, headers: ["Content-Type": "application/json"], body: json)
-                }
+                response = self.deleteRoute(id)
             case ("GET", ["zones"]):
-                let json = try JSONEncoder().encode(ZonesResponse(zones: Array(zones.values)))
+                let json = try JSONEncoder().encode(ZonesResponse(zones: Array(self.zones.values)))
                 response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
             case ("POST", ["zones"]):
-                do {
-                    let req = try JSONDecoder().decode(ZoneCreateRequest.self, from: request.body)
-                    let zone = Zone(id: UUID(), name: req.name)
-                    zones[zone.id] = zone
-                    let json = try JSONEncoder().encode(zone)
-                    response = HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
-                } catch {
-                    response = HTTPResponse(status: 400)
-                }
+                response = await self.createZone(request)
             case ("POST", ["zones", "reload"]):
                 if let manager = zoneManager {
                     await manager.reload()
@@ -156,34 +108,23 @@ public final class GatewayServer {
                     response = HTTPResponse(status: 500)
                 }
             case ("DELETE", let seg) where seg.count == 2 && seg[0] == "zones":
-                let zoneId = seg[1]
-                if let id = UUID(uuidString: String(zoneId)), zones.removeValue(forKey: id) != nil {
-                    records[id] = nil
-                    response = HTTPResponse(status: 204)
-                } else {
-                    response = HTTPResponse(status: 404)
-                }
+                let zoneId = String(seg[1])
+                response = self.deleteZone(zoneId)
             case ("GET", let seg) where seg.count == 3 && seg[0] == "zones" && seg[2] == "records":
-                let zoneId = seg[1]
-                if let id = UUID(uuidString: String(zoneId)), zones[id] != nil {
-                    let recs = Array(records[id]?.values ?? [:].values)
-                    let json = try JSONEncoder().encode(RecordsResponse(records: recs))
-                    response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
-                } else {
-                    response = HTTPResponse(status: 404)
-                }
+                let zoneId = String(seg[1])
+                response = self.listRecords(zoneId)
             case ("POST", let seg) where seg.count == 3 && seg[0] == "zones" && seg[2] == "records":
                 let zoneId = seg[1]
-                guard let id = UUID(uuidString: String(zoneId)), zones[id] != nil else {
+                guard let id = UUID(uuidString: String(zoneId)), self.zones[id] != nil else {
                     response = HTTPResponse(status: 404)
                     break
                 }
                 do {
                     let req = try JSONDecoder().decode(RecordRequest.self, from: request.body)
                     let record = Record(id: UUID(), name: req.name, type: req.type, value: req.value)
-                    var zoneRecords = records[id] ?? [:]
+                    var zoneRecords = self.records[id] ?? [:]
                     zoneRecords[record.id] = record
-                    records[id] = zoneRecords
+                    self.records[id] = zoneRecords
                     let json = try JSONEncoder().encode(record)
                     response = HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
                 } catch {
@@ -194,14 +135,14 @@ public final class GatewayServer {
                 let recordId = seg[3]
                 guard let zid = UUID(uuidString: String(zoneId)),
                       let rid = UUID(uuidString: String(recordId)),
-                      records[zid]?[rid] != nil else {
+                      self.records[zid]?[rid] != nil else {
                     response = HTTPResponse(status: 404)
                     break
                 }
                 do {
                     let req = try JSONDecoder().decode(RecordRequest.self, from: request.body)
                     let record = Record(id: rid, name: req.name, type: req.type, value: req.value)
-                    records[zid]![rid] = record
+                    self.records[zid]![rid] = record
                     let json = try JSONEncoder().encode(record)
                     response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
                 } catch {
@@ -212,7 +153,7 @@ public final class GatewayServer {
                 let recordId = seg[3]
                 if let zid = UUID(uuidString: String(zoneId)),
                    let rid = UUID(uuidString: String(recordId)),
-                   records[zid]?.removeValue(forKey: rid) != nil {
+                   self.records[zid]?.removeValue(forKey: rid) != nil {
                     response = HTTPResponse(status: 204)
                 } else {
                     response = HTTPResponse(status: 404)
@@ -226,6 +167,130 @@ public final class GatewayServer {
             return response
         }
         self.server = NIOHTTPServer(kernel: kernel, group: group)
+    }
+
+    public func gatewayHealth() -> HTTPResponse {
+        let json = try? JSONEncoder().encode(["status": "ok"])
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json ?? Data())
+    }
+
+    public func gatewayMetrics() async -> HTTPResponse {
+        let exposition = await DNSMetrics.shared.exposition()
+        let body = Data(exposition.utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+    }
+
+    public func issueAuthToken(_ request: HTTPRequest) async -> HTTPResponse {
+        do {
+            let creds = try JSONDecoder().decode(CredentialRequest.self, from: request.body)
+            if creds.clientId == "admin", creds.clientSecret == "password" {
+                let formatter = ISO8601DateFormatter()
+                let expires = formatter.string(from: Date().addingTimeInterval(3600))
+                let token = UUID().uuidString
+                let json = try JSONEncoder().encode(TokenResponse(token: token, expiresAt: expires))
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+            }
+            let json = try JSONEncoder().encode(ErrorResponse(error: "invalid credentials"))
+            return HTTPResponse(status: 401, headers: ["Content-Type": "application/json"], body: json)
+        } catch {
+            return HTTPResponse(status: 400)
+        }
+    }
+
+    public func certificateInfo() -> HTTPResponse {
+        struct CertificateInfo: Codable { let notAfter: String; let issuer: String }
+        let formatter = ISO8601DateFormatter()
+        let info = CertificateInfo(notAfter: formatter.string(from: Date().addingTimeInterval(86_400)), issuer: "SelfSigned")
+        if let json = try? JSONEncoder().encode(info) {
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+        }
+        return HTTPResponse(status: 500)
+    }
+
+    public func renewCertificate() -> HTTPResponse {
+        manager.triggerNow()
+        return HTTPResponse(status: 202)
+    }
+
+    public func listRoutes() -> HTTPResponse {
+        if let json = try? JSONEncoder().encode(Array(self.routes.values)) {
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+        }
+        return HTTPResponse(status: 500)
+    }
+
+    public func createRoute(_ request: HTTPRequest) -> HTTPResponse {
+        do {
+            let info = try JSONDecoder().decode(RouteInfo.self, from: request.body)
+            if self.routes[info.id] == nil {
+                self.routes[info.id] = info
+                let json = try JSONEncoder().encode(info)
+                return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
+            }
+            let json = try JSONEncoder().encode(ErrorResponse(error: "exists"))
+            return HTTPResponse(status: 409, headers: ["Content-Type": "application/json"], body: json)
+        } catch {
+            return HTTPResponse(status: 400)
+        }
+    }
+
+    public func updateRoute(_ routeId: String, request: HTTPRequest) -> HTTPResponse {
+        guard self.routes[routeId] != nil else {
+            if let json = try? JSONEncoder().encode(ErrorResponse(error: "not found")) {
+                return HTTPResponse(status: 404, headers: ["Content-Type": "application/json"], body: json)
+            }
+            return HTTPResponse(status: 404)
+        }
+        do {
+            let info = try JSONDecoder().decode(RouteInfo.self, from: request.body)
+            let updated = RouteInfo(id: routeId, path: info.path, target: info.target, methods: info.methods, rateLimit: info.rateLimit)
+            self.routes[routeId] = updated
+            let json = try JSONEncoder().encode(updated)
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+        } catch {
+            return HTTPResponse(status: 400)
+        }
+    }
+
+    public func deleteRoute(_ routeId: String) -> HTTPResponse {
+        if self.routes.removeValue(forKey: routeId) != nil {
+            return HTTPResponse(status: 204)
+        }
+        if let json = try? JSONEncoder().encode(ErrorResponse(error: "not found")) {
+            return HTTPResponse(status: 404, headers: ["Content-Type": "application/json"], body: json)
+        }
+        return HTTPResponse(status: 404)
+    }
+
+    public func createZone(_ request: HTTPRequest) async -> HTTPResponse {
+        do {
+            let req = try JSONDecoder().decode(ZoneCreateRequest.self, from: request.body)
+            let zone = Zone(id: UUID(), name: req.name)
+            self.zones[zone.id] = zone
+            let json = try JSONEncoder().encode(zone)
+            return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
+        } catch {
+            return HTTPResponse(status: 400)
+        }
+    }
+
+    public func deleteZone(_ zoneId: String) -> HTTPResponse {
+        if let id = UUID(uuidString: zoneId), self.zones.removeValue(forKey: id) != nil {
+            self.records[id] = nil
+            return HTTPResponse(status: 204)
+        }
+        return HTTPResponse(status: 404)
+    }
+
+    public func listRecords(_ zoneId: String) -> HTTPResponse {
+        if let id = UUID(uuidString: zoneId), self.zones[id] != nil {
+            let recs = Array(self.records[id]?.values ?? [UUID: Record]().values)
+            if let json = try? JSONEncoder().encode(RecordsResponse(records: recs)) {
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+            }
+            return HTTPResponse(status: 500)
+        }
+        return HTTPResponse(status: 404)
     }
 
     /// Starts the gateway on the given port.
