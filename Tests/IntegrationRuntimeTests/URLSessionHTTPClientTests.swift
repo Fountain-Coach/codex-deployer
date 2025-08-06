@@ -10,6 +10,24 @@ import NIOHTTP1
 final class URLSessionHTTPClientTests: XCTestCase {
     private class MockURLProtocol: URLProtocol {
         nonisolated(unsafe) static var handler: (@Sendable (URLRequest) -> (HTTPURLResponse, Data))?
+        static func bodyData(from request: URLRequest) -> Data {
+            if let body = request.httpBody { return body }
+            guard let stream = request.httpBodyStream else { return Data() }
+            stream.open()
+            defer { stream.close() }
+            var data = Data()
+            let bufferSize = 1024
+            var buffer = [UInt8](repeating: 0, count: bufferSize)
+            while stream.hasBytesAvailable {
+                let read = stream.read(&buffer, maxLength: buffer.count)
+                if read > 0 {
+                    data.append(buffer, count: read)
+                } else {
+                    break
+                }
+            }
+            return data
+        }
         override class func canInit(with request: URLRequest) -> Bool { true }
         override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
         override func startLoading() {
@@ -29,9 +47,10 @@ final class URLSessionHTTPClientTests: XCTestCase {
         MockURLProtocol.handler = { request in
             XCTAssertEqual(request.httpMethod, "POST")
             XCTAssertEqual(request.value(forHTTPHeaderField: "X-Test"), "1")
-            let body = String(data: request.httpBody ?? Data(), encoding: .utf8)
+            let bodyData = MockURLProtocol.bodyData(from: request)
+            let body = String(data: bodyData, encoding: .utf8)
             XCTAssertEqual(body, "hi")
-            let resp = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: ["X-Reply": "ok"])! 
+            let resp = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: ["X-Reply": "ok"])!
             return (resp, Data("pong".utf8))
         }
         var buffer = ByteBufferAllocator().buffer(capacity: 0)
