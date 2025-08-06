@@ -1,7 +1,12 @@
 openapi: 3.0.3
 info:
   title: Typesense API
-  description: "An open source search engine for building delightful search experiences."
+  description: |
+    An open source search engine for building delightful search experiences.
+
+    Proxy Notice: This deployment exposes a limited subset of the API and
+    forwards requests to an upstream Typesense cluster. Clients must supply
+    an `X-API-Key` header for access.
   version: '28.0'
   license:
     name: GPL-3.0
@@ -22,8 +27,8 @@ servers:
 externalDocs:
   description: Find out more about Typesense
   url: https://typesense.org
-security:
-  - api_key_header: []
+  security:
+    - proxy_key_header: []
 tags:
   - name: collections
     description: A collection is defined by a schema
@@ -4021,5 +4026,9 @@ components:
     api_key_header:
       type: apiKey
       name: X-TYPESENSE-API-KEY
+      in: header
+    proxy_key_header:
+      type: apiKey
+      name: X-API-Key
       in: header
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

@@ -10,6 +10,15 @@ public struct Handlers {
     public init(typesense: TypesenseClient = .shared) {
         self.typesense = typesense
     }
+    public func listbaselines(_ request: HTTPRequest) async throws -> HTTPResponse {
+        guard let corpusId = request.path.split(separator: "/").dropFirst(2).first else {
+            return HTTPResponse(status: 400)
+        }
+        let items = await typesense.listBaselines(for: String(corpusId))
+        struct Response: Codable { let total: Int; let baselines: [Baseline] }
+        let data = try JSONEncoder().encode(Response(total: items.count, baselines: items))
+        return HTTPResponse(body: data)
+    }
     public func addbaseline(_ request: HTTPRequest) async throws -> HTTPResponse {
         guard request.path.split(separator: "/").dropFirst(2).first != nil,
               let model = try? JSONDecoder().decode(Baseline.self, from: request.body) else {

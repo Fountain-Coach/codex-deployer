@@ -77,6 +77,49 @@ paths:
           $ref: '#/components/responses/ErrorResponse'
 
   /corpora/{corpusId}/baselines:
+    get:
+      summary: List baselines in a corpus, supports pagination
+      description: |
+        Retrieve baseline snapshots stored for the given corpus.
+        Useful for examining historical semantic state.
+      operationId: listBaselines
+      parameters:
+        - name: corpusId
+          in: path
+          required: true
+          description: Identifier of the corpus to list baselines for.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of baselines to return.
+          schema:
+            type: integer
+            default: 50
+            minimum: 1
+            maximum: 200
+        - name: offset
+          in: query
+          description: Number of baselines to skip before returning results.
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Paginated list of baselines for the corpus.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: Total number of baselines available.
+                  baselines:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Baseline'
     post:
       summary: Add a baseline snapshot to a corpus
       description: |

@@ -10,6 +10,8 @@ public struct Router {
 
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
         switch (request.method, request.path) {
+        case ("GET", "/corpora/{corpusId}/baselines"):
+            return try await handlers.listbaselines(request)
         case ("POST", "/corpora/{corpusId}/baselines"):
             return try await handlers.addbaseline(request)
         case ("GET", "/corpora/{corpusId}/reflections"):
