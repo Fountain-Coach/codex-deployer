@@ -10,9 +10,9 @@ public struct Router {
 
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
         switch (request.method, request.path) {
-        case ("POST", "/tools/register"):
+        case ("POST", let path) where path == "/tools/register" || path.hasPrefix("/tools/register?"):
             return try await handlers.registerOpenapi(request)
-        case ("GET", "/tools"):
+        case ("GET", let path) where path == "/tools" || path.hasPrefix("/tools?"):
             return try await handlers.listTools(request)
         case ("GET", "/metrics"):
             let text = await PrometheusAdapter.shared.exposition()

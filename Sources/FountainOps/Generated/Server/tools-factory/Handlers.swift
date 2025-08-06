@@ -29,7 +29,8 @@ public struct Handlers {
             for fn in list { await typesense.addFunction(fn) }
             let enc = JSONEncoder()
             enc.keyEncodingStrategy = .convertToSnakeCase
-            let respData = try enc.encode(list)
+            let envelope = FunctionListResponse(functions: list, page: 1, page_size: list.count, total: list.count)
+            let respData = try enc.encode(envelope)
             return HTTPResponse(body: respData)
         }
 
@@ -103,16 +104,24 @@ public struct Handlers {
         for fn in functions { await typesense.addFunction(fn) }
         let enc = JSONEncoder()
         enc.keyEncodingStrategy = .convertToSnakeCase
-        let respData = try enc.encode(functions)
+        let envelope = FunctionListResponse(functions: functions, page: 1, page_size: functions.count, total: functions.count)
+        let respData = try enc.encode(envelope)
         return HTTPResponse(body: respData)
     }
 
     /// Returns all stored function definitions.
     public func listTools(_ request: HTTPRequest) async throws -> HTTPResponse {
         let items = await typesense.listFunctions()
+        let comps = URLComponents(string: request.path)
+        let page = comps?.queryItems?.first(where: { $0.name == "page" }).flatMap { Int($0.value ?? "") } ?? 1
+        let pageSize = comps?.queryItems?.first(where: { $0.name == "page_size" }).flatMap { Int($0.value ?? "") } ?? 20
+        let start = max(0, (page - 1) * pageSize)
+        let end = min(start + pageSize, items.count)
+        let pageItems = start < items.count ? Array(items[start..<end]) : []
+        let envelope = FunctionListResponse(functions: pageItems, page: page, page_size: pageSize, total: items.count)
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
-        let data = try encoder.encode(items)
+        let data = try encoder.encode(envelope)
         return HTTPResponse(body: data)
     }
 }

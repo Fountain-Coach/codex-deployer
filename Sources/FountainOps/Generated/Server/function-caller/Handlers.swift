@@ -9,10 +9,10 @@ public struct Handlers {
     public init() {}
 
     public func getFunctionDetails(_ request: HTTPRequest) async throws -> HTTPResponse {
-        guard let id = request.path.split(separator: "/").last else {
+        guard let raw = request.path.split(separator: "/").last?.split(separator: "?").first else {
             return HTTPResponse(status: 404)
         }
-        guard let fn = await TypesenseClient.shared.functionDetails(id: String(id)) else {
+        guard let fn = await TypesenseClient.shared.functionDetails(id: String(raw)) else {
             return HTTPResponse(status: 404)
         }
         let enc = JSONEncoder()
@@ -22,15 +22,22 @@ public struct Handlers {
     }
 
     public func listFunctions(_ request: HTTPRequest) async throws -> HTTPResponse {
-        let fns = await TypesenseClient.shared.listFunctions()
+        let items = await TypesenseClient.shared.listFunctions()
+        let comps = URLComponents(string: request.path)
+        let page = comps?.queryItems?.first(where: { $0.name == "page" }).flatMap { Int($0.value ?? "") } ?? 1
+        let pageSize = comps?.queryItems?.first(where: { $0.name == "page_size" }).flatMap { Int($0.value ?? "") } ?? 20
+        let start = max(0, (page - 1) * pageSize)
+        let end = min(start + pageSize, items.count)
+        let pageItems = start < items.count ? Array(items[start..<end]) : []
+        let envelope = FunctionListResponse(functions: pageItems, page: page, page_size: pageSize, total: items.count)
         let enc = JSONEncoder()
         enc.keyEncodingStrategy = .convertToSnakeCase
-        let data = try enc.encode(fns)
+        let data = try enc.encode(envelope)
         return HTTPResponse(body: data)
     }
 
     public func invokeFunction(_ request: HTTPRequest) async throws -> HTTPResponse {
-        guard let id = request.path.split(separator: "/").dropLast().last else {
+        guard let id = request.path.split(separator: "/").dropLast().last?.split(separator: "?").first else {
             return HTTPResponse(status: 404)
         }
         do {
