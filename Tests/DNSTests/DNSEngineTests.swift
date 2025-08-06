@@ -58,6 +58,7 @@ final class DNSEngineTests: XCTestCase {
         var query = makeQuery(name: "example.com")
         let engine = DNSEngine(zoneCache: ["example.com": "1.2.3.4"])
         _ = engine.handleQuery(buffer: &query)
+        await Task.yield()
         let text = await DNSMetrics.shared.exposition()
         XCTAssertTrue(text.contains("dns_queries_total 1"))
         XCTAssertTrue(text.contains("dns_hits_total 1"))
