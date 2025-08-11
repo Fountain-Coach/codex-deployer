@@ -278,8 +278,10 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
     @MainActor
     /// Zone creation should validate request schema.
       func testZoneEndpointValidatesSchema() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let zoneManager = try ZoneManager(fileURL: file)
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let server = GatewayServer(manager: manager, plugins: [])
+        let server = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
         Task { try await server.start(port: 9109) }
         try await Task.sleep(nanoseconds: 100_000_000)
         let url = URL(string: "http://127.0.0.1:9109/zones")!
@@ -290,18 +292,60 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         request.httpBody = try JSONEncoder().encode(Zone(name: "example"))
         var (data, response) = try await URLSession.shared.data(for: request)
         XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 201)
-        let body = try JSONSerialization.jsonObject(with: data) as? [String: String]
-        XCTAssertEqual(body?["name"], "example")
+        struct ZoneResponse: Decodable { let name: String }
+        let body = try JSONDecoder().decode(ZoneResponse.self, from: data)
+        XCTAssertEqual(body.name, "example")
         request.httpBody = Data("{}".utf8)
-        (_, response) = try await URLSession.shared.data(for: request)
-        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 400)
+        (data, response) = try await URLSession.shared.data(for: request)
+        let http = response as? HTTPURLResponse
+        XCTAssertEqual(http?.statusCode, 400)
+        XCTAssertEqual(http?.value(forHTTPHeaderField: "Content-Type"), "application/json")
+        let err = try JSONSerialization.jsonObject(with: data) as? [String: String]
+        XCTAssertEqual(err?["error"], "invalid zone data")
+        try await server.stop()
+    }
+
+    @MainActor
+    func testRecordListReturnsNotFoundWithJSONError() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let zoneManager = try ZoneManager(fileURL: file)
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
+        Task { try await server.start(port: 9130) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let base = URL(string: "http://127.0.0.1:9130")!
+        let url = base.appendingPathComponent("zones/\(UUID().uuidString)/records")
+        let (data, response) = try await URLSession.shared.data(from: url)
+        let http = response as? HTTPURLResponse
+        XCTAssertEqual(http?.statusCode, 404)
+        XCTAssertEqual(http?.value(forHTTPHeaderField: "Content-Type"), "application/json")
+        let err = try JSONSerialization.jsonObject(with: data) as? [String: String]
+        XCTAssertEqual(err?["error"], "zone not found")
+        try await server.stop()
+    }
+
+    @MainActor
+    func testZonesRequireManager() async throws {
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9131) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let url = URL(string: "http://127.0.0.1:9131/zones")!
+        let (data, response) = try await URLSession.shared.data(from: url)
+        let http = response as? HTTPURLResponse
+        XCTAssertEqual(http?.statusCode, 500)
+        XCTAssertEqual(http?.value(forHTTPHeaderField: "Content-Type"), "application/json")
+        let err = try JSONSerialization.jsonObject(with: data) as? [String: String]
+        XCTAssertEqual(err?["error"], "zone manager unavailable")
         try await server.stop()
     }
 
     @MainActor
     func testZoneLifecycle() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let zoneManager = try ZoneManager(fileURL: file)
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let server = GatewayServer(manager: manager, plugins: [])
+        let server = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
         Task { try await server.start(port: 9110) }
         try await Task.sleep(nanoseconds: 100_000_000)
         let base = URL(string: "http://127.0.0.1:9110")!
@@ -332,8 +376,10 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
 
     @MainActor
     func testRecordLifecycle() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let zoneManager = try ZoneManager(fileURL: file)
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let server = GatewayServer(manager: manager, plugins: [])
+        let server = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
         Task { try await server.start(port: 9111) }
         try await Task.sleep(nanoseconds: 100_000_000)
         let base = URL(string: "http://127.0.0.1:9111")!
