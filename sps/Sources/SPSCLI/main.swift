@@ -7,6 +7,7 @@ import CoreGraphics
 import CoreText
 #endif
 import ArgumentParser
+import Validation
 
 struct IndexDoc: Codable {
     var id: String
@@ -436,6 +437,9 @@ extension SPS {
         @Flag(name: [.customShort("e"), .long], help: "Include enum section")
         var enums: Bool = false
 
+        @Flag(name: [.customShort("v"), .long], help: "Run validation hooks and emit report JSON")
+        var validate: Bool = false
+
         func run() throws {
             let data = try Data(contentsOf: URL(fileURLWithPath: index))
             let index = try JSONDecoder().decode(IndexRoot.self, from: data)
@@ -457,6 +461,15 @@ extension SPS {
             let outData = try enc.encode(matrix)
             try outData.write(to: URL(fileURLWithPath: out))
             print("SPS: wrote matrix skeleton -> \(out)")
+            if validate {
+                let report = Validator.validate(matrixData: outData)
+                let reportURL = URL(fileURLWithPath: out + ".validation.json")
+                let reportEnc = JSONEncoder()
+                reportEnc.outputFormatting = [.prettyPrinted, .sortedKeys]
+                let reportData = try reportEnc.encode(report)
+                try reportData.write(to: reportURL)
+                print("SPS: validation report -> \(reportURL.path)")
+            }
         }
     }
 }
