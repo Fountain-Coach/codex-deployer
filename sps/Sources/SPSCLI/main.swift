@@ -4,6 +4,7 @@ import CryptoKit
 #endif
 #if os(macOS)
 import CoreGraphics
+import CoreText
 #endif
 import ArgumentParser
 
@@ -15,9 +16,18 @@ struct IndexDoc: Codable {
     var pages: [IndexPage]
 }
 
+struct TextLine: Codable {
+    var text: String
+    var x: Double
+    var y: Double
+    var width: Double
+    var height: Double
+}
+
 struct IndexPage: Codable {
     var number: Int
     var text: String
+    var lines: [TextLine]
 }
 
 struct IndexRoot: Codable {
@@ -38,37 +48,210 @@ func sha256Hex(data: Data) -> String {
 
 func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
     guard includeText else {
-        return [IndexPage(number: 1, text: "")]
+        return [IndexPage(number: 1, text: "", lines: [])]
     }
     #if os(macOS)
     guard let provider = CGDataProvider(data: data as CFData),
           let doc = CGPDFDocument(provider) else {
-        return [IndexPage(number: 1, text: "")]
+        return [IndexPage(number: 1, text: "", lines: [])]
     }
+
+    struct CharBox {
+        var text: String
+        var x: CGFloat
+        var y: CGFloat
+        var width: CGFloat
+        var height: CGFloat
+    }
+
+    struct ScanState {
+        var tm = CGAffineTransform.identity
+        var tlm = CGAffineTransform.identity
+        var leading: CGFloat = 0
+        var font: CTFont?
+        var fontSize: CGFloat = 0
+        var chars: [CharBox] = []
+        var fontsDict: CGPDFDictionaryRef?
+        var fontCache: [String: CTFont] = [:]
+
+        mutating func setFont(name: String, size: CGFloat) {
+            fontSize = size
+            if let cached = fontCache[name] {
+                font = CTFontCreateCopyWithAttributes(cached, size, nil, nil)
+                return
+            }
+            guard let fontsDict = fontsDict else { return }
+            var obj: CGPDFObjectRef?
+            guard CGPDFDictionaryGetObject(fontsDict, name, &obj) else { return }
+            var dict: CGPDFDictionaryRef?
+            guard CGPDFObjectGetValue(obj!, .dictionary, &dict), let fontDict = dict else { return }
+            var basePtr: UnsafePointer<Int8>?
+            guard CGPDFDictionaryGetName(fontDict, "BaseFont", &basePtr), let base = basePtr else { return }
+            let baseName = String(cString: base)
+            let ct = CTFontCreateWithName(baseName as CFString, size, nil)
+            fontCache[name] = ct
+            font = ct
+        }
+
+        mutating func show(_ string: String) {
+            guard let font = font else { return }
+            let charsArray = Array(string)
+            let utf16 = Array(string.utf16)
+            var glyphs = [CGGlyph](repeating: 0, count: utf16.count)
+            CTFontGetGlyphsForCharacters(font, utf16, &glyphs, utf16.count)
+            var advances = [CGSize](repeating: .zero, count: utf16.count)
+            CTFontGetAdvancesForGlyphs(font, .horizontal, glyphs, &advances, utf16.count)
+            for (idx, ch) in charsArray.enumerated() {
+                let adv = advances[idx].width
+                chars.append(CharBox(text: String(ch), x: tm.tx, y: tm.ty, width: adv, height: fontSize))
+                tm = tm.translatedBy(x: adv, y: 0)
+            }
+        }
+    }
+
     var pages: [IndexPage] = []
     for i in 1...doc.numberOfPages {
         guard let page = doc.page(at: i) else { continue }
+        var pageDict = CGPDFPageGetDictionary(page)
+        var resources: CGPDFDictionaryRef?
+        if let dict = pageDict {
+            CGPDFDictionaryGetDictionary(dict, "Resources", &resources)
+        }
+        var fontsDict: CGPDFDictionaryRef?
+        if let res = resources {
+            CGPDFDictionaryGetDictionary(res, "Font", &fontsDict)
+        }
+
+        var state = ScanState()
+        state.fontsDict = fontsDict
+
         let content = CGPDFContentStreamCreateWithPage(page)
-        var strings: [String] = []
         let table = CGPDFOperatorTableCreate()!
-        let callback: CGPDFOperatorCallback = { scanner, info in
-            guard let info = info?.assumingMemoryBound(to: [String].self) else { return }
-            var object: CGPDFObjectRef?
-            if CGPDFScannerPopObject(scanner, &object), let obj = object,
-               let str = cgpdfObjectToString(obj) {
-                info.pointee.append(str)
+
+        let Tj: CGPDFOperatorCallback = { scanner, info in
+            guard let info = info?.assumingMemoryBound(to: ScanState.self) else { return }
+            var strRef: CGPDFStringRef?
+            if CGPDFScannerPopString(scanner, &strRef), let s = strRef,
+               let cf = CGPDFStringCopyTextString(s) {
+                info.pointee.show(cf as String)
             }
         }
-        CGPDFOperatorTableSetCallback(table, "Tj", callback)
-        CGPDFOperatorTableSetCallback(table, "TJ", callback)
-        if let scanner = CGPDFScannerCreate(content, table, &strings) {
+
+        let TJ: CGPDFOperatorCallback = { scanner, info in
+            guard let info = info?.assumingMemoryBound(to: ScanState.self) else { return }
+            var arrayRef: CGPDFArrayRef?
+            if !CGPDFScannerPopArray(scanner, &arrayRef) { return }
+            let count = CGPDFArrayGetCount(arrayRef)
+            for idx in 0..<count {
+                var element: CGPDFObjectRef?
+                if !CGPDFArrayGetObject(arrayRef, idx, &element) { continue }
+                let type = CGPDFObjectGetType(element!)
+                if type == .string {
+                    if let str = cgpdfObjectToString(element!) {
+                        info.pointee.show(str)
+                    }
+                } else if type == .real || type == .integer {
+                    var val: CGPDFReal = 0
+                    CGPDFObjectGetValue(element!, .real, &val)
+                    info.pointee.tm.tx -= CGFloat(val) * info.pointee.fontSize / 1000
+                }
+            }
+        }
+
+        let Tf: CGPDFOperatorCallback = { scanner, info in
+            guard let info = info?.assumingMemoryBound(to: ScanState.self) else { return }
+            var size: CGPDFReal = 0
+            var namePtr: UnsafePointer<Int8>?
+            guard CGPDFScannerPopNumber(scanner, &size), CGPDFScannerPopName(scanner, &namePtr), let n = namePtr else { return }
+            let fontName = String(cString: n)
+            info.pointee.setFont(name: fontName, size: CGFloat(size))
+        }
+
+        let Td: CGPDFOperatorCallback = { scanner, info in
+            guard let info = info?.assumingMemoryBound(to: ScanState.self) else { return }
+            var ty: CGPDFReal = 0
+            var tx: CGPDFReal = 0
+            guard CGPDFScannerPopNumber(scanner, &ty), CGPDFScannerPopNumber(scanner, &tx) else { return }
+            info.pointee.tlm = info.pointee.tlm.translatedBy(x: CGFloat(tx), y: CGFloat(ty))
+            info.pointee.tm = info.pointee.tlm
+        }
+
+        let TD: CGPDFOperatorCallback = { scanner, info in
+            guard let info = info?.assumingMemoryBound(to: ScanState.self) else { return }
+            var ty: CGPDFReal = 0
+            var tx: CGPDFReal = 0
+            guard CGPDFScannerPopNumber(scanner, &ty), CGPDFScannerPopNumber(scanner, &tx) else { return }
+            info.pointee.leading = -CGFloat(ty)
+            info.pointee.tlm = info.pointee.tlm.translatedBy(x: CGFloat(tx), y: CGFloat(ty))
+            info.pointee.tm = info.pointee.tlm
+        }
+
+        let Tm: CGPDFOperatorCallback = { scanner, info in
+            guard let info = info?.assumingMemoryBound(to: ScanState.self) else { return }
+            var a: CGPDFReal = 0, b: CGPDFReal = 0, c: CGPDFReal = 0, d: CGPDFReal = 0, e: CGPDFReal = 0, f: CGPDFReal = 0
+            guard CGPDFScannerPopNumber(scanner, &f), CGPDFScannerPopNumber(scanner, &e),
+                  CGPDFScannerPopNumber(scanner, &d), CGPDFScannerPopNumber(scanner, &c),
+                  CGPDFScannerPopNumber(scanner, &b), CGPDFScannerPopNumber(scanner, &a) else { return }
+            let t = CGAffineTransform(a: CGFloat(a), b: CGFloat(b), c: CGFloat(c), d: CGFloat(d), tx: CGFloat(e), ty: CGFloat(f))
+            info.pointee.tlm = t
+            info.pointee.tm = t
+        }
+
+        let Tstar: CGPDFOperatorCallback = { _, info in
+            guard let info = info?.assumingMemoryBound(to: ScanState.self) else { return }
+            info.pointee.tlm = info.pointee.tlm.translatedBy(x: 0, y: -info.pointee.leading)
+            info.pointee.tm = info.pointee.tlm
+        }
+
+        CGPDFOperatorTableSetCallback(table, "Tj", Tj)
+        CGPDFOperatorTableSetCallback(table, "TJ", TJ)
+        CGPDFOperatorTableSetCallback(table, "Tf", Tf)
+        CGPDFOperatorTableSetCallback(table, "Td", Td)
+        CGPDFOperatorTableSetCallback(table, "TD", TD)
+        CGPDFOperatorTableSetCallback(table, "Tm", Tm)
+        CGPDFOperatorTableSetCallback(table, "T*", Tstar)
+
+        if let scanner = CGPDFScannerCreate(content, table, &state) {
             CGPDFScannerScan(scanner)
         }
-        pages.append(IndexPage(number: i, text: strings.joined(separator: " ")))
+
+        let epsilon: CGFloat = 2
+        let sortedChars = state.chars.sorted { (a, b) -> Bool in
+            if abs(a.y - b.y) > epsilon {
+                return a.y > b.y
+            }
+            return a.x < b.x
+        }
+
+        var lineGroups: [[CharBox]] = []
+        for ch in sortedChars {
+            if var last = lineGroups.last, abs(last.first!.y - ch.y) <= epsilon {
+                lineGroups[lineGroups.count - 1].append(ch)
+            } else {
+                lineGroups.append([ch])
+            }
+        }
+
+        var lines: [TextLine] = []
+        for group in lineGroups {
+            let text = group.map { $0.text }.joined()
+            let minX = group.map { $0.x }.min() ?? 0
+            let maxX = group.map { $0.x + $0.width }.max() ?? 0
+            let minY = group.map { $0.y }.min() ?? 0
+            let maxY = group.map { $0.y + $0.height }.max() ?? 0
+            lines.append(TextLine(text: text,
+                                  x: Double(minX),
+                                  y: Double(minY),
+                                  width: Double(maxX - minX),
+                                  height: Double(maxY - minY)))
+        }
+
+        let pageText = lines.map { $0.text }.joined(separator: "\n")
+        pages.append(IndexPage(number: i, text: pageText, lines: lines))
     }
     return pages
     #else
-    return [IndexPage(number: 1, text: "(text extraction unavailable)")]
+    return [IndexPage(number: 1, text: "(text extraction unavailable)", lines: [])]
     #endif
 }
 

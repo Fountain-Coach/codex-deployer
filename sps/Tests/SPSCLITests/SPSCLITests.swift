@@ -50,6 +50,20 @@ final class SPSCLITests: XCTestCase {
         XCTAssertEqual(index.documents.first?.pages.first?.text, "(text extraction unavailable)")
     }
 
+#if os(macOS)
+    func testExtractedCoordinates() throws {
+        let pdfData = Data(base64Encoded: samplePDFBase64)!
+        let pages = extractPages(data: pdfData, includeText: true)
+        XCTAssertEqual(pages.count, 1)
+        let line = pages.first?.lines.first
+        XCTAssertEqual(line?.text, "Hello")
+        XCTAssertEqual(line?.x, 72, accuracy: 0.1)
+        XCTAssertEqual(line?.y, 120, accuracy: 0.1)
+        XCTAssertEqual(line?.height, 24, accuracy: 0.1)
+        XCTAssertGreaterThan(line!.width, 50)
+    }
+#endif
+
     func testScanWithoutIncludeTextEmpty() throws {
         let pdfData = Data(base64Encoded: samplePDFBase64)!
         let tempDir = FileManager.default.temporaryDirectory
@@ -116,9 +130,9 @@ final class SPSCLITests: XCTestCase {
         let tempDir = FileManager.default.temporaryDirectory
         let indexURL = tempDir.appendingPathComponent("range-index.json")
         let pages = [
-            IndexPage(number: 1, text: "hit"),
-            IndexPage(number: 2, text: "hit"),
-            IndexPage(number: 3, text: "hit")
+            IndexPage(number: 1, text: "hit", lines: []),
+            IndexPage(number: 2, text: "hit", lines: []),
+            IndexPage(number: 3, text: "hit", lines: [])
         ]
         let doc = IndexDoc(id: "1", fileName: "dummy", size: 0, sha256: nil, pages: pages)
         let index = IndexRoot(documents: [doc])
@@ -171,7 +185,7 @@ final class SPSCLITests: XCTestCase {
     func testExportMatrixDeterministic() throws {
         let tempDir = FileManager.default.temporaryDirectory
         let indexPath = tempDir.appendingPathComponent("index.json")
-        let page = IndexPage(number: 1, text: "Test Message and Term line")
+        let page = IndexPage(number: 1, text: "Test Message and Term line", lines: [])
         let doc = IndexDoc(id: "1", fileName: "dummy", size: 0, sha256: nil, pages: [page])
         let index = IndexRoot(documents: [doc])
         let enc = JSONEncoder()
