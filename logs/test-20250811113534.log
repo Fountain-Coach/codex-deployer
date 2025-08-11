@@ -1,0 +1,35 @@
+Test Suite 'All tests' started at 2025-08-11 11:35:41.244
+Test Suite 'debug.xctest' started at 2025-08-11 11:35:41.249
+Test Suite 'SPSCLITests' started at 2025-08-11 11:35:41.249
+Test Case 'SPSCLITests.testExportMatrixDeterministic' started at 2025-08-11 11:35:41.249
+SPS: wrote matrix skeleton -> /tmp/matrix.json
+Test Case 'SPSCLITests.testExportMatrixDeterministic' passed (0.018 seconds)
+Test Case 'SPSCLITests.testIncludeTextUsesStubOnLinux' started at 2025-08-11 11:35:41.267
+SPS: wrote index -> /tmp/out.json (502 bytes, 2 doc(s))
+Test Case 'SPSCLITests.testIncludeTextUsesStubOnLinux' passed (0.004 seconds)
+Test Case 'SPSCLITests.testIndexValidateOutputsOK' started at 2025-08-11 11:35:41.271
+SPS: wrote index -> /tmp/index.json (446 bytes, 2 doc(s))
+{ "ok": true, "issues": [] }
+Test Case 'SPSCLITests.testIndexValidateOutputsOK' passed (0.004 seconds)
+Test Case 'SPSCLITests.testQueryReturnsDeterministicHits' started at 2025-08-11 11:35:41.275
+SPS: wrote index -> /tmp/index.json (504 bytes, 2 doc(s))
+Test Case 'SPSCLITests.testQueryReturnsDeterministicHits' passed (0.004 seconds)
+Test Case 'SPSCLITests.testSHA256FallbackDeterministic' started at 2025-08-11 11:35:41.279
+Test Case 'SPSCLITests.testSHA256FallbackDeterministic' passed (0.001 seconds)
+Test Case 'SPSCLITests.testScanProducesDeterministicJSONAndSHA' started at 2025-08-11 11:35:41.280
+SPS: wrote index -> /tmp/out.json (530 bytes, 2 doc(s))
+Test Case 'SPSCLITests.testScanProducesDeterministicJSONAndSHA' passed (0.005 seconds)
+Test Case 'SPSCLITests.testScanWithoutIncludeTextEmpty' started at 2025-08-11 11:35:41.285
+SPS: wrote index -> /tmp/out2.json (445 bytes, 2 doc(s))
+Test Case 'SPSCLITests.testScanWithoutIncludeTextEmpty' passed (0.004 seconds)
+Test Suite 'SPSCLITests' passed at 2025-08-11 11:35:41.289
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.04 (0.04) seconds
+Test Suite 'debug.xctest' passed at 2025-08-11 11:35:41.289
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.04 (0.04) seconds
+Test Suite 'All tests' passed at 2025-08-11 11:35:41.289
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.04 (0.04) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.1 (43b6f88e2f2712e)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests passed after 0.001 seconds.
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

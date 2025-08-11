@@ -13,7 +13,8 @@ let package = Package(
         .executableTarget(
             name: "SPSCLI",
             path: "Sources/SPSCLI",
-            resources: [.process("Resources")]
+            exclude: ["Resources"],
+            resources: []
         ),
         .testTarget(
             name: "SPSCLITests",
@@ -22,3 +23,5 @@ let package = Package(
         )
     ]
 )
+
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
