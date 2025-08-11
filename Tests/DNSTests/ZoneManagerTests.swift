@@ -16,8 +16,8 @@ final class ZoneManagerTests: XCTestCase {
         let yaml = try YAMLEncoder().encode([zone.id: zone])
         try yaml.write(to: file, atomically: true, encoding: .utf8)
         let manager = try ZoneManager(fileURL: file)
-        let ip = await manager.ip(for: "example.com")
-        XCTAssertEqual(ip, "1.2.3.4")
+        let fetched = await manager.record(name: "example.com", type: "A")
+        XCTAssertEqual(fetched?.value, "1.2.3.4")
     }
 
     func testPersistsUpdatesToDisk() async throws {
@@ -57,8 +57,8 @@ final class ZoneManagerTests: XCTestCase {
         let yaml = try YAMLEncoder().encode([zone.id: newZone])
         try yaml.write(to: file, atomically: true, encoding: .utf8)
         await manager.reload()
-        let ip = await manager.ip(for: "example.com")
-        XCTAssertEqual(ip, "2.2.2.2")
+        let fetched = await manager.record(name: "example.com", type: "A")
+        XCTAssertEqual(fetched?.value, "2.2.2.2")
     }
 
     func testSetCommitsChangesToGit() async throws {
@@ -85,6 +85,27 @@ final class ZoneManagerTests: XCTestCase {
         logTask.waitUntilExit()
         let output = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
         XCTAssertTrue(output.contains("Update zone file"))
+    }
+}
+
+final class ZoneManagerRecordTypeTests: XCTestCase {
+    func temporaryFile() -> URL {
+        FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    }
+
+    func testRetrievesRecordsByType() async throws {
+        let file = temporaryFile()
+        let manager = try ZoneManager(fileURL: file)
+        let zone = try await manager.createZone(name: "example.com")
+        _ = try await manager.createRecord(zoneId: zone.id, name: "", type: "A", value: "1.1.1.1")
+        _ = try await manager.createRecord(zoneId: zone.id, name: "", type: "AAAA", value: "2001:db8::1")
+        _ = try await manager.createRecord(zoneId: zone.id, name: "alias", type: "CNAME", value: "example.com")
+        let a = await manager.record(name: "example.com", type: "A")
+        let aaaa = await manager.record(name: "example.com", type: "AAAA")
+        let cname = await manager.record(name: "alias.example.com", type: "CNAME")
+        XCTAssertEqual(a?.value, "1.1.1.1")
+        XCTAssertEqual(aaaa?.value, "2001:db8::1")
+        XCTAssertEqual(cname?.value, "example.com")
     }
 }
 
