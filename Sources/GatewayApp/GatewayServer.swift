@@ -45,10 +45,11 @@ public final class GatewayServer {
 
     /// Route description used for management operations.
     private struct RouteInfo: Codable {
+        enum Method: String, Codable, CaseIterable { case GET, POST, PUT, PATCH, DELETE }
         let id: String
         var path: String
         var target: String
-        var methods: [String]
+        var methods: [Method]
         var rateLimit: Int?
         var proxyEnabled: Bool?
     }
@@ -195,9 +196,10 @@ public final class GatewayServer {
 
         func stats() -> (allowed: Int, throttled: Int) { (allowed, throttled) }
 
-        func allow(routeId: String, limitPerSecond: Int) -> Bool {
+        func allow(routeId: String, limitPerMinute: Int) -> Bool {
+            let ratePerSecond = Double(limitPerMinute) / 60.0
             let now = Date().timeIntervalSince1970
-            var bucket = buckets[routeId] ?? Bucket(tokens: Double(limitPerSecond), lastRefill: now, capacity: Double(limitPerSecond), rate: Double(limitPerSecond))
+            var bucket = buckets[routeId] ?? Bucket(tokens: Double(limitPerMinute), lastRefill: now, capacity: Double(limitPerMinute), rate: ratePerSecond)
             let elapsed = max(0, now - bucket.lastRefill)
             bucket.tokens = min(bucket.capacity, bucket.tokens + elapsed * bucket.rate)
             bucket.lastRefill = now
@@ -222,10 +224,11 @@ public final class GatewayServer {
     private func tryProxy(_ request: HTTPRequest) async throws -> HTTPResponse? {
         // Extract path without query for matching
         let pathOnly = request.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? request.path
+        guard let reqMethod = RouteInfo.Method(rawValue: request.method) else { return nil }
         // Choose the longest matching path prefix among routes
         let candidates = routes.values
             .filter { route in
-                (route.methods.isEmpty || route.methods.contains(request.method)) &&
+                (route.methods.isEmpty || route.methods.contains(reqMethod)) &&
                 ((route.proxyEnabled ?? true) == true) &&
                 (pathOnly == route.path || pathOnly.hasPrefix(route.path.hasSuffix("/") ? route.path : route.path + "/"))
             }
@@ -234,7 +237,7 @@ public final class GatewayServer {
 
         // Rate limit if configured
         if let limit = route.rateLimit, limit > 0 {
-            if !rateLimiter.allow(routeId: route.id, limitPerSecond: limit) {
+            if !rateLimiter.allow(routeId: route.id, limitPerMinute: limit) {
                 return HTTPResponse(status: 429, headers: ["Content-Type": "text/plain"], body: Data("too many requests".utf8))
             }
         }
@@ -342,6 +345,9 @@ public final class GatewayServer {
     public func createRoute(_ request: HTTPRequest) -> HTTPResponse {
         do {
             let info = try JSONDecoder().decode(RouteInfo.self, from: request.body)
+            if !info.methods.allSatisfy({ RouteInfo.Method.allCases.contains($0) }) {
+                return HTTPResponse(status: 400)
+            }
             if self.routes[info.id] == nil {
                 self.routes[info.id] = info
                 self.persistRoutes()
@@ -364,6 +370,9 @@ public final class GatewayServer {
         }
         do {
             let info = try JSONDecoder().decode(RouteInfo.self, from: request.body)
+            guard info.methods.allSatisfy({ RouteInfo.Method.allCases.contains($0) }) else {
+                return HTTPResponse(status: 400)
+            }
             let updated = RouteInfo(id: routeId, path: info.path, target: info.target, methods: info.methods, rateLimit: info.rateLimit, proxyEnabled: info.proxyEnabled)
             self.routes[routeId] = updated
             self.persistRoutes()
