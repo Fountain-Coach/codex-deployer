@@ -393,6 +393,38 @@ final class GatewayServerTests: XCTestCase {
     }
 
     @MainActor
+    /// Proxy routes should forward the full query string to the upstream.
+    func testProxyRoutePropagatesQuery() async throws {
+        let upstreamKernel = HTTPKernel { req in
+            HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: Data(req.path.utf8))
+        }
+        let upstream = NIOHTTPServer(kernel: upstreamKernel)
+        let upstreamPort = try await upstream.start(port: 0)
+
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9121) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int?; var proxyEnabled: Bool? }
+        var create = URLRequest(url: URL(string: "http://127.0.0.1:9121/routes")!)
+        create.httpMethod = "POST"
+        create.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let route = Route(id: "q1", path: "/q", target: "http://127.0.0.1:\(upstreamPort)/q", methods: ["GET"], rateLimit: nil, proxyEnabled: true)
+        create.httpBody = try JSONEncoder().encode(route)
+        _ = try await URLSession.shared.data(for: create)
+
+        let url = URL(string: "http://127.0.0.1:9121/q/item?foo=bar&baz=1")!
+        let (data, response) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 200)
+        let body = String(decoding: data, as: UTF8.self)
+        XCTAssertEqual(body, "/q/item?foo=bar&baz=1")
+
+        try await upstream.stop()
+        try await server.stop()
+    }
+
+    @MainActor
     func testProxyRateLimitEnforced() async throws {
         let upstreamKernel = HTTPKernel { _ in HTTPResponse(status: 200) }
         let upstream = NIOHTTPServer(kernel: upstreamKernel)
@@ -480,6 +512,38 @@ final class GatewayServerTests: XCTestCase {
         let url = URL(string: "http://127.0.0.1:9117/off/anything")!
         let (_, response) = try await URLSession.shared.data(from: url)
         XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 404)
+
+        try await server.stop()
+        try await upstream.stop()
+    }
+
+    @MainActor
+    /// Non-proxy routes should not forward requests and always return 404.
+    func testNonProxyRouteRejectsRequests() async throws {
+        let upstreamKernel = HTTPKernel { _ in HTTPResponse(status: 200) }
+        let upstream = NIOHTTPServer(kernel: upstreamKernel)
+        _ = try await upstream.start(port: 0)
+
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9122) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int?; var proxyEnabled: Bool? }
+        var create = URLRequest(url: URL(string: "http://127.0.0.1:9122/routes")!)
+        create.httpMethod = "POST"
+        create.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let route = Route(id: "np1", path: "/exact", target: "http://127.0.0.1:9/exact", methods: ["GET"], rateLimit: nil, proxyEnabled: false)
+        create.httpBody = try JSONEncoder().encode(route)
+        _ = try await URLSession.shared.data(for: create)
+
+        let exactURL = URL(string: "http://127.0.0.1:9122/exact")!
+        let (_, respExact) = try await URLSession.shared.data(from: exactURL)
+        XCTAssertEqual((respExact as? HTTPURLResponse)?.statusCode, 404)
+
+        let subURL = URL(string: "http://127.0.0.1:9122/exact/other")!
+        let (_, respSub) = try await URLSession.shared.data(from: subURL)
+        XCTAssertEqual((respSub as? HTTPURLResponse)?.statusCode, 404)
 
         try await server.stop()
         try await upstream.stop()
