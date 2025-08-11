@@ -2,6 +2,9 @@ import Foundation
 #if canImport(CryptoKit)
 import CryptoKit
 #endif
+#if os(macOS)
+import CoreGraphics
+#endif
 
 enum SPSCommand: String {
     case scan, index, query, exportMatrix = "export-matrix", help
@@ -23,14 +26,15 @@ struct IndexRoot: Codable {
 }
 
 func usage(_ code: Int32 = 2) -> Never {
-    fputs("""
+    let msg = """
 Usage:
   sps scan <pdf...> --out <index.json> [--include-text] [--sha256]
   sps index validate <index.json>
   sps query <index.json> --q "<term>" [--page-range A-B]
   sps export-matrix <index.json> --out spec/matrix.json
 
-""", stderr)
+"""
+    FileHandle.standardError.write(msg.data(using: .utf8)!)
     exit(code)
 }
 
@@ -54,6 +58,70 @@ func sha256Hex(data: Data) -> String {
     #endif
 }
 
+func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
+    guard includeText else {
+        return [IndexPage(number: 1, text: "")]
+    }
+    #if os(macOS)
+    guard let provider = CGDataProvider(data: data as CFData),
+          let doc = CGPDFDocument(provider) else {
+        return [IndexPage(number: 1, text: "")]
+    }
+    var pages: [IndexPage] = []
+    for i in 1...doc.numberOfPages {
+        guard let page = doc.page(at: i) else { continue }
+        let content = CGPDFContentStreamCreateWithPage(page)
+        var strings: [String] = []
+        let table = CGPDFOperatorTableCreate()!
+        let callback: CGPDFOperatorCallback = { scanner, info in
+            guard let info = info?.assumingMemoryBound(to: [String].self) else { return }
+            var object: CGPDFObjectRef?
+            if CGPDFScannerPopObject(scanner, &object), let obj = object,
+               let str = cgpdfObjectToString(obj) {
+                info.pointee.append(str)
+            }
+        }
+        CGPDFOperatorTableSetCallback(table, "Tj", callback)
+        CGPDFOperatorTableSetCallback(table, "TJ", callback)
+        if let scanner = CGPDFScannerCreate(content, table, &strings) {
+            CGPDFScannerScan(scanner)
+        }
+        pages.append(IndexPage(number: i, text: strings.joined(separator: " ")))
+    }
+    return pages
+    #else
+    return [IndexPage(number: 1, text: "(text extraction unavailable)")]
+    #endif
+}
+
+#if os(macOS)
+private func cgpdfObjectToString(_ object: CGPDFObjectRef) -> String? {
+    let type = CGPDFObjectGetType(object)
+    if type == .string {
+        var stringRef: CGPDFStringRef?
+        if CGPDFObjectGetValue(object, .string, &stringRef), let s = stringRef,
+           let cfStr = CGPDFStringCopyTextString(s) {
+            return cfStr as String
+        }
+    } else if type == .array {
+        var arrayRef: CGPDFArrayRef?
+        if CGPDFObjectGetValue(object, .array, &arrayRef), let arr = arrayRef {
+            var texts: [String] = []
+            let count = CGPDFArrayGetCount(arr)
+            for idx in 0..<count {
+                var element: CGPDFObjectRef?
+                if CGPDFArrayGetObject(arr, idx, &element), let e = element,
+                   let str = cgpdfObjectToString(e) {
+                    texts.append(str)
+                }
+            }
+            return texts.joined()
+        }
+    }
+    return nil
+}
+#endif
+
 func cmdScan(_ argv: [String]) throws {
     guard let out = argVal("--out", argv) else { usage() }
     let includeText = hasFlag("--include-text", argv) || hasFlag("--includeText", argv)
@@ -65,9 +133,8 @@ func cmdScan(_ argv: [String]) throws {
     for path in pdfs {
         let url = URL(fileURLWithPath: path)
         let data = (try? Data(contentsOf: url)) ?? Data()
-        let text = includeText ? "(text extraction TBD for \(url.lastPathComponent))" : ""
+        let pages = extractPages(data: data, includeText: includeText)
         let sha = wantSHA ? sha256Hex(data: data) : nil
-        let pages = [IndexPage(number: 1, text: text)]
         let doc = IndexDoc(id: UUID().uuidString, fileName: url.lastPathComponent, size: data.count, sha256: sha, pages: pages)
         docs.append(doc)
     }
@@ -143,3 +210,5 @@ case SPSCommand.help.rawValue, "--help", "-h":
 default:
     usage()
 }
+
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
