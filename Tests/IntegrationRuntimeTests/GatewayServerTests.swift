@@ -588,6 +588,43 @@ final class GatewayServerTests: XCTestCase {
 
         try await serverB.stop()
     }
+
+    @MainActor
+    func testReloadRoutesEndpointReloadsFromDisk() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let file = dir.appendingPathComponent("routes.json")
+
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [], zoneManager: nil, routeStoreURL: file)
+        Task { try await server.start(port: 9124) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int?; var proxyEnabled: Bool? }
+
+        var create = URLRequest(url: URL(string: "http://127.0.0.1:9124/routes")!)
+        create.httpMethod = "POST"
+        create.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let r1 = Route(id: "r1", path: "/one", target: "http://u/one", methods: ["GET"], rateLimit: nil, proxyEnabled: true)
+        create.httpBody = try JSONEncoder().encode(r1)
+        _ = try await URLSession.shared.data(for: create)
+
+        let r2 = Route(id: "r2", path: "/two", target: "http://u/two", methods: ["GET"], rateLimit: nil, proxyEnabled: true)
+        let data = try JSONEncoder().encode([r2])
+        try data.write(to: file, options: .atomic)
+
+        var reload = URLRequest(url: URL(string: "http://127.0.0.1:9124/routes/reload")!)
+        reload.httpMethod = "POST"
+        let (_, resp) = try await URLSession.shared.data(for: reload)
+        XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 204)
+
+        let (listData, _) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:9124/routes")!)
+        let list = try JSONDecoder().decode([Route].self, from: listData)
+        XCTAssertEqual(list.count, 1)
+        XCTAssertEqual(list.first?.id, "r2")
+
+        try await server.stop()
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
