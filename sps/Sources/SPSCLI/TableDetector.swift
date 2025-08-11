@@ -7,6 +7,27 @@ struct MatrixEntry: Codable {
     var y: Int
 }
 
+struct BitField: Codable {
+    var name: String
+    var bits: [Int]
+}
+
+struct RangeSpec: Codable {
+    var field: String
+    var min: Int
+    var max: Int
+}
+
+struct EnumCase: Codable {
+    var name: String
+    var value: Int
+}
+
+struct EnumSpec: Codable {
+    var field: String
+    var cases: [EnumCase]
+}
+
 struct TableCell: Codable {
     var row: Int
     var column: Int

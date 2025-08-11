@@ -427,15 +427,31 @@ extension SPS {
         @Option(name: .shortAndLong, help: "Output path for matrix JSON")
         var out: String
 
+        @Flag(name: [.customShort("b"), .long], help: "Include bitfield section")
+        var bitfields: Bool = false
+
+        @Flag(name: [.customShort("r"), .long], help: "Include range section")
+        var ranges: Bool = false
+
+        @Flag(name: [.customShort("e"), .long], help: "Include enum section")
+        var enums: Bool = false
+
         func run() throws {
             let data = try Data(contentsOf: URL(fileURLWithPath: index))
             let index = try JSONDecoder().decode(IndexRoot.self, from: data)
             let detected = TableDetector.detect(from: index)
             struct Matrix: Codable {
+                var schemaVersion: String
                 var messages: [MatrixEntry]
                 var terms: [MatrixEntry]
+                var bitfields: [BitField]?
+                var ranges: [RangeSpec]?
+                var enums: [EnumSpec]?
             }
-            let matrix = Matrix(messages: detected.messages, terms: detected.terms)
+            var matrix = Matrix(schemaVersion: "2.0", messages: detected.messages, terms: detected.terms)
+            if bitfields { matrix.bitfields = [] }
+            if ranges { matrix.ranges = [] }
+            if enums { matrix.enums = [] }
             let enc = JSONEncoder()
             enc.outputFormatting = [.prettyPrinted, .sortedKeys]
             let outData = try enc.encode(matrix)
