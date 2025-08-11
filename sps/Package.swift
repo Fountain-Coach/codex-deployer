@@ -9,9 +9,15 @@ let package = Package(
     products: [
         .executable(name: "sps", targets: ["SPSCLI"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.2.0"),
+    ],
     targets: [
         .executableTarget(
             name: "SPSCLI",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser")
+            ],
             path: "Sources/SPSCLI",
             exclude: ["Resources"],
             resources: []
