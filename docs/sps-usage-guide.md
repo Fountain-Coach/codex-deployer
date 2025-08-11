@@ -1,0 +1,28 @@
+# SPS Usage Guide
+
+This guide demonstrates end-to-end workflows with the Semantic PDF Scanner CLI, including page range queries and validation hooks.
+
+## 1. Scan PDFs into an index
+```bash
+swift build -c release
+.build/release/sps scan sps/Samples/extraction_sample.pdf sps/Samples/table_detection_sample.pdf --out index.json --include-text --page-range 1-2
+```
+
+## 2. Validate the generated index
+```bash
+.build/release/sps index validate index.json
+```
+
+## 3. Query the index with page ranges
+```bash
+.build/release/sps query index.json --q "annotated" --page-range 1
+```
+
+## 4. Export a matrix with validation hooks
+```bash
+.build/release/sps export-matrix index.json --out matrix.json --validate
+```
+The `--page-range` flag accepts comma-separated ranges such as `1-3,5`,
+while `--validate` emits `matrix.json.validation.json` summarizing coverage and reserved-bit checks.
+
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
