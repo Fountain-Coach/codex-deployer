@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Semantic PDF Scanner (SPS)
-  version: 0.1.0
+  version: 0.1.1
   description: Swift CLI parity API for Fountain tools-factory integration.
 paths:
   /scan:
@@ -139,7 +139,22 @@ components:
       properties:
         messages:
           type: array
-          items: { type: object }
+          items:
+            $ref: '#/components/schemas/MatrixEntry'
         terms:
           type: array
-          items: { type: object }
+          items:
+            $ref: '#/components/schemas/MatrixEntry'
+    MatrixEntry:
+      type: object
+      required: [text, page, x, y]
+      properties:
+        text: { type: string }
+        page: { type: integer }
+        x:
+          type: integer
+          description: X coordinate (placeholder)
+        y:
+          type: integer
+          description: Y coordinate (placeholder)
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
