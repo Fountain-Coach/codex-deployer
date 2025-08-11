@@ -9,7 +9,7 @@ import Darwin
 #endif
 
 /// Minimal DNS engine capable of parsing A, AAAA and CNAME record queries and responding from an in-memory zone cache.
-public struct DNSEngine {
+public struct DNSEngine: Sendable {
     public struct Record: Sendable {
         public let name: String
         public let type: String
@@ -64,6 +64,17 @@ public struct DNSEngine {
         }
         self.zoneCache = NIOLockedValueBox(cache)
         self.signer = signer
+        let cacheBox = self.zoneCache
+        Task {
+            for await records in zoneManager.updates {
+                cacheBox.withLockedValue { cache in
+                    cache.removeAll()
+                    for (key, record) in records {
+                        cache[Key(name: key.name, type: key.type)] = Record(name: key.name, type: record.type, value: record.value)
+                    }
+                }
+            }
+        }
     }
 
     /// Updates or inserts a record in the zone cache.

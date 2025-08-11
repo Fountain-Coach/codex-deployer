@@ -1,6 +1,6 @@
 import NIOCore
 
-final class DNSHandler: ChannelInboundHandler {
+final class DNSHandler: ChannelInboundHandler, @unchecked Sendable {
     typealias InboundIn = ByteBuffer
     typealias OutboundOut = ByteBuffer
 
