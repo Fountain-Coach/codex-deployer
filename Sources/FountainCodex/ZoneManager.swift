@@ -37,6 +37,8 @@ public actor ZoneManager {
     private var timer: DispatchSourceTimer?
     private var lastModified: Date
     private let enableGitCommits: Bool
+    private let updateContinuation: AsyncStream<[RecordKey: Record]>.Continuation
+    public nonisolated let updates: AsyncStream<[RecordKey: Record]>
 
     /// Loads the zone cache from the provided YAML file if it exists.
     /// - Parameters:
@@ -46,6 +48,9 @@ public actor ZoneManager {
         self.fileURL = fileURL
         self.signer = signer
         self.enableGitCommits = enableGitCommits
+        var continuation: AsyncStream<[RecordKey: Record]>.Continuation!
+        self.updates = AsyncStream { continuation = $0 }
+        self.updateContinuation = continuation
         if let data = try? Data(contentsOf: fileURL),
            let string = String(data: data, encoding: .utf8),
            let loaded = try? YAMLDecoder().decode([UUID: Zone].self, from: string) {
@@ -55,6 +60,14 @@ public actor ZoneManager {
         }
         let attrs = try? FileManager.default.attributesOfItem(atPath: fileURL.path)
         self.lastModified = (attrs?[.modificationDate] as? Date) ?? Date()
+        var map: [RecordKey: Record] = [:]
+        for zone in zones.values {
+            for record in zone.records.values {
+                let fqdn = record.name.isEmpty ? zone.name : "\(record.name).\(zone.name)"
+                map[RecordKey(name: fqdn, type: record.type)] = record
+            }
+        }
+        updateContinuation.yield(map)
         Task { await self.startWatching() }
     }
 
@@ -133,6 +146,8 @@ public actor ZoneManager {
         if enableGitCommits {
             gitCommit(message: "Update zone file")
         }
+        let snapshot = allRecords()
+        updateContinuation.yield(snapshot)
     }
 
     /// Reloads the zone cache from disk when the file has changed.
@@ -145,6 +160,8 @@ public actor ZoneManager {
            let loaded = try? YAMLDecoder().decode([UUID: Zone].self, from: string) {
             zones = loaded
             lastModified = mod
+            let snapshot = allRecords()
+            updateContinuation.yield(snapshot)
         }
     }
 
