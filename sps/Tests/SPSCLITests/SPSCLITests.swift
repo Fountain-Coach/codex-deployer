@@ -199,8 +199,31 @@ final class SPSCLITests: XCTestCase {
         let obj = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
         let msgs = obj["messages"] as? [[String: Any]]
         let terms = obj["terms"] as? [[String: Any]]
+        XCTAssertEqual(obj["schemaVersion"] as? String, "2.0")
+        XCTAssertNil(obj["bitfields"])
+        XCTAssertNil(obj["ranges"])
+        XCTAssertNil(obj["enums"])
         XCTAssertEqual(msgs?.count, 1)
         XCTAssertEqual(terms?.count, 1)
+    }
+
+    func testExportMatrixWithOptions() throws {
+        let tempDir = FileManager.default.temporaryDirectory
+        let indexPath = tempDir.appendingPathComponent("index.json")
+        let page = IndexPage(number: 1, text: "line", lines: [])
+        let doc = IndexDoc(id: "1", fileName: "dummy", size: 0, sha256: nil, pages: [page])
+        let index = IndexRoot(documents: [doc])
+        let enc = JSONEncoder()
+        enc.outputFormatting = [.prettyPrinted, .sortedKeys]
+        try enc.encode(index).write(to: indexPath)
+        let outURL = tempDir.appendingPathComponent("matrix.json")
+        let cmd = try SPS.ExportMatrix.parse([indexPath.path, "--out", outURL.path, "--bitfields", "--ranges", "--enums"])
+        try cmd.run()
+        let data = try Data(contentsOf: outURL)
+        let obj = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+        XCTAssertNotNil(obj["bitfields"])
+        XCTAssertNotNil(obj["ranges"])
+        XCTAssertNotNil(obj["enums"])
     }
 }
 
