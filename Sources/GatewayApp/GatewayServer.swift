@@ -76,11 +76,7 @@ public final class GatewayServer {
         self.server = NIOHTTPServer(kernel: HTTPKernel { _ in HTTPResponse(status: 500) }, group: group)
         self.rateLimiter = RateLimiter()
         // Load persisted routes if configured
-        if let url = routeStoreURL, let data = try? Data(contentsOf: url) {
-            if let loaded = try? JSONDecoder().decode([RouteInfo].self, from: data) {
-                self.routes = Dictionary(uniqueKeysWithValues: loaded.map { ($0.id, $0) })
-            }
-        }
+        self.reloadRoutes()
         let kernel = HTTPKernel { [plugins, zoneManager, self] req in
             var request = req
             for plugin in plugins {
@@ -103,6 +99,9 @@ public final class GatewayServer {
                 response = self.listRoutes()
             case ("POST", ["routes"]):
                 response = self.createRoute(request)
+            case ("POST", ["routes", "reload"]):
+                self.reloadRoutes()
+                response = HTTPResponse(status: 204)
             case ("PUT", let seg) where seg.count == 2 && seg[0] == "routes":
                 let id = String(seg[1])
                 response = self.updateRoute(id, request: request)
@@ -379,10 +378,28 @@ public final class GatewayServer {
         do {
             let list = Array(self.routes.values)
             let data = try JSONEncoder().encode(list)
-            try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
-            try data.write(to: url)
+            let dir = url.deletingLastPathComponent()
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            let temp = dir.appendingPathComponent(UUID().uuidString)
+            try data.write(to: temp)
+            if FileManager.default.fileExists(atPath: url.path) {
+                _ = try FileManager.default.replaceItemAt(url, withItemAt: temp)
+            } else {
+                try FileManager.default.moveItem(at: temp, to: url)
+            }
         } catch {
             FileHandle.standardError.write(Data("[gateway] Warning: failed to persist routes to \(url.path): \(error)\n".utf8))
+        }
+    }
+
+    public func reloadRoutes() {
+        guard let url = routesURL else { return }
+        do {
+            let data = try Data(contentsOf: url)
+            let loaded = try JSONDecoder().decode([RouteInfo].self, from: data)
+            self.routes = Dictionary(uniqueKeysWithValues: loaded.map { ($0.id, $0) })
+        } catch {
+            FileHandle.standardError.write(Data("[gateway] Warning: failed to reload routes from \(url.path): \(error)\n".utf8))
         }
     }
 
