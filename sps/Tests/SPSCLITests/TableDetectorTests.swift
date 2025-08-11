@@ -23,6 +23,23 @@ final class TableDetectorTests: XCTestCase {
         let present = table.cells.first { $0.row == 0 && $0.column == 0 }
         XCTAssertEqual(present?.text, "A")
     }
+
+    func testDetectTablesEmptyInputReturnsNoTables() throws {
+        let index = IndexRoot(documents: [])
+        XCTAssertTrue(TableDetector.detectTables(from: index).isEmpty)
+    }
+
+    func testDetectTablesSingleCell() throws {
+        let lines = [TextLine(text: "A", x: 1, y: 1, width: 1, height: 1)]
+        let page = IndexPage(number: 1, text: "", lines: lines)
+        let doc = IndexDoc(id: "1", fileName: "one.pdf", size: 0, sha256: nil, pages: [page])
+        let index = IndexRoot(documents: [doc])
+        let tables = TableDetector.detectTables(from: index, threshold: 1.0)
+        XCTAssertEqual(tables.count, 1)
+        XCTAssertEqual(tables.first?.rows, 1)
+        XCTAssertEqual(tables.first?.columns, 1)
+        XCTAssertEqual(tables.first?.cells.first?.text, "A")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
