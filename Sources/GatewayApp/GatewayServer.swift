@@ -191,6 +191,10 @@ public final class GatewayServer {
     private final class RateLimiter {
         private struct Bucket { var tokens: Double; var lastRefill: TimeInterval; let capacity: Double; let rate: Double }
         private var buckets: [String: Bucket] = [:]
+        private var allowed = 0
+        private var throttled = 0
+
+        func stats() -> (allowed: Int, throttled: Int) { (allowed, throttled) }
 
         func allow(routeId: String, limitPerSecond: Int) -> Bool {
             let now = Date().timeIntervalSince1970
@@ -201,9 +205,13 @@ public final class GatewayServer {
             if bucket.tokens >= 1.0 {
                 bucket.tokens -= 1.0
                 buckets[routeId] = bucket
+                allowed += 1
+                Task { await DNSMetrics.shared.recordRateLimit(allowed: true) }
                 return true
             }
             buckets[routeId] = bucket
+            throttled += 1
+            Task { await DNSMetrics.shared.recordRateLimit(allowed: false) }
             return false
         }
     }
@@ -245,7 +253,7 @@ public final class GatewayServer {
         }
         if let query, !query.isEmpty { urlString += "?" + query }
         guard let url = URL(string: urlString), url.scheme != nil else { return HTTPResponse(status: 502) }
-        fputs("[gateway] proxy -> \(url.absoluteString)\n", stderr)
+        FileHandle.standardError.write(Data("[gateway] proxy -> \(url.absoluteString)\n".utf8))
 
         var upstream = URLRequest(url: url)
         upstream.httpMethod = request.method
@@ -374,7 +382,7 @@ public final class GatewayServer {
             try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
             try data.write(to: url)
         } catch {
-            fputs("[gateway] Warning: failed to persist routes to \(url.path): \(error)\n", stderr)
+            FileHandle.standardError.write(Data("[gateway] Warning: failed to persist routes to \(url.path): \(error)\n".utf8))
         }
     }
 

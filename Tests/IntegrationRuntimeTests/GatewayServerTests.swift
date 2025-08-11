@@ -358,7 +358,7 @@ final class GatewayServerTests: XCTestCase {
     func testProxyRoutesForwardToUpstream() async throws {
         // Start upstream server returning a known payload
         let upstreamKernel = HTTPKernel { req in
-            let body = Data("upstream:\\(req.path)".utf8)
+            let body = Data("upstream:\(req.path)".utf8)
             return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain", "X-Upstream": "yes"], body: body)
         }
         let upstream = NIOHTTPServer(kernel: upstreamKernel)
@@ -384,7 +384,7 @@ final class GatewayServerTests: XCTestCase {
         let (data, response) = try await URLSession.shared.data(from: url)
         XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 200)
         let body = String(decoding: data, as: UTF8.self)
-        fputs("[test] proxy body: \(body)\n", stderr)
+        FileHandle.standardError.write(Data("[test] proxy body: \(body)\n".utf8))
         XCTAssertTrue(body.contains("/api/hello"), "body=\(body)")
         XCTAssertEqual((response as? HTTPURLResponse)?.value(forHTTPHeaderField: "X-Upstream"), "yes")
 
@@ -420,6 +420,42 @@ final class GatewayServerTests: XCTestCase {
 
         try await upstream.stop()
         try await server.stop()
+    }
+
+    @MainActor
+    func testRateLimitMetricsExposeCounts() async throws {
+        await DNSMetrics.shared.reset()
+        let upstreamKernel = HTTPKernel { _ in HTTPResponse(status: 200) }
+        let upstream = NIOHTTPServer(kernel: upstreamKernel)
+        let upstreamPort = try await upstream.start(port: 0)
+
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9120) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int?; var proxyEnabled: Bool? }
+        var create = URLRequest(url: URL(string: "http://127.0.0.1:9120/routes")!)
+        create.httpMethod = "POST"
+        create.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let r = Route(id: "lim2", path: "/limit", target: "http://127.0.0.1:\(upstreamPort)/limit", methods: ["GET"], rateLimit: 1, proxyEnabled: true)
+        create.httpBody = try JSONEncoder().encode(r)
+        _ = try await URLSession.shared.data(for: create)
+
+        let url = URL(string: "http://127.0.0.1:9120/limit/x")!
+        var (_, resp1) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((resp1 as? HTTPURLResponse)?.statusCode, 200)
+        var (_, resp2) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((resp2 as? HTTPURLResponse)?.statusCode, 429)
+
+        let metricsURL = URL(string: "http://127.0.0.1:9120/metrics")!
+        let (data, _) = try await URLSession.shared.data(from: metricsURL)
+        let body = String(decoding: data, as: UTF8.self)
+        XCTAssertTrue(body.contains("gateway_rate_limit_allowed_total 1"))
+        XCTAssertTrue(body.contains("gateway_rate_limit_throttled_total 1"))
+
+        try await server.stop()
+        try await upstream.stop()
     }
 
     @MainActor
