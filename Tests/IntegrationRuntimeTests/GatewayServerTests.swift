@@ -54,6 +54,71 @@ final class GatewayServerTests: XCTestCase {
     }
 
     @MainActor
+    func testCertificateInfoParsesValidCert() async throws {
+        let pem = """
+-----BEGIN CERTIFICATE-----
+MIIDBTCCAe2gAwIBAgIUA++57EgWuPqCdY0sE30Q3sfgQcAwDQYJKoZIhvcNAQEL
+BQAwEjEQMA4GA1UEAwwHVGVzdCBDQTAeFw0yNTA4MTExMDEyMjdaFw0yNjA4MTEx
+MDEyMjdaMBIxEDAOBgNVBAMMB1Rlc3QgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+DwAwggEKAoIBAQCwjWAELGKGLr9J/vdjPVtcrReknqQaXtaCA/8vFRfmNyU7z+CL
+85QpPgiWKco4ZOaf28Fyyab8CXcm6nYIkEIN7yDnPmoaj5vM/77wsVxF9ODLhn5m
+EVQ4mNxUmiPK+6fLKBxhgJvdqH28idOwRqV+TjhWmXp5BQz+nJg5YZAcYkJnSV4q
+GchbJT3+yo6vDd4J1olOrzb+NokZKr3FFAVa4sH0prlsN7H+7b9sVUitvCEsDhkQ
+S3eWYOnc+0aCW+FWmOv4IdrZdVqfPxaeifvEi5rxiAx6MVbplOQb+IEXQgf4TPxT
+k8oPVqDZFup16oND5LjM7/Sw+iV9/jjMzvnrAgMBAAGjUzBRMB0GA1UdDgQWBBR5
+uRS/OozDbs3lmtoUw3Bi1fEiOzAfBgNVHSMEGDAWgBR5uRS/OozDbs3lmtoUw3Bi
+1fEiOzAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCWIqrFvM12
+erOlJegQFQ8ph8fBJXigfOjEfoflsIat0gzJq/tdTVSNXJhx+L2ZcIt4yfgLVc9Y
+OUB6gc44QgVQiJtkmsU5CiREORuRMKeTmzrieeaCc9iSXzSs0MIfE9ReDzaVP8Vj
+7SN0zec0rJdUPZyUSuTcxWL7yH4M5SB+XChMg9USzu8X5uC/e52V2AdwpxjEH3d+
+MRDfjrTAz18gro8ICG8m9n0fBLEBGJJtwp6le0cRFpreY4bIrktCi5LHwDgbIUm2
+aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
+2jJrrBQHjcaH
+-----END CERTIFICATE-----
+"""
+        let tmp = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try pem.write(to: tmp, atomically: true, encoding: .utf8)
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [], certificatePath: tmp.path)
+        Task { try await server.start(port: 9126) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let url = URL(string: "http://127.0.0.1:9126/certificates")!
+        let (data, response) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 200)
+        struct Info: Codable { let notAfter: String; let issuer: String }
+        let info = try JSONDecoder().decode(Info.self, from: data)
+        XCTAssertEqual(info.issuer, "CN=Test CA")
+        XCTAssertEqual(info.notAfter, "2026-08-11T10:12:27Z")
+        try await server.stop()
+    }
+
+    @MainActor
+    func testCertificateInfoMissingFile() async throws {
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [], certificatePath: "/tmp/missing-cert.pem")
+        Task { try await server.start(port: 9127) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let url = URL(string: "http://127.0.0.1:9127/certificates")!
+        let (_, response) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 404)
+        try await server.stop()
+    }
+
+    @MainActor
+    func testCertificateInfoInvalidCert() async throws {
+        let tmp = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try "not a cert".write(to: tmp, atomically: true, encoding: .utf8)
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [], certificatePath: tmp.path)
+        Task { try await server.start(port: 9128) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let url = URL(string: "http://127.0.0.1:9128/certificates")!
+        let (_, response) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 500)
+        try await server.stop()
+    }
+
+    @MainActor
     func testPluginCanRewriteRequestAndResponse() async throws {
         struct RewritePlugin: GatewayPlugin {
             func prepare(_ request: HTTPRequest) async throws -> HTTPRequest {

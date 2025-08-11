@@ -2,6 +2,8 @@ import Foundation
 import NIO
 import NIOHTTP1
 import FountainCodex
+import Crypto
+import X509
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
@@ -26,6 +28,7 @@ public final class GatewayServer {
     private var records: [UUID: [UUID: Record]]
     private var routes: [String: RouteInfo]
     private let routesURL: URL?
+    private let certificatePath: String?
 
     /// In-memory zone model.
     private struct Zone: Codable { let id: UUID; let name: String }
@@ -65,7 +68,8 @@ public final class GatewayServer {
     public init(manager: CertificateManager = CertificateManager(),
                 plugins: [GatewayPlugin] = [],
                 zoneManager: ZoneManager? = nil,
-                routeStoreURL: URL? = nil) {
+                routeStoreURL: URL? = nil,
+                certificatePath: String? = nil) {
         self.manager = manager
         self.plugins = plugins
         self.zoneManager = zoneManager
@@ -74,6 +78,7 @@ public final class GatewayServer {
         self.records = [:]
         self.routes = [:]
         self.routesURL = routeStoreURL
+        self.certificatePath = certificatePath
         self.server = NIOHTTPServer(kernel: HTTPKernel { _ in HTTPResponse(status: 500) }, group: group)
         self.rateLimiter = RateLimiter()
         // Load persisted routes if configured
@@ -327,12 +332,28 @@ public final class GatewayServer {
 
     public func certificateInfo() -> HTTPResponse {
         struct CertificateInfo: Codable { let notAfter: String; let issuer: String }
-        let formatter = ISO8601DateFormatter()
-        let info = CertificateInfo(notAfter: formatter.string(from: Date().addingTimeInterval(86_400)), issuer: "SelfSigned")
-        if let json = try? JSONEncoder().encode(info) {
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+        guard let path = certificatePath else { return HTTPResponse(status: 500) }
+        guard FileManager.default.fileExists(atPath: path) else { return HTTPResponse(status: 404) }
+        do {
+            let data = try Data(contentsOf: URL(fileURLWithPath: path))
+            let cert: X509.Certificate
+            if let pem = String(data: data, encoding: .utf8), pem.contains("-----BEGIN") {
+                cert = try X509.Certificate(pemEncoded: pem)
+            } else {
+                cert = try X509.Certificate(derEncoded: [UInt8](data))
+            }
+            let formatter = ISO8601DateFormatter()
+            let info = CertificateInfo(
+                notAfter: formatter.string(from: cert.notValidAfter),
+                issuer: cert.issuer.description
+            )
+            if let json = try? JSONEncoder().encode(info) {
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+            }
+            return HTTPResponse(status: 500)
+        } catch {
+            return HTTPResponse(status: 500)
         }
-        return HTTPResponse(status: 500)
     }
 
     public func renewCertificate() -> HTTPResponse {
