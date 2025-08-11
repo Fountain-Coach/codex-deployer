@@ -16,6 +16,15 @@ public actor ZoneManager {
         public var value: String
     }
 
+    public struct RecordKey: Hashable, Sendable {
+        public let name: String
+        public let type: String
+        public init(name: String, type: String) {
+            self.name = name
+            self.type = type
+        }
+    }
+
     public struct Zone: Codable, Sendable {
         public let id: UUID
         public var name: String
@@ -97,23 +106,18 @@ public actor ZoneManager {
         return true
     }
 
-    /// Returns the IPv4 address associated with the given domain name.
-    /// - Parameter name: Fully qualified domain name.
-    /// - Returns: The IPv4 address string if present.
-    public func ip(for name: String) -> String? {
-        if let record = allRecords()[name], record.type == "A" {
-            return record.value
-        }
-        return nil
+    /// Retrieves a record for the given fully qualified name and type.
+    public func record(name: String, type: String) -> Record? {
+        allRecords()[RecordKey(name: name, type: type)]
     }
 
-    /// Returns the current in-memory zone cache as a flattened map keyed by FQDN.
-    public func allRecords() -> [String: Record] {
-        var map: [String: Record] = [:]
+    /// Returns the current in-memory zone cache as a flattened map keyed by name and type.
+    public func allRecords() -> [RecordKey: Record] {
+        var map: [RecordKey: Record] = [:]
         for zone in zones.values {
             for record in zone.records.values {
                 let fqdn = record.name.isEmpty ? zone.name : "\(record.name).\(zone.name)"
-                map[fqdn] = record
+                map[RecordKey(name: fqdn, type: record.type)] = record
             }
         }
         return map
