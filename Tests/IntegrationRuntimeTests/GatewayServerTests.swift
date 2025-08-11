@@ -319,6 +319,8 @@ final class GatewayServerTests: XCTestCase {
 
     @MainActor
     func testAuthTokenEndpointResponds() async throws {
+        setenv("GATEWAY_CRED_admin", "s3cr3t", 1)
+        setenv("GATEWAY_JWT_SECRET", "topsecret", 1)
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
         let server = GatewayServer(manager: manager, plugins: [])
         Task { try await server.start(port: 9113) }
@@ -328,11 +330,12 @@ final class GatewayServerTests: XCTestCase {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         struct Creds: Encodable { let clientId: String; let clientSecret: String }
-        request.httpBody = try JSONEncoder().encode(Creds(clientId: "admin", clientSecret: "password"))
+        request.httpBody = try JSONEncoder().encode(Creds(clientId: "admin", clientSecret: "s3cr3t"))
         let (data, response) = try await URLSession.shared.data(for: request)
         XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 200)
         let body = try JSONSerialization.jsonObject(with: data) as? [String: String]
         XCTAssertNotNil(body?["token"])
+        XCTAssertNotNil(body?["expiresAt"])
         try await server.stop()
     }
 
@@ -639,6 +642,39 @@ final class GatewayServerTests: XCTestCase {
         let list = try JSONDecoder().decode([Route].self, from: listData)
         XCTAssertEqual(list.count, 1)
         XCTAssertEqual(list.first?.id, "r2")
+
+        try await server.stop()
+    }
+
+    @MainActor
+    func testTokenIssuanceAndProtectedMetrics() async throws {
+        setenv("GATEWAY_CRED_admin", "s3cr3t", 1)
+        setenv("GATEWAY_JWT_SECRET", "topsecret", 1)
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [AuthPlugin()])
+        Task { try await server.start(port: 9125) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        struct Credential: Codable { let clientId: String; let clientSecret: String }
+        var req = URLRequest(url: URL(string: "http://127.0.0.1:9125/auth/token")!)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = try JSONEncoder().encode(Credential(clientId: "admin", clientSecret: "s3cr3t"))
+        let (data, tokenResp) = try await URLSession.shared.data(for: req)
+        XCTAssertEqual((tokenResp as? HTTPURLResponse)?.statusCode, 200)
+        struct TokenResponse: Codable { let token: String; let expiresAt: String }
+        let token = try JSONDecoder().decode(TokenResponse.self, from: data)
+        let formatter = ISO8601DateFormatter()
+        XCTAssertNotNil(formatter.date(from: token.expiresAt))
+
+        let metricsURL = URL(string: "http://127.0.0.1:9125/metrics")!
+        var (_, unauthResp) = try await URLSession.shared.data(from: metricsURL)
+        XCTAssertEqual((unauthResp as? HTTPURLResponse)?.statusCode, 401)
+
+        var authReq = URLRequest(url: metricsURL)
+        authReq.setValue("Bearer \(token.token)", forHTTPHeaderField: "Authorization")
+        let (_, okResp) = try await URLSession.shared.data(for: authReq)
+        XCTAssertEqual((okResp as? HTTPURLResponse)?.statusCode, 200)
 
         try await server.stop()
     }

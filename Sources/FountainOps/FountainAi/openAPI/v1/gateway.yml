@@ -35,6 +35,8 @@ paths:
                 type: object
                 additionalProperties:
                   type: integer
+      security:
+        - bearerAuth: []
   /auth/token:
     post:
       summary: Issue Authentication Token
@@ -61,6 +63,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      security: []
   /certificates:
     get:
       summary: Certificate Info
@@ -73,6 +76,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CertificateInfo'
+      security:
+        - bearerAuth: []
   /certificates/renew:
     post:
       summary: Trigger certificate renewal
@@ -85,6 +90,8 @@ paths:
             application/json:
               schema:
                 type: object
+      security:
+        - bearerAuth: []
   /routes:
     get:
       summary: List Configured Routes
@@ -99,6 +106,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/RouteInfo'
+      security:
+        - bearerAuth: []
     post:
       summary: Add a new route
       operationId: createRoute
@@ -121,6 +130,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
   /routes/{routeId}:
     put:
       summary: Update an existing route
@@ -151,6 +162,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
     delete:
       summary: Delete a route
       operationId: deleteRoute
@@ -170,7 +183,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     CredentialRequest:
       type: object

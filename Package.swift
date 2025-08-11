@@ -43,7 +43,7 @@ let package = Package(
         ),
         .executableTarget(
             name: "gateway-server",
-            dependencies: ["FountainCodex", "PublishingFrontend"],
+            dependencies: ["FountainCodex", "PublishingFrontend", .product(name: "Crypto", package: "swift-crypto")],
             path: "Sources/GatewayApp"
         ),
         .target(
