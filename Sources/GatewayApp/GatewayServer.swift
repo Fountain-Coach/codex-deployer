@@ -24,22 +24,16 @@ public final class GatewayServer {
     /// and in reverse order during ``GatewayPlugin.respond(_:for:)``.
     private let plugins: [GatewayPlugin]
     private let zoneManager: ZoneManager?
-    private var zones: [UUID: Zone]
-    private var records: [UUID: [UUID: Record]]
     private var routes: [String: RouteInfo]
     private let routesURL: URL?
     private let certificatePath: String?
 
-    /// In-memory zone model.
-    private struct Zone: Codable { let id: UUID; let name: String }
-    private struct ZonesResponse: Codable { let zones: [Zone] }
     private struct ZoneCreateRequest: Codable { let name: String }
-
+    private struct ZonesResponse: Codable { let zones: [ZoneManager.Zone] }
     /// DNS record model supporting core record types.
     private enum RecordType: String, Codable { case A, AAAA, CNAME, MX, TXT, SRV, CAA }
-    private struct Record: Codable { let id: UUID; let name: String; let type: RecordType; let value: String }
     private struct RecordRequest: Codable { let name: String; let type: RecordType; let value: String }
-    private struct RecordsResponse: Codable { let records: [Record] }
+    private struct RecordsResponse: Codable { let records: [ZoneManager.Record] }
 
     /// Authentication request and token response models.
     private struct CredentialRequest: Codable { let clientId: String; let clientSecret: String }
@@ -74,8 +68,6 @@ public final class GatewayServer {
         self.plugins = plugins
         self.zoneManager = zoneManager
         self.group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-        self.zones = [:]
-        self.records = [:]
         self.routes = [:]
         self.routesURL = routeStoreURL
         self.certificatePath = certificatePath
@@ -119,8 +111,13 @@ public final class GatewayServer {
                 let id = String(seg[1])
                 response = self.deleteRoute(id)
             case ("GET", ["zones"]):
-                let json = try JSONEncoder().encode(ZonesResponse(zones: Array(self.zones.values)))
-                response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                if let manager = zoneManager {
+                    let zones = await manager.listZones()
+                    let json = try JSONEncoder().encode(ZonesResponse(zones: zones))
+                    response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                } else {
+                    response = HTTPResponse(status: 500)
+                }
             case ("POST", ["zones"]):
                 response = await self.createZone(request)
             case ("POST", ["zones", "reload"]):
@@ -132,55 +129,21 @@ public final class GatewayServer {
                 }
             case ("DELETE", let seg) where seg.count == 2 && seg[0] == "zones":
                 let zoneId = String(seg[1])
-                response = self.deleteZone(zoneId)
+                response = await self.deleteZone(zoneId)
             case ("GET", let seg) where seg.count == 3 && seg[0] == "zones" && seg[2] == "records":
                 let zoneId = String(seg[1])
-                response = self.listRecords(zoneId)
+                response = await self.listRecords(zoneId)
             case ("POST", let seg) where seg.count == 3 && seg[0] == "zones" && seg[2] == "records":
                 let zoneId = seg[1]
-                guard let id = UUID(uuidString: String(zoneId)), self.zones[id] != nil else {
-                    response = HTTPResponse(status: 404)
-                    break
-                }
-                do {
-                    let req = try JSONDecoder().decode(RecordRequest.self, from: request.body)
-                    let record = Record(id: UUID(), name: req.name, type: req.type, value: req.value)
-                    var zoneRecords = self.records[id] ?? [:]
-                    zoneRecords[record.id] = record
-                    self.records[id] = zoneRecords
-                    let json = try JSONEncoder().encode(record)
-                    response = HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
-                } catch {
-                    response = HTTPResponse(status: 400)
-                }
+                response = await self.createRecord(String(zoneId), request: request)
             case ("PUT", let seg) where seg.count == 4 && seg[0] == "zones" && seg[2] == "records":
-                let zoneId = seg[1]
-                let recordId = seg[3]
-                guard let zid = UUID(uuidString: String(zoneId)),
-                      let rid = UUID(uuidString: String(recordId)),
-                      self.records[zid]?[rid] != nil else {
-                    response = HTTPResponse(status: 404)
-                    break
-                }
-                do {
-                    let req = try JSONDecoder().decode(RecordRequest.self, from: request.body)
-                    let record = Record(id: rid, name: req.name, type: req.type, value: req.value)
-                    self.records[zid]![rid] = record
-                    let json = try JSONEncoder().encode(record)
-                    response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
-                } catch {
-                    response = HTTPResponse(status: 400)
-                }
+                let zoneId = String(seg[1])
+                let recordId = String(seg[3])
+                response = await self.updateRecord(zoneId, recordId: recordId, request: request)
             case ("DELETE", let seg) where seg.count == 4 && seg[0] == "zones" && seg[2] == "records":
-                let zoneId = seg[1]
-                let recordId = seg[3]
-                if let zid = UUID(uuidString: String(zoneId)),
-                   let rid = UUID(uuidString: String(recordId)),
-                   self.records[zid]?.removeValue(forKey: rid) != nil {
-                    response = HTTPResponse(status: 204)
-                } else {
-                    response = HTTPResponse(status: 404)
-                }
+                let zoneId = String(seg[1])
+                let recordId = String(seg[3])
+                response = await self.deleteRecord(zoneId, recordId: recordId)
             default:
                 if let proxied = try await self.tryProxy(request) {
                     response = proxied
@@ -454,10 +417,10 @@ public final class GatewayServer {
     }
 
     public func createZone(_ request: HTTPRequest) async -> HTTPResponse {
+        guard let manager = zoneManager else { return HTTPResponse(status: 500) }
         do {
             let req = try JSONDecoder().decode(ZoneCreateRequest.self, from: request.body)
-            let zone = Zone(id: UUID(), name: req.name)
-            self.zones[zone.id] = zone
+            let zone = try await manager.createZone(name: req.name)
             let json = try JSONEncoder().encode(zone)
             return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
         } catch {
@@ -465,21 +428,61 @@ public final class GatewayServer {
         }
     }
 
-    public func deleteZone(_ zoneId: String) -> HTTPResponse {
-        if let id = UUID(uuidString: zoneId), self.zones.removeValue(forKey: id) != nil {
-            self.records[id] = nil
+    public func deleteZone(_ zoneId: String) async -> HTTPResponse {
+        guard let manager = zoneManager, let id = UUID(uuidString: zoneId) else { return HTTPResponse(status: 404) }
+        if let success = try? await manager.deleteZone(id: id), success {
             return HTTPResponse(status: 204)
         }
         return HTTPResponse(status: 404)
     }
 
-    public func listRecords(_ zoneId: String) -> HTTPResponse {
-        if let id = UUID(uuidString: zoneId), self.zones[id] != nil {
-            let recs = Array(self.records[id]?.values ?? [UUID: Record]().values)
+    public func listRecords(_ zoneId: String) async -> HTTPResponse {
+        guard let manager = zoneManager, let id = UUID(uuidString: zoneId) else { return HTTPResponse(status: 404) }
+        if let recs = await manager.listRecords(zoneId: id) {
             if let json = try? JSONEncoder().encode(RecordsResponse(records: recs)) {
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
             }
             return HTTPResponse(status: 500)
+        }
+        return HTTPResponse(status: 404)
+    }
+
+    public func createRecord(_ zoneId: String, request: HTTPRequest) async -> HTTPResponse {
+        guard let manager = zoneManager, let id = UUID(uuidString: zoneId) else { return HTTPResponse(status: 404) }
+        do {
+            let req = try JSONDecoder().decode(RecordRequest.self, from: request.body)
+            if let record = try await manager.createRecord(zoneId: id, name: req.name, type: req.type.rawValue, value: req.value),
+               let json = try? JSONEncoder().encode(record) {
+                return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
+            }
+            return HTTPResponse(status: 404)
+        } catch {
+            return HTTPResponse(status: 400)
+        }
+    }
+
+    public func updateRecord(_ zoneId: String, recordId: String, request: HTTPRequest) async -> HTTPResponse {
+        guard let manager = zoneManager,
+              let zid = UUID(uuidString: zoneId),
+              let rid = UUID(uuidString: recordId) else { return HTTPResponse(status: 404) }
+        do {
+            let req = try JSONDecoder().decode(RecordRequest.self, from: request.body)
+            if let record = try await manager.updateRecord(zoneId: zid, recordId: rid, name: req.name, type: req.type.rawValue, value: req.value),
+               let json = try? JSONEncoder().encode(record) {
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+            }
+            return HTTPResponse(status: 404)
+        } catch {
+            return HTTPResponse(status: 400)
+        }
+    }
+
+    public func deleteRecord(_ zoneId: String, recordId: String) async -> HTTPResponse {
+        guard let manager = zoneManager,
+              let zid = UUID(uuidString: zoneId),
+              let rid = UUID(uuidString: recordId) else { return HTTPResponse(status: 404) }
+        if let success = try? await manager.deleteRecord(zoneId: zid, recordId: rid), success {
+            return HTTPResponse(status: 204)
         }
         return HTTPResponse(status: 404)
     }
