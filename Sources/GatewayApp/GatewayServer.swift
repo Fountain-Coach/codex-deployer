@@ -284,8 +284,17 @@ public final class GatewayServer {
 
     public func gatewayMetrics() async -> HTTPResponse {
         let exposition = await DNSMetrics.shared.exposition()
-        let body = Data(exposition.utf8)
-        return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+        var metrics: [String: Int] = [:]
+        for line in exposition.split(separator: "\n") {
+            let parts = line.split(separator: " ")
+            if parts.count == 2, let value = Int(parts[1]) {
+                metrics[String(parts[0])] = value
+            }
+        }
+        if let json = try? JSONEncoder().encode(metrics) {
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+        }
+        return HTTPResponse(status: 500)
     }
 
     public func issueAuthToken(_ request: HTTPRequest) async -> HTTPResponse {
