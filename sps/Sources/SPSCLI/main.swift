@@ -174,6 +174,32 @@ extension SPS {
     }
 }
 
+/// Parse a comma-separated list of page numbers and ranges like "1-3,5".
+/// - Parameter value: Raw page-range string from the CLI.
+/// - Returns: Set of page numbers to include.
+/// - Throws: `ValidationError` if the value cannot be parsed.
+func parsePageRange(_ value: String) throws -> Set<Int> {
+    var pages = Set<Int>()
+    for part in value.split(separator: ",") {
+        if part.contains("-") {
+            let bounds = part.split(separator: "-")
+            guard bounds.count == 2,
+                  let start = Int(bounds[0]),
+                  let end = Int(bounds[1]),
+                  start > 0, end >= start else {
+                throw ValidationError("Invalid page range segment: \(part)")
+            }
+            for p in start...end { pages.insert(p) }
+        } else {
+            guard let page = Int(part), page > 0 else {
+                throw ValidationError("Invalid page number: \(part)")
+            }
+            pages.insert(page)
+        }
+    }
+    return pages
+}
+
 extension SPS {
     struct Query: ParsableCommand {
         static let configuration = CommandConfiguration(abstract: "Query an index")
@@ -184,18 +210,23 @@ extension SPS {
         @Option(name: .customLong("q"), help: "Search term")
         var q: String
 
+        @Option(name: .customLong("page-range"), help: "Comma-separated list of pages or ranges (e.g., 1-3,5)")
+        var pageRange: String?
+
         func run() throws {
             let data = try Data(contentsOf: URL(fileURLWithPath: index))
             let index = try JSONDecoder().decode(IndexRoot.self, from: data)
+            let allowedPages = try pageRange.map { try parsePageRange($0) }
             var hits: [[String: Any]] = []
             for doc in index.documents {
                 for page in doc.pages {
+                    if let allowed = allowedPages, !allowed.contains(page.number) { continue }
                     if page.text.lowercased().contains(q.lowercased()) {
                         hits.append(["docId": doc.id, "page": page.number, "snippet": page.text])
                     }
                 }
             }
-            let out: [String: Any] = ["hits": hits]
+            let out: [String: Any] = ["hits": hits] 
             let json = try JSONSerialization.data(withJSONObject: out, options: [.prettyPrinted, .sortedKeys])
             FileHandle.standardOutput.write(json)
             FileHandle.standardOutput.write("\n".data(using: .utf8)!)
