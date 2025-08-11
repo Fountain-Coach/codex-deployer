@@ -6,6 +6,9 @@ import PublishingFrontend
 /// The server stays running until the process is terminated.
 
 let publishingConfig = try? loadPublishingConfig()
+if publishingConfig == nil {
+    fputs("[gateway] Warning: failed to load Configuration/publishing.yml; using defaults for static content.\n", stderr)
+}
 let server = GatewayServer(plugins: [LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")])
 Task { @MainActor in
     try await server.start(port: 8080)

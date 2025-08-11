@@ -1,0 +1,145 @@
+openapi: 3.1.0
+info:
+  title: Semantic PDF Scanner (SPS)
+  version: 0.1.0
+  description: Swift CLI parity API for Fountain tools-factory integration.
+paths:
+  /scan:
+    post:
+      summary: Scan one or more PDFs into a semantic index
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Index'
+  /index/validate:
+    post:
+      summary: Validate an index structure
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Index'
+      responses:
+        '200':
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+  /query:
+    post:
+      summary: Query an index by keyword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Matched spans
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+  /export/matrix:
+    post:
+      summary: Export a Midi2Swift-friendly matrix skeleton from an index
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Index'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Matrix'
+components:
+  schemas:
+    ScanRequest:
+      type: object
+      required: [inputs]
+      properties:
+        inputs:
+          description: File paths or URLs to PDFs
+          type: array
+          items: { type: string }
+        includeText:
+          type: boolean
+          default: false
+        sha256:
+          type: boolean
+          default: false
+    Index:
+      type: object
+      required: [documents]
+      properties:
+        documents:
+          type: array
+          items:
+            type: object
+            required: [id, fileName, size]
+            properties:
+              id: { type: string }
+              fileName: { type: string }
+              size: { type: integer }
+              sha256: { type: string, nullable: true }
+              pages: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    number: { type: integer }
+                    text: { type: string }
+    ValidationResult:
+      type: object
+      properties:
+        ok: { type: boolean }
+        issues:
+          type: array
+          items: { type: string }
+    QueryRequest:
+      type: object
+      required: [index, q]
+      properties:
+        index:
+          $ref: '#/components/schemas/Index'
+        q:
+          type: string
+        pageRange:
+          type: string
+          description: 'e.g., 1-10'
+    QueryResponse:
+      type: object
+      properties:
+        hits:
+          type: array
+          items:
+            type: object
+            properties:
+              docId: { type: string }
+              page: { type: integer }
+              snippet: { type: string }
+    Matrix:
+      type: object
+      properties:
+        messages:
+          type: array
+          items: { type: object }
+        terms:
+          type: array
+          items: { type: object }

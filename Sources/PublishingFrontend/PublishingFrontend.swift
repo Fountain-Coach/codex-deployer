@@ -42,7 +42,8 @@ public final class PublishingFrontend {
             guard req.method == "GET" else { return HTTPResponse(status: 405) }
             let path = config.rootPath + (req.path == "/" ? "/index.html" : req.path)
             if let data = FileManager.default.contents(atPath: path) {
-                return HTTPResponse(status: 200, headers: ["Content-Type": "text/html"], body: data)
+                let contentType = mimeType(forPath: path)
+                return HTTPResponse(status: 200, headers: ["Content-Type": contentType], body: data)
             }
             return HTTPResponse(status: 404)
         }
@@ -69,12 +70,34 @@ public final class PublishingFrontend {
 /// - Returns: Parsed ``PublishingConfig`` instance.
 public func loadPublishingConfig() throws -> PublishingConfig {
     let url = URL(fileURLWithPath: "Configuration/publishing.yml")
-    let string = try String(contentsOf: url, encoding: .utf8)
-    let yaml = try Yams.load(yaml: string) as? [String: Any] ?? [:]
+    // Strip lines that begin with a copyright footer (e.g., starting with "©")
+    // to keep configuration strictly YAML-parseable.
+    let raw = try String(contentsOf: url, encoding: .utf8)
+    let sanitized = raw
+        .split(separator: "\n", omittingEmptySubsequences: false)
+        .filter { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("©") }
+        .joined(separator: "\n")
+    let yaml = try Yams.load(yaml: sanitized) as? [String: Any] ?? [:]
     let defaults: [String: Any] = ["port": 8085, "rootPath": "./Public"]
     let merged = defaults.merging(yaml) { _, new in new }
     let data = try JSONSerialization.data(withJSONObject: merged)
     return try JSONDecoder().decode(PublishingConfig.self, from: data)
+}
+
+// Basic content-type resolution for common static assets.
+private func mimeType(forPath path: String) -> String {
+    switch URL(fileURLWithPath: path).pathExtension.lowercased() {
+    case "html", "htm": return "text/html"
+    case "css": return "text/css"
+    case "js": return "application/javascript"
+    case "json": return "application/json"
+    case "svg": return "image/svg+xml"
+    case "png": return "image/png"
+    case "jpg", "jpeg": return "image/jpeg"
+    case "gif": return "image/gif"
+    case "txt": return "text/plain"
+    default: return "application/octet-stream"
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

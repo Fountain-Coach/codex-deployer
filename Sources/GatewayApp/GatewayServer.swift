@@ -2,6 +2,9 @@ import Foundation
 import NIO
 import NIOHTTP1
 import FountainCodex
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// HTTP gateway server that composes plugins for request handling.
 /// Provides built-in `/health` and `/metrics` endpoints used for monitoring.
@@ -22,6 +25,7 @@ public final class GatewayServer {
     private var zones: [UUID: Zone]
     private var records: [UUID: [UUID: Record]]
     private var routes: [String: RouteInfo]
+    private let routesURL: URL?
 
     /// In-memory zone model.
     private struct Zone: Codable { let id: UUID; let name: String }
@@ -46,6 +50,7 @@ public final class GatewayServer {
         var target: String
         var methods: [String]
         var rateLimit: Int?
+        var proxyEnabled: Bool?
     }
 
 
@@ -58,7 +63,8 @@ public final class GatewayServer {
     ///     and in reverse order for ``GatewayPlugin.respond(_:for:)``.
     public init(manager: CertificateManager = CertificateManager(),
                 plugins: [GatewayPlugin] = [],
-                zoneManager: ZoneManager? = nil) {
+                zoneManager: ZoneManager? = nil,
+                routeStoreURL: URL? = nil) {
         self.manager = manager
         self.plugins = plugins
         self.zoneManager = zoneManager
@@ -66,7 +72,15 @@ public final class GatewayServer {
         self.zones = [:]
         self.records = [:]
         self.routes = [:]
+        self.routesURL = routeStoreURL
         self.server = NIOHTTPServer(kernel: HTTPKernel { _ in HTTPResponse(status: 500) }, group: group)
+        self.rateLimiter = RateLimiter()
+        // Load persisted routes if configured
+        if let url = routeStoreURL, let data = try? Data(contentsOf: url) {
+            if let loaded = try? JSONDecoder().decode([RouteInfo].self, from: data) {
+                self.routes = Dictionary(uniqueKeysWithValues: loaded.map { ($0.id, $0) })
+            }
+        }
         let kernel = HTTPKernel { [plugins, zoneManager, self] req in
             var request = req
             for plugin in plugins {
@@ -159,7 +173,11 @@ public final class GatewayServer {
                     response = HTTPResponse(status: 404)
                 }
             default:
-                response = HTTPResponse(status: 404)
+                if let proxied = try await self.tryProxy(request) {
+                    response = proxied
+                } else {
+                    response = HTTPResponse(status: 404)
+                }
             }
             for plugin in plugins.reversed() {
                 response = try await plugin.respond(response, for: request)
@@ -167,6 +185,89 @@ public final class GatewayServer {
             return response
         }
         self.server = NIOHTTPServer(kernel: kernel, group: group)
+    }
+
+    /// Simple per-route token bucket rate limiter.
+    private final class RateLimiter {
+        private struct Bucket { var tokens: Double; var lastRefill: TimeInterval; let capacity: Double; let rate: Double }
+        private var buckets: [String: Bucket] = [:]
+
+        func allow(routeId: String, limitPerSecond: Int) -> Bool {
+            let now = Date().timeIntervalSince1970
+            var bucket = buckets[routeId] ?? Bucket(tokens: Double(limitPerSecond), lastRefill: now, capacity: Double(limitPerSecond), rate: Double(limitPerSecond))
+            let elapsed = max(0, now - bucket.lastRefill)
+            bucket.tokens = min(bucket.capacity, bucket.tokens + elapsed * bucket.rate)
+            bucket.lastRefill = now
+            if bucket.tokens >= 1.0 {
+                bucket.tokens -= 1.0
+                buckets[routeId] = bucket
+                return true
+            }
+            buckets[routeId] = bucket
+            return false
+        }
+    }
+    private let rateLimiter: RateLimiter
+
+    /// Attempts to match the incoming request against configured routes and proxy it upstream.
+    /// Performs a simple prefix match on the configured path and enforces allowed methods.
+    /// - Returns: A proxied response if a matching route is found; otherwise `nil`.
+    private func tryProxy(_ request: HTTPRequest) async throws -> HTTPResponse? {
+        // Extract path without query for matching
+        let pathOnly = request.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? request.path
+        // Choose the longest matching path prefix among routes
+        let candidates = routes.values
+            .filter { route in
+                (route.methods.isEmpty || route.methods.contains(request.method)) &&
+                ((route.proxyEnabled ?? true) == true) &&
+                (pathOnly == route.path || pathOnly.hasPrefix(route.path.hasSuffix("/") ? route.path : route.path + "/"))
+            }
+            .sorted { $0.path.count > $1.path.count }
+        guard let route = candidates.first else { return nil }
+
+        // Rate limit if configured
+        if let limit = route.rateLimit, limit > 0 {
+            if !rateLimiter.allow(routeId: route.id, limitPerSecond: limit) {
+                return HTTPResponse(status: 429, headers: ["Content-Type": "text/plain"], body: Data("too many requests".utf8))
+            }
+        }
+
+        // Build upstream URL by joining target + suffix (keep original query string)
+        let suffix = String(pathOnly.dropFirst(route.path.count))
+        let query = request.path.contains("?") ? String(request.path.split(separator: "?", maxSplits: 1)[1]) : nil
+        var urlString = route.target
+        if !suffix.isEmpty {
+            if urlString.hasSuffix("/") || suffix.hasPrefix("/") {
+                urlString += suffix
+            } else {
+                urlString += "/" + suffix
+            }
+        }
+        if let query, !query.isEmpty { urlString += "?" + query }
+        guard let url = URL(string: urlString), url.scheme != nil else { return HTTPResponse(status: 502) }
+        fputs("[gateway] proxy -> \(url.absoluteString)\n", stderr)
+
+        var upstream = URLRequest(url: url)
+        upstream.httpMethod = request.method
+        // Copy headers except Host; allow upstream to set it
+        for (k, v) in request.headers where k.lowercased() != "host" {
+            upstream.setValue(v, forHTTPHeaderField: k)
+        }
+        if !request.body.isEmpty { upstream.httpBody = request.body }
+
+        do {
+            let (data, resp) = try await URLSession.shared.data(for: upstream)
+            let status = (resp as? HTTPURLResponse)?.statusCode ?? 200
+            var headers: [String: String] = [:]
+            if let http = resp as? HTTPURLResponse {
+                for (key, value) in http.allHeaderFields {
+                    if let k = key as? String, let v = value as? String { headers[k] = v }
+                }
+            }
+            return HTTPResponse(status: status, headers: headers, body: data)
+        } catch {
+            return HTTPResponse(status: 502, headers: ["Content-Type": "text/plain"], body: Data("bad gateway".utf8))
+        }
     }
 
     public func gatewayHealth() -> HTTPResponse {
@@ -224,6 +325,7 @@ public final class GatewayServer {
             let info = try JSONDecoder().decode(RouteInfo.self, from: request.body)
             if self.routes[info.id] == nil {
                 self.routes[info.id] = info
+                self.persistRoutes()
                 let json = try JSONEncoder().encode(info)
                 return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
             }
@@ -243,8 +345,9 @@ public final class GatewayServer {
         }
         do {
             let info = try JSONDecoder().decode(RouteInfo.self, from: request.body)
-            let updated = RouteInfo(id: routeId, path: info.path, target: info.target, methods: info.methods, rateLimit: info.rateLimit)
+            let updated = RouteInfo(id: routeId, path: info.path, target: info.target, methods: info.methods, rateLimit: info.rateLimit, proxyEnabled: info.proxyEnabled)
             self.routes[routeId] = updated
+            self.persistRoutes()
             let json = try JSONEncoder().encode(updated)
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
         } catch {
@@ -254,12 +357,25 @@ public final class GatewayServer {
 
     public func deleteRoute(_ routeId: String) -> HTTPResponse {
         if self.routes.removeValue(forKey: routeId) != nil {
+            self.persistRoutes()
             return HTTPResponse(status: 204)
         }
         if let json = try? JSONEncoder().encode(ErrorResponse(error: "not found")) {
             return HTTPResponse(status: 404, headers: ["Content-Type": "application/json"], body: json)
         }
         return HTTPResponse(status: 404)
+    }
+
+    private func persistRoutes() {
+        guard let url = routesURL else { return }
+        do {
+            let list = Array(self.routes.values)
+            let data = try JSONEncoder().encode(list)
+            try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try data.write(to: url)
+        } catch {
+            fputs("[gateway] Warning: failed to persist routes to \(url.path): \(error)\n", stderr)
+        }
     }
 
     public func createZone(_ request: HTTPRequest) async -> HTTPResponse {

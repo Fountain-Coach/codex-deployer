@@ -14,14 +14,16 @@ public actor ZoneManager {
     private let signer: DNSSECSigner?
     private var timer: DispatchSourceTimer?
     private var lastModified: Date
+    private let enableGitCommits: Bool
 
     /// Loads the zone cache from the provided YAML file if it exists.
     /// - Parameters:
     ///   - fileURL: Location of the YAML zone file on disk.
     ///   - signer: Optional DNSSEC signer used to generate zone signatures.
-    public init(fileURL: URL, signer: DNSSECSigner? = nil) throws {
+    public init(fileURL: URL, signer: DNSSECSigner? = nil, enableGitCommits: Bool = true) throws {
         self.fileURL = fileURL
         self.signer = signer
+        self.enableGitCommits = enableGitCommits
         if let data = try? Data(contentsOf: fileURL),
            let string = String(data: data, encoding: .utf8),
            let loaded = try Yams.load(yaml: string) as? [String: String] {
@@ -62,7 +64,9 @@ public actor ZoneManager {
             let sig = try signer.sign(zone: yaml)
             try Data(sig).write(to: fileURL.appendingPathExtension("sig"))
         }
-        gitCommit(message: "Update zone file")
+        if enableGitCommits {
+            gitCommit(message: "Update zone file")
+        }
     }
 
     /// Reloads the zone cache from disk when the file has changed.

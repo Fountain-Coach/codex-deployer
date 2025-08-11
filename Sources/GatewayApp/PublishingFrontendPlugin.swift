@@ -20,9 +20,25 @@ public struct PublishingFrontendPlugin: GatewayPlugin {
         guard request.method == "GET" else { return response }
         let path = rootPath + (request.path == "/" ? "/index.html" : request.path)
         if let data = FileManager.default.contents(atPath: path) {
-            return HTTPResponse(status: 200, headers: ["Content-Type": "text/html"], body: data)
+            let contentType = mimeType(forPath: path)
+            return HTTPResponse(status: 200, headers: ["Content-Type": contentType], body: data)
         }
         return response
+    }
+}
+
+private func mimeType(forPath path: String) -> String {
+    switch URL(fileURLWithPath: path).pathExtension.lowercased() {
+    case "html", "htm": return "text/html"
+    case "css": return "text/css"
+    case "js": return "application/javascript"
+    case "json": return "application/json"
+    case "svg": return "image/svg+xml"
+    case "png": return "image/png"
+    case "jpg", "jpeg": return "image/jpeg"
+    case "gif": return "image/gif"
+    case "txt": return "text/plain"
+    default: return "application/octet-stream"
     }
 }
 

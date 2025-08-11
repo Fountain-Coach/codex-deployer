@@ -353,6 +353,141 @@ final class GatewayServerTests: XCTestCase {
         XCTAssertEqual(list.count, 0)
         try await server.stop()
     }
+
+    @MainActor
+    func testProxyRoutesForwardToUpstream() async throws {
+        // Start upstream server returning a known payload
+        let upstreamKernel = HTTPKernel { req in
+            let body = Data("upstream:\\(req.path)".utf8)
+            return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain", "X-Upstream": "yes"], body: body)
+        }
+        let upstream = NIOHTTPServer(kernel: upstreamKernel)
+        let upstreamPort = try await upstream.start(port: 0)
+
+        // Start gateway
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9115) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        // Create route mapping /api -> upstream
+        struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int?; var proxyEnabled: Bool? }
+        var create = URLRequest(url: URL(string: "http://127.0.0.1:9115/routes")!)
+        create.httpMethod = "POST"
+        create.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let r = Route(id: "u1", path: "/api", target: "http://127.0.0.1:\(upstreamPort)/api", methods: ["GET"], rateLimit: nil, proxyEnabled: true)
+        create.httpBody = try JSONEncoder().encode(r)
+        _ = try await URLSession.shared.data(for: create)
+
+        // Request through gateway and verify upstream response propagated
+        let url = URL(string: "http://127.0.0.1:9115/api/hello?x=1")!
+        let (data, response) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 200)
+        let body = String(decoding: data, as: UTF8.self)
+        fputs("[test] proxy body: \(body)\n", stderr)
+        XCTAssertTrue(body.contains("/api/hello"), "body=\(body)")
+        XCTAssertEqual((response as? HTTPURLResponse)?.value(forHTTPHeaderField: "X-Upstream"), "yes")
+
+        try await upstream.stop()
+        try await server.stop()
+    }
+
+    @MainActor
+    func testProxyRateLimitEnforced() async throws {
+        let upstreamKernel = HTTPKernel { _ in HTTPResponse(status: 200) }
+        let upstream = NIOHTTPServer(kernel: upstreamKernel)
+        let upstreamPort = try await upstream.start(port: 0)
+
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9116) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int?; var proxyEnabled: Bool? }
+        var create = URLRequest(url: URL(string: "http://127.0.0.1:9116/routes")!)
+        create.httpMethod = "POST"
+        create.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let r = Route(id: "rl1", path: "/lim", target: "http://127.0.0.1:\(upstreamPort)/lim", methods: ["GET"], rateLimit: 1, proxyEnabled: true)
+        create.httpBody = try JSONEncoder().encode(r)
+        _ = try await URLSession.shared.data(for: create)
+
+        let url = URL(string: "http://127.0.0.1:9116/lim/a")!
+        var (_, resp1) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((resp1 as? HTTPURLResponse)?.statusCode, 200)
+        // Immediate second request should exceed 1 rps
+        var (_, resp2) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((resp2 as? HTTPURLResponse)?.statusCode, 429)
+
+        try await upstream.stop()
+        try await server.stop()
+    }
+
+    @MainActor
+    func testProxyDisabledSkipsForwarding() async throws {
+        let upstreamKernel = HTTPKernel { _ in HTTPResponse(status: 200) }
+        let upstream = NIOHTTPServer(kernel: upstreamKernel)
+        _ = try await upstream.start(port: 0)
+
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9117) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int?; var proxyEnabled: Bool? }
+        var create = URLRequest(url: URL(string: "http://127.0.0.1:9117/routes")!)
+        create.httpMethod = "POST"
+        create.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let r = Route(id: "d1", path: "/off", target: "http://127.0.0.1:9/off", methods: ["GET"], rateLimit: nil, proxyEnabled: false)
+        create.httpBody = try JSONEncoder().encode(r)
+        _ = try await URLSession.shared.data(for: create)
+
+        let url = URL(string: "http://127.0.0.1:9117/off/anything")!
+        let (_, response) = try await URLSession.shared.data(from: url)
+        XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 404)
+
+        try await server.stop()
+        try await upstream.stop()
+    }
+
+    @MainActor
+    func testRoutesPersistAcrossRestart() async throws {
+        // Create a temporary file for route persistence
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let file = dir.appendingPathComponent("routes.json")
+
+        // Start server A with persistence
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let serverA = GatewayServer(manager: manager, plugins: [], zoneManager: nil, routeStoreURL: file)
+        Task { try await serverA.start(port: 9118) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        // Create a route
+        struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int?; var proxyEnabled: Bool? }
+        var create = URLRequest(url: URL(string: "http://127.0.0.1:9118/routes")!)
+        create.httpMethod = "POST"
+        create.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let r = Route(id: "persist1", path: "/p", target: "http://u/p", methods: ["GET"], rateLimit: nil, proxyEnabled: true)
+        create.httpBody = try JSONEncoder().encode(r)
+        _ = try await URLSession.shared.data(for: create)
+
+        // Stop server A
+        try await serverA.stop()
+        try await Task.sleep(nanoseconds: 50_000_000)
+
+        // Start server B with same persistence file
+        let serverB = GatewayServer(manager: manager, plugins: [], zoneManager: nil, routeStoreURL: file)
+        Task { try await serverB.start(port: 9119) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        // Verify the route is present
+        let (data, _) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:9119/routes")!)
+        let list = try JSONDecoder().decode([Route].self, from: data)
+        XCTAssertEqual(list.count, 1)
+        XCTAssertEqual(list.first?.id, "persist1")
+
+        try await serverB.stop()
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

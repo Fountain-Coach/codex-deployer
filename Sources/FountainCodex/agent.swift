@@ -7,8 +7,10 @@ struct Agent {
     static func main() throws {
         print("""
         Codex Orchestration Steps:
-        1. Run the generator:\n   swift run generator --input OpenAPI/api.yaml --output Generated/
-        2. Run tests:\n   swift test -v
+        1. Run the generator:
+           swift run clientgen-service --input OpenAPI/api.yaml --output Generated/
+        2. Run tests:
+           swift test -v
         3. Commit any changes under Generated/ and Sources/.
         """)
     }
