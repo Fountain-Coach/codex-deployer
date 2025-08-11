@@ -37,6 +37,23 @@ final class GatewayServerTests: XCTestCase {
     }
 
     @MainActor
+    func testRenewCertificateReturnsConfirmation() async throws {
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        let server = GatewayServer(manager: manager, plugins: [])
+        Task { try await server.start(port: 9125) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        var request = URLRequest(url: URL(string: "http://127.0.0.1:9125/certificates/renew")!)
+        request.httpMethod = "POST"
+        let (data, response) = try await URLSession.shared.data(for: request)
+        let httpResponse = response as? HTTPURLResponse
+        XCTAssertEqual(httpResponse?.statusCode, 202)
+        XCTAssertEqual(httpResponse?.value(forHTTPHeaderField: "Content-Type"), "application/json")
+        let body = try JSONSerialization.jsonObject(with: data) as? [String: String]
+        XCTAssertEqual(body?["status"], "triggered")
+        try await server.stop()
+    }
+
+    @MainActor
     func testPluginCanRewriteRequestAndResponse() async throws {
         struct RewritePlugin: GatewayPlugin {
             func prepare(_ request: HTTPRequest) async throws -> HTTPRequest {
