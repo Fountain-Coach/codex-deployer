@@ -11,7 +11,10 @@ final class ZoneManagerTests: XCTestCase {
 
     func testLoadsExistingZonesFromDisk() async throws {
         let file = temporaryFile()
-        try "example.com: 1.2.3.4\n".write(to: file, atomically: true, encoding: .utf8)
+        let record = ZoneManager.Record(id: UUID(), name: "", type: "A", value: "1.2.3.4")
+        let zone = ZoneManager.Zone(id: UUID(), name: "example.com", records: [record.id: record])
+        let yaml = try YAMLEncoder().encode([zone.id: zone])
+        try yaml.write(to: file, atomically: true, encoding: .utf8)
         let manager = try ZoneManager(fileURL: file)
         let ip = await manager.ip(for: "example.com")
         XCTAssertEqual(ip, "1.2.3.4")
@@ -20,33 +23,39 @@ final class ZoneManagerTests: XCTestCase {
     func testPersistsUpdatesToDisk() async throws {
         let file = temporaryFile()
         let manager = try ZoneManager(fileURL: file)
-        try await manager.set(name: "example.com", ip: "5.6.7.8")
+        let zone = try await manager.createZone(name: "example.com")
+        _ = try await manager.createRecord(zoneId: zone.id, name: "", type: "A", value: "5.6.7.8")
         let contents = try String(contentsOf: file, encoding: .utf8)
-        let yaml = try Yams.load(yaml: contents) as? [String: String]
-        XCTAssertEqual(yaml?["example.com"], "5.6.7.8")
+        let decoded = try YAMLDecoder().decode([UUID: ZoneManager.Zone].self, from: contents)
+        XCTAssertEqual(decoded[zone.id]?.records.values.first?.value, "5.6.7.8")
     }
 
     func testConcurrentUpdatesAreSerialized() async throws {
         let file = temporaryFile()
         let manager = try ZoneManager(fileURL: file)
+        let zone = try await manager.createZone(name: "test")
         try await withThrowingTaskGroup(of: Void.self) { group in
             for i in 0..<10 {
                 group.addTask {
-                    try await manager.set(name: "host\(i).test", ip: "1.1.1.\(i)")
+                    _ = try await manager.createRecord(zoneId: zone.id, name: "host\(i)", type: "A", value: "1.1.1.\(i)")
                 }
             }
             try await group.waitForAll()
         }
-        let records = await manager.allRecords()
-        XCTAssertEqual(records.count, 10)
+        let records = await manager.listRecords(zoneId: zone.id)
+        XCTAssertEqual(records?.count, 10)
     }
 
     func testReloadUpdatesCache() async throws {
         let file = temporaryFile()
-        try "example.com: 1.1.1.1\n".write(to: file, atomically: true, encoding: .utf8)
         let manager = try ZoneManager(fileURL: file)
+        let zone = try await manager.createZone(name: "example.com")
+        _ = try await manager.createRecord(zoneId: zone.id, name: "", type: "A", value: "1.1.1.1")
         try await Task.sleep(nanoseconds: 1_000_000_000)
-        try "example.com: 2.2.2.2\n".write(to: file, atomically: true, encoding: .utf8)
+        let record = ZoneManager.Record(id: UUID(), name: "", type: "A", value: "2.2.2.2")
+        let newZone = ZoneManager.Zone(id: zone.id, name: "example.com", records: [record.id: record])
+        let yaml = try YAMLEncoder().encode([zone.id: newZone])
+        try yaml.write(to: file, atomically: true, encoding: .utf8)
         await manager.reload()
         let ip = await manager.ip(for: "example.com")
         XCTAssertEqual(ip, "2.2.2.2")
@@ -64,7 +73,8 @@ final class ZoneManagerTests: XCTestCase {
         try initTask.run()
         initTask.waitUntilExit()
         let manager = try ZoneManager(fileURL: file)
-        try await manager.set(name: "example.com", ip: "3.3.3.3")
+        let zone = try await manager.createZone(name: "example.com")
+        _ = try await manager.createRecord(zoneId: zone.id, name: "", type: "A", value: "3.3.3.3")
         let logTask = Process()
         logTask.executableURL = URL(fileURLWithPath: "/usr/bin/git")
         logTask.currentDirectoryURL = dir

@@ -20,6 +20,20 @@ public struct DNSEngine {
         self.signer = signer
     }
 
+    /// Creates a new engine from a ``ZoneManager`` instance.
+    /// - Parameters:
+    ///   - zoneManager: Zone manager providing records.
+    ///   - signer: Optional ``DNSSECSigner`` for zone signing.
+    public init(zoneManager: ZoneManager, signer: DNSSECSigner? = nil) async {
+        let records = await zoneManager.allRecords()
+        var cache: [String: String] = [:]
+        for (name, record) in records where record.type == "A" {
+            cache[name] = record.value
+        }
+        self.zoneCache = NIOLockedValueBox(cache)
+        self.signer = signer
+    }
+
     /// Updates or inserts a record in the zone cache.
     public func updateRecord(name: String, ip: String) {
         zoneCache.withLockedValue { $0[name] = ip }

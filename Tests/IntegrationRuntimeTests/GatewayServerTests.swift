@@ -10,8 +10,11 @@ final class GatewayServerTests: XCTestCase {
 
     @MainActor
     func testHealthEndpointResponds() async throws {
+        let dir = FileManager.default.temporaryDirectory
+        let file = dir.appendingPathComponent(UUID().uuidString)
+        let zoneManager = try ZoneManager(fileURL: file)
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let server = GatewayServer(manager: manager, plugins: [])
+        let server = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
         Task { try await server.start(port: 9100) }
         try await Task.sleep(nanoseconds: 100_000_000)
         let url = URL(string: "http://127.0.0.1:9100/health")!
@@ -24,8 +27,11 @@ final class GatewayServerTests: XCTestCase {
 
     @MainActor
     func testMetricsEndpointResponds() async throws {
+        let dir = FileManager.default.temporaryDirectory
+        let file = dir.appendingPathComponent(UUID().uuidString)
+        let zoneManager = try ZoneManager(fileURL: file)
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let server = GatewayServer(manager: manager, plugins: [])
+        let server = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
         Task { try await server.start(port: 9101) }
         try await Task.sleep(nanoseconds: 100_000_000)
         let url = URL(string: "http://127.0.0.1:9101/metrics")!
@@ -401,6 +407,51 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         let body = try JSONSerialization.jsonObject(with: data) as? [String: String]
         XCTAssertNotNil(body?["token"])
         XCTAssertNotNil(body?["expiresAt"])
+        try await server.stop()
+    }
+
+    @MainActor
+    func testPersistenceAcrossRestart() async throws {
+        let dir = FileManager.default.temporaryDirectory
+        let file = dir.appendingPathComponent(UUID().uuidString)
+        var zoneManager = try ZoneManager(fileURL: file)
+        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
+        var server = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
+        Task { try await server.start(port: 9115) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let base = URL(string: "http://127.0.0.1:9115")!
+        struct ZoneCreate: Encodable { let name: String }
+        var request = URLRequest(url: base.appendingPathComponent("zones"))
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONEncoder().encode(ZoneCreate(name: "persist"))
+        var (data, _) = try await URLSession.shared.data(for: request)
+        struct Zone: Decodable { let id: String }
+        let zone = try JSONDecoder().decode(Zone.self, from: data)
+        struct RecordRequest: Encodable { let name: String; let type: String; let value: String }
+        var recordReq = URLRequest(url: base.appendingPathComponent("zones/\(zone.id)/records"))
+        recordReq.httpMethod = "POST"
+        recordReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        recordReq.httpBody = try JSONEncoder().encode(RecordRequest(name: "www", type: "A", value: "1.1.1.1"))
+        _ = try await URLSession.shared.data(for: recordReq)
+        try await server.stop()
+
+        zoneManager = try ZoneManager(fileURL: file)
+        server = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
+        Task { try await server.start(port: 9115) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let listURL = base.appendingPathComponent("zones")
+        (data, _) = try await URLSession.shared.data(from: listURL)
+        struct ZonesResponse: Decodable { let zones: [Zone] }
+        let zones = try JSONDecoder().decode(ZonesResponse.self, from: data)
+        XCTAssertEqual(zones.zones.count, 1)
+        XCTAssertEqual(zones.zones.first?.id, zone.id)
+        let recordsURL = base.appendingPathComponent("zones/\(zone.id)/records")
+        let (recData, _) = try await URLSession.shared.data(from: recordsURL)
+        struct Record: Decodable { let id: String }
+        struct RecordsResponse: Decodable { let records: [Record] }
+        let recs = try JSONDecoder().decode(RecordsResponse.self, from: recData)
+        XCTAssertEqual(recs.records.count, 1)
         try await server.stop()
     }
 

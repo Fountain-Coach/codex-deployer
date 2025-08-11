@@ -7,9 +7,22 @@ import Glibc
 import Darwin
 #endif
 
-/// Actor responsible for managing DNS zone records with persistent YAML storage.
+/// Actor responsible for managing DNS zones and records with persistent YAML storage.
 public actor ZoneManager {
-    private var cache: [String: String]
+    public struct Record: Codable, Sendable {
+        public let id: UUID
+        public var name: String
+        public var type: String
+        public var value: String
+    }
+
+    public struct Zone: Codable, Sendable {
+        public let id: UUID
+        public var name: String
+        public var records: [UUID: Record]
+    }
+
+    private var zones: [UUID: Zone]
     private let fileURL: URL
     private let signer: DNSSECSigner?
     private var timer: DispatchSourceTimer?
@@ -26,39 +39,88 @@ public actor ZoneManager {
         self.enableGitCommits = enableGitCommits
         if let data = try? Data(contentsOf: fileURL),
            let string = String(data: data, encoding: .utf8),
-           let loaded = try Yams.load(yaml: string) as? [String: String] {
-            self.cache = loaded
+           let loaded = try? YAMLDecoder().decode([UUID: Zone].self, from: string) {
+            self.zones = loaded
         } else {
-            self.cache = [:]
+            self.zones = [:]
         }
         let attrs = try? FileManager.default.attributesOfItem(atPath: fileURL.path)
         self.lastModified = (attrs?[.modificationDate] as? Date) ?? Date()
         Task { await self.startWatching() }
     }
 
+    // MARK: - Zone operations
+    public func listZones() -> [Zone] { Array(zones.values) }
+
+    public func createZone(name: String) throws -> Zone {
+        let zone = Zone(id: UUID(), name: name, records: [:])
+        zones[zone.id] = zone
+        try persist()
+        return zone
+    }
+
+    public func deleteZone(id: UUID) throws -> Bool {
+        if zones.removeValue(forKey: id) != nil {
+            try persist()
+            return true
+        }
+        return false
+    }
+
+    // MARK: - Record operations
+    public func listRecords(zoneId: UUID) -> [Record]? {
+        zones[zoneId]?.records.values.map { $0 }
+    }
+
+    public func createRecord(zoneId: UUID, name: String, type: String, value: String) throws -> Record? {
+        guard var zone = zones[zoneId] else { return nil }
+        let record = Record(id: UUID(), name: name, type: type, value: value)
+        zone.records[record.id] = record
+        zones[zoneId] = zone
+        try persist()
+        return record
+    }
+
+    public func updateRecord(zoneId: UUID, recordId: UUID, name: String, type: String, value: String) throws -> Record? {
+        guard var zone = zones[zoneId], zone.records[recordId] != nil else { return nil }
+        let record = Record(id: recordId, name: name, type: type, value: value)
+        zone.records[recordId] = record
+        zones[zoneId] = zone
+        try persist()
+        return record
+    }
+
+    public func deleteRecord(zoneId: UUID, recordId: UUID) throws -> Bool {
+        guard var zone = zones[zoneId], zone.records.removeValue(forKey: recordId) != nil else { return false }
+        zones[zoneId] = zone
+        try persist()
+        return true
+    }
+
     /// Returns the IPv4 address associated with the given domain name.
     /// - Parameter name: Fully qualified domain name.
     /// - Returns: The IPv4 address string if present.
     public func ip(for name: String) -> String? {
-        cache[name]
+        if let record = allRecords()[name], record.type == "A" {
+            return record.value
+        }
+        return nil
     }
 
-    /// Updates or inserts a DNS record and persists it to disk.
-    /// - Parameters:
-    ///   - name: Fully qualified domain name.
-    ///   - ip: IPv4 address string.
-    public func set(name: String, ip: String) throws {
-        cache[name] = ip
-        try persist()
-    }
-
-    /// Returns the current in-memory zone cache.
-    public func allRecords() -> [String: String] {
-        cache
+    /// Returns the current in-memory zone cache as a flattened map keyed by FQDN.
+    public func allRecords() -> [String: Record] {
+        var map: [String: Record] = [:]
+        for zone in zones.values {
+            for record in zone.records.values {
+                let fqdn = record.name.isEmpty ? zone.name : "\(record.name).\(zone.name)"
+                map[fqdn] = record
+            }
+        }
+        return map
     }
 
     private func persist() throws {
-        let yaml = try Yams.dump(object: cache)
+        let yaml = try YAMLEncoder().encode(zones)
         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
         if let signer {
             let sig = try signer.sign(zone: yaml)
@@ -76,8 +138,8 @@ public actor ZoneManager {
            mod > lastModified,
            let data = try? Data(contentsOf: fileURL),
            let string = String(data: data, encoding: .utf8),
-           let loaded = try? Yams.load(yaml: string) as? [String: String] {
-            cache = loaded
+           let loaded = try? YAMLDecoder().decode([UUID: Zone].self, from: string) {
+            zones = loaded
             lastModified = mod
         }
     }

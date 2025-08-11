@@ -27,8 +27,9 @@ final class DNSIntegrationTests: XCTestCase {
         let dir = FileManager.default.temporaryDirectory
         let file = dir.appendingPathComponent(UUID().uuidString)
         let manager = try ZoneManager(fileURL: file)
-        try await manager.set(name: "example.com", ip: "1.2.3.4")
-        let engine = DNSEngine(zoneCache: await manager.allRecords())
+        let zone = try await manager.createZone(name: "example.com")
+        _ = try await manager.createRecord(zoneId: zone.id, name: "", type: "A", value: "1.2.3.4")
+        let engine = await DNSEngine(zoneManager: manager)
         var query = Self.makeQuery(name: "example.com")
         let response = engine.handleQuery(buffer: &query)
         XCTAssertNotNil(response)
