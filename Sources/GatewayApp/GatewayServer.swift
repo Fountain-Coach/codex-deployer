@@ -40,6 +40,15 @@ public final class GatewayServer {
     private struct TokenResponse: Codable { let token: String; let expiresAt: String }
     private struct ErrorResponse: Codable { let error: String }
 
+    /// Encodes an error message as JSON and sets the appropriate content type.
+    /// - Parameters:
+    ///   - status: HTTP status code to return.
+    ///   - message: Human-readable error description.
+    private func error(_ status: Int, message: String) -> HTTPResponse {
+        let body = (try? JSONEncoder().encode(ErrorResponse(error: message))) ?? Data()
+        return HTTPResponse(status: status, headers: ["Content-Type": "application/json"], body: body)
+    }
+
     /// Route description used for management operations.
     private struct RouteInfo: Codable {
         enum Method: String, Codable, CaseIterable { case GET, POST, PUT, PATCH, DELETE }
@@ -116,7 +125,7 @@ public final class GatewayServer {
                     let json = try JSONEncoder().encode(ZonesResponse(zones: zones))
                     response = HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
                 } else {
-                    response = HTTPResponse(status: 500)
+                    response = self.error(500, message: "zone manager unavailable")
                 }
             case ("POST", ["zones"]):
                 response = await self.createZone(request)
@@ -410,74 +419,79 @@ public final class GatewayServer {
     }
 
     public func createZone(_ request: HTTPRequest) async -> HTTPResponse {
-        guard let manager = zoneManager else { return HTTPResponse(status: 500) }
+        guard let manager = zoneManager else { return self.error(500, message: "zone manager unavailable") }
         do {
             let req = try JSONDecoder().decode(ZoneCreateRequest.self, from: request.body)
             let zone = try await manager.createZone(name: req.name)
             let json = try JSONEncoder().encode(zone)
             return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
         } catch {
-            return HTTPResponse(status: 400)
+            return self.error(400, message: "invalid zone data")
         }
     }
 
     public func deleteZone(_ zoneId: String) async -> HTTPResponse {
-        guard let manager = zoneManager, let id = UUID(uuidString: zoneId) else { return HTTPResponse(status: 404) }
+        guard let manager = zoneManager else { return self.error(500, message: "zone manager unavailable") }
+        guard let id = UUID(uuidString: zoneId) else { return self.error(404, message: "zone not found") }
         if let success = try? await manager.deleteZone(id: id), success {
             return HTTPResponse(status: 204)
         }
-        return HTTPResponse(status: 404)
+        return self.error(404, message: "zone not found")
     }
 
     public func listRecords(_ zoneId: String) async -> HTTPResponse {
-        guard let manager = zoneManager, let id = UUID(uuidString: zoneId) else { return HTTPResponse(status: 404) }
+        guard let manager = zoneManager else { return self.error(500, message: "zone manager unavailable") }
+        guard let id = UUID(uuidString: zoneId) else { return self.error(404, message: "zone not found") }
         if let recs = await manager.listRecords(zoneId: id) {
             if let json = try? JSONEncoder().encode(RecordsResponse(records: recs)) {
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
             }
-            return HTTPResponse(status: 500)
+            return self.error(500, message: "failed to encode records")
         }
-        return HTTPResponse(status: 404)
+        return self.error(404, message: "zone not found")
     }
 
     public func createRecord(_ zoneId: String, request: HTTPRequest) async -> HTTPResponse {
-        guard let manager = zoneManager, let id = UUID(uuidString: zoneId) else { return HTTPResponse(status: 404) }
+        guard let manager = zoneManager else { return self.error(500, message: "zone manager unavailable") }
+        guard let id = UUID(uuidString: zoneId) else { return self.error(404, message: "zone not found") }
         do {
             let req = try JSONDecoder().decode(RecordRequest.self, from: request.body)
             if let record = try await manager.createRecord(zoneId: id, name: req.name, type: req.type.rawValue, value: req.value),
                let json = try? JSONEncoder().encode(record) {
                 return HTTPResponse(status: 201, headers: ["Content-Type": "application/json"], body: json)
             }
-            return HTTPResponse(status: 404)
+            return self.error(404, message: "zone not found")
         } catch {
-            return HTTPResponse(status: 400)
+            return self.error(400, message: "invalid record data")
         }
     }
 
     public func updateRecord(_ zoneId: String, recordId: String, request: HTTPRequest) async -> HTTPResponse {
-        guard let manager = zoneManager,
-              let zid = UUID(uuidString: zoneId),
-              let rid = UUID(uuidString: recordId) else { return HTTPResponse(status: 404) }
+        guard let manager = zoneManager else { return self.error(500, message: "zone manager unavailable") }
+        guard let zid = UUID(uuidString: zoneId), let rid = UUID(uuidString: recordId) else {
+            return self.error(404, message: "record not found")
+        }
         do {
             let req = try JSONDecoder().decode(RecordRequest.self, from: request.body)
             if let record = try await manager.updateRecord(zoneId: zid, recordId: rid, name: req.name, type: req.type.rawValue, value: req.value),
                let json = try? JSONEncoder().encode(record) {
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
             }
-            return HTTPResponse(status: 404)
+            return self.error(404, message: "record not found")
         } catch {
-            return HTTPResponse(status: 400)
+            return self.error(400, message: "invalid record data")
         }
     }
 
     public func deleteRecord(_ zoneId: String, recordId: String) async -> HTTPResponse {
-        guard let manager = zoneManager,
-              let zid = UUID(uuidString: zoneId),
-              let rid = UUID(uuidString: recordId) else { return HTTPResponse(status: 404) }
+        guard let manager = zoneManager else { return self.error(500, message: "zone manager unavailable") }
+        guard let zid = UUID(uuidString: zoneId), let rid = UUID(uuidString: recordId) else {
+            return self.error(404, message: "record not found")
+        }
         if let success = try? await manager.deleteRecord(zoneId: zid, recordId: rid), success {
             return HTTPResponse(status: 204)
         }
-        return HTTPResponse(status: 404)
+        return self.error(404, message: "record not found")
     }
 
     /// Starts the gateway on the given port.

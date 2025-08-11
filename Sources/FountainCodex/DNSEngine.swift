@@ -24,6 +24,7 @@ public struct DNSEngine {
     /// - Parameters:
     ///   - zoneManager: Zone manager providing records.
     ///   - signer: Optional ``DNSSECSigner`` for zone signing.
+    @MainActor
     public init(zoneManager: ZoneManager, signer: DNSSECSigner? = nil) async {
         let records = await zoneManager.allRecords()
         var cache: [String: String] = [:]
