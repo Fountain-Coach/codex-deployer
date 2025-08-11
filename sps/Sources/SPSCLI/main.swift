@@ -5,10 +5,7 @@ import CryptoKit
 #if os(macOS)
 import CoreGraphics
 #endif
-
-enum SPSCommand: String {
-    case scan, index, query, exportMatrix = "export-matrix", help
-}
+import ArgumentParser
 
 struct IndexDoc: Codable {
     var id: String
@@ -17,33 +14,14 @@ struct IndexDoc: Codable {
     var sha256: String?
     var pages: [IndexPage]
 }
+
 struct IndexPage: Codable {
     var number: Int
     var text: String
 }
+
 struct IndexRoot: Codable {
     var documents: [IndexDoc]
-}
-
-func usage(_ code: Int32 = 2) -> Never {
-    let msg = """
-Usage:
-  sps scan <pdf...> --out <index.json> [--include-text] [--sha256]
-  sps index validate <index.json>
-  sps query <index.json> --q "<term>" [--page-range A-B]
-  sps export-matrix <index.json> --out spec/matrix.json
-
-"""
-    FileHandle.standardError.write(msg.data(using: .utf8)!)
-    exit(code)
-}
-
-@inline(__always) func argVal(_ name: String, _ argv: [String]) -> String? {
-    guard let i = argv.firstIndex(of: name), i + 1 < argv.count else { return nil }
-    return argv[i+1]
-}
-@inline(__always) func hasFlag(_ name: String, _ argv: [String]) -> Bool {
-    argv.contains(name)
 }
 
 func sha256Hex(data: Data) -> String {
@@ -122,101 +100,138 @@ private func cgpdfObjectToString(_ object: CGPDFObjectRef) -> String? {
 }
 #endif
 
-func cmdScan(_ argv: [String]) throws {
-    guard let out = argVal("--out", argv) else { usage() }
-    let includeText = hasFlag("--include-text", argv) || hasFlag("--includeText", argv)
-    let wantSHA = hasFlag("--sha256", argv)
-    let pdfs = argv.dropFirst().filter { !$0.hasPrefix("--") && !$0.contains("scan") }
-    if pdfs.isEmpty { usage() }
-
-    var docs: [IndexDoc] = []
-    for path in pdfs {
-        let url = URL(fileURLWithPath: path)
-        let data = (try? Data(contentsOf: url)) ?? Data()
-        let pages = extractPages(data: data, includeText: includeText)
-        let sha = wantSHA ? sha256Hex(data: data) : nil
-        let doc = IndexDoc(id: UUID().uuidString, fileName: url.lastPathComponent, size: data.count, sha256: sha, pages: pages)
-        docs.append(doc)
-    }
-    let index = IndexRoot(documents: docs)
-    let enc = JSONEncoder()
-    enc.outputFormatting = [.prettyPrinted, .sortedKeys]
-    let json = try enc.encode(index)
-    try json.write(to: URL(fileURLWithPath: out))
-    print("SPS: wrote index -> \(out) (\(json.count) bytes, \(docs.count) doc(s))")
+struct SPS: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        abstract: "Semantic PDF Scanner",
+        subcommands: [Scan.self, Index.self, Query.self, ExportMatrix.self]
+    )
 }
 
-func cmdIndexValidate(_ argv: [String]) throws {
-    guard argv.count >= 4 else { usage() }
-    let path = argv.last!
-    let data = try Data(contentsOf: URL(fileURLWithPath: path))
-    let dec = JSONDecoder()
-    do {
-        _ = try dec.decode(IndexRoot.self, from: data)
-        print(#"{ "ok": true, "issues": [] }"#)
-    } catch {
-        print(#"{ "ok": false, "issues": ["\#(error)"] }"#)
-        exit(3)
+extension SPS {
+    struct Scan: ParsableCommand {
+        static let configuration = CommandConfiguration(abstract: "Scan PDFs and produce an index")
+
+        @Argument(help: "PDF files to scan")
+        var pdfs: [String]
+
+        @Option(name: .shortAndLong, help: "Path to output index JSON")
+        var out: String
+
+        @Flag(name: [.customLong("include-text"), .customLong("includeText")], help: "Include extracted text")
+        var includeText = false
+
+        @Flag(help: "Compute SHA256 digest for each document")
+        var sha256 = false
+
+        func run() throws {
+            guard !pdfs.isEmpty else {
+                throw ValidationError("At least one PDF must be provided.")
+            }
+            var docs: [IndexDoc] = []
+            for path in pdfs {
+                let url = URL(fileURLWithPath: path)
+                let data = (try? Data(contentsOf: url)) ?? Data()
+                let pages = extractPages(data: data, includeText: includeText)
+                let hash = sha256 ? sha256Hex(data: data) : nil
+                let doc = IndexDoc(id: UUID().uuidString, fileName: url.lastPathComponent, size: data.count, sha256: hash, pages: pages)
+                docs.append(doc)
+            }
+            let index = IndexRoot(documents: docs)
+            let enc = JSONEncoder()
+            enc.outputFormatting = [.prettyPrinted, .sortedKeys]
+            let json = try enc.encode(index)
+            try json.write(to: URL(fileURLWithPath: out))
+            print("SPS: wrote index -> \(out) (\(json.count) bytes, \(docs.count) doc(s))")
+        }
     }
 }
 
-func cmdQuery(_ argv: [String]) throws {
-    guard let q = argVal("--q", argv) else { usage() }
-    let indexPath = argv.dropFirst().first { $0.hasSuffix(".json") } ?? ""
-    guard !indexPath.isEmpty else { usage() }
-    let data = try Data(contentsOf: URL(fileURLWithPath: indexPath))
-    let index = try JSONDecoder().decode(IndexRoot.self, from: data)
-    var hits: [[String: Any]] = []
-    for doc in index.documents {
-        for page in doc.pages {
-            if page.text.lowercased().contains(q.lowercased()) {
-                hits.append(["docId": doc.id, "page": page.number, "snippet": page.text])
+extension SPS {
+    struct Index: ParsableCommand {
+        static let configuration = CommandConfiguration(
+            abstract: "Index operations",
+            subcommands: [Validate.self]
+        )
+
+        struct Validate: ParsableCommand {
+            static let configuration = CommandConfiguration(abstract: "Validate an index JSON")
+
+            @Argument(help: "Path to index JSON file")
+            var path: String
+
+            func run() throws {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path))
+                let dec = JSONDecoder()
+                do {
+                    _ = try dec.decode(IndexRoot.self, from: data)
+                    print(#"{ "ok": true, "issues": [] }"#)
+                } catch {
+                    print(#"{ "ok": false, "issues": ["\#(error)"] }"#)
+                    throw ExitCode(3)
+                }
             }
         }
     }
-    let out: [String: Any] = ["hits": hits]
-    let json = try JSONSerialization.data(withJSONObject: out, options: [.prettyPrinted, .sortedKeys])
-    FileHandle.standardOutput.write(json)
-    FileHandle.standardOutput.write("\n".data(using: .utf8)!)
 }
 
-func cmdExportMatrix(_ argv: [String]) throws {
-    guard let out = argVal("--out", argv) else { usage() }
-    let indexPath = argv.first { $0.hasSuffix(".json") } ?? ""
-    guard !indexPath.isEmpty else { usage() }
-    let data = try Data(contentsOf: URL(fileURLWithPath: indexPath))
-    let index = try JSONDecoder().decode(IndexRoot.self, from: data)
-    let detected = TableDetector.detect(from: index)
-    struct Matrix: Codable {
-        var messages: [MatrixEntry]
-        var terms: [MatrixEntry]
+extension SPS {
+    struct Query: ParsableCommand {
+        static let configuration = CommandConfiguration(abstract: "Query an index")
+
+        @Argument(help: "Path to index JSON file")
+        var index: String
+
+        @Option(name: .customLong("q"), help: "Search term")
+        var q: String
+
+        func run() throws {
+            let data = try Data(contentsOf: URL(fileURLWithPath: index))
+            let index = try JSONDecoder().decode(IndexRoot.self, from: data)
+            var hits: [[String: Any]] = []
+            for doc in index.documents {
+                for page in doc.pages {
+                    if page.text.lowercased().contains(q.lowercased()) {
+                        hits.append(["docId": doc.id, "page": page.number, "snippet": page.text])
+                    }
+                }
+            }
+            let out: [String: Any] = ["hits": hits]
+            let json = try JSONSerialization.data(withJSONObject: out, options: [.prettyPrinted, .sortedKeys])
+            FileHandle.standardOutput.write(json)
+            FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+        }
     }
-    let matrix = Matrix(messages: detected.messages, terms: detected.terms)
-    let enc = JSONEncoder()
-    enc.outputFormatting = [.prettyPrinted, .sortedKeys]
-    let outData = try enc.encode(matrix)
-    try outData.write(to: URL(fileURLWithPath: out))
-    print("SPS: wrote matrix skeleton -> \(out)")
 }
 
-let argv = CommandLine.arguments
-guard argv.count >= 2 else { usage() }
-let cmdStr = argv[1]
-switch cmdStr {
-case SPSCommand.scan.rawValue:
-    try! cmdScan(Array(argv.dropFirst(1)))
-case "index":
-    if argv.count >= 3, argv[2] == "validate" {
-        try! cmdIndexValidate(Array(argv.dropFirst(2)))
-    } else { usage() }
-case SPSCommand.query.rawValue:
-    try! cmdQuery(Array(argv.dropFirst(1)))
-case SPSCommand.exportMatrix.rawValue:
-    try! cmdExportMatrix(Array(argv.dropFirst(1)))
-case SPSCommand.help.rawValue, "--help", "-h":
-    usage(0)
-default:
-    usage()
+extension SPS {
+    struct ExportMatrix: ParsableCommand {
+        static let configuration = CommandConfiguration(abstract: "Export Midi2Swift matrix skeleton")
+
+        @Argument(help: "Path to index JSON file")
+        var index: String
+
+        @Option(name: .shortAndLong, help: "Output path for matrix JSON")
+        var out: String
+
+        func run() throws {
+            let data = try Data(contentsOf: URL(fileURLWithPath: index))
+            let index = try JSONDecoder().decode(IndexRoot.self, from: data)
+            let detected = TableDetector.detect(from: index)
+            struct Matrix: Codable {
+                var messages: [MatrixEntry]
+                var terms: [MatrixEntry]
+            }
+            let matrix = Matrix(messages: detected.messages, terms: detected.terms)
+            let enc = JSONEncoder()
+            enc.outputFormatting = [.prettyPrinted, .sortedKeys]
+            let outData = try enc.encode(matrix)
+            try outData.write(to: URL(fileURLWithPath: out))
+            print("SPS: wrote matrix skeleton -> \(out)")
+        }
+    }
 }
+
+SPS.main()
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+
