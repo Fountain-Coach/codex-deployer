@@ -326,7 +326,10 @@ public final class GatewayServer {
 
     public func renewCertificate() -> HTTPResponse {
         manager.triggerNow()
-        return HTTPResponse(status: 202)
+        if let json = try? JSONEncoder().encode(["status": "triggered"]) {
+            return HTTPResponse(status: 202, headers: ["Content-Type": "application/json"], body: json)
+        }
+        return HTTPResponse(status: 500)
     }
 
     public func listRoutes() -> HTTPResponse {
