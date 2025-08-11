@@ -122,16 +122,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
   /routes/{routeId}:
-    parameters:
-      - name: routeId
-        in: path
-        required: true
-        schema:
-          type: string
-          description: Unique identifier for the route
     put:
       summary: Update an existing route
       operationId: updateRoute
+      parameters:
+        - name: routeId
+          in: path
+          required: true
+          description: Unique identifier for the route
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -154,6 +154,13 @@ paths:
     delete:
       summary: Delete a route
       operationId: deleteRoute
+      parameters:
+        - name: routeId
+          in: path
+          required: true
+          description: Unique identifier for the route
+          schema:
+            type: string
       responses:
         '204':
           description: Route deleted
@@ -216,6 +223,9 @@ components:
         rateLimit:
           type: integer
           description: Optional maximum requests per minute
+        proxyEnabled:
+          type: boolean
+          description: Indicates if proxying to the upstream is enabled
     ErrorResponse:
       type: object
       required:
