@@ -28,6 +28,10 @@ Operational assets like Dockerfiles and OpenAPI specifications live under [`Sour
 
 ![image_gen: Flow from OpenAPI specs to generated clients and server binaries]
 
+#### Semantic PDF Scanner (SPS)
+Command-line tool for extracting text and tables from PDFs. Supports page range queries and validation hooks for Midi2Swift.
+See [SPS Usage Guide](docs/sps-usage-guide.md) for end-to-end examples.
+
 ### Design Patterns
 The project adopts several common patterns which can be seen in the implementation files:
 

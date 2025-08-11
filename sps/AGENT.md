@@ -12,7 +12,7 @@ Build a **Swift-only** command‑line tool that semantically scans PDF specifica
   - `Resources/` — templates and built-in prompts (kept empty for now)
 - `openapi/sps.openapi.yml` — OpenAPI describing the CLI’s capabilities for client generators
 - `Tests/SPSCLITests/` — unit tests for helper logic
-- `Samples/` — optional sample PDFs (empty placeholder)
+  - `Samples/` — annotated sample PDFs for extraction and table detection
 - `AGENT.md` — this file
 - `.gitignore`, `Makefile`
 
@@ -27,9 +27,10 @@ Build a **Swift-only** command‑line tool that semantically scans PDF specifica
   - document metadata (file name, size, optional SHA256)
   - page stubs (page count placeholder)
   - extracted text (placeholder; ready for future extractors)
+  - optional page filtering via `--page-range`
 - `index` echoes the index location and validates structure.
-- `query` does simple keyword filtering over extracted text (case-insensitive contains).
-- `export-matrix` creates a **Midi2Swift-friendly** skeleton (`messages: []`, `terms: []`), ready to be upgraded once real table parsing lands.
+- `query` does simple keyword filtering over extracted text (case-insensitive contains) and supports `--page-range`.
+- `export-matrix` creates a **Midi2Swift-friendly** skeleton (`messages: []`, `terms: []`) and can run validation hooks with `--validate`.
 
 > The actual PDF text extraction is intentionally stubbed in Swift for portability. Real extraction backends:
 > - macOS: **CGPDF** (CoreGraphics) or **PDFKit** bridge (C-based)
@@ -40,14 +41,14 @@ Build a **Swift-only** command‑line tool that semantically scans PDF specifica
 2. **Table detector** (rule-based over text + coordinates → semantic tables).
 3. **Entity linker** (terms ↔ definitions; messages ↔ normative sections).
 4. **Matrix exporter v2** (bitfields, ranges, enums; feeds Midi2Swift SwiftGen).
-5. **Verifier hooks** (coverage, reserved-bit invariants, golden vectors cross-check).
+5. **Verifier hooks** (coverage, reserved-bit invariants, golden vectors cross-check) – basic hooks shipped behind `--validate`.
 
 ## CLI overview
 ```
-sps scan <pdf...> --out <index.json> [--include-text] [--sha256]
+sps scan <pdf...> --out <index.json> [--include-text] [--sha256] [--page-range A-B]
 sps index validate <index.json>
 sps query <index.json> --q "<term|regex>" [--page-range A-B]
-sps export-matrix <index.json> --out spec/matrix.json
+sps export-matrix <index.json> --out spec/matrix.json [--validate]
 ```
 
 ### Exit codes
@@ -76,11 +77,11 @@ See `openapi/sps.openapi.yml` for full schema. The CLI mirrors these operations 
 swift build -c release
 
 # 2) Scan PDFs into an index
-.build/release/sps scan spec/sources/midi2/*.pdf --out spec/index.json --include-text --sha256
+.build/release/sps scan spec/sources/midi2/*.pdf --out spec/index.json --include-text --page-range 1-3 --sha256
 
 # 3) Validate + quick query
 .build/release/sps index validate spec/index.json
-.build/release/sps query spec/index.json --q "Note On"
+.build/release/sps query spec/index.json --q "Note On" --page-range 10-12
 
 # 4) Export matrix for Midi2Swift generators
 .build/release/sps export-matrix spec/index.json --out spec/matrix.json --validate

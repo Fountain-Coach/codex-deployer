@@ -1,6 +1,6 @@
 # 🧠 Repository Agent Manifest
 
-**Last Updated:** August 06, 2025
+**Last Updated:** August 11, 2025
 **Scope:** Full-repository self-improvement and orchestration  
 **Purpose:** Serve as a machine-actionable contract and coordination center for Codex-driven implementation, testing, and maintenance across all project modules.
 
@@ -45,6 +45,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | opId→handler audit | repo-wide | Script to diff specs vs code | ✅ | — | tooling, docs |
 | Spec↔code drift | specs & servers | Track/close gaps per service | ✅ | — | process |
 | SPS validation hooks | `sps/Sources/Validation/*`, `sps/Sources/SPSCLI/main.swift` | Add coverage + reserved-bit checks | ✅ | — | sps |
+| SPS samples & usage docs | `sps/Samples`, `docs/sps-usage-guide.md` | Provide annotated sample PDFs and usage guide with page-range queries & validation hooks | ✅ | — | docs, sps |
 
 ---
 
