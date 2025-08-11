@@ -182,12 +182,20 @@ func cmdQuery(_ argv: [String]) throws {
 
 func cmdExportMatrix(_ argv: [String]) throws {
     guard let out = argVal("--out", argv) else { usage() }
-    let matrix: [String: Any] = [
-        "messages": [],
-        "terms": []
-    ]
-    let data = try JSONSerialization.data(withJSONObject: matrix, options: [.prettyPrinted, .sortedKeys])
-    try data.write(to: URL(fileURLWithPath: out))
+    let indexPath = argv.first { $0.hasSuffix(".json") } ?? ""
+    guard !indexPath.isEmpty else { usage() }
+    let data = try Data(contentsOf: URL(fileURLWithPath: indexPath))
+    let index = try JSONDecoder().decode(IndexRoot.self, from: data)
+    let detected = TableDetector.detect(from: index)
+    struct Matrix: Codable {
+        var messages: [MatrixEntry]
+        var terms: [MatrixEntry]
+    }
+    let matrix = Matrix(messages: detected.messages, terms: detected.terms)
+    let enc = JSONEncoder()
+    enc.outputFormatting = [.prettyPrinted, .sortedKeys]
+    let outData = try enc.encode(matrix)
+    try outData.write(to: URL(fileURLWithPath: out))
     print("SPS: wrote matrix skeleton -> \(out)")
 }
 

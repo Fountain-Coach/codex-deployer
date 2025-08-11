@@ -106,15 +106,22 @@ final class SPSCLITests: XCTestCase {
 
     func testExportMatrixDeterministic() throws {
         let tempDir = FileManager.default.temporaryDirectory
-        let indexPath = tempDir.appendingPathComponent("dummy.json")
-        try "{}".data(using: .utf8)!.write(to: indexPath)
+        let indexPath = tempDir.appendingPathComponent("index.json")
+        let page = IndexPage(number: 1, text: "Test Message and Term line")
+        let doc = IndexDoc(id: "1", fileName: "dummy", size: 0, sha256: nil, pages: [page])
+        let index = IndexRoot(documents: [doc])
+        let enc = JSONEncoder()
+        enc.outputFormatting = [.prettyPrinted, .sortedKeys]
+        try enc.encode(index).write(to: indexPath)
         let outURL = tempDir.appendingPathComponent("matrix.json")
         try cmdExportMatrix([indexPath.path, "--out", outURL.path])
         let data = try Data(contentsOf: outURL)
         XCTAssertEqual(data, try canonicalData(from: data))
         let obj = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-        XCTAssertNotNil(obj["messages"] as? [Any])
-        XCTAssertNotNil(obj["terms"] as? [Any])
+        let msgs = obj["messages"] as? [[String: Any]]
+        let terms = obj["terms"] as? [[String: Any]]
+        XCTAssertEqual(msgs?.count, 1)
+        XCTAssertEqual(terms?.count, 1)
     }
 }
 
