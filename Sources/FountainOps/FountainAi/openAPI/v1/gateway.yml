@@ -24,7 +24,7 @@ paths:
   /metrics:
     get:
       summary: Metrics
-      description: Endpoint that serves Prometheus metrics.
+      description: Endpoint that serves runtime metrics encoded as JSON.
       operationId: gatewayMetrics
       responses:
         '200':
@@ -33,6 +33,8 @@ paths:
             application/json:
               schema:
                 type: object
+                additionalProperties:
+                  type: integer
   /auth/token:
     post:
       summary: Issue Authentication Token
