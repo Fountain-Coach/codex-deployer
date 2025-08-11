@@ -16,11 +16,16 @@ let package = Package(
         .executableTarget(
             name: "SPSCLI",
             dependencies: [
+                "Validation",
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
             ],
             path: "Sources/SPSCLI",
             exclude: ["Resources"],
             resources: []
+        ),
+        .target(
+            name: "Validation",
+            path: "Sources/Validation"
         ),
         .testTarget(
             name: "SPSCLITests",

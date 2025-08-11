@@ -83,7 +83,19 @@ swift build -c release
 .build/release/sps query spec/index.json --q "Note On"
 
 # 4) Export matrix for Midi2Swift generators
-.build/release/sps export-matrix spec/index.json --out spec/matrix.json
+.build/release/sps export-matrix spec/index.json --out spec/matrix.json --validate
+```
+
+The `--validate` flag runs coverage analysis and reserved-bit checks.
+It emits a report alongside the matrix at `spec/matrix.json.validation.json`.
+Sample report:
+
+```
+{
+  "coveragePassed": true,
+  "reservedBitsPassed": true,
+  "issues": []
+}
 ```
 
 ## Non-goals (for now)
@@ -102,3 +114,5 @@ swift build -c release
 ### Notes for Midi2Swift integration
 - The produced `matrix.json` must slot into `tools/MatrixBuilder` without manual edits.
 - When `STRICT_FULL_SPEC=1` in downstream CI, missing fields should surface as validation errors, not crashes.
+
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
