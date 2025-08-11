@@ -120,13 +120,6 @@ public final class GatewayServer {
                 }
             case ("POST", ["zones"]):
                 response = await self.createZone(request)
-            case ("POST", ["zones", "reload"]):
-                if let manager = zoneManager {
-                    await manager.reload()
-                    response = HTTPResponse(status: 204)
-                } else {
-                    response = HTTPResponse(status: 500)
-                }
             case ("DELETE", let seg) where seg.count == 2 && seg[0] == "zones":
                 let zoneId = String(seg[1])
                 response = await self.deleteZone(zoneId)
