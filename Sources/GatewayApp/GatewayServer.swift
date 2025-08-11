@@ -80,8 +80,12 @@ public final class GatewayServer {
         self.reloadRoutes()
         let kernel = HTTPKernel { [plugins, zoneManager, self] req in
             var request = req
-            for plugin in plugins {
-                request = try await plugin.prepare(request)
+            do {
+                for plugin in plugins {
+                    request = try await plugin.prepare(request)
+                }
+            } catch is UnauthorizedError {
+                return HTTPResponse(status: 401)
             }
             let segments = request.path.split(separator: "/", omittingEmptySubsequences: true)
             var response: HTTPResponse
@@ -303,15 +307,19 @@ public final class GatewayServer {
     public func issueAuthToken(_ request: HTTPRequest) async -> HTTPResponse {
         do {
             let creds = try JSONDecoder().decode(CredentialRequest.self, from: request.body)
-            if creds.clientId == "admin", creds.clientSecret == "password" {
-                let formatter = ISO8601DateFormatter()
-                let expires = formatter.string(from: Date().addingTimeInterval(3600))
-                let token = UUID().uuidString
-                let json = try JSONEncoder().encode(TokenResponse(token: token, expiresAt: expires))
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+            let store = CredentialStore()
+            guard store.validate(clientId: creds.clientId, clientSecret: creds.clientSecret) else {
+                let json = try JSONEncoder().encode(ErrorResponse(error: "invalid credentials"))
+                return HTTPResponse(status: 401, headers: ["Content-Type": "application/json"], body: json)
             }
-            let json = try JSONEncoder().encode(ErrorResponse(error: "invalid credentials"))
-            return HTTPResponse(status: 401, headers: ["Content-Type": "application/json"], body: json)
+            let expiry = Date().addingTimeInterval(3600)
+            let formatter = ISO8601DateFormatter()
+            let expires = formatter.string(from: expiry)
+            guard let token = try? store.signJWT(subject: creds.clientId, expiresAt: expiry) else {
+                return HTTPResponse(status: 500)
+            }
+            let json = try JSONEncoder().encode(TokenResponse(token: token, expiresAt: expires))
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
         } catch {
             return HTTPResponse(status: 400)
         }
