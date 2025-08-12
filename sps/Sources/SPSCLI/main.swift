@@ -85,14 +85,29 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
                 font = CTFontCreateCopyWithAttributes(cached, size, nil, nil)
                 return
             }
-            guard let fontsDict = fontsDict else { return }
+            guard let fontsDict = fontsDict else {
+                if SPS_DEBUG { print("[SPS_DEBUG] fontsDict is nil for font resource: \
+\(name)") }
+                return
+            }
             var obj: CGPDFObjectRef?
-            guard CGPDFDictionaryGetObject(fontsDict, name, &obj) else { return }
+            if SPS_DEBUG { print("[SPS_DEBUG] looking up font resource key=\(name)") }
+            guard CGPDFDictionaryGetObject(fontsDict, name, &obj) else {
+                if SPS_DEBUG { print("[SPS_DEBUG] CGPDFDictionaryGetObject failed for key=\(name)") }
+                return
+            }
             var dict: CGPDFDictionaryRef?
-            guard CGPDFObjectGetValue(obj!, .dictionary, &dict), let fontDict = dict else { return }
-            var basePtr: UnsafePointer<Int8>?
-            guard CGPDFDictionaryGetName(fontDict, "BaseFont", &basePtr), let base = basePtr else { return }
+            guard CGPDFObjectGetValue(obj!, .dictionary, &dict), let fontDict = dict else {
+                if SPS_DEBUG { print("[SPS_DEBUG] CGPDFObjectGetValue -> dictionary failed for key=\(name)") }
+                return
+            }
+            var basePtr: UnsafePointer[Int8]?
+            guard CGPDFDictionaryGetName(fontDict, "BaseFont", &basePtr), let base = basePtr else {
+                if SPS_DEBUG { print("[SPS_DEBUG] BaseFont not found in font dict for key=\(name)") }
+                return
+            }
             let baseName = String(cString: base)
+            if SPS_DEBUG { print("[SPS_DEBUG] resolved base font name=\(baseName) for resource key=\(name)") }
             let ct = CTFontCreateWithName(baseName as CFString, size, nil)
             fontCache[name] = ct
             font = ct
