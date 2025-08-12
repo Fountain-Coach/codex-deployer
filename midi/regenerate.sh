@@ -13,10 +13,12 @@ export SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH:-1711843200} # 2024-04-01
 echo "[midi] Ingesting specs -> models matrix..."
 "$REPO_ROOT/midi/ingest.sh"
 
+echo "[midi] Parsing index fragments..."
+( cd "$REPO_ROOT/midi" && swift run IndexParser )
+
 echo "[midi] Building normalized model artifacts..."
 "$REPO_ROOT/midi/build-models.sh"
 
 echo "[midi] Done. Artifacts in midi/models"
 
 # © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-
