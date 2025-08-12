@@ -24,7 +24,7 @@
 | 1 | Spec ingestion pipeline   | `midi/specs/`, `sps/*`                     | Ingest MIDI 2.0 specification documents via SPS parsing pipeline using `SPSJobQueue` for asynchronous processing | – | index regenerated via `--wait` queue | DONE |
 | 2 | Data model generation     | `midi/models/`                             | Emit normalized machine-readable models from ingested specs | – | messages, enums, bitfields, ranges regenerated | DONE |
 | 3 | Swift package scaffolding | `Sources/MIDI2/*`, `Package.swift`         | Generate Swift sources for a `MIDI2` module and expose via Swift Package Manager | – | Package and tests scaffolded | DONE |
-| 4 | Test suite                | `Tests/MIDI2Tests/*`                       | Provide tests covering generated MIDI 2 functionality | – | Basic index loading test added | TODO |
+| 4 | Test suite                | `Tests/MIDI2Tests/*`                       | Provide tests covering generated MIDI 2 functionality | – | Sample model decoding tests added | DONE |
 | 5 | Reproducibility tooling   | `midi/*`                                   | Ensure artifacts are reproducible and regeneratable when specs change | – | – | TODO |
 | 6 | Verification              | `swift test`                               | Run full `swift test` after changes | – | all tests passed | DONE |
 | 7 | Job queue reliability     | `sps/Sources/SPSCLI/JobQueue.swift`        | Persist jobs synchronously and provide worker or `--wait` mode | – | sync persistence and `--wait` flag implemented | DONE |

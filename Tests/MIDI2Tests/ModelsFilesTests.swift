@@ -24,6 +24,37 @@ final class ModelsFilesTests: XCTestCase {
         }
     }
 
+    private func decodeFirst<T: Decodable>(_ file: String, as type: T.Type) throws -> T? {
+        let url = URL(fileURLWithPath: path(file))
+        let data = try Data(contentsOf: url)
+        let raw = try JSONSerialization.jsonObject(with: data) as? [Any] ?? []
+        let decoder = JSONDecoder()
+        for element in raw {
+            if let dict = element as? [String: Any] {
+                let elemData = try JSONSerialization.data(withJSONObject: dict)
+                return try decoder.decode(T.self, from: elemData)
+            }
+        }
+        return nil
+    }
+
+    func testDecodeSampleModels() throws {
+        let message = try XCTUnwrap(decodeFirst("midi/models/messages.json", as: MessageType.self))
+        XCTAssertEqual(message.name, "noteOn")
+        XCTAssertEqual(message.status, 144)
+
+        let enumeration = try XCTUnwrap(decodeFirst("midi/models/enums.json", as: EnumDefinition.self))
+        XCTAssertEqual(enumeration.cases, ["up", "down"])
+
+        let bitfield = try XCTUnwrap(decodeFirst("midi/models/bitfields.json", as: Bitfield.self))
+        XCTAssertEqual(bitfield.bits.count, 2)
+        XCTAssertEqual(bitfield.bits.first?.name, "isSharp")
+
+        let range = try XCTUnwrap(decodeFirst("midi/models/ranges.json", as: RangeDefinition.self))
+        XCTAssertEqual(range.min, 0)
+        XCTAssertEqual(range.max, 127)
+    }
+
     func testIndexDecodingHasStableShape() throws {
         let index = try MIDIModelIndex.load()
         // Validate at least keys on first document if present
