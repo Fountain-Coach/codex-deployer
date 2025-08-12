@@ -298,7 +298,7 @@ private func cgpdfObjectToString(_ object: CGPDFObjectRef) -> String? {
 struct SPS: ParsableCommand {
     static let configuration = CommandConfiguration(
         abstract: "Semantic PDF Scanner",
-        subcommands: [Scan.self, Index.self, Query.self, ExportMatrix.self]
+        subcommands: [Scan.self, Index.self, Query.self, ExportMatrix.self, Status.self]
     )
 }
 
@@ -322,21 +322,41 @@ extension SPS {
             guard !pdfs.isEmpty else {
                 throw ValidationError("At least one PDF must be provided.")
             }
-            var docs: [IndexDoc] = []
-            for path in pdfs {
-                let url = URL(fileURLWithPath: path)
-                let data = (try? Data(contentsOf: url)) ?? Data()
-                let pages = extractPages(data: data, includeText: includeText)
-                let hash = sha256 ? sha256Hex(data: data) : nil
-                let doc = IndexDoc(id: UUID().uuidString, fileName: url.lastPathComponent, size: data.count, sha256: hash, pages: pages)
-                docs.append(doc)
+            let ticket = SPSJobQueue.shared.enqueueScan(pdfs: pdfs, out: out, includeText: includeText, sha256: sha256)
+            print("SPS: enqueued scan job -> \(ticket.uuidString)")
+        }
+    }
+}
+
+extension SPS {
+    struct Status: ParsableCommand {
+        static let configuration = CommandConfiguration(abstract: "Check job status")
+
+        @Argument(help: "Ticket ID returned by 'scan'")
+        var ticket: String
+
+        func run() throws {
+            guard let id = UUID(uuidString: ticket),
+                  let job = SPSJobQueue.shared.status(id: id) else {
+                print("Job not found")
+                return
             }
-            let index = IndexRoot(documents: docs)
-            let enc = JSONEncoder()
-            enc.outputFormatting = [.prettyPrinted, .sortedKeys]
-            let json = try enc.encode(index)
-            try json.write(to: URL(fileURLWithPath: out))
-            print("SPS: wrote index -> \(out) (\(json.count) bytes, \(docs.count) doc(s))")
+            let pct = Int(job.progress * 100)
+            let messages = [
+                "Scanning like a champ!",
+                "Hang tight, excellence takes time.",
+                "You're doing great!",
+                "Almost there!"
+            ]
+            let msg = messages[Int(Date().timeIntervalSince1970) % messages.count]
+            switch job.state {
+            case .completed:
+                print("Job completed: \(job.result ?? "")")
+            case .failed:
+                print("Job failed: \(job.error ?? "unknown error")")
+            case .pending, .running:
+                print("Job \(job.state.rawValue) - \(pct)% - \(msg)")
+            }
         }
     }
 }
