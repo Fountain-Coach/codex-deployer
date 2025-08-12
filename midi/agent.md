@@ -12,6 +12,7 @@
 - Expose the package via `Package.swift` and provide corresponding tests under `Tests/MIDI2Tests`.
 - Keep artifacts reproducible: regenerate instead of hand-editing when specs change.
 - Verify all changes with `swift test`.
+- Use the normative schema files under `midi/Normative/` as golden vectors; refine heuristics that map `midi/specs` PDF content to model structures and cross-validate generated models against these references.
 
 ## 📝 Style
 - Follow repository-wide SwiftLint rules.
@@ -28,6 +29,7 @@
 | 5 | Reproducibility tooling   | `midi/*`                                   | Ensure artifacts are reproducible and regeneratable when specs change | – | – | TODO |
 | 6 | Verification              | `swift test`                               | Run full `swift test` after changes | – | all tests passed | DONE |
 | 7 | Job queue reliability     | `sps/Sources/SPSCLI/JobQueue.swift`        | Persist jobs synchronously and provide worker or `--wait` mode | – | sync persistence and `--wait` flag implemented | DONE |
+| 8 | Normative spec alignment | `midi/Normative/*` | Treat normative schema JSON as golden vectors to refine heuristics for model assembly and validate outputs | – | – | TODO |
 
 
 > © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
