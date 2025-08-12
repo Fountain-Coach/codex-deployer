@@ -5,6 +5,7 @@ import CryptoKit
 #if os(macOS)
 import CoreGraphics
 import CoreText
+import PDFKit
 #elseif os(Linux)
 import Glibc
 #endif
@@ -27,12 +28,25 @@ struct TextLine: Codable {
     var y: Double
     var width: Double
     var height: Double
+    // Whether this token ends with a hyphenation marker (soft or hard)
+    var hyphenated: Bool?
+}
+
+// Per-character bounding box used for grouping into lines. Use Double for portability.
+struct CharBox {
+    var text: String
+    var x: Double
+    var y: Double
+    var width: Double
+    var height: Double
 }
 
 struct IndexPage: Codable {
     var number: Int
     var text: String
     var lines: [TextLine]
+    // Optional finer-grained tokens (word-level) extracted by PDFKit fallback.
+    var words: [TextLine]?
 }
 
 struct IndexRoot: Codable {
@@ -86,8 +100,7 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
                 return
             }
             guard let fontsDict = fontsDict else {
-                if SPS_DEBUG { print("[SPS_DEBUG] fontsDict is nil for font resource: \
-\(name)") }
+                if SPS_DEBUG { print("[SPS_DEBUG] fontsDict is nil for font resource: \(name)") }
                 return
             }
             var obj: CGPDFObjectRef?
@@ -101,7 +114,7 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
                 if SPS_DEBUG { print("[SPS_DEBUG] CGPDFObjectGetValue -> dictionary failed for key=\(name)") }
                 return
             }
-            var basePtr: UnsafePointer[Int8]?
+            var basePtr: UnsafePointer<Int8>?
             guard CGPDFDictionaryGetName(fontDict, "BaseFont", &basePtr), let base = basePtr else {
                 if SPS_DEBUG { print("[SPS_DEBUG] BaseFont not found in font dict for key=\(name)") }
                 return
@@ -123,7 +136,7 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
             CTFontGetAdvancesForGlyphs(font, .horizontal, glyphs, &advances, utf16.count)
             for (idx, ch) in charsArray.enumerated() {
                 let adv = advances[idx].width
-                chars.append(CharBox(text: String(ch), x: tm.tx, y: tm.ty, width: adv, height: fontSize))
+                chars.append(CharBox(text: String(ch), x: Double(tm.tx), y: Double(tm.ty), width: Double(adv), height: Double(fontSize)))
                 tm = tm.translatedBy(x: adv, y: 0)
             }
         }
@@ -266,6 +279,7 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
 
         var lines: [TextLine] = []
         for group in lineGroups {
+                    // (hyphen handling note)
             let text = group.map { $0.text }.joined()
             let minX = group.map { $0.x }.min() ?? 0
             let maxX = group.map { $0.x + $0.width }.max() ?? 0
@@ -292,6 +306,133 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
         let pageText = lines.map { $0.text }.joined(separator: "\n")
         pages.append(IndexPage(number: i, text: pageText, lines: lines))
     }
+
+    // If CoreGraphics extraction produced no lines, try PDFKit-based extraction as a fallback.
+    let empty = pages.allSatisfy { $0.lines.isEmpty }
+    if empty {
+        if SPS_DEBUG { print("[SPS_DEBUG] CoreGraphics extraction yielded no lines; trying PDFKit fallback") }
+        if let pdfDoc = PDFDocument(data: data) {
+            // Use PDFKit to extract per-character bounding boxes and reconstruct lines.
+            var pkPages: [IndexPage] = []
+            for pidx in 0..<pdfDoc.pageCount {
+                guard let p = pdfDoc.page(at: pidx) else { continue }
+                let text = p.string ?? ""
+                let ns = text as NSString
+                var charBoxes: [CharBox] = []
+                var ci = 0
+                while ci < ns.length {
+                    let range = NSRange(location: ci, length: 1)
+                    let sel = p.selection(for: range)
+                    var ssub = ns.substring(with: range)
+                    var advance = 1
+                    if let sel = sel, let sstr = sel.string, !sstr.isEmpty {
+                        ssub = sstr
+                        advance = (sstr as NSString).length
+                    }
+                    var rect = CGRect.zero
+                    if let sel = sel {
+                        rect = sel.bounds(for: p)
+                    }
+                    charBoxes.append(CharBox(text: ssub, x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: rect.size.height))
+                    ci += advance
+                }
+
+                // Group characters into lines using vertical clustering
+                let epsilon: CGFloat = 2
+                let sortedChars = charBoxes.sorted { (a, b) -> Bool in
+                    if abs(a.y - b.y) > epsilon { return a.y > b.y }
+                    return a.x < b.x
+                }
+                var lineGroups: [[CharBox]] = []
+                for ch in sortedChars {
+                    if var last = lineGroups.last, abs(last.first!.y - ch.y) <= epsilon {
+                        lineGroups[lineGroups.count - 1].append(ch)
+                    } else {
+                        lineGroups.append([ch])
+                    }
+                }
+
+                var lines: [TextLine] = []
+                for group in lineGroups {
+                    // (hyphen handling note)
+                    let text = group.map { $0.text }.joined()
+                    let minX = group.map { $0.x }.min() ?? 0
+                    let maxX = group.map { $0.x + $0.width }.max() ?? 0
+                    let minY = group.map { $0.y }.min() ?? 0
+                    let maxY = group.map { $0.y + $0.height }.max() ?? 0
+                    lines.append(TextLine(text: text, x: Double(minX), y: Double(minY), width: Double(maxX - minX), height: Double(maxY - minY), hyphenated: nil))
+                }
+                // Build word-level tokens per line and normalize unicode to NFC; handle hyphenation across lines.
+                var words: [TextLine] = []
+                var wordsByLine: [[TextLine]] = []
+                for group in lineGroups {
+                    // (hyphen handling note)
+                    var currentChars: [CharBox] = []
+                    var lineWords: [TextLine] = []
+                    for ch in group {
+                        let isSpace = ch.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                        if isSpace {
+                            if !currentChars.isEmpty {
+                                let wText = currentChars.map { $0.text }.joined()
+                                let minX = currentChars.map { $0.x }.min() ?? 0
+                                let maxX = currentChars.map { $0.x + $0.width }.max() ?? 0
+                                let minY = currentChars.map { $0.y }.min() ?? 0
+                                let maxY = currentChars.map { $0.y + $0.height }.max() ?? 0
+                                let hasSoft = wText.contains("\u{00AD}")
+                                let cleaned = wText.replacingOccurrences(of: "\u{00AD}", with: "")
+                                let normalized = (cleaned as NSString).precomposedStringWithCanonicalMapping
+                                lineWords.append(TextLine(text: normalized, x: Double(minX), y: Double(minY), width: Double(maxX - minX), height: Double(maxY - minY), hyphenated: hasSoft || normalized.hasSuffix("-")))
+                                currentChars.removeAll()
+                            }
+                        } else {
+                            currentChars.append(ch)
+                        }
+                    }
+                    if !currentChars.isEmpty {
+                        let wText = currentChars.map { $0.text }.joined()
+                        let minX = currentChars.map { $0.x }.min() ?? 0
+                        let maxX = currentChars.map { $0.x + $0.width }.max() ?? 0
+                        let minY = currentChars.map { $0.y }.min() ?? 0
+                        let maxY = currentChars.map { $0.y + $0.height }.max() ?? 0
+                        let hasSoft = wText.contains("\u{00AD}")
+                        let cleaned = wText.replacingOccurrences(of: "\u{00AD}", with: "")
+                        let normalized = (cleaned as NSString).precomposedStringWithCanonicalMapping
+                        lineWords.append(TextLine(text: normalized, x: Double(minX), y: Double(minY), width: Double(maxX - minX), height: Double(maxY - minY), hyphenated: hasSoft || normalized.hasSuffix("-")))
+                        currentChars.removeAll()
+                    }
+                    wordsByLine.append(lineWords)
+                }
+                // Handle hyphenation: join trailing hyphenated words with next line's leading word
+                for idx in 0..<wordsByLine.count {
+                    if idx > 0, let prev = wordsByLine[idx-1].last, (prev.hyphenated == true || prev.text.hasSuffix("-")) {
+                        // merge prev (without hyphen) with first of current line if exists
+                        if !wordsByLine[idx].isEmpty {
+                            let first = wordsByLine[idx].removeFirst()
+                            let mergedText = String(prev.text.dropLast()) + first.text
+                            // create merged bounding box spanning prev and first
+                            let minX = min(prev.x, first.x)
+                            let minY = min(prev.y, first.y)
+                            let maxX = max(prev.x + prev.width, first.x + first.width)
+                            let maxY = max(prev.y + prev.height, first.y + first.height)
+                            let merged = TextLine(text: (mergedText as NSString).precomposedStringWithCanonicalMapping, x: minX, y: minY, width: maxX - minX, height: maxY - minY, hyphenated: nil)
+                            // replace prev in previous line
+                            var prevLine = wordsByLine[idx-1]
+                            prevLine[prevLine.count-1] = merged
+                            wordsByLine[idx-1] = prevLine
+                        }
+                    }
+                }
+                for lw in wordsByLine { words.append(contentsOf: lw) }
+                pkPages.append(IndexPage(number: pidx+1, text: text, lines: lines, words: words))
+            }
+            if !pkPages.isEmpty {
+                return pkPages
+            }
+        } else {
+            if SPS_DEBUG { print("[SPS_DEBUG] PDFKit failed to create PDFDocument from data") }
+        }
+    }
+
     return pages
     #elseif os(Linux)
     if let handle = dlopen("libpdfium.so", RTLD_NOW) {
@@ -567,3 +708,12 @@ extension SPS {
 SPS.main()
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+
+
+// Helper: cluster character boxes into reading-order groups (straight pass-through in current form)
+private func groupCharacters(from boxes: [CharBox]) -> [CharBox] {
+    return boxes.sorted { (a, b) -> Bool in
+        if abs(a.y - b.y) > 2 { return a.y > b.y }
+        return a.x < b.x
+    }
+}

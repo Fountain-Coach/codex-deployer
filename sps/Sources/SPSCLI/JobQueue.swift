@@ -47,6 +47,36 @@ final class SPSJobQueue: @unchecked Sendable {
         }
     }
 
+    // Simple PATH lookup for an external binary.
+    private func which(_ name: String) -> String? {
+        let envPath = ProcessInfo.processInfo.environment["PATH"] ?? "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+        for dir in envPath.split(separator: ":") {
+            let candidate = URL(fileURLWithPath: String(dir)).appendingPathComponent(name)
+            if FileManager.default.isExecutableFile(atPath: candidate.path) {
+                return candidate.path
+            }
+        }
+        return nil
+    }
+
+    private func runCommand(_ args: [String]) -> String {
+        guard !args.isEmpty else { return "" }
+        let proc = Process()
+        proc.executableURL = URL(fileURLWithPath: args[0])
+        proc.arguments = Array(args.dropFirst())
+        let outPipe = Pipe()
+        proc.standardOutput = outPipe
+        proc.standardError = Pipe()
+        do {
+            try proc.run()
+        } catch {
+            return ""
+        }
+        proc.waitUntilExit()
+        let data = outPipe.fileHandleForReading.readDataToEndOfFile()
+        return String(data: data, encoding: .utf8) ?? ""
+    }
+
     func enqueueScan(pdfs: [String], out: String, includeText: Bool, sha256: Bool) -> UUID {
         let id = UUID()
         let job = Job(id: id, state: .pending, progress: 0, result: nil, error: nil)
@@ -62,7 +92,21 @@ final class SPSJobQueue: @unchecked Sendable {
                 for (idx, path) in pdfs.enumerated() {
                     let url = URL(fileURLWithPath: path)
                     let data = (try? Data(contentsOf: url)) ?? Data()
-                    let pages = extractPages(data: data, includeText: includeText)
+                    var pages = extractPages(data: data, includeText: includeText)
+                    // If text extraction via CoreGraphics produced no lines, try `pdftotext` as a fallback.
+                    if includeText {
+                        let emptyPages = pages.allSatisfy { $0.lines.isEmpty }
+                        if emptyPages, let pdftotext = self.which("pdftotext") {
+                            let out = self.runCommand([pdftotext, "-layout", path, "-"])
+                            if !out.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                let lines = out.split{ $0 == "\n" || $0 == "\r" }.map { String($0) }
+                                let textLines = lines.enumerated().map { (i, l) -> TextLine in
+                                    return TextLine(text: l, x: 0.0, y: Double(i), width: 0.0, height: 0.0)
+                                }
+                                pages = [IndexPage(number: 1, text: lines.joined(separator: "\n"), lines: textLines)]
+                            }
+                        }
+                    }
                     let hash = sha256 ? sha256Hex(data: data) : nil
                     let doc = IndexDoc(id: UUID().uuidString, fileName: url.lastPathComponent, size: data.count, sha256: hash, pages: pages)
                     docs.append(doc)
