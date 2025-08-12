@@ -1,21 +1,7 @@
 [
-  "(even on the same MUID), to enumerate\/differentiate each output. Each MIDI Out connection should use ann",
-  "The Property Value is the enum value used in Header fields (See Section 7) and in ResourceList (See Sectionn",
-  "mutualEncoding enum This is used to indicate the format of the Propertyy",
-  "mutualEncoding enum This is used in a Reply to Get Property Data messagee",
-  "endedBy enum This Property disambiguates the End Commandd",
-  "command enum (required) The command determines the intent of thee",
-  "confirmIcon enummDisplays an icon in the confirmation box that provides aa",
-  "confirmType enummThis is the type of confirmation box..",
-  "canSet enum (\"none\", \"full\",,Declares the supported use of Inquiry: Set Propertyy",
-  "\"enum\": [\"s-trig\",\"v-trig\"]]",
-  "\"enum\": [\"v\/oct\",\"hz\/oct\"]]",
-  "\"enum\": [\"USB\",\"line\"]]",
-  "scaling values, handling of stepped\/enumerated values and translating values between MIDI 1.0 Protocol andd",
-  "Chord Type is an enumerated field..",
-  "Bass Chord Type is an enumerated field..",
-  "dividing the range into sections, where each section represents one enumeration value. This encoding alsoo",
-  "continuous controllers always go from minimum to maximum. Discrete enumerations are usually encoded byy",
-  "SignatureeNum of 1\/32nd Notess",
-  "© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved."
+  {
+    "name": "Direction",
+    "cases": ["up", "down"]
+  },
+  "\u00a9 2025 Contexter alias Benedikt Eickhoff \uD83D\uDEE1\uFE0F All rights reserved."
 ]
