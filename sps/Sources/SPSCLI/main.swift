@@ -11,6 +11,8 @@ import Glibc
 import ArgumentParser
 import Validation
 
+let SPS_DEBUG: Bool = ProcessInfo.processInfo.environment["SPS_DEBUG"] != nil
+
 struct IndexDoc: Codable {
     var id: String
     var fileName: String
@@ -137,7 +139,9 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
             var strRef: CGPDFStringRef?
             if CGPDFScannerPopString(scanner, &strRef), let s = strRef,
                let cf = CGPDFStringCopyTextString(s) {
-                info.pointee.show(cf as String)
+                let text = cf as String
+                if SPS_DEBUG { print("[SPS_DEBUG] Tj text=\(text)") }
+                info.pointee.show(text)
             }
         }
 
@@ -153,6 +157,7 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
                 let type = CGPDFObjectGetType(element!)
                 if type == .string {
                     if let str = cgpdfObjectToString(element!) {
+                        if SPS_DEBUG { print("[SPS_DEBUG] TJ string=\(str)") }
                         info.pointee.show(str)
                     }
                 } else if type == .real || type == .integer {
@@ -169,6 +174,7 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
             var namePtr: UnsafePointer<Int8>?
             guard CGPDFScannerPopNumber(scanner, &size), CGPDFScannerPopName(scanner, &namePtr), let n = namePtr else { return }
             let fontName = String(cString: n)
+            if SPS_DEBUG { print("[SPS_DEBUG] Tf font=\(fontName) size=\(size)") }
             info.pointee.setFont(name: fontName, size: CGFloat(size))
         }
 
@@ -249,6 +255,17 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
                                   y: Double(minY),
                                   width: Double(maxX - minX),
                                   height: Double(maxY - minY)))
+        }
+
+        if SPS_DEBUG {
+            print("[SPS_DEBUG] page=\(i) chars=\(state.chars.count) groups=\(lineGroups.count) lines=\(lines.count)")
+            if !state.chars.isEmpty {
+                let sample = state.chars.prefix(20).map { $0.text }.joined()
+                print("[SPS_DEBUG] sample chars text=\(sample)")
+            }
+            if !lines.isEmpty {
+                print("[SPS_DEBUG] sample line[0]=\(lines.first!.text)")
+            }
         }
 
         let pageText = lines.map { $0.text }.joined(separator: "\n")
