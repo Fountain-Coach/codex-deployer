@@ -21,12 +21,13 @@
 
 | # | Feature / Component        | Files / Area                              | Action | Problems | Results | Status |
 |---|---------------------------|-------------------------------------------|--------|----------|---------|--------|
-| 1 | Spec ingestion pipeline   | `midi/specs/`, `sps/*`                     | Ingest MIDI 2.0 specification documents via SPS parsing pipeline using `SPSJobQueue` for asynchronous processing | – | – | TODO |
-| 2 | Data model generation     | `midi/models/`                             | Emit normalized machine-readable models from ingested specs | – | – | TODO |
-| 3 | Swift package scaffolding | `Sources/MIDI2/*`, `Package.swift`         | Generate Swift sources for a `MIDI2` module and expose via Swift Package Manager | – | – | TODO |
-| 4 | Test suite                | `Tests/MIDI2Tests/*`                       | Provide tests covering generated MIDI 2 functionality | – | – | TODO |
+| 1 | Spec ingestion pipeline   | `midi/specs/`, `sps/*`                     | Ingest MIDI 2.0 specification documents via SPS parsing pipeline using `SPSJobQueue` for asynchronous processing | CLI exits before async job persists; `status` can't find ticket | – | BLOCKED |
+| 2 | Data model generation     | `midi/models/`                             | Emit normalized machine-readable models from ingested specs | – | messages, enums, bitfields, ranges regenerated | DONE |
+| 3 | Swift package scaffolding | `Sources/MIDI2/*`, `Package.swift`         | Generate Swift sources for a `MIDI2` module and expose via Swift Package Manager | – | Package and tests scaffolded | DONE |
+| 4 | Test suite                | `Tests/MIDI2Tests/*`                       | Provide tests covering generated MIDI 2 functionality | – | Basic index loading test added | TODO |
 | 5 | Reproducibility tooling   | `midi/*`                                   | Ensure artifacts are reproducible and regeneratable when specs change | – | – | TODO |
-| 6 | Verification              | `swift test`                               | Run full `swift test` after changes | – | – | TODO |
+| 6 | Verification              | `swift test`                               | Run full `swift test` after changes | – | all tests passed | DONE |
+| 7 | Job queue reliability     | `sps/Sources/SPSCLI/JobQueue.swift`        | Persist jobs synchronously and provide worker or `--wait` mode | async queue lost after CLI exits | – | TODO |
 
 
 > © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
