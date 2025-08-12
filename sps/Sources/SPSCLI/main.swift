@@ -141,7 +141,11 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
                let cf = CGPDFStringCopyTextString(s) {
                 let text = cf as String
                 if SPS_DEBUG { print("[SPS_DEBUG] Tj text=\(text)") }
-                info.pointee.show(text)
+                // Mutating methods on a pointee return a copy; make mutation persistent by
+                // modifying a local, then writing back to the pointer.
+                var st = info.pointee
+                st.show(text)
+                info.pointee = st
             }
         }
 
@@ -158,7 +162,9 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
                 if type == .string {
                     if let str = cgpdfObjectToString(element!) {
                         if SPS_DEBUG { print("[SPS_DEBUG] TJ string=\(str)") }
-                        info.pointee.show(str)
+                        var st = info.pointee
+                        st.show(str)
+                        info.pointee = st
                     }
                 } else if type == .real || type == .integer {
                     var val: CGPDFReal = 0
