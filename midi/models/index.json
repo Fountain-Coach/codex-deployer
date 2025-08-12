@@ -1,0 +1,94 @@
+{
+  "documents" : [
+    {
+      "fileName" : "M2-100-U_v1-1_MIDI_2-0_Specification_Overview.pdf",
+      "id" : "233A838A-68C1-41C9-A5C9-355D797FBA84",
+      "pages" : [
+        {
+          "lines" : [
+
+          ],
+          "number" : 1,
+          "text" : "(text extraction unavailable)"
+        }
+      ],
+      "sha256" : "sum64-0000000003b1ed35",
+      "size" : 492880
+    },
+    {
+      "fileName" : "M2-101-UM_v1-2_MIDI-CI_Specification.pdf",
+      "id" : "83B5C4A8-F8B0-4239-963C-83B61D9740C8",
+      "pages" : [
+        {
+          "lines" : [
+
+          ],
+          "number" : 1,
+          "text" : "(text extraction unavailable)"
+        }
+      ],
+      "sha256" : "sum64-0000000007dbb22c",
+      "size" : 1049390
+    },
+    {
+      "fileName" : "M2-102-U_v1-1_Common_Rules_for_MIDI-CI_Profiles.pdf",
+      "id" : "BB6EEFDD-05FC-45E8-8556-B3621F1976A1",
+      "pages" : [
+        {
+          "lines" : [
+
+          ],
+          "number" : 1,
+          "text" : "(text extraction unavailable)"
+        }
+      ],
+      "sha256" : "sum64-00000000052dca1c",
+      "size" : 684485
+    },
+    {
+      "fileName" : "M2-103-UM_v1-2_Common Rules_for_MIDI-CI_Property_Exchange.pdf",
+      "id" : "31C9AF17-20CB-44D9-8C0B-BCE647F6E3FD",
+      "pages" : [
+        {
+          "lines" : [
+
+          ],
+          "number" : 1,
+          "text" : "(text extraction unavailable)"
+        }
+      ],
+      "sha256" : "sum64-000000000a9f8ccd",
+      "size" : 1521778
+    },
+    {
+      "fileName" : "M2-104-UM_v1-1-2_UMP_and_MIDI_2-0_Protocol_Specification.pdf",
+      "id" : "2C8582A6-B127-4691-8D5D-9016CDC1F3ED",
+      "pages" : [
+        {
+          "lines" : [
+
+          ],
+          "number" : 1,
+          "text" : "(text extraction unavailable)"
+        }
+      ],
+      "sha256" : "sum64-0000000023a0cbd8",
+      "size" : 4941141
+    },
+    {
+      "fileName" : "M2-116-U_v1-0_MIDI_Clip_File_Specification.pdf",
+      "id" : "6F03B582-5919-47B9-8282-A7AB560082C5",
+      "pages" : [
+        {
+          "lines" : [
+
+          ],
+          "number" : 1,
+          "text" : "(text extraction unavailable)"
+        }
+      ],
+      "sha256" : "sum64-0000000006ae8c37",
+      "size" : 895904
+    }
+  ]
+}
