@@ -115,7 +115,8 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
     var pages: [IndexPage] = []
     for i in 1...doc.numberOfPages {
         guard let page = doc.page(at: i) else { continue }
-        var pageDict = CGPDFPageGetDictionary(page)
+        // Use modern API: obtain the page dictionary via `page.dictionary` (optional)
+        let pageDict = page.dictionary
         var resources: CGPDFDictionaryRef?
         if let dict = pageDict {
             CGPDFDictionaryGetDictionary(dict, "Resources", &resources)
