@@ -2,6 +2,12 @@
 
 This guide demonstrates end-to-end workflows with the Semantic PDF Scanner CLI, including page range queries and validation hooks.
 
+## 0. Install PDF dependencies
+Before building, install required PDF libraries (PDFium, Tesseract) using the helper script:
+```bash
+make -C sps deps
+```
+
 ## 1. Scan PDFs into an index
 ```bash
 swift build -c release

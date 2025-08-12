@@ -1,5 +1,5 @@
 # Simple build helpers for SPS
-.PHONY: build test clean scan validate query export-matrix
+.PHONY: build test clean deps scan validate query export-matrix
 
 build:
 	swift build -c release
@@ -9,6 +9,9 @@ test:
 
 clean:
 	rm -rf .build .swiftpm
+
+deps:
+	./install-deps.sh
 
 scan:
 	.build/release/sps scan Samples/sample.pdf --out spec/index.json --include-text --sha256 || true
@@ -21,3 +24,4 @@ query:
 
 export-matrix:
 	.build/release/sps export-matrix spec/index.json --out spec/matrix.json
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
