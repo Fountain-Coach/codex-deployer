@@ -8,11 +8,16 @@ let package = Package(
     ],
     products: [
         .library(name: "MIDI2", targets: ["MIDI2"]),
+        .executable(name: "IndexParser", targets: ["IndexParser"]),
     ],
     targets: [
         .target(
             name: "MIDI2",
             path: "Sources/MIDI2"
+        ),
+        .executableTarget(
+            name: "IndexParser",
+            path: "Sources/IndexParser"
         ),
         .testTarget(
             name: "MIDI2Tests",
@@ -21,3 +26,5 @@ let package = Package(
         )
     ]
 )
+
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
