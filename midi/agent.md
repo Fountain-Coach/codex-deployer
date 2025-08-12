@@ -31,4 +31,5 @@
 | 7 | Verification | `swift test` | Run full test suite | — | — | TODO |
 | 8 | Job queue reliability | `sps/Sources/SPSCLI/JobQueue.swift` | Ensure queue persists jobs & wait mode | — | — | TODO |
 
+
 > © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
