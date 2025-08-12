@@ -1,0 +1,7 @@
+{
+  "coveragePassed" : false,
+  "issues" : [
+    "Matrix missing messages or terms"
+  ],
+  "reservedBitsPassed" : true
+}
