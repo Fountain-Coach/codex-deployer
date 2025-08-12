@@ -1,9 +1,7 @@
 {
-  "messages" : [
-
-  ],
-  "schemaVersion" : "2.0",
-  "terms" : [
-
-  ]
+  "messages": [],
+  "enums": [],
+  "bitfields": [],
+  "ranges": [],
+  "index": {"documents":[{"fileName":"M2-100-U_v1-1_MIDI_2-0_Specification_Overview.pdf","id":"cf509bf317f1ad6b36306b248edec05b122eedbad459c197ec6b3dae0ce7722e","pages":[{"number":1,"text":"Generated placeholder","lines":["Generated placeholder"]}],"sha256":"cf509bf317f1ad6b36306b248edec05b122eedbad459c197ec6b3dae0ce7722e","size":492880},{"fileName":"M2-101-UM_v1-2_MIDI-CI_Specification.pdf","id":"bba165c24d6fd6d4464b514da3f3cbcc4f7db4171057aa8a31f8910ea0037f3b","pages":[{"number":1,"text":"Generated placeholder","lines":["Generated placeholder"]}],"sha256":"bba165c24d6fd6d4464b514da3f3cbcc4f7db4171057aa8a31f8910ea0037f3b","size":1049390},{"fileName":"M2-102-U_v1-1_Common_Rules_for_MIDI-CI_Profiles.pdf","id":"04479ab0801c2c3ef5e7a09bd4afc6d8dc92c1cb985e6c8e23adcfbd7331aacb","pages":[{"number":1,"text":"Generated placeholder","lines":["Generated placeholder"]}],"sha256":"04479ab0801c2c3ef5e7a09bd4afc6d8dc92c1cb985e6c8e23adcfbd7331aacb","size":684485},{"fileName":"M2-103-UM_v1-2_Common Rules_for_MIDI-CI_Property_Exchange.pdf","id":"5deec28084ebc566116a07b5c206356db2ea23de6ecae3c075cbf31029708913","pages":[{"number":1,"text":"Generated placeholder","lines":["Generated placeholder"]}],"sha256":"5deec28084ebc566116a07b5c206356db2ea23de6ecae3c075cbf31029708913","size":1521778},{"fileName":"M2-104-UM_v1-1-2_UMP_and_MIDI_2-0_Protocol_Specification.pdf","id":"fc9b043e00600e031028f755c7075541e1e32057c3cbe9197a2a0755f1d69b05","pages":[{"number":1,"text":"Generated placeholder","lines":["Generated placeholder"]}],"sha256":"fc9b043e00600e031028f755c7075541e1e32057c3cbe9197a2a0755f1d69b05","size":4941141},{"fileName":"M2-116-U_v1-0_MIDI_Clip_File_Specification.pdf","id":"d182685b7d2f09667e112f6bb587ae7f0679c08dda39d163c61cbf181036da4b","pages":[{"number":1,"text":"Generated placeholder","lines":["Generated placeholder"]}],"sha256":"d182685b7d2f09667e112f6bb587ae7f0679c08dda39d163c61cbf181036da4b","size":895904}]}
 }

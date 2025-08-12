@@ -37,6 +37,11 @@ public struct MIDIModelIndex: Codable {
         let data = try Data(contentsOf: url)
         return try JSONDecoder().decode(MIDIModelIndex.self, from: data)
     }
+
+    /// Convenience loader used by tests and callers that rely on an unlabeled `load()` API.
+    public static func load() throws -> MIDIModelIndex {
+        return try load(from: "midi/models/index.json")
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

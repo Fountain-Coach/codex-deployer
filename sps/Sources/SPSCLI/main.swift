@@ -144,6 +144,7 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
             guard let info = info?.assumingMemoryBound(to: ScanState.self) else { return }
             var arrayRef: CGPDFArrayRef?
             if !CGPDFScannerPopArray(scanner, &arrayRef) { return }
+            guard let arrayRef = arrayRef else { return }
             let count = CGPDFArrayGetCount(arrayRef)
             for idx in 0..<count {
                 var element: CGPDFObjectRef?
@@ -214,9 +215,9 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
         CGPDFOperatorTableSetCallback(table, "Tm", Tm)
         CGPDFOperatorTableSetCallback(table, "T*", Tstar)
 
-        if let scanner = CGPDFScannerCreate(content, table, &state) {
-            CGPDFScannerScan(scanner)
-        }
+        // CGPDFScannerCreate returns a non-optional CGPDFScannerRef in this SDK; call directly.
+        let scanner = CGPDFScannerCreate(content, table, &state)
+        CGPDFScannerScan(scanner)
 
         let epsilon: CGFloat = 2
         let sortedChars = state.chars.sorted { (a, b) -> Bool in
