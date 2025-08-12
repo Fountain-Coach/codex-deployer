@@ -45,6 +45,19 @@ public actor DNSMetrics {
         return lines.joined(separator: "\n")
     }
 
+    /// Waits until the recorded query count reaches or exceeds the target.
+    /// - Parameters:
+    ///   - target: Desired query count.
+    ///   - timeout: Maximum time to wait in seconds.
+    /// - Returns: ``true`` if the target count was reached before the timeout elapsed.
+    public func wait(forQueries target: Int, timeout: TimeInterval = 1.0) async -> Bool {
+        let start = Date()
+        while queries < target && Date().timeIntervalSince(start) < timeout {
+            await Task.yield()
+        }
+        return queries >= target
+    }
+
     public func reset() {
         queries = 0
         hits = 0

@@ -2,7 +2,7 @@
   "documents" : [
     {
       "fileName" : "M2-100-U_v1-1_MIDI_2-0_Specification_Overview.pdf",
-      "id" : "233A838A-68C1-41C9-A5C9-355D797FBA84",
+      "id" : "8B8018F9-6EEF-441E-9AC8-DD7EF94D0A5B",
       "pages" : [
         {
           "lines" : [
@@ -17,7 +17,7 @@
     },
     {
       "fileName" : "M2-101-UM_v1-2_MIDI-CI_Specification.pdf",
-      "id" : "83B5C4A8-F8B0-4239-963C-83B61D9740C8",
+      "id" : "96BA7D97-3E46-4E0E-9894-592C6D697B97",
       "pages" : [
         {
           "lines" : [
@@ -32,7 +32,7 @@
     },
     {
       "fileName" : "M2-102-U_v1-1_Common_Rules_for_MIDI-CI_Profiles.pdf",
-      "id" : "BB6EEFDD-05FC-45E8-8556-B3621F1976A1",
+      "id" : "322D71F8-9C14-4409-94CB-CC0AD3F311EC",
       "pages" : [
         {
           "lines" : [
@@ -47,7 +47,7 @@
     },
     {
       "fileName" : "M2-103-UM_v1-2_Common Rules_for_MIDI-CI_Property_Exchange.pdf",
-      "id" : "31C9AF17-20CB-44D9-8C0B-BCE647F6E3FD",
+      "id" : "F1C37261-B156-4250-B946-DA5E1BA66A94",
       "pages" : [
         {
           "lines" : [
@@ -62,7 +62,7 @@
     },
     {
       "fileName" : "M2-104-UM_v1-1-2_UMP_and_MIDI_2-0_Protocol_Specification.pdf",
-      "id" : "2C8582A6-B127-4691-8D5D-9016CDC1F3ED",
+      "id" : "21F496AB-8053-42C6-BE0F-929EAC217A5C",
       "pages" : [
         {
           "lines" : [
@@ -77,7 +77,7 @@
     },
     {
       "fileName" : "M2-116-U_v1-0_MIDI_Clip_File_Specification.pdf",
-      "id" : "6F03B582-5919-47B9-8282-A7AB560082C5",
+      "id" : "39003A70-4BB0-4608-9B6C-41AEAAE3D014",
       "pages" : [
         {
           "lines" : [
@@ -90,5 +90,6 @@
       "sha256" : "sum64-0000000006ae8c37",
       "size" : 895904
     }
-  ]
+  ],
+  "_copyright" : "© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved."
 }

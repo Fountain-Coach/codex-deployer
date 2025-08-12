@@ -318,12 +318,31 @@ extension SPS {
         @Flag(help: "Compute SHA256 digest for each document")
         var sha256 = false
 
+        @Flag(name: .long, help: "Wait for the scan to finish")
+        var wait = false
+
         func run() throws {
             guard !pdfs.isEmpty else {
                 throw ValidationError("At least one PDF must be provided.")
             }
             let ticket = SPSJobQueue.shared.enqueueScan(pdfs: pdfs, out: out, includeText: includeText, sha256: sha256)
             print("SPS: enqueued scan job -> \(ticket.uuidString)")
+            guard wait else { return }
+            while let job = SPSJobQueue.shared.status(id: ticket), job.state == .pending || job.state == .running {
+                Thread.sleep(forTimeInterval: 0.1)
+            }
+            if let job = SPSJobQueue.shared.status(id: ticket) {
+                switch job.state {
+                case .completed:
+                    print("Job completed: \(job.result ?? "")")
+                case .failed:
+                    print("Job failed: \(job.error ?? "unknown error")")
+                default:
+                    print("Job \(job.state.rawValue)")
+                }
+            } else {
+                print("Job not found")
+            }
         }
     }
 }

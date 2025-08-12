@@ -32,6 +32,8 @@ final class DNSPerformanceTests: XCTestCase {
                 }
             }
         }
+        let finished = await DNSMetrics.shared.wait(forQueries: 1000)
+        XCTAssertTrue(finished)
         let text = await DNSMetrics.shared.exposition()
         XCTAssertTrue(text.contains("dns_queries_total 1000"))
         await DNSMetrics.shared.reset()
