@@ -595,7 +595,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
         let server = GatewayServer(manager: manager, plugins: [])
         Task { try await server.start(port: 9116) }
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await Task.sleep(nanoseconds: 500_000_000)
 
         struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int?; var proxyEnabled: Bool? }
         var create = URLRequest(url: URL(string: "http://127.0.0.1:9116/routes")!)
@@ -626,7 +626,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
         let server = GatewayServer(manager: manager, plugins: [])
         Task { try await server.start(port: 9120) }
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await Task.sleep(nanoseconds: 500_000_000)
 
         struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int?; var proxyEnabled: Bool? }
         var create = URLRequest(url: URL(string: "http://127.0.0.1:9120/routes")!)

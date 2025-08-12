@@ -11,7 +11,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 else
     if command -v apt-get >/dev/null 2>&1; then
         apt-get update
-        apt-get install -y libpdfium-dev tesseract-ocr
+        if apt-get install -y libpdfium-dev tesseract-ocr; then
+            true
+        else
+            echo "libpdfium-dev unavailable; using poppler-utils as fallback" >&2
+            apt-get install -y poppler-utils tesseract-ocr
+        fi
     else
         echo "Unsupported platform. Install PDFium and Tesseract manually." >&2
         exit 1
