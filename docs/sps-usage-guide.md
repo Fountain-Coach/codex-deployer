@@ -14,6 +14,19 @@ swift build -c release
 .build/release/sps scan sps/Samples/extraction_sample.pdf sps/Samples/table_detection_sample.pdf --out index.json --include-text --page-range 1-2
 ```
 
+## 1a. Run scans asynchronously
+The `scan` command now enqueues work and returns a ticket immediately:
+```bash
+.build/release/sps scan sps/Samples/extraction_sample.pdf --out async-index.json
+# -> SPS: enqueued scan job -> <ticket>
+```
+
+Check progress with rotating motivational messages:
+```bash
+.build/release/sps status <ticket>
+```
+States include `pending`, `running`, `completed`, and `failed`. When completed, the status command prints the result path.
+
 ## 2. Validate the generated index
 ```bash
 .build/release/sps index validate index.json
