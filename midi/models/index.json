@@ -1,94 +1,83 @@
 {
-  "documents" : [
+  "documents": [
     {
-      "fileName" : "M2-100-U_v1-1_MIDI_2-0_Specification_Overview.pdf",
-      "id" : "233A838A-68C1-41C9-A5C9-355D797FBA84",
-      "pages" : [
+      "fileName": "M2-100-U_v1-1_MIDI_2-0_Specification_Overview.pdf",
+      "id": "D8BE35D3-F01E-462C-AFE6-C981066193F1",
+      "pages": [
         {
-          "lines" : [
-
-          ],
-          "number" : 1,
-          "text" : "(text extraction unavailable)"
+          "lines": [],
+          "number": 1,
+          "text": "(text extraction unavailable)"
         }
       ],
-      "sha256" : "sum64-0000000003b1ed35",
-      "size" : 492880
+      "sha256": "sum64-0000000003b1ed35",
+      "size": 492880
     },
     {
-      "fileName" : "M2-101-UM_v1-2_MIDI-CI_Specification.pdf",
-      "id" : "83B5C4A8-F8B0-4239-963C-83B61D9740C8",
-      "pages" : [
+      "fileName": "M2-101-UM_v1-2_MIDI-CI_Specification.pdf",
+      "id": "CE4B7DC7-2425-4A11-AC99-F4A5D4393CFF",
+      "pages": [
         {
-          "lines" : [
-
-          ],
-          "number" : 1,
-          "text" : "(text extraction unavailable)"
+          "lines": [],
+          "number": 1,
+          "text": "(text extraction unavailable)"
         }
       ],
-      "sha256" : "sum64-0000000007dbb22c",
-      "size" : 1049390
+      "sha256": "sum64-0000000007dbb22c",
+      "size": 1049390
     },
     {
-      "fileName" : "M2-102-U_v1-1_Common_Rules_for_MIDI-CI_Profiles.pdf",
-      "id" : "BB6EEFDD-05FC-45E8-8556-B3621F1976A1",
-      "pages" : [
+      "fileName": "M2-102-U_v1-1_Common_Rules_for_MIDI-CI_Profiles.pdf",
+      "id": "2495F12B-EE97-4DC6-9E17-7B16166B02F2",
+      "pages": [
         {
-          "lines" : [
-
-          ],
-          "number" : 1,
-          "text" : "(text extraction unavailable)"
+          "lines": [],
+          "number": 1,
+          "text": "(text extraction unavailable)"
         }
       ],
-      "sha256" : "sum64-00000000052dca1c",
-      "size" : 684485
+      "sha256": "sum64-00000000052dca1c",
+      "size": 684485
     },
     {
-      "fileName" : "M2-103-UM_v1-2_Common Rules_for_MIDI-CI_Property_Exchange.pdf",
-      "id" : "31C9AF17-20CB-44D9-8C0B-BCE647F6E3FD",
-      "pages" : [
+      "fileName": "M2-103-UM_v1-2_Common Rules_for_MIDI-CI_Property_Exchange.pdf",
+      "id": "9758D827-85AC-46B5-B94E-00244242B4A6",
+      "pages": [
         {
-          "lines" : [
-
-          ],
-          "number" : 1,
-          "text" : "(text extraction unavailable)"
+          "lines": [],
+          "number": 1,
+          "text": "(text extraction unavailable)"
         }
       ],
-      "sha256" : "sum64-000000000a9f8ccd",
-      "size" : 1521778
+      "sha256": "sum64-000000000a9f8ccd",
+      "size": 1521778
     },
     {
-      "fileName" : "M2-104-UM_v1-1-2_UMP_and_MIDI_2-0_Protocol_Specification.pdf",
-      "id" : "2C8582A6-B127-4691-8D5D-9016CDC1F3ED",
-      "pages" : [
+      "fileName": "M2-104-UM_v1-1-2_UMP_and_MIDI_2-0_Protocol_Specification.pdf",
+      "id": "B882FCDD-0A84-4144-884A-7DE3741F722E",
+      "pages": [
         {
-          "lines" : [
-
-          ],
-          "number" : 1,
-          "text" : "(text extraction unavailable)"
+          "lines": [],
+          "number": 1,
+          "text": "(text extraction unavailable)"
         }
       ],
-      "sha256" : "sum64-0000000023a0cbd8",
-      "size" : 4941141
+      "sha256": "sum64-0000000023a0cbd8",
+      "size": 4941141
     },
     {
-      "fileName" : "M2-116-U_v1-0_MIDI_Clip_File_Specification.pdf",
-      "id" : "6F03B582-5919-47B9-8282-A7AB560082C5",
-      "pages" : [
+      "fileName": "M2-116-U_v1-0_MIDI_Clip_File_Specification.pdf",
+      "id": "7666EBF5-78C3-48E6-A854-859E7CE60649",
+      "pages": [
         {
-          "lines" : [
-
-          ],
-          "number" : 1,
-          "text" : "(text extraction unavailable)"
+          "lines": [],
+          "number": 1,
+          "text": "(text extraction unavailable)"
         }
       ],
-      "sha256" : "sum64-0000000006ae8c37",
-      "size" : 895904
+      "sha256": "sum64-0000000006ae8c37",
+      "size": 895904
     }
-  ]
+  ],
+  "_copyright": "© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved."
 }

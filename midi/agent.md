@@ -5,6 +5,7 @@
 **Purpose:** Guide conversion of the official MIDI 2.0 specification into machine-readable data models using the SPS API and surface them as Swift Package Manager libraries.
 
 ## 🎯 Tasks
+- Ensure SPS toolchain prerequisites are installed (`make -C sps deps`) so PDFium and other requirements are available.
 - Use the SPS parsing pipeline under `/sps` to ingest MIDI 2.0 specification documents placed in `midi/specs/`.
 - Queue long-running scans through `SPSJobQueue` and poll `status` for progress.
 - Emit normalized machine-readable models to `midi/models/`.
@@ -19,14 +20,15 @@
 
 ## 🗂 Task Matrix
 
-| # | Feature / Component        | Files / Area                              | Action | Problems | Results | Status |
-|---|---------------------------|-------------------------------------------|--------|----------|---------|--------|
-| 1 | Spec ingestion pipeline   | `midi/specs/`, `sps/*`                     | Ingest MIDI 2.0 specification documents via SPS parsing pipeline using `SPSJobQueue` for asynchronous processing | – | – | TODO |
-| 2 | Data model generation     | `midi/models/`                             | Emit normalized machine-readable models from ingested specs | – | – | TODO |
-| 3 | Swift package scaffolding | `Sources/MIDI2/*`, `Package.swift`         | Generate Swift sources for a `MIDI2` module and expose via Swift Package Manager | – | – | TODO |
-| 4 | Test suite                | `Tests/MIDI2Tests/*`                       | Provide tests covering generated MIDI 2 functionality | – | – | TODO |
-| 5 | Reproducibility tooling   | `midi/*`                                   | Ensure artifacts are reproducible and regeneratable when specs change | – | – | TODO |
-| 6 | Verification              | `swift test`                               | Run full `swift test` after changes | – | – | TODO |
-
+| # | Feature | Area | Action | Problems | Results | Status |
+|---|---------|------|--------|----------|---------|--------|
+| 1 | SPS toolchain setup | `sps/` | Install deps via `make -C sps deps` | — | — | TODO |
+| 2 | Spec ingestion pipeline | `midi/specs/`, `sps/*` | Ingest specs via `sps scan --wait` | — | — | TODO |
+| 3 | Data model generation | `midi/models/` | Emit normalized models | — | — | TODO |
+| 4 | Swift package scaffolding | `Sources/MIDI2/*`, `Package.swift` | Generate `MIDI2` module | — | — | TODO |
+| 5 | Test suite | `Tests/MIDI2Tests/*` | Cover generated functionality | — | — | TODO |
+| 6 | Reproducibility tooling | `midi/*` | Keep artifacts reproducible | — | — | TODO |
+| 7 | Verification | `swift test` | Run full test suite | — | — | TODO |
+| 8 | Job queue reliability | `sps/Sources/SPSCLI/JobQueue.swift` | Ensure queue persists jobs & wait mode | — | — | TODO |
 
 > © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
