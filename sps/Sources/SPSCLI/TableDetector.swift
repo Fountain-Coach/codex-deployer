@@ -45,16 +45,16 @@ struct TableModel: Codable {
 }
 
 struct TableDetector {
-    static func detect(from index: IndexRoot) -> (messages: [MatrixEntry], terms: [MatrixEntry]) {
+        static func detect(from index: IndexRoot) -> (messages: [MatrixEntry], terms: [MatrixEntry]) {
         var messages: [MatrixEntry] = []
         var terms: [MatrixEntry] = []
         for doc in index.documents {
             for page in doc.pages {
-                let lines = page.text.split(whereSeparator: \.isNewline)
-                for (i, lineSub) in lines.enumerated() {
-                    let line = String(lineSub)
-                    let entry = MatrixEntry(text: line, page: page.number, x: 0, y: i)
-                    let lower = line.lowercased()
+                // Prefer tokenized words if available; fall back to raw lines.
+                let tokens = (page.words ?? page.lines).map { $0.text }
+                for (i, token) in tokens.enumerated() {
+                    let entry = MatrixEntry(text: token, page: page.number, x: 0, y: i)
+                    let lower = token.lowercased()
                     if lower.contains("message") {
                         messages.append(entry)
                     }
@@ -67,22 +67,28 @@ struct TableDetector {
         return (messages, terms)
     }
 
+
     static func detectTables(from index: IndexRoot, threshold: Double = 5.0) -> [TableModel] {
         var tables: [TableModel] = []
         for doc in index.documents {
             for page in doc.pages {
-                let lines = page.lines
-                guard !lines.isEmpty else { continue }
-                let rowCenters = cluster(lines.map { $0.y }, threshold: threshold)
-                let columnCenters = cluster(lines.map { $0.x }, threshold: threshold)
+                // Use token centers where available for better column detection
+                let tokens = page.words ?? page.lines
+                guard !tokens.isEmpty else { continue }
+                // Use token vertical centers for rows and horizontal centers for columns
+                let rowCenters = cluster(tokens.map { $0.y }, threshold: threshold)
+                let columnCenters = cluster(tokens.map { $0.x + $0.width / 2.0 }, threshold: threshold)
                 var cells: [TableCell] = []
                 for (ri, ry) in rowCenters.enumerated() {
                     for (ci, cx) in columnCenters.enumerated() {
-                        if let match = lines.first(where: { abs($0.y - ry) <= threshold && abs($0.x - cx) <= threshold }) {
-                            cells.append(TableCell(row: ri, column: ci, x: match.x, y: match.y, width: match.width, height: match.height, text: match.text))
-                        } else {
-                            cells.append(TableCell(row: ri, column: ci, x: cx, y: ry, width: 0, height: 0, text: ""))
+                        // find nearest token whose center is close to (cx, ry)
+                        if let match = tokens.min(by: { abs(($0.x + $0.width/2.0) - cx) + abs($0.y - ry) < abs(($1.x + $1.width/2.0) - cx) + abs($1.y - ry) }) {
+                            if abs((match.x + match.width/2.0) - cx) <= threshold * 2 && abs(match.y - ry) <= threshold * 2 {
+                                cells.append(TableCell(row: ri, column: ci, x: match.x, y: match.y, width: match.width, height: match.height, text: match.text))
+                                continue
+                            }
                         }
+                        cells.append(TableCell(row: ri, column: ci, x: cx, y: ry, width: 0, height: 0, text: ""))
                     }
                 }
                 tables.append(TableModel(rows: rowCenters.count, columns: columnCenters.count, cells: cells))
