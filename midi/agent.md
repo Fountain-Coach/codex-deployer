@@ -28,4 +28,5 @@
 | 5 | Reproducibility tooling   | `midi/*`                                   | Ensure artifacts are reproducible and regeneratable when specs change | – | – | TODO |
 | 6 | Verification              | `swift test`                               | Run full `swift test` after changes | – | – | TODO |
 
+
 > © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
