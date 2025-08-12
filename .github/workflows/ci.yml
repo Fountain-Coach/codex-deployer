@@ -13,7 +13,6 @@ jobs:
       - uses: norio-nomura/action-swiftlint@v4
         with:
           args: --config .swiftlint.yml
-
   test:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -24,21 +23,35 @@ jobs:
       - uses: swift-actions/setup-swift@v1
         with:
           swift-version: '6.1'
+      - name: Install coverage tools
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y lcov
+      - name: Install SPS deps (Linux)
+        if: runner.os == 'Linux'
+        working-directory: sps
+        run: sudo ./install-deps.sh
+      - name: Install SPS deps (macOS)
+        if: runner.os == 'macOS'
+        working-directory: sps
+        run: ./install-deps.sh
       - name: Build
         run: swift build
       - name: Test
-        run: swift test --enable-code-coverage
+        run: |
+          swift test --enable-code-coverage
+          echo "CODECOV_DIR=$(dirname $(swift test --show-codecov-path))" >> $GITHUB_ENV
       - name: Test SPS
         working-directory: sps
         run: swift test --enable-code-coverage
       - name: Generate Coverage
-        if: matrix.os == 'ubuntu-latest'
+        if: runner.os == 'Linux'
         run: |
-          llvm-cov-19 export -format=lcov .build/x86_64-unknown-linux-gnu/debug/FountainCoachPackageTests.xctest -instr-profile .build/x86_64-unknown-linux-gnu/debug/codecov/default.profdata > coverage.lcov
+          TEST_BINARY=$(find .build -name '*.xctest' | head -n 1)
+          llvm-cov export -format=lcov "$TEST_BINARY" -instr-profile "$CODECOV_DIR/default.profdata" > coverage.lcov
           COVERAGE=$(lcov --summary coverage.lcov 2>/dev/null | grep lines | awk '{print $2}' | sed 's/%//')
           curl -s "https://img.shields.io/badge/Coverage-${COVERAGE}%25-blue" -o coverage-badge.svg
       - name: Upload Coverage
-        if: matrix.os == 'ubuntu-latest'
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
           name: coverage
