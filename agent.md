@@ -42,6 +42,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | DNS perf tests | `Tests/*` | UDP/TCP load & concurrency tests | ✅ | — | test, dns |
 | SwiftLint in CI | `.swiftlint.yml`, `.github/workflows/*` | Add lint job to Actions | ✅ | — | ci, lint |
 | Coverage in CI | `.github/workflows/*` | Publish coverage artifacts/badge | ✅ | — | ci, test |
+| CI dependencies | `.github/workflows/ci.yml`, `sps/install-deps.sh` | Ensure coverage tools & SPS deps installed | ✅ | — | ci, sps |
 | opId→handler audit | repo-wide | Script to diff specs vs code | ✅ | — | tooling, docs |
 | Spec↔code drift | specs & servers | Track/close gaps per service | ✅ | — | process |
 | SPS validation hooks | `sps/Sources/Validation/*`, `sps/Sources/SPSCLI/main.swift` | Add coverage + reserved-bit checks | ✅ | — | sps |
