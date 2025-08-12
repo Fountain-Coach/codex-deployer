@@ -50,7 +50,7 @@ final class SPSJobQueue: @unchecked Sendable {
     func enqueueScan(pdfs: [String], out: String, includeText: Bool, sha256: Bool) -> UUID {
         let id = UUID()
         let job = Job(id: id, state: .pending, progress: 0, result: nil, error: nil)
-        queue.async(flags: .barrier) {
+        queue.sync(flags: .barrier) {
             self.jobs[id] = job
             self.persist(job)
         }
