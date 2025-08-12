@@ -5,6 +5,8 @@ import CryptoKit
 #if os(macOS)
 import CoreGraphics
 import CoreText
+#elseif os(Linux)
+import Glibc
 #endif
 import ArgumentParser
 import Validation
@@ -251,6 +253,15 @@ func extractPages(data: Data, includeText: Bool) -> [IndexPage] {
         pages.append(IndexPage(number: i, text: pageText, lines: lines))
     }
     return pages
+    #elseif os(Linux)
+    if let handle = dlopen("libpdfium.so", RTLD_NOW) {
+        dlclose(handle)
+        return [IndexPage(number: 1, text: "(PDFium extraction not implemented)", lines: [])]
+    } else {
+        let msg = "SPS: PDFium not found. Run 'make deps' to install.\n"
+        FileHandle.standardError.write(msg.data(using: .utf8)!)
+        return [IndexPage(number: 1, text: "(text extraction unavailable)", lines: [])]
+    }
     #else
     return [IndexPage(number: 1, text: "(text extraction unavailable)", lines: [])]
     #endif
@@ -477,4 +488,3 @@ extension SPS {
 SPS.main()
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-
