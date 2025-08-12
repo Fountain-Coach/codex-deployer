@@ -15,6 +15,10 @@ private func canonicalData(from data: Data) throws -> Data {
     return try JSONSerialization.data(withJSONObject: obj, options: [.sortedKeys, .prettyPrinted])
 }
 
+private func pdfiumAvailable() -> Bool {
+    extractPages(data: Data(), includeText: false).first?.text != "(text extraction unavailable)"
+}
+
 final class SPSCLITests: XCTestCase {
     func testSHA256FallbackDeterministic() throws {
         let data = Data([0,1,2,3,4,5,6,7,8,9])
@@ -24,6 +28,7 @@ final class SPSCLITests: XCTestCase {
     }
 
     func testScanProducesDeterministicJSONAndSHA() throws {
+        guard pdfiumAvailable() else { throw XCTSkip("PDFium not installed") }
         let pdfData = Data(base64Encoded: samplePDFBase64)!
         let tempDir = FileManager.default.temporaryDirectory
         let pdfURL = tempDir.appendingPathComponent("sample.pdf")
@@ -38,6 +43,7 @@ final class SPSCLITests: XCTestCase {
     }
 
     func testScanWithoutIncludeTextEmpty() throws {
+        guard pdfiumAvailable() else { throw XCTSkip("PDFium not installed") }
         let pdfData = Data(base64Encoded: samplePDFBase64)!
         let tempDir = FileManager.default.temporaryDirectory
         let pdfURL = tempDir.appendingPathComponent("sample.pdf")
