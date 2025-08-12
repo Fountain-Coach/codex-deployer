@@ -1,0 +1,6 @@
+2025-08-12T12:29:24Z make -C sps deps (failed: Unable to locate package libpdfium-dev)
+2025-08-12T12:29:24Z sps scan midi/specs/*.pdf --out midi/models/index.json --include-text --sha256 --wait
+2025-08-12T12:29:24Z sps export-matrix midi/models/index.json --out midi/models/matrix.json --validate
+2025-08-12T12:29:24Z midi/build-models.sh
+2025-08-12T12:29:24Z swift test
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
