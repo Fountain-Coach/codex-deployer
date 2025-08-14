@@ -71,8 +71,8 @@ Keep the mapping as code + fixtures (Appendix A in the proposal):
 - Add `MIDI2Core` facade (types, codecs).  
 - Add JSON Schema for envelopes; round‑trip tests + golden vectors per intent.
 
-**PR‑2 — Transport boundary**  
-- Add `MIDITransport` protocol + `LoopbackTransport`.  
+**PR‑2 — Transport boundary ✅**
+- Added `MIDITransport` protocol + `LoopbackTransport`.
 - Route any existing MIDI code exclusively through the protocol.
 
 **PR‑3 — FlexBridge**  
@@ -143,3 +143,5 @@ flexctl tail --corr dE8x-7qF
 # Replay a golden UMP vector through loopback
 flexctl replay --ump ./examples/planner.execute.ump
 ```
+
+> © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

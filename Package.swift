@@ -54,6 +54,7 @@ var targets: [Target] = [
     ),
     .target(name: "MIDI2Models", path: "Sources/MIDI2Models"),
     .target(name: "MIDI2Core", dependencies: [.product(name: "MIDI2", package: "midi2")], path: "Sources/MIDI2Core"),
+    .target(name: "MIDI2Transports", path: "Sources/MIDI2Transports"),
     .testTarget(name: "FountainCoreTests", dependencies: ["FountainCore"], path: "Tests/FountainCoreTests"),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
     .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
@@ -62,7 +63,8 @@ var targets: [Target] = [
     .testTarget(name: "DNSPerfTests", dependencies: ["FountainCodex", .product(name: "NIOCore", package: "swift-nio")], path: "Tests/DNSPerfTests"),
     .testTarget(name: "NormativeLinkerTests", dependencies: ["FountainCodex"], path: "Tests/NormativeLinkerTests"),
     .testTarget(name: "MIDI2ModelsTests", dependencies: ["MIDI2Models"], path: "Tests/MIDI2ModelsTests"),
-    .testTarget(name: "MIDI2CoreTests", dependencies: ["MIDI2Core"], path: "Tests/MIDI2CoreTests")
+    .testTarget(name: "MIDI2CoreTests", dependencies: ["MIDI2Core"], path: "Tests/MIDI2CoreTests"),
+    .testTarget(name: "MIDI2TransportsTests", dependencies: ["MIDI2Transports"], path: "Tests/MIDI2TransportsTests")
 ]
 
 #if os(Linux)
