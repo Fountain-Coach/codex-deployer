@@ -9,7 +9,8 @@ var products: [Product] = [
     .library(name: "FlexBridge", targets: ["FlexBridge"]),
     .executable(name: "clientgen-service", targets: ["clientgen-service"]),
     .executable(name: "gateway-server", targets: ["gateway-server"]),
-    .executable(name: "publishing-frontend", targets: ["publishing-frontend"])
+    .executable(name: "publishing-frontend", targets: ["publishing-frontend"]),
+    .executable(name: "flexctl", targets: ["flexctl"])
 ]
 
 var targets: [Target] = [
@@ -64,6 +65,11 @@ var targets: [Target] = [
         ],
         path: "Sources/FlexBridge"
     ),
+    .executableTarget(
+        name: "flexctl",
+        dependencies: ["MIDI2Core", .product(name: "MIDI2", package: "midi2")],
+        path: "Sources/flexctl"
+    ),
     .testTarget(name: "FountainCoreTests", dependencies: ["FountainCore"], path: "Tests/FountainCoreTests"),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
     .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
@@ -73,7 +79,8 @@ var targets: [Target] = [
     .testTarget(name: "NormativeLinkerTests", dependencies: ["FountainCodex"], path: "Tests/NormativeLinkerTests"),
     .testTarget(name: "MIDI2ModelsTests", dependencies: ["MIDI2Models"], path: "Tests/MIDI2ModelsTests"),
     .testTarget(name: "MIDI2CoreTests", dependencies: ["MIDI2Core"], path: "Tests/MIDI2CoreTests"),
-    .testTarget(name: "MIDI2TransportsTests", dependencies: ["MIDI2Transports"], path: "Tests/MIDI2TransportsTests")
+    .testTarget(name: "MIDI2TransportsTests", dependencies: ["MIDI2Transports"], path: "Tests/MIDI2TransportsTests"),
+    .testTarget(name: "FlexctlTests", dependencies: ["flexctl"], path: "Tests/FlexctlTests")
 ]
 
 #if os(Linux)
