@@ -75,8 +75,8 @@ Keep the mapping as code + fixtures (Appendix A in the proposal):
 - Added `MIDITransport` protocol + `LoopbackTransport`.
 - Route any existing MIDI code exclusively through the protocol.
 
-**PR‑3 — FlexBridge**  
-- Envelope parse → HTTP route → reply (ACK/PROGRESS/ERROR).  
+**PR‑3 — FlexBridge ✅**
+- Envelope parse → HTTP route → reply (ACK/PROGRESS/ERROR).
 - Add journaling and replay defense.
 
 **PR‑4 — Linux UMP (`ALSATransport`)**  
