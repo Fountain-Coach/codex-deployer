@@ -79,7 +79,7 @@ Keep the mapping as code + fixtures (Appendix A in the proposal):
 - Envelope parse → HTTP route → reply (ACK/PROGRESS/ERROR).
 - Add journaling and replay defense.
 
-**PR‑4 — Linux UMP (`ALSATransport`)**  
+**PR‑4 — Linux UMP (`ALSATransport`) ✅**
 - Detect endpoints; send/receive golden vectors end‑to‑end.  
 - Provide `flexbridge.service` (systemd), wants `alsa-state.service`.
 
