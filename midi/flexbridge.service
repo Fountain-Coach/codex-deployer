@@ -1,0 +1,13 @@
+[Unit]
+Description=Fountain FlexBridge Service
+After=network.target alsa-state.service
+Wants=alsa-state.service
+
+[Service]
+ExecStart=/usr/local/bin/flexbridge-service
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
