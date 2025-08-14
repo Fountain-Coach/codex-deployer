@@ -83,7 +83,7 @@ Keep the mapping as code + fixtures (Appendix A in the proposal):
 - Detect endpoints; send/receive golden vectors end‑to‑end.  
 - Provide `flexbridge.service` (systemd), wants `alsa-state.service`.
 
-**PR‑5 — CLI & fixtures**  
+**PR‑5 — CLI & fixtures ✅**
 - `flexctl send|tail|replay`.  
 - Commit `examples/` with Appendix request/response shapes and `.ump` golden vectors.
 
