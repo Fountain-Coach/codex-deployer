@@ -1,9 +1,16 @@
 import XCTest
-@testable import MIDI2
+@testable import MIDI2Models
 
 final class ModelsFilesTests: XCTestCase {
     private func path(_ relative: String) -> String {
         return (FileManager.default.currentDirectoryPath as NSString).appendingPathComponent(relative)
+    }
+
+    private func readJSONData(_ file: String) throws -> Data {
+        let url = URL(fileURLWithPath: path(file))
+        let text = try String(contentsOf: url, encoding: .utf8)
+        let filtered = text.split(separator: "\n").filter { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("//") }.joined(separator: "\n")
+        return filtered.data(using: .utf8)!
     }
 
     func testMessagesEnumsBitfieldsRangesExistAndAreArrays() throws {
@@ -18,15 +25,14 @@ final class ModelsFilesTests: XCTestCase {
             let url = URL(fileURLWithPath: path(file))
             XCTAssertTrue(FileManager.default.fileExists(atPath: url.path), "Missing \(file)")
 
-            let data = try Data(contentsOf: url)
+            let data = try readJSONData(file)
             let json = try JSONSerialization.jsonObject(with: data, options: [])
             XCTAssertTrue(json is [Any], "Expected array JSON in \(file)")
         }
     }
 
     private func decodeFirst<T: Decodable>(_ file: String, as type: T.Type) throws -> T? {
-        let url = URL(fileURLWithPath: path(file))
-        let data = try Data(contentsOf: url)
+        let data = try readJSONData(file)
         let raw = try JSONSerialization.jsonObject(with: data) as? [Any] ?? []
         let decoder = JSONDecoder()
         for element in raw {

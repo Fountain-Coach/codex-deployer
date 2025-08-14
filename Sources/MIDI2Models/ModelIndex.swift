@@ -34,7 +34,9 @@ public struct MIDIModelIndex: Codable {
 
     public static func load(from path: String = "midi/models/index.json") throws -> MIDIModelIndex {
         let url = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(path)
-        let data = try Data(contentsOf: url)
+        let text = try String(contentsOf: url, encoding: .utf8)
+        let filtered = text.split(separator: "\n").filter { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("//") }.joined(separator: "\n")
+        let data = filtered.data(using: .utf8)!
         return try JSONDecoder().decode(MIDIModelIndex.self, from: data)
     }
 

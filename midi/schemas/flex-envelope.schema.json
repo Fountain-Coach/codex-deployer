@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FlexEnvelope",
+  "type": "object",
+  "required": ["v", "ts", "corr", "intent", "body"],
+  "properties": {
+    "v": {"type": "integer"},
+    "ts": {"type": "integer"},
+    "corr": {"type": "string"},
+    "intent": {"type": "string"},
+    "body": {"type": "object"}
+  }
+}
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

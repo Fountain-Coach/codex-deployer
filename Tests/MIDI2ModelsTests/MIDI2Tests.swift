@@ -1,7 +1,7 @@
 import XCTest
-@testable import MIDI2
+@testable import MIDI2Models
 
-final class MIDI2Tests: XCTestCase {
+final class MIDI2ModelsTests: XCTestCase {
     func testLoadIndex() throws {
         let index = try MIDIModelIndex.load()
         XCTAssertFalse(index.documents.isEmpty)

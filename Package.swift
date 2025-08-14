@@ -4,7 +4,8 @@ import PackageDescription
 var products: [Product] = [
     .library(name: "FountainCore", targets: ["FountainCore"]),
     .library(name: "FountainCodex", targets: ["FountainCodex"]),
-    .library(name: "MIDI2", targets: ["MIDI2"]),
+    .library(name: "MIDI2Models", targets: ["MIDI2Models"]),
+    .library(name: "MIDI2Core", targets: ["MIDI2Core"]),
     .executable(name: "clientgen-service", targets: ["clientgen-service"]),
     .executable(name: "gateway-server", targets: ["gateway-server"]),
     .executable(name: "publishing-frontend", targets: ["publishing-frontend"])
@@ -51,7 +52,8 @@ var targets: [Target] = [
         dependencies: ["PublishingFrontend"],
         path: "Sources/publishing-frontend"
     ),
-    .target(name: "MIDI2", path: "Sources/MIDI2"),
+    .target(name: "MIDI2Models", path: "Sources/MIDI2Models"),
+    .target(name: "MIDI2Core", dependencies: [.product(name: "MIDI2", package: "midi2")], path: "Sources/MIDI2Core"),
     .testTarget(name: "FountainCoreTests", dependencies: ["FountainCore"], path: "Tests/FountainCoreTests"),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
     .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
@@ -59,7 +61,8 @@ var targets: [Target] = [
     .testTarget(name: "IntegrationRuntimeTests", dependencies: ["gateway-server", "FountainCodex"], path: "Tests/IntegrationRuntimeTests"),
     .testTarget(name: "DNSPerfTests", dependencies: ["FountainCodex", .product(name: "NIOCore", package: "swift-nio")], path: "Tests/DNSPerfTests"),
     .testTarget(name: "NormativeLinkerTests", dependencies: ["FountainCodex"], path: "Tests/NormativeLinkerTests"),
-    .testTarget(name: "MIDI2Tests", dependencies: ["MIDI2"], path: "Tests/MIDI2Tests")
+    .testTarget(name: "MIDI2ModelsTests", dependencies: ["MIDI2Models"], path: "Tests/MIDI2ModelsTests"),
+    .testTarget(name: "MIDI2CoreTests", dependencies: ["MIDI2Core"], path: "Tests/MIDI2CoreTests")
 ]
 
 #if os(Linux)
@@ -79,7 +82,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.63.0"),
         .package(url: "https://github.com/apple/swift-crypto.git", from: "3.0.0"),
         .package(url: "https://github.com/apple/swift-certificates.git", from: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-log.git", from: "1.5.0")
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.5.0"),
+        .package(url: "https://github.com/Fountain-Coach/midi2.git", from: "0.2.0")
     ],
     targets: targets
 )
