@@ -6,6 +6,7 @@ var products: [Product] = [
     .library(name: "FountainCodex", targets: ["FountainCodex"]),
     .library(name: "MIDI2Models", targets: ["MIDI2Models"]),
     .library(name: "MIDI2Core", targets: ["MIDI2Core"]),
+    .library(name: "FlexBridge", targets: ["FlexBridge"]),
     .executable(name: "clientgen-service", targets: ["clientgen-service"]),
     .executable(name: "gateway-server", targets: ["gateway-server"]),
     .executable(name: "publishing-frontend", targets: ["publishing-frontend"])
@@ -55,6 +56,14 @@ var targets: [Target] = [
     .target(name: "MIDI2Models", path: "Sources/MIDI2Models"),
     .target(name: "MIDI2Core", dependencies: [.product(name: "MIDI2", package: "midi2")], path: "Sources/MIDI2Core"),
     .target(name: "MIDI2Transports", path: "Sources/MIDI2Transports"),
+    .target(
+        name: "FlexBridge",
+        dependencies: [
+            "MIDI2Core",
+            "MIDI2Transports"
+        ],
+        path: "Sources/FlexBridge"
+    ),
     .testTarget(name: "FountainCoreTests", dependencies: ["FountainCore"], path: "Tests/FountainCoreTests"),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
     .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
