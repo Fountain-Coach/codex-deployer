@@ -1,3 +1,5 @@
+import Foundation
+
 public protocol ArtifactStore: Sendable {
     func writeSnapshot(_ snap: Snapshot) async throws
     func writeAnalysis(_ analysis: Analysis) async throws
