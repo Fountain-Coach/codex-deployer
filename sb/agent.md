@@ -20,13 +20,13 @@ Create a new top-level directory `semantic-browser` (or `sb`) in the FountainAI 
 sb/
 ├── Package.swift
 ├── Sources/
-│   ├── SPSCLI/                          # CLI entrypoints (browse/analyze/index)
+│   ├── SBCLI/                          # CLI entrypoints (browse/analyze/index)
 │   │   ├── main.swift
 │   │   └── Commands/
 │   │       ├── BrowseCommand.swift
 │   │       ├── AnalyzeCommand.swift
 │   │       └── IndexCommand.swift
-│   ├── SPSCore/                         # Domain core, actors, models
+│   ├── SBCore/                         # Domain core, actors, models
 │   │   ├── SPS.swift                    # façade for end-to-end run
 │   │   ├── Models/                      # OpenAPI-aligned data models
 │   │   │   ├── Snapshot.swift
@@ -62,7 +62,7 @@ sb/
 ---
 
 ## 3) Domain Interfaces (Ports)
-Define the hexagonal ports in `SPSCore/Ports/`:
+Define the hexagonal ports in `SBCore/Ports/`:
 
 
 ```swift
@@ -145,7 +145,7 @@ Civility & Policy
 
 ## 5) Dissector (Semantics)
 
-Implement SPSDissector aligned to OpenAPI schemas:
+Implement SBDissector aligned to OpenAPI schemas:
     •    Segmentation: compute blocks[] from rendered.html + rendered.text. Use simple rules:
     •    Headings (<h1..h6>) → kind=heading, level
     •    Paragraphs → kind=paragraph
@@ -161,7 +161,7 @@ Implement SPSDissector aligned to OpenAPI schemas:
 
 ## 6) Typesense Indexer
 
-Implement SPSTypesense:
+Implement SBTypesense:
     •    Collections (create on first use if absent):
     •    pages (page doc)
     •    segments (block doc)
@@ -175,12 +175,12 @@ Implement SPSTypesense:
 
 ## 7) CLI Commands
 
-SPSCLI/main.swift wires subcommands; all flags mirror OpenAPI requests.
+SBCLI/main.swift wires subcommands; all flags mirror OpenAPI requests.
 
 ### 7.1 sb browse
 
 ```
-sps browse \
+sb browse \
   --url "https://example.com" \
   --wait "networkIdle:500,maxWait:15000" \
   --mode standard \
@@ -193,23 +193,23 @@ sps browse \
     •    Produces snapshot.json, rendered.html, text.txt, analysis.json under --out.
     •    If --index → upserts to Typesense and prints a compact summary.
 
-### 7.2 sps snapshot
+### 7.2 sb snapshot
 
 ```
-sps snapshot --url ... --wait ... --out ./out
+sb snapshot --url ... --wait ... --out ./out
 ```
 
 
-### 7.3 sps analyze
+### 7.3 sb analyze
 
 ```
-sps analyze --snapshot ./out/snapshot.json --mode deep --out ./out
+sb analyze --snapshot ./out/snapshot.json --mode deep --out ./out
 ```
 
 ### 7.4 sps index
 
 ```
-sps index --analysis ./out/analysis.json \
+sb index --analysis ./out/analysis.json \
           --typesense-url http://localhost:8108 \
           --typesense-key ${TYPESENSE_API_KEY}
 
@@ -221,12 +221,12 @@ Exit codes: 0 success; 2 bad args; 3 upstream (Typesense) unavailable; 4 navigat
 ## 8) Configuration & Env
 
 ```
-    •    SPS_HEADLESS (default true)
-    •    SPS_MAX_HOST_CONCURRENCY (default 2)
-    •    SPS_USER_AGENT (default generic)
-    •    SPS_TYPESENSE_URL, SPS_TYPESENSE_API_KEY (optional)
-    •    SPS_MAX_BODY_BYTES (e.g., 2_000_000 for XHR body capture)
-    •    SPS_SNAPSHOT_TEXT_TRUNCATE (safety cap for innerText)
+    •    SB_HEADLESS (default true)
+    •    SB_MAX_HOST_CONCURRENCY (default 2)
+    •    SB_USER_AGENT (default generic)
+    •    SB_TYPESENSE_URL, SPS_TYPESENSE_API_KEY (optional)
+    •    SB_MAX_BODY_BYTES (e.g., 2_000_000 for XHR body capture)
+    •    SB_SNAPSHOT_TEXT_TRUNCATE (safety cap for innerText)
 ```
 
 ⸻
@@ -242,7 +242,7 @@ Exit codes: 0 success; 2 bad args; 3 upstream (Typesense) unavailable; 4 navigat
 
 ## 10) Testing Strategy
 
-### Golden fixtures under Tests/SPSCoreTests/Golden/:
+### Golden fixtures under Tests/SBCoreTests/Golden/:
 
     •    sample.html (headings/paras/code/table)
     •    sample.md
@@ -279,14 +279,14 @@ Exit codes: 0 success; 2 bad args; 3 upstream (Typesense) unavailable; 4 navigat
 
 ## 13) Delivery Steps (Codex runbook)
     1.    Scaffold SPM targets as per tree above; add Package.swift with strict tools version // swift-tools-version: 6.1.
-    2.    Add Models in SPSCore/Models/ directly mirroring OpenAPI schemas.
+    2.    Add Models in SBCore/Models/ directly mirroring OpenAPI schemas.
     3.    Implement Ports and empty stubs for adapters; unit-compile.
     4.    Implement BrowserPool + CDPClient (connect, navigate, wait policies, capture).
     5.    Implement SnapshotBuilder (DOM/innerText/meta/XHR bodies → Snapshot).
     6.    Implement Dissector (Segmenter, Entities, Tables, Summarizer) for quick → standard → deep.
     7.    Implement Typesense client (collections + upsert).
     8.    Wire CLI commands; print JSON on stdout and write artifacts to --out.
-    9.    (Optional) Generate HTTP kernel from OpenAPI; bind handlers to SPSCore.SPS.
+    9.    (Optional) Generate HTTP kernel from OpenAPI; bind handlers to SBCore.SB.
     10.    Add tests + golden fixtures; ensure swift test passes locally and in CI.
     11.    Docs: add README.md and this agent.md; document CLI usage and OpenAPI URL.
 
@@ -298,7 +298,7 @@ Exit codes: 0 success; 2 bad args; 3 upstream (Typesense) unavailable; 4 navigat
 ⸻
 
 ## 14) Acceptance Criteria
-    •    sps browse --url https://example.com --mode quick --out ./out
+    •    sb browse --url https://example.com --mode quick --out ./out
     •    Produces snapshot.json, rendered.html, text.txt, analysis.json.
     •    analysis.json always contains blocks with valid [start,end) spans into rendered.text.
     •    --index upserts at least a page and per-block segment docs to Typesense.
@@ -309,7 +309,6 @@ Exit codes: 0 success; 2 bad args; 3 upstream (Typesense) unavailable; 4 navigat
 
 ## 15) Future Hooks (non-blocking)
     •    Pre-render hook for sites that need auth or special selectors.
-    •    OCR fallback for image-only PDFs (behind a feature flag).
     •    Cross-page contradiction detection via entity-linked claims.
 
 ⸻
