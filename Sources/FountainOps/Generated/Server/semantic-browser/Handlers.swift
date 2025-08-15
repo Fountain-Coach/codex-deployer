@@ -5,24 +5,68 @@ public struct Handlers {
     private let navigator: URLNavigator
     private let dissector: Dissector
     private let indexer: TypesenseIndexer
+    private let typesense: TypesenseService?
     private let sb: SB
 
     public init(
         navigator: URLNavigator = URLNavigator(),
         dissector: Dissector = Dissector(),
-        indexer: TypesenseIndexer = TypesenseIndexer()
+        indexer: TypesenseIndexer = TypesenseIndexer(),
+        typesense: TypesenseService? = try? TypesenseService()
     ) {
         self.navigator = navigator
         self.dissector = dissector
         self.indexer = indexer
+        self.typesense = typesense
         self.sb = SB(navigator: navigator, dissector: dissector, indexer: indexer, store: nil)
     }
 
     // MARK: - Query
     public func querypages(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         struct Response: Codable { let total: Int; let items: [PageDoc] }
-        let data = try JSONEncoder().encode(Response(total: 0, items: []))
-        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        guard let ts = typesense else {
+            let data = try JSONEncoder().encode(Response(total: 0, items: []))
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        }
+
+        let comps = URLComponents(string: request.path)
+        var params: [String: Any] = ["q": "*", "query_by": "title"]
+        var limit = 20
+        var offset = 0
+        var filters: [String] = []
+        for item in comps?.queryItems ?? [] {
+            switch item.name {
+            case "q": params["q"] = item.value ?? "*"
+            case "host": if let v = item.value { filters.append("host:=\(v)") }
+            case "lang": if let v = item.value { filters.append("lang:=\(v)") }
+            case "after": if let v = item.value { filters.append("fetchedAt:>\(v)") }
+            case "before": if let v = item.value { filters.append("fetchedAt:<\(v)") }
+            case "limit": limit = Int(item.value ?? "") ?? limit
+            case "offset": offset = Int(item.value ?? "") ?? offset
+            default: break
+            }
+        }
+        params["per_page"] = limit
+        params["page"] = offset / limit + 1
+        if !filters.isEmpty { params["filter_by"] = filters.joined(separator: " && ") }
+
+        let json = try JSONSerialization.data(withJSONObject: params, options: [])
+        let paramStr = String(data: json, encoding: .utf8)!
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "{}"
+        let result = try await ts.search(collection: "pages", parameters: paramStr)
+
+        var items: [PageDoc] = []
+        for hit in result.hits {
+            let docFlat = hit.document.reduce(into: [String: String]()) { acc, kv in
+                if let v = kv.value.values.first { acc[kv.key] = v }
+            }
+            if let data = try? JSONSerialization.data(withJSONObject: docFlat),
+               let doc = try? JSONDecoder().decode(PageDoc.self, from: data) {
+                items.append(doc)
+            }
+        }
+        let payload = try JSONEncoder().encode(Response(total: result.found, items: items))
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: payload)
     }
 
     public func browseanddissect(_ request: HTTPRequest, body: BrowseRequest?) async throws -> HTTPResponse {
@@ -55,8 +99,46 @@ public struct Handlers {
 
     public func queryentities(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         struct Response: Codable { let total: Int; let items: [EntityDoc] }
-        let data = try JSONEncoder().encode(Response(total: 0, items: []))
-        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        guard let ts = typesense else {
+            let data = try JSONEncoder().encode(Response(total: 0, items: []))
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        }
+
+        let comps = URLComponents(string: request.path)
+        var params: [String: Any] = ["q": "*", "query_by": "name"]
+        var limit = 20
+        var offset = 0
+        var filters: [String] = []
+        for item in comps?.queryItems ?? [] {
+            switch item.name {
+            case "q": params["q"] = item.value ?? "*"
+            case "type": if let v = item.value { filters.append("type:=\(v)") }
+            case "limit": limit = Int(item.value ?? "") ?? limit
+            case "offset": offset = Int(item.value ?? "") ?? offset
+            default: break
+            }
+        }
+        params["per_page"] = limit
+        params["page"] = offset / limit + 1
+        if !filters.isEmpty { params["filter_by"] = filters.joined(separator: " && ") }
+
+        let json = try JSONSerialization.data(withJSONObject: params, options: [])
+        let paramStr = String(data: json, encoding: .utf8)!
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "{}"
+        let result = try await ts.search(collection: "entities", parameters: paramStr)
+
+        var items: [EntityDoc] = []
+        for hit in result.hits {
+            let docFlat = hit.document.reduce(into: [String: String]()) { acc, kv in
+                if let v = kv.value.values.first { acc[kv.key] = v }
+            }
+            if let data = try? JSONSerialization.data(withJSONObject: docFlat),
+               let doc = try? JSONDecoder().decode(EntityDoc.self, from: data) {
+                items.append(doc)
+            }
+        }
+        let payload = try JSONEncoder().encode(Response(total: result.found, items: items))
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: payload)
     }
 
     public func indexanalysis(_ request: HTTPRequest, body: IndexRequest?) async throws -> HTTPResponse {
@@ -73,12 +155,59 @@ public struct Handlers {
 
     public func querysegments(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         struct Response: Codable { let total: Int; let items: [SegmentDoc] }
-        let data = try JSONEncoder().encode(Response(total: 0, items: []))
-        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        guard let ts = typesense else {
+            let data = try JSONEncoder().encode(Response(total: 0, items: []))
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        }
+
+        let comps = URLComponents(string: request.path)
+        var params: [String: Any] = ["q": "*", "query_by": "text"]
+        var limit = 20
+        var offset = 0
+        var filters: [String] = []
+        for item in comps?.queryItems ?? [] {
+            switch item.name {
+            case "q": params["q"] = item.value ?? "*"
+            case "kind": if let v = item.value { filters.append("kind:=\(v)") }
+            case "entity": if let v = item.value { filters.append("entities:=[\(v)]") }
+            case "limit": limit = Int(item.value ?? "") ?? limit
+            case "offset": offset = Int(item.value ?? "") ?? offset
+            default: break
+            }
+        }
+        params["per_page"] = limit
+        params["page"] = offset / limit + 1
+        if !filters.isEmpty { params["filter_by"] = filters.joined(separator: " && ") }
+
+        let json = try JSONSerialization.data(withJSONObject: params, options: [])
+        let paramStr = String(data: json, encoding: .utf8)!
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "{}"
+        let result = try await ts.search(collection: "segments", parameters: paramStr)
+
+        var items: [SegmentDoc] = []
+        for hit in result.hits {
+            let docFlat = hit.document.reduce(into: [String: String]()) { acc, kv in
+                if let v = kv.value.values.first { acc[kv.key] = v }
+            }
+            if let data = try? JSONSerialization.data(withJSONObject: docFlat),
+               let doc = try? JSONDecoder().decode(SegmentDoc.self, from: data) {
+                items.append(doc)
+            }
+        }
+        let payload = try JSONEncoder().encode(Response(total: result.found, items: items))
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: payload)
     }
 
     public func getpage(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 404)
+        guard let ts = typesense else { return HTTPResponse(status: 404) }
+        let parts = request.path.split(separator: "/")
+        guard let id = parts.last.map(String.init) else { return HTTPResponse(status: 404) }
+        do {
+            let data = try await ts.getDocument(collection: "pages", id: id)
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        } catch {
+            return HTTPResponse(status: 404)
+        }
     }
 
     public func analyzesnapshot(_ request: HTTPRequest, body: AnalyzeRequest?) async throws -> HTTPResponse {
