@@ -27,7 +27,7 @@ sb/
 │   │       ├── AnalyzeCommand.swift
 │   │       └── IndexCommand.swift
 │   ├── SBCore/                         # Domain core, actors, models
-│   │   ├── SPS.swift                    # façade for end-to-end run
+│   │   ├── SB.swift                    # façade for end-to-end run
 │   │   ├── Models/                      # OpenAPI-aligned data models
 │   │   │   ├── Snapshot.swift
 │   │   │   ├── Analysis.swift
@@ -55,7 +55,7 @@ sb/
 ## 2) OpenAPI → Swift Bindings (HTTP Kernel is Optional)
 - Keep the OpenAPI spec at `sb/openapi/semantic-browser.openapi.yaml` .
 - Generate Swift server stubs using your **Swift OpenAPI kernel** (already used in other services).
-- Route implementations in `SBHTTPKernel/Kernel.swift` should delegate to `SBCore.SPS` façade.
+- Route implementations in `SBHTTPKernel/Kernel.swift` should delegate to `SBCore.SB` façade.
 
 > If you choose to run CLI-only, Codex interacts with `SBCLI` and skips the HTTP kernel.
 
@@ -224,7 +224,7 @@ Exit codes: 0 success; 2 bad args; 3 upstream (Typesense) unavailable; 4 navigat
     •    SB_HEADLESS (default true)
     •    SB_MAX_HOST_CONCURRENCY (default 2)
     •    SB_USER_AGENT (default generic)
-    •    SB_TYPESENSE_URL, SPS_TYPESENSE_API_KEY (optional)
+    •    SB_TYPESENSE_URL, SB_TYPESENSE_API_KEY (optional)
     •    SB_MAX_BODY_BYTES (e.g., 2_000_000 for XHR body capture)
     •    SB_SNAPSHOT_TEXT_TRUNCATE (safety cap for innerText)
 ```
@@ -291,7 +291,7 @@ Exit codes: 0 success; 2 bad args; 3 upstream (Typesense) unavailable; 4 navigat
     11.    Docs: add README.md and this agent.md; document CLI usage and OpenAPI URL.
 
 ### Commit/PR conventions:
-    •    PR title: feat(sps): semantic browser & dissector (swift-only, cli-first)
+    •    PR title: feat(sb): semantic browser & dissector (swift-only, cli-first)
     •    Labels: swift, cli, cdp, typesense, semantics
     •    Changelist order: scaffolding → browser → snapshot → dissector → indexer → CLI → tests.
 
@@ -317,3 +317,4 @@ End of agent brief.
 Codex: follow the runbook, keep commits focused, and ensure all models match the OpenAPI schemas exactly.
 
 
+> © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
