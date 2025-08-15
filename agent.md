@@ -48,7 +48,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | SPS validation hooks | `sps/Sources/Validation/*`, `sps/Sources/SPSCLI/main.swift` | Add coverage + reserved-bit checks | ✅ | — | sps |
 | SPS samples & usage docs | `sps/Samples`, `docs/sps-usage-guide.md` | Provide annotated sample PDFs and usage guide with page-range queries & validation hooks | ✅ | — | docs, sps |
 | MIDI 2 library | `midi/*`, `sps/*`, `Sources/MIDI2/*` | Parse MIDI 2 spec via SPS and expose Swift Package module | ✅ | — | midi, sps, spm |
-| Semantic browser & dissector | `sb/*` | Implement Dissector with basic segmentation and entity extraction | 🚧 | — | sb, cli, cdp, typesense, semantics |
+| Semantic browser & dissector | `sb/*` | Wire CLI commands and integrate Typesense indexer | 🚧 | — | sb, cli, cdp, typesense, semantics |
 
 
 ---
