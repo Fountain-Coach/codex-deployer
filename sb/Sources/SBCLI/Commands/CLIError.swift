@@ -1,5 +1,5 @@
-import Foundation
-import SBCore
+enum CLIError: Error {
+    case invalidArguments
+}
 
-print("SBCLI placeholder")
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
