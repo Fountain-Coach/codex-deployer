@@ -13,6 +13,7 @@ This directory contains the OpenAPI specifications for each FountainAI microserv
 | Persistence | http://persist.fountain.coach/api/v1 | Typesense-backed store for baselines, drifts, reflections and registered tools. | [v1/persist.yml](v1/persist.yml) |
 | Planner | http://planner.fountain.coach/api/v1 | Orchestrates planning workflows across the LLM Gateway and Function Caller. | [v1/planner.yml](v1/planner.yml) |
 | Tools Factory | http://tools-factory.fountain.coach/api/v1 | Registers new tool definitions in the shared Typesense collection consumed by the Function Caller. | [v1/tools-factory.yml](v1/tools-factory.yml) |
+| Semantic Browser | https://api.fountain.coach/semantic-browser | Headless page renderer, semantic dissector and optional Typesense indexer. | [v1/semantic-browser.yml](v1/semantic-browser.yml) |
 | Typesense Server | http://typesense.fountain.coach | Underlying search engine powering the persistence layer. | [typesense.yml](typesense.yml) |
 
 ### Cross-service Interactions
