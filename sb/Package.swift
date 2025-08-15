@@ -15,7 +15,14 @@ let package = Package(
             name: "SBCLI",
             dependencies: ["SBCore"]
         ),
-        .target(name: "SBCore")
+        .target(name: "SBCore"),
+        .testTarget(
+            name: "SBCoreTests",
+            dependencies: ["SBCore"],
+            resources: [
+                .copy("Golden")
+            ]
+        )
     ]
 )
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
