@@ -206,7 +206,7 @@ sb snapshot --url ... --wait ... --out ./out
 sb analyze --snapshot ./out/snapshot.json --mode deep --out ./out
 ```
 
-### 7.4 sps index
+### 7.4 sb index
 
 ```
 sb index --analysis ./out/analysis.json \
