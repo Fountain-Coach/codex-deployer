@@ -150,7 +150,77 @@ public struct Handlers {
     }
 
     public func exportartifacts(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
-        return HTTPResponse(status: 404)
+        guard let ts = typesense else { return HTTPResponse(status: 404) }
+        let comps = URLComponents(string: request.path)
+        var pageId: String?
+        var format: String?
+        for item in comps?.queryItems ?? [] {
+            switch item.name {
+            case "pageId": pageId = item.value
+            case "format": format = item.value
+            default: break
+            }
+        }
+        guard let pid = pageId, let fmt = format else { return HTTPResponse(status: 400) }
+        do {
+            let pageData = try await ts.getDocument(collection: "pages", id: pid)
+            let page = try? JSONDecoder().decode(PageDoc.self, from: pageData)
+            guard let url = page?.url else { return HTTPResponse(status: 404) }
+
+            let snap = try await navigator.snapshot(
+                url: url,
+                wait: WaitPolicy(strategy: .domContentLoaded),
+                store: nil
+            )
+
+            var headers: [String: String] = [:]
+            var body = Data()
+            var analysis: Analysis?
+            switch fmt {
+            case "snapshot.html":
+                headers["Content-Type"] = "text/html"
+                body = snap.rendered.html.data(using: .utf8) ?? Data()
+            case "snapshot.text":
+                headers["Content-Type"] = "text/plain"
+                body = snap.rendered.text.data(using: .utf8) ?? Data()
+            case "analysis.json", "summary.md", "tables.csv":
+                analysis = try await dissector.analyze(from: snap, mode: .standard, store: nil)
+                if fmt == "analysis.json" {
+                    headers["Content-Type"] = "application/json"
+                    body = try JSONEncoder().encode(analysis)
+                } else if fmt == "summary.md" {
+                    headers["Content-Type"] = "text/markdown"
+                    var md = ""
+                    if let s = analysis?.summaries {
+                        if let abs = s.abstract { md += abs + "\n" }
+                        if let points = s.keyPoints, !points.isEmpty {
+                            md += points.map { "- \($0)" }.joined(separator: "\n") + "\n"
+                        }
+                        if let tl = s.tl_dr { md += "\nTL;DR: \(tl)\n" }
+                    }
+                    body = md.data(using: .utf8) ?? Data()
+                } else if fmt == "tables.csv" {
+                    headers["Content-Type"] = "text/csv"
+                    var lines: [String] = []
+                    var first = true
+                    for block in analysis?.blocks ?? [] {
+                        if let table = block.table {
+                            if !first { lines.append("") }
+                            first = false
+                            if let caption = table.caption { lines.append("# " + caption) }
+                            if let cols = table.columns { lines.append(cols.joined(separator: ",")) }
+                            for row in table.rows { lines.append(row.joined(separator: ",")) }
+                        }
+                    }
+                    body = lines.joined(separator: "\n").data(using: .utf8) ?? Data()
+                }
+            default:
+                return HTTPResponse(status: 404)
+            }
+            return HTTPResponse(status: 200, headers: headers, body: body)
+        } catch {
+            return HTTPResponse(status: 404)
+        }
     }
 
     public func querysegments(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
