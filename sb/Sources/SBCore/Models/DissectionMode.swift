@@ -1,3 +1,5 @@
+import Foundation
+
 public enum DissectionMode: String, Codable, Sendable {
     case quick
     case standard
