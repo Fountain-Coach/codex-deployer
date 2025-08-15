@@ -707,3 +707,4 @@ components:
         code: { type: string }
         message: { type: string }
         details: { type: object }
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

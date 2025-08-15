@@ -1,6 +1,6 @@
 # 🧠 Repository Agent Manifest
 
-**Last Updated:** August 12, 2025
+**Last Updated:** August 15, 2025
 **Scope:** Full-repository self-improvement and orchestration  
 **Purpose:** Serve as a machine-actionable contract and coordination center for Codex-driven implementation, testing, and maintenance across all project modules.
 
@@ -48,6 +48,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | SPS validation hooks | `sps/Sources/Validation/*`, `sps/Sources/SPSCLI/main.swift` | Add coverage + reserved-bit checks | ✅ | — | sps |
 | SPS samples & usage docs | `sps/Samples`, `docs/sps-usage-guide.md` | Provide annotated sample PDFs and usage guide with page-range queries & validation hooks | ✅ | — | docs, sps |
 | MIDI 2 library | `midi/*`, `sps/*`, `Sources/MIDI2/*` | Parse MIDI 2 spec via SPS and expose Swift Package module | ✅ | — | midi, sps, spm |
+| Semantic browser & dissector | `sb/*` | Scaffold SPM package and core models | 🚧 | — | sb, cli, cdp, typesense, semantics |
 
 
 ---
