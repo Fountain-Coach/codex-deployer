@@ -53,7 +53,7 @@ sb/
 ---
 
 ## 2) OpenAPI → Swift Bindings (HTTP Kernel is Optional)
-- Keep the OpenAPI spec at `sb/openapi/semantic-browser.openapi.yaml` (the version produced in the previous step).
+- Keep the OpenAPI spec at `sb/openapi/semantic-browser.openapi.yaml` .
 - Generate Swift server stubs using your **Swift OpenAPI kernel** (already used in other services).
 - Route implementations in `SBHTTPKernel/Kernel.swift` should delegate to `SBCore.SPS` façade.
 
