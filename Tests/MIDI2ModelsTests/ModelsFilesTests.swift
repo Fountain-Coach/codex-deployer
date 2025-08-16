@@ -1,13 +1,23 @@
 import XCTest
 @testable import MIDI2Models
+import ResourceLoader
 
 final class ModelsFilesTests: XCTestCase {
-    private func path(_ relative: String) -> String {
-        return (FileManager.default.currentDirectoryPath as NSString).appendingPathComponent(relative)
+    private func resourceURL(_ relative: String) throws -> URL {
+        let ns = relative as NSString
+        let subdir = ns.deletingLastPathComponent.isEmpty ? nil : ns.deletingLastPathComponent
+        let file = ns.lastPathComponent
+        let name = (file as NSString).deletingPathExtension
+        let ext = (file as NSString).pathExtension
+        do {
+            return try ResourceLoader.url(name, ext: ext, subdir: subdir, bundle: MIDI2ModelsResources.bundle)
+        } catch {
+            return try ResourceLoader.url(name, ext: ext, subdir: nil, bundle: MIDI2ModelsResources.bundle)
+        }
     }
 
     private func readJSONData(_ file: String) throws -> Data {
-        let url = URL(fileURLWithPath: path(file))
+        let url = try resourceURL(file)
         let text = try String(contentsOf: url, encoding: .utf8)
         let filtered = text.split(separator: "\n").filter { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("//") }.joined(separator: "\n")
         return filtered.data(using: .utf8)!
@@ -22,7 +32,7 @@ final class ModelsFilesTests: XCTestCase {
         ]
 
         for file in files {
-            let url = URL(fileURLWithPath: path(file))
+            let url = try resourceURL(file)
             XCTAssertTrue(FileManager.default.fileExists(atPath: url.path), "Missing \(file)")
 
             let data = try readJSONData(file)
