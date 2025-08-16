@@ -67,6 +67,19 @@ servers to start. When a new service is added—or a path changes—you must upd
 this file yourself. Tools like `clientgen` can generate API clients, but they do
 not register services in the launcher.
 
+## 🔍 Auto-generate `services.json`
+
+To avoid editing the registry by hand, you can rebuild `services.json` by
+scanning a directory that contains all FountainOps binaries:
+
+```bash
+FOUNTAINAI_SERVICES_DIR=/usr/local/bin swift Scripts/generate-service-registry.swift
+```
+
+The script checks the specified directory for the expected executables and
+writes their locations into `Sources/FountainAiLauncher/services.json`. Run it
+whenever you install or move service binaries.
+
 ---
 
 ## 🔧 Required Service Binaries
