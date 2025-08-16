@@ -1,11 +1,26 @@
 import XCTest
 @testable import MIDI2Core
 import MIDI2
+import ResourceLoader
+@testable import flexctl
 
 final class RoundTripTests: XCTestCase {
+    private func resourceURL(_ relative: String) throws -> URL {
+        let ns = relative as NSString
+        let subdir = ns.deletingLastPathComponent.isEmpty ? nil : ns.deletingLastPathComponent
+        let file = ns.lastPathComponent
+        let name = (file as NSString).deletingPathExtension
+        let ext = (file as NSString).pathExtension
+        do {
+            return try ResourceLoader.url(name, ext: ext, subdir: subdir, bundle: FlexctlResources.bundle)
+        } catch {
+            return try ResourceLoader.url(name, ext: ext, subdir: nil, bundle: FlexctlResources.bundle)
+        }
+    }
+
     private func loadJSON<T: Decodable>(_ relative: String, as type: T.Type) throws -> T {
-        let path = (FileManager.default.currentDirectoryPath as NSString).appendingPathComponent(relative)
-        let text = try String(contentsOfFile: path, encoding: .utf8)
+        let url = try resourceURL(relative)
+        let text = try String(contentsOf: url, encoding: .utf8)
         let filtered = text.split(separator: "\n").filter { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("//") }.joined(separator: "\n")
         let data = filtered.data(using: .utf8)!
         return try JSONDecoder().decode(T.self, from: data)

@@ -1,4 +1,5 @@
 import Foundation
+import ResourceLoader
 
 public struct MIDIModelIndex: Codable {
     public struct Document: Codable {
@@ -32,9 +33,15 @@ public struct MIDIModelIndex: Codable {
         self.documents = documents
     }
 
-    public static func load(from path: String = "midi/models/index.json") throws -> MIDIModelIndex {
-        let url = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(path)
-        let text = try String(contentsOf: url, encoding: .utf8)
+    public static func load(from path: String? = nil) throws -> MIDIModelIndex {
+        let rawData: Data
+        if let path {
+            let url = URL(fileURLWithPath: path)
+            rawData = try Data(contentsOf: url)
+        } else {
+            rawData = try ResourceLoader.data("index", ext: "json", subdir: nil, bundle: MIDI2ModelsResources.bundle)
+        }
+        let text = String(decoding: rawData, as: UTF8.self)
         let filtered = text.split(separator: "\n").filter { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("//") }.joined(separator: "\n")
         let data = filtered.data(using: .utf8)!
         return try JSONDecoder().decode(MIDIModelIndex.self, from: data)
@@ -42,7 +49,7 @@ public struct MIDIModelIndex: Codable {
 
     /// Convenience loader used by tests and callers that rely on an unlabeled `load()` API.
     public static func load() throws -> MIDIModelIndex {
-        return try load(from: "midi/models/index.json")
+        return try load(from: nil)
     }
 }
 
