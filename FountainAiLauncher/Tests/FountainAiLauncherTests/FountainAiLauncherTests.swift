@@ -28,6 +28,7 @@ final class FountainAiLauncherTests: XCTestCase {
         XCTAssertEqual(service.arguments, ["hi"])
         XCTAssertEqual(service.port, 42)
         XCTAssertEqual(service.healthPath, "/health")
+        XCTAssertFalse(service.shouldRestart)
     }
 
     /// Ensures default initializer uses empty arguments and no health settings.
@@ -36,6 +37,17 @@ final class FountainAiLauncherTests: XCTestCase {
         XCTAssertTrue(service.arguments.isEmpty)
         XCTAssertNil(service.port)
         XCTAssertNil(service.healthPath)
+        XCTAssertFalse(service.shouldRestart)
+    }
+
+    /// Decoding JSON manifest into services works.
+    func testServiceDecoding() throws {
+        let json = """
+        [{"name":"X","binaryPath":"/bin/echo","shouldRestart":true}]
+        """.data(using: .utf8)!
+        let decoded = try JSONDecoder().decode([Service].self, from: json)
+        XCTAssertEqual(decoded.count, 1)
+        XCTAssertTrue(decoded[0].shouldRestart)
     }
 }
 

@@ -14,6 +14,7 @@ This launcher replaces Docker, `systemd`, and `launchd` with a single, lightweig
 
 - ✅ Cross-platform orchestration (macOS & Linux)
 - 🌀 Launches all services as subprocesses
+- 📄 Loads service metadata from `services.json`
 - 🔁 Optional auto-restart on failure
 - 🌐 Optional `/status` and `/health` HTTP endpoint (coming soon)
 - 📜 Logs directly to stdout or per-service log files
@@ -25,16 +26,16 @@ This launcher replaces Docker, `systemd`, and `launchd` with a single, lightweig
 
 | Service Name           | Executable Name        | Port  | Role Description |
 |------------------------|------------------------|-------|------------------|
-| Baseline Awareness     | `awareness-service`    | 8001  | Diff, drift, narrative patterns |
-| Bootstrap Service      | `bootstrap-service`    | 8002  | Corpus and rules initializer |
-| Planner Service        | `planner-service`      | 8003  | Delegates tasks and goals |
+| Baseline Awareness     | `baseline-awareness`   | 8001  | Diff, drift, narrative patterns |
+| Bootstrap              | `bootstrap`            | 8002  | Corpus and rules initializer |
+| Planner                | `planner`              | 8003  | Delegates tasks and goals |
 | Function Caller        | `function-caller`      | 8004  | Maps operationIds to HTTP |
-| Persistence Service    | `persistence-service`  | 8005  | Typesense-backed corpus storage |
+| Persist                | `persist`              | 8005  | Typesense-backed corpus storage |
 | **LLM Gateway**        | `llm-gateway`          | 8006  | Connects to external LLMs (OpenAI, Claude) |
 | Semantic Browser       | `semantic-browser`     | 8007  | Headless browsing and semantic dissection |
 | **Gateway**            | `fountain-gateway`     | 8010  | HTTPS, authentication, route proxying |
-| Publishing Frontend    | `publishing-frontend`  | 8085  | Serves static publishing assets |
-| Typesense Proxy        | `typesense-proxy`      | 8100  | Swift-native wrapper around Typesense |
+| Tools Factory          | `tools-factory`        | 8011  | Registers callable OpenAPI tools |
+| Typesense              | `typesense`            | 8100  | Swift-native wrapper around Typesense |
 
 ---
 
@@ -63,16 +64,16 @@ The launcher expects the following executables to exist on disk. Install each se
 
 | Service Name         | Expected Path                             |
 |----------------------|-------------------------------------------|
-| Awareness Service    | `/usr/local/bin/awareness-service`        |
-| Bootstrap Service    | `/usr/local/bin/bootstrap-service`        |
-| Planner Service      | `/usr/local/bin/planner-service`          |
+| Baseline Awareness   | `/usr/local/bin/baseline-awareness`       |
+| Bootstrap            | `/usr/local/bin/bootstrap`                |
+| Planner              | `/usr/local/bin/planner`                  |
 | Function Caller      | `/usr/local/bin/function-caller`          |
-| Persistence Service  | `/usr/local/bin/persistence-service`      |
+| Persist              | `/usr/local/bin/persist`                  |
 | LLM Gateway          | `/usr/local/bin/llm-gateway`              |
 | Semantic Browser     | `/usr/local/bin/semantic-browser`         |
 | Gateway              | `/usr/local/bin/fountain-gateway`         |
-| Publishing Frontend  | `/usr/local/bin/publishing-frontend`      |
-| Typesense Proxy      | `/usr/local/bin/typesense-proxy`          |
+| Tools Factory        | `/usr/local/bin/tools-factory`            |
+| Typesense            | `/usr/local/bin/typesense`                |
 
 ---
 
