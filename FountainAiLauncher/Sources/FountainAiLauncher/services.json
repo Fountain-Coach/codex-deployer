@@ -1,0 +1,12 @@
+[
+  {"name":"Baseline Awareness","binaryPath":"/usr/local/bin/baseline-awareness","port":8001,"healthPath":"/metrics","shouldRestart":true},
+  {"name":"Bootstrap","binaryPath":"/usr/local/bin/bootstrap","port":8002,"healthPath":"/metrics","shouldRestart":true},
+  {"name":"Planner","binaryPath":"/usr/local/bin/planner","port":8003,"healthPath":"/metrics","shouldRestart":true},
+  {"name":"Function Caller","binaryPath":"/usr/local/bin/function-caller","port":8004,"healthPath":"/metrics","shouldRestart":true},
+  {"name":"Persist","binaryPath":"/usr/local/bin/persist","port":8005,"healthPath":"/metrics","shouldRestart":true},
+  {"name":"LLM Gateway","binaryPath":"/usr/local/bin/llm-gateway","port":8006,"healthPath":"/metrics","shouldRestart":true},
+  {"name":"Semantic Browser","binaryPath":"/usr/local/bin/semantic-browser","port":8007,"healthPath":"/metrics","shouldRestart":true},
+  {"name":"Gateway","binaryPath":"/usr/local/bin/fountain-gateway","port":8010,"healthPath":"/metrics","shouldRestart":true},
+  {"name":"Tools Factory","binaryPath":"/usr/local/bin/tools-factory","port":8011,"healthPath":"/metrics","shouldRestart":true},
+  {"name":"Typesense","binaryPath":"/usr/local/bin/typesense","port":8100,"healthPath":"/metrics","shouldRestart":true}
+]
