@@ -58,6 +58,30 @@ FountainAiLauncher/
 
 ---
 
+## 🗂 Manual Service Registry
+
+FountainAI does not include automatic service discovery. The launcher and the
+`start-diagnostics.swift` script read from the manually curated
+`Sources/FountainAiLauncher/services.json` file to know which FountainOps
+servers to start. When a new service is added—or a path changes—you must update
+this file yourself. Tools like `clientgen` can generate API clients, but they do
+not register services in the launcher.
+
+## 🔍 Auto-generate `services.json`
+
+To avoid editing the registry by hand, you can rebuild `services.json` by
+scanning a directory that contains all FountainOps binaries:
+
+```bash
+FOUNTAINAI_SERVICES_DIR=/usr/local/bin swift Scripts/generate-service-registry.swift
+```
+
+The script checks the specified directory for the expected executables and
+writes their locations into `Sources/FountainAiLauncher/services.json`. Run it
+whenever you install or move service binaries.
+
+---
+
 ## 🔧 Required Service Binaries
 
 The launcher expects the following executables to exist on disk. Install each service to the path shown or adjust `main.swift` if your binaries live elsewhere.
@@ -74,6 +98,16 @@ The launcher expects the following executables to exist on disk. Install each se
 | Gateway              | `/usr/local/bin/fountain-gateway`         |
 | Tools Factory        | `/usr/local/bin/tools-factory`            |
 | Typesense            | `/usr/local/bin/typesense`                |
+
+---
+
+## 🩺 Diagnostics
+
+Run the Swift diagnostics script before launching to verify all service binaries and required API keys are available:
+
+```bash
+swift Scripts/start-diagnostics.swift
+```
 
 ---
 
