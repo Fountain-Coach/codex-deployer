@@ -442,8 +442,8 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         let file = dir.appendingPathComponent(UUID().uuidString)
         var zoneManager = try ZoneManager(fileURL: file)
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        var server = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
-        Task { try await server.start(port: 9115) }
+        let serverA = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
+        Task { try await serverA.start(port: 9115) }
         try await Task.sleep(nanoseconds: 100_000_000)
         let base = URL(string: "http://127.0.0.1:9115")!
         struct ZoneCreate: Encodable { let name: String }
@@ -460,11 +460,11 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         recordReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
         recordReq.httpBody = try JSONEncoder().encode(RecordRequest(name: "www", type: "A", value: "1.1.1.1"))
         _ = try await URLSession.shared.data(for: recordReq)
-        try await server.stop()
+        try await serverA.stop()
 
         zoneManager = try ZoneManager(fileURL: file)
-        server = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
-        Task { try await server.start(port: 9115) }
+        let serverB = GatewayServer(manager: manager, plugins: [], zoneManager: zoneManager)
+        Task { try await serverB.start(port: 9115) }
         try await Task.sleep(nanoseconds: 100_000_000)
         let listURL = base.appendingPathComponent("zones")
         (data, _) = try await URLSession.shared.data(from: listURL)
@@ -478,7 +478,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         struct RecordsResponse: Decodable { let records: [Record] }
         let recs = try JSONDecoder().decode(RecordsResponse.self, from: recData)
         XCTAssertEqual(recs.records.count, 1)
-        try await server.stop()
+        try await serverB.stop()
     }
 
     @MainActor
@@ -606,10 +606,10 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         _ = try await URLSession.shared.data(for: create)
 
         let url = URL(string: "http://127.0.0.1:9116/lim/a")!
-        var (_, resp1) = try await URLSession.shared.data(from: url)
+        let (_, resp1) = try await URLSession.shared.data(from: url)
         XCTAssertEqual((resp1 as? HTTPURLResponse)?.statusCode, 200)
         // Immediate second request should exceed 1 rps
-        var (_, resp2) = try await URLSession.shared.data(from: url)
+        let (_, resp2) = try await URLSession.shared.data(from: url)
         XCTAssertEqual((resp2 as? HTTPURLResponse)?.statusCode, 429)
 
         try await upstream.stop()
@@ -637,9 +637,9 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         _ = try await URLSession.shared.data(for: create)
 
         let url = URL(string: "http://127.0.0.1:9120/limit/x")!
-        var (_, resp1) = try await URLSession.shared.data(from: url)
+        let (_, resp1) = try await URLSession.shared.data(from: url)
         XCTAssertEqual((resp1 as? HTTPURLResponse)?.statusCode, 200)
-        var (_, resp2) = try await URLSession.shared.data(from: url)
+        let (_, resp2) = try await URLSession.shared.data(from: url)
         XCTAssertEqual((resp2 as? HTTPURLResponse)?.statusCode, 429)
 
         let metricsURL = URL(string: "http://127.0.0.1:9120/metrics")!
@@ -810,7 +810,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         XCTAssertNotNil(formatter.date(from: token.expiresAt))
 
         let metricsURL = URL(string: "http://127.0.0.1:9125/metrics")!
-        var (_, unauthResp) = try await URLSession.shared.data(from: metricsURL)
+        let (_, unauthResp) = try await URLSession.shared.data(from: metricsURL)
         XCTAssertEqual((unauthResp as? HTTPURLResponse)?.statusCode, 401)
 
         var authReq = URLRequest(url: metricsURL)

@@ -21,7 +21,11 @@ if CommandLine.arguments.contains("--dns") {
         let zoneURL = URL(fileURLWithPath: "Configuration/zones.yml")
         if let manager = try? ZoneManager(fileURL: zoneURL) {
             let dns = await DNSServer(zoneManager: manager)
-            try? await dns.start(udpPort: 1053)
+            do {
+                try await dns.start(udpPort: 1053)
+            } catch {
+                FileHandle.standardError.write(Data("[gateway] Warning: DNS failed to start on port 1053: \(error)\n".utf8))
+            }
         } else {
             FileHandle.standardError.write(Data("[gateway] Warning: failed to initialize ZoneManager\n".utf8))
         }
