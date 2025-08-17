@@ -7,7 +7,7 @@ import FoundationNetworking
 
 final class SentinelConsultHandlerTests: XCTestCase {
     private class StubProtocol: URLProtocol {
-        static var decision = "allow"
+        nonisolated(unsafe) static var decision = "allow"
         override class func canInit(with request: URLRequest) -> Bool { true }
         override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
         override func startLoading() {
@@ -23,7 +23,7 @@ final class SentinelConsultHandlerTests: XCTestCase {
     }
 
     override func setUp() {
-        URLProtocol.registerClass(StubProtocol.self)
+        _ = URLProtocol.registerClass(StubProtocol.self)
         setenv("OPENAI_API_KEY", "test", 1)
     }
 
@@ -33,7 +33,7 @@ final class SentinelConsultHandlerTests: XCTestCase {
 
     private func consult(decision: String) async throws -> String {
         StubProtocol.decision = decision
-        let requestBody = SecurityCheckRequest(summary: "danger", user: "user", resources: [])
+        let requestBody = SecurityCheckRequest(resources: [], summary: "danger", user: "user")
         let data = try JSONEncoder().encode(requestBody)
         let request = HTTPRequest(method: "POST", path: "/sentinel/consult", body: data)
         let resp = try await Handlers().sentinelconsult(request, body: requestBody)

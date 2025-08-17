@@ -25,7 +25,7 @@ final class SpecLoaderTests: XCTestCase {
     /// Loading an empty file should produce a decoding error.
     func testLoadThrowsForEmptyFile() {
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("empty.yml")
-        FileManager.default.createFile(atPath: url.path, contents: Data())
+        _ = FileManager.default.createFile(atPath: url.path, contents: Data())
         XCTAssertThrowsError(try SpecLoader.load(from: url))
     }
 
@@ -34,7 +34,7 @@ final class SpecLoaderTests: XCTestCase {
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("invalid.json")
         let bytes: [UInt8] = [0xFF]
         let data = Data(bytes)
-        FileManager.default.createFile(atPath: url.path, contents: data)
+        _ = FileManager.default.createFile(atPath: url.path, contents: data)
         XCTAssertThrowsError(try SpecLoader.load(from: url))
     }
 }

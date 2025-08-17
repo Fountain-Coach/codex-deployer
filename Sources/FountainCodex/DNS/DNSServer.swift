@@ -1,5 +1,5 @@
-import NIOCore
-import NIOPosix
+@preconcurrency import NIOCore
+@preconcurrency import NIOPosix
 
 /// NIO-based DNS server booting UDP and optional TCP listeners.
 public final class DNSServer: @unchecked Sendable {
@@ -35,7 +35,7 @@ public final class DNSServer: @unchecked Sendable {
         if let tcpPort {
             let tcpBootstrap = ServerBootstrap(group: group)
                 .childChannelInitializer { channel in
-                    channel.pipeline.addHandler(ByteToMessageHandler(TCPFrameDecoder())).flatMap {
+                    channel.pipeline.addHandler(TCPFrameHandler()).flatMap {
                         channel.pipeline.addHandler(TCPFrameEncoder())
                     }.flatMap {
                         channel.pipeline.addHandler(DNSHandler(engine: self.engine))
@@ -80,18 +80,24 @@ private final class DatagramCodec: ChannelDuplexHandler, @unchecked Sendable {
     }
 }
 
-/// Decoder for TCP DNS length-prefixed frames.
-private final class TCPFrameDecoder: ByteToMessageDecoder, @unchecked Sendable {
+/// Handler for TCP DNS length-prefixed frames.
+private final class TCPFrameHandler: ChannelInboundHandler, @unchecked Sendable {
+    typealias InboundIn = ByteBuffer
     typealias InboundOut = ByteBuffer
-    func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
-        guard let length: UInt16 = buffer.getInteger(at: buffer.readerIndex) else { return .needMoreData }
-        let total = Int(length) + 2
-        guard buffer.readableBytes >= total else { return .needMoreData }
-        buffer.moveReaderIndex(forwardBy: 2)
-        if let slice = buffer.readSlice(length: Int(length)) {
-            context.fireChannelRead(self.wrapInboundOut(slice))
+    private var buffer = ByteBuffer()
+
+    func channelRead(context: ChannelHandlerContext, data: NIOAny) {
+        var newData = self.unwrapInboundIn(data)
+        buffer.writeBuffer(&newData)
+        while true {
+            guard let length: UInt16 = buffer.getInteger(at: buffer.readerIndex) else { break }
+            let total = Int(length) + 2
+            guard buffer.readableBytes >= total else { break }
+            buffer.moveReaderIndex(forwardBy: 2)
+            if let slice = buffer.readSlice(length: Int(length)) {
+                context.fireChannelRead(self.wrapInboundOut(slice))
+            }
         }
-        return .continue
     }
 }
 

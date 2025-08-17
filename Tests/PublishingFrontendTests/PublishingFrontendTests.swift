@@ -36,8 +36,8 @@ final class PublishingFrontendTests: XCTestCase {
         """
         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
         let cwd = FileManager.default.currentDirectoryPath
-        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
-        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        defer { _ = FileManager.default.changeCurrentDirectoryPath(cwd) }
+        _ = FileManager.default.changeCurrentDirectoryPath(dir.path)
         let config = try loadPublishingConfig()
         XCTAssertEqual(config.port, 1234)
         XCTAssertEqual(config.rootPath, "/tmp/Public")
@@ -62,8 +62,8 @@ final class PublishingFrontendTests: XCTestCase {
         try? FileManager.default.removeItem(at: dir)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         let cwd = FileManager.default.currentDirectoryPath
-        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
-        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        defer { _ = FileManager.default.changeCurrentDirectoryPath(cwd) }
+        _ = FileManager.default.changeCurrentDirectoryPath(dir.path)
         XCTAssertThrowsError(try loadPublishingConfig())
     }
 
@@ -76,8 +76,8 @@ final class PublishingFrontendTests: XCTestCase {
         let fileURL = configDir.appendingPathComponent("publishing.yml")
         try "port: [123".write(to: fileURL, atomically: true, encoding: .utf8)
         let cwd = FileManager.default.currentDirectoryPath
-        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
-        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        defer { _ = FileManager.default.changeCurrentDirectoryPath(cwd) }
+        _ = FileManager.default.changeCurrentDirectoryPath(dir.path)
         XCTAssertThrowsError(try loadPublishingConfig())
     }
 
@@ -94,8 +94,8 @@ final class PublishingFrontendTests: XCTestCase {
         """
         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
         let cwd = FileManager.default.currentDirectoryPath
-        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
-        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        defer { _ = FileManager.default.changeCurrentDirectoryPath(cwd) }
+        _ = FileManager.default.changeCurrentDirectoryPath(dir.path)
         XCTAssertThrowsError(try loadPublishingConfig())
     }
 
@@ -111,8 +111,8 @@ final class PublishingFrontendTests: XCTestCase {
         """
         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
         let cwd = FileManager.default.currentDirectoryPath
-        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
-        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        defer { _ = FileManager.default.changeCurrentDirectoryPath(cwd) }
+        _ = FileManager.default.changeCurrentDirectoryPath(dir.path)
         let config = try loadPublishingConfig()
         XCTAssertEqual(config.port, 1234)
         XCTAssertEqual(config.rootPath, "./Public")
@@ -130,8 +130,8 @@ final class PublishingFrontendTests: XCTestCase {
         """
         try yaml.write(to: fileURL, atomically: true, encoding: .utf8)
         let cwd = FileManager.default.currentDirectoryPath
-        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
-        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        defer { _ = FileManager.default.changeCurrentDirectoryPath(cwd) }
+        _ = FileManager.default.changeCurrentDirectoryPath(dir.path)
         let config = try loadPublishingConfig()
         XCTAssertEqual(config.port, 8085)
         XCTAssertEqual(config.rootPath, "/tmp/Public")
@@ -218,8 +218,8 @@ final class PublishingFrontendTests: XCTestCase {
         let fileURL = configDir.appendingPathComponent("publishing.yml")
         try "".write(to: fileURL, atomically: true, encoding: .utf8)
         let cwd = FileManager.default.currentDirectoryPath
-        defer { FileManager.default.changeCurrentDirectoryPath(cwd) }
-        FileManager.default.changeCurrentDirectoryPath(dir.path)
+        defer { _ = FileManager.default.changeCurrentDirectoryPath(cwd) }
+        _ = FileManager.default.changeCurrentDirectoryPath(dir.path)
         let config = try loadPublishingConfig()
         XCTAssertEqual(config.port, 8085)
         XCTAssertEqual(config.rootPath, "./Public")
