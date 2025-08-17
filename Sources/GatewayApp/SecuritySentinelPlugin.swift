@@ -10,6 +10,12 @@ public enum SentinelDecision: String, Decodable {
     case escalate
 }
 
+private struct SecurityCheckRequest: Codable {
+    let summary: String
+    let user: String
+    let resources: [String]
+}
+
 /// Plugin that consults SecuritySentinel for potentially destructive actions.
 public struct SecuritySentinelPlugin: GatewayPlugin {
     private let client: APIClient
@@ -74,7 +80,7 @@ public struct SecuritySentinelPlugin: GatewayPlugin {
             let dir = logURL.deletingLastPathComponent()
             try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
             if !FileManager.default.fileExists(atPath: logURL.path) {
-                FileManager.default.createFile(atPath: logURL.path, contents: nil)
+                _ = FileManager.default.createFile(atPath: logURL.path, contents: nil)
             }
             let handle = try FileHandle(forWritingTo: logURL)
             defer { try? handle.close() }

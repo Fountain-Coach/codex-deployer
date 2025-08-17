@@ -27,7 +27,8 @@ var targets: [Target] = [
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "Logging", package: "swift-log")
         ],
-        path: "Sources/FountainCodex"
+        path: "Sources/FountainCodex",
+        exclude: ["DNS/README.md"]
     ),
     .executableTarget(
         name: "clientgen-service",
@@ -43,11 +44,13 @@ var targets: [Target] = [
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "X509", package: "swift-certificates")
         ],
-        path: "Sources/GatewayApp"
+        path: "Sources/GatewayApp",
+        exclude: ["README.md"]
     ),
     .target(
         name: "LLMGatewayClient",
         path: "Sources/FountainOps/Generated/Client/llm-gateway",
+        exclude: ["Models.swift", "Requests"],
         sources: ["APIClient.swift", "APIRequest.swift"]
     ),
     .target(
@@ -58,7 +61,8 @@ var targets: [Target] = [
     .target(
         name: "LLMGatewayService",
         dependencies: ["ServiceShared"],
-        path: "Sources/FountainOps/Generated/Server/llm-gateway"
+        path: "Sources/FountainOps/Generated/Server/llm-gateway",
+        exclude: ["HTTPServer.swift"]
     ),
     .target(
         name: "PublishingFrontend",
@@ -97,7 +101,12 @@ var targets: [Target] = [
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
     .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
     .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainCodex", .product(name: "Crypto", package: "swift-crypto"), .product(name: "NIOEmbedded", package: "swift-nio"), .product(name: "NIO", package: "swift-nio")], path: "Tests/DNSTests"),
-    .testTarget(name: "IntegrationRuntimeTests", dependencies: ["gateway-server", "FountainCodex"], path: "Tests/IntegrationRuntimeTests"),
+    .testTarget(
+        name: "IntegrationRuntimeTests",
+        dependencies: ["gateway-server", "FountainCodex"],
+        path: "Tests/IntegrationRuntimeTests",
+        resources: [.process("Fixtures")]
+    ),
     .testTarget(name: "DNSPerfTests", dependencies: ["FountainCodex", .product(name: "NIOCore", package: "swift-nio")], path: "Tests/DNSPerfTests"),
     .testTarget(name: "NormativeLinkerTests", dependencies: ["FountainCodex"], path: "Tests/NormativeLinkerTests"),
     .testTarget(name: "MIDI2ModelsTests", dependencies: ["MIDI2Models"], path: "Tests/MIDI2ModelsTests"),

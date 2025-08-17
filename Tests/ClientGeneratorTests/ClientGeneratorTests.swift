@@ -49,7 +49,7 @@ final class ClientGeneratorTests: XCTestCase {
         try? FileManager.default.removeItem(at: outDir)
         try ClientGenerator.emitClient(from: spec, to: outDir)
         let requestFile = outDir.appendingPathComponent("Requests/GetZone.swift")
-        let contents = try String(contentsOf: requestFile)
+        let contents = try String(contentsOf: requestFile, encoding: .utf8)
         XCTAssertTrue(contents.contains("detail"))
         XCTAssertTrue(contents.contains("query.append(\"detail"))
     }

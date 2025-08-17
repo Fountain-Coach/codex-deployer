@@ -16,7 +16,7 @@ public struct Handlers {
             return HTTPResponse(status: 500)
         }
         let base = ProcessInfo.processInfo.environment["OPENAI_API_BASE"] ?? "https://api.openai.com/v1/chat/completions"
-        var payload: [String: Any] = [
+        let payload: [String: Any] = [
             "model": "gpt-4o-mini",
             "messages": [
                 ["role": "system", "content": "You are security_sentinel. Respond with allow, deny, or escalate."],
