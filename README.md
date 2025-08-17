@@ -1,51 +1,28 @@
-
 # 🌊 FountainAI
 
-## System Architecture
+FountainAI assembles a family of Swift services that work together to run a secure, observable and extensible AI platform. Rather than centering on a single CLI, the repository balances gateways, operations tooling and code generation as equal pillars of the ecosystem.
 
-FountainAI is a collection of Swift packages orchestrated by the `FountainAiLauncher` CLI. Each module provides a specific layer of the stack, from HTTP routing to DNS management.
+## Architecture Pillars
 
-![image_gen: Overview diagram with modules FountainAiLauncher, GatewayApp, PublishingFrontend, FountainCodex and FountainOps connected by arrows]
+- **GatewayApp** – Plugin-driven HTTP and DNS gateway built on SwiftNIO. It composes `GatewayPlugin` implementations such as `LoggingPlugin` and `PublishingFrontendPlugin` to handle cross-cutting concerns.
+- **FountainOps** – Operational assets including Dockerfiles, OpenAPI specifications and generated client/server code used for deployment and monitoring.
+- **FountainCodex** – Libraries for loading OpenAPI specs and emitting Swift clients and servers, powering both gateway and publishing services.
+- **PublishingFrontend** – Static file host for generated documentation and artifacts, configured through YAML in `Configuration/`.
+- **FountainAiLauncher** – A minimal supervisor binary that starts and watches other services; it is an entrypoint, not the core architecture.
 
-### Core Modules
+## Security Architecture
 
-#### FountainAiLauncher
-This executable supervises all running services. It defines a `Service` model and a `Supervisor` that launches and terminates processes. The main entry point lists each service binary to run. Key code is found in [`FountainAiLauncher/Sources/FountainAiLauncher/Supervisor.swift`](FountainAiLauncher/Sources/FountainAiLauncher/Supervisor.swift) and [`main.swift`](FountainAiLauncher/Sources/FountainAiLauncher/main.swift).
+The `SECURITY` directory documents threats such as unauthorized access, destructive API calls, prompt injection, denial of service and supply-chain attacks. Recommended mitigations include OAuth2-based access control, scoped permissions, rate limiting, input filtering, anomaly monitoring, and signed container images. See [SECURITY/README.md](SECURITY/README.md) for comprehensive guidance.
 
-#### GatewayApp
-A lightweight HTTP gateway built on SwiftNIO. The server composes a list of plugins conforming to [`GatewayPlugin`](Sources/GatewayApp/GatewayPlugin.swift). Plugins such as [`LoggingPlugin`](Sources/GatewayApp/LoggingPlugin.swift) and [`PublishingFrontendPlugin`](Sources/GatewayApp/PublishingFrontendPlugin.swift) modify requests and responses before or after routing. The server implementation resides in [`GatewayServer.swift`](Sources/GatewayApp/GatewayServer.swift).
+## Operations and Deployment
 
-![image_gen: Plugin based HTTP gateway with request flow through prepare, router, respond]
+FountainOps connects specifications in `openAPI/` with generated code and container images. The gateway exposes Prometheus-style metrics, handles TLS certificate renewal and integrates DNS management for end-to-end service delivery.
 
-- [Sources/GatewayApp/README.md](Sources/GatewayApp/README.md) – documentation for the HTTP gateway implementation.
-- [Sources/FountainCodex/DNS/README.md](Sources/FountainCodex/DNS/README.md) – overview of the embedded DNS server.
+## Design Patterns
 
-#### PublishingFrontend
-A simple static file server used to host generated documentation or assets. Configuration is loaded from [`Configuration/publishing.yml`](Configuration/publishing.yml). The core logic is defined in [`PublishingFrontend.swift`](Sources/PublishingFrontend/PublishingFrontend.swift) and exposes a small HTTP kernel for serving files.
-
-#### FountainCodex
-Libraries for parsing OpenAPI specifications and generating Swift clients and servers. The [ClientGenerator](Sources/FountainCodex/ClientGenerator/ClientGenerator.swift) emits type-safe API requests and a reusable `APIClient`. Supporting infrastructure such as [`HTTPKernel`](Sources/FountainCodex/IntegrationRuntime/HTTPKernel.swift) powers both GatewayApp and the publishing server.
-
-#### FountainOps
-Operational assets like Dockerfiles and OpenAPI specifications live under [`Sources/FountainOps`](Sources/FountainOps). The `openAPI` folder lists all service specs used for client generation.
-
-![image_gen: Flow from OpenAPI specs to generated clients and server binaries]
-
-#### Semantic PDF Scanner (SPS)
-Command-line tool for extracting text and tables from PDFs. Supports page range queries and validation hooks for Midi2Swift.
-See [SPS Usage Guide](docs/sps-usage-guide.md) for end-to-end examples.
-
-### Design Patterns
-The project adopts several common patterns which can be seen in the implementation files:
-
-- **Client/Server Pattern** – `HTTPKernel` in [`IntegrationRuntime`](Sources/FountainCodex/IntegrationRuntime/HTTPKernel.swift) enables a simple server abstraction used by the gateway and publishing frontend.
-- **Plugin Pattern** – `GatewayPlugin` and its implementations ([`LoggingPlugin`](Sources/GatewayApp/LoggingPlugin.swift), [`PublishingFrontendPlugin`](Sources/GatewayApp/PublishingFrontendPlugin.swift)) allow cross-cutting behavior around request handling.
-- **Supervisor Pattern** – `Supervisor` in [`FountainAiLauncher`](FountainAiLauncher/Sources/FountainAiLauncher/Supervisor.swift) manages multiple child processes to keep services alive.
-- **Declarative Configuration** – YAML files in [`Configuration`](Configuration) provide runtime settings such as gateway certificates and server ports, loaded at startup by the publishing frontend.
-
-![image_gen: Sequence of FountainAiLauncher starting services which communicate through the gateway]
-
+- **Plugin Pattern** – `GatewayPlugin` implementations provide extensibility around request handling.
+- **Declarative Configuration** – YAML files in `Configuration/` supply runtime settings for gateways and publishing services.
+- **Supervisor Pattern** – `FountainAiLauncher` monitors child processes to keep services running.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-
