@@ -39,10 +39,16 @@ var targets: [Target] = [
         dependencies: [
             "FountainCodex",
             "PublishingFrontend",
+            "LLMGatewayClient",
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "X509", package: "swift-certificates")
         ],
         path: "Sources/GatewayApp"
+    ),
+    .target(
+        name: "LLMGatewayClient",
+        path: "Sources/FountainOps/Generated/Client/llm-gateway",
+        sources: ["APIClient.swift", "APIRequest.swift"]
     ),
     .target(
         name: "PublishingFrontend",
@@ -87,7 +93,8 @@ var targets: [Target] = [
     .testTarget(name: "MIDI2ModelsTests", dependencies: ["MIDI2Models"], path: "Tests/MIDI2ModelsTests"),
     .testTarget(name: "MIDI2CoreTests", dependencies: ["MIDI2Core", "ResourceLoader", "flexctl"], path: "Tests/MIDI2CoreTests"),
     .testTarget(name: "MIDI2TransportsTests", dependencies: ["MIDI2Transports"], path: "Tests/MIDI2TransportsTests"),
-    .testTarget(name: "FlexctlTests", dependencies: ["flexctl", "ResourceLoader"], path: "Tests/FlexctlTests")
+    .testTarget(name: "FlexctlTests", dependencies: ["flexctl", "ResourceLoader"], path: "Tests/FlexctlTests"),
+    .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayClient"], path: "Tests/GatewayAppTests")
 ]
 
 #if os(Linux)
