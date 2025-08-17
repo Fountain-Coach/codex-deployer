@@ -33,12 +33,31 @@ Refer to the OpenAPI file for request and response schemas, authentication requi
 
 ## Plugin Index
 
-| Plugin | Description | Docs |
-| --- | --- | --- |
-| [GatewayPlugin](GatewayPlugin.swift) | Protocol defining `prepare` and `respond` hooks for request/response middleware. | [documentation](../../docs/README.md#gatewayplugin) |
-| [AuthPlugin](AuthPlugin.swift) | Enforces bearer-token authentication on protected paths. | [documentation](../../docs/README.md#authplugin) |
-| [LoggingPlugin](LoggingPlugin.swift) | Logs every request and response for debugging. | [documentation](../../docs/README.md#loggingplugin) |
-| [PublishingFrontendPlugin](PublishingFrontendPlugin.swift) | Serves static files when the router returns `404`. | [documentation](../../docs/README.md#publishingfrontendplugin) |
+The gateway composes middleware plugins to augment request handling. Each plugin is documented below.
+
+### [GatewayPlugin](GatewayPlugin.swift)
+Protocol describing middleware hooks for the gateway server.
+
+- `prepare(_:)` – Allows mutation or inspection of a request before routing. Default implementation returns the request unchanged.
+- `respond(_:for:)` – Allows mutation or inspection of the response before it is returned. Default implementation returns the response unchanged.
+
+### [AuthPlugin](AuthPlugin.swift)
+Enforces bearer-token authentication on protected paths.
+
+- `init(store:protected:)` – Configures the credentials store and path prefixes requiring authorization.
+- `prepare(_:)` – Validates `Authorization: Bearer` tokens for protected paths and throws `UnauthorizedError` when verification fails.
+
+### [LoggingPlugin](LoggingPlugin.swift)
+Logs incoming requests and outgoing responses for debugging.
+
+- `prepare(_:)` – Prints the request method and path.
+- `respond(_:for:)` – Logs the response status for the original request.
+
+### [PublishingFrontendPlugin](PublishingFrontendPlugin.swift)
+Serves static files from disk when the router does not handle a request.
+
+- `rootPath` – Directory containing files to be served.
+- `respond(_:for:)` – Intercepts `404` responses for GET requests, serving a file with the appropriate `Content-Type` header when found.
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
