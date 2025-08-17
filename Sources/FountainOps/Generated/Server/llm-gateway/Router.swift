@@ -1,5 +1,4 @@
 import Foundation
-import ServiceShared
 
 public struct Router {
     public var handlers: Handlers
@@ -10,14 +9,19 @@ public struct Router {
 
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
         switch (request.method, request.path) {
-        case ("POST", "/chat"):
-            return try await handlers.chatwithobjective(request)
         case ("GET", "/metrics"):
-            return try await handlers.metricsMetricsGet(request)
+            let body = try? JSONDecoder().decode(NoBody.self, from: request.body)
+            return try await handlers.metricsMetricsGet(request, body: body)
+        case ("POST", "/sentinel/consult"):
+            let body = try? JSONDecoder().decode(SecurityCheckRequest.self, from: request.body)
+            return try await handlers.sentinelconsult(request, body: body)
+        case ("POST", "/chat"):
+            let body = try? JSONDecoder().decode(ChatRequest.self, from: request.body)
+            return try await handlers.chatwithobjective(request, body: body)
         default:
             return HTTPResponse(status: 404)
         }
     }
 }
 
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

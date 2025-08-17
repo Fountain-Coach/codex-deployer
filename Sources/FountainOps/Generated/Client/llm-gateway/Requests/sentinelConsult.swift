@@ -1,10 +1,10 @@
 import Foundation
 
-public struct chatWithObjective: APIRequest {
-    public typealias Body = ChatRequest
-    public typealias Response = chatWithObjectiveResponse
+public struct sentinelConsult: APIRequest {
+    public typealias Body = SecurityCheckRequest
+    public typealias Response = SecurityDecision
     public var method: String { "POST" }
-    public var path: String { "/chat" }
+    public var path: String { "/sentinel/consult" }
     public var body: Body?
 
     public init(body: Body? = nil) {

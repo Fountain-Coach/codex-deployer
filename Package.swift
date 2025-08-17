@@ -51,6 +51,16 @@ var targets: [Target] = [
         sources: ["APIClient.swift", "APIRequest.swift"]
     ),
     .target(
+        name: "ServiceShared",
+        path: "Sources/FountainOps/Generated/Server/Shared",
+        exclude: ["Models.swift", "TypesenseClient.swift"]
+    ),
+    .target(
+        name: "LLMGatewayService",
+        dependencies: ["ServiceShared"],
+        path: "Sources/FountainOps/Generated/Server/llm-gateway"
+    ),
+    .target(
         name: "PublishingFrontend",
         dependencies: ["FountainCodex", "Yams"],
         path: "Sources/PublishingFrontend"
@@ -94,7 +104,8 @@ var targets: [Target] = [
     .testTarget(name: "MIDI2CoreTests", dependencies: ["MIDI2Core", "ResourceLoader", "flexctl"], path: "Tests/MIDI2CoreTests"),
     .testTarget(name: "MIDI2TransportsTests", dependencies: ["MIDI2Transports"], path: "Tests/MIDI2TransportsTests"),
     .testTarget(name: "FlexctlTests", dependencies: ["flexctl", "ResourceLoader"], path: "Tests/FlexctlTests"),
-    .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayClient"], path: "Tests/GatewayAppTests")
+    .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayClient"], path: "Tests/GatewayAppTests"),
+    .testTarget(name: "FountainOpsTests", dependencies: ["LLMGatewayService"], path: "Tests/FountainOpsTests")
 ]
 
 #if os(Linux)
