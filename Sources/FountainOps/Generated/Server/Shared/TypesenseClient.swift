@@ -332,4 +332,4 @@ public actor TypesenseClient {
     }
 }
 
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
