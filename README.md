@@ -17,6 +17,9 @@ A lightweight HTTP gateway built on SwiftNIO. The server composes a list of plug
 
 ![image_gen: Plugin based HTTP gateway with request flow through prepare, router, respond]
 
+- [Sources/GatewayApp/README.md](Sources/GatewayApp/README.md) – documentation for the HTTP gateway implementation.
+- [Sources/FountainCodex/DNS/README.md](Sources/FountainCodex/DNS/README.md) – overview of the embedded DNS server.
+
 #### PublishingFrontend
 A simple static file server used to host generated documentation or assets. Configuration is loaded from [`Configuration/publishing.yml`](Configuration/publishing.yml). The core logic is defined in [`PublishingFrontend.swift`](Sources/PublishingFrontend/PublishingFrontend.swift) and exposes a small HTTP kernel for serving files.
 
