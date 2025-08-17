@@ -29,7 +29,7 @@ Refer to the OpenAPI file for request and response schemas, authentication requi
 [`CredentialStore.swift`](CredentialStore.swift) loads API client credentials from environment variables, validates pairs and signs or verifies JSON Web Tokens used by `AuthPlugin`.
 
 ### Entry Point
-[`main.swift`](main.swift) constructs a `GatewayServer` with `LoggingPlugin` and `PublishingFrontendPlugin` and starts listening on port 8080. Passing `--dns` additionally launches a DNS server backed by `ZoneManager`.
+[`main.swift`](main.swift) constructs a `GatewayServer` with `LoggingPlugin` and `PublishingFrontendPlugin` and starts listening on port 8080. Passing `--dns` additionally launches a DNS server backed by `ZoneManager`. See [DNS subsystem docs](../FountainCodex/DNS/README.md) for zone management and server details.
 
 ## Plugin Index
 
