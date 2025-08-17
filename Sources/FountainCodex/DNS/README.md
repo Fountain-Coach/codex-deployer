@@ -59,6 +59,7 @@ $ swift run GatewayApp --dns
 ## Control plane API
 
 The HTTP gateway exposes endpoints that delegate to `ZoneManager`:
+The full API specification is defined in [`Sources/FountainOps/FountainAi/openAPI/v1/dns.yml`](../../FountainOps/FountainAi/openAPI/v1/dns.yml).
 
 - `GET  /zones` – list all zones
 - `POST /zones` – create a new zone
