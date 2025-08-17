@@ -6,4 +6,4 @@ public protocol APIRequest {
     var path: String { get }
 }
 
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

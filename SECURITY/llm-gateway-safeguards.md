@@ -61,4 +61,8 @@ try await client.addRole(sentinel)
 
 Embedding this consultable persona ensures that high-risk behavior is intercepted and audited before affecting production systems.
 
+### Plugin Enforcement
+
+`SecuritySentinelPlugin` hooks into the gateway request pipeline. When a request uses a destructive HTTP verb or path, the plugin summarizes it and consults `/sentinel/consult`. Decisions of `allow`, `deny`, or `escalate` are enforced immediately, and every outcome is appended to `logs/security.log` for audit.
+
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
