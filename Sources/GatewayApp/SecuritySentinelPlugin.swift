@@ -31,11 +31,14 @@ public struct SecuritySentinelPlugin: GatewayPlugin {
 
     private struct ConsultRequest: APIRequest {
         typealias Response = ConsultResponse
+        typealias Body = SecurityCheckRequest
         let summary: String
+        let user: String
+        let resources: [String]
         var method: String { "POST" }
-        var path: String {
-            let encoded = summary.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-            return "/sentinel/consult?summary=\(encoded)"
+        var path: String { "/sentinel/consult" }
+        var body: Body? {
+            SecurityCheckRequest(summary: summary, user: user, resources: resources)
         }
     }
 
@@ -46,7 +49,9 @@ public struct SecuritySentinelPlugin: GatewayPlugin {
     public func prepare(_ request: HTTPRequest) async throws -> HTTPRequest {
         guard isDestructive(request) else { return request }
         let summary = "\(request.method) \(request.path)"
-        let decision = try await client.send(ConsultRequest(summary: summary)).decision
+        let user = request.headers["X-User"] ?? "anonymous"
+        let resources = [request.path]
+        let decision = try await client.send(ConsultRequest(summary: summary, user: user, resources: resources)).decision
         log(summary: summary, decision: decision)
         switch decision {
         case .allow:
