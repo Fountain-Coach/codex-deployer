@@ -9,6 +9,7 @@ FountainAI assembles a family of Swift services that work together to run a secu
 - **FountainCodex** – Libraries for loading OpenAPI specs and emitting Swift clients and servers, powering both gateway and publishing services.
 - **PublishingFrontend** – Static file host for generated documentation and artifacts, configured through YAML in `Configuration/`.
 - **FountainAiLauncher** – A minimal supervisor binary that starts and watches other services; it is an entrypoint, not the core architecture.
+- **Security Components** – Harden the platform with `AuthPlugin`, `SecuritySentinelPlugin`, `CoTLogger`, and route rate limiting. For configuration details, refer to the [GatewayApp README](Sources/GatewayApp/README.md) and [security docs](SECURITY/README.md).
 
 ## Security Architecture
 

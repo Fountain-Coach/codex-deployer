@@ -6,8 +6,11 @@ import ServiceShared
 
 public struct Handlers {
     private let cotLogURL: URL
-    public init(cotLogURL: URL = URL(fileURLWithPath: "logs/cot.log")) {
+    private let session: URLSession
+
+    public init(cotLogURL: URL = URL(fileURLWithPath: "logs/cot.log"), session: URLSession = .shared) {
         self.cotLogURL = cotLogURL
+        self.session = session
     }
     public func metricsMetricsGet(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
         let text = await PrometheusAdapter.shared.exposition()
@@ -32,7 +35,7 @@ public struct Handlers {
         urlRequest.httpBody = data
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-        let (respData, _) = try await URLSession.shared.data(for: urlRequest)
+        let (respData, _) = try await session.data(for: urlRequest)
         struct OpenAIResponse: Decodable {
             struct Choice: Decodable {
                 struct Message: Decodable { let content: String }
