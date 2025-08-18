@@ -6,11 +6,20 @@ import FountainCodex
 /// field returned in the response body is appended to a log file.
 public struct CoTLogger: GatewayPlugin {
     private let logURL: URL
+    private let sentinel: SecuritySentinelPlugin?
+    private let patterns: [String]
 
     /// Creates a new logger.
-    /// - Parameter logURL: Destination file for captured reasoning steps.
-    public init(logURL: URL = URL(fileURLWithPath: "logs/cot.log")) {
+    /// - Parameters:
+    ///   - logURL: Destination file for captured reasoning steps.
+    ///   - sentinel: Optional security sentinel used to vet risky reasoning.
+    ///   - patterns: Keywords that trigger a sentinel consult when present in the CoT.
+    public init(logURL: URL = URL(fileURLWithPath: "logs/cot.log"),
+                sentinel: SecuritySentinelPlugin? = nil,
+                patterns: [String] = ["delete", "rm", "destroy", "truncate"]) {
         self.logURL = logURL
+        self.sentinel = sentinel
+        self.patterns = patterns
     }
 
     /// Saves chain-of-thought steps when present and requested.
@@ -25,7 +34,15 @@ public struct CoTLogger: GatewayPlugin {
         guard let respJSON = try? JSONSerialization.jsonObject(with: response.body) as? [String: Any],
               let cot = respJSON["cot"],
               let id = respJSON["id"] as? String else { return response }
-        let entry: [String: Any] = ["id": id, "cot": sanitize(cot)]
+        var entry: [String: Any] = ["id": id, "cot": sanitize(cot)]
+
+        if isRisky(cot), let sentinel = sentinel {
+            let user = request.headers["X-User"] ?? "anonymous"
+            if let decision = try? await sentinel.consult(summary: "cot \(id)", user: user, resources: [String(describing: cot)]) {
+                entry["sentinel_decision"] = decision.rawValue
+            }
+        }
+
         guard let data = try? JSONSerialization.data(withJSONObject: entry) else { return response }
         do {
             let dir = logURL.deletingLastPathComponent()
@@ -65,6 +82,11 @@ public struct CoTLogger: GatewayPlugin {
             output = output.replacingOccurrences(of: p, with: "[REDACTED]", options: .caseInsensitive)
         }
         return output
+    }
+
+    private func isRisky(_ value: Any) -> Bool {
+        let text = String(describing: value).lowercased()
+        return patterns.contains { text.contains($0) }
     }
 }
 
