@@ -22,13 +22,18 @@ final class SentinelConsultHandlerTests: XCTestCase {
         override func stopLoading() {}
     }
 
+    private var handlers: Handlers!
+
     override func setUp() {
-        _ = URLProtocol.registerClass(StubProtocol.self)
+        var config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [StubProtocol.self]
+        let session = URLSession(configuration: config)
+        handlers = Handlers(session: session)
         setenv("OPENAI_API_KEY", "test", 1)
     }
 
     override func tearDown() {
-        URLProtocol.unregisterClass(StubProtocol.self)
+        handlers = nil
     }
 
     private func consult(decision: String) async throws -> String {
@@ -36,7 +41,7 @@ final class SentinelConsultHandlerTests: XCTestCase {
         let requestBody = SecurityCheckRequest(resources: [], summary: "danger", user: "user")
         let data = try JSONEncoder().encode(requestBody)
         let request = HTTPRequest(method: "POST", path: "/sentinel/consult", body: data)
-        let resp = try await Handlers().sentinelconsult(request, body: requestBody)
+        let resp = try await handlers.sentinelconsult(request, body: requestBody)
         let decisionResp = try JSONDecoder().decode(SecurityDecision.self, from: resp.body)
         return decisionResp.decision
     }
