@@ -80,6 +80,12 @@ Captures chain-of-thought responses when `/chat` requests include `include_cot: 
 
 - `respond(_:for:)` – Appends sanitized `cot` entries to `logs/cot.log` and optionally vets risky reasoning with `SecuritySentinelPlugin`.
 
+### [BudgetBreakerPlugin](BudgetBreakerPlugin.swift)
+Applies per-user request budgets with circuit breakers and health-triggered load shedding.
+
+- `updateHealth(isHealthy:)` – Integrates autoscaling or health signals to shed load.
+- `stats()` – Returns counts of allowed versus throttled requests for metrics.
+
 ### Built-in Rate Limiting
 `GatewayServer` enforces per-route token bucket limits.
 

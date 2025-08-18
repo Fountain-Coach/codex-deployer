@@ -96,6 +96,10 @@ public final class GatewayServer {
                 return HTTPResponse(status: 401)
             } catch is ForbiddenError {
                 return HTTPResponse(status: 403)
+            } catch is TooManyRequestsError {
+                return HTTPResponse(status: 429, headers: ["Content-Type": "text/plain"], body: Data("too many requests".utf8))
+            } catch is ServiceUnavailableError {
+                return HTTPResponse(status: 503, headers: ["Content-Type": "text/plain"], body: Data("service unavailable".utf8))
             }
             let segments = request.path.split(separator: "/", omittingEmptySubsequences: true)
             var response: HTTPResponse

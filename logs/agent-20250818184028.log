@@ -1,0 +1,8 @@
+task: resilience plugin for gateway
+result: added BudgetBreakerPlugin with circuit breakers and metrics
+actions:
+  - implemented BudgetBreakerPlugin
+  - updated GatewayServer error handling
+  - documented plugin and added tests
+status: success
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
