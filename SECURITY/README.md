@@ -25,6 +25,13 @@
 
 # Risk Mitigation & Recommendations
 
+## Current Mitigations
+
+- **AuthPlugin** – Enforces bearer-token authentication on protected routes. Source: [`AuthPlugin.swift`](../Sources/GatewayApp/AuthPlugin.swift). Configure credentials with `GATEWAY_CRED_<CLIENT_ID>` variables and `GATEWAY_JWT_SECRET` as described in the [GatewayApp README](../Sources/GatewayApp/README.md#authplugin).
+- **SecuritySentinelPlugin** – Consults an external service before destructive operations. Source: [`SecuritySentinelPlugin.swift`](../Sources/GatewayApp/SecuritySentinelPlugin.swift). Set the sentinel URL and log path per the [GatewayApp README](../Sources/GatewayApp/README.md#securitysentinelplugin).
+- **CoTLogger** – Captures chain-of-thought logs and optionally vets reasoning through the sentinel. Source: [`CoTLogger.swift`](../Sources/GatewayApp/CoTLogger.swift). Enable in the gateway pipeline and configure log destinations in the [GatewayApp README](../Sources/GatewayApp/README.md#cotlogger).
+- **Built-in Rate Limiter** – Applies per-route token buckets to throttle excessive requests. Implementation: [`GatewayServer.swift`](../Sources/GatewayApp/GatewayServer.swift). Set `rateLimit` on route definitions as documented under [Built-in Rate Limiting](../Sources/GatewayApp/README.md#built-in-rate-limiting).
+
 ## Strengthen Access Controls
 - Use OAuth2 or similar authentication and enforce fine-grained authorization.  
 - Segregate permissions so an LLM or service can only access necessary endpoints.  
@@ -46,10 +53,22 @@
 - Implement circuit breakers or request budgets per user/service.  
 
 ## Secure the Supply Chain and Runtime
-- Verify container images with signed checksums and use dependency scanning tools.  
-- Apply patches promptly and keep infrastructure as code under version control.  
-- Isolate the model runtime (e.g., in sandboxed environments) so any compromise remains contained.  
+- Verify container images with signed checksums and use dependency scanning tools.
+- Apply patches promptly and keep infrastructure as code under version control.
+- Isolate the model runtime (e.g., in sandboxed environments) so any compromise remains contained.
+
+## Roadmap Status
+
+The following recommendations remain unimplemented and are tracked for future work:
+
+- OAuth2 integration and role-based authorization.
+- Write-once logs, periodic snapshots, and anomaly monitoring for destructive operations.
+- Prompt/response validation and policy enforcement for LLM interactions.
+- Load balancing, autoscaling, circuit breakers, and per-user request budgets.
+- Signed container images, dependency scanning, and sandboxed runtimes.
 
 ---
 
 By combining robust authentication, tightly scoped permissions, strong monitoring, and defense-in-depth practices, the LLM and its surrounding infrastructure can be prevented from performing destructive actions and kept resilient against malicious misuse or accidental harm.
+
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
