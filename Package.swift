@@ -99,7 +99,7 @@ var targets: [Target] = [
     .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainCodex", .product(name: "Crypto", package: "swift-crypto"), .product(name: "NIOEmbedded", package: "swift-nio"), .product(name: "NIO", package: "swift-nio")], path: "Tests/DNSTests"),
     .testTarget(
         name: "IntegrationRuntimeTests",
-        dependencies: ["gateway-server", "FountainCodex"],
+        dependencies: ["gateway-server", "FountainCodex", "LLMGatewayService"],
         path: "Tests/IntegrationRuntimeTests",
         resources: [.process("Fixtures")]
     ),
