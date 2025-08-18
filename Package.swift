@@ -2,7 +2,6 @@
 import PackageDescription
 
 var products: [Product] = [
-    .library(name: "FountainCore", targets: ["FountainCore"]),
     .library(name: "FountainCodex", targets: ["FountainCodex"]),
     .library(name: "MIDI2Models", targets: ["MIDI2Models"]),
     .library(name: "MIDI2Core", targets: ["MIDI2Core"]),
@@ -14,11 +13,9 @@ var products: [Product] = [
 ]
 
 var targets: [Target] = [
-    .target(name: "FountainCore", path: "Sources/FountainCore"),
     .target(
         name: "FountainCodex",
         dependencies: [
-            "FountainCore",
             .product(name: "AsyncHTTPClient", package: "async-http-client"),
             .product(name: "NIO", package: "swift-nio"),
             .product(name: "NIOCore", package: "swift-nio"),
@@ -97,7 +94,6 @@ var targets: [Target] = [
         path: "Sources/flexctl",
         resources: [.process("Resources")]
     ),
-    .testTarget(name: "FountainCoreTests", dependencies: ["FountainCore"], path: "Tests/FountainCoreTests"),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
     .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
     .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainCodex", .product(name: "Crypto", package: "swift-crypto"), .product(name: "NIOEmbedded", package: "swift-nio"), .product(name: "NIO", package: "swift-nio")], path: "Tests/DNSTests"),
