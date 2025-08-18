@@ -57,6 +57,12 @@
 - Apply patches promptly and keep infrastructure as code under version control.
 - Isolate the model runtime (e.g., in sandboxed environments) so any compromise remains contained.
 
+## Pre-deployment Verification
+- Place the Cosign public key for container images at `SECURITY/cosign.pub`.
+- Run `Scripts/predeploy.sh <image-ref>` before releasing any container.
+- The script verifies signatures, scans dependencies with Grype, and records an SBOM via Syft in `logs/`.
+- Unsigned images or high-severity vulnerabilities cause the script to abort and block deployment.
+
 ## Roadmap Status
 
 The following recommendations remain unimplemented and are tracked for future work:
