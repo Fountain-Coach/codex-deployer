@@ -11,7 +11,7 @@ if publishingConfig == nil {
     FileHandle.standardError.write(Data("[gateway] Warning: failed to load Configuration/publishing.yml; using defaults for static content.\n".utf8))
 }
 
-let server = GatewayServer(plugins: [SecuritySentinelPlugin(), LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")])
+let server = GatewayServer(plugins: [SecuritySentinelPlugin(), CoTLogger(), LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")])
 Task { @MainActor in
     try await server.start(port: 8080)
 }

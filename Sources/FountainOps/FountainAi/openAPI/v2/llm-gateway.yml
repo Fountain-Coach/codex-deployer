@@ -41,6 +41,13 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  cot:
+                    title: Chain of Thought
+                    description: Reasoning steps produced by the model
+                    type: array
+                    items:
+                      type: string
         "422":
           description: Validation Error
           content:
@@ -102,6 +109,10 @@ components:
             - type: string
               enum: [auto]
             - $ref: '#/components/schemas/FunctionCallObject'
+        include_cot:
+          title: Include Chain of Thought
+          description: When true, reasoning steps are returned and logged
+          type: boolean
     SecurityCheckRequest:
       title: SecurityCheckRequest
       type: object

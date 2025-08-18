@@ -5,6 +5,7 @@ public struct ChatRequest: Codable {
     public let functions: [FunctionObject]
     public let messages: [MessageObject]
     public let model: String
+    public let include_cot: Bool?
 }
 
 public struct FunctionCallObject: Codable {
@@ -43,7 +44,9 @@ public struct ValidationError: Codable {
 
 public typealias metrics_metrics_getResponse = [String: String]
 
-public typealias chatWithObjectiveResponse = [String: String]
+public struct chatWithObjectiveResponse: Codable {
+    public let cot: [String]?
+}
 
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
