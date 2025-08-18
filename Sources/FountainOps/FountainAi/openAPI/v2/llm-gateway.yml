@@ -54,6 +54,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /chat/{id}/cot:
+    get:
+      summary: Fetch stored Chain-of-Thought
+      operationId: getChatCoT
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retrieved reasoning
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  cot:
+                    type: string
+                  cot_summary:
+                    type: string
+        "404":
+          description: Not Found
+      security:
+        - bearerAuth: []
   /sentinel/consult:
     post:
       tags:

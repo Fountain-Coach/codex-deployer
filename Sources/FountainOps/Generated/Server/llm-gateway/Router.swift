@@ -18,6 +18,9 @@ public struct Router {
         case ("POST", "/chat"):
             let body = try? JSONDecoder().decode(ChatRequest.self, from: request.body)
             return try await handlers.chatwithobjective(request, body: body)
+        case ("GET", let path) where path.hasPrefix("/chat/") && path.hasSuffix("/cot"):
+            let body = try? JSONDecoder().decode(NoBody.self, from: request.body)
+            return try await handlers.chatcot(request, body: body)
         default:
             return HTTPResponse(status: 404)
         }
