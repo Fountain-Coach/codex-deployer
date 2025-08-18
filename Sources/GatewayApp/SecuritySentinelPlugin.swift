@@ -52,13 +52,24 @@ public struct SecuritySentinelPlugin: GatewayPlugin {
         let decision: SentinelDecision
     }
 
+    /// Consults the sentinel service for a decision.
+    /// - Parameters:
+    ///   - summary: Text describing the action being evaluated.
+    ///   - user: Identifier for the user initiating the action.
+    ///   - resources: Resources touched by the action.
+    /// - Returns: The sentinel's decision for the action.
+    public func consult(summary: String, user: String, resources: [String]) async throws -> SentinelDecision {
+        let decision = try await client.send(ConsultRequest(summary: summary, user: user, resources: resources)).decision
+        log(summary: summary, decision: decision)
+        return decision
+    }
+
     public func prepare(_ request: HTTPRequest) async throws -> HTTPRequest {
         guard isDestructive(request) else { return request }
         let summary = "\(request.method) \(request.path)"
         let user = request.headers["X-User"] ?? "anonymous"
         let resources = [request.path]
-        let decision = try await client.send(ConsultRequest(summary: summary, user: user, resources: resources)).decision
-        log(summary: summary, decision: decision)
+        let decision = try await consult(summary: summary, user: user, resources: resources)
         switch decision {
         case .allow:
             return request
