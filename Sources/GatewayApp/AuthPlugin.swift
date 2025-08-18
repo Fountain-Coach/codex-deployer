@@ -14,7 +14,7 @@ public struct AuthPlugin: GatewayPlugin {
     ///   - store: Credential store used to verify JWTs.
     ///   - protected: Path prefixes requiring authorization.
     public init(store: CredentialStore = CredentialStore(),
-                protected: [String] = ["/metrics", "/certificates", "/routes", "/zones"]) {
+                protected: [String] = ["/metrics", "/certificates", "/routes", "/zones", "/chat/"]) {
         self.store = store
         self.protected = protected
     }
@@ -31,6 +31,10 @@ public struct AuthPlugin: GatewayPlugin {
         }
         let token = String(auth.dropFirst(7))
         guard store.verify(jwt: token) else { throw UnauthorizedError() }
+        var request = request
+        if let role = store.role(for: token) {
+            request.headers["X-User-Role"] = role
+        }
         return request
     }
 }

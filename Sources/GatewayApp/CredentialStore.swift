@@ -26,9 +26,9 @@ public struct CredentialStore: @unchecked Sendable {
     }
 
     /// Generates a signed JWT for the given subject with an expiry.
-    public func signJWT(subject: String, expiresAt: Date) throws -> String {
+    public func signJWT(subject: String, expiresAt: Date, role: String? = nil) throws -> String {
         let header = JWTHeader()
-        let payload = JWTPayload(sub: subject, exp: Int(expiresAt.timeIntervalSince1970))
+        let payload = JWTPayload(sub: subject, exp: Int(expiresAt.timeIntervalSince1970), role: role)
         let headerData = try JSONEncoder().encode(header)
         let payloadData = try JSONEncoder().encode(payload)
         let header64 = headerData.base64URLEncodedString()
@@ -51,10 +51,19 @@ public struct CredentialStore: @unchecked Sendable {
               let payload = try? JSONDecoder().decode(JWTPayload.self, from: payloadData) else { return false }
         return payload.exp > Int(Date().timeIntervalSince1970)
     }
+
+    /// Extracts the role claim from a verified JWT.
+    public func role(for jwt: String) -> String? {
+        let segments = jwt.split(separator: ".")
+        guard segments.count == 3,
+              let payloadData = Data(base64URLEncoded: String(segments[1])),
+              let payload = try? JSONDecoder().decode(JWTPayload.self, from: payloadData) else { return nil }
+        return payload.role
+    }
 }
 
 private struct JWTHeader: Encodable { let alg = "HS256"; let typ = "JWT" }
-private struct JWTPayload: Codable { let sub: String; let exp: Int }
+private struct JWTPayload: Codable { let sub: String; let exp: Int; let role: String? }
 
 private extension Data {
     func base64URLEncodedString() -> String {
