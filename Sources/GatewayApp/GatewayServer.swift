@@ -92,6 +92,8 @@ public final class GatewayServer {
                 }
             } catch is UnauthorizedError {
                 return HTTPResponse(status: 401)
+            } catch is ForbiddenError {
+                return HTTPResponse(status: 403)
             }
             let segments = request.path.split(separator: "/", omittingEmptySubsequences: true)
             var response: HTTPResponse
@@ -285,7 +287,8 @@ public final class GatewayServer {
             let expiry = Date().addingTimeInterval(3600)
             let formatter = ISO8601DateFormatter()
             let expires = formatter.string(from: expiry)
-            guard let token = try? store.signJWT(subject: creds.clientId, expiresAt: expiry) else {
+            let role = store.role(forClientId: creds.clientId)
+            guard let token = try? store.signJWT(subject: creds.clientId, expiresAt: expiry, role: role) else {
                 return HTTPResponse(status: 500)
             }
             let json = try JSONEncoder().encode(TokenResponse(token: token, expiresAt: expires))
