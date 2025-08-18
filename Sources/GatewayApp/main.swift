@@ -11,8 +11,13 @@ if publishingConfig == nil {
     FileHandle.standardError.write(Data("[gateway] Warning: failed to load Configuration/publishing.yml; using defaults for static content.\n".utf8))
 }
 
+let gatewayConfig = try? loadGatewayConfig()
+if gatewayConfig == nil {
+    FileHandle.standardError.write(Data("[gateway] Warning: failed to load Configuration/gateway.yml; using defaults for rate limiting.\n".utf8))
+}
+let rateLimiter = RateLimiterPlugin(defaultLimit: gatewayConfig?.rateLimitPerMinute ?? 60)
 let sentinel = SecuritySentinelPlugin()
-let server = GatewayServer(plugins: [sentinel, CoTLogger(sentinel: sentinel), LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")])
+let server = GatewayServer(plugins: [sentinel, CoTLogger(sentinel: sentinel), rateLimiter, LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")], rateLimiter: rateLimiter)
 Task { @MainActor in
     try await server.start(port: 8080)
 }

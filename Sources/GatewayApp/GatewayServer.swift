@@ -27,6 +27,7 @@ public final class GatewayServer {
     private var routes: [String: RouteInfo]
     private let routesURL: URL?
     private let certificatePath: String?
+    private let rateLimiter: RateLimiterPlugin?
 
     private struct ZoneCreateRequest: Codable { let name: String }
     private struct ZonesResponse: Codable { let zones: [ZoneManager.Zone] }
@@ -72,7 +73,8 @@ public final class GatewayServer {
                 plugins: [GatewayPlugin] = [],
                 zoneManager: ZoneManager? = nil,
                 routeStoreURL: URL? = nil,
-                certificatePath: String? = nil) {
+                certificatePath: String? = nil,
+                rateLimiter: RateLimiterPlugin? = nil) {
         self.manager = manager
         self.plugins = plugins
         self.zoneManager = zoneManager
@@ -81,7 +83,7 @@ public final class GatewayServer {
         self.routesURL = routeStoreURL
         self.certificatePath = certificatePath
         self.server = NIOHTTPServer(kernel: HTTPKernel { _ in HTTPResponse(status: 500) }, group: group)
-        self.rateLimiter = RateLimiter()
+        self.rateLimiter = rateLimiter
         // Load persisted routes if configured
         self.reloadRoutes()
         let kernel = HTTPKernel { [plugins, zoneManager, self] req in
@@ -163,37 +165,6 @@ public final class GatewayServer {
         self.server = NIOHTTPServer(kernel: kernel, group: group)
     }
 
-    /// Simple per-route token bucket rate limiter.
-    private final class RateLimiter {
-        private struct Bucket { var tokens: Double; var lastRefill: TimeInterval; let capacity: Double; let rate: Double }
-        private var buckets: [String: Bucket] = [:]
-        private var allowed = 0
-        private var throttled = 0
-
-        func stats() -> (allowed: Int, throttled: Int) { (allowed, throttled) }
-
-        func allow(routeId: String, limitPerMinute: Int) -> Bool {
-            let ratePerSecond = Double(limitPerMinute) / 60.0
-            let now = Date().timeIntervalSince1970
-            var bucket = buckets[routeId] ?? Bucket(tokens: Double(limitPerMinute), lastRefill: now, capacity: Double(limitPerMinute), rate: ratePerSecond)
-            let elapsed = max(0, now - bucket.lastRefill)
-            bucket.tokens = min(bucket.capacity, bucket.tokens + elapsed * bucket.rate)
-            bucket.lastRefill = now
-            if bucket.tokens >= 1.0 {
-                bucket.tokens -= 1.0
-                buckets[routeId] = bucket
-                allowed += 1
-                Task { await DNSMetrics.shared.recordRateLimit(allowed: true) }
-                return true
-            }
-            buckets[routeId] = bucket
-            throttled += 1
-            Task { await DNSMetrics.shared.recordRateLimit(allowed: false) }
-            return false
-        }
-    }
-    private let rateLimiter: RateLimiter
-
     /// Attempts to match the incoming request against configured routes and proxy it upstream.
     /// Performs a simple prefix match on the configured path and enforces allowed methods.
     /// - Returns: A proxied response if a matching route is found; otherwise `nil`.
@@ -211,9 +182,16 @@ public final class GatewayServer {
             .sorted { $0.path.count > $1.path.count }
         guard let route = candidates.first else { return nil }
 
-        // Rate limit if configured
-        if let limit = route.rateLimit, limit > 0 {
-            if !rateLimiter.allow(routeId: route.id, limitPerMinute: limit) {
+        // Apply rate limiting if a plugin is available
+        if let rateLimiter {
+            var clientId = "anonymous"
+            if let auth = request.headers["Authorization"], auth.hasPrefix("Bearer ") {
+                let token = String(auth.dropFirst(7))
+                let store = CredentialStore()
+                clientId = store.subject(for: token) ?? clientId
+            }
+            let allowed = await rateLimiter.allow(routeId: route.id, clientId: clientId, limitPerMinute: route.rateLimit)
+            if !allowed {
                 return HTTPResponse(status: 429, headers: ["Content-Type": "text/plain"], body: Data("too many requests".utf8))
             }
         }
