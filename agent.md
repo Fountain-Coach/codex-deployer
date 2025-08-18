@@ -35,6 +35,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Typesense API | `openAPI/typesense.yml` | Decide proxy vs native subset | ✅ | — | server, design |
 | Static site | `Sources/PublishingFrontend/*`, `Configuration/publishing.yml` | Serve docs/static; keep defaults | ✅ | — | server, docs |
 | Gateway plugins | `LoggingPlugin`, `PublishingFrontendPlugin` | Keep logging & HTML fallback | ✅ | — | server |
+| Resilience plugin | `BudgetBreakerPlugin` | Apply per-user budgets and circuit breakers | ✅ | — | server |
 | DestructiveGuardianPlugin | `Sources/GatewayApp/DestructiveGuardianPlugin.swift` | Guard destructive ops w/ approval or tokens | ✅ | — | server, security |
 | Certificate renewal | `Sources/GatewayApp/CertificateManager.swift` | Schedule/trigger renewal | ✅ | — | ops, tls |
 | DNSSEC | `Sources/FountainCodex/DNSSECSigner.swift` | Integrate signer into engine | ✅ | — | security, dns |

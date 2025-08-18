@@ -169,6 +169,37 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
     }
 
     @MainActor
+    func testBudgetBreakerPluginLimitsAndShedsLoad() async throws {
+        await DNSMetrics.shared.reset()
+        let plugin = BudgetBreakerPlugin(defaultBudget: 2, failureThreshold: 2, baseBackoff: 0.1)
+        let req = HTTPRequest(method: "GET", path: "/test")
+        _ = try await plugin.prepare(req)
+        _ = try await plugin.prepare(req)
+        do {
+            _ = try await plugin.prepare(req)
+            XCTFail("expected TooManyRequestsError")
+        } catch is TooManyRequestsError {}
+        let resp = HTTPResponse(status: 500)
+        _ = try await plugin.respond(resp, for: req)
+        _ = try await plugin.respond(resp, for: req)
+        do {
+            _ = try await plugin.prepare(req)
+            XCTFail("expected ServiceUnavailableError")
+        } catch is ServiceUnavailableError {}
+        await plugin.updateHealth(isHealthy: false)
+        do {
+            _ = try await plugin.prepare(req)
+            XCTFail("expected shed load")
+        } catch is ServiceUnavailableError {}
+        let stats = await plugin.stats()
+        XCTAssertEqual(stats.allowed, 2)
+        XCTAssertEqual(stats.throttled, 3)
+        let metrics = await DNSMetrics.shared.exposition()
+        XCTAssertTrue(metrics.contains("gateway_rate_limit_allowed_total 2"))
+        XCTAssertTrue(metrics.contains("gateway_rate_limit_throttled_total 3"))
+    }
+
+    @MainActor
     /// Plugins should receive the response in reverse order of registration.
     func testPluginsRespondInReverseOrder() async throws {
         actor OrderCollector {
