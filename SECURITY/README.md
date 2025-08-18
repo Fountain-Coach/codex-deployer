@@ -27,15 +27,15 @@
 
 ## Current Mitigations
 
-- **AuthPlugin** – Enforces bearer-token authentication on protected routes. Source: [`AuthPlugin.swift`](../Sources/GatewayApp/AuthPlugin.swift). Configure credentials with `GATEWAY_CRED_<CLIENT_ID>` variables and `GATEWAY_JWT_SECRET` as described in the [GatewayApp README](../Sources/GatewayApp/README.md#authplugin).
+- **AuthPlugin** – Delegates credential validation to an OAuth2/OIDC provider and enforces role-based access on management routes. Source: [`AuthPlugin.swift`](../Sources/GatewayApp/AuthPlugin.swift). Configure `GATEWAY_OAUTH2_INTROSPECTION_URL`, optional client credentials, and `GATEWAY_ROLE_<CLIENT_ID>` as documented in the [GatewayApp README](../Sources/GatewayApp/README.md#authplugin).
 - **SecuritySentinelPlugin** – Consults an external service before destructive operations. Source: [`SecuritySentinelPlugin.swift`](../Sources/GatewayApp/SecuritySentinelPlugin.swift). Set the sentinel URL and log path per the [GatewayApp README](../Sources/GatewayApp/README.md#securitysentinelplugin).
 - **CoTLogger** – Captures chain-of-thought logs and optionally vets reasoning through the sentinel. Source: [`CoTLogger.swift`](../Sources/GatewayApp/CoTLogger.swift). Enable in the gateway pipeline and configure log destinations in the [GatewayApp README](../Sources/GatewayApp/README.md#cotlogger).
 - **Built-in Rate Limiter** – Applies per-route token buckets to throttle excessive requests. Implementation: [`GatewayServer.swift`](../Sources/GatewayApp/GatewayServer.swift). Set `rateLimit` on route definitions as documented under [Built-in Rate Limiting](../Sources/GatewayApp/README.md#built-in-rate-limiting).
 
 ## Strengthen Access Controls
-- Use OAuth2 or similar authentication and enforce fine-grained authorization.  
-- Segregate permissions so an LLM or service can only access necessary endpoints.  
-- Implement rate limiting to reduce brute-force risks.  
+- Audit OAuth2 scopes and roles to ensure least-privilege access.
+- Segregate permissions so an LLM or service can only access necessary endpoints.
+- Implement rate limiting to reduce brute-force risks.
 
 ## Harden Memory and Data Management
 - Restrict destructive API endpoints (delete, modify) to internal services or human approval workflows.  
@@ -61,7 +61,6 @@
 
 The following recommendations remain unimplemented and are tracked for future work:
 
-- OAuth2 integration and role-based authorization.
 - Write-once logs, periodic snapshots, and anomaly monitoring for destructive operations.
 - Prompt/response validation and policy enforcement for LLM interactions.
 - Load balancing, autoscaling, circuit breakers, and per-user request budgets.

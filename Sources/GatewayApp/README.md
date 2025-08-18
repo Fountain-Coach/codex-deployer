@@ -29,7 +29,7 @@ Refer to the OpenAPI file for request and response schemas, authentication requi
 [`CredentialStore.swift`](CredentialStore.swift) loads API client credentials from environment variables, validates pairs and signs or verifies JSON Web Tokens used by `AuthPlugin`.
 
 #### Authentication Environment Variables
-Define a `GATEWAY_CRED_<CLIENT_ID>` variable for each client allowed to request a token and set `GATEWAY_JWT_SECRET` to the HMAC signing key used to mint and verify JWTs.
+Define a `GATEWAY_CRED_<CLIENT_ID>` variable for each client allowed to request a token, an optional `GATEWAY_ROLE_<CLIENT_ID>` to embed a role claim, and set `GATEWAY_JWT_SECRET` to the HMAC signing key used to mint and verify JWTs.
 
 ### Entry Point
 [`main.swift`](main.swift) constructs a `GatewayServer` with `SecuritySentinelPlugin`, `CoTLogger`, `LoggingPlugin` and `PublishingFrontendPlugin` and starts listening on port 8080. Passing `--dns` additionally launches a DNS server backed by `ZoneManager`. See [DNS subsystem docs](../FountainCodex/DNS/README.md) for zone management and server details.
@@ -45,10 +45,17 @@ Protocol describing middleware hooks for the gateway server.
 - `respond(_:for:)` – Allows mutation or inspection of the response before it is returned. Default implementation returns the response unchanged.
 
 ### [AuthPlugin](AuthPlugin.swift)
-Enforces bearer-token authentication on protected paths.
+Enforces bearer-token authentication and role-based access on management paths.
 
-- `init(store:protected:)` – Configures the credentials store and path prefixes requiring authorization.
-- `prepare(_:)` – Validates `Authorization: Bearer` tokens for protected paths and throws `UnauthorizedError` when verification fails.
+- `init(validator:protected:)` – Accepts a ``TokenValidator`` such as ``CredentialStoreValidator`` or ``OAuth2Validator`` and a map of path prefixes to required roles.
+- `prepare(_:)` – Validates `Authorization: Bearer` tokens, extracts roles or scopes and throws `UnauthorizedError` or `ForbiddenError` when checks fail.
+
+#### OAuth2 Configuration
+
+- Set `GATEWAY_OAUTH2_INTROSPECTION_URL` to the provider's introspection endpoint.
+- Optionally supply `GATEWAY_OAUTH2_CLIENT_ID` and `GATEWAY_OAUTH2_CLIENT_SECRET` for basic authentication when calling the endpoint.
+- Tokens must grant the `admin` scope (or role) to access management endpoints such as `/metrics` and `/routes`.
+- Local issuance via `/auth/token` reads `GATEWAY_ROLE_<CLIENT_ID>` variables to embed roles in signed JWTs.
 
 ### [LoggingPlugin](LoggingPlugin.swift)
 Logs incoming requests and outgoing responses for debugging.

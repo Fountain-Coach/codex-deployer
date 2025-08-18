@@ -4,18 +4,26 @@ import Crypto
 /// Provides access to client credentials and JWT signing.
 public struct CredentialStore: @unchecked Sendable {
     private let credentials: [String: String]
+    private let roles: [String: String]
     private let signingKey: SymmetricKey
 
     /// Loads credentials and signing key from environment variables.
     /// Expected format for credentials: `GATEWAY_CRED_<CLIENT_ID>`.
     /// Signing key is read from `GATEWAY_JWT_SECRET`.
     public init(environment: [String: String] = ProcessInfo.processInfo.environment) {
-        var map: [String: String] = [:]
-        for (key, value) in environment where key.hasPrefix("GATEWAY_CRED_") {
-            let id = String(key.dropFirst("GATEWAY_CRED_".count))
-            map[id] = value
+        var credMap: [String: String] = [:]
+        var roleMap: [String: String] = [:]
+        for (key, value) in environment {
+            if key.hasPrefix("GATEWAY_CRED_") {
+                let id = String(key.dropFirst("GATEWAY_CRED_".count))
+                credMap[id] = value
+            } else if key.hasPrefix("GATEWAY_ROLE_") {
+                let id = String(key.dropFirst("GATEWAY_ROLE_".count))
+                roleMap[id] = value
+            }
         }
-        self.credentials = map
+        self.credentials = credMap
+        self.roles = roleMap
         let secret = environment["GATEWAY_JWT_SECRET"] ?? "secret"
         self.signingKey = SymmetricKey(data: Data(secret.utf8))
     }
@@ -23,6 +31,11 @@ public struct CredentialStore: @unchecked Sendable {
     /// Verifies a pair of client credentials against the store.
     public func validate(clientId: String, clientSecret: String) -> Bool {
         credentials[clientId] == clientSecret
+    }
+
+    /// Returns the configured role for a client identifier.
+    public func role(forClientId id: String) -> String? {
+        roles[id]
     }
 
     /// Generates a signed JWT for the given subject with an expiry.
