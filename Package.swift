@@ -39,7 +39,8 @@ var targets: [Target] = [
             "PublishingFrontend",
             "LLMGatewayClient",
             .product(name: "Crypto", package: "swift-crypto"),
-            .product(name: "X509", package: "swift-certificates")
+            .product(name: "X509", package: "swift-certificates"),
+            "Yams"
         ],
         path: "Sources/GatewayApp",
         exclude: ["README.md"]

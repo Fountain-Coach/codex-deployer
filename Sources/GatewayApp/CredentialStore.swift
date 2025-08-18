@@ -73,6 +73,15 @@ public struct CredentialStore: @unchecked Sendable {
               let payload = try? JSONDecoder().decode(JWTPayload.self, from: payloadData) else { return nil }
         return payload.role
     }
+
+    /// Extracts the subject claim from a verified JWT.
+    public func subject(for jwt: String) -> String? {
+        let segments = jwt.split(separator: ".")
+        guard segments.count == 3,
+              let payloadData = Data(base64URLEncoded: String(segments[1])),
+              let payload = try? JSONDecoder().decode(JWTPayload.self, from: payloadData) else { return nil }
+        return payload.sub
+    }
 }
 
 private struct JWTHeader: Encodable { let alg = "HS256"; let typ = "JWT" }
