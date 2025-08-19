@@ -44,6 +44,43 @@ final class BwrapRunnerTests: XCTestCase {
         XCTAssertEqual(try String(contentsOf: path.appendingPathComponent("cgroup.procs"), encoding: .utf8), "1234\n")
     }
 
+    func testNetworkDisabled() throws {
+        try XCTSkipIf(!Self.canUseBubblewrap, "bubblewrap not functional")
+        let fm = FileManager.default
+        let work = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try fm.createDirectory(at: work, withIntermediateDirectories: true)
+        let runner = BwrapRunner()
+        let result = try runner.run(
+            executable: "/bin/sh",
+            arguments: ["-c", "curl -sSf http://example.com >/dev/null && echo ok || echo fail"],
+            inputs: [],
+            workDirectory: work,
+            allowNetwork: false,
+            timeout: 5,
+            limits: nil
+        )
+        XCTAssertEqual(result.stdout.trimmingCharacters(in: .whitespacesAndNewlines), "fail")
+    }
+
+    func testPathGuard() throws {
+        try XCTSkipIf(!Self.canUseBubblewrap, "bubblewrap not functional")
+        let fm = FileManager.default
+        let work = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try fm.createDirectory(at: work, withIntermediateDirectories: true)
+        let runner = BwrapRunner()
+        XCTAssertThrowsError(
+            try runner.run(
+                executable: "/bin/touch",
+                arguments: ["/etc/evil"],
+                inputs: [],
+                workDirectory: work,
+                allowNetwork: false,
+                timeout: 5,
+                limits: nil
+            )
+        )
+    }
+
     private static let canUseBubblewrap: Bool = {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/bwrap")
