@@ -97,15 +97,17 @@ var targets: [Target] = [
         resources: [.process("Resources")]
     ),
     .target(
-        name: "ToolsFactoryService",
-        dependencies: ["ServiceShared", "Yams", "FountainCodex"],
-        path: "Sources/ToolServer/Service"
+        name: "ToolServer",
+        dependencies: [.product(name: "Crypto", package: "swift-crypto")],
+        path: "Sources/ToolServer",
+        exclude: ["main.swift", "Service", "Dockerfile"],
+        resources: [.process("openapi.yaml")]
     ),
     .executableTarget(
         name: "tools-factory-server",
-        dependencies: ["ToolsFactoryService"],
+        dependencies: ["ToolServer"],
         path: "Sources/ToolServer",
-        exclude: ["Dockerfile", "Service"],
+        exclude: ["Dockerfile", "Service", "Adapters", "Router.swift", "Validation.swift", "SandboxPolicy.swift", "HTTPTypes.swift", "openapi.yaml"],
         sources: ["main.swift"]
     ),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
