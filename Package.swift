@@ -107,7 +107,7 @@ var targets: [Target] = [
         name: "tools-factory-server",
         dependencies: ["ToolServer"],
         path: "Sources/ToolServer",
-        exclude: ["Dockerfile", "Service", "Adapters", "Router.swift", "Validation.swift", "SandboxPolicy.swift", "HTTPTypes.swift", "openapi.yaml"],
+        exclude: ["Dockerfile", "Service", "Adapters", "Router.swift", "Validation.swift", "SandboxPolicy.swift", "HTTPTypes.swift", "openapi.yaml", "JSONLogger.swift"],
         sources: ["main.swift"]
     ),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
