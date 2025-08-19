@@ -20,12 +20,17 @@ public final class BwrapRunner: SandboxRunner {
         timeout: TimeInterval? = nil,
         limits: CgroupLimits? = nil
     ) throws -> SandboxResult {
+        try guardWritePaths(arguments: arguments, workDirectory: workDirectory)
         var cgPath: URL?
         if let limits = limits {
             cgPath = try prepareCgroup(limits: limits)
         }
 
-        var args: [String] = ["--die-with-parent", "--bind", workDirectory.path, "/work"]
+        var args: [String] = ["--die-with-parent"]
+        if let seccomp = Bundle.module.url(forResource: "restricted", withExtension: "json") {
+            args += ["--seccomp", seccomp.path]
+        }
+        args += ["--bind", workDirectory.path, "/work"]
         if !allowNetwork {
             args.append("--unshare-net")
         }

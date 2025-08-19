@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [],
     targets: [
         .target(name: "Toolsmith", dependencies: []),
-        .target(name: "SandboxRunner", dependencies: []),
+        .target(name: "SandboxRunner", dependencies: [], resources: [.process("Profiles")]),
         .target(name: "ToolsmithAPI", dependencies: []),
         .executableTarget(name: "toolsmith-cli", dependencies: ["Toolsmith"]),
         .testTarget(name: "SandboxRunnerTests", dependencies: ["SandboxRunner"])

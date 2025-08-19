@@ -40,6 +40,25 @@ final class QemuRunnerTests: XCTestCase {
         XCTAssertEqual(result.stdout.trimmingCharacters(in: .whitespacesAndNewlines), "fail")
     }
 
+    func testPathGuard() throws {
+        try XCTSkipIf(!Self.canUseQemu, "qemu not functional")
+        let fm = FileManager.default
+        let work = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try fm.createDirectory(at: work, withIntermediateDirectories: true)
+        let runner = QemuRunner(image: Self.imageURL)
+        XCTAssertThrowsError(
+            try runner.run(
+                executable: "/bin/touch",
+                arguments: ["/etc/evil"],
+                inputs: [],
+                workDirectory: work,
+                allowNetwork: false,
+                timeout: 30,
+                limits: nil
+            )
+        )
+    }
+
     private static let canUseQemu: Bool = {
         guard let image = ProcessInfo.processInfo.environment["QEMU_TEST_IMAGE"],
               FileManager.default.fileExists(atPath: image),

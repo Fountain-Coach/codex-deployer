@@ -1,0 +1,6 @@
+{
+  "defaultAction": "SCMP_ACT_ERRNO",
+  "syscalls": [
+    { "names": ["read", "write", "exit", "fstat", "mmap", "brk", "rt_sigaction", "rt_sigprocmask"], "action": "SCMP_ACT_ALLOW" }
+  ]
+}

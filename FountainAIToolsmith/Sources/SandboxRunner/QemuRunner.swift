@@ -23,6 +23,7 @@ public final class QemuRunner: SandboxRunner {
     ) throws -> SandboxResult {
         _ = inputs
         _ = limits
+        try guardWritePaths(arguments: arguments, workDirectory: workDirectory)
         var args: [String] = []
         #if os(macOS)
         args += ["-accel", "hvf"]
@@ -31,14 +32,17 @@ public final class QemuRunner: SandboxRunner {
         #endif
         args += ["-drive", "file=\(image.path),if=virtio,snapshot=on"]
         args += ["-virtfs", "local,path=\(workDirectory.path),mount_tag=work,security_model=none"]
-        let port = UInt16.random(in: 40000..<60000)
-        forwardedPort = port
         if allowNetwork {
+            let port = UInt16.random(in: 40000..<60000)
+            forwardedPort = port
             args += ["-netdev", "user,id=net0,hostfwd=tcp:127.0.0.1:\(port)-:8080",
                      "-device", "virtio-net-pci,netdev=net0"]
         } else {
-            args += ["-netdev", "user,id=net0,hostfwd=tcp:127.0.0.1:\(port)-:8080,restrict=on",
-                     "-device", "virtio-net-pci,netdev=net0"]
+            forwardedPort = nil
+            args += ["-net", "none"]
+        }
+        if let seccomp = Bundle.module.url(forResource: "restricted", withExtension: "json") {
+            args += ["-seccomp", seccomp.path]
         }
         args += ["-nographic"]
         let command = ([executable] + arguments).joined(separator: " ")
