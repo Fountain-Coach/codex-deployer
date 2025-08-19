@@ -1,6 +1,6 @@
 # FountainAI Tool Sandbox (Ubuntu) — Requirements & Implementation Paper
 **Version:** 0.9 (August 18, 2025)  
-**Audience:** Architecture/Platform, Tooling, Security, CI/Deploy, Codex (Reasoning Engine) stakeholders  
+**Audience:** Architecture/Platform, Tooling, Security, CI/Deploy, and LLM Gateway / reasoning engine stakeholders
 **Authors:** FountainAI Platform (with GPT-5 Pro)  
 **Status:** Draft for internal review
 
@@ -8,7 +8,7 @@
 
 ## 1) Executive Summary
 
-We will provide a **Swift‑centered sandbox** that hosts a **Tool Server** on Ubuntu, exposing a **growing catalog of headless tools** behind **OpenAPI 3.1**. The host (Codex/`codex-deployer`) interacts **only** with typed Swift clients generated from the OpenAPI, keeping the **orchestration path 100% Swift** and **free of Docker** and host toolchain side‑effects.
+We will provide a **Swift‑centered sandbox** that hosts a **Tool Server** on Ubuntu, exposing a **growing catalog of headless tools** behind **OpenAPI 3.1**. The LLM orchestrator (via the Gateway—Codex or any capable model) interacts **only** with typed Swift clients generated from the OpenAPI, keeping the **orchestration path 100% Swift** and **free of Docker** and host toolchain side‑effects.
 
 Two sandbox backends are supported:
 - **Namespaces backend (Linux)** via `bubblewrap` (preferred) or `proot`.
@@ -40,7 +40,7 @@ This paper specifies: scope, constraints, threat model, functional & non‑funct
 - **Swift-only orchestration**: repository modules rely on Swift NIO and `Process` APIs—no shell in the execution path.
 - **No Docker dependency**: the sandbox runs on the host via `bubblewrap`, `proot`, or QEMU without requiring a Docker daemon.
 - **Typed boundaries via OpenAPI**: versioned specs live under `Sources/FountainOps/FountainAi/openAPI`, with generated Swift clients and server stubs in `Sources/FountainOps/Generated` for type-safe calls.
-- **Single orchestrator**: Codex is the sole coordinator per the repository’s agent manifest; the Tool Factory remains a library invoked by Codex.
+- **Pluggable LLM orchestrator**: the LLM Gateway coordinates requests using Codex or any compatible model; the Tool Factory remains a library invoked by the orchestrator.
 - **Reproducible artifacts**: rootfs/QCOW images are checksum‑pinned and dependencies are versioned in `Package.swift` for deterministic builds.
 - **Licensing compliance**: GPL/LGPL tools are included only with attribution and source‑offer, adhering to repository policies.
 
@@ -54,7 +54,7 @@ This paper specifies: scope, constraints, threat model, functional & non‑funct
 | No Docker | **Strong Fit** | bwrap/proot or QEMU micro‑VM; no daemon. |
 | OpenAPI‑typed interfaces | **Strong Fit** | Tool Server publishes OAS 3.1; clients generated with Swift toolchain. |
 | Deterministic, Git‑tracked artifacts | **Strong Fit** | Image manifest (checksums), generated clients committed. |
-| Single agent (Codex) orchestration | **Strong Fit** | Tool Factory is a library; Codex owns the loop. |
+| Pluggable LLM orchestration | **Strong Fit** | Tool Factory is a library; LLM Gateway drives the loop (Codex by default). |
 | Minimal host impact | **Strong Fit** | No tool install on host; read‑only mounts; isolated build cache. |
 | macOS parity via Ubuntu equivalents | **Good Fit** | Canonical mapping (e.g., `sips`⇒ImageMagick, `afconvert`⇒ffmpeg). Some options differ; API normalizes. |
 | Security hardening | **Good Fit** | User namespaces or VM isolation; cgroups; network off by default; seccomp (optional). |
@@ -65,10 +65,10 @@ This paper specifies: scope, constraints, threat model, functional & non‑funct
 
 ```
 
-+-----------------------+          +--------------------------------------+
-|     Codex (Reasoner)  |  Swift   |     FountainAI Tool Factory          |
-|  (in codex-deployer)  |<-------> | (SPM: SandboxRunner + API Client)    |
-+-----------------------+          +--------------------------------------+
++-------------------------------+          +--------------------------------------+
+| LLM Orchestrator via Gateway  |  Swift   |     FountainAI Tool Factory          |
+|   (Codex or compatible LLM)   |<-------> | (SPM: SandboxRunner + API Client)    |
++-------------------------------+          +--------------------------------------+
 
                 (boot/exec)
                      |
@@ -427,3 +427,4 @@ qcow2 (Ubuntu 22.04) with cloud‑init seed for one‑shot Tool Server bootstrap
     •    ✅ No host toolchain changes required.
     •    ✅ Network‑off default enforced.
 
+> © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
