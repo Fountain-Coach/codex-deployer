@@ -46,6 +46,8 @@ jobs:
       - name: Test SPS
         working-directory: sps
         run: swift test --enable-code-coverage
+      - name: Verify licenses
+        run: Scripts/verify-licenses.sh
       - name: Generate Coverage
         if: runner.os == 'Linux'
         run: |

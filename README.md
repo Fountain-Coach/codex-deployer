@@ -25,5 +25,9 @@ FountainOps connects specifications in `openAPI/` with generated code and contai
 - **Declarative Configuration** – YAML files in `Configuration/` supply runtime settings for gateways and publishing services.
 - **Supervisor Pattern** – `FountainAiLauncher` monitors child processes to keep services running.
 
+## Licensing
+
+See [docs/licensing-matrix.md](docs/licensing-matrix.md) for upstream tool licenses and source links.
+
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
