@@ -16,6 +16,8 @@ Provide a portable Ubuntu sandbox that runs a Swift Tool Server exposing headles
 - Swift Tool Server built on Swift NIO; no shell in the execution path.
 - "FountainAI Toolsmith" SPM package with SandboxRunner and generated API clients built atop the `tools-factory` OpenAPI, avoiding naming collisions with that service.
 - Deterministic, checksum‑pinned artifacts and reproducible builds.
+- Markdown architecture diagrams (Mermaid) showing orchestrator → Tool Factory → sandbox flow.
+- Package README with quick-start build and API examples.
 
 ## 🔐 Security & Isolation
 
@@ -29,6 +31,7 @@ Provide a portable Ubuntu sandbox that runs a Swift Tool Server exposing headles
 - Structured logs must include `request_id`, `tool`, `args_hash`, `duration_ms`, and `exit_code`.
 - Maintain `tools.json` manifest with image checksums, tool versions, and exposed operations.
 - Ensure licensing compliance and provide source offers for bundled GPL/LGPL tools.
+- License matrix tracked at `../docs/licensing-matrix.md`; run `./Scripts/verify-licenses.sh` in CI.
 
 ## ✅ Acceptance & Testing
 
@@ -36,6 +39,8 @@ Provide a portable Ubuntu sandbox that runs a Swift Tool Server exposing headles
 - Golden tests cover image resize, audio transcode, and plist conversion.
 - Security tests reject writes outside `/work` and network access when disabled.
 - Performance targets: cold bwrap start ≤150ms; micro‑VM snapshot ≤2s; 1MB JPEG→1024px PNG ≤500ms.
+- `./Scripts/build-sandbox-image.sh` and `swift build -c release` succeed.
+- `./Scripts/run-tests.sh` passes and reports coverage.
 
 ---
 
