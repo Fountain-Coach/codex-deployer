@@ -1,3 +1,4 @@
+import ToolServer
 import Foundation
 import Dispatch
 #if os(Linux)
@@ -6,16 +7,23 @@ import Glibc
 import Darwin
 #endif
 
-import ToolsFactoryService
+let adapters: [String: ToolAdapter] = [
+    "imagemagick": ImageMagickAdapter(),
+    "ffmpeg": FFmpegAdapter(),
+    "exiftool": ExifToolAdapter(),
+    "pandoc": PandocAdapter(),
+    "libplist": LibPlistAdapter()
+]
+let router = Router(adapters: adapters)
 
 final class SimpleHTTPRuntime: @unchecked Sendable {
     enum RuntimeError: Error { case socket, bind, listen }
-    let kernel: HTTPKernel
+    let router: Router
     let port: Int32
     private var serverFD: Int32 = -1
 
-    init(kernel: HTTPKernel, port: Int32 = 8080) {
-        self.kernel = kernel
+    init(router: Router, port: Int32 = 8080) {
+        self.router = router
         self.port = port
     }
 
@@ -62,7 +70,7 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
         let data = Data(buffer[0..<n])
         guard let request = parseRequest(data) else { close(fd); return }
         Task {
-            let resp = try await kernel.handle(request)
+            let resp = try await router.route(request)
             let respData = serialize(resp)
             respData.withUnsafeBytes { _ = write(fd, $0.baseAddress!, respData.count) }
             close(fd)
@@ -78,12 +86,13 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
         guard tokens.count >= 2 else { return nil }
         let method = String(tokens[0])
         let path = String(tokens[1])
-        return HTTPRequest(method: method, path: path)
+        return HTTPRequest(method: method, path: path, body: parts.count>1 ? Data(parts[1].utf8) : Data())
     }
 
     private func serialize(_ resp: HTTPResponse) -> Data {
-        var text = "HTTP/1.1 \(resp.status) OK\r\n"
+        var text = "HTTP/1.1 \(resp.status)\r\n"
         text += "Content-Length: \(resp.body.count)\r\n"
+        for (k,v) in resp.headers { text += "\(k): \(v)\r\n" }
         text += "\r\n"
         var data = Data(text.utf8)
         data.append(resp.body)
@@ -91,11 +100,10 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
     }
 }
 
-let kernel = HTTPKernel()
 do {
-    let runtime = SimpleHTTPRuntime(kernel: kernel, port: 8080)
+    let runtime = SimpleHTTPRuntime(router: router, port: 8080)
     try runtime.start()
-    print("tools-factory server listening on port 8080")
+    print("tool server listening on port 8080")
     dispatchMain()
 } catch {
     print("Failed to start server: \(error)")

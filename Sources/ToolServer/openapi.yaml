@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: Tool Server
+  version: 1.0.0
+paths:
+  /imagemagick:
+    post:
+      operationId: runImageMagick
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToolRequest'
+      responses:
+        '200':
+          description: output
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /ffmpeg:
+    post:
+      operationId: runFFmpeg
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToolRequest'
+      responses:
+        '200': { description: output }
+  /exiftool:
+    post:
+      operationId: runExifTool
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToolRequest'
+      responses:
+        '200': { description: output }
+  /pandoc:
+    post:
+      operationId: runPandoc
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToolRequest'
+      responses:
+        '200': { description: output }
+  /libplist:
+    post:
+      operationId: runLibPlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToolRequest'
+      responses:
+        '200': { description: output }
+components:
+  schemas:
+    ToolRequest:
+      type: object
+      properties:
+        args:
+          type: array
+          items:
+            type: string
+        request_id:
+          type: string
+      required: [args]
+
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
