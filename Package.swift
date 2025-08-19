@@ -9,7 +9,8 @@ var products: [Product] = [
     .executable(name: "clientgen-service", targets: ["clientgen-service"]),
     .executable(name: "gateway-server", targets: ["gateway-server"]),
     .executable(name: "publishing-frontend", targets: ["publishing-frontend"]),
-    .executable(name: "flexctl", targets: ["flexctl"])
+    .executable(name: "flexctl", targets: ["flexctl"]),
+    .executable(name: "tools-factory-server", targets: ["tools-factory-server"])
 ]
 
 var targets: [Target] = [
@@ -94,6 +95,18 @@ var targets: [Target] = [
         dependencies: ["MIDI2Core", .product(name: "MIDI2", package: "midi2")],
         path: "Sources/flexctl",
         resources: [.process("Resources")]
+    ),
+    .target(
+        name: "ToolsFactoryService",
+        dependencies: ["ServiceShared", "Yams", "FountainCodex"],
+        path: "Sources/ToolServer/Service"
+    ),
+    .executableTarget(
+        name: "tools-factory-server",
+        dependencies: ["ToolsFactoryService"],
+        path: "Sources/ToolServer",
+        exclude: ["Dockerfile", "Service"],
+        sources: ["main.swift"]
     ),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
     .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
