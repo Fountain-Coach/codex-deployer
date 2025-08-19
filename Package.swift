@@ -125,6 +125,7 @@ let package = Package(
     ],
     products: products,
     dependencies: [
+        .package(path: "./FountainAIToolsmith"),
         .package(url: "https://github.com/jpsim/Yams.git", from: "5.0.0"),
         .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.21.0"),
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.63.0"),
