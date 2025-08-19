@@ -107,7 +107,7 @@ var targets: [Target] = [
         name: "tools-factory-server",
         dependencies: ["ToolServer"],
         path: "Sources/ToolServer",
-        exclude: ["Dockerfile", "Service", "Adapters", "Router.swift", "Validation.swift", "SandboxPolicy.swift", "HTTPTypes.swift", "openapi.yaml", "JSONLogger.swift"],
+        exclude: ["Dockerfile", "Service", "Adapters", "Router.swift", "Validation.swift", "SandboxPolicy.swift", "HTTPTypes.swift", "openapi.yaml", "JSONLogger.swift", "ToolManifest.swift"],
         sources: ["main.swift"]
     ),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
@@ -125,7 +125,8 @@ var targets: [Target] = [
     .testTarget(name: "MIDI2TransportsTests", dependencies: ["MIDI2Transports"], path: "Tests/MIDI2TransportsTests"),
     .testTarget(name: "FlexctlTests", dependencies: ["flexctl", "ResourceLoader"], path: "Tests/FlexctlTests"),
     .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayClient"], path: "Tests/GatewayAppTests"),
-    .testTarget(name: "FountainOpsTests", dependencies: ["LLMGatewayService"], path: "Tests/FountainOpsTests")
+    .testTarget(name: "FountainOpsTests", dependencies: ["LLMGatewayService"], path: "Tests/FountainOpsTests"),
+    .testTarget(name: "ToolServerTests", dependencies: ["ToolServer"], path: "Tests/ToolServerTests")
 ]
 
 #if os(Linux)

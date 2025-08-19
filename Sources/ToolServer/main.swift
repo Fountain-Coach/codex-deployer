@@ -14,7 +14,9 @@ let adapters: [String: ToolAdapter] = [
     "pandoc": PandocAdapter(),
     "libplist": LibPlistAdapter()
 ]
-let router = Router(adapters: adapters)
+let manifestURL = URL(fileURLWithPath: "tools.json")
+let manifest = (try? ToolManifest.load(from: manifestURL)) ?? ToolManifest(image: .init(name: "", tarball: "", sha256: "", qcow2: "", qcow2_sha256: ""), tools: [:], operations: [])
+let router = Router(adapters: adapters, manifest: manifest)
 
 final class SimpleHTTPRuntime: @unchecked Sendable {
     enum RuntimeError: Error { case socket, bind, listen }
