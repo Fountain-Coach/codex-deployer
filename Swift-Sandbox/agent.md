@@ -1,0 +1,40 @@
+# 🧠 Swift Sandbox Agent Manifest
+
+**Last Updated:** September 15, 2025
+**Scope:** `Swift-Sandbox`
+**Purpose:** Guide development of the Swift‑centered tool sandbox and server.
+
+---
+
+## 🎯 Mission
+Provide a portable Ubuntu sandbox that runs a Swift Tool Server exposing headless tools through OpenAPI 3.1. The LLM orchestrator interacts only with typed Swift clients, keeping orchestration fully Swift and Docker‑free.
+
+## 📦 Components
+- Ubuntu image with Swift 6 and curated tools (ImageMagick, ffmpeg, exiftool, pandoc, libplist; optional Csound, LilyPond).
+- Swift Tool Server built on Swift NIO; no shell in the execution path.
+- "FountainAI Tool Factory" SPM package with SandboxRunner and generated API clients.
+- Deterministic, checksum‑pinned artifacts and reproducible builds.
+
+## 🔐 Security & Isolation
+- Namespaces backend using `bubblewrap` or `proot` (preferred) and a micro‑VM backend via QEMU for stronger isolation.
+- Read‑only source mounts, write‑only scratch area, disabled network by default.
+- Enforce cgroup limits (memory, cpu, pids) and optional seccomp profiles.
+
+## ⚙️ Operational Guidelines
+- OpenAPI specs live under `Sources/FountainOps/FountainAi/openAPI`; generated Swift clients and stubs reside in `Sources/FountainOps/Generated`.
+- Structured logs must include `request_id`, `tool`, `args_hash`, `duration_ms`, and `exit_code`.
+- Maintain `tools.json` manifest with image checksums, tool versions, and exposed operations.
+- Ensure licensing compliance and provide source offers for bundled GPL/LGPL tools.
+
+## ✅ Acceptance & Testing
+- `GET /_health` returns within 500ms; `GET /_manifest` lists tools and versions.
+- Golden tests cover image resize, audio transcode, and plist conversion.
+- Security tests reject writes outside `/work` and network access when disabled.
+- Performance targets: cold bwrap start ≤150ms; micro‑VM snapshot ≤2s; 1MB JPEG→1024px PNG ≤500ms.
+
+---
+
+## 📁 Placement
+Keep this file alongside `Agent-Development.md` and update it as requirements evolve.
+
+> © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
