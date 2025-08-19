@@ -90,14 +90,17 @@ This paper specifies: scope, constraints, threat model, functional & non‑funct
 ## 6) Functional Requirements (FR)
 
 **FR‑1 Sandbox lifecycle**
+
 - Start sandbox with a named image (e.g., `swift-6.0.1-ubuntu22.04`).
 - Health‑check endpoint `GET /_health` must return within 500ms.
 - Stop sandbox cleanly and remove temp mounts.
 
 **FR‑2 Tool discovery**
+
 - `GET /_manifest` returns JSON with tool list, versions, and supported operations.
 
 **FR‑3 Tool execution**
+
 - Each tool operation is an OpenAPI `POST` that:
   - Accepts input as JSON + (optionally) multipart file streams.
   - Runs the tool with validated arguments.
@@ -105,18 +108,22 @@ This paper specifies: scope, constraints, threat model, functional & non‑funct
   - Returns strict, typed result models (bytes or URLs of artifacts).
 
 **FR‑4 Filesystem policy**
+
 - Read‑only bind mounts for inputs; dedicated writable scratch (`/work`) per request.
 - All outputs live under `/work/out` and are returned to caller or exported to a temporary host folder managed by the Tool Factory.
 
 **FR‑5 Resource policy**
+
 - Per‑operation limits: CPU time, memory, wall time; default timeouts (e.g., 60s).
 - Network disabled unless a tool operation opts‑in (`network: true`).
 
 **FR‑6 Observability**
+
 - Correlate every request with a `x-request-id`.
 - Emit structured JSON logs; include timing, exit status, stderr digest.
 
 **FR‑7 Error model**
+
 - Map tool exit codes to typed problem responses; preserve stderr (bounded to 64KB).
 
 ---
@@ -305,13 +312,15 @@ try tf.shutdown()
 
 ## 11) In‑Sandbox Tool Server (Swift NIO)
 
-Responsibilities
+### Responsibilities
+
     •    Validate requests (JSON Schema derived from OpenAPI).
     •    Map to a tool adapter (e.g., ImageMagickAdapter).
     •    Prepare /work, run tool with posix_spawn/Process (no shell), capture stdout/stderr.
     •    Stream logs (optional SSE) and return typed result.
 
-Key modules
+### Key modules
+
     •    Router.swift (static routes from OAS).
     •    Validation.swift (input typing).
     •    ToolAdapters/ (ImageMagick, ffmpeg, etc.).
@@ -322,7 +331,8 @@ Key modules
 
 ## 12) Isolation & Limits
 
-Namespaces backend (preferred on Linux)
+### Namespaces backend (preferred on Linux)
+
     •    bwrap:
     •    --ro-bind inputs, --bind scratch, --unshare-net (default).
     •    Minimal /proc, /dev nodes; --die-with-parent.
@@ -330,12 +340,14 @@ Namespaces backend (preferred on Linux)
     •    memory.max, cpu.max, pids.max per request.
     •    (Optional) seccomp profile for common tools (block execve of unknown paths).
 
-Micro‑VM backend (macOS & Linux)
+### Micro‑VM backend (macOS & Linux)
+
     •    qemu-system-x86_64 / -accel hvf on macOS, /dev/kvm on Linux.
     •    Snapshot boot, 9p or virtiofs shared mount of a temporary host directory.
     •    Port‑forward to expose Tool Server only to 127.0.0.1 on host.
 
-Defaults
+### Defaults
+
     •    Network: off (per‑operation allow‑list).
     •    Timeouts: 60s (override per op).
     •    I/O: 256MB per request cap unless extended.
@@ -344,8 +356,13 @@ Defaults
 
 ## 13) Image Packaging & Manifest
 
-Rootfs (namespaces): squashfs or directory image with /opt/swift, /opt/tools.
-Micro‑VM: qcow2 (Ubuntu 22.04) with cloud‑init seed for one‑shot Tool Server bootstrap.
+### Rootfs (namespaces): 
+
+squashfs or directory image with /opt/swift, /opt/tools.
+
+### Micro‑VM: 
+
+qcow2 (Ubuntu 22.04) with cloud‑init seed for one‑shot Tool Server bootstrap.
 
 **tools.json** manifest example
 
@@ -365,6 +382,7 @@ Micro‑VM: qcow2 (Ubuntu 22.04) with cloud‑init seed for one‑shot Tool Serv
 ⸻
 
 ## 14) Compliance & Licensing Strategy
+
     •    Include license texts for each packaged tool.
     •    Provide build scripts or references to upstream source consistent with GPL/LGPL obligations (ffmpeg/LilyPond).
     •    Prefer dynamic linking with clear notice where applicable.
@@ -373,6 +391,7 @@ Micro‑VM: qcow2 (Ubuntu 22.04) with cloud‑init seed for one‑shot Tool Serv
 ⸻
 
 ## 15) Observability, Logging, and Auditing
+
     •    Structured JSON logs at host and server layers with request_id.
     •    Emit tool, args_hash, duration_ms, exit_code.
     •    Optional OpenTelemetry spans (host facade exports spans; Tool Server adds child spans).
@@ -382,23 +401,28 @@ Micro‑VM: qcow2 (Ubuntu 22.04) with cloud‑init seed for one‑shot Tool Serv
 
 ## 16) Testing & Acceptance Criteria
 
-Unit
+### Unit
+
     •    Adapters validate argv formation; fake Process returns deterministic output.
 
-Integration
+### Integration
+
     •    Boot sandbox, run /_health, /_manifest.
     •    Golden tests: image resize, audio transcode, plist convert.
 
-Security
+### Security
+
     •    Attempt to write outside /work ⇒ must fail.
     •    Attempt network fetch when disabled ⇒ must fail.
     •    Memory pressure ⇒ clean tool termination with 137/oom mapping.
 
-Performance
+### Performance
+
     •    Cold bwrap start ≤150ms; micro‑VM snapshot ≤2s.
     •    1MB JPEG → 1024px PNG ≤500ms.
 
-Acceptance Checklist
+## Acceptance Checklist
+
     •    ✅ OAS generated clients compile and pass smoke tests.
     •    ✅ No host toolchain changes required.
     •    ✅ Network‑off default enforced.
@@ -406,6 +430,7 @@ Acceptance Checklist
 ⸻
 
 ## 17) CI / Build / Release
+
     •    Image builder pipeline (run in our Hetzner dispatcher, not GH Actions):
     •    Build Ubuntu image, install Swift/tools, write tools.json, generate openapi.yaml.
     •    Produce checksum and upload to a release bucket/registry.
@@ -436,6 +461,7 @@ M3
 ⸻
 
 ## 19) Open Questions / Risks
+
     •    Git LFS or OCI? Where to host large images (GitHub Releases vs. OCI registry vs. S3).
     •    Codec coverage in ffmpeg and legal boundaries in redistribution.
     •    Apple Silicon macOS: VM image arch (x86_64 vs aarch64) and tool availability symmetry.
@@ -472,9 +498,7 @@ public struct SandboxSpec {
 C) Minimal /_health handler
 
 ```
-
 GET /_health -> 200 {"status":"ok","uptime_ms":1234}
-
 ```
 
 
