@@ -79,6 +79,13 @@ csound_version=$(chroot "$ROOTFS_DIR" bash -c 'command -v csound >/dev/null && c
 lilypond_version=$(chroot "$ROOTFS_DIR" bash -c 'command -v lilypond >/dev/null && lilypond --version | head -n1' || true)
 
 # ---------------------------------------------------------------------------
+# 3b. Include license files
+# ---------------------------------------------------------------------------
+
+mkdir -p "$ROOTFS_DIR/usr/share/licenses"
+cp -a LICENSES/. "$ROOTFS_DIR/usr/share/licenses/"
+
+# ---------------------------------------------------------------------------
 # 4. Create tarball and qcow2 snapshot
 # ---------------------------------------------------------------------------
 
@@ -135,3 +142,4 @@ JSON
 echo "[build] Image: $TARBALL (sha256 $image_sha)"
 echo "[build] QCOW2: $QCOW2 (sha256 $qcow_sha)"
 echo "[build] Manifest written to $MANIFEST"
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
