@@ -126,7 +126,15 @@ var targets: [Target] = [
     .testTarget(name: "FlexctlTests", dependencies: ["flexctl", "ResourceLoader"], path: "Tests/FlexctlTests"),
     .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayClient"], path: "Tests/GatewayAppTests"),
     .testTarget(name: "FountainOpsTests", dependencies: ["LLMGatewayService"], path: "Tests/FountainOpsTests"),
-    .testTarget(name: "ToolServerTests", dependencies: ["ToolServer"], path: "Tests/ToolServerTests")
+    .testTarget(name: "ToolServerTests", dependencies: ["ToolServer"], path: "Tests/ToolServerTests"),
+    .testTarget(
+        name: "FountainAIToolsmithTests",
+        dependencies: [
+            "ToolServer",
+            .product(name: "SandboxRunner", package: "FountainAIToolsmith")
+        ],
+        path: "Tests/FountainAIToolsmithTests"
+    )
 ]
 
 #if os(Linux)
