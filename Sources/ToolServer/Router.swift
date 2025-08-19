@@ -9,9 +9,11 @@ public protocol ToolAdapter {
 public struct Router {
     let adapters: [String: ToolAdapter]
     let validator = Validation()
+    let manifest: ToolManifest
 
-    public init(adapters: [String: ToolAdapter]) {
+    public init(adapters: [String: ToolAdapter], manifest: ToolManifest) {
         self.adapters = adapters
+        self.manifest = manifest
     }
 
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
@@ -28,6 +30,9 @@ public struct Router {
                 let uptime = Int(ProcessInfo.processInfo.systemUptime)
                 let body = Data("uptime_seconds \(uptime)\n".utf8)
                 return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+            case "/manifest":
+                let data = try JSONEncoder().encode(manifest)
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
             default:
                 break
             }

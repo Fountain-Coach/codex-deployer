@@ -12,13 +12,16 @@ let package = Package(
         .library(name: "ToolsmithAPI", targets: ["ToolsmithAPI"]),
         .executable(name: "toolsmith-cli", targets: ["toolsmith-cli"])
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-crypto.git", from: "3.0.0")
+    ],
     targets: [
-        .target(name: "Toolsmith", dependencies: []),
-        .target(name: "SandboxRunner", dependencies: [], resources: [.process("Profiles")]),
+        .target(name: "ToolsmithSupport", dependencies: [.product(name: "Crypto", package: "swift-crypto")]),
+        .target(name: "Toolsmith", dependencies: ["ToolsmithSupport"]),
+        .target(name: "SandboxRunner", dependencies: ["ToolsmithSupport"], resources: [.process("Profiles")]),
         .target(name: "ToolsmithAPI", dependencies: []),
         .executableTarget(name: "toolsmith-cli", dependencies: ["Toolsmith"]),
-        .testTarget(name: "SandboxRunnerTests", dependencies: ["SandboxRunner"])
+        .testTarget(name: "SandboxRunnerTests", dependencies: ["SandboxRunner", "Toolsmith", "ToolsmithSupport"])
     ]
 )
 

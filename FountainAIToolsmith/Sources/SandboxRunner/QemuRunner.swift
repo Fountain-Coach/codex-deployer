@@ -1,14 +1,18 @@
 import Foundation
+import ToolsmithSupport
 
 public final class QemuRunner: SandboxRunner {
     private let qemu: URL
     private let image: URL
+    private let manifest: ToolManifest?
     public private(set) var forwardedPort: UInt16?
 
     public init(qemu: URL = URL(fileURLWithPath: "/usr/bin/qemu-system-x86_64"),
-                image: URL) {
+                image: URL,
+                manifest: ToolManifest? = nil) {
         self.qemu = qemu
         self.image = image
+        self.manifest = manifest
     }
 
     @discardableResult
@@ -24,6 +28,9 @@ public final class QemuRunner: SandboxRunner {
         _ = inputs
         _ = limits
         try guardWritePaths(arguments: arguments, workDirectory: workDirectory)
+        if let manifest = manifest {
+            try manifest.verify(fileAt: image)
+        }
         var args: [String] = []
         #if os(macOS)
         args += ["-accel", "hvf"]

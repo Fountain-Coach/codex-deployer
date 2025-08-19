@@ -1,9 +1,14 @@
 import Foundation
+import ToolsmithSupport
 
 public struct Toolsmith {
     let logger = JSONLogger()
+    public let manifest: ToolManifest?
 
-    public init() {}
+    public init(imageDirectory: URL = URL(fileURLWithPath: ".")) {
+        let manifestURL = imageDirectory.appendingPathComponent("tools.json")
+        self.manifest = try? ToolManifest.load(from: manifestURL)
+    }
 
     @discardableResult
     public func run(tool: String, metadata: [String: String] = [:], requestID: String = UUID().uuidString, operation: () throws -> Void) rethrows -> String {
