@@ -14,7 +14,7 @@ Two sandbox backends are supported:
 - **Namespaces backend (Linux)** via `bubblewrap` (preferred) or `proot`.
 - **Micro‑VM backend (macOS/Linux)** via `QEMU` (snapshot boot), for hosts that lack unprivileged namespaces or that prefer stronger isolation.
 
-This paper specifies: scope, constraints, threat model, functional & non‑functional requirements, architecture, API shape, packaging, licensing compliance, CI/CD, acceptance tests, and a phase plan.
+This paper specifies: scope, constraints, threat model, functional & non‑functional requirements, architecture, API shape, packaging, licensing compliance, CI/CD, and acceptance tests.
 
 ---
 
@@ -426,80 +426,4 @@ qcow2 (Ubuntu 22.04) with cloud‑init seed for one‑shot Tool Server bootstrap
     •    ✅ OAS generated clients compile and pass smoke tests.
     •    ✅ No host toolchain changes required.
     •    ✅ Network‑off default enforced.
-
-⸻
-
-## 17) CI / Build / Release
-
-    •    Image builder pipeline (run in our Hetzner dispatcher, not GH Actions):
-    •    Build Ubuntu image, install Swift/tools, write tools.json, generate openapi.yaml.
-    •    Produce checksum and upload to a release bucket/registry.
-    •    Client generation:
-    •    Use our Swift OpenAPI kernel to generate typed clients; commit to repo along with the versioned OAS.
-    •    Signing:
-    •    Sign checksums; verify at download time in the SPM plugin.
-
-⸻
-
-## 18) Migration Plan & Phases
-
-M1 (2–3 weeks)
-    •    Bwrap backend + rootfs (swift 6 + ImageMagick/ffmpeg/exiftool/pandoc/libplist).
-    •    Tool Server minimal: /_health, /_manifest, image.convert, audio.transcode, metadata.read.
-    •    Host SPM package with typed clients + plugin to fetch image.
-
-M2
-    •    Add Micro‑VM backend for macOS hosts (HVF accel), snapshot boot.
-    •    Add plist.convert, text.convert (pandoc).
-    •    Observability baseline and cgroups limits.
-
-M3
-    •    Optional Csound/LilyPond tools (license review, artifact weight).
-    •    SSE log streaming, seccomp profile, expanded test matrix.
-    •    Multi‑image support with manifest pinning/rollback.
-
-⸻
-
-## 19) Open Questions / Risks
-
-    •    Git LFS or OCI? Where to host large images (GitHub Releases vs. OCI registry vs. S3).
-    •    Codec coverage in ffmpeg and legal boundaries in redistribution.
-    •    Apple Silicon macOS: VM image arch (x86_64 vs aarch64) and tool availability symmetry.
-    •    LilyPond redistribution: GPL obligations and dependency chain size.
-
-⸻
-
-## 20) Appendix
-
-A) Example Adapter (ImageMagick) — Swift NIO Tool Server snippet
-
-```
-let args = ["/usr/bin/magick", "convert", "/work/in/input.jpg", "-resize", "1024", "/work/out/out.png"]
-let proc = Process()
-proc.executableURL = URL(fileURLWithPath: args[0])
-proc.arguments = Array(args.dropFirst())
-// assign pipes; set workingDirectoryURL = /work; setrlimit; run
-```
-
-
-B) Host‑side SandboxSpec
-
-```
-public struct SandboxSpec {
-  public var image: String                   // "swift-6.0.1-ubuntu22.04"
-  public var networkEnabled: Bool = false
-  public var cpuTimeLimitSec: Int = 60
-  public var memoryLimitMB: Int = 1024
-  public var openFilesLimit: Int = 1024
-  public var cacheDir: URL                   // bind as /work/.build (SPM, ffmpeg cache)
-}
-```
-
-C) Minimal /_health handler
-
-```
-GET /_health -> 200 {"status":"ok","uptime_ms":1234}
-```
-
-
 
