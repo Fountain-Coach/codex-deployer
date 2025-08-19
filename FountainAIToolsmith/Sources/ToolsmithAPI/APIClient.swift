@@ -25,7 +25,14 @@ public struct APIClient {
     public func send<R: APIRequest>(_ request: R) async throws -> R.Response {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(request.path))
         urlRequest.httpMethod = request.method
+        if let body = request.body {
+            urlRequest.httpBody = body
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
         let (data, _) = try await session.data(for: urlRequest)
+        if R.Response.self == Data.self {
+            return data as! R.Response
+        }
         return try JSONDecoder().decode(R.Response.self, from: data)
     }
 }

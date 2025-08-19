@@ -61,4 +61,38 @@ Verify an orchestrator ↔ sandbox round-trip with:
 Scripts/toolsmith-smoke-test.sh
 ```
 
+## CLI Usage
+
+Decode the sample media first:
+
+```bash
+FountainAIToolsmith/Samples/prepare.sh
+```
+
+With a Tool Server running and `TOOLSERVER_URL` set to its base URL, the `toolsmith-cli` utility can drive conversions:
+
+```bash
+export TOOLSERVER_URL=http://localhost:8080
+
+# Check server health
+toolsmith-cli health-check
+# {"status":"ok"}
+
+# Download the manifest
+toolsmith-cli manifest
+# prints manifest json
+
+# Convert an image
+toolsmith-cli convert-image FountainAIToolsmith/Samples/sample.png out.jpg
+# wrote out.jpg
+
+# Transcode audio
+toolsmith-cli transcode-audio FountainAIToolsmith/Samples/sample.wav out.mp3
+# wrote out.mp3
+
+# Convert a plist
+toolsmith-cli convert-plist FountainAIToolsmith/Samples/sample.plist out.plist
+# wrote out.plist
+```
+
 > © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
