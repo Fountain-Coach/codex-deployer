@@ -37,14 +37,12 @@ This paper specifies: scope, constraints, threat model, functional & non‑funct
 
 ## 3) Constraints & Assumptions
 
-- **Swift‑only orchestration**: no shell in the orchestration path; all invocations are `Process` with explicit argv.
-- **No Docker requirement**: environments must run without a Docker daemon.
-- **Typed boundaries**: client calls generated from OpenAPI specs (via our Swift OpenAPI generator).
-- **One agent**: Codex remains the single orchestrator; the Tool Factory is a thin, typed client + sandbox manager it calls.
-- **Reproducibility**: rootfs/qcow images are pinned by checksum and versioned.
-- **Licensing**: strict compliance for GPL tools (LilyPond, ffmpeg codecs), attribution, and source‑offer where required.
-
-**External confirmation of the org’s OpenAPI‑first/Swift posture** exists in public repos (`swift-codex-openapi-kernel`, `swarm-orchestrator`, `SwiftUI-View-Factory`). These reinforce the design here.
+- **Swift-only orchestration**: repository modules rely on Swift NIO and `Process` APIs—no shell in the execution path.
+- **No Docker dependency**: the sandbox runs on the host via `bubblewrap`, `proot`, or QEMU without requiring a Docker daemon.
+- **Typed boundaries via OpenAPI**: versioned specs live under `Sources/FountainOps/FountainAi/openAPI`, with generated Swift clients and server stubs in `Sources/FountainOps/Generated` for type-safe calls.
+- **Single orchestrator**: Codex is the sole coordinator per the repository’s agent manifest; the Tool Factory remains a library invoked by Codex.
+- **Reproducible artifacts**: rootfs/QCOW images are checksum‑pinned and dependencies are versioned in `Package.swift` for deterministic builds.
+- **Licensing compliance**: GPL/LGPL tools are included only with attribution and source‑offer, adhering to repository policies.
 
 ---
 
@@ -302,6 +300,7 @@ let pngBytes = try img.convert(.data(jpegData), to: .png, width: 1024, height: n
 try tf.shutdown()
 ```
 
+
 ⸻
 
 ## 11) In‑Sandbox Tool Server (Swift NIO)
@@ -477,3 +476,6 @@ C) Minimal /_health handler
 GET /_health -> 200 {"status":"ok","uptime_ms":1234}
 
 ```
+
+
+
