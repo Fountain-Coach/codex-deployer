@@ -1,4 +1,5 @@
 import Foundation
+#if canImport(Network)
 import Network
 
 public final class RTPMidiSession: MIDITransport {
@@ -131,5 +132,27 @@ public final class RTPMidiSession: MIDITransport {
         // TODO: Implement MIDI-CI negotiation handshake
     }
 }
+#else
+
+public final class RTPMidiSession: MIDITransport {
+    public var onReceiveUMP: (([UInt32]) -> Void)?
+    public var onReceiveUmps: (([[UInt32]]) -> Void)?
+
+    public init(localName: String, mtu: Int = 1500) {}
+
+    public func open() throws {}
+
+    public func close() throws {}
+
+    public func send(umpWords: [UInt32]) throws {
+        onReceiveUMP?(umpWords)
+        onReceiveUmps?([umpWords])
+    }
+
+    public func send(umps: [[UInt32]]) throws {
+        for u in umps { try send(umpWords: u) }
+    }
+}
+#endif
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
