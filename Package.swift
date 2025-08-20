@@ -83,7 +83,7 @@ var targets: [Target] = [
     ),
     .target(name: "MIDI2Core", dependencies: [.product(name: "MIDI2", package: "midi2")], path: "Sources/MIDI2Core"),
     .target(name: "MIDI2Transports", path: "Sources/MIDI2Transports"),
-    .target(name: "SSEOverMIDI", dependencies: ["MIDI2Core"], path: "Sources/SSEOverMIDI"),
+    .target(name: "SSEOverMIDI", dependencies: ["MIDI2Core", .product(name: "MIDI2", package: "midi2")], path: "Sources/SSEOverMIDI"),
     .target(
         name: "FlexBridge",
         dependencies: [
