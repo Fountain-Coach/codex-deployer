@@ -1,6 +1,8 @@
 // swift-tools-version: 6.1
 import PackageDescription
 
+// SPS package is deprecated and intentionally omitted from workspace targets.
+
 var products: [Product] = [
     .library(name: "FountainCodex", targets: ["FountainCodex"]),
     .library(name: "MIDI2Models", targets: ["MIDI2Models"]),
