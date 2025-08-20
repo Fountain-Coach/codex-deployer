@@ -50,7 +50,8 @@ final class AdapterTests: XCTestCase {
         try XCTSkipIf(!FileManager.default.isExecutableFile(atPath: "/usr/bin/plutil"), "plutil missing")
         let adapter = LibPlistAdapter()
         let (data, code) = try adapter.run(args: ["-help"])
-        XCTAssertEqual(code, 1) // plutil -help exits 1
+        XCTAssertTrue([0, 1].contains(code), "Unexpected exit code: \(code)")
+        // plutil -help exits 0 on some platforms and 1 on others
         XCTAssertTrue(String(data: data, encoding: .utf8)?.contains("plutil") ?? false)
     }
 }
