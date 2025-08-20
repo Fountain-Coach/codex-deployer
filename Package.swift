@@ -6,6 +6,7 @@ var products: [Product] = [
     .library(name: "MIDI2Models", targets: ["MIDI2Models"]),
     .library(name: "MIDI2Core", targets: ["MIDI2Core"]),
     .library(name: "FlexBridge", targets: ["FlexBridge"]),
+    .library(name: "SSEOverMIDI", targets: ["SSEOverMIDI"]),
     .executable(name: "clientgen-service", targets: ["clientgen-service"]),
     .executable(name: "gateway-server", targets: ["gateway-server"]),
     .executable(name: "publishing-frontend", targets: ["publishing-frontend"]),
@@ -82,6 +83,7 @@ var targets: [Target] = [
     ),
     .target(name: "MIDI2Core", dependencies: [.product(name: "MIDI2", package: "midi2")], path: "Sources/MIDI2Core"),
     .target(name: "MIDI2Transports", path: "Sources/MIDI2Transports"),
+    .target(name: "SSEOverMIDI", dependencies: ["MIDI2Core"], path: "Sources/SSEOverMIDI"),
     .target(
         name: "FlexBridge",
         dependencies: [
