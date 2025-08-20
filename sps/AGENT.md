@@ -1,9 +1,7 @@
 # Semantic PDF Scanner (SPS) • AGENT.md
 
-## Mission
-Build a **Swift-only** command‑line tool that semantically scans PDF specifications and emits a normalized, queryable index for FountainAI’s tools‑factory. The SPS must cover our Midi2Swift needs (extract normative tables, terms, message layouts), while remaining **generally useful** for any PDF‑centric workflow.
-
-**Pipeline:** `PDFs → scan → semantic index → (optional) matrix export → contract verify → publish`
+## Deprecation Notice
+The Semantic PDF Scanner (SPS) service is deprecated and scheduled for removal on **2025-11-01**. Development has ceased and existing users should migrate to alternative tooling.
 
 ## Repository map (for `sps/`)
 - `Package.swift` — SwiftPM manifest (Swift 6)
