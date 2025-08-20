@@ -2,6 +2,8 @@
 
 FountainAI assembles a family of Swift services that work together to run a secure, observable and extensible AI platform. Rather than centering on a single CLI, the repository balances gateways, operations tooling and code generation as equal pillars of the ecosystem.
 
+> ⚠️ **SPS Deprecated:** The Semantic PDF Scanner is frozen. Use the [Toolsmith-based PDF tooling](FountainAIToolsmith) instead.
+
 ## Architecture Pillars
 
 - **GatewayApp** – Plugin-driven HTTP and DNS gateway built on SwiftNIO. It composes `GatewayPlugin` implementations such as `LoggingPlugin` and `PublishingFrontendPlugin` to handle cross-cutting concerns.
