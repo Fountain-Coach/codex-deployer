@@ -12,7 +12,11 @@ let adapters: [String: ToolAdapter] = [
     "ffmpeg": FFmpegAdapter(),
     "exiftool": ExifToolAdapter(),
     "pandoc": PandocAdapter(),
-    "libplist": LibPlistAdapter()
+    "libplist": LibPlistAdapter(),
+    "scan": PDFScanAdapter(),
+    "index": PDFIndexAdapter(),
+    "query": PDFQueryAdapter(),
+    "export-matrix": PDFExportMatrixAdapter()
 ]
 let manifestURL = URL(fileURLWithPath: "tools.json")
 let manifest = (try? ToolManifest.load(from: manifestURL)) ?? ToolManifest(image: .init(name: "", tarball: "", sha256: "", qcow2: "", qcow2_sha256: ""), tools: [:], operations: [])
