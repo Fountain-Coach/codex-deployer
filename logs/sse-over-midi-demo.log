@@ -1,0 +1,9 @@
+date: 2025-08-20
+changes:
+  - added SSE over MIDI demo under Examples/SSEOverMIDI
+  - documented RTPMidiSession, DefaultSseSender, and DefaultSseReceiver in docs/sse-over-midi-guide.md
+  - ensured Package.swift exposes SSEOverMIDI target and tests
+  
+tests: swift test
+
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

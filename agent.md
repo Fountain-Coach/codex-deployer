@@ -58,6 +58,7 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | Semantic browser & dissector | `sb/*` | Wire CLI commands and integrate Typesense indexer | ✅ | — | sb, cli, cdp, typesense, semantics |
 | Toolsmith package | `FountainAIToolsmith/*` | Scaffold Toolsmith orchestration package with CLI | ✅ | — | toolsmith |
 | LibPlist adapter tests | `Tests/FountainAIToolsmithTests/AdapterTests.swift` | Handle plutil help exit codes 0 or 1 | ✅ | — | toolsmith, test |
+| SSE over MIDI demo | Package.swift, docs/sse-over-midi-guide.md, Examples/SSEOverMIDI | Add target, docs and demo | ✅ | — | midi, sse |
 
 
 ---
