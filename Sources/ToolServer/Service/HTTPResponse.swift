@@ -11,5 +11,4 @@ public struct HTTPResponse {
         self.body = body
     }
 }
-
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
