@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+echo "sps is deprecated; use toolsmith-cli pdf-$1" >&2; exec toolsmith-cli pdf-"$1" "${@:2}"
