@@ -7,10 +7,13 @@ public final class DefaultSseReceiver: SseOverMidiReceiver {
     public var onEvent: ((SseEnvelope) -> Void)?
     private let rtp: RTPMidiSession
     private let flex: FlexPacker
+    private let metrics: Metrics?
+    private var expectedSeq: UInt64?
 
-    public init(rtp: RTPMidiSession, flex: FlexPacker) {
+    public init(rtp: RTPMidiSession, flex: FlexPacker, metrics: Metrics? = nil) {
         self.rtp = rtp
         self.flex = flex
+        self.metrics = metrics
         self.rtp.onReceiveUmps = { [weak self] packets in
             guard let self else { return }
             var umps: [Ump128] = []
@@ -21,6 +24,11 @@ public final class DefaultSseReceiver: SseOverMidiReceiver {
             }
             for blob in self.flex.unpack(umps: umps) {
                 if let env = try? JSONDecoder().decode(SseEnvelope.self, from: blob) {
+                    self.metrics?.addRecv(bytes: blob.count)
+                    if let exp = self.expectedSeq, env.seq != exp {
+                        self.metrics?.incSeqGapsDetected()
+                    }
+                    self.expectedSeq = env.seq &+ 1
                     self.onEvent?(env)
                 }
             }

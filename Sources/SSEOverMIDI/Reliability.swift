@@ -6,8 +6,11 @@ public final class Reliability {
     private(set) var highestAcked: UInt64 = 0
     private var buffer: [UInt64: [Ump128]] = [:]
     private let maxBuffer: Int = 512
+    private let metrics: Metrics?
 
-    public init() {}
+    public init(metrics: Metrics? = nil) {
+        self.metrics = metrics
+    }
 
     /// Store frames for potential retransmission.
     /// Keeps the buffer bounded by removing the lowest sequence when exceeding `maxBuffer` entries.
@@ -20,7 +23,14 @@ public final class Reliability {
 
     /// Build an ACK control envelope acknowledging `h`.
     public func buildAck(h: UInt64) -> SseEnvelope {
-        SseEnvelope(ev: "ctrl", seq: h, data: "{\"ack\":\(h)}")
+        metrics?.incAcksSent()
+        return SseEnvelope(ev: "ctrl", seq: h, data: "{\"ack\":\(h)}")
+    }
+
+    public func buildNack(_ seqs: [UInt64]) -> SseEnvelope {
+        metrics?.incNacksSent()
+        let list = seqs.map(String.init).joined(separator: ",")
+        return SseEnvelope(ev: "ctrl", seq: highestAcked, data: "{\"nack\":[\(list)]}")
     }
 
     /// Handle a received control envelope.
@@ -38,8 +48,15 @@ public final class Reliability {
 
         guard let nacks = ctrl.nack else { return nil }
         var resend: [UInt64: [Ump128]] = [:]
+        var retransmitCount = 0
         for seq in nacks {
-            if let frames = buffer[seq] { resend[seq] = frames }
+            if let frames = buffer[seq] {
+                resend[seq] = frames
+                retransmitCount += frames.count
+            }
+        }
+        if retransmitCount > 0 {
+            metrics?.incRetransmits(retransmitCount)
         }
         return resend.isEmpty ? nil : resend
     }
