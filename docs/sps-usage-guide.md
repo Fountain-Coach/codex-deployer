@@ -1,3 +1,5 @@
+> ⚠️ **Warning:** The Semantic PDF Scanner is frozen. Use the Toolsmith sandbox workflow instead (see [Toolsmith orchestration guide](toolsmith-orchestration.md)).
+
 # SPS Usage Guide
 
 This guide demonstrates end-to-end workflows with the Semantic PDF Scanner CLI, including page range queries and validation hooks.

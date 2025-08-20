@@ -6,6 +6,11 @@
 
 ---
 
+## 🚚 SPS Folder Migration
+The `sps/` directory is frozen and scheduled for removal on **2025-11-01**. For migration assistance, contact **Benedikt Eickhoff** via the repository issue tracker.
+
+---
+
 ## 🎯 Mission
 
 This agent maintains an up-to-date view of outstanding development tasks across the entire repository. It exists to bridge declared intent (e.g., specs, interface plans) with verifiable implementation. Each task is described in a structured matrix to allow vertical slice execution and repeatable progress tracking.
