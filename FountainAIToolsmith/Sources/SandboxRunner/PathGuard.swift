@@ -6,6 +6,9 @@ func guardWritePaths(arguments: [String], workDirectory: URL) throws {
     let base = workDirectory.standardizedFileURL.path
     for arg in arguments {
         guard !arg.hasPrefix("-") else { continue }
+        if arg.hasPrefix("/inputs/") || arg.hasPrefix("/scratch/") {
+            continue
+        }
         if arg.hasPrefix("/") || arg.contains("..") {
             let resolved = URL(fileURLWithPath: arg, relativeTo: workDirectory).standardizedFileURL.path
             if !resolved.hasPrefix(base) {
@@ -14,3 +17,5 @@ func guardWritePaths(arguments: [String], workDirectory: URL) throws {
         }
     }
 }
+
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

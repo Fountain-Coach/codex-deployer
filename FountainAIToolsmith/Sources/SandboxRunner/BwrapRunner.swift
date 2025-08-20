@@ -31,6 +31,7 @@ public final class BwrapRunner: SandboxRunner {
             args += ["--seccomp", seccomp.path]
         }
         args += ["--bind", workDirectory.path, "/work"]
+        args += ["--bind", workDirectory.path, "/scratch"]
         if !allowNetwork {
             args.append("--unshare-net")
         }

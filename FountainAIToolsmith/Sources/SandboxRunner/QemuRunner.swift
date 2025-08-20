@@ -25,7 +25,6 @@ public final class QemuRunner: SandboxRunner {
         timeout: TimeInterval? = nil,
         limits: CgroupLimits? = nil
     ) throws -> SandboxResult {
-        _ = inputs
         _ = limits
         try guardWritePaths(arguments: arguments, workDirectory: workDirectory)
         if let manifest = manifest {
@@ -39,6 +38,11 @@ public final class QemuRunner: SandboxRunner {
         #endif
         args += ["-drive", "file=\(image.path),if=virtio,snapshot=on"]
         args += ["-virtfs", "local,path=\(workDirectory.path),mount_tag=work,security_model=none"]
+        args += ["-virtfs", "local,path=\(workDirectory.path),mount_tag=scratch,security_model=none"]
+        for (idx, input) in inputs.enumerated() {
+            let tag = "input\(idx)"
+            args += ["-virtfs", "local,path=\(input.path),mount_tag=\(tag),security_model=none,readonly"]
+        }
         if allowNetwork {
             let port = UInt16.random(in: 40000..<60000)
             forwardedPort = port
