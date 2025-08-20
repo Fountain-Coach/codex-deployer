@@ -10,6 +10,8 @@ let package = Package(
         .library(name: "Toolsmith", targets: ["Toolsmith"]),
         .library(name: "SandboxRunner", targets: ["SandboxRunner"]),
         .library(name: "ToolsmithAPI", targets: ["ToolsmithAPI"]),
+        .library(name: "SPSCore", targets: ["SPSCore"]),
+        .library(name: "SPSTools", targets: ["SPSTools"]),
         .executable(name: "toolsmith-cli", targets: ["toolsmith-cli"])
     ],
     dependencies: [
@@ -20,8 +22,11 @@ let package = Package(
         .target(name: "Toolsmith", dependencies: ["ToolsmithSupport"]),
         .target(name: "SandboxRunner", dependencies: ["ToolsmithSupport"], resources: [.process("Profiles")]),
         .target(name: "ToolsmithAPI", dependencies: []),
+        .target(name: "SPSCore", dependencies: [.product(name: "Crypto", package: "swift-crypto")]),
+        .target(name: "SPSTools", dependencies: ["SPSCore", "Toolsmith", "SandboxRunner"], resources: [.process("Resources")]),
         .executableTarget(name: "toolsmith-cli", dependencies: ["ToolsmithAPI", "ToolsmithSupport"]),
-        .testTarget(name: "SandboxRunnerTests", dependencies: ["SandboxRunner", "Toolsmith", "ToolsmithSupport"])
+        .testTarget(name: "SandboxRunnerTests", dependencies: ["SandboxRunner", "Toolsmith", "ToolsmithSupport"]),
+        .testTarget(name: "SPSTests", dependencies: ["SPSCore", "SPSTools", "Toolsmith", "SandboxRunner"])
     ]
 )
 

@@ -14,7 +14,8 @@
     "pandoc": "",
     "libplist": "",
     "csound": "",
-    "lilypond": ""
+    "lilypond": "",
+    "sps": "Semantic PDF Scanner via Toolsmith"
   },
   "operations": [
     "swiftc",
@@ -24,6 +25,10 @@
     "pandoc",
     "plistutil",
     "csound",
-    "lilypond"
+    "lilypond",
+    "sps-scan",
+    "sps-validate",
+    "sps-query",
+    "sps-export-matrix"
   ]
 }

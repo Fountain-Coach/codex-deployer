@@ -1,0 +1,222 @@
+openapi: 3.1.0
+info:
+  title: Semantic PDF Scanner (SPS)
+  version: 0.2.0
+  description: Swift CLI parity API for Fountain tools-factory integration.
+  x-matrix-schema: "2.0"
+paths:
+  /scan:
+    post:
+      summary: Scan one or more PDFs into a semantic index
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Index'
+  /index/validate:
+    post:
+      summary: Validate an index structure
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Index'
+      responses:
+        '200':
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+  /query:
+    post:
+      summary: Query an index by keyword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Matched spans
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+  /export/matrix:
+    post:
+      summary: Export a Midi2Swift-friendly matrix skeleton from an index
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportMatrixRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Matrix'
+components:
+  schemas:
+    ScanRequest:
+      type: object
+      required: [inputs]
+      properties:
+        inputs:
+          description: File paths or URLs to PDFs
+          type: array
+          items: { type: string }
+        includeText:
+          type: boolean
+          default: false
+        sha256:
+          type: boolean
+          default: false
+    Index:
+      type: object
+      required: [documents]
+      properties:
+        documents:
+          type: array
+          items:
+            type: object
+            required: [id, fileName, size]
+            properties:
+              id: { type: string }
+              fileName: { type: string }
+              size: { type: integer }
+              sha256: { type: string, nullable: true }
+              pages: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    number: { type: integer }
+                    text: { type: string }
+    ValidationResult:
+      type: object
+      properties:
+        ok: { type: boolean }
+        issues:
+          type: array
+          items: { type: string }
+    QueryRequest:
+      type: object
+      required: [index, q]
+      properties:
+        index:
+          $ref: '#/components/schemas/Index'
+        q:
+          type: string
+        pageRange:
+          type: string
+          description: 'Comma-separated list of pages or ranges to search (e.g., 1-3,5)'
+    QueryResponse:
+      type: object
+      properties:
+        hits:
+          type: array
+          items:
+            type: object
+            properties:
+              docId: { type: string }
+              page: { type: integer }
+              snippet: { type: string }
+    ExportMatrixRequest:
+      type: object
+      required: [index]
+      properties:
+        index:
+          $ref: '#/components/schemas/Index'
+        bitfields:
+          type: boolean
+          default: false
+        ranges:
+          type: boolean
+          default: false
+        enums:
+          type: boolean
+          default: false
+    Matrix:
+      type: object
+      required: [schemaVersion, messages, terms]
+      properties:
+        schemaVersion:
+          type: string
+          description: Matrix schema version
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatrixEntry'
+        terms:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatrixEntry'
+        bitfields:
+          type: array
+          items:
+            $ref: '#/components/schemas/BitField'
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/RangeSpec'
+        enums:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnumSpec'
+    MatrixEntry:
+      type: object
+      required: [text, page, x, y]
+      properties:
+        text: { type: string }
+        page: { type: integer }
+        x:
+          type: integer
+          description: X coordinate (placeholder)
+        y:
+          type: integer
+          description: Y coordinate (placeholder)
+    BitField:
+      type: object
+      required: [name, bits]
+      properties:
+        name: { type: string }
+        bits:
+          type: array
+          items: { type: integer }
+    RangeSpec:
+      type: object
+      required: [field, min, max]
+      properties:
+        field: { type: string }
+        min: { type: integer }
+        max: { type: integer }
+    EnumCase:
+      type: object
+      required: [name, value]
+      properties:
+        name: { type: string }
+        value: { type: integer }
+    EnumSpec:
+      type: object
+      required: [field, cases]
+      properties:
+        field: { type: string }
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnumCase'
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
