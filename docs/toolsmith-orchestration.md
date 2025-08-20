@@ -1,6 +1,6 @@
 # FountainAIToolsmith in Gateway/Codex Orchestration
 
-This guide shows how the Gateway/Codex loop imports and drives `FountainAIToolsmith` to execute sandboxed tools.
+This guide shows how the Gateway/Codex loop imports and drives `FountainAIToolsmith` to execute sandboxed tools, including the integrated SPS (Semantic PDF Scanner) functionality.
 
 ## Importing and Instantiating
 
@@ -13,9 +13,12 @@ Add the package to `Package.swift` and import the libraries in your orchestrator
 ```swift
 import Toolsmith
 import SandboxRunner
+import SPSTools  // For SPS functionality
+import SPSCore   // For SPS data models
 
 let toolsmith = Toolsmith()
 let runner = BwrapRunner()
+let spsFactory = SPSToolFactory(toolsmith: toolsmith, runner: runner)
 ```
 
 ## Tool Call Lifecycle
