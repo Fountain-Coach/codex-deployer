@@ -32,7 +32,6 @@ As modules gain documentation, brief summaries are added here.
 - **publishing-frontend CLI** – documented main entrypoint starting the static server.
 - **clientgen-service CLI** – wrapper around GeneratorCLI is now documented.
 - **gateway-server CLI** – documented gateway server entrypoint exposing the HTTP gateway.
- - **SPS CLI** – [usage guide](sps-usage-guide.md) covers page range queries, validation hooks, and sample PDFs.
 - **GatewayServerTests** – verifies the gateway's health endpoint.
 - **GatewayServer** – documentation now covers health and metrics endpoints.
 - **Service** and **Supervisor** – properties and lifecycle methods documented.

@@ -7,23 +7,9 @@
     "qcow2_sha256": "<fill in>"
   },
   "tools": {
-    "swift": "Swift version 6.1.2 (swift-6.1.2-RELEASE)",
-    "imagemagick": "",
-    "ffmpeg": "",
-    "exiftool": "",
-    "pandoc": "",
-    "libplist": "",
-    "csound": "",
-    "lilypond": ""
+    "swift": "Swift version 6.1.2 (swift-6.1.2-RELEASE)"
   },
   "operations": [
-    "swiftc",
-    "convert",
-    "ffmpeg",
-    "exiftool",
-    "pandoc",
-    "plistutil",
-    "csound",
-    "lilypond"
+    "swiftc"
   ]
 }
