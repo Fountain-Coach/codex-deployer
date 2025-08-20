@@ -136,6 +136,11 @@ var targets: [Target] = [
             .product(name: "SandboxRunner", package: "FountainAIToolsmith")
         ],
         path: "Tests/FountainAIToolsmithTests"
+    ),
+    .testTarget(
+        name: "SSEOverMIDITests",
+        dependencies: ["SSEOverMIDI", "MIDI2Transports", "MIDI2Core"],
+        path: "Tests/SSEOverMIDITests"
     )
 ]
 
