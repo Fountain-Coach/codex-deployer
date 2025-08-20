@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
 import FoundationNetworking
+#endif
 
 /// Claims extracted from a validated access token.
 public struct TokenClaims: Sendable {
