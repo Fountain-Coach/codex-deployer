@@ -1,5 +1,4 @@
 import Foundation
-import ServiceShared
 
 public struct Router {
     public var handlers: Handlers
@@ -10,17 +9,36 @@ public struct Router {
 
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
         switch (request.method, request.path) {
-        case ("POST", let path) where path == "/tools/register" || path.hasPrefix("/tools/register?"):
-            return try await handlers.registerOpenapi(request)
-        case ("GET", let path) where path == "/tools" || path.hasPrefix("/tools?"):
-            return try await handlers.listTools(request)
-        case ("GET", "/metrics"):
-            let text = await PrometheusAdapter.shared.exposition()
-            return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: Data(text.utf8))
+        case ("POST", "/ffmpeg"):
+            let body = try? JSONDecoder().decode(ToolRequest.self, from: request.body)
+            return try await handlers.runffmpeg(request, body: body)
+        case ("POST", "/exiftool"):
+            let body = try? JSONDecoder().decode(ToolRequest.self, from: request.body)
+            return try await handlers.runexiftool(request, body: body)
+        case ("POST", "/imagemagick"):
+            let body = try? JSONDecoder().decode(ToolRequest.self, from: request.body)
+            return try await handlers.runimagemagick(request, body: body)
+        case ("POST", "/pdf/scan"):
+            let body = try? JSONDecoder().decode(ScanRequest.self, from: request.body)
+            return try await handlers.pdfscan(request, body: body)
+        case ("POST", "/pandoc"):
+            let body = try? JSONDecoder().decode(ToolRequest.self, from: request.body)
+            return try await handlers.runpandoc(request, body: body)
+        case ("POST", "/pdf/export-matrix"):
+            let body = try? JSONDecoder().decode(ExportMatrixRequest.self, from: request.body)
+            return try await handlers.pdfexportmatrix(request, body: body)
+        case ("POST", "/libplist"):
+            let body = try? JSONDecoder().decode(ToolRequest.self, from: request.body)
+            return try await handlers.runlibplist(request, body: body)
+        case ("POST", "/pdf/query"):
+            let body = try? JSONDecoder().decode(QueryRequest.self, from: request.body)
+            return try await handlers.pdfquery(request, body: body)
+        case ("POST", "/pdf/index/validate"):
+            let body = try? JSONDecoder().decode(Index.self, from: request.body)
+            return try await handlers.pdfindexvalidate(request, body: body)
         default:
             return HTTPResponse(status: 404)
         }
     }
 }
-
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

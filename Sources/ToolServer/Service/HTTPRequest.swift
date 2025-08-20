@@ -1,5 +1,7 @@
 import Foundation
 
+public struct NoBody: Codable {}
+
 public struct HTTPRequest {
     public let method: String
     public let path: String
@@ -13,5 +15,4 @@ public struct HTTPRequest {
         self.body = body
     }
 }
-
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
