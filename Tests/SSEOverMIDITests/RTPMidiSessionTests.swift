@@ -3,7 +3,7 @@ import XCTest
 
 final class RTPMidiSessionTests: XCTestCase {
     func testCoalescingAndReordering() throws {
-        let session = RTPMidiSession(localName: "test", mtu: 64)
+        let session = RTPMidiSession(localName: "test", mtu: 64, enableDiscovery: false, enableCINegotiation: false)
         let exp = expectation(description: "recv")
         var received: [[UInt32]] = []
         session.onReceiveUmps = { umps in

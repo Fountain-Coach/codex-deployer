@@ -18,23 +18,38 @@ public final class RTPMidiSession: MIDITransport {
 
     private let localName: String
     private let mtu: Int
+    private let enableDiscovery: Bool
+    private let enableCINegotiation: Bool
     private let queue = DispatchQueue(label: "RTPMidiSessionQueue")
     private var listener: NWListener?
+    private var browser: NWBrowser?
     private var connection: NWConnection?
     private var incoming: [NWConnection] = []
+    private var discovered: Set<String> = []
 
-    public init(localName: String, mtu: Int = 1500) {
+    private var localID = UUID()
+    private var remoteID: UUID?
+    private var protocolVersion: UInt8 = 0
+    private var negotiatedGroup: UInt8 = 0
+    private var negotiatedChannel: UInt8 = 0
+
+    public init(localName: String,
+                mtu: Int = 1500,
+                enableDiscovery: Bool = true,
+                enableCINegotiation: Bool = true) {
         self.localName = localName
         self.mtu = mtu
+        self.enableDiscovery = enableDiscovery
+        self.enableCINegotiation = enableCINegotiation
     }
 
     public func open() throws {
-        startBonjourDiscovery()
-        startMIDICINegotiation()
-
         let params = NWParameters.udp
         let ready = DispatchSemaphore(value: 0)
         listener = try NWListener(using: params, on: .any)
+        if enableDiscovery {
+            listener?.service = NWListener.Service(name: localName, type: "_rtp-midi._udp")
+        }
         listener?.stateUpdateHandler = { [weak self] state in
             switch state {
             case .ready:
@@ -42,8 +57,11 @@ public final class RTPMidiSession: MIDITransport {
                 if let port = self.listener?.port {
                     let host = NWEndpoint.Host("127.0.0.1")
                     let conn = NWConnection(host: host, port: port, using: params)
-                    self.configureReceive(on: conn)
                     conn.start(queue: self.queue)
+                    if self.enableCINegotiation {
+                        self.startMIDICINegotiation(on: conn)
+                    }
+                    self.configureReceive(on: conn)
                     self.connection = conn
                 }
                 ready.signal()
@@ -54,16 +72,21 @@ public final class RTPMidiSession: MIDITransport {
         listener?.newConnectionHandler = { [weak self] newConn in
             guard let self else { return }
             self.incoming.append(newConn)
-            self.configureReceive(on: newConn)
             newConn.start(queue: self.queue)
+            if self.enableCINegotiation {
+                self.startMIDICINegotiation(on: newConn)
+            }
+            self.configureReceive(on: newConn)
         }
         listener?.start(queue: queue)
+        if enableDiscovery { startBonjourDiscovery() }
         ready.wait()
     }
 
     public func close() throws {
         connection?.cancel()
         listener?.cancel()
+        browser?.cancel()
         incoming.forEach { $0.cancel() }
         incoming.removeAll()
     }
@@ -125,11 +148,42 @@ public final class RTPMidiSession: MIDITransport {
     }
 
     private func startBonjourDiscovery() {
-        // TODO: Advertise and browse RTP-MIDI sessions via Bonjour/mDNS
+        guard listener != nil else { return }
+        browser = NWBrowser(for: .bonjour(type: "_rtp-midi._udp", domain: nil), using: .udp)
+        browser?.browseResultsChangedHandler = { [weak self] results, _ in
+            guard let self else { return }
+            self.discovered = Set(results.compactMap { result in
+                if case let .service(name: name, type: _, domain: _, interface: _) = result.endpoint {
+                    return name
+                }
+                return nil
+            })
+        }
+        browser?.start(queue: queue)
     }
 
-    private func startMIDICINegotiation() {
-        // TODO: Implement MIDI-CI negotiation handshake
+    private func startMIDICINegotiation(on connection: NWConnection) {
+        var msg = Data([0x4D, 0x43, 0x01]) // "MC" + protocol version
+        var uuid = localID.uuid
+        withUnsafeBytes(of: &uuid) { msg.append(contentsOf: $0) }
+        msg.append(contentsOf: [negotiatedGroup, negotiatedChannel])
+
+        let sem = DispatchSemaphore(value: 0)
+        connection.receiveMessage { [weak self] data, _, _, _ in
+            if let data = data, data.count >= 21 {
+                self?.protocolVersion = data[2]
+                var uuidBytes = uuid_t()
+                _ = withUnsafeMutableBytes(of: &uuidBytes) {
+                    data.copyBytes(to: $0, from: 3..<19)
+                }
+                self?.remoteID = UUID(uuid: uuidBytes)
+                self?.negotiatedGroup = data[19]
+                self?.negotiatedChannel = data[20]
+            }
+            sem.signal()
+        }
+        connection.send(content: msg, completion: .contentProcessed { _ in })
+        sem.wait()
     }
 }
 #else
@@ -138,7 +192,7 @@ public final class RTPMidiSession: MIDITransport {
     public var onReceiveUMP: (([UInt32]) -> Void)?
     public var onReceiveUmps: (([[UInt32]]) -> Void)?
 
-    public init(localName: String, mtu: Int = 1500) {}
+    public init(localName: String, mtu: Int = 1500, enableDiscovery: Bool = true, enableCINegotiation: Bool = true) {}
 
     public func open() throws {}
 

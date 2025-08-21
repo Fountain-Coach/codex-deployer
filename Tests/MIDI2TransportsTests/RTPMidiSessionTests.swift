@@ -3,7 +3,7 @@ import XCTest
 
 final class RTPMidiSessionTests: XCTestCase {
     func testLoopbackSendReceive() throws {
-        let session = RTPMidiSession(localName: "test")
+        let session = RTPMidiSession(localName: "test", enableDiscovery: false, enableCINegotiation: false)
         let exp = expectation(description: "receive")
         var received: [UInt32] = []
         session.onReceiveUMP = { words in
