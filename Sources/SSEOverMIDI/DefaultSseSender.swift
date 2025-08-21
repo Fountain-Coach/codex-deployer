@@ -98,6 +98,20 @@ public final class DefaultSseSender: SseOverMidiSender, @unchecked Sendable {
     private func prunePending() {
         pending = pending.filter { $0 > rel.highestAcked }
     }
+
+    public func listen(to receiver: DefaultSseReceiver) {
+        receiver.onCtrl = { [weak self] env in
+            guard let self = self else { return }
+            guard let resend = self.rel.handleCtrl(env) else { return }
+            for (_, frames) in resend.sorted(by: { $0.key < $1.key }) {
+                do {
+                    try self.rtp.send(umps: frames.map { $0.words })
+                } catch {
+                    // ignore send errors for retransmissions
+                }
+            }
+        }
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
