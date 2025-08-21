@@ -45,6 +45,7 @@ public final class DefaultSseReceiver: SseOverMidiReceiver {
     private func handleBlob(_ blob: Data) {
         guard let env = try? JSONDecoder().decode(SseEnvelope.self, from: blob) else { return }
         metrics?.addRecv(bytes: blob.count)
+        rel.record(seq: env.seq, frames: [])
         if env.ev == "ctrl" {
             onCtrl?(env)
         } else {
@@ -62,7 +63,6 @@ public final class DefaultSseReceiver: SseOverMidiReceiver {
             if expectedSeq > 0 {
                 let ackVal = expectedSeq &- 1
                 let ack = rel.buildAck(h: ackVal)
-                _ = rel.handleCtrl(ack)
                 sendCtrl(ack)
             }
         } else if seq > expectedSeq {
@@ -79,6 +79,7 @@ public final class DefaultSseReceiver: SseOverMidiReceiver {
     private func sendCtrl(_ env: SseEnvelope) {
         guard let data = try? JSONEncoder().encode(env) else { return }
         let frames = flex.pack(json: data, group: 0x1, statusBank: 0x1, status: 0x1)
+        rel.record(seq: env.seq, frames: frames)
         let umps = frames.map { $0.words }
         try? rtp.send(umps: umps)
     }
