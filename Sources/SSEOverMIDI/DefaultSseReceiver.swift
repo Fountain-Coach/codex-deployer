@@ -50,7 +50,22 @@ public final class DefaultSseReceiver: SseOverMidiReceiver {
             onCtrl?(env)
         } else {
             handleSeq(env.seq)
-            onEvent?(env)
+            if let ts = env.ts {
+                let hostTs = Timing.hostTime(fromJR: ts)
+                let translated = SseEnvelope(
+                    v: env.v,
+                    ev: env.ev,
+                    id: env.id,
+                    ct: env.ct,
+                    seq: env.seq,
+                    frag: env.frag,
+                    ts: hostTs,
+                    data: env.data
+                )
+                onEvent?(translated)
+            } else {
+                onEvent?(env)
+            }
         }
     }
 
