@@ -354,23 +354,25 @@ public final class DefaultSseSender: SseOverMidiSender {
 ```swift
 public final class DefaultSseReceiver: SseOverMidiReceiver {
     public var onEvent: ((SseEnvelope) -> Void)?
+    public var onCtrl: ((SseEnvelope) -> Void)?
     private let rtp: RTPMidiSession
     private let flex: FlexPacker
+    private let sysx: SysEx8Packer
+    private let rel: Reliability
+    private var expectedSeq: UInt64 = 0
+    private var pending: Set<UInt64> = []
 
-    public init(rtp: RTPMidiSession, flex: FlexPacker) {
-        self.rtp = rtp; self.flex = flex
-        self.rtp.onReceiveUmps = { [weak self] umps in
+    public init(rtp: RTPMidiSession, flex: FlexPacker, sysx: SysEx8Packer, rel: Reliability) {
+        self.rtp = rtp; self.flex = flex; self.sysx = sysx; self.rel = rel
+        self.rtp.onReceiveUmps = { [weak self] packets in
             guard let self else { return }
-            for blob in self.flex.unpack(umps: umps) {
-                if let env = try? JSONDecoder().decode(SseEnvelope.self, from: blob) {
-                    self.onEvent?(env)
-                }
-            }
+            // unpack SysEx8 and Flex packets then decode SseEnvelope
+            // emit onEvent/onCtrl and track seq for ACK/NACK via Reliability
         }
     }
 
     public func start() throws { try rtp.open() }
-    public func stop() { rtp.close() }
+    public func stop() { try? rtp.close() }
 }
 ```
 
@@ -507,3 +509,5 @@ Expose a `Metrics` facade (in‑memory, thread‑safe):
 - [ ] README includes Envelope spec, API docs, and limitations.  
 - [ ] Profile ID (`com.fountainai.sse`) and Property schema documented.  
 - [ ] Version tagged and CHANGELOG started.
+
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
