@@ -37,7 +37,7 @@ public final class DefaultSseSender: SseOverMidiSender, @unchecked Sendable {
         }
 
         let seq = allocateSeq()
-        let ts = Date().timeIntervalSince1970
+        let ts = Timing.jrNow()
         let env = SseEnvelope(
             v: event.v,
             ev: event.ev,
