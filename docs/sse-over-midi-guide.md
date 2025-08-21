@@ -9,16 +9,29 @@ import MIDI2Transports
 import SSEOverMIDI
 
 let session = RTPMidiSession(localName: "loopback")
+let rel = Reliability()
 let sender = DefaultSseSender(
     rtp: session,
     flex: FlexPacker(),
     sysx: SysEx8Packer(),
-    rel: Reliability()
+    rel: rel
 )
 
-let receiver = DefaultSseReceiver(rtp: session, flex: FlexPacker())
+let receiver = DefaultSseReceiver(
+    rtp: session,
+    flex: FlexPacker(),
+    sysx: SysEx8Packer(),
+    rel: rel
+)
 receiver.onEvent = { env in
     print("Received: \(env.data ?? "")")
+}
+receiver.onCtrl = { env in
+    if let resend = rel.handleCtrl(env) {
+        for frames in resend.values {
+            for f in frames { try? session.send(umps: [f.words]) }
+        }
+    }
 }
 
 try receiver.start()

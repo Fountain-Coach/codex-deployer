@@ -9,6 +9,7 @@ public protocol SseOverMidiSender {
 
 public protocol SseOverMidiReceiver {
     var onEvent: ((SseEnvelope) -> Void)? { get set }
+    var onCtrl: ((SseEnvelope) -> Void)? { get set }
     func start() throws
     func stop()
 }
