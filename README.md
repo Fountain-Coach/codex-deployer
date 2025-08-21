@@ -4,6 +4,16 @@ FountainAI assembles a family of Swift services that work together to run a secu
 
 > ⚠️ **SPS Deprecated:** The Semantic PDF Scanner is frozen. Use the [Toolsmith-based PDF tooling](FountainAIToolsmith) instead.
 
+## Quick start
+
+Try streaming Server-Sent Events over a local MIDI 2.0 loopback:
+
+```bash
+swift Examples/SSEOverMIDI/TwoSessions.swift
+```
+
+See [docs/sse-over-midi-guide.md](docs/sse-over-midi-guide.md) for setup details and expected output.
+
 ## Architecture Pillars
 
 - **GatewayApp** – Plugin-driven HTTP and DNS gateway built on SwiftNIO. It composes `GatewayPlugin` implementations such as `LoggingPlugin` and `PublishingFrontendPlugin` to handle cross-cutting concerns.
