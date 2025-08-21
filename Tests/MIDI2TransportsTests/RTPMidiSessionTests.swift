@@ -17,6 +17,22 @@ final class RTPMidiSessionTests: XCTestCase {
         XCTAssertEqual(received, packet)
         try session.close()
     }
+
+#if canImport(Network)
+    func testBonjourAndMIDICIDiscoveryLoopback() throws {
+        let session = RTPMidiSession(localName: "disc")
+        try session.open()
+        Thread.sleep(forTimeInterval: 0.5)
+        let mirror = Mirror(reflecting: session)
+        let discovered = mirror.children.first { $0.label == "discovered" }?.value as? Set<String> ?? []
+        XCTAssertTrue(discovered.contains("disc"))
+        let proto = mirror.children.first { $0.label == "protocolVersion" }?.value as? UInt8 ?? 0
+        XCTAssertEqual(proto, 1)
+        let remote = mirror.children.first { $0.label == "remoteID" }?.value as? UUID?
+        XCTAssertNotNil(remote ?? nil)
+        try session.close()
+    }
+#endif
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
