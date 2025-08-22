@@ -1,19 +1,49 @@
-# 🧠 Repository Agent Manifest
+# 🧠 Repository + FountainAI Agent Manifest
 
-**Last Updated:** August 15, 2025
-**Scope:** Full-repository self-improvement and orchestration  
-**Purpose:** Serve as a machine-actionable contract and coordination center for Codex-driven implementation, testing, and maintenance across all project modules.
+**Last Updated:** August 22, 2025  
+**Scope:** Full-repository self-improvement, orchestration, and MIDI-CI identity  
+**Purpose:**  
+1. Serve as a machine-actionable contract and coordination center for Codex-driven implementation, testing, and maintenance across all project modules.  
+2. Publicly declare FountainAI’s identity as a **Swift 6 transparent reasoning engine** that speaks **MIDI 2.0 with Capability Inquiry (MIDI‑CI)** and projects its **OpenAPI specs** as the constitutional source of truth.  
 
 ---
 
-## 🚚 SPS Folder Migration
-The `sps/` directory is frozen and scheduled for removal on **2025-11-01**. For migration assistance, contact **Benedikt Eickhoff** via the repository issue tracker.
+## 🎹 FountainAI Identity (MIDI‑CI)
+
+- **Manufacturer ID:** `TBD` (temporary `7D` for local dev; official MMA ID pending)  
+- **Families / Models:**  
+  - `Core.Kernel` — main reasoning engine  
+  - `Core.Orchestrator` — ensemble orchestration  
+  - `GUI.DefaultUI` — standard GUI  
+  - `Service.*` — official FountainAI microservices (`Baseline`, `DriftDetector`, `ClientGen`, …)  
+  - `Plugin.Author.PluginName` — delegated third‑party plugins under FountainAI’s umbrella  
+
+Each endpoint replies to **Process Inquiry** with:  
+`manufacturerId`, `family`, `model`, `version`, and a **persistent `muid`** (per‑install).  
+
+### Projection of OpenAPI into MIDI‑CI Property Exchange
+- `fountain.capabilities` — summary + OpenAPI `{version, sha256}`  
+- `fountain.schema` — compact JSON Schema subset from OpenAPI components  
+- `fountain.commands.schema` — list of invokable operations (IDs via `x-midi-ci-command-id`)  
+- `fountain.commands` (SET) — invoke an operation by ID with validated input  
+- `fountain.state` — small read model; progress, mode, corpus; may be **NOTIFY**  
+
+### Transparent Reasoning Stream
+- FountainAI emits reasoning via **incremental property notifications** (SSE‑like semantics over MIDI).  
+- Consumers may display or audit this stream.  
+- This is **observability**, not a programming API.  
+
+**Claim:**  
+> FountainAI is a **Swift 6 transparent reasoning engine** that participates in the **MIDI 2.0 ecosystem via MIDI‑CI**.  
+> Its OpenAPI is the single constitutional source of truth, projected into MIDI‑CI.  
+> It can stream its reasoning over MIDI. If you speak MIDI‑CI, you can discover it; if you speak OpenAPI, you already understand it.  
 
 ---
 
 ## 🎯 Mission
-
-This agent maintains an up-to-date view of outstanding development tasks across the entire repository. It exists to bridge declared intent (e.g., specs, interface plans) with verifiable implementation. Each task is described in a structured matrix to allow vertical slice execution and repeatable progress tracking.
+This agent maintains an up-to-date view of outstanding development tasks across the entire repository.  
+It bridges declared intent (specs, interface plans) with verifiable implementation.  
+Tasks are tracked in a structured **matrix** to allow vertical slice execution and repeatable progress.  
 
 ---
 
@@ -60,37 +90,39 @@ This agent maintains an up-to-date view of outstanding development tasks across 
 | LibPlist adapter tests | `Tests/FountainAIToolsmithTests/AdapterTests.swift` | Handle plutil help exit codes 0 or 1 | ✅ | — | toolsmith, test |
 | SSE over MIDI demo | Package.swift, docs/sse-over-midi-guide.md, Examples/SSEOverMIDI | Add target, docs and demo | ✅ | — | midi, sse |
 
-
 ---
 
 ## 🧪 Execution Strategy
 
-Each Codex execution cycle must:
+Each Codex execution cycle must:  
 - Select tasks by tag or status  
 - Implement code + tests + docs  
 - Verify via `swift test` or CI  
-- Update `Status` and `Blockers`
+- Update `Status` and `Blockers`  
 
 ---
 
 ## 🔁 Feedback Cycle
 
-After each cycle:
+After each cycle:  
 1. Update the matrix in-place  
 2. Append structured result logs to `/logs/`  
-3. Track recurring gaps in `/feedback/`
+3. Track recurring gaps in `/feedback/`  
 
 ---
 
 ## 📁 Placement
 
-Place this file at the **repository root** as `agent.md`. It is the canonical manifest for repository self-improvement.
+This file **lives at the repository root** as `agent.md`.  
+It is the **canonical manifest** for both:  
+- FountainAI’s **MIDI‑CI identity claim**  
+- Codex‑driven **repository self‑improvement**  
 
 ---
 
 ## COPYRIGHT POLICY 🔐
 
 **Mandatory Footer:**  
-Every generated or updated file must end with:
+Every generated or updated file must end with:  
 
 > © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
