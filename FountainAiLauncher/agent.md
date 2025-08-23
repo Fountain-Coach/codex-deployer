@@ -4,6 +4,8 @@ This specification turns `FountainAiLauncher` into the single **boot, runtime, a
 The former `Scripts/boot.sh` is retired; all setup and execution go through this Swift executable.
 Any service started outside the launcher must refuse to run.
 
+For runtime usage and deployment instructions, consult [README.md](README.md).
+
 ---
 
 ## 🎯 Mission
