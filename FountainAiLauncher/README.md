@@ -8,6 +8,8 @@ The `FountainAiLauncher` is a **cross-platform Swift CLI** that launches, monito
 
 This launcher replaces Docker, `systemd`, and `launchd` with a single, lightweight, Swift-native supervisor. It is suitable for both macOS and Linux deployments.
 
+This README covers operations and deployment. For the golden-key specification and development roadmap, see [agent.md](agent.md).
+
 ---
 
 ## 🎯 Features

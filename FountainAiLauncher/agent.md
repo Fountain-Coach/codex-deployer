@@ -1,89 +1,77 @@
-# 🧠 Codex Agent: FountainAiLauncher
+# 🧠 Codex Agent: FountainAiLauncher – Golden-Key Boot & Supervisor
 
-This `agent.md` defines your task as the build and orchestration coordinator for the Swift-native FountainAI deployment CLI. This agent launches all services without Docker or external supervisors.
+This specification turns `FountainAiLauncher` into the single **boot, runtime, and maintenance** application for FountainAI.
+The former `Scripts/boot.sh` is retired; all setup and execution go through this Swift executable.
+Any service started outside the launcher must refuse to run.
 
----
-
-## 🧩 Scope and Intent
-
-You are to:
-
-- Replace Docker, `systemd`, and `launchd`
-- Run each FountainAI service as an independent Swift subprocess
-- Maintain logs and optionally expose a summary `/status` endpoint
-- Support cross-platform (macOS + Linux) runtime compatibility
+For runtime usage and deployment instructions, consult [README.md](README.md).
 
 ---
 
-## 🧠 Gateway Role Clarification
-
-There are **two gateways** in the system, with distinct responsibilities:
-
-### ✅ `Gateway` (Real API Gateway)
-- **OpenAPI**: `gateway.yml`
-- **Executable**: `fountain-gateway`
-- **Role**:
-  - TLS and HTTPS termination
-  - JWT authentication
-  - Routing and path proxying
-  - Certificate management
-  - Metrics and rate-limiting
-
-### 🧠 `LLM Gateway`
-- **OpenAPI**: `FountainAi-LLM-Gateway.yml`
-- **Executable**: `llm-gateway`
-- **Role**:
-  - Interface to external LLMs (OpenAI, Claude, etc.)
-  - Supports `/chat` endpoint
-  - Executes planner objectives using language models
-
-⛔ These must never be conflated. Codex must treat them as **distinct entities** with **non-overlapping functionality**.
+## 🎯 Mission
+- Act as the "golden key" for the whole system: without the launcher, FountainAI **cannot** start.
+- Perform **build‑time** environment and security checks, build all services, install binaries, and record cryptographic fingerprints.
+- Provide **runtime** supervision, health monitoring, and a small control plane for maintenance commands.
 
 ---
 
-## 📋 Launch Behavior
+## 🧱 Build-Time Responsibilities
+1. Load `.env` (or injected environment) and verify required secrets:
+   - `OPENAI_API_KEY`
+   - `TYPESENSE_URL`
+   - `TYPESENSE_API_KEY`
+   - any gateway credentials and TLS config
+2. Run diagnostics equivalent to `Scripts/start-diagnostics.swift`.
+3. Execute `swift build --configuration release` for every package.
+4. Install or symlink resulting binaries according to `services.json`.
+5. Generate a manifest of SHA-256 hashes and file permissions for each binary; runtime must verify against this manifest.
 
-Each service is defined in `main.swift` as a `Service`:
+---
 
-```swift
-let service = Service(
-  name: "LLM Gateway",
-  binaryPath: "/usr/local/bin/llm-gateway",
-  port: 8006,
-  healthPath: "/metrics"
-)
+## 🚀 Runtime Responsibilities
+1. Load service manifest, verify each binary's hash and permission bits before launch.
+2. Supervise services as subprocesses, streaming logs and rotating them.
+3. Expose HTTP control plane:
+   - `GET /status` – overall health summary
+   - `POST /restart/{service}` – restart one service
+   - `POST /shutdown` – graceful stop of all services
+4. Periodically call each service's health endpoint and restart on failure.
+5. Provide scheduled maintenance hooks (certificate renewal, cache purge, database migrations).
+
+---
+
+## 🔐 Security Constraints
+- Embed a compile‑time guard in every service binary that validates the launcher signature; if missing, the binary exits.
+- Secrets are injected only by the launcher at runtime; services may not read `.env` directly.
+- Refuse to launch if any hash or env check fails.
+- No Docker, `systemd`, or external process managers.
+
+---
+
+## 📦 File Layout
+```
+FountainAiLauncher/
+├── Package.swift
+├── Sources/
+│   ├── Diagnostics/
+│   ├── Builder/
+│   ├── Installer/
+│   ├── Supervisor/
+│   └── ControlPlane/
+└── Tests/
 ```
 
-The `Supervisor` launches each child process and prints a summary.
-
 ---
 
-## 🧰 Constraints
-
-- ✅ Pure Swift using SwiftPM
-- ✅ All binaries must be precompiled and present on disk
-- ✅ No containers, no bash wrappers
-- 🚫 No systemd, launchctl, supervisord
-
----
-
-## 📦 Expected Files
-
-```
-Sources/FountainAiLauncher/
-├── main.swift
-├── Service.swift
-├── Supervisor.swift
-└── HealthMonitor.swift  (optional)
-```
-
-Also provide and / or maintain:
-
-- `Package.swift`
-- `README.md`
-- `Tests/`
+## ✅ Completion Checklist
+- [ ] Replace `Scripts/boot.sh` with equivalent Swift modules.
+- [ ] Build + install pipeline implemented.
+- [ ] Service manifest with hashes and permission checks.
+- [ ] Runtime supervisor with HTTP control plane.
+- [ ] Golden-key self-check embedded in all services.
+- [ ] Unit tests covering build pipeline and supervisor restart logic.
+- [ ] README describes `swift run FountainAiLauncher` as the one-click boot command.
 
 ---
 
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

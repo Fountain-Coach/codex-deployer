@@ -50,7 +50,7 @@ Each endpoint replies to MIDI-CI **Process Inquiry** with `manufacturerId`, `fam
 
 - [Architecture & Pillars](docs/architecture.md)  
 - [Security](docs/security/README.md)  
-- [Operations & Deployment](docs/operations.md)  
+- [Operations & Deployment](FountainAiLauncher/README.md)
 - [Design Patterns](docs/design-patterns.md)  
 - [Licensing Matrix](docs/licensing-matrix.md)  
 
