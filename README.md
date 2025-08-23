@@ -19,6 +19,17 @@ swift Examples/SSEOverMIDI/TwoSessions.swift
 
 See [docs/sse-over-midi-guide.md](docs/sse-over-midi-guide.md) for setup details.
 
+### Configure environment
+
+Copy the example environment file and fill in your secrets:
+
+```bash
+cp .env.example .env
+# edit .env and provide real values
+```
+
+`Scripts/boot.sh` and other utilities will automatically load variables from `.env`.
+
 ---
 
 ## 🎹 Identity
