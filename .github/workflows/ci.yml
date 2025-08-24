@@ -37,15 +37,37 @@ jobs:
         if: runner.os == 'macOS'
         working-directory: sps
         run: ./install-deps.sh
-      - name: Build
-        run: swift build
-      - name: Test
+      - name: Install sandbox deps
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y debootstrap qemu-utils jq
+      - name: Restore sandbox cache
+        if: runner.os == 'Linux'
+        id: cache-sandbox
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: sandbox-${{ hashFiles('tools.json') }}
+      - name: Run tests (Linux)
+        if: runner.os == 'Linux'
         run: |
-          swift test --enable-code-coverage
+          BUILD_SANDBOX=${{ steps.cache-sandbox.outputs.cache-hit == 'true' && '0' || '1' }} Scripts/run-tests.sh
           echo "CODECOV_DIR=$(dirname $(swift test --show-codecov-path))" >> $GITHUB_ENV
-      - name: Test SPS
-        working-directory: sps
-        run: swift test --enable-code-coverage
+      - name: Run tests (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          Scripts/run-tests.sh
+          echo "CODECOV_DIR=$(dirname $(swift test --show-codecov-path))" >> $GITHUB_ENV
+      - name: Upload sandbox artifacts
+        if: runner.os == 'Linux' && steps.cache-sandbox.outputs.cache-hit != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: sandbox
+          path: build
+      - name: Release sandbox
+        if: runner.os == 'Linux' && github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/*
       - name: Verify licenses
         run: Scripts/verify-licenses.sh
       - name: Generate Coverage
