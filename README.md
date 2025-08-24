@@ -46,6 +46,10 @@ Each endpoint replies to MIDI-CI **Process Inquiry** with `manufacturerId`, `fam
 
 ---
 
+## 🖥️ Publishing Frontend
+
+`Sources/PublishingFrontend` currently serves generated docs through a lightweight NIO HTTP server. The roadmap transforms it into the full user and administrator portal. It will render chat interfaces, plugin marketplaces, usage dashboards, and admin consoles for DNS, certificates, budgets, and system health, all driven by FountainAI's OpenAPI specifications. See [Sources/PublishingFrontend/README.md](Sources/PublishingFrontend/README.md) for requirements and future plans.
+
 ## 📚 Learn More
 
 - [Architecture & Pillars](docs/architecture.md)  
