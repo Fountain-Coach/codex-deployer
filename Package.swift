@@ -26,13 +26,13 @@ var targets: [Target] = [
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "Logging", package: "swift-log")
         ],
-        path: "Sources/FountainCodex",
-        exclude: ["DNS/README.md"]
+        path: "libs/FountainCodex",
+        exclude: ["FountainCodex/DNS/README.md"]
     ),
     .executableTarget(
         name: "clientgen-service",
         dependencies: ["FountainCodex"],
-        path: "Sources/clientgen-service"
+        path: "apps/ClientgenService"
     ),
     .executableTarget(
         name: "gateway-server",
@@ -44,74 +44,67 @@ var targets: [Target] = [
             .product(name: "X509", package: "swift-certificates"),
             "Yams"
         ],
-        path: "Sources/GatewayApp",
-        exclude: ["README.md", "List gateway functions.pdf"]
+        path: "apps/GatewayServer"
     ),
     .target(
         name: "LLMGatewayClient",
         path: "Sources/FountainOps/Generated/Client/llm-gateway",
-        exclude: ["Models.swift", "Requests"],
         sources: ["APIClient.swift", "APIRequest.swift"]
     ),
     .target(
         name: "ServiceShared",
-        path: "Sources/FountainOps/Generated/Server/Shared",
-        exclude: ["Models.swift", "TypesenseClient.swift"]
+        path: "Sources/FountainOps/Generated/Server/Shared"
     ),
     .target(
         name: "LLMGatewayService",
         dependencies: ["ServiceShared"],
-        path: "Sources/FountainOps/Generated/Server/llm-gateway",
-        exclude: ["HTTPServer.swift"]
+        path: "Sources/FountainOps/Generated/Server/llm-gateway"
     ),
     .target(
         name: "PublishingFrontend",
         dependencies: ["FountainCodex", "Yams"],
-        path: "Sources/PublishingFrontend",
-        exclude: ["README.md"]
+        path: "libs/PublishingFrontend"
     ),
     .executableTarget(
         name: "publishing-frontend",
         dependencies: ["PublishingFrontend"],
-        path: "Sources/publishing-frontend"
+        path: "apps/PublishingFrontendCLI"
     ),
-    .target(name: "ResourceLoader", path: "Sources/ResourceLoader"),
+    .target(name: "ResourceLoader", path: "libs/ResourceLoader"),
     .target(
         name: "MIDI2Models",
         dependencies: ["ResourceLoader"],
-        path: "Sources/MIDI2Models",
-        resources: [.process("Resources")]
+        path: "libs/MIDI2/MIDI2Models",
+        resources: [.process("MIDI2Models/Resources")]
     ),
-    .target(name: "MIDI2Core", dependencies: [.product(name: "MIDI2", package: "midi2")], path: "Sources/MIDI2Core"),
-    .target(name: "MIDI2Transports", path: "Sources/MIDI2Transports"),
-    .target(name: "SSEOverMIDI", dependencies: ["MIDI2Core", "MIDI2Transports", .product(name: "MIDI2", package: "midi2")], path: "Sources/SSEOverMIDI"),
+    .target(name: "MIDI2Core", dependencies: [.product(name: "MIDI2", package: "midi2")], path: "libs/MIDI2/MIDI2Core"),
+    .target(name: "MIDI2Transports", path: "libs/MIDI2/MIDI2Transports"),
+    .target(name: "SSEOverMIDI", dependencies: ["MIDI2Core", "MIDI2Transports", .product(name: "MIDI2", package: "midi2")], path: "libs/MIDI2/SSEOverMIDI"),
     .target(
         name: "FlexBridge",
         dependencies: [
             "MIDI2Core",
             "MIDI2Transports"
         ],
-        path: "Sources/FlexBridge"
+        path: "libs/MIDI2/FlexBridge"
     ),
     .executableTarget(
         name: "flexctl",
         dependencies: ["MIDI2Core", .product(name: "MIDI2", package: "midi2")],
-        path: "Sources/flexctl",
-        resources: [.process("Resources")]
+        path: "apps/Flexctl",
+        resources: [.process("flexctl/Resources")]
     ),
     .target(
         name: "ToolServer",
         dependencies: [.product(name: "Crypto", package: "swift-crypto")],
-        path: "Sources/ToolServer",
-        exclude: ["main.swift", "Service", "Dockerfile"],
+        path: "libs/ToolServer",
+        exclude: ["Service", "Dockerfile"],
         resources: [.process("openapi.yaml")]
     ),
     .executableTarget(
         name: "tools-factory-server",
         dependencies: ["ToolServer"],
-        path: "Sources/ToolServer",
-        exclude: ["Dockerfile", "Service", "Adapters", "Router.swift", "Validation.swift", "SandboxPolicy.swift", "HTTPTypes.swift", "openapi.yaml", "JSONLogger.swift", "ToolManifest.swift", "PDFTools"],
-        sources: ["main.swift"]
+        path: "apps/ToolsFactoryServer"
     ),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
     .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
@@ -149,11 +142,11 @@ var targets: [Target] = [
 
 #if os(Linux)
 products.append(.library(name: "PDFiumExtractor", targets: ["PDFiumExtractor"]))
-targets.append(.target(name: "PDFiumExtractor", dependencies: [], path: "Sources/PDFiumExtractor"))
+targets.append(.target(name: "PDFiumExtractor", dependencies: [], path: "libs/PDFiumExtractor"))
 #endif
 
 let package = Package(
-    name: "FountainCoach",
+    name: "the-fountainai",
     platforms: [
         .macOS(.v14)
     ],

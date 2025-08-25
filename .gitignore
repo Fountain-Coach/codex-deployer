@@ -16,8 +16,8 @@ venv/
 ENV/
 
 # Logs and feedback
-!**/logs/
-!**/logs/**
+logs/
+**/logs/
 feedback/
 deploy/feedback/
 
@@ -31,3 +31,4 @@ dispatcher.env
 *.xcworkspacedata
 *.xcuserstate
 *.plist
+.swiftpm/

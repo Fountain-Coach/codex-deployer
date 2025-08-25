@@ -48,13 +48,32 @@ Each endpoint replies to MIDI-CI **Process Inquiry** with `manufacturerId`, `fam
 
 ## 🖥️ Publishing Frontend
 
-`Sources/PublishingFrontend` currently serves generated docs through a lightweight NIO HTTP server. The roadmap transforms it into the full user and administrator portal. It will render chat interfaces, plugin marketplaces, usage dashboards, and admin consoles for DNS, certificates, budgets, and system health, all driven by FountainAI's OpenAPI specifications. See [Sources/PublishingFrontend/README.md](Sources/PublishingFrontend/README.md) for requirements and future plans.
+`libs/PublishingFrontend` provides the HTTP rendering library, and `apps/PublishingFrontendCLI` serves generated docs through a lightweight NIO HTTP server. The roadmap transforms it into the full user and administrator portal. It will render chat interfaces, plugin marketplaces, usage dashboards, and admin consoles for DNS, certificates, budgets, and system health, all driven by FountainAI's OpenAPI specifications. See [docs/PublishingFrontend/README.md](docs/PublishingFrontend/README.md) for requirements and future plans.
+
+## 📁 Repository Structure
+
+- apps: Executable targets (CLIs and servers)
+  - GatewayServer: HTTP gateway runtime (target `gateway-server`).
+  - PublishingFrontendCLI: Publishing frontend CLI (target `publishing-frontend`).
+  - Flexctl: MIDI2 tooling CLI (target `flexctl`).
+  - ClientgenService: Client generator service (target `clientgen-service`).
+  - ToolsFactoryServer: Tool server runtime (target `tools-factory-server`).
+- libs: Reusable Swift libraries
+  - FountainCodex: Core code generation and utilities.
+  - PublishingFrontend: Publishing frontend library APIs.
+  - ResourceLoader: Shared resource loading utilities.
+  - MIDI2: MIDI2 components (MIDI2Models, MIDI2Core, MIDI2Transports, SSEOverMIDI, FlexBridge).
+  - ToolServer: Tool server library (adapters, router, resources).
+- internal: Generated code and internal modules (not user-edited)
+  - FountainOps/Generated: Server + client API codegen.
+- docs: Documentation and design notes (gateway, SSE, security, proposals).
+- tests: SwiftPM test targets mirroring apps/libs components.
 
 ## 📚 Learn More
 
 - [Architecture & Pillars](docs/architecture.md)  
 - [Security](docs/security/README.md)  
-- [Operations & Deployment](FountainAiLauncher/README.md)
+- [Operations & Deployment](platform/FountainAILauncher/README.md)
 - [Design Patterns](docs/design-patterns.md)  
 - [Licensing Matrix](docs/licensing-matrix.md)  
 
