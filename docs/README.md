@@ -40,7 +40,7 @@ As modules gain documentation, brief summaries are added here.
 - **PublishingConfig.port** and **rootPath** – documented properties clarifying server binding and static directory.
 - **Todo.id** and **Todo.name** – documented properties clarifying task identifiers and titles.
 - **OpenAPISpec** – root model now documents components, servers, security schemes, and requirements.
-- **FountainOps Todo** – generated model now documents its properties.
+- **openapi Todo** – generated model now documents its properties.
 - **GatewayServer** – internal components like the certificate manager and plugin stack are now described.
 - **GatewayServer.start** and **stop** – documentation now explains certificate manager activation and graceful shutdown.
 - **APIClient.baseURL**, **session**, and **defaultHeaders** – stored properties document connection details.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Audit OpenAPI operationIds against server code.
 
-Scans OpenAPI spec files under Sources/FountainOps/FountainAi/openAPI
+Scans OpenAPI spec files under openapi
 and checks whether each operationId appears somewhere in the source
 code tree. Reports missing handlers per spec file.
 """
@@ -9,8 +9,8 @@ import subprocess
 from pathlib import Path
 import sys
 
-SPEC_ROOT = Path("Sources/FountainOps/FountainAi/openAPI")
-CODE_ROOT = Path("Sources")
+SPEC_ROOT = Path("openapi")
+CODE_ROOT = Path(".")
 
 
 def collect_operation_ids(spec_path: Path):
@@ -31,7 +31,7 @@ def opid_in_code(opid: str) -> bool:
             opid,
             str(CODE_ROOT),
             "--glob",
-            "!**/openAPI/**",
+            "!openapi/**",
         ],
         stdout=subprocess.PIPE,
         stderr=subprocess.DEVNULL,

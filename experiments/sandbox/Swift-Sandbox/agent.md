@@ -27,7 +27,7 @@ Provide a portable Ubuntu sandbox that runs a Swift Tool Server exposing headles
 
 ## ⚙️ Operational Guidelines
 
-- OpenAPI specs live under `Sources/FountainOps/FountainAi/openAPI` (e.g., `tools-factory.yml`); generated Swift clients and stubs reside in `Sources/FountainOps/Generated`.
+- OpenAPI specs live under `openapi` (e.g., `tools-factory.yml`); generated Swift clients and stubs reside in `Sources/openapi/Generated`.
 - Structured logs must include `request_id`, `tool`, `args_hash`, `duration_ms`, and `exit_code`.
 - Maintain `tools.json` manifest with image checksums, tool versions, and exposed operations.
 - Ensure licensing compliance and provide source offers for bundled GPL/LGPL tools.

@@ -39,7 +39,7 @@ This paper specifies: scope, constraints, threat model, functional & non‑funct
 
 - **Swift-only orchestration**: repository modules rely on Swift NIO and `Process` APIs—no shell in the execution path.
 - **No Docker dependency**: the sandbox runs on the host via `bubblewrap`, `proot`, or QEMU without requiring a Docker daemon.
-- **Typed boundaries via OpenAPI**: versioned specs live under `Sources/FountainOps/FountainAi/openAPI`, with generated Swift clients and server stubs in `Sources/FountainOps/Generated` for type-safe calls.
+- **Typed boundaries via OpenAPI**: versioned specs live under `openapi`, with generated Swift clients and server stubs in `Sources/openapi/Generated` for type-safe calls.
 - **Pluggable LLM orchestrator**: the LLM Gateway coordinates requests using Codex or any compatible model; the Tool Factory remains a library invoked by the orchestrator.
 - **Reproducible artifacts**: rootfs/QCOW images are checksum‑pinned and dependencies are versioned in `Package.swift` for deterministic builds.
 - **Licensing compliance**: GPL/LGPL tools are included only with attribution and source‑offer, adhering to repository policies.

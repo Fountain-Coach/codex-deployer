@@ -64,7 +64,7 @@ FountainAiLauncher/
 
 FountainAI does not include automatic service discovery. The launcher and the
 `start-diagnostics.swift` script read from the manually curated
-`Sources/FountainAiLauncher/services.json` file to know which FountainOps
+`Sources/FountainAiLauncher/services.json` file to know which openapi
 servers to start. When a new service is added—or a path changes—you must update
 this file yourself. Tools like `clientgen` can generate API clients, but they do
 not register services in the launcher.
@@ -72,7 +72,7 @@ not register services in the launcher.
 ## 🔍 Auto-generate `services.json`
 
 To avoid editing the registry by hand, you can rebuild `services.json` by
-scanning a directory that contains all FountainOps binaries:
+scanning a directory that contains all openapi binaries:
 
 ```bash
 FOUNTAINAI_SERVICES_DIR=/usr/local/bin swift Scripts/generate-service-registry.swift

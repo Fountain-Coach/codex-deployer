@@ -2,7 +2,7 @@ import Foundation
 
 let fm = FileManager.default
 let root = URL(fileURLWithPath: fm.currentDirectoryPath)
-let spec = root.appendingPathComponent("Sources/FountainOps/FountainAi/openAPI/v1/tools-factory.yml")
+let spec = root.appendingPathComponent("openapi/v1/tools-factory.yml")
 let tmp = root.appendingPathComponent(".toolsmith-gen")
 try? fm.removeItem(at: tmp)
 try fm.createDirectory(at: tmp, withIntermediateDirectories: true)

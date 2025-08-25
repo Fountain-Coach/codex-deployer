@@ -3,7 +3,7 @@
 Comprehensive implementation documentation for the FountainAI Gateway. The gateway is a lightweight SwiftNIO-based HTTP server that composes middleware plugins and exposes management endpoints for health, metrics, certificate renewal and dynamic routing.
 
 ## OpenAPI Specification
-The Gateway API is described by the [OpenAPI document](../FountainOps/FountainAi/openAPI/v1/gateway.yml). Key operations include:
+The Gateway API is described by the [OpenAPI document](../openapi/v1/gateway.yml). Key operations include:
 
 - `GET /health` – uptime check returning an empty JSON object.
 - `GET /metrics` – runtime counters and gauges encoded as JSON, secured with bearer authentication.
