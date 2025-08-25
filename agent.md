@@ -58,16 +58,16 @@ Tasks are tracked in a structured **matrix** to allow vertical slice execution a
 | Client errors | `Sources/FountainCodex/ClientGenerator/APIClient.swift` | Add non-200 error decoding | ✅ | — | client, generator |
 | Server generator | `Sources/FountainCodex/ServerGenerator/*` | Emit router/types/handler **stubs** | ✅ | — | generator, server |
 | DNS API handlers | `Sources/GatewayApp/GatewayServer.swift` | Keep CRUD for zones/records | ✅ | — | server, dns |
-| Baseline analytics streaming | `Sources/FountainOps/Generated/Server/baseline-awareness/Handlers.swift` | Implement `streamHistoryAnalytics` handler | ✅ | — | server |
+| Baseline analytics streaming | `Sources/openapi/Generated/Server/baseline-awareness/Handlers.swift` | Implement `streamHistoryAnalytics` handler | ✅ | — | server |
 | DNS zone endpoints | `Sources/GatewayApp/GatewayServer.swift` | Add `createZone`, `deleteZone`, `listRecords` handlers | ✅ | — | server, dns |
-| LLM Gateway | `openAPI/v2/llm-gateway.yml` | Implement `metrics_metrics_get`, `chatWithObjective` | ✅ | — | server, llm |
-| Gateway Mgmt API | `openAPI/v1/gateway.yml` | Implement health/metrics/auth/cert/routes ops | ✅ | — | server |
-| Planner (v1) | `openAPI/v1/planner.yml` | Implement planner ops (reason/execute/list/etc.) | ✅ | — | server, planner |
-| Planner (v0) | `openAPI/v0/planner.yml` | Deprecate or alias to v1 | ✅ | — | docs, planner |
-| Tools Factory | `openAPI/v1/tools-factory.yml` | Implement list/register ops | ✅ | — | server |
-| Function Caller | `openAPI/v1/function-caller.yml` | Implement list/get/invoke/metrics | ✅ | — | server |
-| Persistence API | `openAPI/v1/persist.yml` | Implement corpus/baseline/function/reflection ops | ✅ | — | server, storage |
-| Typesense API | `openAPI/typesense.yml` | Decide proxy vs native subset | ✅ | — | server, design |
+| LLM Gateway | `openapi/v2/llm-gateway.yml` | Implement `metrics_metrics_get`, `chatWithObjective` | ✅ | — | server, llm |
+| Gateway Mgmt API | `openapi/v1/gateway.yml` | Implement health/metrics/auth/cert/routes ops | ✅ | — | server |
+| Planner (v1) | `openapi/v1/planner.yml` | Implement planner ops (reason/execute/list/etc.) | ✅ | — | server, planner |
+| Planner (v0) | `openapi/v0/planner.yml` | Deprecate or alias to v1 | ✅ | — | docs, planner |
+| Tools Factory | `openapi/v1/tools-factory.yml` | Implement list/register ops | ✅ | — | server |
+| Function Caller | `openapi/v1/function-caller.yml` | Implement list/get/invoke/metrics | ✅ | — | server |
+| Persistence API | `openapi/v1/persist.yml` | Implement corpus/baseline/function/reflection ops | ✅ | — | server, storage |
+| Typesense API | `openapi/typesense.yml` | Decide proxy vs native subset | ✅ | — | server, design |
 | Static site | `Sources/PublishingFrontend/*`, `Configuration/publishing.yml` | Serve docs/static; keep defaults | ✅ | — | server, docs |
 | Gateway plugins | `LoggingPlugin`, `PublishingFrontendPlugin` | Keep logging & HTML fallback | ✅ | — | server |
 | Resilience plugin | `BudgetBreakerPlugin` | Apply per-user budgets and circuit breakers | ✅ | — | server |

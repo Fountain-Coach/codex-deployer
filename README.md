@@ -65,7 +65,7 @@ Each endpoint replies to MIDI-CI **Process Inquiry** with `manufacturerId`, `fam
   - MIDI2: MIDI2 components (MIDI2Models, MIDI2Core, MIDI2Transports, SSEOverMIDI, FlexBridge).
   - ToolServer: Tool server library (adapters, router, resources).
 - internal: Generated code and internal modules (not user-edited)
-  - FountainOps/Generated: Server + client API codegen.
+  - openapi: Service specs and API codegen.
 - docs: Documentation and design notes (gateway, SSE, security, proposals).
 - tests: SwiftPM test targets mirroring apps/libs components.
 

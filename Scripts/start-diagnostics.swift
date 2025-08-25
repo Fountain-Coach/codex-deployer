@@ -7,7 +7,7 @@ import Foundation
 /// checks for required environment variables.
 ///
 /// FountainAI currently has no automatic service registry—when adding new
-/// FountainOps servers you must update `services.json` by hand so this
+/// openapi servers you must update `services.json` by hand so this
 /// diagnostics check and the launcher know about them.
 struct Service: Decodable {
     let name: String
