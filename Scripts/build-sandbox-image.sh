@@ -7,6 +7,8 @@ set -euo pipefail
 # The script relies on debootstrap and produces both a tarball and a
 # qcow2 snapshot suitable for micro-VM execution.  A tools.json manifest
 # describing the resulting image is emitted alongside the artifacts.
+#
+# For usage and maintenance details, consult the toolsmith documentation.
 
 UBUNTU_RELEASE="jammy"
 IMAGE_NAME="sandbox-ubuntu22.04"
