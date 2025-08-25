@@ -39,6 +39,7 @@ var targets: [Target] = [
         dependencies: [
             "FountainCodex",
             "PublishingFrontend",
+            "LLMGatewayPlugin",
             "LLMGatewayClient",
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "X509", package: "swift-certificates"),
@@ -50,6 +51,11 @@ var targets: [Target] = [
         name: "LLMGatewayClient",
         path: "Sources/FountainOps/Generated/Client/llm-gateway",
         sources: ["APIClient.swift", "APIRequest.swift"]
+    ),
+    .target(
+        name: "LLMGatewayPlugin",
+        dependencies: ["FountainCodex"],
+        path: "libs/GatewayPlugins/LLMGatewayPlugin"
     ),
     .target(
         name: "ServiceShared",
@@ -120,7 +126,7 @@ var targets: [Target] = [
     .testTarget(name: "MIDI2CoreTests", dependencies: ["MIDI2Core", "ResourceLoader", "flexctl"], path: "Tests/MIDI2CoreTests"),
     .testTarget(name: "MIDI2TransportsTests", dependencies: ["MIDI2Transports"], path: "Tests/MIDI2TransportsTests"),
     .testTarget(name: "FlexctlTests", dependencies: ["flexctl", "ResourceLoader"], path: "Tests/FlexctlTests"),
-    .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayClient"], path: "Tests/GatewayAppTests"),
+    .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayClient", "LLMGatewayPlugin"], path: "Tests/GatewayAppTests"),
     .testTarget(name: "FountainOpsTests", dependencies: ["LLMGatewayService"], path: "Tests/FountainOpsTests"),
     .testTarget(name: "ToolServerTests", dependencies: ["ToolServer"], path: "Tests/ToolServerTests"),
     .testTarget(

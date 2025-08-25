@@ -4,6 +4,7 @@ import NIOHTTP1
 import FountainCodex
 import Crypto
 import X509
+import LLMGatewayPlugin
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
@@ -100,6 +101,14 @@ public final class GatewayServer {
                 return HTTPResponse(status: 429, headers: ["Content-Type": "text/plain"], body: Data("too many requests".utf8))
             } catch is ServiceUnavailableError {
                 return HTTPResponse(status: 503, headers: ["Content-Type": "text/plain"], body: Data("service unavailable".utf8))
+            }
+
+            // Allow plugins with routers to handle requests before builtin routes.
+            for plugin in plugins {
+                if let llm = plugin as? LLMGatewayPlugin,
+                   let handled = try await llm.router.route(request) {
+                    return handled
+                }
             }
             let segments = request.path.split(separator: "/", omittingEmptySubsequences: true)
             var response: HTTPResponse
