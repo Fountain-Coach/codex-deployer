@@ -169,7 +169,7 @@ public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
         msg.append(contentsOf: [negotiatedGroup, negotiatedChannel])
 
         let sem = DispatchSemaphore(value: 0)
-        connection.receiveMessage { [weak self] data, _, _, _ in
+        connection.receiveMessage { [weak self] (data: Data?, _: NWConnection.ContentContext?, _: Bool, _: NWError?) in
             if let data = data, data.count >= 21 {
                 self?.protocolVersion = data[2]
                 var uuidBytes = uuid_t()
