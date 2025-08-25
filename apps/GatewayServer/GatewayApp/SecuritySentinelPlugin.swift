@@ -1,8 +1,6 @@
 import Foundation
 import FountainCodex
-import LLMGatewayClient
-
-extension APIClient: @unchecked Sendable {}
+import LLMGatewayPlugin
 
 public enum SentinelDecision: String, Decodable {
     case allow
@@ -10,46 +8,23 @@ public enum SentinelDecision: String, Decodable {
     case escalate
 }
 
-private struct SecurityCheckRequest: Codable {
-    let summary: String
-    let user: String
-    let resources: [String]
-}
-
 /// Plugin that consults SecuritySentinel for potentially destructive actions.
 public struct SecuritySentinelPlugin: GatewayPlugin {
-    private let client: APIClient
+    private let handlers: Handlers
     private let logURL: URL
     private let patterns: [String]
 
     /// Creates a new plugin instance.
     /// - Parameters:
-    ///   - client: API client used to consult the sentinel service.
+    ///   - handlers: LLM gateway handlers used for sentinel consults.
     ///   - logURL: Destination log file.
     ///   - patterns: Path substrings considered destructive.
-    public init(client: APIClient = APIClient(baseURL: URL(string: "http://localhost:8080")!),
+    public init(handlers: Handlers = Handlers(),
                 logURL: URL = URL(fileURLWithPath: "logs/security.log"),
                 patterns: [String] = ["delete", "destroy", "truncate"]) {
-        self.client = client
+        self.handlers = handlers
         self.logURL = logURL
         self.patterns = patterns
-    }
-
-    private struct ConsultRequest: APIRequest {
-        typealias Response = ConsultResponse
-        typealias Body = SecurityCheckRequest
-        let summary: String
-        let user: String
-        let resources: [String]
-        var method: String { "POST" }
-        var path: String { "/sentinel/consult" }
-        var body: Body? {
-            SecurityCheckRequest(summary: summary, user: user, resources: resources)
-        }
-    }
-
-    private struct ConsultResponse: Decodable {
-        let decision: SentinelDecision
     }
 
     /// Consults the sentinel service for a decision.
@@ -59,9 +34,13 @@ public struct SecuritySentinelPlugin: GatewayPlugin {
     ///   - resources: Resources touched by the action.
     /// - Returns: The sentinel's decision for the action.
     public func consult(summary: String, user: String, resources: [String]) async throws -> SentinelDecision {
-        let decision = try await client.send(ConsultRequest(summary: summary, user: user, resources: resources)).decision
-        log(summary: summary, decision: decision)
-        return decision
+        let request = HTTPRequest(method: "POST", path: "/sentinel/consult")
+        let body = SecurityCheckRequest(summary: summary, user: user, resources: resources)
+        let resp = try await handlers.sentinelConsult(request, body: body)
+        let decision = try JSONDecoder().decode(SecurityDecision.self, from: resp.body).decision
+        let result = SentinelDecision(rawValue: decision) ?? .escalate
+        log(summary: summary, decision: result)
+        return result
     }
 
     public func prepare(_ request: HTTPRequest) async throws -> HTTPRequest {

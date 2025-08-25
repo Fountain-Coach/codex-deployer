@@ -2,7 +2,7 @@ import Foundation
 import FountainCodex
 
 /// Minimal router for LLM gateway endpoints.
-public struct Router {
+public struct Router: Sendable {
     public var handlers: Handlers
     public init(handlers: Handlers = Handlers()) {
         self.handlers = handlers

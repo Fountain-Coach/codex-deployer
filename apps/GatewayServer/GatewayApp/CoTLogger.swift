@@ -38,7 +38,8 @@ public struct CoTLogger: GatewayPlugin {
 
         if isRisky(cot), let sentinel = sentinel {
             let user = request.headers["X-User"] ?? "anonymous"
-            if let decision = try? await sentinel.consult(summary: "cot \(id)", user: user, resources: [String(describing: cot)]) {
+            let summary = String(describing: cot)
+            if let decision = try? await sentinel.consult(summary: summary, user: user, resources: [summary]) {
                 entry["sentinel_decision"] = decision.rawValue
             }
         }
