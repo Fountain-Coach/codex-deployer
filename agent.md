@@ -1,4 +1,4 @@
-# 🧠 Repository + FountainAI Agent Manifest
+| LibPlist adapter tests | `Tests/ToolsmithPackageTests/APIClientTests.swift` | Handle plutil help exit codes 0 or 1 | ✅ | — | toolsmith, test |# 🧠 Repository + FountainAI Agent Manifest
 
 **Last Updated:** August 22, 2025  
 **Scope:** Full-repository self-improvement, orchestration, and MIDI-CI identity  
@@ -86,8 +86,8 @@ Tasks are tracked in a structured **matrix** to allow vertical slice execution a
 | SPS samples & usage docs | `sps/Samples`, `docs/sps-usage-guide.md` | Provide annotated sample PDFs and usage guide with page-range queries & validation hooks | ✅ | — | docs, sps |
 | MIDI 2 library | `midi/*`, `sps/*`, `Sources/MIDI2/*` | Parse MIDI 2 spec via SPS and expose Swift Package module | ✅ | — | midi, sps, spm |
 | Semantic browser & dissector | `sb/*` | Wire CLI commands and integrate Typesense indexer | ✅ | — | sb, cli, cdp, typesense, semantics |
-| Toolsmith package | `FountainAIToolsmith/*` | Scaffold Toolsmith orchestration package with CLI | ✅ | — | toolsmith |
-| LibPlist adapter tests | `Tests/FountainAIToolsmithTests/AdapterTests.swift` | Handle plutil help exit codes 0 or 1 | ✅ | — | toolsmith, test |
+| Toolsmith package | `toolsmith/*` | Scaffold Toolsmith orchestration package with CLI | ✅ | — | toolsmith |
+| LibPlist adapter tests | `Tests/ToolsmithPackageTests/APIClientTests.swift` | Handle plutil help exit codes 0 or 1 | ✅ | — | toolsmith, test |
 | SSE over MIDI demo | Package.swift, docs/sse-over-midi-guide.md, Examples/SSEOverMIDI | Add target, docs and demo | ✅ | — | midi, sse |
 
 ---

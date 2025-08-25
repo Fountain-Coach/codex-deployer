@@ -34,7 +34,7 @@ A lightweight launcher supervises micro‑services declared in configuration.
 ## Toolsmith & Dynamic Tooling
 
 Tooling can be generated on demand from OpenAPI descriptions.
-- [FountainAIToolsmith](../FountainAIToolsmith) scaffolds tool runtimes and CLI wrappers.
+- [ToolsmithPackage](../toolsmith) scaffolds tool runtimes and CLI wrappers.
 - The [toolsmith orchestration guide](toolsmith-orchestration.md) shows end‑to‑end flows.
 
 ## Publishing Frontend

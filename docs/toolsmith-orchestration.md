@@ -1,13 +1,13 @@
-# FountainAIToolsmith in Gateway/Codex Orchestration
+# Toolsmith in Gateway/Codex Orchestration
 
-This guide shows how the Gateway/Codex loop imports and drives `FountainAIToolsmith` to execute sandboxed tools.
+This guide shows how the Gateway/Codex loop imports and drives `toolsmith` to execute sandboxed tools.
 
 ## Importing and Instantiating
 
 Add the package to `Package.swift` and import the libraries in your orchestrator:
 
 ```swift
-.package(path: "./FountainAIToolsmith")
+.package(path: "./toolsmith")
 ```
 
 ```swift
@@ -51,7 +51,7 @@ let requestID = toolsmith.run(tool: "echo") {
 
 ## Client Generation
 
-Run `Scripts/generate-toolsmith-client.swift` to regenerate the `ToolsmithAPI` client from the shared `tools-factory.yml` spec. The generator copies the `Client/tools-factory` output into `FountainAIToolsmith/Sources/ToolsmithAPI`, preserving operation names like `list_tools` and `register_openapi` so interfaces mirror the Tools Factory contract and avoid naming conflicts.
+Run `Scripts/generate-toolsmith-client.swift` to regenerate the `ToolsmithAPI` client from the shared `tools-factory.yml` spec. The generator copies the `Client/tools-factory` output into `toolsmith/Sources/ToolsmithAPI`, preserving operation names like `list_tools` and `register_openapi` so interfaces mirror the Tools Factory contract and avoid naming conflicts.
 
 ## Smoke Test
 
@@ -63,11 +63,6 @@ Scripts/toolsmith-smoke-test.sh
 
 ## CLI Usage
 
-Decode the sample media first:
-
-```bash
-FountainAIToolsmith/Samples/prepare.sh
-```
 
 With a Tool Server running and `TOOLSERVER_URL` set to its base URL, the `toolsmith-cli` utility can drive conversions:
 
@@ -83,15 +78,15 @@ toolsmith-cli manifest
 # prints manifest json
 
 # Convert an image
-toolsmith-cli convert-image FountainAIToolsmith/Samples/sample.png out.jpg
+toolsmith-cli convert-image path/to/sample.png out.jpg
 # wrote out.jpg
 
 # Transcode audio
-toolsmith-cli transcode-audio FountainAIToolsmith/Samples/sample.wav out.mp3
+toolsmith-cli transcode-audio path/to/sample.wav out.mp3
 # wrote out.mp3
 
 # Convert a plist
-toolsmith-cli convert-plist FountainAIToolsmith/Samples/sample.plist out.plist
+toolsmith-cli convert-plist path/to/sample.plist out.plist
 # wrote out.plist
 ```
 

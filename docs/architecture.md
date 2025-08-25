@@ -13,7 +13,7 @@ FountainAI organizes its Swift packages into modular layers.
 - [Examples/SSEOverMIDI/TwoSessions.swift](../Examples/SSEOverMIDI/TwoSessions.swift) // demo wiring sender and receiver
 - [Sources/PublishingFrontend](../Sources/PublishingFrontend) // static documentation server
 - [FountainAiLauncher/Sources](../FountainAiLauncher/Sources) // supervisor launching configured services
-- [FountainAIToolsmith](../FountainAIToolsmith) // orchestration package for tool generation
+- [ToolsmithPackage](../toolsmith) // orchestration package for tool generation
 
 ## Pillars
 

@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+
+# SwiftPM / Build
+.swiftpm/
+.build/
+Package.resolved
+
+# Xcode
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+DerivedData/
+
+# Logs & temporary
+*.log
+*.swp
+*.tmp
+
+# Coverage
+*.gcno
+*.gcda
+*.profraw
+*.profdata
+
+# © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
