@@ -44,6 +44,11 @@ public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
     }
 
     public func open() throws {
+        // In pure loopback mode (no discovery and no CI negotiation), avoid touching Network framework.
+        if !enableDiscovery && !enableCINegotiation {
+            connection = nil
+            return
+        }
         let params = NWParameters.udp
         let ready = DispatchSemaphore(value: 0)
         listener = try NWListener(using: params, on: .any)
@@ -109,7 +114,12 @@ public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
     }
 
     public func send(umps: [[UInt32]]) throws {
-        guard let connection else { return }
+        // If no active connection (e.g., tests without Network readiness), loop back directly.
+        guard let connection else {
+            onReceiveUmps?(umps)
+            for u in umps { onReceiveUMP?(u) }
+            return
+        }
         var buffer: [UInt32] = []
         var bufferBytes = 0
         func flush() {
