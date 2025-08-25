@@ -126,7 +126,7 @@ public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
     }
 
     private func configureReceive(on connection: NWConnection) {
-        let handler: (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void = { [weak self] data, _, _, _ in
+        let handler: @Sendable (Data?, NWConnection.ContentContext?, Bool, Network.NWError?) -> Void = { [weak self] data, _, _, _ in
             if let data = data, data.count >= 12 {
                 let payload = data.subdata(in: 12..<data.count)
                 var umps: [[UInt32]] = []
@@ -170,7 +170,7 @@ public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
         msg.append(contentsOf: [negotiatedGroup, negotiatedChannel])
 
         let sem = DispatchSemaphore(value: 0)
-        let negotiationHandler: (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void = { [weak self] data, _, _, _ in
+        let negotiationHandler: @Sendable (Data?, NWConnection.ContentContext?, Bool, Network.NWError?) -> Void = { [weak self] data, _, _, _ in
             if let data = data, data.count >= 21 {
                 self?.protocolVersion = data[2]
                 var uuidBytes = uuid_t()
