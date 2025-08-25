@@ -20,7 +20,7 @@ guard proc.terminationStatus == 0 else {
 }
 
 let clientSrc = tmp.appendingPathComponent("Client/tools-factory")
-let clientDst = root.appendingPathComponent("FountainAIToolsmith/Sources/ToolsmithAPI")
+let clientDst = root.appendingPathComponent("toolsmith/Sources/ToolsmithAPI")
 if fm.fileExists(atPath: clientDst.path) { try fm.removeItem(at: clientDst) }
 try fm.createDirectory(at: clientDst.deletingLastPathComponent(), withIntermediateDirectories: true)
 try fm.moveItem(at: clientSrc, to: clientDst)

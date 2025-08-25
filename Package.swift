@@ -131,12 +131,14 @@ var targets: [Target] = [
     .testTarget(name: "FountainOpsTests", dependencies: ["LLMGatewayService"], path: "Tests/FountainOpsTests"),
     .testTarget(name: "ToolServerTests", dependencies: ["ToolServer"], path: "Tests/ToolServerTests"),
     .testTarget(
-        name: "FountainAIToolsmithTests",
+        name: "ToolsmithPackageTests",
         dependencies: [
-            "ToolServer",
-            .product(name: "SandboxRunner", package: "FountainAIToolsmith")
+            .product(name: "Toolsmith", package: "toolsmith"),
+            .product(name: "SandboxRunner", package: "toolsmith"),
+            .product(name: "ToolsmithSupport", package: "toolsmith"),
+            .product(name: "ToolsmithAPI", package: "toolsmith")
         ],
-        path: "Tests/FountainAIToolsmithTests"
+        path: "Tests/ToolsmithPackageTests"
     ),
     .testTarget(
         name: "SSEOverMIDITests",
@@ -157,7 +159,7 @@ let package = Package(
     ],
     products: products,
     dependencies: [
-        .package(path: "./FountainAIToolsmith"),
+        .package(path: "./toolsmith"),
         .package(url: "https://github.com/jpsim/Yams.git", from: "5.0.0"),
         .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.21.0"),
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.63.0"),
