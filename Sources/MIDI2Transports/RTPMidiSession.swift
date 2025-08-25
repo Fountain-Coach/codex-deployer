@@ -1,6 +1,6 @@
 import Foundation
 #if canImport(Network)
-import Network
+@preconcurrency import Network
 
 public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
     public var onReceiveUMP: (([UInt32]) -> Void)? {
@@ -126,7 +126,8 @@ public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
     }
 
     private func configureReceive(on connection: NWConnection) {
-        let handler: @Sendable (Data?, NWConnection.ContentContext?, Bool, Network.NWError?) -> Void = { [weak self] data, _, _, _ in
+        typealias ReceiveMessageHandler = @Sendable (Foundation.Data?, Network.NWConnection.ContentContext?, Swift.Bool, Network.NWError?) -> Swift.Void
+        let handler: ReceiveMessageHandler = { [weak self] (data: Foundation.Data?, context: Network.NWConnection.ContentContext?, isComplete: Swift.Bool, error: Network.NWError?) in
             if let data = data, data.count >= 12 {
                 let payload = data.subdata(in: 12..<data.count)
                 var umps: [[UInt32]] = []
@@ -170,16 +171,29 @@ public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
         msg.append(contentsOf: [negotiatedGroup, negotiatedChannel])
 
         let sem = DispatchSemaphore(value: 0)
-        let negotiationHandler: @Sendable (Data?, NWConnection.ContentContext?, Bool, Network.NWError?) -> Void = { [weak self] data, _, _, _ in
+        typealias ReceiveMessageHandler = @Sendable (Foundation.Data?, Network.NWConnection.ContentContext?, Swift.Bool, Network.NWError?) -> Swift.Void
+        let negotiationHandler: ReceiveMessageHandler = { [weak self] (data: Foundation.Data?, context: Network.NWConnection.ContentContext?, isComplete: Swift.Bool, error: Network.NWError?) in
             if let data = data, data.count >= 21 {
-                self?.protocolVersion = data[2]
-                var uuidBytes = uuid_t()
-                _ = withUnsafeMutableBytes(of: &uuidBytes) {
-                    data.copyBytes(to: $0, from: 3..<19)
+                // Protocol version
+                let version: UInt8 = data[data.startIndex.advanced(by: 2)]
+                self?.protocolVersion = version
+
+                // Extract 16-byte UUID starting at offset 3
+                var uuidBytes: uuid_t = (0, 0, 0, 0,
+                                         0, 0, 0, 0,
+                                         0, 0, 0, 0,
+                                         0, 0, 0, 0)
+                data.withUnsafeBytes { rawBuffer in
+                    let bytes = rawBuffer.bindMemory(to: UInt8.self)
+                    if bytes.count >= 19 {
+                        withUnsafeMutableBytes(of: &uuidBytes) { dest in
+                            dest.copyBytes(from: UnsafeRawBufferPointer(start: bytes.baseAddress?.advanced(by: 3), count: 16))
+                        }
+                    }
                 }
                 self?.remoteID = UUID(uuid: uuidBytes)
-                self?.negotiatedGroup = data[19]
-                self?.negotiatedChannel = data[20]
+                self?.negotiatedGroup = data[data.startIndex.advanced(by: 19)]
+                self?.negotiatedChannel = data[data.startIndex.advanced(by: 20)]
             }
             sem.signal()
         }

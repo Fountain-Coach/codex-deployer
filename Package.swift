@@ -45,7 +45,7 @@ var targets: [Target] = [
             "Yams"
         ],
         path: "Sources/GatewayApp",
-        exclude: ["README.md"]
+        exclude: ["README.md", "List gateway functions.pdf"]
     ),
     .target(
         name: "LLMGatewayClient",
@@ -67,7 +67,8 @@ var targets: [Target] = [
     .target(
         name: "PublishingFrontend",
         dependencies: ["FountainCodex", "Yams"],
-        path: "Sources/PublishingFrontend"
+        path: "Sources/PublishingFrontend",
+        exclude: ["README.md"]
     ),
     .executableTarget(
         name: "publishing-frontend",
