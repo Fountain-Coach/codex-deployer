@@ -3,17 +3,8 @@ import Foundation
 @preconcurrency import Network
 
 public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
-    public var onReceiveUMP: (([UInt32]) -> Void)? {
-        didSet {
-            if let cb = onReceiveUMP {
-                onReceiveUmps = { umps in
-                    for u in umps { cb(u) }
-                }
-            } else {
-                onReceiveUmps = nil
-            }
-        }
-    }
+    // Independent callbacks; do not rebind one to the other.
+    public var onReceiveUMP: (([UInt32]) -> Void)?
     public var onReceiveUmps: (([[UInt32]]) -> Void)?
 
     private let localName: String
@@ -116,8 +107,9 @@ public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
     public func send(umps: [[UInt32]]) throws {
         // If no active connection (e.g., tests without Network readiness), loop back directly.
         guard let connection else {
-            onReceiveUmps?(umps)
-            for u in umps { onReceiveUMP?(u) }
+            // Fan out to both handlers without rebinding/duplication.
+            if let batch = onReceiveUmps { batch(umps) }
+            if let single = onReceiveUMP { for u in umps { single(u) } }
             return
         }
         var buffer: [UInt32] = []
@@ -192,7 +184,9 @@ public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
                     }
                     if !ump.isEmpty { umps.append(ump) }
                 }
-                self?.onReceiveUmps?(umps)
+                // Deliver to both handlers if present.
+                if let batch = self?.onReceiveUmps { batch(umps) }
+                if let single = self?.onReceiveUMP { for u in umps { single(u) } }
             }
             self?.configureReceive(on: connection)
         }
@@ -240,8 +234,9 @@ public final class RTPMidiSession: MIDITransport {
     public func close() throws {}
 
     public func send(umpWords: [UInt32]) throws {
-        onReceiveUMP?(umpWords)
-        onReceiveUmps?([umpWords])
+        // Prefer batch handler if present; otherwise fall back to single.
+        if let batch = onReceiveUmps { batch([umpWords]) }
+        else { onReceiveUMP?(umpWords) }
     }
 
     public func send(umps: [[UInt32]]) throws {
