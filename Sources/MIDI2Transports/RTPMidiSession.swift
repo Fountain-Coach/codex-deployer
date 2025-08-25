@@ -2,7 +2,7 @@ import Foundation
 #if canImport(Network)
 import Network
 
-public final class RTPMidiSession: MIDITransport {
+public final class RTPMidiSession: MIDITransport, @unchecked Sendable {
     public var onReceiveUMP: (([UInt32]) -> Void)? {
         didSet {
             if let cb = onReceiveUMP {
@@ -108,7 +108,7 @@ public final class RTPMidiSession: MIDITransport {
             }
             buffer.removeAll()
             bufferBytes = 0
-            var header = Data([0x80, 0x61, 0x00, 0x00,
+            let header = Data([0x80, 0x61, 0x00, 0x00,
                                0x00, 0x00, 0x00, 0x00,
                                0x00, 0x00, 0x00, 0x00])
             let packet = header + payload
@@ -126,7 +126,7 @@ public final class RTPMidiSession: MIDITransport {
     }
 
     private func configureReceive(on connection: NWConnection) {
-        connection.receiveMessage { [weak self] data, _, _, _ in
+        connection.receiveMessage(completion: { [weak self] (data: Data?, _: NWConnection.ContentContext?, _: Bool, _: NWError?) in
             if let data = data, data.count >= 12 {
                 let payload = data.subdata(in: 12..<data.count)
                 var umps: [[UInt32]] = []
@@ -144,7 +144,7 @@ public final class RTPMidiSession: MIDITransport {
                 self?.onReceiveUmps?(umps)
             }
             self?.configureReceive(on: connection)
-        }
+        })
     }
 
     private func startBonjourDiscovery() {
@@ -169,7 +169,7 @@ public final class RTPMidiSession: MIDITransport {
         msg.append(contentsOf: [negotiatedGroup, negotiatedChannel])
 
         let sem = DispatchSemaphore(value: 0)
-        connection.receiveMessage { [weak self] data, _, _, _ in
+        connection.receiveMessage(completion: { [weak self] (data: Data?, _: NWConnection.ContentContext?, _: Bool, _: NWError?) in
             if let data = data, data.count >= 21 {
                 self?.protocolVersion = data[2]
                 var uuidBytes = uuid_t()
@@ -181,7 +181,7 @@ public final class RTPMidiSession: MIDITransport {
                 self?.negotiatedChannel = data[20]
             }
             sem.signal()
-        }
+        })
         connection.send(content: msg, completion: .contentProcessed { _ in })
         sem.wait()
     }
