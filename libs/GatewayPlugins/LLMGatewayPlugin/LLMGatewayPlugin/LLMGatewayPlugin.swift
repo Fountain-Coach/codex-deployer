@@ -2,7 +2,7 @@ import Foundation
 import FountainCodex
 
 /// Plugin exposing sentinel consult and CoT endpoints.
-public struct LLMGatewayPlugin: GatewayPlugin {
+public struct LLMGatewayPlugin: Sendable {
     public let router: Router
 
     /// Creates a new plugin instance.

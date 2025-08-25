@@ -1,10 +1,6 @@
 import XCTest
 @testable import gateway_server
 @testable import FountainCodex
-import LLMGatewayClient
-#if canImport(FoundationNetworking)
-import FoundationNetworking
-#endif
 
 final class CoTLoggerTests: XCTestCase {
     /// Ensures reasoning steps are logged when include_cot is true.
@@ -40,16 +36,7 @@ final class CoTLoggerTests: XCTestCase {
         let cotURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         let sentinelLog = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
 
-        struct StubSession: HTTPSession {
-            func data(for request: URLRequest) async throws -> (Data, URLResponse) {
-                let body = "{\"decision\":\"deny\"}".data(using: .utf8)!
-                let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
-                return (body, response)
-            }
-        }
-
-        let client = APIClient(baseURL: URL(string: "http://example.com")!, session: StubSession())
-        let sentinel = SecuritySentinelPlugin(client: client, logURL: sentinelLog)
+        let sentinel = SecuritySentinelPlugin(logURL: sentinelLog)
         let plugin = CoTLogger(logURL: cotURL, sentinel: sentinel)
 
         let reqBody = try JSONSerialization.data(withJSONObject: ["include_cot": true])

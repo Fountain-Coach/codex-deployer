@@ -40,7 +40,6 @@ var targets: [Target] = [
             "FountainCodex",
             "PublishingFrontend",
             "LLMGatewayPlugin",
-            "LLMGatewayClient",
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "X509", package: "swift-certificates"),
             "Yams"
@@ -48,23 +47,9 @@ var targets: [Target] = [
         path: "apps/GatewayServer"
     ),
     .target(
-        name: "LLMGatewayClient",
-        path: "Sources/FountainOps/Generated/Client/llm-gateway",
-        sources: ["APIClient.swift", "APIRequest.swift"]
-    ),
-    .target(
         name: "LLMGatewayPlugin",
         dependencies: ["FountainCodex"],
         path: "libs/GatewayPlugins/LLMGatewayPlugin"
-    ),
-    .target(
-        name: "ServiceShared",
-        path: "Sources/FountainOps/Generated/Server/Shared"
-    ),
-    .target(
-        name: "LLMGatewayService",
-        dependencies: ["ServiceShared"],
-        path: "Sources/FountainOps/Generated/Server/llm-gateway"
     ),
     .target(
         name: "PublishingFrontend",
@@ -117,7 +102,7 @@ var targets: [Target] = [
     .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainCodex", .product(name: "Crypto", package: "swift-crypto"), .product(name: "NIOEmbedded", package: "swift-nio"), .product(name: "NIO", package: "swift-nio")], path: "Tests/DNSTests"),
     .testTarget(
         name: "IntegrationRuntimeTests",
-        dependencies: ["gateway-server", "FountainCodex", "LLMGatewayService"],
+        dependencies: ["gateway-server", "FountainCodex", "LLMGatewayPlugin"],
         path: "Tests/IntegrationRuntimeTests",
         resources: [.process("Fixtures")]
     ),
@@ -126,8 +111,8 @@ var targets: [Target] = [
     .testTarget(name: "MIDI2CoreTests", dependencies: ["MIDI2Core", "ResourceLoader", "flexctl"], path: "Tests/MIDI2CoreTests"),
     .testTarget(name: "MIDI2TransportsTests", dependencies: ["MIDI2Transports"], path: "Tests/MIDI2TransportsTests"),
     .testTarget(name: "FlexctlTests", dependencies: ["flexctl", "ResourceLoader"], path: "Tests/FlexctlTests"),
-    .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayClient", "LLMGatewayPlugin"], path: "Tests/GatewayAppTests"),
-    .testTarget(name: "FountainOpsTests", dependencies: ["LLMGatewayService"], path: "Tests/FountainOpsTests"),
+    .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayPlugin"], path: "Tests/GatewayAppTests"),
+    .testTarget(name: "FountainOpsTests", dependencies: ["LLMGatewayPlugin"], path: "Tests/FountainOpsTests"),
     .testTarget(name: "ToolServerTests", dependencies: ["ToolServer"], path: "Tests/ToolServerTests"),
     .testTarget(
         name: "ToolsmithPackageTests",

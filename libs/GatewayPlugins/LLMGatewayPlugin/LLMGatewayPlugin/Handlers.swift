@@ -2,7 +2,7 @@ import Foundation
 import FountainCodex
 
 /// Collection of request handlers used by ``LLMGatewayPlugin``.
-public struct Handlers {
+public struct Handlers: Sendable {
     /// Location of the CoT log file, if any.
     let cotLogURL: URL?
 

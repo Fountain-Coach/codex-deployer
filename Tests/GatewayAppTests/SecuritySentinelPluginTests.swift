@@ -1,40 +1,25 @@
 import XCTest
 import Foundation
-#if canImport(FoundationNetworking)
-import FoundationNetworking
-#endif
 @testable import gateway_server
-import LLMGatewayClient
 import FountainCodex
 
 final class SecuritySentinelPluginTests: XCTestCase {
-    private struct StubSession: HTTPSession {
-        let decision: String
-        func data(for request: URLRequest) async throws -> (Data, URLResponse) {
-            let body = "{\"decision\":\"\(decision)\"}".data(using: .utf8)!
-            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            return (body, response)
-        }
-    }
-
-    private func makePlugin(decision: String, logURL: URL) -> SecuritySentinelPlugin {
-        let session = StubSession(decision: decision)
-        let client = APIClient(baseURL: URL(string: "http://example.com")!, session: session)
-        return SecuritySentinelPlugin(client: client, logURL: logURL)
+    private func makePlugin(logURL: URL) -> SecuritySentinelPlugin {
+        SecuritySentinelPlugin(logURL: logURL)
     }
 
     func testAllow() async throws {
         let logURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-        let plugin = makePlugin(decision: "allow", logURL: logURL)
-        let request = HTTPRequest(method: "DELETE", path: "/danger")
-        _ = try await plugin.prepare(request)
+        let plugin = makePlugin(logURL: logURL)
+        let decision = try await plugin.consult(summary: "nothing risky", user: "u", resources: [])
+        XCTAssertEqual(decision, .allow)
         let log = try String(contentsOf: logURL, encoding: .utf8)
         XCTAssertTrue(log.contains("allow"))
     }
 
     func testDeny() async throws {
         let logURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-        let plugin = makePlugin(decision: "deny", logURL: logURL)
+        let plugin = makePlugin(logURL: logURL)
         let request = HTTPRequest(method: "DELETE", path: "/danger")
         do {
             _ = try await plugin.prepare(request)
@@ -47,8 +32,8 @@ final class SecuritySentinelPluginTests: XCTestCase {
 
     func testEscalate() async throws {
         let logURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-        let plugin = makePlugin(decision: "escalate", logURL: logURL)
-        let request = HTTPRequest(method: "DELETE", path: "/danger")
+        let plugin = makePlugin(logURL: logURL)
+        let request = HTTPRequest(method: "DELETE", path: "/need-escalate")
         do {
             _ = try await plugin.prepare(request)
             XCTFail("expected escalate")
