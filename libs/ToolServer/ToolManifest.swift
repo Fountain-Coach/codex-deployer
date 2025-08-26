@@ -1,7 +1,7 @@
 import Foundation
 
-public struct ToolManifest: Codable {
-    public struct Image: Codable {
+public struct ToolManifest: Codable, Sendable {
+    public struct Image: Codable, Sendable {
         public let name: String
         public let tarball: String
         public let sha256: String

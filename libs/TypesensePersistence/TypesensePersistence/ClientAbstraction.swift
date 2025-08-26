@@ -4,7 +4,7 @@ import Foundation
 import Typesense
 #endif
 
-public protocol TypesenseClientLike {
+public protocol TypesenseClientLike: Sendable {
     func createCollection(name: String, fields: [(String, String)], defaultSortingField: String?) async throws
     func upsert(collectionName: String, document: Data) async throws
     func exportAll(collectionName: String) async throws -> Data
@@ -16,7 +16,7 @@ extension Client: TypesenseInternalClient {}
 
 public protocol TypesenseInternalClient {}
 
-public final class RealTypesenseClient: TypesenseClientLike {
+public final class RealTypesenseClient: TypesenseClientLike, @unchecked Sendable {
     private let client: Client
 
     public init(nodes: [String], apiKey: String, debug: Bool = false) {
@@ -42,7 +42,7 @@ public final class RealTypesenseClient: TypesenseClientLike {
 
     public func exportAll(collectionName: String) async throws -> Data {
         let (data, _) = try await client.collection(name: collectionName).documents().export(options: nil)
-        return data
+        return data ?? Data()
     }
 
     public func searchFunctions(q: String, filterBy: String?, page: Int, perPage: Int) async throws -> (total: Int, functions: [FunctionModel]) {
@@ -53,13 +53,14 @@ public final class RealTypesenseClient: TypesenseClientLike {
             page: page,
             perPage: perPage
         )
-        let (result, _) = try await client.collection(name: "functions").documents().search(params, for: FunctionModel.self)
+        let (resultOpt, _) = try await client.collection(name: "functions").documents().search(params, for: FunctionModel.self)
+        guard let result = resultOpt else { return (0, []) }
         // Prefer result.found if available; otherwise fall back to hits count
         let hits = result.hits?.compactMap { $0.document } ?? []
         let total: Int
-        if let mirrorFound = Mirror(reflecting: result).children.first(where: { $0.label == "found" })?.value as? Int {
+        if let mirrorFound = Mirror(reflecting: result as Any).children.first(where: { $0.label == "found" })?.value as? Int {
             total = mirrorFound
-        } else if let mirrorFoundI = Mirror(reflecting: result).children.first(where: { $0.label == "found" })?.value as? Int32 {
+        } else if let mirrorFoundI = Mirror(reflecting: result as Any).children.first(where: { $0.label == "found" })?.value as? Int32 {
             total = Int(mirrorFoundI)
         } else {
             total = hits.count
@@ -69,7 +70,7 @@ public final class RealTypesenseClient: TypesenseClientLike {
 }
 #endif
 
-public final class MockTypesenseClient: TypesenseClientLike {
+public final class MockTypesenseClient: TypesenseClientLike, @unchecked Sendable {
     public private(set) var collections: [String: [[String: Any]]] = [:]
 
     public init() {}

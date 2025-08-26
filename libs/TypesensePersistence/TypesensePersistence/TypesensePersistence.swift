@@ -22,14 +22,14 @@ public actor TypesensePersistenceService {
 
     // MARK: - Corpora
     public func createCorpus(_ req: CorpusCreateRequest) async throws -> CorpusResponse {
-        try await ensureCollections()
+        await ensureCollections()
         let payload = try JSONEncoder().encode(["corpusId": req.corpusId])
         try await client.upsert(collectionName: "corpora", document: payload)
         return CorpusResponse(corpusId: req.corpusId, message: "created")
     }
 
     public func listCorpora(limit: Int = 50, offset: Int = 0) async throws -> (total: Int, corpora: [String]) {
-        try await ensureCollections()
+        await ensureCollections()
         let data = try await client.exportAll(collectionName: "corpora")
         let items: [[String: Any]] = Self.parseJSONL(data)
         let ids = items.compactMap { $0["corpusId"] as? String }.sorted()
@@ -40,14 +40,14 @@ public actor TypesensePersistenceService {
 
     // MARK: - Baselines
     public func addBaseline(_ baseline: Baseline) async throws -> SuccessResponse {
-        try await ensureCollections()
+        await ensureCollections()
         let payload = try JSONEncoder().encode(baseline)
         try await client.upsert(collectionName: "baselines", document: payload)
         return SuccessResponse(message: "ok")
     }
 
     public func listBaselines(corpusId: String, limit: Int = 50, offset: Int = 0) async throws -> (total: Int, baselines: [Baseline]) {
-        try await ensureCollections()
+        await ensureCollections()
         let data = try await client.exportAll(collectionName: "baselines")
         let items: [[String: Any]] = Self.parseJSONL(data)
         let filtered = items.filter { ($0["corpusId"] as? String) == corpusId }
@@ -59,14 +59,14 @@ public actor TypesensePersistenceService {
 
     // MARK: - Reflections
     public func addReflection(_ reflection: Reflection) async throws -> SuccessResponse {
-        try await ensureCollections()
+        await ensureCollections()
         let payload = try JSONEncoder().encode(reflection)
         try await client.upsert(collectionName: "reflections", document: payload)
         return SuccessResponse(message: "ok")
     }
 
     public func listReflections(corpusId: String, limit: Int = 50, offset: Int = 0) async throws -> (total: Int, reflections: [Reflection]) {
-        try await ensureCollections()
+        await ensureCollections()
         let data = try await client.exportAll(collectionName: "reflections")
         let items: [[String: Any]] = Self.parseJSONL(data)
         let filtered = items.filter { ($0["corpusId"] as? String) == corpusId }
@@ -78,14 +78,14 @@ public actor TypesensePersistenceService {
 
     // MARK: - Functions
     public func addFunction(_ function: FunctionModel) async throws -> SuccessResponse {
-        try await ensureCollections()
+        await ensureCollections()
         let payload = try JSONEncoder().encode(function)
         try await client.upsert(collectionName: "functions", document: payload)
         return SuccessResponse(message: "ok")
     }
 
     public func listFunctions(limit: Int = 50, offset: Int = 0, q: String? = nil) async throws -> (total: Int, functions: [FunctionModel]) {
-        try await ensureCollections()
+        await ensureCollections()
         let page = max(offset / max(limit, 1) + 1, 1)
         let perPage = max(limit, 1)
         let (total, results) = try await client.searchFunctions(q: (q?.isEmpty == false ? q! : "*"), filterBy: nil, page: page, perPage: perPage)
@@ -98,7 +98,7 @@ public actor TypesensePersistenceService {
     }
 
     public func listFunctions(corpusId: String, limit: Int = 50, offset: Int = 0, q: String? = nil) async throws -> (total: Int, functions: [FunctionModel]) {
-        try await ensureCollections()
+        await ensureCollections()
         let page = max(offset / max(limit, 1) + 1, 1)
         let perPage = max(limit, 1)
         let filterBy = "corpusId:=\(corpusId)"

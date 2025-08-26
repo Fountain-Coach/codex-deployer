@@ -1,4 +1,5 @@
 import Foundation
+import Dispatch
 import FountainCodex
 import Yams
 import TypesensePersistence
@@ -36,38 +37,32 @@ func loadPersistConfig() -> PersistConfig? {
     return PersistConfig(typesenseURLs: urls, apiKey: apiKey, debug: debug)
 }
 
-@main
-enum Main {
-    static func buildService() -> TypesensePersistenceService {
-        if let cfg = loadPersistConfig() {
-            #if canImport(Typesense)
-            let client = RealTypesenseClient(nodes: cfg.typesenseURLs, apiKey: cfg.apiKey, debug: cfg.debug)
-            return TypesensePersistenceService(client: client)
-            #else
-            return TypesensePersistenceService(client: MockTypesenseClient())
-            #endif
-        } else {
-            FileHandle.standardError.write(Data("[persist] Warning: TYPESENSE_URL(S) or TYPESENSE_API_KEY not set; using in-memory mock.\n".utf8))
-            return TypesensePersistenceService(client: MockTypesenseClient())
-        }
+func buildService() -> TypesensePersistenceService {
+    if let cfg = loadPersistConfig() {
+        #if canImport(Typesense)
+        let client = RealTypesenseClient(nodes: cfg.typesenseURLs, apiKey: cfg.apiKey, debug: cfg.debug)
+        return TypesensePersistenceService(client: client)
+        #else
+        return TypesensePersistenceService(client: MockTypesenseClient())
+        #endif
+    } else {
+        FileHandle.standardError.write(Data("[persist] Warning: TYPESENSE_URL(S) or TYPESENSE_API_KEY not set; using in-memory mock.\n".utf8))
+        return TypesensePersistenceService(client: MockTypesenseClient())
     }
-
-    static func main() async {
-        let svc = buildService()
-        await svc.ensureCollections()
-        let kernel = makePersistKernel(service: svc)
-
-        let server = NIOHTTPServer(kernel: kernel)
-        do {
-            _ = try await server.start(port: 8005)
-            print("persist server listening on port 8005")
-            dispatchMain()
-        } catch {
-            FileHandle.standardError.write(Data("[persist] Failed to start: \(error)\n".utf8))
-        }
-    }
-
-    
 }
+
+let svc = buildService()
+Task {
+    await svc.ensureCollections()
+    let kernel = makePersistKernel(service: svc)
+    let server = NIOHTTPServer(kernel: kernel)
+    do {
+        _ = try await server.start(port: 8005)
+        print("persist server listening on port 8005")
+    } catch {
+        FileHandle.standardError.write(Data("[persist] Failed to start: \(error)\n".utf8))
+    }
+}
+dispatchMain()
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
