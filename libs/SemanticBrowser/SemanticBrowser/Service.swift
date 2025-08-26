@@ -1,9 +1,21 @@
 import Foundation
 
 public actor SemanticMemoryService {
+    public protocol Backend: Sendable {
+        func upsert(page: PageDoc)
+        func upsert(segment: SegmentDoc)
+        func upsert(entity: EntityDoc)
+        func searchPages(q: String?, host: String?, lang: String?, limit: Int, offset: Int) -> (Int, [PageDoc])
+        func searchSegments(q: String?, kind: String?, entity: String?, limit: Int, offset: Int) -> (Int, [SegmentDoc])
+        func searchEntities(q: String?, type: String?, limit: Int, offset: Int) -> (Int, [EntityDoc])
+    }
+
     private var pages: [PageDoc] = []
     private var segments: [SegmentDoc] = []
     private var entities: [EntityDoc] = []
+    private let backend: Backend?
+
+    public init(backend: Backend? = nil) { self.backend = backend }
 
     public init() {}
 
@@ -15,6 +27,7 @@ public actor SemanticMemoryService {
     }
 
     public func queryPages(q: String?, host: String?, lang: String?, limit: Int, offset: Int) -> (total: Int, items: [PageDoc]) {
+        if let backend { let (t, items) = backend.searchPages(q: q, host: host, lang: lang, limit: limit, offset: offset); return (t, items) }
         var list = pages
         if let host, !host.isEmpty { list = list.filter { $0.host == host } }
         if let lang, !lang.isEmpty { list = list.filter { $0.lang?.lowercased() == lang.lowercased() } }
@@ -28,6 +41,7 @@ public actor SemanticMemoryService {
     }
 
     public func querySegments(q: String?, kind: String?, entity: String?, limit: Int, offset: Int) -> (total: Int, items: [SegmentDoc]) {
+        if let backend { let (t, items) = backend.searchSegments(q: q, kind: kind, entity: entity, limit: limit, offset: offset); return (t, items) }
         var list = segments
         if let kind, !kind.isEmpty { list = list.filter { $0.kind == kind } }
         if let entity, !entity.isEmpty { list = list.filter { ($0.entities ?? []).contains(entity) } }
@@ -38,6 +52,7 @@ public actor SemanticMemoryService {
     }
 
     public func queryEntities(q: String?, type: String?, limit: Int, offset: Int) -> (total: Int, items: [EntityDoc]) {
+        if let backend { let (t, items) = backend.searchEntities(q: q, type: type, limit: limit, offset: offset); return (t, items) }
         var list = entities
         if let type, !type.isEmpty { list = list.filter { $0.type == type } }
         if let q, !q.isEmpty { let n = q.lowercased(); list = list.filter { $0.name.lowercased().contains(n) } }
@@ -69,25 +84,58 @@ public actor SemanticMemoryService {
     public func ingest(_ req: IndexRequest) -> IndexResult {
         var pUp = 0, sUp = 0, eUp = 0
         // Upsert page by id
-        if let idx = pages.firstIndex(where: { $0.id == req.analysis.page.id }) {
-            pages[idx] = req.analysis.page
+        if let backend {
+            backend.upsert(page: req.analysis.page)
         } else {
-            pages.append(req.analysis.page)
+            if let idx = pages.firstIndex(where: { $0.id == req.analysis.page.id }) { pages[idx] = req.analysis.page } else { pages.append(req.analysis.page) }
         }
         pUp = 1
         if let segs = req.analysis.segments {
             for s in segs {
-                if let i = segments.firstIndex(where: { $0.id == s.id }) { segments[i] = s } else { segments.append(s) }
+                if let backend { backend.upsert(segment: s) } else { if let i = segments.firstIndex(where: { $0.id == s.id }) { segments[i] = s } else { segments.append(s) } }
                 sUp += 1
             }
         }
         if let ents = req.analysis.entities {
             for e in ents {
-                if let i = entities.firstIndex(where: { $0.id == e.id }) { entities[i] = e } else { entities.append(e) }
+                if let backend { backend.upsert(entity: e) } else { if let i = entities.firstIndex(where: { $0.id == e.id }) { entities[i] = e } else { entities.append(e) } }
                 eUp += 1
             }
         }
         return IndexResult(pagesUpserted: pUp, segmentsUpserted: sUp, entitiesUpserted: eUp, tablesUpserted: 0)
+    }
+
+    // MARK: - Full Analysis mapping (subset of OpenAPI)
+    public struct FullAnalysis: Codable, Sendable {
+        public struct Envelope: Codable, Sendable {
+            public struct Source: Codable, Sendable { public let uri: String? }
+            public let id: String
+            public let source: Source?
+            public let contentType: String?
+            public let language: String?
+        }
+        public struct Block: Codable, Sendable { public let id: String; public let kind: String; public let text: String }
+        public struct Semantics: Codable, Sendable {
+            public struct Entity: Codable, Sendable { public let id: String; public let name: String; public let type: String }
+            public let entities: [Entity]?
+        }
+        public let envelope: Envelope
+        public let blocks: [Block]
+        public let semantics: Semantics?
+    }
+
+    public func ingest(full: FullAnalysis) -> IndexResult {
+        let url = full.envelope.source?.uri ?? ""
+        let host = URL(string: url)?.host ?? ""
+        let title = full.blocks.first(where: { $0.kind == "heading" })?.text
+        let textSize = full.blocks.reduce(0) { $0 + $1.text.count }
+        let pageId = full.envelope.id
+        let page = PageDoc(id: pageId, url: url, host: host, status: nil, contentType: full.envelope.contentType, lang: full.envelope.language, title: title, textSize: textSize, fetchedAt: nil, labels: nil)
+        var segs: [SegmentDoc] = []
+        for b in full.blocks { segs.append(SegmentDoc(id: b.id, pageId: pageId, kind: b.kind, text: b.text)) }
+        var ents: [EntityDoc] = []
+        if let es = full.semantics?.entities { ents = es.map { EntityDoc(id: $0.id, name: $0.name, type: $0.type) } }
+        return ingest(IndexRequest(analysis: IngestAnalysis(page: page, segments: segs, entities: ents)))
     }
 }
 
