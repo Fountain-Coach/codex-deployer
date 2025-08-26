@@ -1,128 +1,92 @@
-| LibPlist adapter tests | `Tests/ToolsmithPackageTests/APIClientTests.swift` | Handle plutil help exit codes 0 or 1 | ✅ | — | toolsmith, test |# 🧠 Repository + FountainAI Agent Manifest
+# 🧠 FountainAI Root Agent Manifest
 
-**Last Updated:** August 22, 2025  
-**Scope:** Full-repository self-improvement, orchestration, and MIDI-CI identity  
-**Purpose:**  
-1. Serve as a machine-actionable contract and coordination center for Codex-driven implementation, testing, and maintenance across all project modules.  
-2. Publicly declare FountainAI’s identity as a **Swift 6 transparent reasoning engine** that speaks **MIDI 2.0 with Capability Inquiry (MIDI‑CI)** and projects its **OpenAPI specs** as the constitutional source of truth.  
+Last Updated: August 26, 2025
 
----
-
-## 🎹 FountainAI Identity (MIDI‑CI)
-
-- **Manufacturer ID:** `TBD` (temporary `7D` for local dev; official MMA ID pending)  
-- **Families / Models:**  
-  - `Core.Kernel` — main reasoning engine  
-  - `Core.Orchestrator` — ensemble orchestration  
-  - `GUI.DefaultUI` — standard GUI  
-  - `Service.*` — official FountainAI microservices (`Baseline`, `DriftDetector`, `ClientGen`, …)  
-  - `Plugin.Author.PluginName` — delegated third‑party plugins under FountainAI’s umbrella  
-
-Each endpoint replies to **Process Inquiry** with:  
-`manufacturerId`, `family`, `model`, `version`, and a **persistent `muid`** (per‑install).  
-
-### Projection of OpenAPI into MIDI‑CI Property Exchange
-- `fountain.capabilities` — summary + OpenAPI `{version, sha256}`  
-- `fountain.schema` — compact JSON Schema subset from OpenAPI components  
-- `fountain.commands.schema` — list of invokable operations (IDs via `x-midi-ci-command-id`)  
-- `fountain.commands` (SET) — invoke an operation by ID with validated input  
-- `fountain.state` — small read model; progress, mode, corpus; may be **NOTIFY**  
-
-### Transparent Reasoning Stream
-- FountainAI emits reasoning via **incremental property notifications** (SSE‑like semantics over MIDI).  
-- Consumers may display or audit this stream.  
-- This is **observability**, not a programming API.  
-
-**Claim:**  
-> FountainAI is a **Swift 6 transparent reasoning engine** that participates in the **MIDI 2.0 ecosystem via MIDI‑CI**.  
-> Its OpenAPI is the single constitutional source of truth, projected into MIDI‑CI.  
-> It can stream its reasoning over MIDI. If you speak MIDI‑CI, you can discover it; if you speak OpenAPI, you already understand it.  
+Scope: Repository self-improvement, spec→code alignment, and runtime orchestration.  
+Identity: Swift 6 transparent reasoning engine; OpenAPI is the constitutional source of truth; MIDI‑CI is the discovery/observability fabric.
 
 ---
 
-## 🎯 Mission
-This agent maintains an up-to-date view of outstanding development tasks across the entire repository.  
-It bridges declared intent (specs, interface plans) with verifiable implementation.  
-Tasks are tracked in a structured **matrix** to allow vertical slice execution and repeatable progress.  
+## Why The Previous Manifest Was Outdated
+
+- Over-claimed status: Marked many services as ✅ that do not exist as code (e.g., Function Caller, Persistence, Planner, Baseline Awareness, Semantic Browser).
+- Incorrect paths: Referenced files under non-existent trees (e.g., `Sources/openapi/Generated/...`). This repo uses `libs/*`, `apps/*`, and `openapi/*`.
+- Drift from reality: Claimed DNS HTTP CRUD and multiple CI features not present in the current codebase.
+- Corrupted content: A stray table row leaked to the top and bottom of the document.
+- Conflated concerns: Mixed product identity, long task matrix, and per-run instructions in one place without machine-verifiable links to code/tests.
 
 ---
 
-## 📋 Task Matrix
+## Repository Topography (Current)
 
-| Feature / Component | File(s) or Area | Action | Status | Blockers | Tags |
-|---|---|---|---|---|---|
-| OpenAPI loader | `Sources/FountainCodex/Parser/SpecLoader.swift` | Maintain JSON/YAML load + normalization | ✅ | — | parser |
-| Spec validation | `Sources/FountainCodex/Parser/SpecValidator.swift` | Keep unique ids & params checks | ✅ | — | parser |
-| Model emitter | `Sources/FountainCodex/ModelEmitter/*` | Generate Swift models from schemas | ✅ | — | generator |
-| Client generator | `Sources/FountainCodex/ClientGenerator/*` | Emit type-safe requests & client | ✅ | — | generator, cli |
-| Client errors | `Sources/FountainCodex/ClientGenerator/APIClient.swift` | Add non-200 error decoding | ✅ | — | client, generator |
-| Server generator | `Sources/FountainCodex/ServerGenerator/*` | Emit router/types/handler **stubs** | ✅ | — | generator, server |
-| DNS API handlers | `Sources/GatewayApp/GatewayServer.swift` | Keep CRUD for zones/records | ✅ | — | server, dns |
-| Baseline analytics streaming | `Sources/openapi/Generated/Server/baseline-awareness/Handlers.swift` | Implement `streamHistoryAnalytics` handler | ✅ | — | server |
-| DNS zone endpoints | `Sources/GatewayApp/GatewayServer.swift` | Add `createZone`, `deleteZone`, `listRecords` handlers | ✅ | — | server, dns |
-| LLM Gateway | `openapi/v2/llm-gateway.yml` | Implement `metrics_metrics_get`, `chatWithObjective` | ✅ | — | server, llm |
-| Gateway Mgmt API | `openapi/v1/gateway.yml` | Implement health/metrics/auth/cert/routes ops | ✅ | — | server |
-| Planner (v1) | `openapi/v1/planner.yml` | Implement planner ops (reason/execute/list/etc.) | ✅ | — | server, planner |
-| Planner (v0) | `openapi/v0/planner.yml` | Deprecate or alias to v1 | ✅ | — | docs, planner |
-| Tools Factory | `openapi/v1/tools-factory.yml` | Implement list/register ops | ✅ | — | server |
-| Function Caller | `openapi/v1/function-caller.yml` | Implement list/get/invoke/metrics | ✅ | — | server |
-| Persistence API | `openapi/v1/persist.yml` | Implement corpus/baseline/function/reflection ops | ✅ | — | server, storage |
-| Typesense API | `openapi/typesense.yml` | Decide proxy vs native subset | ✅ | — | server, design |
-| Static site | `Sources/PublishingFrontend/*`, `Configuration/publishing.yml` | Serve docs/static; keep defaults | ✅ | — | server, docs |
-| Gateway plugins | `LoggingPlugin`, `PublishingFrontendPlugin` | Keep logging & HTML fallback | ✅ | — | server |
-| Resilience plugin | `BudgetBreakerPlugin` | Apply per-user budgets and circuit breakers | ✅ | — | server |
-| DestructiveGuardianPlugin | `Sources/GatewayApp/DestructiveGuardianPlugin.swift` | Guard destructive ops w/ approval or tokens | ✅ | — | server, security |
-| Certificate renewal | `Sources/GatewayApp/CertificateManager.swift` | Schedule/trigger renewal | ✅ | — | ops, tls |
-| DNSSEC | `Sources/FountainCodex/DNSSECSigner.swift` | Integrate signer into engine | ✅ | — | security, dns |
-| Metrics & logging | `GatewayServer`, `DNSMetrics` | Expose Prometheus-style metrics | ✅ | — | observability |
-| Integration tests | `Tests/*` | E2E tests for generated servers | ✅ | — | test |
-| DNS perf tests | `Tests/*` | UDP/TCP load & concurrency tests | ✅ | — | test, dns |
-| SwiftLint in CI | `.swiftlint.yml`, `.github/workflows/*` | Add lint job to Actions | ✅ | — | ci, lint |
-| Coverage in CI | `.github/workflows/*` | Publish coverage artifacts/badge | ✅ | — | ci, test |
-| CI dependencies | `.github/workflows/ci.yml`, `sps/install-deps.sh` | Ensure coverage tools & SPS deps installed | ✅ | — | ci, sps |
-| opId→handler audit | repo-wide | Script to diff specs vs code | ✅ | — | tooling, docs |
-| Spec↔code drift | specs & servers | Track/close gaps per service | ✅ | — | process |
-| SPS validation hooks | `sps/Sources/Validation/*`, `sps/Sources/SPSCLI/main.swift` | Add coverage + reserved-bit checks | ✅ | — | sps |
-| SPS samples & usage docs | `sps/Samples`, `docs/sps-usage-guide.md` | Provide annotated sample PDFs and usage guide with page-range queries & validation hooks | ✅ | — | docs, sps |
-| MIDI 2 library | `midi/*`, `sps/*`, `Sources/MIDI2/*` | Parse MIDI 2 spec via SPS and expose Swift Package module | ✅ | — | midi, sps, spm |
-| Semantic browser & dissector | `sb/*` | Wire CLI commands and integrate Typesense indexer | ✅ | — | sb, cli, cdp, typesense, semantics |
-| Toolsmith package | `toolsmith/*` | Scaffold Toolsmith orchestration package with CLI | ✅ | — | toolsmith |
-| LibPlist adapter tests | `Tests/ToolsmithPackageTests/APIClientTests.swift` | Handle plutil help exit codes 0 or 1 | ✅ | — | toolsmith, test |
-| SSE over MIDI demo | Package.swift, docs/sse-over-midi-guide.md, Examples/SSEOverMIDI | Add target, docs and demo | ✅ | — | midi, sse |
+- Apps: `gateway-server`, `publishing-frontend`, `flexctl`, `clientgen-service`, `tools-factory-server`
+- Gateway Plugins (code): Auth, LLM, RateLimiter, BudgetBreaker, PayloadInspection, DestructiveGuardian, SecuritySentinel
+- Libraries: `FountainCodex` (OpenAPI loader, model/server generators, DNS engine, HTTP runtime), `PublishingFrontend`, `MIDI2*`, `ToolServer`, `ResourceLoader`
+- OpenAPI: `openapi/v1/*`, `openapi/v2/llm-gateway.yml`, `openapi/typesense.yml`
+- Tests: DNS, MIDI2, Gateway app integration, ToolServer, client generation, SSE over MIDI
 
 ---
 
-## 🧪 Execution Strategy
+## Spec → Code Status Snapshot
 
-Each Codex execution cycle must:  
-- Select tasks by tag or status  
-- Implement code + tests + docs  
-- Verify via `swift test` or CI  
-- Update `Status` and `Blockers`  
-
----
-
-## 🔁 Feedback Cycle
-
-After each cycle:  
-1. Update the matrix in-place  
-2. Append structured result logs to `/logs/`  
-3. Track recurring gaps in `/feedback/`  
-
----
-
-## 📁 Placement
-
-This file **lives at the repository root** as `agent.md`.  
-It is the **canonical manifest** for both:  
-- FountainAI’s **MIDI‑CI identity claim**  
-- Codex‑driven **repository self‑improvement**  
+| Service/Plugin | Spec | Code | Status |
+| --- | --- | --- | --- |
+| Gateway (mgmt, health, routes) | `openapi/v1/gateway.yml` | `apps/GatewayServer` | Implemented (core + routing) |
+| LLM Gateway | `openapi/v2/llm-gateway.yml` | `libs/GatewayPlugins/LLMGatewayPlugin` | Partial (some handlers exist) |
+| Auth Plugin | `openapi/v1/auth-gateway.yml` | `libs/GatewayPlugins/AuthGatewayPlugin` | Implemented |
+| Rate Limiter Plugin | `openapi/v1/rate-limiter-gateway.yml` | `libs/GatewayPlugins/RateLimiterGatewayPlugin` | Implemented |
+| Budget Breaker Plugin | `openapi/v1/budget-breaker-gateway.yml` | `libs/GatewayPlugins/BudgetBreakerGatewayPlugin` | Implemented |
+| Payload Inspection Plugin | `openapi/v1/payload-inspection-gateway.yml` | `libs/GatewayPlugins/PayloadInspectionGatewayPlugin` | Implemented |
+| Destructive Guardian Plugin | `openapi/v1/destructive-guardian-gateway.yml` | `libs/GatewayPlugins/DestructiveGuardianGatewayPlugin` | Implemented |
+| Security Sentinel Plugin | `openapi/v1/security-sentinel-gateway.yml` | `libs/GatewayPlugins/SecuritySentinelGatewayPlugin` | Implemented |
+| Role Health Check Plugin | `openapi/v1/role-health-check-gateway.yml` | — | Missing (spec only) |
+| Tools Factory | `openapi/v1/tools-factory.yml` | `libs/ToolServer`, `apps/ToolsFactoryServer` | Implemented |
+| Function Caller Service | `openapi/v1/function-caller.yml` | — | Missing (no target) |
+| Persistence Service | `openapi/v1/persist.yml` | — | Missing (no target) |
+| Planner Service | `openapi/v1/planner.yml`, `openapi/v0/planner.yml` | — | Missing (no target) |
+| Baseline Awareness | `openapi/v1/baseline-awareness.yml` | — | Missing (no target) |
+| DNS API | `openapi/v1/dns.yml` | `FountainCodex/DNS/*`, optional DNS runtime in gateway | Partial (DNS runtime present; HTTP API not wired) |
+| Semantic Browser | `openapi/v1/semantic-browser.yml` | — | Missing (no target) |
+| Typesense API (3rd‑party) | `openapi/typesense.yml` | — | Reference spec only |
 
 ---
 
-## COPYRIGHT POLICY 🔐
+## Root Agent Mission
 
-**Mandatory Footer:**  
-Every generated or updated file must end with:  
+Keep OpenAPI, code, and tests in lockstep; surface drift early; drive incremental, verifiable delivery of missing services and endpoints.
 
-> © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+### Operating Procedure (Per Cycle)
+
+1) Scan `openapi/*` and enumerate operationIds per spec.  
+2) Map specs to Swift targets: plugins under `libs/GatewayPlugins/*`, services under `apps/*` or `libs/*`.  
+3) Check handler stubs exist for every operationId; flag missing or mismatched routes.  
+4) Implement or scaffold gaps (code + minimal tests).  
+5) Run `swift build && swift test`; record outcomes.  
+6) Update this manifest’s status snapshot and the backlog.
+
+---
+
+## Immediate Needs (Backlog, Prioritized)
+
+1. Ship minimal Role Health Check Gateway plugin to satisfy `openapi/v1/role-health-check-gateway.yml` and register it in `apps/GatewayServer`.
+2. Implement a skeleton Function Caller service matching `openapi/v1/function-caller.yml` (map operationIds to registered functions; start with in‑memory registry).
+3. Stand up Persistence service scaffolding for `openapi/v1/persist.yml` (Typesense client stub or proxy decision; CRUD for corpora/baselines).
+4. Add Planner service skeleton for `openapi/v1/planner.yml` (reason/execute with simple rule‑based placeholder).
+5. Add Baseline Awareness stub service for streaming analytics per spec.
+6. Wire DNS HTTP endpoints from `openapi/v1/dns.yml` to existing DNS runtime (zone CRUD + record list).
+7. Audit LLM Gateway against v2 spec; fill missing endpoints and error handling.
+8. Create a spec–route linter (script) to enforce opId→route/handler coverage in CI.
+
+---
+
+## Helpful Commands
+
+- Build all: `swift build -v`
+- Run gateway: `swift run gateway-server [--dns]`
+- Run publishing frontend: `swift run publishing-frontend`
+- Run tools factory: `swift run tools-factory-server`
+- Run tests: `swift test -v`
+
+---
+
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
