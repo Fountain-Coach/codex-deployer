@@ -144,6 +144,11 @@ var targets: [Target] = [
         dependencies: ["ToolServer"],
         path: "apps/ToolsFactoryServer"
     ),
+    .executableTarget(
+        name: "persist-server",
+        dependencies: ["FountainCodex", "TypesensePersistence", "Yams"],
+        path: "apps/PersistServer"
+    ),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
     .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
     .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainCodex", .product(name: "Crypto", package: "swift-crypto"), .product(name: "NIOEmbedded", package: "swift-nio"), .product(name: "NIO", package: "swift-nio")], path: "Tests/DNSTests"),
