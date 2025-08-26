@@ -23,7 +23,7 @@ The authentication gateway plugin validates OAuth2/OIDC bearer tokens and enforc
 [`RateLimiterGatewayPlugin`](../../libs/GatewayPlugins/RateLimiterGatewayPlugin/RateLimiterGatewayPlugin/RateLimiterGatewayPlugin.swift) implements per‑client token buckets to throttle excessive requests and records allowance metrics.
 
 ### Pre‑deployment verification
-[`Scripts/predeploy.sh`](../../Scripts/predeploy.sh) verifies container image signatures with Cosign, scans for high‑severity vulnerabilities via Grype, and generates an SBOM using Syft before release.
+[`scripts/predeploy.sh`](../../scripts/predeploy.sh) verifies container image signatures with Cosign, scans for high‑severity vulnerabilities via Grype, and generates an SBOM using Syft before release.
 
 ### Security Sentinel persona
 The [LLM gateway safeguards](./llm-gateway-safeguards.md) define a `SecuritySentinel` role that reviews high‑risk instructions and returns `allow`, `deny`, or `escalate` decisions to the gateway.

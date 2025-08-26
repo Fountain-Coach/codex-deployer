@@ -13,7 +13,7 @@ public final class CertificateManager {
     /// - Parameters:
     ///   - scriptPath: Shell script used for renewal.
     ///   - interval: Time between renewals in seconds.
-    public init(scriptPath: String = "./Scripts/renew-certs.sh", interval: TimeInterval = 86_400) {
+    public init(scriptPath: String = "./scripts/renew-certs.sh", interval: TimeInterval = 86_400) {
         self.scriptPath = scriptPath
         self.interval = interval
     }

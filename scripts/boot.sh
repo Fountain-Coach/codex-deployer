@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Bootstraps a FountainAI dev environment.
 # Each major step can be disabled by setting its control variable to 0.
-# Example: `BUILD=0 Scripts/boot.sh` skips the Swift build.
+# Example: `BUILD=0 scripts/boot.sh` skips the Swift build.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$SCRIPT_DIR/.."

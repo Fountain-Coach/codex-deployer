@@ -59,7 +59,7 @@
 
 ## Pre-deployment Verification
 - Place the Cosign public key for container images at `docs/security/cosign.pub`.
-- Run `../../Scripts/predeploy.sh <image-ref>` before releasing any container.
+- Run `../../scripts/predeploy.sh <image-ref>` before releasing any container.
 - The script verifies signatures, scans dependencies with Grype, and records an SBOM via Syft in `logs/`.
 - Unsigned images or high-severity vulnerabilities cause the script to abort and block deployment.
 

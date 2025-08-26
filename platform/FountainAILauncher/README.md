@@ -75,7 +75,7 @@ To avoid editing the registry by hand, you can rebuild `services.json` by
 scanning a directory that contains all openapi binaries:
 
 ```bash
-FOUNTAINAI_SERVICES_DIR=/usr/local/bin swift Scripts/generate-service-registry.swift
+FOUNTAINAI_SERVICES_DIR=/usr/local/bin swift scripts/generate-service-registry.swift
 ```
 
 The script checks the specified directory for the expected executables and
@@ -108,7 +108,7 @@ The launcher expects the following executables to exist on disk. Install each se
 Run the Swift diagnostics script before launching to verify all service binaries and required API keys are available:
 
 ```bash
-swift Scripts/start-diagnostics.swift
+swift scripts/start-diagnostics.swift
 ```
 
 ---

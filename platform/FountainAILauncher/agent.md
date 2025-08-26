@@ -1,7 +1,7 @@
 # 🧠 Codex Agent: FountainAiLauncher – Golden-Key Boot & Supervisor
 
 This specification turns `FountainAiLauncher` into the single **boot, runtime, and maintenance** application for FountainAI.
-The former `Scripts/boot.sh` is retired; all setup and execution go through this Swift executable.
+The former `scripts/boot.sh` is retired; all setup and execution go through this Swift executable.
 Any service started outside the launcher must refuse to run.
 
 For runtime usage and deployment instructions, consult [README.md](README.md).
@@ -21,7 +21,7 @@ For runtime usage and deployment instructions, consult [README.md](README.md).
    - `TYPESENSE_URL`
    - `TYPESENSE_API_KEY`
    - any gateway credentials and TLS config
-2. Run diagnostics equivalent to `Scripts/start-diagnostics.swift`.
+2. Run diagnostics equivalent to `scripts/start-diagnostics.swift`.
 3. Execute `swift build --configuration release` for every package.
 4. Install or symlink resulting binaries according to `services.json`.
 5. Generate a manifest of SHA-256 hashes and file permissions for each binary; runtime must verify against this manifest.
@@ -64,7 +64,7 @@ FountainAiLauncher/
 ---
 
 ## ✅ Completion Checklist
-- [ ] Replace `Scripts/boot.sh` with equivalent Swift modules.
+- [ ] Replace `scripts/boot.sh` with equivalent Swift modules.
 - [ ] Build + install pipeline implemented.
 - [ ] Service manifest with hashes and permission checks.
 - [ ] Runtime supervisor with HTTP control plane.
