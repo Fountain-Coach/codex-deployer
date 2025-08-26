@@ -42,6 +42,7 @@ var targets: [Target] = [
             "LLMGatewayPlugin",
             "AuthGatewayPlugin",
             "RateLimiterGatewayPlugin",
+            "BudgetBreakerGatewayPlugin",
             "PayloadInspectionGatewayPlugin",
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "X509", package: "swift-certificates"),
@@ -63,6 +64,11 @@ var targets: [Target] = [
         name: "RateLimiterGatewayPlugin",
         dependencies: ["FountainCodex"],
         path: "libs/GatewayPlugins/RateLimiterGatewayPlugin",
+    ),
+    .target(
+        name: "BudgetBreakerGatewayPlugin",
+        dependencies: ["FountainCodex"],
+        path: "libs/GatewayPlugins/BudgetBreakerGatewayPlugin",
     ),
     .target(
         name: "PayloadInspectionGatewayPlugin",
