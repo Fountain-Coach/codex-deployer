@@ -19,5 +19,6 @@ Versioned service definitions live here. Each YAML file describes a FountainAI s
 | Tools Factory Service | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/tools-factory.yml](v1/tools-factory.yml) |
 | Typesense API | 28.0 | Contexter alias Benedikt Eickhoff | [typesense.yml](typesense.yml) |
 | Rate Limiter Gateway Plugin | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/rate-limiter-gateway.yml](v1/rate-limiter-gateway.yml) |
+| Payload Inspection Gateway Plugin | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/payload-inspection-gateway.yml](v1/payload-inspection-gateway.yml) |
 
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
