@@ -27,7 +27,7 @@
 
 ## Current Mitigations
 
-- **AuthPlugin** – Delegates credential validation to an OAuth2/OIDC provider and enforces role-based access on management routes. Source: [`AuthPlugin.swift`](../Sources/GatewayApp/AuthPlugin.swift). Configure `GATEWAY_OAUTH2_INTROSPECTION_URL`, optional client credentials, and `GATEWAY_ROLE_<CLIENT_ID>` as documented in the [GatewayApp README](../Sources/GatewayApp/README.md#authplugin).
+- **AuthGatewayPlugin** – Delegates credential validation to an OAuth2/OIDC provider and exposes `/auth/validate` and `/auth/claims` endpoints. Configure `GATEWAY_OAUTH2_INTROSPECTION_URL`, optional client credentials, and `GATEWAY_ROLE_<CLIENT_ID>` as documented in the [GatewayApp README](../Sources/GatewayApp/README.md).
 - **SecuritySentinelPlugin** – Consults an external service before destructive operations. Source: [`SecuritySentinelPlugin.swift`](../Sources/GatewayApp/SecuritySentinelPlugin.swift). Set the sentinel URL and log path per the [GatewayApp README](../Sources/GatewayApp/README.md#securitysentinelplugin).
 - **CoTLogger** – Captures chain-of-thought logs and optionally vets reasoning through the sentinel. Source: [`CoTLogger.swift`](../Sources/GatewayApp/CoTLogger.swift). Enable in the gateway pipeline and configure log destinations in the [GatewayApp README](../Sources/GatewayApp/README.md#cotlogger).
 - **Built-in Rate Limiter** – Applies per-route token buckets to throttle excessive requests. Implementation: [`GatewayServer.swift`](../Sources/GatewayApp/GatewayServer.swift). Set `rateLimit` on route definitions as documented under [Built-in Rate Limiting](../Sources/GatewayApp/README.md#built-in-rate-limiting).

@@ -11,7 +11,7 @@ This document outlines the current security posture of FountainAi and highlights
 
 ## Current Controls
 ### Authentication & authorization
-[`AuthPlugin`](../../Sources/GatewayApp/AuthPlugin.swift) validates OAuth2/OIDC bearer tokens and enforces role‑based access on administrative routes, returning `401` or `403` when credentials or scopes are insufficient.
+The authentication gateway plugin validates OAuth2/OIDC bearer tokens and enforces role‑based access on administrative routes, returning `401` or `403` when credentials or scopes are insufficient.
 
 ### Security sentinel
 [`SecuritySentinelPlugin`](../../Sources/GatewayApp/SecuritySentinelPlugin.swift) inspects potentially destructive requests, consults an external `SecuritySentinel` service, logs decisions to `logs/security.log` and denies or escalates high‑risk actions.

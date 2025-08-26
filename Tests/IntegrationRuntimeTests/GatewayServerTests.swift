@@ -830,57 +830,6 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         try await server.stop()
     }
 
-    @MainActor
-    func testTokenIssuanceAndProtectedMetrics() async throws {
-        setenv("GATEWAY_CRED_admin", "s3cr3t", 1)
-        setenv("GATEWAY_ROLE_admin", "admin", 1)
-        setenv("GATEWAY_JWT_SECRET", "topsecret", 1)
-        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let server = GatewayServer(manager: manager, plugins: [AuthPlugin()])
-        Task { try await server.start(port: 9125) }
-        try await Task.sleep(nanoseconds: 100_000_000)
-
-        struct Credential: Codable { let clientId: String; let clientSecret: String }
-        var req = URLRequest(url: URL(string: "http://127.0.0.1:9125/auth/token")!)
-        req.httpMethod = "POST"
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        req.httpBody = try JSONEncoder().encode(Credential(clientId: "admin", clientSecret: "s3cr3t"))
-        let (data, tokenResp) = try await URLSession.shared.data(for: req)
-        XCTAssertEqual((tokenResp as? HTTPURLResponse)?.statusCode, 200)
-        struct TokenResponse: Codable { let token: String; let expiresAt: String }
-        let token = try JSONDecoder().decode(TokenResponse.self, from: data)
-        let formatter = ISO8601DateFormatter()
-        XCTAssertNotNil(formatter.date(from: token.expiresAt))
-
-        let metricsURL = URL(string: "http://127.0.0.1:9125/metrics")!
-        let (_, unauthResp) = try await URLSession.shared.data(from: metricsURL)
-        XCTAssertEqual((unauthResp as? HTTPURLResponse)?.statusCode, 401)
-
-        var authReq = URLRequest(url: metricsURL)
-        authReq.setValue("Bearer \(token.token)", forHTTPHeaderField: "Authorization")
-        let (_, okResp) = try await URLSession.shared.data(for: authReq)
-        XCTAssertEqual((okResp as? HTTPURLResponse)?.statusCode, 200)
-
-        try await server.stop()
-    }
-
-    @MainActor
-    func testProtectedMetricsRequiresRole() async throws {
-        setenv("GATEWAY_CRED_user", "pw", 1)
-        setenv("GATEWAY_ROLE_user", "user", 1)
-        setenv("GATEWAY_JWT_SECRET", "topsecret", 1)
-        let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let server = GatewayServer(manager: manager, plugins: [AuthPlugin()])
-        Task { try await server.start(port: 9126) }
-        try await Task.sleep(nanoseconds: 100_000_000)
-        let store = CredentialStore()
-        let bad = try store.signJWT(subject: "user", expiresAt: Date().addingTimeInterval(3600), role: "user")
-        var req = URLRequest(url: URL(string: "http://127.0.0.1:9126/metrics")!)
-        req.setValue("Bearer \(bad)", forHTTPHeaderField: "Authorization")
-        let (_, resp) = try await URLSession.shared.data(for: req)
-        XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 403)
-        try await server.stop()
-    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
