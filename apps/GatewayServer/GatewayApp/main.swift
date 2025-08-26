@@ -6,9 +6,6 @@ import LLMGatewayPlugin
 import AuthGatewayPlugin
 import RateLimiterGatewayPlugin
 
-/// Launches ``GatewayServer`` with the publishing plugin enabled.
-/// The server stays running until the process is terminated.
-
 let publishingConfig = try? loadPublishingConfig()
 if publishingConfig == nil {
     FileHandle.standardError.write(Data("[gateway] Warning: failed to load Configuration/publishing.yml; using defaults for static content.\n".utf8))
@@ -22,8 +19,7 @@ let rateLimiter = RateLimiterGatewayPlugin(defaultLimit: gatewayConfig?.rateLimi
 let cotLogPath = ProcessInfo.processInfo.environment["COT_LOG_PATH"].map { URL(fileURLWithPath: $0) }
 let llmPlugin = LLMGatewayPlugin(cotLogURL: cotLogPath)
 let authPlugin = AuthGatewayPlugin()
-let sentinel = SecuritySentinelPlugin()
-let server = GatewayServer(plugins: [authPlugin, llmPlugin, sentinel, CoTLogger(sentinel: sentinel), rateLimiter, LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")], rateLimiter: rateLimiter)
+let server = GatewayServer(plugins: [authPlugin, llmPlugin, CoTLogger(), rateLimiter, LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")], rateLimiter: rateLimiter)
 Task { @MainActor in
     try await server.start(port: 8080)
 }
