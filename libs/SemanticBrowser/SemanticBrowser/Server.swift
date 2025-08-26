@@ -55,6 +55,95 @@ public func makeSemanticKernel(service: SemanticMemoryService) -> HTTPKernel {
             } else {
                 return HTTPResponse(status: 400)
             }
+        case ("POST", ["v1", "snapshot"]):
+            struct SnapshotRequest: Codable { let url: String; let storeArtifacts: Bool? }
+            if let sreq = try? JSONDecoder().decode(SnapshotRequest.self, from: req.body) {
+                let id = UUID().uuidString
+                let html = "<html><body><h1>\(sreq.url)</h1></body></html>"
+                let text = sreq.url
+                let snap = SemanticMemoryService.Snapshot(id: id, url: sreq.url, renderedHTML: html, renderedText: text)
+                if sreq.storeArtifacts ?? true { await service.store(snapshot: snap) }
+                if let data = try? JSONEncoder().encode(["snapshot": ["id": id, "url": sreq.url, "rendered": ["html": html, "text": text]]]) {
+                    return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+                }
+                return HTTPResponse(status: 200)
+            }
+            return HTTPResponse(status: 400)
+        case ("POST", ["v1", "analyze"]):
+            struct AnalyzeRequest: Codable { let snapshot: SemanticMemoryService.Snapshot?; let snapshotRef: SnapshotRef?; struct SnapshotRef: Codable { let snapshotId: String } }
+            if let areq = try? JSONDecoder().decode(AnalyzeRequest.self, from: req.body) {
+                let snap = areq.snapshot ?? (areq.snapshotRef.flatMap { await service.loadSnapshot(id: $0.snapshotId) })
+                guard let snap else { return HTTPResponse(status: 400) }
+                let fid = UUID().uuidString
+                let full = SemanticMemoryService.FullAnalysis(
+                    envelope: .init(id: fid, source: .init(uri: snap.url), contentType: "text/html", language: "en"),
+                    blocks: [ .init(id: fid+"-h", kind: "heading", text: snap.renderedText) ],
+                    semantics: .init(entities: [])
+                )
+                await service.store(analysis: full)
+                if let data = try? JSONEncoder().encode(full) {
+                    return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+                }
+                return HTTPResponse(status: 200)
+            }
+            return HTTPResponse(status: 400)
+        case ("POST", ["v1", "browse"]):
+            struct BrowseRequest: Codable { let url: String; let index: IndexOpt?; struct IndexOpt: Codable { let enabled: Bool? } }
+            if let breq = try? JSONDecoder().decode(BrowseRequest.self, from: req.body) {
+                let sid = UUID().uuidString
+                let html = "<html><body><h1>\(breq.url)</h1></body></html>"
+                let text = breq.url
+                let snap = SemanticMemoryService.Snapshot(id: sid, url: breq.url, renderedHTML: html, renderedText: text)
+                await service.store(snapshot: snap)
+                let fid = UUID().uuidString
+                let full = SemanticMemoryService.FullAnalysis(
+                    envelope: .init(id: fid, source: .init(uri: breq.url), contentType: "text/html", language: "en"),
+                    blocks: [ .init(id: fid+"-h", kind: "heading", text: text) ],
+                    semantics: .init(entities: [])
+                )
+                await service.store(analysis: full)
+                var indexObj: Any = NSNull()
+                if breq.index?.enabled ?? true {
+                    let res = await service.ingest(full: full)
+                    indexObj = try JSONSerialization.jsonObject(with: JSONEncoder().encode(res))
+                }
+                let resp: [String: Any] = [
+                    "snapshot": ["id": sid, "url": breq.url, "rendered": ["html": html, "text": text]],
+                    "analysis": try JSONSerialization.jsonObject(with: JSONEncoder().encode(full)),
+                    "index": indexObj
+                ]
+                if let data = try? JSONSerialization.data(withJSONObject: resp) {
+                    return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+                }
+                return HTTPResponse(status: 200)
+            }
+            return HTTPResponse(status: 400)
+        case ("GET", let seg) where seg.count == 3 && seg[0] == "v1" && seg[1] == "pages":
+            let id = String(seg[2])
+            if let p = await service.getPage(id: id), let data = try? JSONEncoder().encode(p) {
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            }
+            return HTTPResponse(status: 404)
+        case ("GET", ["v1", "export"]):
+            func qp(_ path: String) -> [String: String] {
+                guard let i = path.firstIndex(of: "?") else { return [:] }
+                let q = path[path.index(after: i)...]
+                var out: [String: String] = [:]
+                for pair in q.split(separator: "&") { let parts = pair.split(separator: "=", maxSplits: 1).map(String.init); if parts.count == 2 { out[parts[0]] = parts[1] } }
+                return out
+            }
+            let params = qp(req.path)
+            guard let pageId = params["pageId"], let format = params["format"] else { return HTTPResponse(status: 400) }
+            if format == "snapshot.html", let snap = await service.loadSnapshot(id: pageId) {
+                return HTTPResponse(status: 200, headers: ["Content-Type": "text/html"], body: Data(snap.renderedHTML.utf8))
+            }
+            if format == "snapshot.text", let snap = await service.loadSnapshot(id: pageId) {
+                return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: Data(snap.renderedText.utf8))
+            }
+            if format == "analysis.json", let a = await service.loadAnalysis(id: pageId), let data = try? JSONEncoder().encode(a) {
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            }
+            return HTTPResponse(status: 404)
         default:
             return HTTPResponse(status: 404)
         }

@@ -14,6 +14,16 @@ public actor SemanticMemoryService {
     private var segments: [SegmentDoc] = []
     private var entities: [EntityDoc] = []
     private let backend: Backend?
+    // Stored artifacts for snapshot/analyze/export
+    public struct Snapshot: Codable, Sendable {
+        public let id: String
+        public let url: String
+        public let renderedHTML: String
+        public let renderedText: String
+        public init(id: String, url: String, renderedHTML: String, renderedText: String) { self.id = id; self.url = url; self.renderedHTML = renderedHTML; self.renderedText = renderedText }
+    }
+    private var snapshots: [String: Snapshot] = [:] // key: snapshotId
+    private var analyses: [String: FullAnalysis] = [:] // key: envelope.id
 
     public init(backend: Backend? = nil) { self.backend = backend }
 
@@ -136,6 +146,21 @@ public actor SemanticMemoryService {
         var ents: [EntityDoc] = []
         if let es = full.semantics?.entities { ents = es.map { EntityDoc(id: $0.id, name: $0.name, type: $0.type) } }
         return ingest(IndexRequest(analysis: IngestAnalysis(page: page, segments: segs, entities: ents)))
+    }
+
+    // MARK: - Snapshot / Analyze artifact storage
+    public func store(snapshot: Snapshot) { snapshots[snapshot.id] = snapshot }
+    public func loadSnapshot(id: String) -> Snapshot? { snapshots[id] }
+    public func store(analysis: FullAnalysis) { analyses[analysis.envelope.id] = analysis }
+    public func loadAnalysis(id: String) -> FullAnalysis? { analyses[id] }
+    public func getPage(id: String) -> PageDoc? {
+        if let p = pages.first(where: { $0.id == id }) { return p }
+        // Backend fallback: naive search and filter by id
+        if let backend {
+            let (total, list) = backend.searchPages(q: "*", host: nil, lang: nil, limit: 200, offset: 0)
+            if total > 0 { return list.first(where: { $0.id == id }) }
+        }
+        return nil
     }
 }
 
