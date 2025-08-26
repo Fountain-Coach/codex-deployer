@@ -5,6 +5,7 @@ import FoundationNetworking
 #endif
 @testable import gateway_server
 @testable import FountainCodex
+import RateLimiterGatewayPlugin
 
 final class GatewayServerTests: XCTestCase {
 
@@ -45,7 +46,7 @@ final class GatewayServerTests: XCTestCase {
     @MainActor
     func testRenewCertificateReturnsConfirmation() async throws {
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let rl = RateLimiterPlugin()
+        let rl = RateLimiterGatewayPlugin()
         let server = GatewayServer(manager: manager, plugins: [rl], rateLimiter: rl)
         Task { try await server.start(port: 9125) }
         try await Task.sleep(nanoseconds: 100_000_000)
@@ -158,7 +159,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
     /// Unknown paths should yield a `404` status.
     func testUnknownPathReturns404() async throws {
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let rl = RateLimiterPlugin()
+        let rl = RateLimiterGatewayPlugin()
         let server = GatewayServer(manager: manager, plugins: [rl], rateLimiter: rl)
         Task { try await server.start(port: 9103) }
         try await Task.sleep(nanoseconds: 100_000_000)
@@ -267,7 +268,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
     /// Health endpoint should emit the JSON content type header.
     func testHealthEndpointSetsJSONContentType() async throws {
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let rl = RateLimiterPlugin()
+        let rl = RateLimiterGatewayPlugin()
         let server = GatewayServer(manager: manager, plugins: [rl], rateLimiter: rl)
         Task { try await server.start(port: 9106) }
         try await Task.sleep(nanoseconds: 100_000_000)
@@ -282,7 +283,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
     /// Metrics endpoint should emit the JSON content type header.
     func testMetricsEndpointSetsJSONContentType() async throws {
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let rl = RateLimiterPlugin()
+        let rl = RateLimiterGatewayPlugin()
         let server = GatewayServer(manager: manager, plugins: [rl], rateLimiter: rl)
         Task { try await server.start(port: 9107) }
         try await Task.sleep(nanoseconds: 100_000_000)
@@ -298,7 +299,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
     func testMetricsEndpointReturnsZeroCounters() async throws {
         await DNSMetrics.shared.reset()
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let rl = RateLimiterPlugin()
+        let rl = RateLimiterGatewayPlugin()
         let server = GatewayServer(manager: manager, plugins: [rl], rateLimiter: rl)
         Task { try await server.start(port: 9108) }
         try await Task.sleep(nanoseconds: 100_000_000)
@@ -363,7 +364,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
     @MainActor
     func testZonesRequireManager() async throws {
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let rl = RateLimiterPlugin()
+        let rl = RateLimiterGatewayPlugin()
         let server = GatewayServer(manager: manager, plugins: [rl], rateLimiter: rl)
         Task { try await server.start(port: 9131) }
         try await Task.sleep(nanoseconds: 100_000_000)
@@ -457,7 +458,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         setenv("GATEWAY_ROLE_admin", "admin", 1)
         setenv("GATEWAY_JWT_SECRET", "topsecret", 1)
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let rl = RateLimiterPlugin()
+        let rl = RateLimiterGatewayPlugin()
         let server = GatewayServer(manager: manager, plugins: [rl], rateLimiter: rl)
         Task { try await server.start(port: 9113) }
         try await Task.sleep(nanoseconds: 100_000_000)
@@ -523,7 +524,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
     @MainActor
     func testRoutesCRUD() async throws {
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let rl = RateLimiterPlugin()
+        let rl = RateLimiterGatewayPlugin()
         let server = GatewayServer(manager: manager, plugins: [rl], rateLimiter: rl)
         Task { try await server.start(port: 9114) }
         try await Task.sleep(nanoseconds: 100_000_000)
@@ -633,7 +634,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         let upstreamPort = try await upstream.start(port: 0)
 
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let rl = RateLimiterPlugin()
+        let rl = RateLimiterGatewayPlugin()
         let server = GatewayServer(manager: manager, plugins: [rl], rateLimiter: rl)
         Task { try await server.start(port: 9116) }
         try await Task.sleep(nanoseconds: 500_000_000)
@@ -665,7 +666,7 @@ aAhFmOl1mcUedOydNA87ZDbQXd7VqSw5mi4cqymNnbpPfjjsy9vG/+xqCMFdnFQd
         let upstreamPort = try await upstream.start(port: 0)
 
         let manager = CertificateManager(scriptPath: "/usr/bin/true", interval: 3600)
-        let rl = RateLimiterPlugin()
+        let rl = RateLimiterGatewayPlugin()
         let server = GatewayServer(manager: manager, plugins: [rl], rateLimiter: rl)
         Task { try await server.start(port: 9120) }
         try await Task.sleep(nanoseconds: 500_000_000)

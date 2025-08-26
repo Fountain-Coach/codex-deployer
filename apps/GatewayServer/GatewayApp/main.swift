@@ -4,6 +4,7 @@ import PublishingFrontend
 import FountainCodex
 import LLMGatewayPlugin
 import AuthGatewayPlugin
+import RateLimiterGatewayPlugin
 
 /// Launches ``GatewayServer`` with the publishing plugin enabled.
 /// The server stays running until the process is terminated.
@@ -17,7 +18,7 @@ let gatewayConfig = try? loadGatewayConfig()
 if gatewayConfig == nil {
     FileHandle.standardError.write(Data("[gateway] Warning: failed to load Configuration/gateway.yml; using defaults for rate limiting.\n".utf8))
 }
-let rateLimiter = RateLimiterPlugin(defaultLimit: gatewayConfig?.rateLimitPerMinute ?? 60)
+let rateLimiter = RateLimiterGatewayPlugin(defaultLimit: gatewayConfig?.rateLimitPerMinute ?? 60)
 let cotLogPath = ProcessInfo.processInfo.environment["COT_LOG_PATH"].map { URL(fileURLWithPath: $0) }
 let llmPlugin = LLMGatewayPlugin(cotLogURL: cotLogPath)
 let authPlugin = AuthGatewayPlugin()

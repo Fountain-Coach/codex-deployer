@@ -6,6 +6,7 @@ import Crypto
 import X509
 import LLMGatewayPlugin
 import AuthGatewayPlugin
+import RateLimiterGatewayPlugin
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
@@ -29,7 +30,7 @@ public final class GatewayServer {
     private var routes: [String: RouteInfo]
     private let routesURL: URL?
     private let certificatePath: String?
-    private let rateLimiter: RateLimiterPlugin?
+    private let rateLimiter: RateLimiterGatewayPlugin?
 
     private struct ZoneCreateRequest: Codable { let name: String }
     private struct ZonesResponse: Codable { let zones: [ZoneManager.Zone] }
@@ -76,7 +77,7 @@ public final class GatewayServer {
                 zoneManager: ZoneManager? = nil,
                 routeStoreURL: URL? = nil,
                 certificatePath: String? = nil,
-                rateLimiter: RateLimiterPlugin? = nil) {
+                rateLimiter: RateLimiterGatewayPlugin? = nil) {
         self.manager = manager
         self.plugins = plugins
         self.zoneManager = zoneManager

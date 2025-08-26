@@ -20,7 +20,7 @@ The authentication gateway plugin validates OAuth2/OIDC bearer tokens and enforc
 [`CoTLogger`](../../Sources/GatewayApp/CoTLogger.swift) captures reasoning when `include_cot` is set, sanitizes secrets, and optionally checks risky entries with the sentinel before persisting them.
 
 ### Rate limiting
-[`RateLimiterPlugin`](../../Sources/GatewayApp/RateLimiterPlugin.swift) implements per‑client token buckets to throttle excessive requests and records allowance metrics.
+[`RateLimiterGatewayPlugin`](../../libs/GatewayPlugins/RateLimiterGatewayPlugin/RateLimiterGatewayPlugin/RateLimiterGatewayPlugin.swift) implements per‑client token buckets to throttle excessive requests and records allowance metrics.
 
 ### Pre‑deployment verification
 [`Scripts/predeploy.sh`](../../Scripts/predeploy.sh) verifies container image signatures with Cosign, scans for high‑severity vulnerabilities via Grype, and generates an SBOM using Syft before release.

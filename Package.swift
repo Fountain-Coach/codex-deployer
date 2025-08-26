@@ -41,6 +41,7 @@ var targets: [Target] = [
             "PublishingFrontend",
             "LLMGatewayPlugin",
             "AuthGatewayPlugin",
+            "RateLimiterGatewayPlugin",
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "X509", package: "swift-certificates"),
             "Yams"
@@ -56,6 +57,11 @@ var targets: [Target] = [
         name: "AuthGatewayPlugin",
         dependencies: ["FountainCodex", .product(name: "Crypto", package: "swift-crypto")],
         path: "libs/GatewayPlugins/AuthGatewayPlugin"
+    ),
+    .target(
+        name: "RateLimiterGatewayPlugin",
+        dependencies: ["FountainCodex"],
+        path: "libs/GatewayPlugins/RateLimiterGatewayPlugin",
     ),
     .target(
         name: "PublishingFrontend",
@@ -108,7 +114,7 @@ var targets: [Target] = [
     .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainCodex", .product(name: "Crypto", package: "swift-crypto"), .product(name: "NIOEmbedded", package: "swift-nio"), .product(name: "NIO", package: "swift-nio")], path: "Tests/DNSTests"),
     .testTarget(
         name: "IntegrationRuntimeTests",
-        dependencies: ["gateway-server", "FountainCodex", "LLMGatewayPlugin"],
+        dependencies: ["gateway-server", "FountainCodex", "LLMGatewayPlugin", "RateLimiterGatewayPlugin"],
         path: "Tests/IntegrationRuntimeTests",
         resources: [.process("Fixtures")]
     ),
