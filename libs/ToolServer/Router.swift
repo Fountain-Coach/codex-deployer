@@ -24,8 +24,9 @@ public struct Router {
     }
 
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
+        let pathOnly = request.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? request.path
         if request.method == "GET" {
-            switch request.path {
+            switch pathOnly {
             case "/openapi.yaml":
                 let url = URL(fileURLWithPath: "Sources/ToolServer/openapi.yaml")
                 let data = try Data(contentsOf: url)
@@ -42,15 +43,13 @@ public struct Router {
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
             default:
                 // /tools with pagination
-                if request.path.hasPrefix("/tools") {
-                    return try await listTools(request)
-                }
+                if pathOnly == "/tools" { return try await listTools(request) }
                 break
             }
         }
 
         guard request.method == "POST" else { return HTTPResponse(status: 405) }
-        if request.path == "/tools/register" {
+        if pathOnly == "/tools/register" {
             return try await registerTools(request)
         }
         let parts = request.path.split(separator: "/").map(String.init)
