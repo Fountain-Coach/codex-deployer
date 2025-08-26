@@ -58,7 +58,7 @@ final class GatewayPersistProxyTests: XCTestCase {
         var gReq = URLRequest(url: URL(string: "http://127.0.0.1:9130/persist/corpora/g2/functions")!)
         gReq.httpMethod = "POST"
         gReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        gReq.httpBody = try JSONEncoder().encode(["functionId": "g-f1", "name": "GX", "description": "gx", "httpMethod": "GET", "httpPath": "/gx"]) 
+        gReq.httpBody = try JSONEncoder().encode(["functionId": "gx1", "name": "GX", "description": "gx", "httpMethod": "GET", "httpPath": "/gx"]) 
         let (_, gResp) = try await URLSession.shared.data(for: gReq)
         XCTAssertEqual((gResp as? HTTPURLResponse)?.statusCode, 200)
 

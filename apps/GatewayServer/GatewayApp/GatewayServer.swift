@@ -232,8 +232,10 @@ public final class GatewayServer {
 
         var upstream = URLRequest(url: url)
         upstream.httpMethod = request.method
-        // Copy headers except Host; allow upstream to set it
-        for (k, v) in request.headers where k.lowercased() != "host" {
+        // Copy safe headers, let URLSession manage hop-by-hop and payload framing
+        for (k, v) in request.headers {
+            let lk = k.lowercased()
+            if lk == "host" || lk == "content-length" || lk == "transfer-encoding" || lk == "connection" || lk == "expect" { continue }
             upstream.setValue(v, forHTTPHeaderField: k)
         }
         if !request.body.isEmpty { upstream.httpBody = request.body }

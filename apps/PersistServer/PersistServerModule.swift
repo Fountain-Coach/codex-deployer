@@ -4,7 +4,8 @@ import TypesensePersistence
 
 public func makePersistKernel(service svc: TypesensePersistenceService) -> HTTPKernel {
     HTTPKernel { req in
-        let segments = req.path.split(separator: "/", omittingEmptySubsequences: true)
+        let pathOnly = req.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? req.path
+        let segments = pathOnly.split(separator: "/", omittingEmptySubsequences: true)
         do {
             switch (req.method, segments) {
             case ("GET", ["metrics"]):
@@ -73,10 +74,21 @@ public func makePersistKernel(service svc: TypesensePersistenceService) -> HTTPK
 
             case ("POST", let seg) where seg.count == 3 && seg[0] == "corpora" && seg[2] == "functions":
                 let corpusId = String(seg[1])
-                var function = try JSONDecoder().decode(FunctionModel.self, from: req.body)
-                if function.corpusId != corpusId {
-                    function = FunctionModel(corpusId: corpusId, functionId: function.functionId, name: function.name, description: function.description, httpMethod: function.httpMethod, httpPath: function.httpPath)
+                struct FunctionIncoming: Codable {
+                    let corpusId: String?
+                    let functionId: String
+                    let name: String
+                    let description: String
+                    let httpMethod: String
+                    let httpPath: String
                 }
+                let incoming = try JSONDecoder().decode(FunctionIncoming.self, from: req.body)
+                let function = FunctionModel(corpusId: incoming.corpusId ?? corpusId,
+                                             functionId: incoming.functionId,
+                                             name: incoming.name,
+                                             description: incoming.description,
+                                             httpMethod: incoming.httpMethod,
+                                             httpPath: incoming.httpPath)
                 let resp = try await svc.addFunction(function)
                 let json = try JSONEncoder().encode(resp)
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
