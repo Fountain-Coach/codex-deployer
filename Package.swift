@@ -4,6 +4,7 @@ import PackageDescription
 var products: [Product] = [
     .library(name: "FountainCodex", targets: ["FountainCodex"]),
     .library(name: "TypesensePersistence", targets: ["TypesensePersistence"]),
+    .library(name: "SemanticBrowser", targets: ["SemanticBrowser"]),
     .library(name: "MIDI2Models", targets: ["MIDI2Models"]),
     .library(name: "MIDI2Core", targets: ["MIDI2Core"]),
     .library(name: "FlexBridge", targets: ["FlexBridge"]),
@@ -36,6 +37,16 @@ var targets: [Target] = [
             .product(name: "Typesense", package: "typesense-swift")
         ],
         path: "libs/TypesensePersistence"
+    ),
+    .target(
+        name: "SemanticBrowser",
+        dependencies: [],
+        path: "libs/SemanticBrowser"
+    ),
+    .executableTarget(
+        name: "semantic-browser-server",
+        dependencies: ["SemanticBrowser", "FountainCodex"],
+        path: "apps/SemanticBrowserServer"
     ),
     .executableTarget(
         name: "clientgen-service",
