@@ -22,7 +22,7 @@ func buildService() -> SemanticMemoryService {
 let service = buildService()
 Task { await service.seed(pages: [PageDoc(id: "p1", url: "https://example.com/page", host: "example.com", title: "Example")]) }
 
-let kernel = makeSemanticKernel(service: service)
+let kernel = makeSemanticKernel(service: service, engine: (ProcessInfo.processInfo.environment["SB_BROWSER_CLI"].map { ShellBrowserEngine(binary: $0, args: (ProcessInfo.processInfo.environment["SB_BROWSER_ARGS"] ?? "").split(separator: " ").map(String.init)) } ?? URLFetchBrowserEngine() ), apiKey: ProcessInfo.processInfo.environment["SB_API_KEY"] ?? ProcessInfo.processInfo.environment["SEM_BROWSER_API_KEY"])
 let server = NIOHTTPServer(kernel: kernel)
 Task { _ = try? await server.start(port: 8006); print("semantic-browser listening on 8006") }
 dispatchMain()

@@ -1,7 +1,7 @@
 import Foundation
 import FountainCodex
 
-public func makeSemanticKernel(service: SemanticMemoryService) -> HTTPKernel {
+public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEngine? = nil, apiKey: String? = nil) -> HTTPKernel {
     func qp(_ path: String) -> [String: String] {
         guard let i = path.firstIndex(of: "?") else { return [:] }
         let q = path[path.index(after: i)...]
@@ -13,6 +13,9 @@ public func makeSemanticKernel(service: SemanticMemoryService) -> HTTPKernel {
         return out
     }
     return HTTPKernel { req in
+        if let apiKey, !apiKey.isEmpty {
+            if (req.headers["X-API-Key"] ?? "") != apiKey { return HTTPResponse(status: 401) }
+        }
         let pathOnly = req.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? req.path
         let segs = pathOnly.split(separator: "/", omittingEmptySubsequences: true)
         switch (req.method, segs) {
@@ -59,8 +62,12 @@ public func makeSemanticKernel(service: SemanticMemoryService) -> HTTPKernel {
             struct SnapshotRequest: Codable { let url: String; let storeArtifacts: Bool? }
             if let sreq = try? JSONDecoder().decode(SnapshotRequest.self, from: req.body) {
                 let id = UUID().uuidString
-                let html = "<html><body><h1>\(sreq.url)</h1></body></html>"
-                let text = sreq.url
+                let (html, text): (String, String)
+                if let engine {
+                    if let result = try? await engine.snapshotHTML(for: sreq.url) { html = result.html; text = result.text } else { html = ""; text = sreq.url }
+                } else {
+                    html = "<html><body><h1>\(sreq.url)</h1></body></html>"; text = sreq.url
+                }
                 let snap = SemanticMemoryService.Snapshot(id: id, url: sreq.url, renderedHTML: html, renderedText: text)
                 if sreq.storeArtifacts ?? true { await service.store(snapshot: snap) }
                 if let data = try? JSONEncoder().encode(["snapshot": ["id": id, "url": sreq.url, "rendered": ["html": html, "text": text]]]) {
@@ -91,8 +98,12 @@ public func makeSemanticKernel(service: SemanticMemoryService) -> HTTPKernel {
             struct BrowseRequest: Codable { let url: String; let index: IndexOpt?; struct IndexOpt: Codable { let enabled: Bool? } }
             if let breq = try? JSONDecoder().decode(BrowseRequest.self, from: req.body) {
                 let sid = UUID().uuidString
-                let html = "<html><body><h1>\(breq.url)</h1></body></html>"
-                let text = breq.url
+                let (html, text): (String, String)
+                if let engine {
+                    if let result = try? await engine.snapshotHTML(for: breq.url) { html = result.html; text = result.text } else { html = ""; text = breq.url }
+                } else {
+                    html = "<html><body><h1>\(breq.url)</h1></body></html>"; text = breq.url
+                }
                 let snap = SemanticMemoryService.Snapshot(id: sid, url: breq.url, renderedHTML: html, renderedText: text)
                 await service.store(snapshot: snap)
                 let fid = UUID().uuidString
