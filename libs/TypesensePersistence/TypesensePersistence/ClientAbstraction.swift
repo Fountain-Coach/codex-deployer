@@ -8,7 +8,7 @@ public protocol TypesenseClientLike {
     func createCollection(name: String, fields: [(String, String)], defaultSortingField: String?) async throws
     func upsert(collectionName: String, document: Data) async throws
     func exportAll(collectionName: String) async throws -> Data
-    func searchFunctions(q: String, filterBy: String?, page: Int, perPage: Int) async throws -> [FunctionModel]
+    func searchFunctions(q: String, filterBy: String?, page: Int, perPage: Int) async throws -> (total: Int, functions: [FunctionModel])
 }
 
 #if canImport(Typesense)
@@ -45,7 +45,7 @@ public final class RealTypesenseClient: TypesenseClientLike {
         return data
     }
 
-    public func searchFunctions(q: String, filterBy: String?, page: Int, perPage: Int) async throws -> [FunctionModel] {
+    public func searchFunctions(q: String, filterBy: String?, page: Int, perPage: Int) async throws -> (total: Int, functions: [FunctionModel]) {
         let params = SearchParameters(
             q: q,
             queryBy: "name,description,httpPath,functionId,corpusId",
@@ -54,8 +54,17 @@ public final class RealTypesenseClient: TypesenseClientLike {
             perPage: perPage
         )
         let (result, _) = try await client.collection(name: "functions").documents().search(params, for: FunctionModel.self)
-        // SearchResult<T> likely wraps hits with documents
-        return result.hits?.compactMap { $0.document } ?? []
+        // Prefer result.found if available; otherwise fall back to hits count
+        let hits = result.hits?.compactMap { $0.document } ?? []
+        let total: Int
+        if let mirrorFound = Mirror(reflecting: result).children.first(where: { $0.label == "found" })?.value as? Int {
+            total = mirrorFound
+        } else if let mirrorFoundI = Mirror(reflecting: result).children.first(where: { $0.label == "found" })?.value as? Int32 {
+            total = Int(mirrorFoundI)
+        } else {
+            total = hits.count
+        }
+        return (total, hits)
     }
 }
 #endif
@@ -94,7 +103,7 @@ public final class MockTypesenseClient: TypesenseClientLike {
         return Data(lines.joined(separator: "\n").utf8)
     }
 
-    public func searchFunctions(q: String, filterBy: String?, page: Int, perPage: Int) async throws -> [FunctionModel] {
+    public func searchFunctions(q: String, filterBy: String?, page: Int, perPage: Int) async throws -> (total: Int, functions: [FunctionModel]) {
         let all = collections["functions"] ?? []
         let needle = q == "*" ? nil : q.lowercased()
         let filtered: [[String: Any]] = all.filter { obj in
@@ -114,7 +123,7 @@ public final class MockTypesenseClient: TypesenseClientLike {
         }.sorted { $0.functionId < $1.functionId }
         let start = max((page - 1) * perPage, 0)
         let slice = Array(decoded.dropFirst(min(start, decoded.count)).prefix(perPage))
-        return slice
+        return (decoded.count, slice)
     }
 }
 

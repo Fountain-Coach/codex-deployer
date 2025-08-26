@@ -88,23 +88,8 @@ public actor TypesensePersistenceService {
         try await ensureCollections()
         let page = max(offset / max(limit, 1) + 1, 1)
         let perPage = max(limit, 1)
-        let results = try await client.searchFunctions(q: (q?.isEmpty == false ? q! : "*"), filterBy: nil, page: page, perPage: perPage)
-        // We cannot get exact total cheaply via mock search; compute via export for total count
-        let data = try await client.exportAll(collectionName: "functions")
-        let items: [[String: Any]] = Self.parseJSONL(data)
-        var decoded: [FunctionModel] = try items.map { try Self.decode($0) }
-        if let q, !q.isEmpty {
-            let needle = q.lowercased()
-            decoded = decoded.filter { f in
-                f.name.lowercased().contains(needle) ||
-                f.description.lowercased().contains(needle) ||
-                f.httpPath.lowercased().contains(needle) ||
-                f.functionId.lowercased().contains(needle) ||
-                f.corpusId.lowercased().contains(needle)
-            }
-        }
-        decoded.sort { $0.functionId < $1.functionId }
-        return (decoded.count, results)
+        let (total, results) = try await client.searchFunctions(q: (q?.isEmpty == false ? q! : "*"), filterBy: nil, page: page, perPage: perPage)
+        return (total, results)
     }
 
     public func getFunctionDetails(functionId: String) async throws -> FunctionModel? {
@@ -117,24 +102,8 @@ public actor TypesensePersistenceService {
         let page = max(offset / max(limit, 1) + 1, 1)
         let perPage = max(limit, 1)
         let filterBy = "corpusId:=\(corpusId)"
-        let results = try await client.searchFunctions(q: (q?.isEmpty == false ? q! : "*"), filterBy: filterBy, page: page, perPage: perPage)
-        // Compute total consistently using exportAll for now
-        let data = try await client.exportAll(collectionName: "functions")
-        let items: [[String: Any]] = Self.parseJSONL(data)
-        var decoded: [FunctionModel] = try items
-            .filter { ($0["corpusId"] as? String) == corpusId }
-            .map { try Self.decode($0) }
-        if let q, !q.isEmpty {
-            let needle = q.lowercased()
-            decoded = decoded.filter { f in
-                f.name.lowercased().contains(needle) ||
-                f.description.lowercased().contains(needle) ||
-                f.httpPath.lowercased().contains(needle) ||
-                f.functionId.lowercased().contains(needle)
-            }
-        }
-        decoded.sort { $0.functionId < $1.functionId }
-        return (decoded.count, results)
+        let (total, results) = try await client.searchFunctions(q: (q?.isEmpty == false ? q! : "*"), filterBy: filterBy, page: page, perPage: perPage)
+        return (total, results)
     }
 
     // MARK: - Helpers
