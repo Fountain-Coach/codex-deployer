@@ -28,7 +28,7 @@ cp .env.example .env
 # edit .env and provide real values
 ```
 
-`Scripts/boot.sh` and other utilities will automatically load variables from `.env`.
+`scripts/boot.sh` and other utilities will automatically load variables from `.env`.
 
 ---
 

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Pre-deployment verification for container images.
-# Usage: Scripts/predeploy.sh <image-ref>
+# Usage: scripts/predeploy.sh <image-ref>
 # Requires COSIGN_PUBLIC_KEY to point to the verifying key.
 # Tools: cosign, grype, syft.
 

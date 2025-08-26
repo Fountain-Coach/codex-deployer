@@ -6,7 +6,7 @@ Quick-start guide for building and exercising the sandboxed Tool Server.
 
 ```bash
 # Generate Ubuntu rootfs with bundled tools
-./Scripts/build-sandbox-image.sh swift-6.0.1-ubuntu22.04
+./scripts/build-sandbox-image.sh swift-6.0.1-ubuntu22.04
 
 # Compile Swift packages
 swift build -c release
@@ -31,4 +31,6 @@ curl -X POST http://localhost:8080/image/convert \
 ## More
 
 - License matrix: see [../docs/licensing-matrix.md](../docs/licensing-matrix.md).
-- Test procedure: run [../Scripts/run-tests.sh](../Scripts/run-tests.sh).
+- Test procedure: run [../scripts/run-tests.sh](../scripts/run-tests.sh).
+
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

@@ -51,14 +51,14 @@ let requestID = toolsmith.run(tool: "echo") {
 
 ## Client Generation
 
-Run `Scripts/generate-toolsmith-client.swift` to regenerate the `ToolsmithAPI` client from the shared `tools-factory.yml` spec. The generator copies the `Client/tools-factory` output into `toolsmith/Sources/ToolsmithAPI`, preserving operation names like `list_tools` and `register_openapi` so interfaces mirror the Tools Factory contract and avoid naming conflicts.
+Run `scripts/generate-toolsmith-client.swift` to regenerate the `ToolsmithAPI` client from the shared `tools-factory.yml` spec. The generator copies the `Client/tools-factory` output into `toolsmith/Sources/ToolsmithAPI`, preserving operation names like `list_tools` and `register_openapi` so interfaces mirror the Tools Factory contract and avoid naming conflicts.
 
 ## Smoke Test
 
 Verify an orchestrator ↔ sandbox round-trip with:
 
 ```bash
-Scripts/toolsmith-smoke-test.sh
+scripts/toolsmith-smoke-test.sh
 ```
 
 ## CLI Usage

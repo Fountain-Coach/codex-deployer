@@ -320,7 +320,7 @@ try tf.shutdown()
 
 ```bash
 # Build the sandbox image with bundled tools
-./Scripts/build-sandbox-image.sh swift-6.0.1-ubuntu22.04
+./scripts/build-sandbox-image.sh swift-6.0.1-ubuntu22.04
 
 # Compile the Swift packages
 swift build -c release
@@ -441,7 +441,7 @@ qcow2 (Ubuntu 22.04) with cloud‑init seed for one‑shot Tool Server bootstrap
 
     •    Boot sandbox, run /_health, /_manifest.
     •    Golden tests: image resize, audio transcode, plist convert.
-    •    ./Scripts/run-tests.sh builds and runs coverage tests.
+    •    ./scripts/run-tests.sh builds and runs coverage tests.
 
 ### Security
 
@@ -459,6 +459,6 @@ qcow2 (Ubuntu 22.04) with cloud‑init seed for one‑shot Tool Server bootstrap
     •    ✅ OAS generated clients compile and pass smoke tests.
     •    ✅ No host toolchain changes required.
     •    ✅ Network‑off default enforced.
-    •    ✅ License compliance validated via docs/licensing-matrix.md and Scripts/verify-licenses.sh.
+    •    ✅ License compliance validated via docs/licensing-matrix.md and scripts/verify-licenses.sh.
 
 > © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
