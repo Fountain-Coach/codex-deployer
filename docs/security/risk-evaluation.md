@@ -27,10 +27,10 @@
 
 ## Current Mitigations
 
-- **AuthGatewayPlugin** – Delegates credential validation to an OAuth2/OIDC provider and exposes `/auth/validate` and `/auth/claims` endpoints. Configure `GATEWAY_OAUTH2_INTROSPECTION_URL`, optional client credentials, and `GATEWAY_ROLE_<CLIENT_ID>` as documented in the [GatewayApp README](../Sources/GatewayApp/README.md).
-- **SecuritySentinelPlugin** – Consults an external service before destructive operations. Source: [`SecuritySentinelPlugin.swift`](../Sources/GatewayApp/SecuritySentinelPlugin.swift). Set the sentinel URL and log path per the [GatewayApp README](../Sources/GatewayApp/README.md#securitysentinelplugin).
-- **CoTLogger** – Captures chain-of-thought logs and optionally vets reasoning through the sentinel. Source: [`CoTLogger.swift`](../Sources/GatewayApp/CoTLogger.swift). Enable in the gateway pipeline and configure log destinations in the [GatewayApp README](../Sources/GatewayApp/README.md#cotlogger).
-- **Built-in Rate Limiter** – Applies per-route token buckets to throttle excessive requests. Implementation: [`GatewayServer.swift`](../Sources/GatewayApp/GatewayServer.swift). Set `rateLimit` on route definitions as documented under [Built-in Rate Limiting](../Sources/GatewayApp/README.md#built-in-rate-limiting).
+- **AuthGatewayPlugin** – Delegates credential validation to an OAuth2/OIDC provider and exposes `/auth/validate` and `/auth/claims` endpoints. Configure `GATEWAY_OAUTH2_INTROSPECTION_URL`, optional client credentials, and `GATEWAY_ROLE_<CLIENT_ID>` as documented in the [GatewayApp README](../../Sources/GatewayApp/README.md).
+- **SecuritySentinelPlugin** – Consults an external service before destructive operations. Source: [`SecuritySentinelPlugin.swift`](../../Sources/GatewayApp/SecuritySentinelPlugin.swift). Set the sentinel URL and log path per the [GatewayApp README](../../Sources/GatewayApp/README.md#securitysentinelplugin).
+- **CoTLogger** – Captures chain-of-thought logs and optionally vets reasoning through the sentinel. Source: [`CoTLogger.swift`](../../Sources/GatewayApp/CoTLogger.swift). Enable in the gateway pipeline and configure log destinations in the [GatewayApp README](../../Sources/GatewayApp/README.md#cotlogger).
+- **Built-in Rate Limiter** – Applies per-route token buckets to throttle excessive requests. Implementation: [`GatewayServer.swift`](../../Sources/GatewayApp/GatewayServer.swift). Set `rateLimit` on route definitions as documented under [Built-in Rate Limiting](../../Sources/GatewayApp/README.md#built-in-rate-limiting).
 
 ## Strengthen Access Controls
 - Audit OAuth2 scopes and roles to ensure least-privilege access.
@@ -58,8 +58,8 @@
 - Isolate the model runtime (e.g., in sandboxed environments) so any compromise remains contained.
 
 ## Pre-deployment Verification
-- Place the Cosign public key for container images at `SECURITY/cosign.pub`.
-- Run `Scripts/predeploy.sh <image-ref>` before releasing any container.
+- Place the Cosign public key for container images at `docs/security/cosign.pub`.
+- Run `../../Scripts/predeploy.sh <image-ref>` before releasing any container.
 - The script verifies signatures, scans dependencies with Grype, and records an SBOM via Syft in `logs/`.
 - Unsigned images or high-severity vulnerabilities cause the script to abort and block deployment.
 
