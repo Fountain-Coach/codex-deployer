@@ -1,5 +1,6 @@
 import Foundation
 import Crypto
+import Toolsmith
 
 public protocol ToolAdapter {
     var tool: String { get }
@@ -10,6 +11,7 @@ public struct Router {
     let adapters: [String: ToolAdapter]
     let validator = Validation()
     let manifest: ToolManifest
+    let toolsmith = Toolsmith()
 
     public init(adapters: [String: ToolAdapter], manifest: ToolManifest) {
         self.adapters = adapters
@@ -44,21 +46,14 @@ public struct Router {
 
         let payload = try JSONDecoder().decode(ToolRequest.self, from: request.body)
         try validator.validate(args: payload.args)
-        let start = Date()
-        let (output, code) = try adapter.run(args: payload.args)
-        let end = Date()
-        let duration = Int(end.timeIntervalSince(start) * 1000)
         let hash = SHA256.hash(data: Data(payload.args.joined(separator: " ").utf8)).compactMap { String(format: "%02x", $0) }.joined()
-        var metadata = ["args_hash": hash, "exit_code": String(code)]
-        let logger = JSONLogger()
-        if let trace = request.headers["X-Trace-ID"] {
-            let spanID = UUID().uuidString
-            let span = Span(trace_id: trace, span_id: spanID, parent_id: request.headers["X-Span-ID"], name: adapter.tool, start: start, end: end)
-            logger.exportSpan(span)
-            metadata["span_id"] = spanID
+        var output = Data()
+        var code: Int32 = -1
+        try toolsmith.run(tool: adapter.tool, metadata: ["args_hash": hash], requestID: payload.request_id ?? UUID().uuidString) {
+            let result = try adapter.run(args: payload.args)
+            output = result.0
+            code = result.1
         }
-        let log = LogEntry(request_id: payload.request_id ?? UUID().uuidString, tool: adapter.tool, duration_ms: duration, metadata: metadata)
-        logger.log(log)
         return HTTPResponse(status: Int(code == 0 ? 200 : 500), body: output)
     }
 }

@@ -123,7 +123,10 @@ var targets: [Target] = [
     ),
     .target(
         name: "ToolServer",
-        dependencies: [.product(name: "Crypto", package: "swift-crypto")],
+        dependencies: [
+            .product(name: "Crypto", package: "swift-crypto"),
+            .product(name: "Toolsmith", package: "toolsmith")
+        ],
         path: "libs/ToolServer",
         exclude: ["Service", "Dockerfile"],
         resources: [.process("openapi.yaml")]
@@ -179,7 +182,7 @@ let package = Package(
     ],
     products: products,
     dependencies: [
-        .package(path: "./toolsmith"),
+        .package(url: "https://github.com/Fountain-Coach/toolsmith.git", exact: "1.0.0"),
         .package(url: "https://github.com/jpsim/Yams.git", from: "5.0.0"),
         .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.21.0"),
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.63.0"),
