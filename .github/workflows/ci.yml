@@ -75,5 +75,23 @@ jobs:
           COSIGN_PUBLIC_KEY: ${{ secrets.COSIGN_PUBLIC_KEY }}
         run: Scripts/predeploy.sh "$CONTAINER_IMAGE"
 
+  typesense-integration:
+    name: Typesense Integration Tests (macOS)
+    runs-on: macos-14
+    if: ${{ secrets.TYPESENSE_API_KEY != '' && (secrets.TYPESENSE_URL != '' || secrets.TYPESENSE_URLS != '') }}
+    env:
+      TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_API_KEY }}
+      TYPESENSE_URL: ${{ secrets.TYPESENSE_URL }}
+      TYPESENSE_URLS: ${{ secrets.TYPESENSE_URLS }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: '6.1.2'
+      - name: Build
+        run: swift build
+      - name: Run Typesense integration tests
+        run: swift test --filter TypesenseIntegrationTests
+
 
 # © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
