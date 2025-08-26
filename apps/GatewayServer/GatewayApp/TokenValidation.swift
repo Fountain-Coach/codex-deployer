@@ -3,6 +3,12 @@ import Foundation
 import FoundationNetworking
 #endif
 
+/// Error thrown when authorization fails.
+public struct UnauthorizedError: Error {}
+
+/// Error thrown when authorization is denied for insufficient scope or role.
+public struct ForbiddenError: Error {}
+
 /// Claims extracted from a validated access token.
 public struct TokenClaims: Sendable {
     /// Optional role claim.

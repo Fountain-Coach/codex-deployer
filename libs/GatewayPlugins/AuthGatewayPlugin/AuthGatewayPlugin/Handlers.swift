@@ -1,0 +1,63 @@
+import Foundation
+import FountainCodex
+import Crypto
+
+/// Collection of handlers for auth gateway endpoints.
+public struct Handlers: Sendable {
+    private let secret: String
+
+    public init(secret: String = ProcessInfo.processInfo.environment["GATEWAY_JWT_SECRET"] ?? "secret") {
+        self.secret = secret
+    }
+
+    private func claims(for token: String) -> ClaimsResponse? {
+        let segments = token.split(separator: ".")
+        guard segments.count == 3 else { return nil }
+        let signingInput = segments[0] + "." + segments[1]
+        guard let signatureData = Data(base64URLEncoded: String(segments[2])) else { return nil }
+        let key = SymmetricKey(data: Data(secret.utf8))
+        let expected = HMAC<SHA256>.authenticationCode(for: Data(signingInput.utf8), using: key)
+        guard Data(expected) == signatureData,
+              let payloadData = Data(base64URLEncoded: String(segments[1])),
+              let payload = try? JSONDecoder().decode(JWTPayload.self, from: payloadData),
+              payload.exp > Int(Date().timeIntervalSince1970) else { return nil }
+        let scopes = payload.role.map { [$0] } ?? []
+        return ClaimsResponse(role: payload.role, scopes: scopes)
+    }
+
+    private struct JWTPayload: Decodable { let exp: Int; let role: String? }
+
+    /// Validates a provided bearer token.
+    public func authValidate(_ request: HTTPRequest, body: ValidateRequest?) async throws -> HTTPResponse {
+        guard let token = body?.token, let claims = claims(for: token) else {
+            return HTTPResponse(status: 401)
+        }
+        let resp = ValidationResponse(valid: true, role: claims.role)
+        let data = try JSONEncoder().encode(resp)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    /// Returns claims for the bearer token in the Authorization header.
+    public func authClaims(_ request: HTTPRequest, body: NoBody?) async throws -> HTTPResponse {
+        guard let auth = request.headers["Authorization"], auth.hasPrefix("Bearer "),
+              let claims = claims(for: String(auth.dropFirst(7))) else {
+            return HTTPResponse(status: 401)
+        }
+        let data = try JSONEncoder().encode(claims)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+}
+
+private extension Data {
+    init?(base64URLEncoded input: String) {
+        var base64 = input
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+        let padding = 4 - base64.count % 4
+        if padding < 4 { base64 += String(repeating: "=", count: padding) }
+        guard let data = Data(base64Encoded: base64) else { return nil }
+        self = data
+    }
+}
+
+// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
