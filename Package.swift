@@ -40,13 +40,18 @@ var targets: [Target] = [
     ),
     .target(
         name: "SemanticBrowser",
-        dependencies: [],
+        dependencies: ["FountainCodex"],
         path: "libs/SemanticBrowser"
     ),
     .executableTarget(
         name: "semantic-browser-server",
         dependencies: ["SemanticBrowser", "FountainCodex"],
         path: "apps/SemanticBrowserServer"
+    ),
+    .testTarget(
+        name: "SemanticBrowserTests",
+        dependencies: ["SemanticBrowser", "FountainCodex"],
+        path: "Tests/SemanticBrowserTests"
     ),
     .executableTarget(
         name: "clientgen-service",

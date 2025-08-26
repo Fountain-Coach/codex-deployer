@@ -3,8 +3,19 @@
     "id": "persist",
     "path": "/persist",
     "target": "http://127.0.0.1:8005",
-    "methods": ["GET", "POST"],
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "proxyEnabled": true
+  },
+  {
+    "id": "semantic",
+    "path": "/semantic",
+    "target": "http://127.0.0.1:8006",
+    "methods": [
+      "GET"
+    ],
     "proxyEnabled": true
   }
 ]
-
