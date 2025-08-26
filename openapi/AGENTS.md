@@ -7,9 +7,10 @@
 2. **README maintenance**  
    - After adding or updating a spec, update `openapi/README.md`.  
    - Maintain two tables:  
-     - **Gateway Plugins** – all plugin specs for the Gateway layer, with owner and completion status.  
-     - **Persistence/Typesense** – specs for the Typesense-based persistence layer.  
+     - **Gateway Plugins** – all plugin specs for the Gateway layer, with owner and completion status.
+     - **Persistence/Typesense** – specs for the Typesense-based persistence layer.
    - Mark the status column (e.g., ✅/❌) to reflect task completion.
+   - Do **not** delete or rewrite existing spec links—only append entries so the README remains a versioned index of every OpenAPI document.
 
 3. **Validation & copyright**  
    - Run the project’s OpenAPI validation tooling after changes.  
