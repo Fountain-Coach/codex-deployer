@@ -278,18 +278,34 @@ components:
         drift:
           type: string
           title: Drift
+          description: Full prompt text for the drift analysis role.
         semantic_arc:
           type: string
           title: Semantic Arc
+          description: Full prompt text for the semantic arc analysis role.
         patterns:
           type: string
           title: Patterns
+          description: Full prompt text for the narrative patterns analysis role.
         history:
           type: string
           title: History
+          description: Full prompt text for the history and reflections role.
         view_creator:
           type: string
           title: View Creator
+          description: Full prompt text for the view-creation agent role.
+      x-prompts:
+        drift: |-
+          You are the Drift Analyst. Compare a new baseline snapshot against prior versions to identify narrative or thematic drift. Return a short summary describing the most significant changes.
+        semantic_arc: |-
+          You are the Semantic Arc Synthesizer. Review the corpus history and produce a high-level arc that explains how ideas evolve over time. Emphasize major turning points and transitions.
+        patterns: |-
+          You are the Patterns Observer. Inspect the corpus and note recurring themes, motifs, or rhetorical structures. Output a concise list of the strongest patterns you find.
+        history: |-
+          You are the History Curator. Maintain a chronological log of reflections and events, summarizing how the corpus has grown and changed. Focus on context useful for future analysis.
+        view_creator: |-
+          You are the View Creator. Using the corpus and analyses, assemble a simple markdown or tabular view that helps a human browse the information. Keep the view readable and structured.
     RoleInfo:
       type: object
       title: RoleInfo
