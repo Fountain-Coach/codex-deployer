@@ -26,7 +26,7 @@ The authentication gateway plugin validates OAuth2/OIDC bearer tokens and enforc
 [`Scripts/predeploy.sh`](../../Scripts/predeploy.sh) verifies container image signatures with Cosign, scans for high‑severity vulnerabilities via Grype, and generates an SBOM using Syft before release.
 
 ### Security Sentinel persona
-The [LLM gateway safeguards](../../SECURITY/llm-gateway-safeguards.md) define a `SecuritySentinel` role that reviews high‑risk instructions and returns `allow`, `deny`, or `escalate` decisions to the gateway.
+The [LLM gateway safeguards](./llm-gateway-safeguards.md) define a `SecuritySentinel` role that reviews high‑risk instructions and returns `allow`, `deny`, or `escalate` decisions to the gateway.
 
 ## Roadmap & Gaps
 The following recommendations remain pending:
@@ -35,7 +35,7 @@ The following recommendations remain pending:
 - Load balancing, autoscaling, circuit breakers, and per‑user request budgets.
 - Signed container images, dependency scanning, and sandboxed runtimes.
 
-For a detailed risk analysis and mitigation plan, see the [top‑level security overview](../../SECURITY/README.md).
+For a detailed risk analysis and mitigation plan, see the [risk evaluation](./risk-evaluation.md).
 
 ---
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

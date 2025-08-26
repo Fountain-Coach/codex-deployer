@@ -12,7 +12,7 @@ if [[ -z "$IMAGE" ]]; then
   exit 64
 fi
 
-COSIGN_KEY="${COSIGN_PUBLIC_KEY:-SECURITY/cosign.pub}"
+COSIGN_KEY="${COSIGN_PUBLIC_KEY:-docs/security/cosign.pub}"
 if [[ ! -f "$COSIGN_KEY" ]]; then
   echo "[predeploy] Public key not found: $COSIGN_KEY" >&2
   exit 1
