@@ -17,7 +17,7 @@ public actor TypesensePersistenceService {
         try? await client.createCollection(name: "corpora", fields: [("corpusId", "string")], defaultSortingField: "corpusId")
         try? await client.createCollection(name: "baselines", fields: [("corpusId", "string"), ("baselineId", "string"), ("content", "string")], defaultSortingField: "baselineId")
         try? await client.createCollection(name: "reflections", fields: [("corpusId", "string"), ("reflectionId", "string"), ("question", "string"), ("content", "string")], defaultSortingField: "reflectionId")
-        try? await client.createCollection(name: "functions", fields: [("functionId", "string"), ("name", "string"), ("description", "string"), ("httpMethod", "string"), ("httpPath", "string")], defaultSortingField: "functionId")
+        try? await client.createCollection(name: "functions", fields: [("corpusId", "string"), ("functionId", "string"), ("name", "string"), ("description", "string"), ("httpMethod", "string"), ("httpPath", "string")], defaultSortingField: "functionId")
     }
 
     // MARK: - Corpora
@@ -99,6 +99,19 @@ public actor TypesensePersistenceService {
         return list.first { $0.functionId == functionId }
     }
 
+    public func listFunctions(corpusId: String, limit: Int = 50, offset: Int = 0) async throws -> (total: Int, functions: [FunctionModel]) {
+        try await ensureCollections()
+        let data = try await client.exportAll(collectionName: "functions")
+        let items: [[String: Any]] = Self.parseJSONL(data)
+        let decoded: [FunctionModel] = try items
+            .filter { ($0["corpusId"] as? String) == corpusId }
+            .map { try Self.decode($0) }
+            .sorted { $0.functionId < $1.functionId }
+        let total = decoded.count
+        let slice = Array(decoded.dropFirst(min(offset, total)).prefix(limit))
+        return (total, slice)
+    }
+
     // MARK: - Helpers
     static func parseJSONL(_ data: Data) -> [[String: Any]] {
         let str = String(data: data, encoding: .utf8) ?? ""
@@ -118,4 +131,3 @@ public actor TypesensePersistenceService {
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

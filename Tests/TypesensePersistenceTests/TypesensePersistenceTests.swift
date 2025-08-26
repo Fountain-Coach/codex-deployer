@@ -51,15 +51,15 @@ final class TypesensePersistenceTests: XCTestCase {
     func testFunctionsRegistry() async throws {
         let mock = MockTypesenseClient()
         let svc = TypesensePersistenceService(client: mock)
-        _ = try await svc.addFunction(.init(functionId: "f1", name: "F1", description: "d1", httpMethod: "GET", httpPath: "/f1"))
-        _ = try await svc.addFunction(.init(functionId: "f2", name: "F2", description: "d2", httpMethod: "POST", httpPath: "/f2"))
+        _ = try await svc.addFunction(.init(corpusId: "cx", functionId: "f1", name: "F1", description: "d1", httpMethod: "GET", httpPath: "/f1"))
+        _ = try await svc.addFunction(.init(corpusId: "cx", functionId: "f2", name: "F2", description: "d2", httpMethod: "POST", httpPath: "/f2"))
         let (total, list) = try await svc.listFunctions()
         XCTAssertEqual(total, 2)
         XCTAssertEqual(list.map{ $0.functionId }, ["f1","f2"]) // sorted by id
         let f = try await svc.getFunctionDetails(functionId: "f2")
         XCTAssertEqual(f?.name, "F2")
+        XCTAssertEqual(f?.corpusId, "cx")
     }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

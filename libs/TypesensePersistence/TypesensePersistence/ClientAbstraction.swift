@@ -58,7 +58,10 @@ public final class MockTypesenseClient: TypesenseClientLike {
     public func upsert(collectionName: String, document: Data) async throws {
         let obj = try JSONSerialization.jsonObject(with: document) as? [String: Any] ?? [:]
         var list = collections[collectionName] ?? []
-        if let idKey = obj.keys.first(where: { $0.hasSuffix("Id") || $0 == "id" }), let id = obj[idKey] as? String, !id.isEmpty {
+        // Prefer specific identifiers first to avoid matching corpusId for functions
+        let preferredKeys = ["functionId", "baselineId", "reflectionId", "corpusId", "id"]
+        let idKey = preferredKeys.first(where: { obj[$0] is String }) ?? obj.keys.first(where: { $0.hasSuffix("Id") || $0 == "id" })
+        if let idKey, let id = obj[idKey] as? String, !id.isEmpty {
             if let idx = list.firstIndex(where: { ($0[idKey] as? String) == id }) {
                 list[idx] = obj
             } else {
@@ -79,4 +82,3 @@ public final class MockTypesenseClient: TypesenseClientLike {
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

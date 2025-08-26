@@ -93,11 +93,12 @@ final class PersistServerTests: XCTestCase {
         let server = NIOHTTPServer(kernel: kernel)
         let port = try await server.start(port: 0)
 
-        // Add two functions
-        for (id, name) in [("f1","F1"),("f2","F2")] {
-            var req = URLRequest(url: URL(string: "http://127.0.0.1:\(port)/corpora/cx/functions")!)
+        // Add functions to two corpora
+        for (id, name, corpus) in [("f1","F1","cx"),("f2","F2","cx"),("g1","G1","cy")] {
+            var req = URLRequest(url: URL(string: "http://127.0.0.1:\(port)/corpora/\(corpus)/functions")!)
             req.httpMethod = "POST"
             req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            // corpusId in body is optional; server will enforce path-level corpusId if omitted or mismatched
             let body: [String: Any] = ["functionId": id, "name": name, "description": "d", "httpMethod": "GET", "httpPath": "/p"]
             req.httpBody = try JSONSerialization.data(withJSONObject: body)
             let (_, resp) = try await URLSession.shared.data(for: req)
@@ -108,17 +109,23 @@ final class PersistServerTests: XCTestCase {
         var (data, resp) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:\(port)/functions")!)
         XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 200)
         var obj = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-        XCTAssertEqual(obj?["total"] as? Int, 2)
+        XCTAssertEqual(obj?["total"] as? Int, 3)
 
         // Get single function
         (data, resp) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:\(port)/functions/f2")!)
         XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 200)
         let f = try JSONDecoder().decode(FunctionModel.self, from: data)
         XCTAssertEqual(f.functionId, "f2")
+        XCTAssertEqual(f.corpusId, "cx")
+
+        // List functions by corpus
+        (data, resp) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:\(port)/corpora/cx/functions")!)
+        XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 200)
+        obj = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertEqual(obj?["total"] as? Int, 2)
 
         try await server.stop()
     }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

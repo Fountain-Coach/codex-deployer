@@ -72,8 +72,11 @@ public func makePersistKernel(service svc: TypesensePersistenceService) -> HTTPK
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
 
             case ("POST", let seg) where seg.count == 3 && seg[0] == "corpora" && seg[2] == "functions":
-                _ = String(seg[1]) // Accept but currently unused for storage
-                let function = try JSONDecoder().decode(FunctionModel.self, from: req.body)
+                let corpusId = String(seg[1])
+                var function = try JSONDecoder().decode(FunctionModel.self, from: req.body)
+                if function.corpusId != corpusId {
+                    function = FunctionModel(corpusId: corpusId, functionId: function.functionId, name: function.name, description: function.description, httpMethod: function.httpMethod, httpPath: function.httpPath)
+                }
                 let resp = try await svc.addFunction(function)
                 let json = try JSONEncoder().encode(resp)
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
@@ -83,6 +86,19 @@ public func makePersistKernel(service svc: TypesensePersistenceService) -> HTTPK
                 let limit = min(max(Int(qp["limit"] ?? "50") ?? 50, 1), 200)
                 let offset = max(Int(qp["offset"] ?? "0") ?? 0, 0)
                 let (total, functions) = try await svc.listFunctions(limit: limit, offset: offset)
+                let obj: [String: Any] = [
+                    "total": total,
+                    "functions": try functions.map { try JSONSerialization.jsonObject(with: JSONEncoder().encode($0)) }
+                ]
+                let json = try JSONSerialization.data(withJSONObject: obj)
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+
+            case ("GET", let seg) where seg.count == 3 && seg[0] == "corpora" && seg[2] == "functions":
+                let corpusId = String(seg[1])
+                let qp = queryParams(from: req.path)
+                let limit = min(max(Int(qp["limit"] ?? "50") ?? 50, 1), 200)
+                let offset = max(Int(qp["offset"] ?? "0") ?? 0, 0)
+                let (total, functions) = try await svc.listFunctions(corpusId: corpusId, limit: limit, offset: offset)
                 let obj: [String: Any] = [
                     "total": total,
                     "functions": try functions.map { try JSONSerialization.jsonObject(with: JSONEncoder().encode($0)) }
@@ -119,4 +135,3 @@ public func queryParams(from path: String) -> [String: String] {
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

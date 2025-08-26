@@ -154,6 +154,46 @@ paths:
           $ref: '#/components/responses/ErrorResponse'
 
   /corpora/{corpusId}/functions:
+    get:
+      summary: List functions in a corpus, supports pagination
+      operationId: listFunctionsInCorpus
+      parameters:
+        - name: corpusId
+          in: path
+          required: true
+          description: Corpus identifier to list functions for.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of functions to return.
+          schema:
+            type: integer
+            default: 50
+            minimum: 1
+            maximum: 200
+        - name: offset
+          in: query
+          description: Number of functions to skip before returning results.
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Paginated list of functions in the corpus.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: Total functions registered in this corpus.
+                  functions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Function'
     post:
       summary: Add a function to a corpus
       operationId: addFunction
@@ -398,30 +438,32 @@ components:
               description: Generated response or insight from GPT.
 
     Function:
-      type: object
-      required:
-        - functionId
-        - name
-        - description
-        - httpMethod
-        - httpPath
-      properties:
-        functionId:
-          type: string
-          description: Unique identifier for the registered function.
-        name:
-          type: string
-          description: Human-readable function name.
-        description:
-          type: string
-          description: Description of the function’s purpose.
-        httpMethod:
-          type: string
-          enum: [GET, POST, PUT, PATCH, DELETE]
-          description: HTTP method to invoke the function.
-        httpPath:
-          type: string
-          description: HTTP path used to call the function.
+      allOf:
+        - $ref: '#/components/schemas/BaseEntity'
+        - type: object
+          required:
+            - functionId
+            - name
+            - description
+            - httpMethod
+            - httpPath
+          properties:
+            functionId:
+              type: string
+              description: Unique identifier for the registered function.
+            name:
+              type: string
+              description: Human-readable function name.
+            description:
+              type: string
+              description: Description of the function’s purpose.
+            httpMethod:
+              type: string
+              enum: [GET, POST, PUT, PATCH, DELETE]
+              description: HTTP method to invoke the function.
+            httpPath:
+              type: string
+              description: HTTP path used to call the function.
 
     SuccessResponse:
       type: object

@@ -17,6 +17,7 @@ public struct Reflection: Codable, Sendable {
 }
 
 public struct FunctionModel: Codable, Sendable {
+    public let corpusId: String
     public let functionId: String
     public let name: String
     public let description: String
@@ -27,4 +28,3 @@ public struct FunctionModel: Codable, Sendable {
 public struct SuccessResponse: Codable, Sendable { public let message: String }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-
