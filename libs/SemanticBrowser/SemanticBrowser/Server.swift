@@ -43,6 +43,15 @@ public func makeSemanticKernel(service: SemanticMemoryService) -> HTTPKernel {
             let obj: [String: Any] = ["total": total, "items": try items.map { try JSONSerialization.jsonObject(with: JSONEncoder().encode($0)) }]
             let data = try JSONSerialization.data(withJSONObject: obj)
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        case ("POST", ["v1", "index"]):
+            do {
+                let reqObj = try JSONDecoder().decode(SemanticMemoryService.IndexRequest.self, from: req.body)
+                let result = await service.ingest(reqObj)
+                let data = try JSONEncoder().encode(result)
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            } catch {
+                return HTTPResponse(status: 400)
+            }
         default:
             return HTTPResponse(status: 404)
         }

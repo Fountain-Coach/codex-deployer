@@ -45,7 +45,50 @@ public actor SemanticMemoryService {
         let slice = Array(list.dropFirst(min(offset, total)).prefix(limit))
         return (total, slice)
     }
+
+    // MARK: - Ingest (Index)
+    public struct IndexRequest: Codable, Sendable {
+        public let analysis: IngestAnalysis
+        public init(analysis: IngestAnalysis) { self.analysis = analysis }
+    }
+    public struct IngestAnalysis: Codable, Sendable {
+        public let page: PageDoc
+        public let segments: [SegmentDoc]?
+        public let entities: [EntityDoc]?
+        public init(page: PageDoc, segments: [SegmentDoc]? = nil, entities: [EntityDoc]? = nil) {
+            self.page = page; self.segments = segments; self.entities = entities
+        }
+    }
+    public struct IndexResult: Codable, Sendable {
+        public let pagesUpserted: Int
+        public let segmentsUpserted: Int
+        public let entitiesUpserted: Int
+        public let tablesUpserted: Int
+    }
+
+    public func ingest(_ req: IndexRequest) -> IndexResult {
+        var pUp = 0, sUp = 0, eUp = 0
+        // Upsert page by id
+        if let idx = pages.firstIndex(where: { $0.id == req.analysis.page.id }) {
+            pages[idx] = req.analysis.page
+        } else {
+            pages.append(req.analysis.page)
+        }
+        pUp = 1
+        if let segs = req.analysis.segments {
+            for s in segs {
+                if let i = segments.firstIndex(where: { $0.id == s.id }) { segments[i] = s } else { segments.append(s) }
+                sUp += 1
+            }
+        }
+        if let ents = req.analysis.entities {
+            for e in ents {
+                if let i = entities.firstIndex(where: { $0.id == e.id }) { entities[i] = e } else { entities.append(e) }
+                eUp += 1
+            }
+        }
+        return IndexResult(pagesUpserted: pUp, segmentsUpserted: sUp, entitiesUpserted: eUp, tablesUpserted: 0)
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-
