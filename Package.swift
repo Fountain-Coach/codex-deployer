@@ -3,6 +3,7 @@ import PackageDescription
  
 var products: [Product] = [
     .library(name: "FountainCodex", targets: ["FountainCodex"]),
+    .library(name: "TypesensePersistence", targets: ["TypesensePersistence"]),
     .library(name: "MIDI2Models", targets: ["MIDI2Models"]),
     .library(name: "MIDI2Core", targets: ["MIDI2Core"]),
     .library(name: "FlexBridge", targets: ["FlexBridge"]),
@@ -28,6 +29,13 @@ var targets: [Target] = [
         ],
         path: "libs/FountainCodex",
         exclude: ["FountainCodex/DNS/README.md"]
+    ),
+    .target(
+        name: "TypesensePersistence",
+        dependencies: [
+            .product(name: "Typesense", package: "typesense-swift")
+        ],
+        path: "libs/TypesensePersistence"
     ),
     .executableTarget(
         name: "clientgen-service",
@@ -167,6 +175,11 @@ var targets: [Target] = [
         name: "SSEOverMIDITests",
         dependencies: ["SSEOverMIDI", "MIDI2Transports", "MIDI2Core"],
         path: "Tests/SSEOverMIDITests"
+    ),
+    .testTarget(
+        name: "TypesensePersistenceTests",
+        dependencies: ["TypesensePersistence"],
+        path: "Tests/TypesensePersistenceTests"
     )
 ]
 
@@ -182,6 +195,7 @@ let package = Package(
     ],
     products: products,
     dependencies: [
+        .package(url: "https://github.com/typesense/typesense-swift.git", from: "1.0.1"),
         .package(url: "https://github.com/Fountain-Coach/toolsmith.git", exact: "1.0.0"),
         .package(url: "https://github.com/jpsim/Yams.git", from: "5.0.0"),
         .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.21.0"),
