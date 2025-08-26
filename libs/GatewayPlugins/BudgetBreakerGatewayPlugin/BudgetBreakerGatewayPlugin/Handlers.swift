@@ -6,7 +6,7 @@ public actor Handlers {
     public init() {}
 
     public func budgetCheck(_ request: HTTPRequest, body: BudgetCheckRequest?) async throws -> HTTPResponse {
-        guard let body else { return HTTPResponse(status: 400) }
+        guard body != nil else { return HTTPResponse(status: 400) }
         let response = BudgetCheckResponse(allowed: true, remaining: 0)
         let data = try JSONEncoder().encode(response)
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
