@@ -1,5 +1,0 @@
-[2025-08-05] Implemented actor-based ZoneManager with YAML persistence.
-Tags: storage, concurrency
-Tests: swift test
-
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

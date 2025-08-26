@@ -1,4 +1,0 @@
-opId→handler audit: added script to compare OpenAPI specs with code handlers
-Spec↔code drift: missing handlers reported for baseline-awareness, dns, gateway APIs
-
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

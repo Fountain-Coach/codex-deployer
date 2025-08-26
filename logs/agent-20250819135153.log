@@ -1,5 +1,0 @@
-[2025-08-19T13:51:53Z] Added FountainAIToolsmith package with Toolsmith, SandboxRunner, ToolsmithAPI, and toolsmith-cli.
-[2025-08-19T13:51:53Z] Updated root Package.swift to depend on FountainAIToolsmith.
-[2025-08-19T13:51:53Z] Logged repository manifest for Toolsmith package.
-
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

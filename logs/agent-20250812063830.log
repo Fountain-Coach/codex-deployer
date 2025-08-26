@@ -1,8 +1,0 @@
-task: midi spec ingestion via SPSJobQueue
-result: Job queue returned 'Job not found' during status polling; models regenerated from existing matrix
-actions:
-  - added wait helper in DNSMetrics and updated DNSPerformanceTests
-  - attempted SPSJobQueue scan (failed)
-  - regenerated MIDI models
-status: partial
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

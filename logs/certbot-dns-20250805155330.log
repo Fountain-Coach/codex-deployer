@@ -1,4 +1,0 @@
-ACME client integrated using certbot manual DNS-01 challenge with API hooks.
-DNS API endpoint configurable via DNS_API variable.
-
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

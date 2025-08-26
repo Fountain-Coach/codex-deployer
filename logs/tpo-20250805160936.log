@@ -1,2 +1,0 @@
-Implemented EmbeddedChannel DNS tests, NIOLockedValueBox caching, and Prometheus-style metrics.
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

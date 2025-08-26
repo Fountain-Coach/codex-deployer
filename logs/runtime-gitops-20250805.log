@@ -1,5 +1,0 @@
-[2025-08-05] Added zone file hot-reload and Git versioning.
-Tags: dns, runtime, gitops
-Tests: swift test
-
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

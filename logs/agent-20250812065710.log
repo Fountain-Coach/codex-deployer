@@ -1,8 +1,0 @@
-task: analyze SPSJobQueue scan failure
-result: discovered CLI terminates before async job persists, yielding 'Job not found' on status check
-actions:
-  - inspected sps/Sources/SPSCLI/JobQueue.swift
-  - confirmed enqueue writes to temp dir asynchronously, allowing process exit before persistence
-  - outlined fix to persist synchronously and add worker or --wait mode
-status: analysis
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
