@@ -136,15 +136,15 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             }
             return HTTPResponse(status: 404)
         case ("GET", ["v1", "export"]):
-            func qp(_ path: String) -> [String: String] {
+            func _qp(_ path: String) -> [String: String] {
                 guard let i = path.firstIndex(of: "?") else { return [:] }
                 let q = path[path.index(after: i)...]
                 var out: [String: String] = [:]
                 for pair in q.split(separator: "&") { let parts = pair.split(separator: "=", maxSplits: 1).map(String.init); if parts.count == 2 { out[parts[0]] = parts[1] } }
                 return out
             }
-            let params = qp(req.path)
-            guard let pageId = params["pageId"], let format = params["format"] else { return HTTPResponse(status: 400) }
+            let eparams = _qp(req.path)
+            guard let pageId = eparams["pageId"], let format = eparams["format"] else { return HTTPResponse(status: 400) }
             if format == "snapshot.html", let snap = await service.loadSnapshot(id: pageId) {
                 return HTTPResponse(status: 200, headers: ["Content-Type": "text/html"], body: Data(snap.renderedHTML.utf8))
             }
@@ -154,11 +154,20 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             if format == "analysis.json", let a = await service.loadAnalysis(id: pageId), let data = try? JSONEncoder().encode(a) {
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
             }
+            if format == "tables.csv", let a = await service.loadAnalysis(id: pageId) {
+                if let table = a.blocks.compactMap({ $0.table }).first {
+                    var csv = ""
+                    if let cols = table.columns, !cols.isEmpty { csv += cols.joined(separator: ",") + "
+" }
+                    for row in table.rows { csv += row.joined(separator: ",") + "
+" }
+                    return HTTPResponse(status: 200, headers: ["Content-Type": "text/csv"], body: Data(csv.utf8))
+                }
+                return HTTPResponse(status: 404)
+            }
             return HTTPResponse(status: 404)
         default:
             return HTTPResponse(status: 404)
         }
     }
 }
-
-// © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

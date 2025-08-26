@@ -95,3 +95,25 @@ jobs:
 
 
 # © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+
+
+  semantic-browser-integration:
+    name: Semantic Browser Integration (macOS)
+    runs-on: macos-14
+    if: ${{ (secrets.SB_TYPESENSE_API_KEY != '' && (secrets.SB_TYPESENSE_URL != '' || secrets.SB_TYPESENSE_URLS != '')) || (secrets.TYPESENSE_API_KEY != '' && (secrets.TYPESENSE_URL != '' || secrets.TYPESENSE_URLS != '')) }}
+    env:
+      SB_TYPESENSE_API_KEY: ${{ secrets.SB_TYPESENSE_API_KEY }}
+      SB_TYPESENSE_URL: ${{ secrets.SB_TYPESENSE_URL }}
+      SB_TYPESENSE_URLS: ${{ secrets.SB_TYPESENSE_URLS }}
+      TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_API_KEY }}
+      TYPESENSE_URL: ${{ secrets.TYPESENSE_URL }}
+      TYPESENSE_URLS: ${{ secrets.TYPESENSE_URLS }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: '6.1.2'
+      - name: Build
+        run: swift build
+      - name: Semantic Browser smoke tests
+        run: swift test --filter SemanticBrowser(Query|Index)Tests
