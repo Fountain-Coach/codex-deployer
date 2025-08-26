@@ -82,7 +82,24 @@ actor CDPSession {
     }
     func enablePage() async throws { struct R: Decodable {}; _ = try await sendRecv("Page.enable", params: [:], result: R.self) }
     func navigate(url: String) async throws { struct R: Decodable {}; _ = try await sendRecv("Page.navigate", params: ["url": url], result: R.self) }
-    func waitForLoadEvent(timeoutMs: Int) async throws { try await Task.sleep(nanoseconds: UInt64(timeoutMs) * 1_000_000) }
+    func waitForLoadEvent(timeoutMs: Int) async throws {
+        let deadline = Date().addingTimeInterval(Double(timeoutMs)/1000.0)
+        while Date() < deadline {
+            guard let task else { throw BrowserError.fetchFailed }
+            do {
+                let msg = try await withTaskCancellationHandler(operation: {
+                    try await withTimeout(seconds: 0.5) { try await task.receive() }
+                }, onCancel: { })
+                switch msg {
+                case .data(let d):
+                    if let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any], (m["method"] as? String) == "Page.loadEventFired" { return }
+                case .string(let s):
+                    if let d = s.data(using: .utf8), let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any], (m["method"] as? String) == "Page.loadEventFired" { return }
+                @unknown default: break
+                }
+            } catch { /* ignore timeouts */ }
+        }
+    }
     func getOuterHTML() async throws -> String {
         struct GetDoc: Decodable { let root: Node }
         struct Node: Decodable { let nodeId: Int }
@@ -90,6 +107,17 @@ actor CDPSession {
         struct Outer: Decodable { let outerHTML: String }
         let out: Outer = try await sendRecv("DOM.getOuterHTML", params: ["nodeId": doc.root.nodeId], result: Outer.self)
         return out.outerHTML
+    }
+}
+
+@available(macOS 14.0, *)
+func withTimeout<T>(seconds: Double, operation: @escaping () async throws -> T) async throws -> T {
+    try await withThrowingTaskGroup(of: T.self) { group in
+        group.addTask { try await operation() }
+        group.addTask { try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000)); throw BrowserError.fetchFailed }
+        let result = try await group.next()!
+        group.cancelAll()
+        return result
     }
 }
 
