@@ -86,6 +86,10 @@ public actor TypesensePersistenceService {
 
     public func listFunctions(limit: Int = 50, offset: Int = 0, q: String? = nil) async throws -> (total: Int, functions: [FunctionModel]) {
         try await ensureCollections()
+        let page = max(offset / max(limit, 1) + 1, 1)
+        let perPage = max(limit, 1)
+        let results = try await client.searchFunctions(q: (q?.isEmpty == false ? q! : "*"), filterBy: nil, page: page, perPage: perPage)
+        // We cannot get exact total cheaply via mock search; compute via export for total count
         let data = try await client.exportAll(collectionName: "functions")
         let items: [[String: Any]] = Self.parseJSONL(data)
         var decoded: [FunctionModel] = try items.map { try Self.decode($0) }
@@ -100,9 +104,7 @@ public actor TypesensePersistenceService {
             }
         }
         decoded.sort { $0.functionId < $1.functionId }
-        let total = decoded.count
-        let slice = Array(decoded.dropFirst(min(offset, total)).prefix(limit))
-        return (total, slice)
+        return (decoded.count, results)
     }
 
     public func getFunctionDetails(functionId: String) async throws -> FunctionModel? {
@@ -112,6 +114,11 @@ public actor TypesensePersistenceService {
 
     public func listFunctions(corpusId: String, limit: Int = 50, offset: Int = 0, q: String? = nil) async throws -> (total: Int, functions: [FunctionModel]) {
         try await ensureCollections()
+        let page = max(offset / max(limit, 1) + 1, 1)
+        let perPage = max(limit, 1)
+        let filterBy = "corpusId:=\(corpusId)"
+        let results = try await client.searchFunctions(q: (q?.isEmpty == false ? q! : "*"), filterBy: filterBy, page: page, perPage: perPage)
+        // Compute total consistently using exportAll for now
         let data = try await client.exportAll(collectionName: "functions")
         let items: [[String: Any]] = Self.parseJSONL(data)
         var decoded: [FunctionModel] = try items
@@ -127,9 +134,7 @@ public actor TypesensePersistenceService {
             }
         }
         decoded.sort { $0.functionId < $1.functionId }
-        let total = decoded.count
-        let slice = Array(decoded.dropFirst(min(offset, total)).prefix(limit))
-        return (total, slice)
+        return (decoded.count, results)
     }
 
     // MARK: - Helpers

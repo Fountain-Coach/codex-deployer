@@ -8,6 +8,7 @@ public protocol TypesenseClientLike {
     func createCollection(name: String, fields: [(String, String)], defaultSortingField: String?) async throws
     func upsert(collectionName: String, document: Data) async throws
     func exportAll(collectionName: String) async throws -> Data
+    func searchFunctions(q: String, filterBy: String?, page: Int, perPage: Int) async throws -> [FunctionModel]
 }
 
 #if canImport(Typesense)
@@ -42,6 +43,19 @@ public final class RealTypesenseClient: TypesenseClientLike {
     public func exportAll(collectionName: String) async throws -> Data {
         let (data, _) = try await client.collection(name: collectionName).documents().export(options: nil)
         return data
+    }
+
+    public func searchFunctions(q: String, filterBy: String?, page: Int, perPage: Int) async throws -> [FunctionModel] {
+        let params = SearchParameters(
+            q: q,
+            queryBy: "name,description,httpPath,functionId,corpusId",
+            filterBy: filterBy,
+            page: page,
+            perPage: perPage
+        )
+        let (result, _) = try await client.collection(name: "functions").documents().search(params, for: FunctionModel.self)
+        // SearchResult<T> likely wraps hits with documents
+        return result.hits?.compactMap { $0.document } ?? []
     }
 }
 #endif
@@ -78,6 +92,29 @@ public final class MockTypesenseClient: TypesenseClientLike {
         // Return JSONL
         let lines = try list.map { try JSONSerialization.data(withJSONObject: $0) }.map { String(data: $0, encoding: .utf8) ?? "{}" }
         return Data(lines.joined(separator: "\n").utf8)
+    }
+
+    public func searchFunctions(q: String, filterBy: String?, page: Int, perPage: Int) async throws -> [FunctionModel] {
+        let all = collections["functions"] ?? []
+        let needle = q == "*" ? nil : q.lowercased()
+        let filtered: [[String: Any]] = all.filter { obj in
+            if let fb = filterBy, fb.hasPrefix("corpusId:=") {
+                let val = String(fb.dropFirst("corpusId:=".count))
+                if (obj["corpusId"] as? String) != val { return false }
+            }
+            if let needle {
+                let fields = ["name","description","httpPath","functionId","corpusId"]
+                return fields.contains { key in (obj[key] as? String)?.lowercased().contains(needle) == true }
+            }
+            return true
+        }
+        let decoded: [FunctionModel] = try filtered.map { data in
+            let d = try JSONSerialization.data(withJSONObject: data)
+            return try JSONDecoder().decode(FunctionModel.self, from: d)
+        }.sorted { $0.functionId < $1.functionId }
+        let start = max((page - 1) * perPage, 0)
+        let slice = Array(decoded.dropFirst(min(start, decoded.count)).prefix(perPage))
+        return slice
     }
 }
 
