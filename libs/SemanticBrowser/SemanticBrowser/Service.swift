@@ -124,7 +124,13 @@ public actor SemanticMemoryService {
             public let contentType: String?
             public let language: String?
         }
-        public struct Block: Codable, Sendable { public let id: String; public let kind: String; public let text: String }
+        public struct Table: Codable, Sendable { public let caption: String?; public let columns: [String]?; public let rows: [[String]] }
+        public struct Block: Codable, Sendable {
+            public let id: String
+            public let kind: String
+            public let text: String
+            public let table: Table?
+        }
         public struct Semantics: Codable, Sendable {
             public struct Entity: Codable, Sendable { public let id: String; public let name: String; public let type: String }
             public let entities: [Entity]?
