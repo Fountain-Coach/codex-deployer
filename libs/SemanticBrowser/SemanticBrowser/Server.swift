@@ -156,15 +156,15 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             }
             return HTTPResponse(status: 404)
         case ("GET", ["v1", "export"]):
-            func _qp(_ path: String) -> [String: String] {
+            func qp(_ path: String) -> [String: String] {
                 guard let i = path.firstIndex(of: "?") else { return [:] }
                 let q = path[path.index(after: i)...]
                 var out: [String: String] = [:]
                 for pair in q.split(separator: "&") { let parts = pair.split(separator: "=", maxSplits: 1).map(String.init); if parts.count == 2 { out[parts[0]] = parts[1] } }
                 return out
             }
-            let eparams = _qp(req.path)
-            guard let pageId = eparams["pageId"], let format = eparams["format"] else { return HTTPResponse(status: 400) }
+            let params = qp(req.path)
+            guard let pageId = params["pageId"], let format = params["format"] else { return HTTPResponse(status: 400) }
             if format == "snapshot.html", let snap = await service.loadSnapshot(id: pageId) {
                 return HTTPResponse(status: 200, headers: ["Content-Type": "text/html"], body: Data(snap.renderedHTML.utf8))
             }
@@ -175,15 +175,37 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
             }
             if format == "tables.csv", let a = await service.loadAnalysis(id: pageId) {
-                if let table = a.blocks.compactMap({ $0.table }).first {
-                    var csv = ""
+                let tables = a.blocks.compactMap { $0.table }
+                if tables.isEmpty { return HTTPResponse(status: 404) }
+                var csv = ""
+                for (i, table) in tables.enumerated() {
+                    if i > 0 { csv += "
+" }
                     if let cols = table.columns, !cols.isEmpty { csv += cols.joined(separator: ",") + "
 " }
                     for row in table.rows { csv += row.joined(separator: ",") + "
 " }
-                    return HTTPResponse(status: 200, headers: ["Content-Type": "text/csv"], body: Data(csv.utf8))
                 }
-                return HTTPResponse(status: 404)
+                return HTTPResponse(status: 200, headers: ["Content-Type": "text/csv"], body: Data(csv.utf8))
+            }
+            if format == "summary.md", let a = await service.loadAnalysis(id: pageId) {
+                var md = "# Summary
+
+"
+                if let title = a.blocks.first(where: { $0.kind == "heading" })?.text { md += "**Title:** \(title)
+
+" }
+                if let ents = a.semantics?.entities, !ents.isEmpty {
+                    md += "**Entities:**
+" + ents.map{ "- \($0.name) (\($0.type))" }.joined(separator: "
+") + "
+
+"
+                }
+                md += "**Blocks:** \(a.blocks.count)
+
+"
+                return HTTPResponse(status: 200, headers: ["Content-Type": "text/markdown"], body: Data(md.utf8))
             }
             return HTTPResponse(status: 404)
         default:
