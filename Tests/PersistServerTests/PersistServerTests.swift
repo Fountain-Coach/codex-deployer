@@ -124,6 +124,12 @@ final class PersistServerTests: XCTestCase {
         obj = try JSONSerialization.jsonObject(with: data) as? [String: Any]
         XCTAssertEqual(obj?["total"] as? Int, 2)
 
+        // Filtered search q=F1
+        (data, resp) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:\(port)/functions?q=F1")!)
+        XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 200)
+        obj = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertEqual(obj?["total"] as? Int, 1)
+
         try await server.stop()
     }
 }

@@ -1,4 +1,5 @@
 import ToolServer
+import TypesensePersistence
 import Foundation
 import Dispatch
 #if os(Linux)
@@ -108,6 +109,19 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
 
 do {
     let runtime = SimpleHTTPRuntime(router: router, port: 8080)
+    // Optional publish to Typesense functions collection
+    if let url = ProcessInfo.processInfo.environment["TYPESENSE_URL"] ?? ProcessInfo.processInfo.environment["TYPESENSE_URLS"],
+       let apiKey = ProcessInfo.processInfo.environment["TYPESENSE_API_KEY"], !apiKey.isEmpty {
+        let urls = url.contains(",") ? url.split(separator: ",").map(String.init) : [url]
+        #if canImport(Typesense)
+        let client = RealTypesenseClient(nodes: urls, apiKey: apiKey, debug: false)
+        let svc = TypesensePersistenceService(client: client)
+        Task { await svc.ensureCollections(); try? await publishFunctions(manifest: manifest, corpusId: ProcessInfo.processInfo.environment["TOOLS_FACTORY_CORPUS_ID"] ?? "tools-factory", service: svc) }
+        #else
+        let svc = TypesensePersistenceService(client: MockTypesenseClient())
+        Task { await svc.ensureCollections(); try? await publishFunctions(manifest: manifest, corpusId: ProcessInfo.processInfo.environment["TOOLS_FACTORY_CORPUS_ID"] ?? "tools-factory", service: svc) }
+        #endif
+    }
     try runtime.start()
     print("tool server listening on port 8080")
     dispatchMain()

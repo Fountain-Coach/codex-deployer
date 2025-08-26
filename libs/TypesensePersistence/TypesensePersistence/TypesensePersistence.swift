@@ -84,11 +84,22 @@ public actor TypesensePersistenceService {
         return SuccessResponse(message: "ok")
     }
 
-    public func listFunctions(limit: Int = 50, offset: Int = 0) async throws -> (total: Int, functions: [FunctionModel]) {
+    public func listFunctions(limit: Int = 50, offset: Int = 0, q: String? = nil) async throws -> (total: Int, functions: [FunctionModel]) {
         try await ensureCollections()
         let data = try await client.exportAll(collectionName: "functions")
         let items: [[String: Any]] = Self.parseJSONL(data)
-        let decoded: [FunctionModel] = try items.map { try Self.decode($0) }.sorted { $0.functionId < $1.functionId }
+        var decoded: [FunctionModel] = try items.map { try Self.decode($0) }
+        if let q, !q.isEmpty {
+            let needle = q.lowercased()
+            decoded = decoded.filter { f in
+                f.name.lowercased().contains(needle) ||
+                f.description.lowercased().contains(needle) ||
+                f.httpPath.lowercased().contains(needle) ||
+                f.functionId.lowercased().contains(needle) ||
+                f.corpusId.lowercased().contains(needle)
+            }
+        }
+        decoded.sort { $0.functionId < $1.functionId }
         let total = decoded.count
         let slice = Array(decoded.dropFirst(min(offset, total)).prefix(limit))
         return (total, slice)
@@ -99,14 +110,23 @@ public actor TypesensePersistenceService {
         return list.first { $0.functionId == functionId }
     }
 
-    public func listFunctions(corpusId: String, limit: Int = 50, offset: Int = 0) async throws -> (total: Int, functions: [FunctionModel]) {
+    public func listFunctions(corpusId: String, limit: Int = 50, offset: Int = 0, q: String? = nil) async throws -> (total: Int, functions: [FunctionModel]) {
         try await ensureCollections()
         let data = try await client.exportAll(collectionName: "functions")
         let items: [[String: Any]] = Self.parseJSONL(data)
-        let decoded: [FunctionModel] = try items
+        var decoded: [FunctionModel] = try items
             .filter { ($0["corpusId"] as? String) == corpusId }
             .map { try Self.decode($0) }
-            .sorted { $0.functionId < $1.functionId }
+        if let q, !q.isEmpty {
+            let needle = q.lowercased()
+            decoded = decoded.filter { f in
+                f.name.lowercased().contains(needle) ||
+                f.description.lowercased().contains(needle) ||
+                f.httpPath.lowercased().contains(needle) ||
+                f.functionId.lowercased().contains(needle)
+            }
+        }
+        decoded.sort { $0.functionId < $1.functionId }
         let total = decoded.count
         let slice = Array(decoded.dropFirst(min(offset, total)).prefix(limit))
         return (total, slice)

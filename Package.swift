@@ -133,7 +133,8 @@ var targets: [Target] = [
         name: "ToolServer",
         dependencies: [
             .product(name: "Crypto", package: "swift-crypto"),
-            .product(name: "Toolsmith", package: "toolsmith")
+            .product(name: "Toolsmith", package: "toolsmith"),
+            "TypesensePersistence"
         ],
         path: "libs/ToolServer",
         exclude: ["Service", "Dockerfile"],
@@ -141,7 +142,7 @@ var targets: [Target] = [
     ),
     .executableTarget(
         name: "tools-factory-server",
-        dependencies: ["ToolServer"],
+        dependencies: ["ToolServer", "TypesensePersistence"],
         path: "apps/ToolsFactoryServer"
     ),
     .executableTarget(

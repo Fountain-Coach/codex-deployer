@@ -31,13 +31,39 @@ final class GatewayPersistProxyTests: XCTestCase {
         let server = GatewayServer(manager: manager, plugins: [], zoneManager: nil, routeStoreURL: file)
         Task { try await server.start(port: 9130) }
         try await Task.sleep(nanoseconds: 100_000_000)
-        // Make a POST via the gateway to upstream Persist
+        // Make a POST via the gateway to upstream Persist: create corpus
         var req = URLRequest(url: URL(string: "http://127.0.0.1:9130/persist/corpora")!)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpBody = try JSONEncoder().encode(["corpusId": "g1"]) 
         let (_, resp) = try await URLSession.shared.data(for: req)
         XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 201)
+
+        // Publish a function via gateway proxy
+        var fReq = URLRequest(url: URL(string: "http://127.0.0.1:9130/persist/corpora/g1/functions")!)
+        fReq.httpMethod = "POST"
+        fReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        fReq.httpBody = try JSONEncoder().encode(["functionId": "f1", "name": "F1", "description": "d", "httpMethod": "GET", "httpPath": "/f1"]) 
+        let (_, fResp) = try await URLSession.shared.data(for: fReq)
+        XCTAssertEqual((fResp as? HTTPURLResponse)?.statusCode, 200)
+
+        // List functions via gateway proxy (global)
+        let (data, lResp) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:9130/persist/functions")!)
+        XCTAssertEqual((lResp as? HTTPURLResponse)?.statusCode, 200)
+        let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertEqual(obj?["total"] as? Int, 1)
+
+        // List functions via gateway proxy (by corpus)
+        let (cxData, cxResp) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:9130/persist/corpora/g1/functions")!)
+        XCTAssertEqual((cxResp as? HTTPURLResponse)?.statusCode, 200)
+        let cxObj = try JSONSerialization.jsonObject(with: cxData) as? [String: Any]
+        XCTAssertEqual(cxObj?["total"] as? Int, 1)
+
+        // Filter via q=F1
+        let (qData, qResp) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:9130/persist/functions?q=F1")!)
+        XCTAssertEqual((qResp as? HTTPURLResponse)?.statusCode, 200)
+        let qObj = try JSONSerialization.jsonObject(with: qData) as? [String: Any]
+        XCTAssertEqual(qObj?["total"] as? Int, 1)
 
         try await server.stop()
         try await upstream.stop()

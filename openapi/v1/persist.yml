@@ -179,6 +179,11 @@ paths:
             type: integer
             default: 0
             minimum: 0
+        - name: q
+          in: query
+          description: Optional substring filter across name, description, and httpPath.
+          schema:
+            type: string
       responses:
         '200':
           description: Paginated list of functions in the corpus.
@@ -320,6 +325,11 @@ paths:
             type: integer
             default: 0
             minimum: 0
+        - name: q
+          in: query
+          description: Optional substring filter across name, description, httpPath, functionId, and corpusId.
+          schema:
+            type: string
       responses:
         '200':
           description: Paginated list of functions.

@@ -85,7 +85,8 @@ public func makePersistKernel(service svc: TypesensePersistenceService) -> HTTPK
                 let qp = queryParams(from: req.path)
                 let limit = min(max(Int(qp["limit"] ?? "50") ?? 50, 1), 200)
                 let offset = max(Int(qp["offset"] ?? "0") ?? 0, 0)
-                let (total, functions) = try await svc.listFunctions(limit: limit, offset: offset)
+                let q = qp["q"]
+                let (total, functions) = try await svc.listFunctions(limit: limit, offset: offset, q: q)
                 let obj: [String: Any] = [
                     "total": total,
                     "functions": try functions.map { try JSONSerialization.jsonObject(with: JSONEncoder().encode($0)) }
@@ -98,7 +99,8 @@ public func makePersistKernel(service svc: TypesensePersistenceService) -> HTTPK
                 let qp = queryParams(from: req.path)
                 let limit = min(max(Int(qp["limit"] ?? "50") ?? 50, 1), 200)
                 let offset = max(Int(qp["offset"] ?? "0") ?? 0, 0)
-                let (total, functions) = try await svc.listFunctions(corpusId: corpusId, limit: limit, offset: offset)
+                let q = qp["q"]
+                let (total, functions) = try await svc.listFunctions(corpusId: corpusId, limit: limit, offset: offset, q: q)
                 let obj: [String: Any] = [
                     "total": total,
                     "functions": try functions.map { try JSONSerialization.jsonObject(with: JSONEncoder().encode($0)) }
