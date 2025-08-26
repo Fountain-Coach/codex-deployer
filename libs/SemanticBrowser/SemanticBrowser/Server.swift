@@ -1,7 +1,22 @@
 import Foundation
 import FountainCodex
 
-public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEngine? = nil, apiKey: String? = nil) -> HTTPKernel {
+actor SimpleRateLimiter {
+    private var buckets: [String: (start: TimeInterval, count: Int)] = [:]
+    func allow(id: String, limitPerMinute: Int) -> Bool {
+        let now = Date().timeIntervalSince1970
+        var entry = buckets[id] ?? (start: now, count: 0)
+        if now - entry.start >= 60 {
+            entry = (start: now, count: 0)
+        }
+        if entry.count + 1 > limitPerMinute { buckets[id] = entry; return false }
+        entry.count += 1
+        buckets[id] = entry
+        return true
+    }
+}
+
+public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEngine? = nil, apiKey: String? = nil, limiter: SimpleRateLimiter? = nil, limitPerMinute: Int = 60) -> HTTPKernel {
     func qp(_ path: String) -> [String: String] {
         guard let i = path.firstIndex(of: "?") else { return [:] }
         let q = path[path.index(after: i)...]
@@ -15,6 +30,11 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
     return HTTPKernel { req in
         if let apiKey, !apiKey.isEmpty {
             if (req.headers["X-API-Key"] ?? "") != apiKey { return HTTPResponse(status: 401) }
+        }
+        if let limiter {
+            let client = req.headers["X-Forwarded-For"] ?? req.headers["X-Client-Id"] ?? "anonymous"
+            let ok = await limiter.allow(id: client, limitPerMinute: limitPerMinute)
+            if !ok { return HTTPResponse(status: 429, headers: ["Content-Type": "text/plain"], body: Data("too many requests".utf8)) }
         }
         let pathOnly = req.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? req.path
         let segs = pathOnly.split(separator: "/", omittingEmptySubsequences: true)
