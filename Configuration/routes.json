@@ -1,0 +1,10 @@
+[
+  {
+    "id": "persist",
+    "path": "/persist",
+    "target": "http://127.0.0.1:8005",
+    "methods": ["GET", "POST"],
+    "proxyEnabled": true
+  }
+]
+

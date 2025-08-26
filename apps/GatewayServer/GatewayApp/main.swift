@@ -19,7 +19,8 @@ let rateLimiter = RateLimiterGatewayPlugin(defaultLimit: gatewayConfig?.rateLimi
 let cotLogPath = ProcessInfo.processInfo.environment["COT_LOG_PATH"].map { URL(fileURLWithPath: $0) }
 let llmPlugin = LLMGatewayPlugin(cotLogURL: cotLogPath)
 let authPlugin = AuthGatewayPlugin()
-let server = GatewayServer(plugins: [authPlugin, llmPlugin, CoTLogger(), rateLimiter, LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")], rateLimiter: rateLimiter)
+let routesFile = URL(fileURLWithPath: "Configuration/routes.json")
+let server = GatewayServer(plugins: [authPlugin, llmPlugin, CoTLogger(), rateLimiter, LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")], zoneManager: nil, routeStoreURL: routesFile, certificatePath: nil, rateLimiter: rateLimiter)
 Task { @MainActor in
     try await server.start(port: 8080)
 }
