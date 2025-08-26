@@ -4,6 +4,7 @@ Versioned service definitions live here. Each YAML file describes a FountainAI s
 
 | Service | Version | Owner | Spec |
 | --- | --- | --- | --- |
+| Auth Gateway Plugin | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/auth-gateway.yml](v1/auth-gateway.yml) |
 | Baseline Awareness Service | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/baseline-awareness.yml](v1/baseline-awareness.yml) |
 | Bootstrap Service | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/bootstrap.yml](v1/bootstrap.yml) |
 | DNS API | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/dns.yml](v1/dns.yml) |

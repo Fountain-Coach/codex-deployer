@@ -5,6 +5,7 @@ import FountainCodex
 import Crypto
 import X509
 import LLMGatewayPlugin
+import AuthGatewayPlugin
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
@@ -107,6 +108,10 @@ public final class GatewayServer {
             for plugin in plugins {
                 if let llm = plugin as? LLMGatewayPlugin,
                    let handled = try await llm.router.route(request) {
+                    return handled
+                }
+                if let auth = plugin as? AuthGatewayPlugin,
+                   let handled = try await auth.router.route(request) {
                     return handled
                 }
             }

@@ -3,6 +3,7 @@ import Dispatch
 import PublishingFrontend
 import FountainCodex
 import LLMGatewayPlugin
+import AuthGatewayPlugin
 
 /// Launches ``GatewayServer`` with the publishing plugin enabled.
 /// The server stays running until the process is terminated.
@@ -19,8 +20,9 @@ if gatewayConfig == nil {
 let rateLimiter = RateLimiterPlugin(defaultLimit: gatewayConfig?.rateLimitPerMinute ?? 60)
 let cotLogPath = ProcessInfo.processInfo.environment["COT_LOG_PATH"].map { URL(fileURLWithPath: $0) }
 let llmPlugin = LLMGatewayPlugin(cotLogURL: cotLogPath)
+let authPlugin = AuthGatewayPlugin()
 let sentinel = SecuritySentinelPlugin()
-let server = GatewayServer(plugins: [llmPlugin, sentinel, CoTLogger(sentinel: sentinel), rateLimiter, LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")], rateLimiter: rateLimiter)
+let server = GatewayServer(plugins: [authPlugin, llmPlugin, sentinel, CoTLogger(sentinel: sentinel), rateLimiter, LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")], rateLimiter: rateLimiter)
 Task { @MainActor in
     try await server.start(port: 8080)
 }

@@ -26,7 +26,7 @@ Refer to the OpenAPI file for request and response schemas, authentication requi
 [`CertificateManager.swift`](CertificateManager.swift) schedules execution of a renewal script and exposes `start`, `stop` and `triggerNow` for manual control.
 
 ### `CredentialStore`
-[`CredentialStore.swift`](CredentialStore.swift) loads API client credentials from environment variables, validates pairs and signs or verifies JSON Web Tokens used by `AuthPlugin`.
+[`CredentialStore.swift`](CredentialStore.swift) loads API client credentials from environment variables, validates pairs and signs or verifies JSON Web Tokens used by the authentication gateway plugin.
 
 #### Authentication Environment Variables
 Define a `GATEWAY_CRED_<CLIENT_ID>` variable for each client allowed to request a token, an optional `GATEWAY_ROLE_<CLIENT_ID>` to embed a role claim, and set `GATEWAY_JWT_SECRET` to the HMAC signing key used to mint and verify JWTs.
@@ -44,18 +44,8 @@ Protocol describing middleware hooks for the gateway server.
 - `prepare(_:)` – Allows mutation or inspection of a request before routing. Default implementation returns the request unchanged.
 - `respond(_:for:)` – Allows mutation or inspection of the response before it is returned. Default implementation returns the response unchanged.
 
-### [AuthPlugin](AuthPlugin.swift)
-Enforces bearer-token authentication and role-based access on management paths.
-
-- `init(validator:protected:)` – Accepts a ``TokenValidator`` such as ``CredentialStoreValidator`` or ``OAuth2Validator`` and a map of path prefixes to required roles.
-- `prepare(_:)` – Validates `Authorization: Bearer` tokens, extracts roles or scopes and throws `UnauthorizedError` or `ForbiddenError` when checks fail.
-
-#### OAuth2 Configuration
-
-- Set `GATEWAY_OAUTH2_INTROSPECTION_URL` to the provider's introspection endpoint.
-- Optionally supply `GATEWAY_OAUTH2_CLIENT_ID` and `GATEWAY_OAUTH2_CLIENT_SECRET` for basic authentication when calling the endpoint.
-- Tokens must grant the `admin` scope (or role) to access management endpoints such as `/metrics` and `/routes`.
-- Local issuance via `/auth/token` reads `GATEWAY_ROLE_<CLIENT_ID>` variables to embed roles in signed JWTs.
+### AuthGatewayPlugin
+Provides `/auth/validate` and `/auth/claims` endpoints for token verification and claim retrieval.
 
 ### [LoggingPlugin](LoggingPlugin.swift)
 Logs incoming requests and outgoing responses for debugging.
