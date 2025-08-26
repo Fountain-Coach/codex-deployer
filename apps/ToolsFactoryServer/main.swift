@@ -21,7 +21,28 @@ let adapters: [String: ToolAdapter] = [
 ]
 let manifestURL = URL(fileURLWithPath: "tools.json")
 let manifest = (try? ToolManifest.load(from: manifestURL)) ?? ToolManifest(image: .init(name: "", tarball: "", sha256: "", qcow2: "", qcow2_sha256: ""), tools: [:], operations: [])
-let router = Router(adapters: adapters, manifest: manifest)
+let defaultCorpus = ProcessInfo.processInfo.environment["TOOLS_FACTORY_CORPUS_ID"] ?? "tools-factory"
+let router: Router
+do {
+    if let url = ProcessInfo.processInfo.environment["TYPESENSE_URL"] ?? ProcessInfo.processInfo.environment["TYPESENSE_URLS"],
+       let apiKey = ProcessInfo.processInfo.environment["TYPESENSE_API_KEY"], !apiKey.isEmpty {
+        let urls = url.contains(",") ? url.split(separator: ",").map(String.init) : [url]
+        #if canImport(Typesense)
+        let client = RealTypesenseClient(nodes: urls, apiKey: apiKey, debug: false)
+        let svc = TypesensePersistenceService(client: client)
+        Task { await svc.ensureCollections(); try? await publishFunctions(manifest: manifest, corpusId: defaultCorpus, service: svc) }
+        router = Router(adapters: adapters, manifest: manifest, persistence: svc, defaultCorpusId: defaultCorpus)
+        #else
+        let svc = TypesensePersistenceService(client: MockTypesenseClient())
+        Task { await svc.ensureCollections(); try? await publishFunctions(manifest: manifest, corpusId: defaultCorpus, service: svc) }
+        router = Router(adapters: adapters, manifest: manifest, persistence: svc, defaultCorpusId: defaultCorpus)
+        #endif
+    } else {
+        let svc = TypesensePersistenceService(client: MockTypesenseClient())
+        Task { await svc.ensureCollections(); try? await publishFunctions(manifest: manifest, corpusId: defaultCorpus, service: svc) }
+        router = Router(adapters: adapters, manifest: manifest, persistence: svc, defaultCorpusId: defaultCorpus)
+    }
+} 
 
 final class SimpleHTTPRuntime: @unchecked Sendable {
     enum RuntimeError: Error { case socket, bind, listen }
