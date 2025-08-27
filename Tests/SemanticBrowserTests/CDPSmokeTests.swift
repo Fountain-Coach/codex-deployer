@@ -1,5 +1,5 @@
 import XCTest
-@testable import SemanticBrowser
+import SemanticBrowser
 
 final class CDPSmokeTests: XCTestCase {
     func testCDPSnapshotSkipsWhenNoEnv() async throws {

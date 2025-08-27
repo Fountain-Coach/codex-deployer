@@ -3,8 +3,7 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
-@testable import SemanticBrowser
-@testable import FountainCodex
+import SemanticBrowser
 
 final class SemanticBrowserIndexTests: XCTestCase {
     func testIndexThenQuery() async throws {
