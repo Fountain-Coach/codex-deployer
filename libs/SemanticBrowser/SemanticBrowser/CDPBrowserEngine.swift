@@ -21,6 +21,35 @@ public struct CDPBrowserEngine: BrowserEngine {
             throw BrowserError.fetchFailed
         }
     }
+
+    public func snapshot(for url: String, wait: APIModels.WaitPolicy?) async throws -> SnapshotResult {
+        if #available(macOS 14.0, *) {
+            let session = CDPSession(wsURL: wsURL)
+            try await session.open()
+            defer { Task { await session.close() } }
+            let targetId = try await session.createTarget(url: "about:blank")
+            try await session.attach(targetId: targetId)
+            try await session.enablePage()
+            let start = Date()
+            try await session.navigate(url: url)
+            let strat = wait?.strategy?.lowercased()
+            if strat == "domcontentloaded" {
+                try await session.waitForDomContentLoaded(timeoutMs: wait?.maxWaitMs ?? 5000)
+            } else if strat == "networkidle" {
+                try await session.waitForLoadEvent(timeoutMs: wait?.maxWaitMs ?? 5000)
+                if let idle = wait?.networkIdleMs, idle > 0 { try? await Task.sleep(nanoseconds: UInt64(idle) * 1_000_000) }
+            } else {
+                try await session.waitForLoadEvent(timeoutMs: wait?.maxWaitMs ?? 5000)
+            }
+            let loadMs = Int(Date().timeIntervalSince(start) * 1000.0)
+            let html = try await session.getOuterHTML()
+            let text = html.removingHTMLTags()
+            let final = (try? await session.getCurrentURL()) ?? url
+            return SnapshotResult(html: html, text: text, finalURL: final, loadMs: loadMs)
+        } else {
+            throw BrowserError.fetchFailed
+        }
+    }
 }
 
 @available(macOS 14.0, *)
@@ -100,6 +129,24 @@ actor CDPSession {
             } catch { /* ignore timeouts */ }
         }
     }
+    func waitForDomContentLoaded(timeoutMs: Int) async throws {
+        let deadline = Date().addingTimeInterval(Double(timeoutMs)/1000.0)
+        while Date() < deadline {
+            guard let task else { throw BrowserError.fetchFailed }
+            do {
+                let msg = try await withTaskCancellationHandler(operation: {
+                    try await withTimeout(seconds: 0.5) { try await task.receive() }
+                }, onCancel: { })
+                switch msg {
+                case .data(let d):
+                    if let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any], (m["method"] as? String) == "Page.domContentEventFired" { return }
+                case .string(let s):
+                    if let d = s.data(using: .utf8), let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any], (m["method"] as? String) == "Page.domContentEventFired" { return }
+                @unknown default: break
+                }
+            } catch { /* ignore timeouts */ }
+        }
+    }
     func getOuterHTML() async throws -> String {
         struct GetDoc: Decodable { let root: Node }
         struct Node: Decodable { let nodeId: Int }
@@ -107,6 +154,13 @@ actor CDPSession {
         struct Outer: Decodable { let outerHTML: String }
         let out: Outer = try await sendRecv("DOM.getOuterHTML", params: ["nodeId": doc.root.nodeId], result: Outer.self)
         return out.outerHTML
+    }
+    func getCurrentURL() async throws -> String? {
+        struct Hist: Decodable { let currentIndex: Int; let entries: [Entry] }
+        struct Entry: Decodable { let url: String }
+        let h: Hist = try await sendRecv("Page.getNavigationHistory", params: [:], result: Hist.self)
+        if h.currentIndex >= 0 && h.currentIndex < h.entries.count { return h.entries[h.currentIndex].url }
+        return nil
     }
 }
 

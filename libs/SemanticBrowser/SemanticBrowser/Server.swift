@@ -41,6 +41,34 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
         }
         let pathOnly = req.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? req.path
         let segs = pathOnly.split(separator: "/", omittingEmptySubsequences: true)
+        func urlAllowed(_ urlString: String) -> Bool {
+            guard let comp = URLComponents(string: urlString), let host = comp.host, let scheme = comp.scheme?.lowercased(), ["http","https"].contains(scheme) else { return false }
+            let h = host.lowercased()
+            if h == "localhost" { return false }
+            // IPv4 checks
+            func isPrivateIPv4(_ parts: [Int]) -> Bool {
+                if parts[0] == 10 { return true }
+                if parts[0] == 172 && parts[1] >= 16 && parts[1] <= 31 { return true }
+                if parts[0] == 192 && parts[1] == 168 { return true }
+                if parts[0] == 127 { return true }
+                if parts[0] == 169 && parts[1] == 254 { return true }
+                if parts[0] == 0 { return true }
+                return false
+            }
+            if h.split(separator: ".").count == 4, let octets = h.split(separator: ".").compactMap({ Int($0) }), octets.count == 4 {
+                if octets.contains(where: { $0 < 0 || $0 > 255 }) { return false }
+                if isPrivateIPv4(octets) { return false }
+            }
+            // IPv6 simple blocklist
+            if h.contains(":") {
+                let v6 = h
+                if v6 == "::1" { return false }
+                if v6.hasPrefix("fe80:") { return false } // link-local
+                if v6 == "::" { return false }
+            }
+            return true
+        }
+
         switch (req.method, segs) {
         case ("GET", ["v1", "health"]):
             let body = try? JSONSerialization.data(withJSONObject: ["status": "ok", "version": "0.2.0", "browserPool": ["capacity": 0, "inUse": 0]])
@@ -98,32 +126,30 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             }
         case ("POST", ["v1", "snapshot"]):
             if let sreq = try? JSONDecoder().decode(APIModels.SnapshotRequest.self, from: req.body) {
+                // SSRF guard
+                guard urlAllowed(sreq.url) else { return HTTPResponse(status: 400, headers: ["Content-Type": "application/json"], body: Data("{\"code\":\"invalid_url\",\"message\":\"URL not allowed\"}".utf8)) }
                 let sid = UUID().uuidString
-                let (html, text): (String, String)
-                if let engine {
-                    if let result = try? await engine.snapshotHTML(for: sreq.url) { (html, text) = result } else { (html, text) = ("", sreq.url) }
-                } else {
-                    (html, text) = ("<html><body><h1>\(sreq.url)</h1></body></html>", sreq.url)
-                }
+                let snapRes: SnapshotResult
+                if let engine, let res = try? await engine.snapshot(for: sreq.url, wait: sreq.wait) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(sreq.url)</h1></body></html>", text: sreq.url, finalURL: sreq.url, loadMs: nil) }
                 let now = Date()
                 let page = APIModels.Snapshot.Page(
                     uri: sreq.url,
-                    finalUrl: sreq.url,
+                    finalUrl: snapRes.finalURL,
                     fetchedAt: now.iso8601String,
                     status: 200,
                     contentType: "text/html",
-                    navigation: .init(ttfbMs: nil, loadMs: nil)
+                    navigation: .init(ttfbMs: nil, loadMs: snapRes.loadMs)
                 )
                 let apiSnap = APIModels.Snapshot(
                     snapshotId: sid,
                     page: page,
-                    rendered: .init(html: html, text: text, meta: nil),
+                    rendered: .init(html: snapRes.html, text: snapRes.text, meta: nil),
                     network: nil,
                     diagnostics: []
                 )
                 // Store artifact for export compatibility
                 let store = sreq.storeArtifacts ?? true
-                if store { await service.store(snapshot: .init(id: sid, url: sreq.url, renderedHTML: html, renderedText: text)) }
+                if store { await service.store(snapshot: .init(id: sid, url: sreq.url, renderedHTML: snapRes.html, renderedText: snapRes.text)) }
                 let resp = APIModels.SnapshotResponse(snapshot: apiSnap)
                 if let data = try? JSONEncoder().encode(resp) {
                     return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
@@ -161,24 +187,25 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             return HTTPResponse(status: 400)
         case ("POST", ["v1", "browse"]):
             if let breq = try? JSONDecoder().decode(APIModels.BrowseRequest.self, from: req.body) {
+                guard urlAllowed(breq.url) else { return HTTPResponse(status: 400, headers: ["Content-Type": "application/json"], body: Data("{\"code\":\"invalid_url\",\"message\":\"URL not allowed\"}".utf8)) }
                 let sid = UUID().uuidString
-                let (html, text): (String, String)
-                if let engine, let result = try? await engine.snapshotHTML(for: breq.url) { (html, text) = result } else { (html, text) = ("<html><body><h1>\(breq.url)</h1></body></html>", breq.url) }
-                await service.store(snapshot: .init(id: sid, url: breq.url, renderedHTML: html, renderedText: text))
+                let snapRes: SnapshotResult
+                if let engine, let res = try? await engine.snapshot(for: breq.url, wait: breq.wait) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(breq.url)</h1></body></html>", text: breq.url, finalURL: breq.url, loadMs: nil) }
+                await service.store(snapshot: .init(id: sid, url: breq.url, renderedHTML: snapRes.html, renderedText: snapRes.text))
                 let now = Date()
                 let snap = APIModels.Snapshot(
                     snapshotId: sid,
-                    page: .init(uri: breq.url, finalUrl: breq.url, fetchedAt: now.iso8601String, status: 200, contentType: "text/html", navigation: .init(ttfbMs: nil, loadMs: nil)),
-                    rendered: .init(html: html, text: text, meta: nil),
+                    page: .init(uri: breq.url, finalUrl: snapRes.finalURL, fetchedAt: now.iso8601String, status: 200, contentType: "text/html", navigation: .init(ttfbMs: nil, loadMs: snapRes.loadMs)),
+                    rendered: .init(html: snapRes.html, text: snapRes.text, meta: nil),
                     network: nil,
                     diagnostics: []
                 )
                 // Analyze
                 let fid = UUID().uuidString
-                let blocks = HTMLParser().parseBlocks(from: html)
+                let blocks = HTMLParser().parseBlocks(from: snapRes.html)
                 let apiBlocks: [APIModels.Analysis.Block] = blocks.map { .init(id: $0.id, kind: $0.kind, level: nil, text: $0.text, span: nil, table: $0.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }) }
                 let analysis = APIModels.Analysis(
-                    envelope: .init(id: fid, source: .init(uri: breq.url, fetchedAt: now.iso8601String), contentType: "text/html", language: "en", bytes: html.utf8.count, diagnostics: []),
+                    envelope: .init(id: fid, source: .init(uri: breq.url, fetchedAt: now.iso8601String), contentType: "text/html", language: "en", bytes: snapRes.html.utf8.count, diagnostics: []),
                     blocks: apiBlocks,
                     semantics: .init(outline: nil, entities: [], claims: [], relations: []),
                     summaries: .init(abstract: nil, keyPoints: nil, tl__dr: nil),
