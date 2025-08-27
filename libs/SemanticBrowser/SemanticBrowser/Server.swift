@@ -479,6 +479,11 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     network: (snapRes.network.map { APIModels.Snapshot.Network(requests: $0) }) ?? nil,
                     diagnostics: []
                 )
+                // Persist artifacts (FS store)
+                if let st = artifactStore {
+                    if let ref = try? st.put(kind: "snapshot.html", ext: "html", mime: "text/html", data: Data(snapRes.html.utf8), ttlDays: Int(env["ARTIFACT_TTL_DAYS"] ?? "7") ?? 7) { await service.storeArtifactRef(ownerId: sid, kind: "snapshot.html", refPath: ref.refPath) }
+                    if let ref = try? st.put(kind: "snapshot.text", ext: "txt", mime: "text/plain", data: Data(parsed.text.utf8), ttlDays: Int(env["ARTIFACT_TTL_DAYS"] ?? "7") ?? 7) { await service.storeArtifactRef(ownerId: sid, kind: "snapshot.text", refPath: ref.refPath) }
+                }
                 // Analyze
                 let fid = UUID().uuidString
                 let parsedBlocks = parsed.blocks
@@ -509,6 +514,9 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     summaries: .init(abstract: nil, keyPoints: nil, tl__dr: nil),
                     provenance: .init(pipeline: "semantic-browser@0.2", model: nil)
                 )
+                if let st = artifactStore, let data = try? JSONEncoder().encode(analysis) {
+                    if let ref = try? st.put(kind: "analysis.json", ext: "json", mime: "application/json", data: data, ttlDays: Int(env["ARTIFACT_TTL_DAYS"] ?? "7") ?? 7) { await service.storeArtifactRef(ownerId: fid, kind: "analysis.json", refPath: ref.refPath) }
+                }
                 // Store internal analysis
                 let full = SemanticMemoryService.FullAnalysis(
                     envelope: .init(id: fid, source: .init(uri: breq.url), contentType: "text/html", language: "en"),
@@ -557,14 +565,23 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
         case ("GET", ["v1", "export"]):
             let params = qp(req.path)
             guard let pageId = params["pageId"], let format = params["format"] else { return HTTPResponse(status: 400) }
-            if format == "snapshot.html", let snap = await service.resolveSnapshot(byPageId: pageId) {
-                return HTTPResponse(status: 200, headers: ["Content-Type": "text/html"], body: Data(snap.renderedHTML.utf8))
+            if format == "snapshot.html" {
+                if let st = artifactStore, let ref = await service.loadArtifactRef(ownerId: pageId, kind: "snapshot.html"), let (data, _) = try? st.get(refPath: ref) {
+                    return HTTPResponse(status: 200, headers: ["Content-Type": "text/html"], body: data)
+                }
+                if let snap = await service.resolveSnapshot(byPageId: pageId) { return HTTPResponse(status: 200, headers: ["Content-Type": "text/html"], body: Data(snap.renderedHTML.utf8)) }
             }
-            if format == "snapshot.text", let snap = await service.resolveSnapshot(byPageId: pageId) {
-                return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: Data(snap.renderedText.utf8))
+            if format == "snapshot.text" {
+                if let st = artifactStore, let ref = await service.loadArtifactRef(ownerId: pageId, kind: "snapshot.text"), let (data, _) = try? st.get(refPath: ref) {
+                    return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: data)
+                }
+                if let snap = await service.resolveSnapshot(byPageId: pageId) { return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: Data(snap.renderedText.utf8)) }
             }
-            if format == "analysis.json", let a = await service.resolveAnalysis(byPageId: pageId), let data = try? JSONEncoder().encode(a) {
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            if format == "analysis.json" {
+                if let st = artifactStore, let ref = await service.loadArtifactRef(ownerId: pageId, kind: "analysis.json"), let (data, _) = try? st.get(refPath: ref) {
+                    return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+                }
+                if let a = await service.resolveAnalysis(byPageId: pageId), let data = try? JSONEncoder().encode(a) { return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
             }
             if format == "tables.csv", let a = await service.resolveAnalysis(byPageId: pageId) {
                 let tables = a.blocks.compactMap { $0.table }

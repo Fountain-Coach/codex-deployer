@@ -27,6 +27,7 @@ public actor SemanticMemoryService {
     private var analysisToSnapshot: [String: String] = [:]
     private var snapshotToAnalysis: [String: String] = [:]
     private var networks: [String: [AdminNetworkRequest]] = [:]
+    private var artifactRefs: [String: [String: String]] = [:] // key: id (snapshotId or analysisId) -> kind -> refPath
 
     public init(backend: Backend? = nil) { self.backend = backend }
 
@@ -181,6 +182,13 @@ public actor SemanticMemoryService {
 
     public func storeNetwork(snapshotId: String, requests: [AdminNetworkRequest]?) { if let r = requests { networks[snapshotId] = r } }
     public func loadNetwork(snapshotId: String) -> [AdminNetworkRequest]? { networks[snapshotId] }
+
+    public func storeArtifactRef(ownerId: String, kind: String, refPath: String) {
+        var m = artifactRefs[ownerId] ?? [:]
+        m[kind] = refPath
+        artifactRefs[ownerId] = m
+    }
+    public func loadArtifactRef(ownerId: String, kind: String) -> String? { artifactRefs[ownerId]?[kind] }
     public func getPage(id: String) -> PageDoc? {
         if let p = pages.first(where: { $0.id == id }) { return p }
         // Backend fallback: naive search and filter by id
