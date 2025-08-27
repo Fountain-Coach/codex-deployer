@@ -257,6 +257,20 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             if let hg = hostGate { let s = await hg.stats(); verbose["hostGate"] = ["total": s.total, "used": s.used, "perHostUsed": s.perHost, "perHostCapacity": s.perHostCap, "rejected": s.rejected] }
             let body = try? JSONSerialization.data(withJSONObject: verbose)
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: body ?? Data())
+        case ("GET", ["v1", "admin", "artifacts"]):
+            let params = qp(req.path)
+            let pageId = params["pageId"]
+            let analysisId = params["analysisId"] ?? params["pageId"]
+            let kind = params["kind"]
+            let limit = min(max(Int(params["limit"] ?? "20") ?? 20, 1), 200)
+            #if canImport(Typesense)
+            if let catalog = artifactCatalog as? TypesenseArtifacts {
+                let docs = await catalog.search(pageId: pageId, analysisId: analysisId, kind: kind, limit: limit)
+                if let data = try? JSONEncoder().encode(docs) { return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
+                return HTTPResponse(status: 200)
+            }
+            #endif
+            return HTTPResponse(status: 404)
         case ("GET", let seg) where seg.count == 5 && seg[0] == "v1" && seg[1] == "admin" && seg[2] == "snapshots" && seg[4] == "network":
             let sid = String(segs[3])
             if let items = await service.loadNetwork(snapshotId: sid), let data = try? JSONEncoder().encode(items) {

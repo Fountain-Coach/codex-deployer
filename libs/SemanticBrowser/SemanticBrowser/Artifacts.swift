@@ -150,6 +150,15 @@ public final class TypesenseArtifacts: @unchecked Sendable {
             Task { _ = try? await client.collection(name: "artifacts").documents().upsert(document: data) }
         }
     }
+
+    public func search(pageId: String? = nil, analysisId: String? = nil, kind: String? = nil, limit: Int = 50) async -> [ArtifactDoc] {
+        var filters: [String] = []
+        if let pageId, !pageId.isEmpty { filters.append("pageId:=\(pageId)") }
+        if let analysisId, !analysisId.isEmpty { filters.append("analysisId:=\(analysisId)") }
+        if let kind, !kind.isEmpty { filters.append("kind:=\(kind)") }
+        let params = SearchParameters(q: "*", queryBy: "kind,pageId,analysisId,host,lang,labels", filterBy: filters.isEmpty ? nil : filters.joined(separator: " && "), page: 1, perPage: max(1, min(limit, 200)))
+        let res = try? await client.collection(name: "artifacts").documents().search(params, for: ArtifactDoc.self)
+        return res?.0.hits?.compactMap { $0.document } ?? []
+    }
 }
 #endif
-
