@@ -1,0 +1,32 @@
+name: semantic-browser-smoke
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    container: swift:6.0-jammy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build server
+        run: swift build -c release --product semantic-browser-server
+      - name: Launch server
+        run: .build/release/semantic-browser-server &
+      - name: Wait for server
+        run: |
+          for i in {1..20}; do
+            curl -fsS http://127.0.0.1:8006/v1/health && exit 0 || sleep 1;
+          done
+          echo "server did not start" >&2; exit 1
+      - name: Browse+Analyze+Index
+        run: |
+          curl -fsS -X POST http://127.0.0.1:8006/v1/browse \
+            -H 'Content-Type: application/json' \
+            -d '{"url":"https://example.com","wait":{"strategy":"domContentLoaded","maxWaitMs":3000},"mode":"standard","index":{"enabled":true}}' | jq .snapshot.snapshotId
+      - name: Query pages
+        run: curl -fsS 'http://127.0.0.1:8006/v1/pages?q=Example'
+

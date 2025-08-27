@@ -70,7 +70,22 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             let data = try JSONSerialization.data(withJSONObject: obj)
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         case ("POST", ["v1", "index"]):
-            if let reqObj = try? JSONDecoder().decode(SemanticMemoryService.IndexRequest.self, from: req.body) {
+            if let apiReq = try? JSONDecoder().decode(APIModels.IndexRequest.self, from: req.body) {
+                // Map API Analysis to internal FullAnalysis
+                let a = apiReq.analysis
+                let blocks: [SemanticMemoryService.FullAnalysis.Block] = a.blocks.map { .init(id: $0.id, kind: $0.kind, text: $0.text, table: $0.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }) }
+                let ents: [SemanticMemoryService.FullAnalysis.Semantics.Entity] = (a.semantics?.entities ?? []).map { .init(id: $0.id, name: $0.name, type: $0.type) }
+                let full = SemanticMemoryService.FullAnalysis(
+                    envelope: .init(id: a.envelope.id, source: .init(uri: a.envelope.source?.uri), contentType: a.envelope.contentType, language: a.envelope.language),
+                    blocks: blocks,
+                    semantics: .init(entities: ents)
+                )
+                let result = await service.ingest(full: full)
+                if let data = try? JSONEncoder().encode(APIModels.IndexResult(pagesUpserted: result.pagesUpserted, segmentsUpserted: result.segmentsUpserted, entitiesUpserted: result.entitiesUpserted, tablesUpserted: result.tablesUpserted)) {
+                    return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+                }
+                return HTTPResponse(status: 200)
+            } else if let reqObj = try? JSONDecoder().decode(SemanticMemoryService.IndexRequest.self, from: req.body) {
                 let result = await service.ingest(reqObj)
                 if let data = try? JSONEncoder().encode(result) { return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
                 return HTTPResponse(status: 200)
@@ -82,73 +97,108 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 return HTTPResponse(status: 400)
             }
         case ("POST", ["v1", "snapshot"]):
-            struct SnapshotRequest: Codable { let url: String; let storeArtifacts: Bool? }
-            if let sreq = try? JSONDecoder().decode(SnapshotRequest.self, from: req.body) {
-                let id = UUID().uuidString
+            if let sreq = try? JSONDecoder().decode(APIModels.SnapshotRequest.self, from: req.body) {
+                let sid = UUID().uuidString
                 let (html, text): (String, String)
                 if let engine {
-                    if let result = try? await engine.snapshotHTML(for: sreq.url) { html = result.html; text = result.text } else { html = ""; text = sreq.url }
+                    if let result = try? await engine.snapshotHTML(for: sreq.url) { (html, text) = result } else { (html, text) = ("", sreq.url) }
                 } else {
-                    html = "<html><body><h1>\(sreq.url)</h1></body></html>"; text = sreq.url
+                    (html, text) = ("<html><body><h1>\(sreq.url)</h1></body></html>", sreq.url)
                 }
-                let snap = SemanticMemoryService.Snapshot(id: id, url: sreq.url, renderedHTML: html, renderedText: text)
-                if sreq.storeArtifacts ?? true { await service.store(snapshot: snap) }
-                if let data = try? JSONEncoder().encode(["snapshot": ["id": id, "url": sreq.url, "rendered": ["html": html, "text": text]]]) {
+                let now = Date()
+                let page = APIModels.Snapshot.Page(
+                    uri: sreq.url,
+                    finalUrl: sreq.url,
+                    fetchedAt: now.iso8601String,
+                    status: 200,
+                    contentType: "text/html",
+                    navigation: .init(ttfbMs: nil, loadMs: nil)
+                )
+                let apiSnap = APIModels.Snapshot(
+                    snapshotId: sid,
+                    page: page,
+                    rendered: .init(html: html, text: text, meta: nil),
+                    network: nil,
+                    diagnostics: []
+                )
+                // Store artifact for export compatibility
+                let store = sreq.storeArtifacts ?? true
+                if store { await service.store(snapshot: .init(id: sid, url: sreq.url, renderedHTML: html, renderedText: text)) }
+                let resp = APIModels.SnapshotResponse(snapshot: apiSnap)
+                if let data = try? JSONEncoder().encode(resp) {
                     return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
                 }
                 return HTTPResponse(status: 200)
             }
             return HTTPResponse(status: 400)
         case ("POST", ["v1", "analyze"]):
-            struct AnalyzeRequest: Codable { let snapshot: SemanticMemoryService.Snapshot?; let snapshotRef: SnapshotRef?; struct SnapshotRef: Codable { let snapshotId: String } }
-            if let areq = try? JSONDecoder().decode(AnalyzeRequest.self, from: req.body) {
-                let snap = areq.snapshot ?? (areq.snapshotRef.flatMap { await service.loadSnapshot(id: $0.snapshotId) })
+            if let areq = try? JSONDecoder().decode(APIModels.AnalyzeRequest.self, from: req.body) {
+                let snap: SemanticMemoryService.Snapshot?
+                if let s = areq.snapshot { snap = .init(id: s.snapshotId, url: s.page.uri, renderedHTML: s.rendered.html, renderedText: s.rendered.text) }
+                else if let sid = areq.snapshotRef?.snapshotId { snap = await service.loadSnapshot(id: sid) }
+                else { snap = nil }
                 guard let snap else { return HTTPResponse(status: 400) }
                 let fid = UUID().uuidString
                 let blocks = HTMLParser().parseBlocks(from: snap.renderedHTML)
+                let apiBlocks: [APIModels.Analysis.Block] = blocks.map { .init(id: $0.id, kind: $0.kind, level: nil, text: $0.text, span: nil, table: $0.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }) }
+                let analysis = APIModels.Analysis(
+                    envelope: .init(id: fid, source: .init(uri: snap.url, fetchedAt: Date().iso8601String), contentType: "text/html", language: "en", bytes: snap.renderedHTML.utf8.count, diagnostics: []),
+                    blocks: apiBlocks,
+                    semantics: .init(outline: nil, entities: [], claims: [], relations: []),
+                    summaries: .init(abstract: nil, keyPoints: nil, tl__dr: nil),
+                    provenance: .init(pipeline: "semantic-browser@0.2", model: nil)
+                )
+                // Store a FullAnalysis for internal indexing/export
                 let full = SemanticMemoryService.FullAnalysis(
                     envelope: .init(id: fid, source: .init(uri: snap.url), contentType: "text/html", language: "en"),
                     blocks: blocks,
                     semantics: .init(entities: [])
                 )
                 await service.store(analysis: full)
-                if let data = try? JSONEncoder().encode(full) {
-                    return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
-                }
+                if let data = try? JSONEncoder().encode(analysis) { return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
                 return HTTPResponse(status: 200)
             }
             return HTTPResponse(status: 400)
         case ("POST", ["v1", "browse"]):
-            struct BrowseRequest: Codable { let url: String; let index: IndexOpt?; struct IndexOpt: Codable { let enabled: Bool? } }
-            if let breq = try? JSONDecoder().decode(BrowseRequest.self, from: req.body) {
+            if let breq = try? JSONDecoder().decode(APIModels.BrowseRequest.self, from: req.body) {
                 let sid = UUID().uuidString
                 let (html, text): (String, String)
-                if let engine {
-                    if let result = try? await engine.snapshotHTML(for: breq.url) { html = result.html; text = result.text } else { html = ""; text = breq.url }
-                } else {
-                    html = "<html><body><h1>\(breq.url)</h1></body></html>"; text = breq.url
-                }
-                let snap = SemanticMemoryService.Snapshot(id: sid, url: breq.url, renderedHTML: html, renderedText: text)
-                await service.store(snapshot: snap)
+                if let engine, let result = try? await engine.snapshotHTML(for: breq.url) { (html, text) = result } else { (html, text) = ("<html><body><h1>\(breq.url)</h1></body></html>", breq.url) }
+                await service.store(snapshot: .init(id: sid, url: breq.url, renderedHTML: html, renderedText: text))
+                let now = Date()
+                let snap = APIModels.Snapshot(
+                    snapshotId: sid,
+                    page: .init(uri: breq.url, finalUrl: breq.url, fetchedAt: now.iso8601String, status: 200, contentType: "text/html", navigation: .init(ttfbMs: nil, loadMs: nil)),
+                    rendered: .init(html: html, text: text, meta: nil),
+                    network: nil,
+                    diagnostics: []
+                )
+                // Analyze
                 let fid = UUID().uuidString
                 let blocks = HTMLParser().parseBlocks(from: html)
+                let apiBlocks: [APIModels.Analysis.Block] = blocks.map { .init(id: $0.id, kind: $0.kind, level: nil, text: $0.text, span: nil, table: $0.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }) }
+                let analysis = APIModels.Analysis(
+                    envelope: .init(id: fid, source: .init(uri: breq.url, fetchedAt: now.iso8601String), contentType: "text/html", language: "en", bytes: html.utf8.count, diagnostics: []),
+                    blocks: apiBlocks,
+                    semantics: .init(outline: nil, entities: [], claims: [], relations: []),
+                    summaries: .init(abstract: nil, keyPoints: nil, tl__dr: nil),
+                    provenance: .init(pipeline: "semantic-browser@0.2", model: nil)
+                )
+                // Store internal analysis
                 let full = SemanticMemoryService.FullAnalysis(
                     envelope: .init(id: fid, source: .init(uri: breq.url), contentType: "text/html", language: "en"),
                     blocks: blocks,
                     semantics: .init(entities: [])
                 )
                 await service.store(analysis: full)
-                var indexObj: Any = NSNull()
+                // Optionally index
+                var indexRes: APIModels.IndexResult? = nil
                 if breq.index?.enabled ?? true {
                     let res = await service.ingest(full: full)
-                    indexObj = try JSONSerialization.jsonObject(with: JSONEncoder().encode(res))
+                    indexRes = .init(pagesUpserted: res.pagesUpserted, segmentsUpserted: res.segmentsUpserted, entitiesUpserted: res.entitiesUpserted, tablesUpserted: res.tablesUpserted)
                 }
-                let resp: [String: Any] = [
-                    "snapshot": ["id": sid, "url": breq.url, "rendered": ["html": html, "text": text]],
-                    "analysis": try JSONSerialization.jsonObject(with: JSONEncoder().encode(full)),
-                    "index": indexObj
-                ]
-                if let data = try? JSONSerialization.data(withJSONObject: resp) {
+                let resp = APIModels.BrowseResponse(snapshot: snap, analysis: analysis, index: indexRes)
+                if let data = try? JSONEncoder().encode(resp) {
                     return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
                 }
                 return HTTPResponse(status: 200)
