@@ -109,11 +109,13 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
     var dnsCache: [String: (expires: Date, ips: [String])] = [:]
 
     func withTimeout<T>(ms: Int, _ op: @escaping () async throws -> T) async -> Result<T, Error> {
-        do {
-            let v = try await withTimeout(seconds: Double(ms)/1000.0, operation: op)
-            return .success(v)
-        } catch {
-            return .failure(error)
+        await withTaskGroup(of: Result<T, Error>.self) { group in
+            let deadlineNs = UInt64(ms) * 1_000_000
+            group.addTask { do { return .success(try await op()) } catch { return .failure(error) } }
+            group.addTask { try? await Task.sleep(nanoseconds: deadlineNs); return .failure(TimeoutError.deadlineExceeded) }
+            let result = await group.next() ?? .failure(TimeoutError.deadlineExceeded)
+            group.cancelAll()
+            return result
         }
     }
     return HTTPKernel { req in
