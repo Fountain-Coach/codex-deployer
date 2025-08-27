@@ -30,6 +30,7 @@ public struct CDPBrowserEngine: BrowserEngine {
             let targetId = try await session.createTarget(url: "about:blank")
             try await session.attach(targetId: targetId)
             try await session.enablePage()
+            try await session.enableNetwork()
             let start = Date()
             try await session.navigate(url: url)
             let strat = wait?.strategy?.lowercased()
@@ -37,7 +38,9 @@ public struct CDPBrowserEngine: BrowserEngine {
                 try await session.waitForDomContentLoaded(timeoutMs: wait?.maxWaitMs ?? 5000)
             } else if strat == "networkidle" {
                 try await session.waitForLoadEvent(timeoutMs: wait?.maxWaitMs ?? 5000)
-                if let idle = wait?.networkIdleMs, idle > 0 { try? await Task.sleep(nanoseconds: UInt64(idle) * 1_000_000) }
+                if let idle = wait?.networkIdleMs, idle > 0 {
+                    try await session.waitForNetworkIdle(idleMs: idle, timeoutMs: wait?.maxWaitMs ?? (idle + 3000))
+                }
             } else {
                 try await session.waitForLoadEvent(timeoutMs: wait?.maxWaitMs ?? 5000)
             }
@@ -45,7 +48,11 @@ public struct CDPBrowserEngine: BrowserEngine {
             let html = try await session.getOuterHTML()
             let text = html.removingHTMLTags()
             let final = (try? await session.getCurrentURL()) ?? url
-            return SnapshotResult(html: html, text: text, finalURL: final, loadMs: loadMs)
+            // Map captured requests (truncate body capture omitted for now)
+            let requests: [APIModels.Snapshot.Network.Request] = session.reqs.values.map { info in
+                APIModels.Snapshot.Network.Request(url: info.url, type: info.type, status: info.status, body: nil)
+            }
+            return SnapshotResult(html: html, text: text, finalURL: final, loadMs: loadMs, network: requests)
         } else {
             throw BrowserError.fetchFailed
         }
@@ -57,6 +64,10 @@ actor CDPSession {
     let wsURL: URL
     var task: URLSessionWebSocketTask?
     var nextId: Int = 1
+    // Network tracking
+    var inflight: Set<String> = []
+    struct ReqInfo { var url: String; var type: String?; var status: Int? }
+    var reqs: [String: ReqInfo] = [:]
     init(wsURL: URL) { self.wsURL = wsURL }
     func open() async throws {
         let session = URLSession(configuration: .default)
@@ -68,6 +79,31 @@ actor CDPSession {
     func close() {
         task?.cancel()
     }
+    private func processEventObject(_ obj: [String: Any]) {
+        guard let method = obj["method"] as? String, let params = obj["params"] as? [String: Any] else { return }
+        switch method {
+        case "Network.requestWillBeSent":
+            if let rid = params["requestId"] as? String, let req = params["request"] as? [String: Any], let url = req["url"] as? String {
+                inflight.insert(rid)
+                var info = reqs[rid] ?? ReqInfo(url: url, type: nil, status: nil)
+                if let t = params["type"] as? String { info.type = t }
+                reqs[rid] = info
+            }
+        case "Network.responseReceived":
+            if let rid = params["requestId"] as? String, let resp = params["response"] as? [String: Any] {
+                var info = reqs[rid] ?? ReqInfo(url: "", type: nil, status: nil)
+                if let s = resp["status"] as? Int { info.status = s }
+                if let t = params["type"] as? String { info.type = t }
+                if let url = resp["url"] as? String, info.url.isEmpty { info.url = url }
+                reqs[rid] = info
+            }
+        case "Network.loadingFinished", "Network.loadingFailed":
+            if let rid = params["requestId"] as? String { inflight.remove(rid) }
+        default:
+            break
+        }
+    }
+
     private func sendRecv<T: Decodable>(_ method: String, params: [String: Any]? = nil, result: T.Type) async throws -> T {
         guard let task else { throw BrowserError.fetchFailed }
         let id = nextId; nextId += 1
@@ -80,6 +116,7 @@ actor CDPSession {
             switch msg {
             case .data(let d):
                 let j = try JSONSerialization.jsonObject(with: d) as? [String: Any]
+                if let m = j, m["method"] != nil { processEventObject(m) }
                 if let rid = j?["id"] as? Int, rid == id {
                     if let res = j?["result"] {
                         let rd = try JSONSerialization.data(withJSONObject: res)
@@ -89,6 +126,7 @@ actor CDPSession {
             case .string(let s):
                 if let d = s.data(using: .utf8) {
                     let j = try JSONSerialization.jsonObject(with: d) as? [String: Any]
+                    if let m = j, m["method"] != nil { processEventObject(m) }
                     if let rid = j?["id"] as? Int, rid == id {
                         if let res = j?["result"] {
                             let rd = try JSONSerialization.data(withJSONObject: res)
@@ -110,6 +148,7 @@ actor CDPSession {
         _ = try await sendRecv("Target.attachToTarget", params: ["targetId": targetId, "flatten": true], result: R.self)
     }
     func enablePage() async throws { struct R: Decodable {}; _ = try await sendRecv("Page.enable", params: [:], result: R.self) }
+    func enableNetwork() async throws { struct R: Decodable {}; _ = try await sendRecv("Network.enable", params: [:], result: R.self) }
     func navigate(url: String) async throws { struct R: Decodable {}; _ = try await sendRecv("Page.navigate", params: ["url": url], result: R.self) }
     func waitForLoadEvent(timeoutMs: Int) async throws {
         let deadline = Date().addingTimeInterval(Double(timeoutMs)/1000.0)
@@ -121,9 +160,15 @@ actor CDPSession {
                 }, onCancel: { })
                 switch msg {
                 case .data(let d):
-                    if let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any], (m["method"] as? String) == "Page.loadEventFired" { return }
+                    if let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any] {
+                        if (m["method"] as? String) == "Page.loadEventFired" { return }
+                        processEventObject(m)
+                    }
                 case .string(let s):
-                    if let d = s.data(using: .utf8), let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any], (m["method"] as? String) == "Page.loadEventFired" { return }
+                    if let d = s.data(using: .utf8), let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any] {
+                        if (m["method"] as? String) == "Page.loadEventFired" { return }
+                        processEventObject(m)
+                    }
                 @unknown default: break
                 }
             } catch { /* ignore timeouts */ }
@@ -139,12 +184,42 @@ actor CDPSession {
                 }, onCancel: { })
                 switch msg {
                 case .data(let d):
-                    if let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any], (m["method"] as? String) == "Page.domContentEventFired" { return }
+                    if let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any] {
+                        if (m["method"] as? String) == "Page.domContentEventFired" { return }
+                        processEventObject(m)
+                    }
                 case .string(let s):
-                    if let d = s.data(using: .utf8), let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any], (m["method"] as? String) == "Page.domContentEventFired" { return }
+                    if let d = s.data(using: .utf8), let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any] {
+                        if (m["method"] as? String) == "Page.domContentEventFired" { return }
+                        processEventObject(m)
+                    }
                 @unknown default: break
                 }
             } catch { /* ignore timeouts */ }
+        }
+    }
+    func waitForNetworkIdle(idleMs: Int, timeoutMs: Int) async throws {
+        let overallDeadline = Date().addingTimeInterval(Double(timeoutMs)/1000.0)
+        var idleStart: Date? = nil
+        while Date() < overallDeadline {
+            if inflight.isEmpty {
+                if idleStart == nil { idleStart = Date() }
+                if let started = idleStart, Int(Date().timeIntervalSince(started) * 1000.0) >= idleMs { return }
+            } else {
+                idleStart = nil
+            }
+            // drain events for a short period
+            guard let task else { throw BrowserError.fetchFailed }
+            do {
+                let msg = try await withTimeout(seconds: 0.2) { try await task.receive() }
+                switch msg {
+                case .data(let d):
+                    if let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any] { processEventObject(m) }
+                case .string(let s):
+                    if let d = s.data(using: .utf8), let m = try? JSONSerialization.jsonObject(with: d) as? [String: Any] { processEventObject(m) }
+                @unknown default: break
+                }
+            } catch { /* time slice idle */ }
         }
     }
     func getOuterHTML() async throws -> String {

@@ -7,6 +7,7 @@ public struct SnapshotResult: Sendable {
     public let text: String
     public let finalURL: String
     public let loadMs: Int?
+    public let network: [APIModels.Snapshot.Network.Request]?
 }
 
 public protocol BrowserEngine: Sendable {
@@ -30,7 +31,7 @@ public struct URLFetchBrowserEngine: BrowserEngine {
         let html = String(data: data, encoding: .utf8) ?? ""
         let text = html.removingHTMLTags()
         let final = (resp.url?.absoluteString) ?? url
-        return SnapshotResult(html: html, text: text, finalURL: final, loadMs: elapsed)
+        return SnapshotResult(html: html, text: text, finalURL: final, loadMs: elapsed, network: nil)
     }
 }
 
@@ -56,14 +57,14 @@ public struct ShellBrowserEngine: BrowserEngine {
         let html = String(data: data, encoding: .utf8) ?? ""
         let text = html.removingHTMLTags()
         let elapsed = Int(Date().timeIntervalSince(start) * 1000.0)
-        return SnapshotResult(html: html, text: text, finalURL: url, loadMs: elapsed)
+        return SnapshotResult(html: html, text: text, finalURL: url, loadMs: elapsed, network: nil)
     }
 }
 
 public extension BrowserEngine {
     func snapshot(for url: String, wait: APIModels.WaitPolicy?) async throws -> SnapshotResult {
         let r = try await snapshotHTML(for: url)
-        return SnapshotResult(html: r.html, text: r.text, finalURL: url, loadMs: nil)
+        return SnapshotResult(html: r.html, text: r.text, finalURL: url, loadMs: nil, network: nil)
     }
 }
 

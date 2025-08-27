@@ -1,4 +1,5 @@
 import Foundation
+import Darwin
 import FountainCodex
 
 actor SimpleRateLimiter {
@@ -64,7 +65,42 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 let v6 = h
                 if v6 == "::1" { return false }
                 if v6.hasPrefix("fe80:") { return false } // link-local
+                if v6.hasPrefix("fc") || v6.hasPrefix("fd") { return false } // unique local
                 if v6 == "::" { return false }
+            }
+            // DNS resolve and block private/loopback
+            func resolveIPs(_ host: String) -> [String] {
+                var hints = addrinfo(ai_flags: 0, ai_family: AF_UNSPEC, ai_socktype: SOCK_STREAM, ai_protocol: 0, ai_addrlen: 0, ai_canonname: nil, ai_addr: nil, ai_next: nil)
+                var res: UnsafeMutablePointer<addrinfo>? = nil
+                let rc = getaddrinfo(host, nil, &hints, &res)
+                guard rc == 0, let first = res else { return [] }
+                defer { freeaddrinfo(first) }
+                var out: [String] = []
+                var p: UnsafeMutablePointer<addrinfo>? = first
+                while let cur = p {
+                    if let sa = cur.pointee.ai_addr {
+                        var hostbuf = [CChar](repeating: 0, count: Int(NI_MAXHOST))
+                        if getnameinfo(sa, socklen_t(cur.pointee.ai_addrlen), &hostbuf, socklen_t(hostbuf.count), nil, 0, NI_NUMERICHOST) == 0 {
+                            out.append(String(cString: hostbuf))
+                        }
+                    }
+                    p = cur.pointee.ai_next
+                }
+                return out
+            }
+            func isPrivateIPv6(_ ip: String) -> Bool {
+                let low = ip.lowercased()
+                if low == "::1" || low == "::" { return true }
+                if low.hasPrefix("fe80:") { return true } // link-local
+                if low.hasPrefix("fc") || low.hasPrefix("fd") { return true } // unique local
+                return false
+            }
+            for ip in resolveIPs(h) {
+                if ip.contains(":") { if isPrivateIPv6(ip) { return false } }
+                else {
+                    let parts = ip.split(separator: ".").compactMap { Int($0) }
+                    if parts.count == 4 && isPrivateIPv4(parts) { return false }
+                }
             }
             return true
         }
@@ -144,7 +180,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     snapshotId: sid,
                     page: page,
                     rendered: .init(html: snapRes.html, text: snapRes.text, meta: nil),
-                    network: nil,
+                    network: (snapRes.network.map { APIModels.Snapshot.Network(requests: $0) }) ?? nil,
                     diagnostics: []
                 )
                 // Store artifact for export compatibility
@@ -197,7 +233,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     snapshotId: sid,
                     page: .init(uri: breq.url, finalUrl: snapRes.finalURL, fetchedAt: now.iso8601String, status: 200, contentType: "text/html", navigation: .init(ttfbMs: nil, loadMs: snapRes.loadMs)),
                     rendered: .init(html: snapRes.html, text: snapRes.text, meta: nil),
-                    network: nil,
+                    network: (snapRes.network.map { APIModels.Snapshot.Network(requests: $0) }) ?? nil,
                     diagnostics: []
                 )
                 // Analyze
