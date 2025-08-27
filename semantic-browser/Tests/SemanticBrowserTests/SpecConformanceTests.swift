@@ -69,7 +69,7 @@ final class SpecConformanceTests: XCTestCase {
         let blocks = analysis?["blocks"] as? [[String: Any]]
         XCTAssertNotNil(blocks)
         XCTAssertTrue(blocks!.contains { ($0["span"] as? [Int]) != nil })
-      
+
         try await server.stop()
 
     }

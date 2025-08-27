@@ -186,4 +186,3 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-
