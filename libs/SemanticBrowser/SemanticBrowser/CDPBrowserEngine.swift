@@ -112,7 +112,7 @@ actor CDPSession {
     var nextId: Int = 1
     // Network tracking
     var inflight: Set<String> = []
-    struct ReqInfo { var url: String; var type: String?; var status: Int?; var mimeType: String?; var body: String?; var encodedLength: Int?; var contentLength: Int? }
+    struct ReqInfo { var url: String; var type: String?; var status: Int?; var mimeType: String?; var body: String?; var encodedLength: Int?; var contentLength: Int?; var method: String?; var requestHeaders: [String: String]?; var responseHeaders: [String: String]? }
     var reqs: [String: ReqInfo] = [:]
     init(wsURL: URL) { self.wsURL = wsURL }
     func open() async throws {
@@ -131,27 +131,27 @@ actor CDPSession {
         case "Network.requestWillBeSent":
             if let rid = params["requestId"] as? String, let req = params["request"] as? [String: Any], let url = req["url"] as? String {
                 inflight.insert(rid)
-                var info = reqs[rid] ?? ReqInfo(url: url, type: nil, status: nil)
+                var info = reqs[rid] ?? ReqInfo(url: url, type: nil, status: nil, mimeType: nil, body: nil, encodedLength: nil, contentLength: nil, method: nil, requestHeaders: nil, responseHeaders: nil)
                 if let t = params["type"] as? String { info.type = t }
+                if let m = req["method"] as? String { info.method = m }
+                if let hdrs = req["headers"] as? [String: Any] { var h: [String:String] = [:]; for (k,v) in hdrs { h[k] = "\(v)" }; info.requestHeaders = h }
                 reqs[rid] = info
             }
         case "Network.responseReceived":
             if let rid = params["requestId"] as? String, let resp = params["response"] as? [String: Any] {
-                var info = reqs[rid] ?? ReqInfo(url: "", type: nil, status: nil, mimeType: nil, body: nil, encodedLength: nil, contentLength: nil)
+                var info = reqs[rid] ?? ReqInfo(url: "", type: nil, status: nil, mimeType: nil, body: nil, encodedLength: nil, contentLength: nil, method: nil, requestHeaders: nil, responseHeaders: nil)
                 if let s = resp["status"] as? Int { info.status = s }
                 if let t = params["type"] as? String { info.type = t }
                 if let url = resp["url"] as? String, info.url.isEmpty { info.url = url }
                 if let mt = resp["mimeType"] as? String { info.mimeType = mt }
-                if let hdrs = resp["headers"] as? [String: Any] {
-                    for (k, v) in hdrs { if k.lowercased() == "content-length" { if let s = v as? String, let n = Int(s) { info.contentLength = n } else if let n = v as? Int { info.contentLength = n } else if let n = v as? Double { info.contentLength = Int(n) } } }
-                }
+                if let hdrs = resp["headers"] as? [String: Any] { var h: [String:String] = [:]; for (k,v) in hdrs { h[k] = "\(v)"; if k.lowercased()=="content-length" { if let s=v as? String, let n=Int(s){ info.contentLength=n } else if let n=v as? Int { info.contentLength=n } else if let n=v as? Double { info.contentLength=Int(n) } } }; info.responseHeaders = h }
                 reqs[rid] = info
             }
         case "Network.loadingFinished":
             if let rid = params["requestId"] as? String {
                 inflight.remove(rid)
                 if let len = params["encodedDataLength"] as? Double {
-                    var info = reqs[rid] ?? ReqInfo(url: "", type: nil, status: nil, mimeType: nil, body: nil, encodedLength: nil, contentLength: nil)
+                    var info = reqs[rid] ?? ReqInfo(url: "", type: nil, status: nil, mimeType: nil, body: nil, encodedLength: nil, contentLength: nil, method: nil, requestHeaders: nil, responseHeaders: nil)
                     info.encodedLength = Int(len)
                     reqs[rid] = info
                 }
