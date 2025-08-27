@@ -21,6 +21,14 @@ actor SimpleRateLimiter {
     }
 }
 
+actor ConcurrencyGate {
+    private(set) var inUse: Int = 0
+    let capacity: Int
+    init(capacity: Int) { self.capacity = max(0, capacity) }
+    func tryAcquire() -> Bool { if inUse >= capacity { return false }; inUse += 1; return true }
+    func release() { if inUse > 0 { inUse -= 1 } }
+}
+
 actor SimpleMetrics {
     private var counts: [String: Int] = [:]
     private var latencies: [String: [Int]] = [:]
@@ -37,7 +45,7 @@ actor SimpleMetrics {
     }
 }
 
-public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEngine? = nil, apiKey: String? = nil, limiter: SimpleRateLimiter? = nil, limitPerMinute: Int = 60, requireAPIKey: Bool = false, reqBodyMaxBytes: Int = 1_000_000, reqTimeoutMs: Int = 15_000, metrics: SimpleMetrics? = nil) -> HTTPKernel {
+public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEngine? = nil, apiKey: String? = nil, limiter: SimpleRateLimiter? = nil, limitPerMinute: Int = 60, requireAPIKey: Bool = false, reqBodyMaxBytes: Int = 1_000_000, reqTimeoutMs: Int = 15_000, metrics: SimpleMetrics? = nil, gate: ConcurrencyGate? = nil) -> HTTPKernel {
     func qp(_ path: String) -> [String: String] {
         guard let i = path.firstIndex(of: "?") else { return [:] }
         let q = path[path.index(after: i)...]
@@ -158,7 +166,9 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
 
         switch (req.method, segs) {
         case ("GET", ["v1", "health"]):
-            let body = try? JSONSerialization.data(withJSONObject: ["status": "ok", "version": "0.2.0", "browserPool": ["capacity": 0, "inUse": 0]])
+            let cap = await gate?.capacity ?? 0
+            let used = await gate?.inUse ?? 0
+            let body = try? JSONSerialization.data(withJSONObject: ["status": "ok", "version": "0.2.0", "browserPool": ["capacity": cap, "inUse": used]])
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: body ?? Data())
         case ("GET", ["v1", "admin", "healthx"]):
             // Verbose, non-spec health
@@ -262,8 +272,13 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     maxBodyBytes: Int(req.headers["X-Capture-Body-Max-Bytes"] ?? ""),
                     maxTotalBytes: Int(req.headers["X-Capture-Body-Total-Bytes"] ?? "")
                 )
+                // Concurrency gate
+                if let g = gate, await !g.tryAcquire() { return HTTPResponse(status: 429, headers: ["Retry-After": "1"], body: Data("too many requests".utf8)) }
+                defer { Task { if let g = gate { await g.release() } } }
                 let snapRes: SnapshotResult
-                if let engine, let res = try? await engine.snapshot(for: sreq.url, wait: sreq.wait, capture: cap) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(sreq.url)</h1></body></html>", text: sreq.url, finalURL: sreq.url, loadMs: nil, network: nil) }
+                if let engine, let res = try? await engine.snapshot(for: sreq.url, wait: sreq.wait, capture: cap) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(sreq.url)</h1></body></html>", text: sreq.url, finalURL: sreq.url, loadMs: nil, network: nil, pageStatus: nil, pageContentType: nil) }
+                // Recompute text + blocks via parser for stable spans
+                let parsed = HTMLParser().parseTextAndBlocks(from: snapRes.html)
                 let now = Date()
                 let page = APIModels.Snapshot.Page(
                     uri: sreq.url,
@@ -276,13 +291,13 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 let apiSnap = APIModels.Snapshot(
                     snapshotId: sid,
                     page: page,
-                    rendered: .init(html: snapRes.html, text: snapRes.text, meta: nil),
+                    rendered: .init(html: snapRes.html, text: parsed.text, meta: nil),
                     network: (snapRes.network.map { APIModels.Snapshot.Network(requests: $0) }) ?? nil,
                     diagnostics: []
                 )
                 // Store artifact for export compatibility
                 let store = sreq.storeArtifacts ?? true
-                if store { await service.store(snapshot: .init(id: sid, url: sreq.url, renderedHTML: snapRes.html, renderedText: snapRes.text)) }
+                if store { await service.store(snapshot: .init(id: sid, url: sreq.url, renderedHTML: snapRes.html, renderedText: parsed.text)) }
                 let resp = APIModels.SnapshotResponse(snapshot: apiSnap)
                 if let data = try? JSONEncoder().encode(resp) {
                     // Build capture headers
@@ -366,38 +381,47 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     maxBodyBytes: Int(req.headers["X-Capture-Body-Max-Bytes"] ?? ""),
                     maxTotalBytes: Int(req.headers["X-Capture-Body-Total-Bytes"] ?? "")
                 )
+                if let g = gate, await !g.tryAcquire() { return HTTPResponse(status: 429, headers: ["Retry-After": "1"], body: Data("too many requests".utf8)) }
+                defer { Task { if let g = gate { await g.release() } } }
                 let snapRes: SnapshotResult
-                if let engine, let res = try? await engine.snapshot(for: breq.url, wait: breq.wait, capture: cap) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(breq.url)</h1></body></html>", text: breq.url, finalURL: breq.url, loadMs: nil, network: nil) }
-                await service.store(snapshot: .init(id: sid, url: breq.url, renderedHTML: snapRes.html, renderedText: snapRes.text))
+                if let engine, let res = try? await engine.snapshot(for: breq.url, wait: breq.wait, capture: cap) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(breq.url)</h1></body></html>", text: breq.url, finalURL: breq.url, loadMs: nil, network: nil, pageStatus: nil, pageContentType: nil) }
+                let parsed = HTMLParser().parseTextAndBlocks(from: snapRes.html)
+                await service.store(snapshot: .init(id: sid, url: breq.url, renderedHTML: snapRes.html, renderedText: parsed.text))
                 let now = Date()
                 let snap = APIModels.Snapshot(
                     snapshotId: sid,
                     page: .init(uri: breq.url, finalUrl: snapRes.finalURL, fetchedAt: now.iso8601String, status: snapRes.pageStatus ?? 200, contentType: (snapRes.pageContentType ?? "text/html"), navigation: .init(ttfbMs: nil, loadMs: snapRes.loadMs)),
-                    rendered: .init(html: snapRes.html, text: snapRes.text, meta: nil),
+                    rendered: .init(html: snapRes.html, text: parsed.text, meta: nil),
                     network: (snapRes.network.map { APIModels.Snapshot.Network(requests: $0) }) ?? nil,
                     diagnostics: []
                 )
                 // Analyze
                 let fid = UUID().uuidString
-                let blocks = HTMLParser().parseBlocks(from: snapRes.html)
-                let fullText = snapRes.text
-                var cursor = 0
-                var apiBlocks: [APIModels.Analysis.Block] = []
-                for b in blocks {
-                    let t = b.text
-                    if let range = fullText.range(of: t, options: [], range: fullText.index(fullText.startIndex, offsetBy: cursor)..<fullText.endIndex) {
-                        let start = fullText.distance(from: fullText.startIndex, to: range.lowerBound)
-                        let end = start + t.count
-                        cursor = end
-                        apiBlocks.append(.init(id: b.id, kind: b.kind, level: nil, text: b.text, span: [start, end], table: b.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }))
-                    } else {
-                        apiBlocks.append(.init(id: b.id, kind: b.kind, level: nil, text: b.text, span: nil, table: b.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }))
+                let parsedBlocks = parsed.blocks
+                var apiBlocks: [APIModels.Analysis.Block] = parsedBlocks.map { APIModels.Analysis.Block(id: $0.id, kind: $0.kind, level: $0.level, text: $0.text, span: [$0.start, $0.end], table: $0.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }) }
+                // Baseline entities: capitalized tokens with spans
+                var entities: [String: (id: String, mentions: [[String: Any]])] = [:]
+                let wordRe = try? NSRegularExpression(pattern: "\\b[A-Z][a-zA-Z]{2,}\\b")
+                for b in parsedBlocks {
+                    if let re = wordRe {
+                        let r = NSRange(location: 0, length: b.text.utf16.count)
+                        let matches = re.matches(in: b.text, range: r)
+                        for m in matches {
+                            if let rr = Range(m.range, in: b.text) {
+                                let token = String(b.text[rr])
+                                let start = b.start + b.text.distance(from: b.text.startIndex, to: rr.lowerBound)
+                                let end = start + token.count
+                                var ent = entities[token] ?? (UUID().uuidString, [])
+                                ent.mentions.append(["block": b.id, "span": [start, end]])
+                                entities[token] = ent
+                            }
+                        }
                     }
                 }
                 let analysis = APIModels.Analysis(
                     envelope: .init(id: fid, source: .init(uri: breq.url, fetchedAt: now.iso8601String), contentType: "text/html", language: "en", bytes: snapRes.html.utf8.count, diagnostics: []),
                     blocks: apiBlocks,
-                    semantics: .init(outline: nil, entities: [], claims: [], relations: []),
+                    semantics: .init(outline: nil, entities: entities.map { APIModels.Analysis.Entity(id: $0.value.id, name: $0.key, type: "OTHER", mentions: $0.value.mentions.map { APIModels.Analysis.Entity.Mention(block: $0["block"] as? String, span: $0["span"] as? [Int]) }) }, claims: [], relations: []),
                     summaries: .init(abstract: nil, keyPoints: nil, tl__dr: nil),
                     provenance: .init(pipeline: "semantic-browser@0.2", model: nil)
                 )

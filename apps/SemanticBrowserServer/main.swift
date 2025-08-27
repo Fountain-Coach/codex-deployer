@@ -35,7 +35,9 @@ let requireKey = (env["SB_REQUIRE_API_KEY"] ?? "true").lowercased() != "false"
 let maxBody = max(Int(env["SB_REQ_BODY_MAX_BYTES"] ?? "1000000") ?? 1_000_000, 1024)
 let reqTimeout = max(Int(env["SB_REQ_TIMEOUT_MS"] ?? "15000") ?? 15_000, 1000)
 let metrics = SimpleMetrics()
-let kernel = makeSemanticKernel(service: service, engine: engine, apiKey: apiKey, limiter: limiter, limitPerMinute: limit, requireAPIKey: requireKey, reqBodyMaxBytes: maxBody, reqTimeoutMs: reqTimeout, metrics: metrics)
+let concurrency = Int(env["SB_BROWSER_CONCURRENCY"] ?? "4") ?? 4
+let gate = ConcurrencyGate(capacity: max(concurrency, 0))
+let kernel = makeSemanticKernel(service: service, engine: engine, apiKey: apiKey, limiter: limiter, limitPerMinute: limit, requireAPIKey: requireKey, reqBodyMaxBytes: maxBody, reqTimeoutMs: reqTimeout, metrics: metrics, gate: gate)
 let server = NIOHTTPServer(kernel: kernel)
 Task { _ = try? await server.start(port: 8006); print("semantic-browser listening on 8006") }
 dispatchMain()
