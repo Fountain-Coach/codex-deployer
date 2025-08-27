@@ -43,7 +43,11 @@ var artifactStore: ArtifactStore? = nil
 if let root = env["ARTIFACT_ROOT"], !root.isEmpty {
     artifactStore = try? FSArtifactStore(rootPath: root, budgetBytes: Int64(env["ARTIFACT_MAX_BYTES"] ?? "0") ?? 0)
 }
-let kernel = makeSemanticKernel(service: service, engine: engine, apiKey: apiKey, limiter: limiter, limitPerMinute: limit, requireAPIKey: requireKey, reqBodyMaxBytes: maxBody, reqTimeoutMs: reqTimeout, metrics: metrics, gate: gate, hostGate: hostGate, artifactStore: artifactStore)
+var artifactCatalog: Any? = nil
+#if canImport(Typesense)
+if let nodes = (env["SB_TYPESENSE_URLS"] ?? env["TYPESENSE_URLS"])?.split(separator: ",").map(String.init), let key = (env["SB_TYPESENSE_API_KEY"] ?? env["TYPESENSE_API_KEY"]) { if !nodes.isEmpty && !key.isEmpty { artifactCatalog = TypesenseArtifacts(nodes: nodes, apiKey: key, debug: false) } }
+#endif
+let kernel = makeSemanticKernel(service: service, engine: engine, apiKey: apiKey, limiter: limiter, limitPerMinute: limit, requireAPIKey: requireKey, reqBodyMaxBytes: maxBody, reqTimeoutMs: reqTimeout, metrics: metrics, gate: gate, hostGate: hostGate, artifactStore: artifactStore, artifactCatalog: artifactCatalog)
 let server = NIOHTTPServer(kernel: kernel)
 Task { _ = try? await server.start(port: 8006); print("semantic-browser listening on 8006") }
 dispatchMain()

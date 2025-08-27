@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(CryptoKit)
+import CryptoKit
+#endif
 
 public struct ArtifactRef: Sendable, Codable, Equatable {
     public let id: String
@@ -89,7 +92,6 @@ public final class FSArtifactStore: ArtifactStore, @unchecked Sendable {
 
     private func sha256Hex(_ data: Data) -> String {
         #if canImport(CryptoKit)
-        import CryptoKit
         let digest = SHA256.hash(data: data)
         return digest.map { String(format: "%02x", $0) }.joined()
         #else

@@ -32,8 +32,11 @@ actor ConcurrencyGate {
 actor SimpleMetrics {
     private var counts: [String: Int] = [:]
     private var latencies: [String: [Int]] = [:]
+    private var gauges: [String: Int64] = [:]
     func inc(_ name: String, by n: Int = 1) { counts[name, default: 0] += n }
     func observe(_ name: String, ms: Int) { latencies[name, default: []].append(ms) }
+    func addGauge(_ name: String, by delta: Int64) { gauges[name, default: 0] += delta }
+    func setGauge(_ name: String, to value: Int64) { gauges[name] = value }
     func renderPrometheus() -> String {
         var out = ""
         for (k,v) in counts { out += "# TYPE \(k) counter\n\(k) \(v)\n" }
@@ -41,6 +44,7 @@ actor SimpleMetrics {
             let sum = arr.reduce(0,+)
             out += "# TYPE \(k)_ms summary\n\(k)_ms_count \(arr.count)\n\(k)_ms_sum \(sum)\n"
         }
+        for (k,v) in gauges { out += "# TYPE \(k) gauge\n\(k) \(v)\n" }
         return out
     }
 }
@@ -255,6 +259,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 ]
             ]
             if let hg = hostGate { let s = await hg.stats(); verbose["hostGate"] = ["total": s.total, "used": s.used, "perHostUsed": s.perHost, "perHostCapacity": s.perHostCap, "rejected": s.rejected] }
+            if let st = artifactStore { let removed = (try? st.gc(now: Date())) ?? 0; if let m = metrics { await m.inc("artifact_gc_runs_total"); await m.inc("artifact_gc_deleted_total", by: removed) } }
             let body = try? JSONSerialization.data(withJSONObject: verbose)
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: body ?? Data())
         case ("GET", ["v1", "admin", "artifacts"]):
@@ -495,8 +500,8 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 )
                 // Persist artifacts (FS store)
                 if let st = artifactStore {
-                    if let ref = try? st.put(kind: "snapshot.html", ext: "html", mime: "text/html", data: Data(snapRes.html.utf8), ttlDays: Int(env["ARTIFACT_TTL_DAYS"] ?? "7") ?? 7) { await service.storeArtifactRef(ownerId: sid, kind: "snapshot.html", refPath: ref.refPath) }
-                    if let ref = try? st.put(kind: "snapshot.text", ext: "txt", mime: "text/plain", data: Data(parsed.text.utf8), ttlDays: Int(env["ARTIFACT_TTL_DAYS"] ?? "7") ?? 7) { await service.storeArtifactRef(ownerId: sid, kind: "snapshot.text", refPath: ref.refPath) }
+                    if let ref = try? st.put(kind: "snapshot.html", ext: "html", mime: "text/html", data: Data(snapRes.html.utf8), ttlDays: Int(env["ARTIFACT_TTL_DAYS"] ?? "7") ?? 7) { await service.storeArtifactRef(ownerId: sid, kind: "snapshot.html", refPath: ref.refPath); if let m=metrics { await m.inc("artifact_writes_total"); await m.addGauge("artifact_bytes_total", by: Int64(ref.size)) } }
+                    if let ref = try? st.put(kind: "snapshot.text", ext: "txt", mime: "text/plain", data: Data(parsed.text.utf8), ttlDays: Int(env["ARTIFACT_TTL_DAYS"] ?? "7") ?? 7) { await service.storeArtifactRef(ownerId: sid, kind: "snapshot.text", refPath: ref.refPath); if let m=metrics { await m.inc("artifact_writes_total"); await m.addGauge("artifact_bytes_total", by: Int64(ref.size)) } }
                 }
                 // Analyze
                 let fid = UUID().uuidString
@@ -529,7 +534,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     provenance: .init(pipeline: "semantic-browser@0.2", model: nil)
                 )
                 if let st = artifactStore, let data = try? JSONEncoder().encode(analysis) {
-                    if let ref = try? st.put(kind: "analysis.json", ext: "json", mime: "application/json", data: data, ttlDays: Int(env["ARTIFACT_TTL_DAYS"] ?? "7") ?? 7) { await service.storeArtifactRef(ownerId: fid, kind: "analysis.json", refPath: ref.refPath) }
+                    if let ref = try? st.put(kind: "analysis.json", ext: "json", mime: "application/json", data: data, ttlDays: Int(env["ARTIFACT_TTL_DAYS"] ?? "7") ?? 7) { await service.storeArtifactRef(ownerId: fid, kind: "analysis.json", refPath: ref.refPath); if let m=metrics { await m.inc("artifact_writes_total"); await m.addGauge("artifact_bytes_total", by: Int64(ref.size)) } }
                 }
                 // Store internal analysis
                 let full = SemanticMemoryService.FullAnalysis(
@@ -581,18 +586,21 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             guard let pageId = params["pageId"], let format = params["format"] else { return HTTPResponse(status: 400) }
             if format == "snapshot.html" {
                 if let st = artifactStore, let ref = await service.loadArtifactRef(ownerId: pageId, kind: "snapshot.html"), let (data, _) = try? st.get(refPath: ref) {
+                    if let m = metrics { await m.inc("artifact_reads_total") }
                     return HTTPResponse(status: 200, headers: ["Content-Type": "text/html"], body: data)
                 }
                 if let snap = await service.resolveSnapshot(byPageId: pageId) { return HTTPResponse(status: 200, headers: ["Content-Type": "text/html"], body: Data(snap.renderedHTML.utf8)) }
             }
             if format == "snapshot.text" {
                 if let st = artifactStore, let ref = await service.loadArtifactRef(ownerId: pageId, kind: "snapshot.text"), let (data, _) = try? st.get(refPath: ref) {
+                    if let m = metrics { await m.inc("artifact_reads_total") }
                     return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: data)
                 }
                 if let snap = await service.resolveSnapshot(byPageId: pageId) { return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: Data(snap.renderedText.utf8)) }
             }
             if format == "analysis.json" {
                 if let st = artifactStore, let ref = await service.loadArtifactRef(ownerId: pageId, kind: "analysis.json"), let (data, _) = try? st.get(refPath: ref) {
+                    if let m = metrics { await m.inc("artifact_reads_total") }
                     return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
                 }
                 if let a = await service.resolveAnalysis(byPageId: pageId), let data = try? JSONEncoder().encode(a) { return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
