@@ -23,7 +23,10 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
         var out: [String: String] = [:]
         for pair in q.split(separator: "&") {
             let parts = pair.split(separator: "=", maxSplits: 1).map(String.init)
-            if parts.count == 2 { out[parts[0]] = parts[1] }
+            guard parts.count == 2 else { continue }
+            let key = parts[0].replacingOccurrences(of: "+", with: " ").removingPercentEncoding ?? parts[0]
+            let val = parts[1].replacingOccurrences(of: "+", with: " ").removingPercentEncoding ?? parts[1]
+            out[key] = val
         }
         return out
     }
@@ -158,13 +161,6 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             }
             return HTTPResponse(status: 404)
         case ("GET", ["v1", "export"]):
-            func qp(_ path: String) -> [String: String] {
-                guard let i = path.firstIndex(of: "?") else { return [:] }
-                let q = path[path.index(after: i)...]
-                var out: [String: String] = [:]
-                for pair in q.split(separator: "&") { let parts = pair.split(separator: "=", maxSplits: 1).map(String.init); if parts.count == 2 { out[parts[0]] = parts[1] } }
-                return out
-            }
             let params = qp(req.path)
             guard let pageId = params["pageId"], let format = params["format"] else { return HTTPResponse(status: 400) }
             if format == "snapshot.html", let snap = await service.loadSnapshot(id: pageId) {

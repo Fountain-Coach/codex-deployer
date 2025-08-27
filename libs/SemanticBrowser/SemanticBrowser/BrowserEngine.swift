@@ -37,12 +37,4 @@ public struct ShellBrowserEngine: BrowserEngine {
     }
 }
 
-extension String {
-    func removingHTMLTags() -> String {
-        return self.replacingOccurrences(of: "<[^>]+>", with: " ", options: .regularExpression, range: nil)
-            .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-}
-
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
