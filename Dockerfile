@@ -14,4 +14,8 @@ ENV SB_NET_BODY_MAX_BYTES=16384
 ENV SB_NET_BODY_TOTAL_MAX_BYTES=131072
 # Optional MIME allowlist for CDP body capture
 # ENV SB_NET_BODY_MIME_ALLOW=text/markdown,application/xml
+# Default artifact root path (mounted volume recommended)
+ENV ARTIFACT_ROOT=/data
+RUN useradd -m -u 10001 appuser && mkdir -p /data && chown -R appuser:appuser /data
+USER appuser
 CMD ["semantic-browser-server"]

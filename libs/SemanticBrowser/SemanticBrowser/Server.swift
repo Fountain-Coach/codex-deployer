@@ -82,7 +82,9 @@ actor HostGate {
     }
 }
 
-public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEngine? = nil, apiKey: String? = nil, limiter: SimpleRateLimiter? = nil, limitPerMinute: Int = 60, requireAPIKey: Bool = false, reqBodyMaxBytes: Int = 1_000_000, reqTimeoutMs: Int = 15_000, metrics: SimpleMetrics? = nil, gate: ConcurrencyGate? = nil, hostGate: HostGate? = nil) -> HTTPKernel {
+enum TimeoutError: Error { case deadlineExceeded }
+
+public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEngine? = nil, apiKey: String? = nil, limiter: SimpleRateLimiter? = nil, limitPerMinute: Int = 60, requireAPIKey: Bool = false, reqBodyMaxBytes: Int = 1_000_000, reqTimeoutMs: Int = 15_000, metrics: SimpleMetrics? = nil, gate: ConcurrencyGate? = nil, hostGate: HostGate? = nil, artifactStore: ArtifactStore? = nil, artifactCatalog: Any? = nil) -> HTTPKernel {
     func qp(_ path: String) -> [String: String] {
         guard let i = path.firstIndex(of: "?") else { return [:] }
         let q = path[path.index(after: i)...]
@@ -224,6 +226,17 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             return true
         }
 
+        func withTimeout<T>(ms: Int, _ op: @escaping () async throws -> T) async -> Result<T, Error> {
+            await withTaskGroup(of: Result<T, Error>.self) { group in
+                let deadlineNs = UInt64(ms) * 1_000_000
+                group.addTask { do { return .success(try await op()) } catch { return .failure(error) } }
+                group.addTask { try? await Task.sleep(nanoseconds: deadlineNs); return .failure(TimeoutError.deadlineExceeded) }
+                let result = await group.next() ?? .failure(TimeoutError.deadlineExceeded)
+                group.cancelAll()
+                return result
+            }
+        }
+
         switch (req.method, segs) {
         case ("GET", ["v1", "health"]):
             let cap = await gate?.capacity ?? 0
@@ -362,7 +375,14 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 if let hg = hostGate, !host.isEmpty, await !hg.tryAcquire(host: host) { return HTTPResponse(status: 429, headers: ["Retry-After": "1"], body: Data("too many requests".utf8)) }
                 defer { Task { if let hg = hostGate, !host.isEmpty { await hg.release(host: host) } } }
                 let snapRes: SnapshotResult
-                if let engine, let res = try? await engine.snapshot(for: sreq.url, wait: sreq.wait, capture: cap) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(sreq.url)</h1></body></html>", text: sreq.url, finalURL: sreq.url, loadMs: nil, network: nil, pageStatus: nil, pageContentType: nil) }
+                if let engine {
+                    switch await withTimeout(ms: reqTimeoutMs, { try await engine.snapshot(for: sreq.url, wait: sreq.wait, capture: cap) }) {
+                    case .success(let r): snapRes = r
+                    case .failure: return HTTPResponse(status: 504, headers: ["Content-Type": "application/json"], body: Data("{\"code\":\"timeout\"}".utf8))
+                    }
+                } else {
+                    snapRes = SnapshotResult(html: "<html><body><h1>\(sreq.url)</h1></body></html>", text: sreq.url, finalURL: sreq.url, loadMs: nil, network: nil, pageStatus: nil, pageContentType: nil)
+                }
                 // Redirect pinning: final URL must also be allowed
                 if !urlAllowed(snapRes.finalURL) {
                     let reason = ["code": "redirect_blocked", "message": "Final URL not allowed"]
@@ -485,7 +505,14 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 if let hg = hostGate, !host.isEmpty, await !hg.tryAcquire(host: host) { return HTTPResponse(status: 429, headers: ["Retry-After": "1"], body: Data("too many requests".utf8)) }
                 defer { Task { if let hg = hostGate, !host.isEmpty { await hg.release(host: host) } } }
                 let snapRes: SnapshotResult
-                if let engine, let res = try? await engine.snapshot(for: breq.url, wait: breq.wait, capture: cap) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(breq.url)</h1></body></html>", text: breq.url, finalURL: breq.url, loadMs: nil, network: nil, pageStatus: nil, pageContentType: nil) }
+                if let engine {
+                    switch await withTimeout(ms: reqTimeoutMs, { try await engine.snapshot(for: breq.url, wait: breq.wait, capture: cap) }) {
+                    case .success(let r): snapRes = r
+                    case .failure: return HTTPResponse(status: 504, headers: ["Content-Type": "application/json"], body: Data("{\"code\":\"timeout\"}".utf8))
+                    }
+                } else {
+                    snapRes = SnapshotResult(html: "<html><body><h1>\(breq.url)</h1></body></html>", text: breq.url, finalURL: breq.url, loadMs: nil, network: nil, pageStatus: nil, pageContentType: nil)
+                }
                 if !urlAllowed(snapRes.finalURL) { return HTTPResponse(status: 400, headers: ["Content-Type": "application/json"], body: Data("{\"code\":\"redirect_blocked\",\"message\":\"Final URL not allowed\"}".utf8)) }
                 let parsed = HTMLParser().parseTextAndBlocks(from: snapRes.html)
                 await service.store(snapshot: .init(id: sid, url: breq.url, renderedHTML: snapRes.html, renderedText: parsed.text))
