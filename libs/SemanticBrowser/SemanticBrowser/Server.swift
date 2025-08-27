@@ -45,7 +45,40 @@ actor SimpleMetrics {
     }
 }
 
-public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEngine? = nil, apiKey: String? = nil, limiter: SimpleRateLimiter? = nil, limitPerMinute: Int = 60, requireAPIKey: Bool = false, reqBodyMaxBytes: Int = 1_000_000, reqTimeoutMs: Int = 15_000, metrics: SimpleMetrics? = nil, gate: ConcurrencyGate? = nil) -> HTTPKernel {
+actor ConcurrencyGate {
+    private(set) var inUse: Int = 0
+    let capacity: Int
+    init(capacity: Int) { self.capacity = max(0, capacity) }
+    func tryAcquire() -> Bool { if inUse >= capacity { return false }; inUse += 1; return true }
+    func release() { if inUse > 0 { inUse -= 1 } }
+}
+
+actor HostGate {
+    private var inUseByHost: [String: Int] = [:]
+    private(set) var rejectedByHost: [String: Int] = [:]
+    private(set) var totalInUse: Int = 0
+    let totalCapacity: Int
+    let perHostCapacity: Int
+    init(total: Int, perHost: Int) { self.totalCapacity = max(0, total); self.perHostCapacity = max(1, perHost) }
+    func tryAcquire(host: String) -> Bool {
+        let h = host.lowercased()
+        let usedHost = inUseByHost[h] ?? 0
+        if totalInUse >= totalCapacity || usedHost >= perHostCapacity { rejectedByHost[h, default: 0] += 1; return false }
+        inUseByHost[h] = usedHost + 1
+        totalInUse += 1
+        return true
+    }
+    func release(host: String) {
+        let h = host.lowercased()
+        if let u = inUseByHost[h], u > 0 { inUseByHost[h] = u - 1 }
+        if totalInUse > 0 { totalInUse -= 1 }
+    }
+    func stats() -> (total: Int, used: Int, perHost: [String: Int], rejected: [String: Int], perHostCap: Int) {
+        return (totalCapacity, totalInUse, inUseByHost, rejectedByHost, perHostCapacity)
+    }
+}
+
+public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEngine? = nil, apiKey: String? = nil, limiter: SimpleRateLimiter? = nil, limitPerMinute: Int = 60, requireAPIKey: Bool = false, reqBodyMaxBytes: Int = 1_000_000, reqTimeoutMs: Int = 15_000, metrics: SimpleMetrics? = nil, gate: ConcurrencyGate? = nil, hostGate: HostGate? = nil) -> HTTPKernel {
     func qp(_ path: String) -> [String: String] {
         guard let i = path.firstIndex(of: "?") else { return [:] }
         let q = path[path.index(after: i)...]
@@ -64,6 +97,8 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
     func splitList(_ s: String?) -> [String] { (s ?? "").split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }.filter { !$0.isEmpty } }
     let allowList = splitList(env["SB_URL_ALLOWLIST"]) // e.g., "example.com,.trusted.tld"
     let denyList = splitList(env["SB_URL_DENYLIST"])   // e.g., "bad.com,.internal"
+    let allowCIDRs = splitList(env["SB_URL_ALLOWCIDR"]) // e.g., "1.2.3.0/24,10.0.0.0/8"
+    let denyCIDRs = splitList(env["SB_URL_DENYCIDR"])   // e.g., "127.0.0.0/8,::1/128"
     let dnsTTL = max(Int(env["SB_DNS_CACHE_TTL"] ?? "60") ?? 60, 1)
     var dnsCache: [String: (expires: Date, ips: [String])] = [:]
 
@@ -154,11 +189,32 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 if low.hasPrefix("fc") || low.hasPrefix("fd") { return true } // unique local
                 return false
             }
+            func ipv4ToInt(_ ip: String) -> UInt32? {
+                let parts = ip.split(separator: ".").compactMap { UInt32($0) }
+                guard parts.count == 4 else { return nil }
+                return (parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8) | parts[3]
+            }
+            func parseCIDR(_ s: String) -> (UInt32, UInt32)? {
+                let comps = s.split(separator: "/")
+                guard comps.count == 2, let base = ipv4ToInt(String(comps[0])), let bits = Int(comps[1]), bits >= 0 && bits <= 32 else { return nil }
+                let mask = bits == 0 ? 0 : 0xFFFFFFFF << (32 - bits)
+                return (base & UInt32(mask), UInt32(mask))
+            }
+            let allowCIDRParsed: [(UInt32, UInt32)] = allowCIDRs.compactMap(parseCIDR)
+            let denyCIDRParsed: [(UInt32, UInt32)] = denyCIDRs.compactMap(parseCIDR)
             for ip in resolveIPs(h) {
                 if ip.contains(":") { if isPrivateIPv6(ip) { return false } }
                 else {
                     let parts = ip.split(separator: ".").compactMap { Int($0) }
                     if parts.count == 4 && isPrivateIPv4(parts) { return false }
+                    if let v = ipv4ToInt(ip) {
+                        for (base, mask) in denyCIDRParsed { if (v & mask) == base { return false } }
+                        if !allowCIDRParsed.isEmpty {
+                            var ok = false
+                            for (base, mask) in allowCIDRParsed { if (v & mask) == base { ok = true; break } }
+                            if !ok { return false }
+                        }
+                    }
                 }
             }
             return true
@@ -182,10 +238,10 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             let maxBodies = max(Int(env["SB_NET_BODY_MAX_COUNT"] ?? "20") ?? 20, 0)
             let maxBytes = max(Int(env["SB_NET_BODY_MAX_BYTES"] ?? "16384") ?? 16384, 512)
             let maxTotal = max(Int(env["SB_NET_BODY_TOTAL_MAX_BYTES"] ?? "131072") ?? 131072, maxBytes)
-            let verbose: [String: Any] = [
+            var verbose: [String: Any] = [
                 "status": "ok",
                 "version": "0.2.0",
-                "browserPool": ["capacity": 0, "inUse": 0],
+                "browserPool": ["capacity": cap, "inUse": used],
                 "capture": [
                     "allowedMIMEs": Array(allowed).sorted(),
                     "maxBodies": maxBodies,
@@ -198,6 +254,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     "dnsCacheTTL": dnsTTL
                 ]
             ]
+            if let hg = hostGate { let s = await hg.stats(); verbose["hostGate"] = ["total": s.total, "used": s.used, "perHostUsed": s.perHost, "perHostCapacity": s.perHostCap, "rejected": s.rejected] }
             let body = try? JSONSerialization.data(withJSONObject: verbose)
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: body ?? Data())
         case ("GET", ["v1", "pages"]):
@@ -275,8 +332,18 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 // Concurrency gate
                 if let g = gate, await !g.tryAcquire() { return HTTPResponse(status: 429, headers: ["Retry-After": "1"], body: Data("too many requests".utf8)) }
                 defer { Task { if let g = gate { await g.release() } } }
+                // Host gate
+                let host = URL(string: sreq.url)?.host ?? ""
+                if let hg = hostGate, !host.isEmpty, await !hg.tryAcquire(host: host) { return HTTPResponse(status: 429, headers: ["Retry-After": "1"], body: Data("too many requests".utf8)) }
+                defer { Task { if let hg = hostGate, !host.isEmpty { await hg.release(host: host) } } }
                 let snapRes: SnapshotResult
                 if let engine, let res = try? await engine.snapshot(for: sreq.url, wait: sreq.wait, capture: cap) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(sreq.url)</h1></body></html>", text: sreq.url, finalURL: sreq.url, loadMs: nil, network: nil, pageStatus: nil, pageContentType: nil) }
+                // Redirect pinning: final URL must also be allowed
+                if !urlAllowed(snapRes.finalURL) {
+                    let reason = ["code": "redirect_blocked", "message": "Final URL not allowed"]
+                    let data = try? JSONSerialization.data(withJSONObject: reason)
+                    return HTTPResponse(status: 400, headers: ["Content-Type": "application/json", "X-URL-Block-Reason": "redirect"], body: data ?? Data())
+                }
                 // Recompute text + blocks via parser for stable spans
                 let parsed = HTMLParser().parseTextAndBlocks(from: snapRes.html)
                 let now = Date()
@@ -334,32 +401,37 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 else { snap = nil }
                 guard let snap else { return HTTPResponse(status: 400) }
                 let fid = UUID().uuidString
-                let blocks = HTMLParser().parseBlocks(from: snap.renderedHTML)
-                let fullText = snap.renderedText
-                var cursor = 0
-                var apiBlocks: [APIModels.Analysis.Block] = []
-                for b in blocks {
-                    let t = b.text
-                    if let range = fullText.range(of: t, options: [], range: fullText.index(fullText.startIndex, offsetBy: cursor)..<fullText.endIndex) {
-                        let start = fullText.distance(from: fullText.startIndex, to: range.lowerBound)
-                        let end = start + t.count
-                        cursor = end
-                        apiBlocks.append(.init(id: b.id, kind: b.kind, level: nil, text: b.text, span: [start, end], table: b.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }))
-                    } else {
-                        apiBlocks.append(.init(id: b.id, kind: b.kind, level: nil, text: b.text, span: nil, table: b.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }))
+                let parsed = HTMLParser().parseTextAndBlocks(from: snap.renderedHTML)
+                let apiBlocks: [APIModels.Analysis.Block] = parsed.blocks.map { .init(id: $0.id, kind: $0.kind, level: $0.level, text: $0.text, span: [$0.start, $0.end], table: $0.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }) }
+                var entities: [String: (id: String, mentions: [[String: Any]])] = [:]
+                let wordRe = try? NSRegularExpression(pattern: "\\b[A-Z][a-zA-Z]{2,}\\b")
+                for b in parsed.blocks {
+                    if let re = wordRe {
+                        let r = NSRange(location: 0, length: b.text.utf16.count)
+                        for m in re.matches(in: b.text, range: r) {
+                            if let rr = Range(m.range, in: b.text) {
+                                let token = String(b.text[rr])
+                                let start = b.start + b.text.distance(from: b.text.startIndex, to: rr.lowerBound)
+                                let end = start + token.count
+                                var ent = entities[token] ?? (UUID().uuidString, [])
+                                ent.mentions.append(["block": b.id, "span": [start, end]])
+                                entities[token] = ent
+                            }
+                        }
                     }
                 }
                 let analysis = APIModels.Analysis(
                     envelope: .init(id: fid, source: .init(uri: snap.url, fetchedAt: Date().iso8601String), contentType: "text/html", language: "en", bytes: snap.renderedHTML.utf8.count, diagnostics: []),
                     blocks: apiBlocks,
-                    semantics: .init(outline: nil, entities: [], claims: [], relations: []),
+                    semantics: .init(outline: nil, entities: entities.map { APIModels.Analysis.Entity(id: $0.value.id, name: $0.key, type: "OTHER", mentions: $0.value.mentions.map { APIModels.Analysis.Entity.Mention(block: $0["block"] as? String, span: $0["span"] as? [Int]) }) }, claims: [], relations: []),
                     summaries: .init(abstract: nil, keyPoints: nil, tl__dr: nil),
                     provenance: .init(pipeline: "semantic-browser@0.2", model: nil)
                 )
                 // Store a FullAnalysis for internal indexing/export
+                let fullBlocks = parsed.blocks.map { SemanticMemoryService.FullAnalysis.Block(id: $0.id, kind: $0.kind, text: $0.text, table: $0.table) }
                 let full = SemanticMemoryService.FullAnalysis(
                     envelope: .init(id: fid, source: .init(uri: snap.url), contentType: "text/html", language: "en"),
-                    blocks: blocks,
+                    blocks: fullBlocks,
                     semantics: .init(entities: [])
                 )
                 await service.store(analysis: full, forSnapshotId: snap.id)
@@ -383,8 +455,12 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 )
                 if let g = gate, await !g.tryAcquire() { return HTTPResponse(status: 429, headers: ["Retry-After": "1"], body: Data("too many requests".utf8)) }
                 defer { Task { if let g = gate { await g.release() } } }
+                let host = URL(string: breq.url)?.host ?? ""
+                if let hg = hostGate, !host.isEmpty, await !hg.tryAcquire(host: host) { return HTTPResponse(status: 429, headers: ["Retry-After": "1"], body: Data("too many requests".utf8)) }
+                defer { Task { if let hg = hostGate, !host.isEmpty { await hg.release(host: host) } } }
                 let snapRes: SnapshotResult
                 if let engine, let res = try? await engine.snapshot(for: breq.url, wait: breq.wait, capture: cap) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(breq.url)</h1></body></html>", text: breq.url, finalURL: breq.url, loadMs: nil, network: nil, pageStatus: nil, pageContentType: nil) }
+                if !urlAllowed(snapRes.finalURL) { return HTTPResponse(status: 400, headers: ["Content-Type": "application/json"], body: Data("{\"code\":\"redirect_blocked\",\"message\":\"Final URL not allowed\"}".utf8)) }
                 let parsed = HTMLParser().parseTextAndBlocks(from: snapRes.html)
                 await service.store(snapshot: .init(id: sid, url: breq.url, renderedHTML: snapRes.html, renderedText: parsed.text))
                 let now = Date()
