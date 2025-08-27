@@ -91,7 +91,14 @@ public struct CDPBrowserEngine: BrowserEngine {
             let requests: [APIModels.Snapshot.Network.Request] = session.reqs.map { (rid, info) in
                 APIModels.Snapshot.Network.Request(url: info.url, type: info.type, status: info.status, body: captured[rid])
             }
-            return SnapshotResult(html: html, text: text, finalURL: final, loadMs: loadMs, network: requests)
+            // Main document info
+            var docStatus: Int? = nil
+            var docCT: String? = nil
+            if let main = session.reqs.values.first(where: { ($0.type ?? "").lowercased() == "document" && ($0.url == final || $0.url == url) }) ?? session.reqs.values.first(where: { ($0.type ?? "").lowercased() == "document" }) {
+                docStatus = main.status
+                docCT = main.mimeType
+            }
+            return SnapshotResult(html: html, text: text, finalURL: final, loadMs: loadMs, network: requests, pageStatus: docStatus, pageContentType: docCT)
         } else {
             throw BrowserError.fetchFailed
         }

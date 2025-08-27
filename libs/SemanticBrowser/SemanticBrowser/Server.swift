@@ -21,7 +21,23 @@ actor SimpleRateLimiter {
     }
 }
 
-public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEngine? = nil, apiKey: String? = nil, limiter: SimpleRateLimiter? = nil, limitPerMinute: Int = 60) -> HTTPKernel {
+actor SimpleMetrics {
+    private var counts: [String: Int] = [:]
+    private var latencies: [String: [Int]] = [:]
+    func inc(_ name: String, by n: Int = 1) { counts[name, default: 0] += n }
+    func observe(_ name: String, ms: Int) { latencies[name, default: []].append(ms) }
+    func renderPrometheus() -> String {
+        var out = ""
+        for (k,v) in counts { out += "# TYPE \(k) counter\n\(k) \(v)\n" }
+        for (k,arr) in latencies {
+            let sum = arr.reduce(0,+)
+            out += "# TYPE \(k)_ms summary\n\(k)_ms_count \(arr.count)\n\(k)_ms_sum \(sum)\n"
+        }
+        return out
+    }
+}
+
+public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEngine? = nil, apiKey: String? = nil, limiter: SimpleRateLimiter? = nil, limitPerMinute: Int = 60, requireAPIKey: Bool = false, reqBodyMaxBytes: Int = 1_000_000, reqTimeoutMs: Int = 15_000, metrics: SimpleMetrics? = nil) -> HTTPKernel {
     func qp(_ path: String) -> [String: String] {
         guard let i = path.firstIndex(of: "?") else { return [:] }
         let q = path[path.index(after: i)...]
@@ -43,10 +59,24 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
     let dnsTTL = max(Int(env["SB_DNS_CACHE_TTL"] ?? "60") ?? 60, 1)
     var dnsCache: [String: (expires: Date, ips: [String])] = [:]
 
+    func withTimeout<T>(ms: Int, _ op: @escaping () async throws -> T) async -> Result<T, Error> {
+        do {
+            let v = try await withTimeout(seconds: Double(ms)/1000.0, operation: op)
+            return .success(v)
+        } catch {
+            return .failure(error)
+        }
+    }
     return HTTPKernel { req in
-        if let apiKey, !apiKey.isEmpty {
+        // API key enforcement
+        if requireAPIKey {
+            if (req.headers["X-API-Key"] ?? "").isEmpty { return HTTPResponse(status: 401) }
+            if let key = apiKey, !key.isEmpty, (req.headers["X-API-Key"] ?? "") != key { return HTTPResponse(status: 401) }
+        } else if let apiKey, !apiKey.isEmpty {
             if (req.headers["X-API-Key"] ?? "") != apiKey { return HTTPResponse(status: 401) }
         }
+        // Request body size limit for POST
+        if req.method == "POST" && req.body.count > reqBodyMaxBytes { return HTTPResponse(status: 413) }
         if let limiter {
             let client = req.headers["X-Forwarded-For"] ?? req.headers["X-Client-Id"] ?? "anonymous"
             let ok = await limiter.allow(id: client, limitPerMinute: limitPerMinute)
@@ -185,6 +215,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             let data = try JSONSerialization.data(withJSONObject: obj)
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         case ("POST", ["v1", "index"]):
+            let t0 = Date()
             if let apiReq = try? JSONDecoder().decode(APIModels.IndexRequest.self, from: req.body) {
                 // Map API Analysis to internal FullAnalysis
                 let a = apiReq.analysis
@@ -197,21 +228,24 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 )
                 let result = await service.ingest(full: full)
                 if let data = try? JSONEncoder().encode(APIModels.IndexResult(pagesUpserted: result.pagesUpserted, segmentsUpserted: result.segmentsUpserted, entitiesUpserted: result.entitiesUpserted, tablesUpserted: result.tablesUpserted)) {
+                    if let m = metrics { await m.inc("index_requests_total"); await m.observe("index_latency", ms: Int(Date().timeIntervalSince(t0)*1000)) }
                     return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
                 }
                 return HTTPResponse(status: 200)
             } else if let reqObj = try? JSONDecoder().decode(SemanticMemoryService.IndexRequest.self, from: req.body) {
                 let result = await service.ingest(reqObj)
-                if let data = try? JSONEncoder().encode(result) { return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
+                if let data = try? JSONEncoder().encode(result) { if let m = metrics { await m.inc("index_requests_total"); await m.observe("index_latency", ms: Int(Date().timeIntervalSince(t0)*1000)) }; return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
                 return HTTPResponse(status: 200)
             } else if let full = try? JSONDecoder().decode(SemanticMemoryService.FullAnalysis.self, from: req.body) {
                 let result = await service.ingest(full: full)
-                if let data = try? JSONEncoder().encode(result) { return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
+                if let data = try? JSONEncoder().encode(result) { if let m = metrics { await m.inc("index_requests_total"); await m.observe("index_latency", ms: Int(Date().timeIntervalSince(t0)*1000)) }; return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
                 return HTTPResponse(status: 200)
             } else {
+                if let m = metrics { await m.inc("index_requests_error_total") }
                 return HTTPResponse(status: 400)
             }
         case ("POST", ["v1", "snapshot"]):
+            let t0 = Date()
             if let sreq = try? JSONDecoder().decode(APIModels.SnapshotRequest.self, from: req.body) {
                 // SSRF guard
                 guard urlAllowed(sreq.url) else {
@@ -235,8 +269,8 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     uri: sreq.url,
                     finalUrl: snapRes.finalURL,
                     fetchedAt: now.iso8601String,
-                    status: 200,
-                    contentType: "text/html",
+                    status: snapRes.pageStatus ?? 200,
+                    contentType: (snapRes.pageContentType ?? "text/html"),
                     navigation: .init(ttfbMs: nil, loadMs: snapRes.loadMs)
                 )
                 let apiSnap = APIModels.Snapshot(
@@ -269,12 +303,15 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     headers["X-Capture-Body-Max-Count"] = String(maxBodiesEff)
                     headers["X-Capture-Body-Max-Bytes"] = String(maxBytesEff)
                     headers["X-Capture-Body-Total-Bytes"] = String(maxTotalEff)
+                    if let m = metrics { await m.inc("snapshot_requests_total"); await m.observe("snapshot_latency", ms: Int(Date().timeIntervalSince(t0)*1000)) }
                     return HTTPResponse(status: 200, headers: headers, body: data)
                 }
                 return HTTPResponse(status: 200)
             }
+            if let m = metrics { await m.inc("snapshot_requests_error_total") }
             return HTTPResponse(status: 400)
         case ("POST", ["v1", "analyze"]):
+            let t0 = Date()
             if let areq = try? JSONDecoder().decode(APIModels.AnalyzeRequest.self, from: req.body) {
                 let snap: SemanticMemoryService.Snapshot?
                 if let s = areq.snapshot { snap = .init(id: s.snapshotId, url: s.page.uri, renderedHTML: s.rendered.html, renderedText: s.rendered.text) }
@@ -311,11 +348,13 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     semantics: .init(entities: [])
                 )
                 await service.store(analysis: full, forSnapshotId: snap.id)
-                if let data = try? JSONEncoder().encode(analysis) { return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
+                if let data = try? JSONEncoder().encode(analysis) { if let m = metrics { await m.inc("analyze_requests_total"); await m.observe("analyze_latency", ms: Int(Date().timeIntervalSince(t0)*1000)) }; return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
                 return HTTPResponse(status: 200)
             }
+            if let m = metrics { await m.inc("analyze_requests_error_total") }
             return HTTPResponse(status: 400)
         case ("POST", ["v1", "browse"]):
+            let t0 = Date()
             if let breq = try? JSONDecoder().decode(APIModels.BrowseRequest.self, from: req.body) {
                 guard urlAllowed(breq.url) else { return HTTPResponse(status: 400, headers: ["Content-Type": "application/json"], body: Data("{\"code\":\"invalid_url\",\"message\":\"URL not allowed\"}".utf8)) }
                 let sid = UUID().uuidString
@@ -333,7 +372,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 let now = Date()
                 let snap = APIModels.Snapshot(
                     snapshotId: sid,
-                    page: .init(uri: breq.url, finalUrl: snapRes.finalURL, fetchedAt: now.iso8601String, status: 200, contentType: "text/html", navigation: .init(ttfbMs: nil, loadMs: snapRes.loadMs)),
+                    page: .init(uri: breq.url, finalUrl: snapRes.finalURL, fetchedAt: now.iso8601String, status: snapRes.pageStatus ?? 200, contentType: (snapRes.pageContentType ?? "text/html"), navigation: .init(ttfbMs: nil, loadMs: snapRes.loadMs)),
                     rendered: .init(html: snapRes.html, text: snapRes.text, meta: nil),
                     network: (snapRes.network.map { APIModels.Snapshot.Network(requests: $0) }) ?? nil,
                     diagnostics: []
@@ -394,10 +433,12 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     headers["X-Capture-Body-Max-Count"] = String(maxBodiesEff)
                     headers["X-Capture-Body-Max-Bytes"] = String(maxBytesEff)
                     headers["X-Capture-Body-Total-Bytes"] = String(maxTotalEff)
+                    if let m = metrics { await m.inc("browse_requests_total"); await m.observe("browse_latency", ms: Int(Date().timeIntervalSince(t0)*1000)) }
                     return HTTPResponse(status: 200, headers: headers, body: data)
                 }
                 return HTTPResponse(status: 200)
             }
+            if let m = metrics { await m.inc("browse_requests_error_total") }
             return HTTPResponse(status: 400)
         case ("GET", let seg) where seg.count == 3 && seg[0] == "v1" && seg[1] == "pages":
             let id = String(seg[2])
@@ -445,6 +486,9 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
 
 "
                 }
+        case ("GET", ["metrics"]):
+            if let m = metrics { let body = Data(await m.renderPrometheus().utf8); return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain; version=0.0.4"], body: body) }
+            return HTTPResponse(status: 404)
                 md += "**Blocks:** \(a.blocks.count)
 
 "
