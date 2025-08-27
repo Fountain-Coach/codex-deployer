@@ -24,6 +24,8 @@ public actor SemanticMemoryService {
     }
     private var snapshots: [String: Snapshot] = [:] // key: snapshotId
     private var analyses: [String: FullAnalysis] = [:] // key: envelope.id
+    private var analysisToSnapshot: [String: String] = [:]
+    private var snapshotToAnalysis: [String: String] = [:]
 
     public init(backend: Backend? = nil) { self.backend = backend }
 
@@ -157,8 +159,24 @@ public actor SemanticMemoryService {
     // MARK: - Snapshot / Analyze artifact storage
     public func store(snapshot: Snapshot) { snapshots[snapshot.id] = snapshot }
     public func loadSnapshot(id: String) -> Snapshot? { snapshots[id] }
-    public func store(analysis: FullAnalysis) { analyses[analysis.envelope.id] = analysis }
+    public func store(analysis: FullAnalysis, forSnapshotId snapshotId: String? = nil) {
+        analyses[analysis.envelope.id] = analysis
+        if let sid = snapshotId {
+            analysisToSnapshot[analysis.envelope.id] = sid
+            snapshotToAnalysis[sid] = analysis.envelope.id
+        }
+    }
     public func loadAnalysis(id: String) -> FullAnalysis? { analyses[id] }
+    public func resolveSnapshot(byPageId id: String) -> Snapshot? {
+        if let s = snapshots[id] { return s }
+        if let sid = analysisToSnapshot[id], let s = snapshots[sid] { return s }
+        return nil
+    }
+    public func resolveAnalysis(byPageId id: String) -> FullAnalysis? {
+        if let a = analyses[id] { return a }
+        if let aid = snapshotToAnalysis[id], let a = analyses[aid] { return a }
+        return nil
+    }
     public func getPage(id: String) -> PageDoc? {
         if let p = pages.first(where: { $0.id == id }) { return p }
         // Backend fallback: naive search and filter by id

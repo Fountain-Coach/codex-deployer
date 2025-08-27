@@ -15,7 +15,7 @@ public enum APIModels {
     // MARK: - Snapshot
     public struct SnapshotRequest: Codable, Sendable {
         public let url: String
-        public let wait: WaitPolicy?
+        public let wait: WaitPolicy
         public let storeArtifacts: Bool?
     }
 
@@ -117,4 +117,3 @@ extension Date {
         return fmt.string(from: self)
     }
 }
-

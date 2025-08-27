@@ -128,7 +128,10 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
 
         switch (req.method, segs) {
         case ("GET", ["v1", "health"]):
-            // Capture settings (effective defaults)
+            let body = try? JSONSerialization.data(withJSONObject: ["status": "ok", "version": "0.2.0", "browserPool": ["capacity": 0, "inUse": 0]])
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: body ?? Data())
+        case ("GET", ["v1", "admin", "healthx"]):
+            // Verbose, non-spec health
             var allowed: Set<String> = [
                 "text/html", "text/plain", "text/css",
                 "application/json", "application/javascript", "text/javascript"
@@ -139,7 +142,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             let maxBodies = max(Int(env["SB_NET_BODY_MAX_COUNT"] ?? "20") ?? 20, 0)
             let maxBytes = max(Int(env["SB_NET_BODY_MAX_BYTES"] ?? "16384") ?? 16384, 512)
             let maxTotal = max(Int(env["SB_NET_BODY_TOTAL_MAX_BYTES"] ?? "131072") ?? 131072, maxBytes)
-            let health: [String: Any] = [
+            let verbose: [String: Any] = [
                 "status": "ok",
                 "version": "0.2.0",
                 "browserPool": ["capacity": 0, "inUse": 0],
@@ -155,7 +158,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     "dnsCacheTTL": dnsTTL
                 ]
             ]
-            let body = try? JSONSerialization.data(withJSONObject: health)
+            let body = try? JSONSerialization.data(withJSONObject: verbose)
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: body ?? Data())
         case ("GET", ["v1", "pages"]):
             let params = qp(req.path)
@@ -280,7 +283,20 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 guard let snap else { return HTTPResponse(status: 400) }
                 let fid = UUID().uuidString
                 let blocks = HTMLParser().parseBlocks(from: snap.renderedHTML)
-                let apiBlocks: [APIModels.Analysis.Block] = blocks.map { .init(id: $0.id, kind: $0.kind, level: nil, text: $0.text, span: nil, table: $0.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }) }
+                let fullText = snap.renderedText
+                var cursor = 0
+                var apiBlocks: [APIModels.Analysis.Block] = []
+                for b in blocks {
+                    let t = b.text
+                    if let range = fullText.range(of: t, options: [], range: fullText.index(fullText.startIndex, offsetBy: cursor)..<fullText.endIndex) {
+                        let start = fullText.distance(from: fullText.startIndex, to: range.lowerBound)
+                        let end = start + t.count
+                        cursor = end
+                        apiBlocks.append(.init(id: b.id, kind: b.kind, level: nil, text: b.text, span: [start, end], table: b.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }))
+                    } else {
+                        apiBlocks.append(.init(id: b.id, kind: b.kind, level: nil, text: b.text, span: nil, table: b.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }))
+                    }
+                }
                 let analysis = APIModels.Analysis(
                     envelope: .init(id: fid, source: .init(uri: snap.url, fetchedAt: Date().iso8601String), contentType: "text/html", language: "en", bytes: snap.renderedHTML.utf8.count, diagnostics: []),
                     blocks: apiBlocks,
@@ -294,7 +310,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     blocks: blocks,
                     semantics: .init(entities: [])
                 )
-                await service.store(analysis: full)
+                await service.store(analysis: full, forSnapshotId: snap.id)
                 if let data = try? JSONEncoder().encode(analysis) { return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data) }
                 return HTTPResponse(status: 200)
             }
@@ -325,7 +341,20 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 // Analyze
                 let fid = UUID().uuidString
                 let blocks = HTMLParser().parseBlocks(from: snapRes.html)
-                let apiBlocks: [APIModels.Analysis.Block] = blocks.map { .init(id: $0.id, kind: $0.kind, level: nil, text: $0.text, span: nil, table: $0.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }) }
+                let fullText = snapRes.text
+                var cursor = 0
+                var apiBlocks: [APIModels.Analysis.Block] = []
+                for b in blocks {
+                    let t = b.text
+                    if let range = fullText.range(of: t, options: [], range: fullText.index(fullText.startIndex, offsetBy: cursor)..<fullText.endIndex) {
+                        let start = fullText.distance(from: fullText.startIndex, to: range.lowerBound)
+                        let end = start + t.count
+                        cursor = end
+                        apiBlocks.append(.init(id: b.id, kind: b.kind, level: nil, text: b.text, span: [start, end], table: b.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }))
+                    } else {
+                        apiBlocks.append(.init(id: b.id, kind: b.kind, level: nil, text: b.text, span: nil, table: b.table.map { .init(caption: $0.caption, columns: $0.columns, rows: $0.rows) }))
+                    }
+                }
                 let analysis = APIModels.Analysis(
                     envelope: .init(id: fid, source: .init(uri: breq.url, fetchedAt: now.iso8601String), contentType: "text/html", language: "en", bytes: snapRes.html.utf8.count, diagnostics: []),
                     blocks: apiBlocks,
@@ -339,7 +368,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     blocks: blocks,
                     semantics: .init(entities: [])
                 )
-                await service.store(analysis: full)
+                await service.store(analysis: full, forSnapshotId: sid)
                 // Optionally index
                 var indexRes: APIModels.IndexResult? = nil
                 if breq.index?.enabled ?? true {
@@ -379,16 +408,16 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
         case ("GET", ["v1", "export"]):
             let params = qp(req.path)
             guard let pageId = params["pageId"], let format = params["format"] else { return HTTPResponse(status: 400) }
-            if format == "snapshot.html", let snap = await service.loadSnapshot(id: pageId) {
+            if format == "snapshot.html", let snap = await service.resolveSnapshot(byPageId: pageId) {
                 return HTTPResponse(status: 200, headers: ["Content-Type": "text/html"], body: Data(snap.renderedHTML.utf8))
             }
-            if format == "snapshot.text", let snap = await service.loadSnapshot(id: pageId) {
+            if format == "snapshot.text", let snap = await service.resolveSnapshot(byPageId: pageId) {
                 return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: Data(snap.renderedText.utf8))
             }
-            if format == "analysis.json", let a = await service.loadAnalysis(id: pageId), let data = try? JSONEncoder().encode(a) {
+            if format == "analysis.json", let a = await service.resolveAnalysis(byPageId: pageId), let data = try? JSONEncoder().encode(a) {
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
             }
-            if format == "tables.csv", let a = await service.loadAnalysis(id: pageId) {
+            if format == "tables.csv", let a = await service.resolveAnalysis(byPageId: pageId) {
                 let tables = a.blocks.compactMap { $0.table }
                 if tables.isEmpty { return HTTPResponse(status: 404) }
                 var csv = ""
@@ -402,7 +431,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 }
                 return HTTPResponse(status: 200, headers: ["Content-Type": "text/csv"], body: Data(csv.utf8))
             }
-            if format == "summary.md", let a = await service.loadAnalysis(id: pageId) {
+            if format == "summary.md", let a = await service.resolveAnalysis(byPageId: pageId) {
                 var md = "# Summary
 
 "
