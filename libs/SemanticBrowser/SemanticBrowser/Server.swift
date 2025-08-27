@@ -102,9 +102,10 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 let snap = areq.snapshot ?? (areq.snapshotRef.flatMap { await service.loadSnapshot(id: $0.snapshotId) })
                 guard let snap else { return HTTPResponse(status: 400) }
                 let fid = UUID().uuidString
+                let blocks = HTMLParser().parseBlocks(from: snap.renderedHTML)
                 let full = SemanticMemoryService.FullAnalysis(
                     envelope: .init(id: fid, source: .init(uri: snap.url), contentType: "text/html", language: "en"),
-                    blocks: [ .init(id: fid+"-h", kind: "heading", text: snap.renderedText) ],
+                    blocks: blocks,
                     semantics: .init(entities: [])
                 )
                 await service.store(analysis: full)
@@ -127,9 +128,10 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 let snap = SemanticMemoryService.Snapshot(id: sid, url: breq.url, renderedHTML: html, renderedText: text)
                 await service.store(snapshot: snap)
                 let fid = UUID().uuidString
+                let blocks = HTMLParser().parseBlocks(from: html)
                 let full = SemanticMemoryService.FullAnalysis(
                     envelope: .init(id: fid, source: .init(uri: breq.url), contentType: "text/html", language: "en"),
-                    blocks: [ .init(id: fid+"-h", kind: "heading", text: text) ],
+                    blocks: blocks,
                     semantics: .init(entities: [])
                 )
                 await service.store(analysis: full)
