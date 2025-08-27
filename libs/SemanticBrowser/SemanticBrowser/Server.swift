@@ -257,6 +257,12 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             if let hg = hostGate { let s = await hg.stats(); verbose["hostGate"] = ["total": s.total, "used": s.used, "perHostUsed": s.perHost, "perHostCapacity": s.perHostCap, "rejected": s.rejected] }
             let body = try? JSONSerialization.data(withJSONObject: verbose)
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: body ?? Data())
+        case ("GET", let seg) where seg.count == 5 && seg[0] == "v1" && seg[1] == "admin" && seg[2] == "snapshots" && seg[4] == "network":
+            let sid = String(segs[3])
+            if let items = await service.loadNetwork(snapshotId: sid), let data = try? JSONEncoder().encode(items) {
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            }
+            return HTTPResponse(status: 404)
         case ("GET", ["v1", "pages"]):
             let params = qp(req.path)
             let limit = min(max(Int(params["limit"] ?? "20") ?? 20, 1), 200)
@@ -355,6 +361,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     contentType: (snapRes.pageContentType ?? "text/html"),
                     navigation: .init(ttfbMs: nil, loadMs: snapRes.loadMs)
                 )
+                await service.storeNetwork(snapshotId: sid, requests: snapRes.adminNetwork)
                 let apiSnap = APIModels.Snapshot(
                     snapshotId: sid,
                     page: page,
@@ -464,6 +471,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 let parsed = HTMLParser().parseTextAndBlocks(from: snapRes.html)
                 await service.store(snapshot: .init(id: sid, url: breq.url, renderedHTML: snapRes.html, renderedText: parsed.text))
                 let now = Date()
+                await service.storeNetwork(snapshotId: sid, requests: snapRes.adminNetwork)
                 let snap = APIModels.Snapshot(
                     snapshotId: sid,
                     page: .init(uri: breq.url, finalUrl: snapRes.finalURL, fetchedAt: now.iso8601String, status: snapRes.pageStatus ?? 200, contentType: (snapRes.pageContentType ?? "text/html"), navigation: .init(ttfbMs: nil, loadMs: snapRes.loadMs)),

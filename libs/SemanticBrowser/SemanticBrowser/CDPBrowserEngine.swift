@@ -91,6 +91,9 @@ public struct CDPBrowserEngine: BrowserEngine {
             let requests: [APIModels.Snapshot.Network.Request] = session.reqs.map { (rid, info) in
                 APIModels.Snapshot.Network.Request(url: info.url, type: info.type, status: info.status, body: captured[rid])
             }
+            let adminRequests: [AdminNetworkRequest] = session.reqs.map { (_, info) in
+                AdminNetworkRequest(url: info.url, type: info.type, status: info.status, method: info.method, requestHeaders: info.requestHeaders, responseHeaders: info.responseHeaders)
+            }
             // Main document info
             var docStatus: Int? = nil
             var docCT: String? = nil
@@ -98,7 +101,7 @@ public struct CDPBrowserEngine: BrowserEngine {
                 docStatus = main.status
                 docCT = main.mimeType
             }
-            return SnapshotResult(html: html, text: text, finalURL: final, loadMs: loadMs, network: requests, pageStatus: docStatus, pageContentType: docCT)
+            return SnapshotResult(html: html, text: text, finalURL: final, loadMs: loadMs, network: requests, pageStatus: docStatus, pageContentType: docCT, adminNetwork: adminRequests)
         } else {
             throw BrowserError.fetchFailed
         }

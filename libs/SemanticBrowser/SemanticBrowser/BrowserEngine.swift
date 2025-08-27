@@ -10,6 +10,7 @@ public struct SnapshotResult: Sendable {
     public let network: [APIModels.Snapshot.Network.Request]?
     public let pageStatus: Int?
     public let pageContentType: String?
+    public let adminNetwork: [AdminNetworkRequest]?
 }
 
 public protocol BrowserEngine: Sendable {
@@ -73,7 +74,7 @@ public struct ShellBrowserEngine: BrowserEngine {
 public extension BrowserEngine {
     func snapshot(for url: String, wait: APIModels.WaitPolicy?, capture: CaptureOptions?) async throws -> SnapshotResult {
         let r = try await snapshotHTML(for: url)
-        return SnapshotResult(html: r.html, text: r.text, finalURL: url, loadMs: nil, network: nil, pageStatus: nil, pageContentType: nil)
+        return SnapshotResult(html: r.html, text: r.text, finalURL: url, loadMs: nil, network: nil, pageStatus: nil, pageContentType: nil, adminNetwork: nil)
     }
 }
 
@@ -88,6 +89,15 @@ public struct CaptureOptions: Sendable {
         self.maxBodyBytes = maxBodyBytes
         self.maxTotalBytes = maxTotalBytes
     }
+}
+
+public struct AdminNetworkRequest: Codable, Sendable, Equatable {
+    public let url: String
+    public let type: String?
+    public let status: Int?
+    public let method: String?
+    public let requestHeaders: [String: String]?
+    public let responseHeaders: [String: String]?
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
