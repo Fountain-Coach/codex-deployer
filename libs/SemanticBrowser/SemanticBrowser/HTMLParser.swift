@@ -17,6 +17,12 @@ public struct HTMLParser {
             let text = m.1.removingHTMLTags()
             return SemanticMemoryService.FullAnalysis.Block(id: "p\(i)", kind: "paragraph", text: text, table: nil)
         })
+        // code blocks (pre or code tags)
+        let prePattern = "<(pre|code)[^>]*>([\\s\\S]*?)</\\1>"
+        blocks.append(contentsOf: matches(html, pattern: prePattern).enumerated().map { i, m in
+            let text = m.1.removingHTMLTags()
+            return SemanticMemoryService.FullAnalysis.Block(id: "c\(i)", kind: "code", text: text, table: nil)
+        })
         // tables
         let tPattern = "<table[\\s\\S]*?</table>"
         for (ti, tableHTML) in allMatches(html, pattern: tPattern).enumerated() {
@@ -67,6 +73,25 @@ public struct HTMLParser {
         return String(s[r])
     }
 }
+
+
+    public func extractEntities(from blocks: [SemanticMemoryService.FullAnalysis.Block]) -> [SemanticMemoryService.FullAnalysis.Semantics.Entity] {
+        var set = Set<String>()
+        var entities: [SemanticMemoryService.FullAnalysis.Semantics.Entity] = []
+        for b in blocks where !b.text.isEmpty {
+            let words = b.text.split(whereSeparator: { !$0.isLetter })
+            for w in words {
+                let s = String(w)
+                if s.count >= 3, s.prefix(1) == s.prefix(1).uppercased(), s.dropFirst().rangeOfCharacter(from: CharacterSet.lowercaseLetters) != nil {
+                    if !set.contains(s) {
+                        set.insert(s)
+                        entities.append(.init(id: UUID().uuidString, name: s, type: "OTHER"))
+                    }
+                }
+            }
+        }
+        return entities
+    }
 
 extension String {
     func removingHTMLTags() -> String {
