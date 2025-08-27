@@ -44,6 +44,7 @@ final class SpecConformanceTests: XCTestCase {
             XCTAssertNotNil(rendered?["text"]) 
         }
         try await server.stop()
+
     }
 
     func testBrowseIncludesSpans() async throws {
@@ -68,7 +69,9 @@ final class SpecConformanceTests: XCTestCase {
         let blocks = analysis?["blocks"] as? [[String: Any]]
         XCTAssertNotNil(blocks)
         XCTAssertTrue(blocks!.contains { ($0["span"] as? [Int]) != nil })
+
         try await server.stop()
+
     }
 
     func testHealthIsSpecOnly() async throws {
