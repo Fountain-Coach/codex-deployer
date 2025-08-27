@@ -128,7 +128,34 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
 
         switch (req.method, segs) {
         case ("GET", ["v1", "health"]):
-            let body = try? JSONSerialization.data(withJSONObject: ["status": "ok", "version": "0.2.0", "browserPool": ["capacity": 0, "inUse": 0]])
+            // Capture settings (effective defaults)
+            var allowed: Set<String> = [
+                "text/html", "text/plain", "text/css",
+                "application/json", "application/javascript", "text/javascript"
+            ]
+            if let raw = env["SB_NET_BODY_MIME_ALLOW"], !raw.isEmpty {
+                for m in raw.split(separator: ",") { allowed.insert(String(m).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) }
+            }
+            let maxBodies = max(Int(env["SB_NET_BODY_MAX_COUNT"] ?? "20") ?? 20, 0)
+            let maxBytes = max(Int(env["SB_NET_BODY_MAX_BYTES"] ?? "16384") ?? 16384, 512)
+            let maxTotal = max(Int(env["SB_NET_BODY_TOTAL_MAX_BYTES"] ?? "131072") ?? 131072, maxBytes)
+            let health: [String: Any] = [
+                "status": "ok",
+                "version": "0.2.0",
+                "browserPool": ["capacity": 0, "inUse": 0],
+                "capture": [
+                    "allowedMIMEs": Array(allowed).sorted(),
+                    "maxBodies": maxBodies,
+                    "maxBodyBytes": maxBytes,
+                    "maxTotalBytes": maxTotal
+                ],
+                "ssrf": [
+                    "allowList": allowList,
+                    "denyList": denyList,
+                    "dnsCacheTTL": dnsTTL
+                ]
+            ]
+            let body = try? JSONSerialization.data(withJSONObject: health)
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: body ?? Data())
         case ("GET", ["v1", "pages"]):
             let params = qp(req.path)
@@ -221,7 +248,25 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 if store { await service.store(snapshot: .init(id: sid, url: sreq.url, renderedHTML: snapRes.html, renderedText: snapRes.text)) }
                 let resp = APIModels.SnapshotResponse(snapshot: apiSnap)
                 if let data = try? JSONEncoder().encode(resp) {
-                    return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+                    // Build capture headers
+                    var headers = ["Content-Type": "application/json"]
+                    // effective capture values mirror CDP logic
+                    var allowedEff: Set<String> = [
+                        "text/html", "text/plain", "text/css",
+                        "application/json", "application/javascript", "text/javascript"
+                    ]
+                    if let raw = env["SB_NET_BODY_MIME_ALLOW"], !raw.isEmpty {
+                        for m in raw.split(separator: ",") { allowedEff.insert(String(m).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) }
+                    }
+                    if let m = cap.allowedMIMEs { allowedEff.formUnion(m.map { $0.lowercased() }) }
+                    let maxBodiesEff = max(cap.maxBodies ?? (Int(env["SB_NET_BODY_MAX_COUNT"] ?? "20") ?? 20), 0)
+                    let maxBytesEff = max(cap.maxBodyBytes ?? (Int(env["SB_NET_BODY_MAX_BYTES"] ?? "16384") ?? 16384), 512)
+                    let maxTotalEff = max(cap.maxTotalBytes ?? (Int(env["SB_NET_BODY_TOTAL_MAX_BYTES"] ?? "131072") ?? 131072), maxBytesEff)
+                    headers["X-Capture-Allowed-MIMEs"] = Array(allowedEff).sorted().joined(separator: ",")
+                    headers["X-Capture-Body-Max-Count"] = String(maxBodiesEff)
+                    headers["X-Capture-Body-Max-Bytes"] = String(maxBytesEff)
+                    headers["X-Capture-Body-Total-Bytes"] = String(maxTotalEff)
+                    return HTTPResponse(status: 200, headers: headers, body: data)
                 }
                 return HTTPResponse(status: 200)
             }
@@ -303,7 +348,24 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                 }
                 let resp = APIModels.BrowseResponse(snapshot: snap, analysis: analysis, index: indexRes)
                 if let data = try? JSONEncoder().encode(resp) {
-                    return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+                    // Build capture headers
+                    var headers = ["Content-Type": "application/json"]
+                    var allowedEff: Set<String> = [
+                        "text/html", "text/plain", "text/css",
+                        "application/json", "application/javascript", "text/javascript"
+                    ]
+                    if let raw = env["SB_NET_BODY_MIME_ALLOW"], !raw.isEmpty {
+                        for m in raw.split(separator: ",") { allowedEff.insert(String(m).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) }
+                    }
+                    if let m = cap.allowedMIMEs { allowedEff.formUnion(m.map { $0.lowercased() }) }
+                    let maxBodiesEff = max(cap.maxBodies ?? (Int(env["SB_NET_BODY_MAX_COUNT"] ?? "20") ?? 20), 0)
+                    let maxBytesEff = max(cap.maxBodyBytes ?? (Int(env["SB_NET_BODY_MAX_BYTES"] ?? "16384") ?? 16384), 512)
+                    let maxTotalEff = max(cap.maxTotalBytes ?? (Int(env["SB_NET_BODY_TOTAL_MAX_BYTES"] ?? "131072") ?? 131072), maxBytesEff)
+                    headers["X-Capture-Allowed-MIMEs"] = Array(allowedEff).sorted().joined(separator: ",")
+                    headers["X-Capture-Body-Max-Count"] = String(maxBodiesEff)
+                    headers["X-Capture-Body-Max-Bytes"] = String(maxBytesEff)
+                    headers["X-Capture-Body-Total-Bytes"] = String(maxTotalEff)
+                    return HTTPResponse(status: 200, headers: headers, body: data)
                 }
                 return HTTPResponse(status: 200)
             }
