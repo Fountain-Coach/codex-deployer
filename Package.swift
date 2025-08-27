@@ -4,7 +4,6 @@ import PackageDescription
 var products: [Product] = [
     .library(name: "FountainCodex", targets: ["FountainCodex"]),
     .library(name: "TypesensePersistence", targets: ["TypesensePersistence"]),
-    .library(name: "SemanticBrowser", targets: ["SemanticBrowser"]),
     .library(name: "MIDI2Models", targets: ["MIDI2Models"]),
     .library(name: "MIDI2Core", targets: ["MIDI2Core"]),
     .library(name: "FlexBridge", targets: ["FlexBridge"]),
@@ -38,19 +37,19 @@ var targets: [Target] = [
         ],
         path: "libs/TypesensePersistence"
     ),
-    .target(
-        name: "SemanticBrowser",
-        dependencies: ["FountainCodex"],
-        path: "libs/SemanticBrowser"
-    ),
     .executableTarget(
         name: "semantic-browser-server",
-        dependencies: ["SemanticBrowser", "FountainCodex"],
-        path: "apps/SemanticBrowserServer"
+        dependencies: [
+            .product(name: "SemanticBrowser", package: "semantic-browser"),
+        ],
+        path: "apps/SemanticBrowserServer",
+        exclude: ["README.md"]
     ),
     .testTarget(
         name: "SemanticBrowserTests",
-        dependencies: ["SemanticBrowser", "FountainCodex"],
+        dependencies: [
+            .product(name: "SemanticBrowser", package: "semantic-browser"),
+        ],
         path: "Tests/SemanticBrowserTests"
     ),
     .executableTarget(
@@ -225,7 +224,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-crypto.git", from: "3.0.0"),
         .package(url: "https://github.com/apple/swift-certificates.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.5.0"),
-        .package(url: "https://github.com/Fountain-Coach/midi2.git", from: "0.3.0")
+        .package(url: "https://github.com/Fountain-Coach/midi2.git", from: "0.3.0"),
+        .package(url: "https://github.com/Fountain-Coach/semantic-browser.git", from: "0.0.1")
     ],
     targets: targets
 )

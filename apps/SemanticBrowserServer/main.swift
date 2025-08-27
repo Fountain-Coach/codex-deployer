@@ -1,14 +1,20 @@
 import Foundation
-import Dispatch
-import FountainCodex
 import SemanticBrowser
 
 func buildService() -> SemanticMemoryService {
     let env = ProcessInfo.processInfo.environment
-    let urls = env["SB_TYPESENSE_URLS"].map { $0.split(separator: ",").map(String.init) }
-        ?? env["SB_TYPESENSE_URL"].map { [$0] }
-        ?? env["TYPESENSE_URLS"].map { $0.split(separator: ",").map(String.init) }
-        ?? env["TYPESENSE_URL"].map { [$0] }
+    let urls: [String]?
+    if let list = env["SB_TYPESENSE_URLS"] {
+        urls = list.split(separator: ",").map(String.init)
+    } else if let one = env["SB_TYPESENSE_URL"] {
+        urls = [one]
+    } else if let list = env["TYPESENSE_URLS"] {
+        urls = list.split(separator: ",").map(String.init)
+    } else if let one = env["TYPESENSE_URL"] {
+        urls = [one]
+    } else {
+        urls = nil
+    }
     let apiKey = env["SB_TYPESENSE_API_KEY"] ?? env["TYPESENSE_API_KEY"]
     #if canImport(Typesense)
     if let urls, let apiKey, !urls.isEmpty, !apiKey.isEmpty {
@@ -19,37 +25,25 @@ func buildService() -> SemanticMemoryService {
     return SemanticMemoryService()
 }
 
-let service = buildService()
-Task { await service.seed(pages: [PageDoc(id: "p1", url: "https://example.com/page", host: "example.com", title: "Example")]) }
-
 let env = ProcessInfo.processInfo.environment
-let engine: BrowserEngine = {
-    if let ws = env["SB_CDP_URL"], let u = URL(string: ws) { return CDPBrowserEngine(wsURL: u) }
-    if let bin = env["SB_BROWSER_CLI"] { return ShellBrowserEngine(binary: bin, args: (env["SB_BROWSER_ARGS"] ?? "").split(separator: " ").map(String.init)) }
-    return URLFetchBrowserEngine()
-}()
-let apiKey = env["SB_API_KEY"] ?? env["SEM_BROWSER_API_KEY"]
-let limiter = SimpleRateLimiter()
-let limit = Int(env["SB_RATE_LIMIT"] ?? env["SEM_RATE_LIMIT"] ?? "60") ?? 60
-let requireKey = (env["SB_REQUIRE_API_KEY"] ?? "true").lowercased() != "false"
-let maxBody = max(Int(env["SB_REQ_BODY_MAX_BYTES"] ?? "1000000") ?? 1_000_000, 1024)
-let reqTimeout = max(Int(env["SB_REQ_TIMEOUT_MS"] ?? "15000") ?? 15_000, 1000)
-let metrics = SimpleMetrics()
-let concurrency = Int(env["SB_BROWSER_CONCURRENCY"] ?? "4") ?? 4
-let gate = ConcurrencyGate(capacity: max(concurrency, 0))
-let perHost = Int(env["SB_HOST_CONCURRENCY_PER"] ?? "2") ?? 2
-let hostGate = HostGate(total: max(concurrency, 0), perHost: max(perHost, 1))
-var artifactStore: ArtifactStore? = nil
-if let root = env["ARTIFACT_ROOT"], !root.isEmpty {
-    artifactStore = try? FSArtifactStore(rootPath: root, budgetBytes: Int64(env["ARTIFACT_MAX_BYTES"] ?? "0") ?? 0)
+Task {
+    let service = buildService()
+    let engine: BrowserEngine = {
+        if let ws = env["SB_CDP_URL"], let u = URL(string: ws) { return CDPBrowserEngine(wsURL: u) }
+        if let bin = env["SB_BROWSER_CLI"] {
+            return ShellBrowserEngine(
+                binary: bin,
+                args: (env["SB_BROWSER_ARGS"] ?? "").split(separator: " ").map(String.init)
+            )
+        }
+        return URLFetchBrowserEngine()
+    }()
+    let requireKey = (env["SB_REQUIRE_API_KEY"] ?? "true").lowercased() != "false"
+    let kernel = makeSemanticKernel(service: service, engine: engine, requireAPIKey: requireKey)
+    let server = NIOHTTPServer(kernel: kernel)
+    _ = try? await server.start(port: 8006)
+    print("semantic-browser listening on 8006")
 }
-var artifactCatalog: Any? = nil
-#if canImport(Typesense)
-if let nodes = (env["SB_TYPESENSE_URLS"] ?? env["TYPESENSE_URLS"])?.split(separator: ",").map(String.init), let key = (env["SB_TYPESENSE_API_KEY"] ?? env["TYPESENSE_API_KEY"]) { if !nodes.isEmpty && !key.isEmpty { artifactCatalog = TypesenseArtifacts(nodes: nodes, apiKey: key, debug: false) } }
-#endif
-let kernel = makeSemanticKernel(service: service, engine: engine, apiKey: apiKey, limiter: limiter, limitPerMinute: limit, requireAPIKey: requireKey, reqBodyMaxBytes: maxBody, reqTimeoutMs: reqTimeout, metrics: metrics, gate: gate, hostGate: hostGate, artifactStore: artifactStore, artifactCatalog: artifactCatalog)
-let server = NIOHTTPServer(kernel: kernel)
-Task { _ = try? await server.start(port: 8006); print("semantic-browser listening on 8006") }
-dispatchMain()
+RunLoop.main.run()
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

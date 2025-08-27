@@ -3,8 +3,7 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
-@testable import SemanticBrowser
-@testable import FountainCodex
+import SemanticBrowser
 
 final class SpecConformanceTests: XCTestCase {
     func testSnapshotRequiresWaitAndReturnsSpecFields() async throws {
@@ -12,7 +11,6 @@ final class SpecConformanceTests: XCTestCase {
         let kernel = makeSemanticKernel(service: svc, requireAPIKey: false)
         let server = NIOHTTPServer(kernel: kernel)
         let port = try await server.start(port: 0)
-        defer { try? await server.stop() }
 
         // Missing wait -> 400
         do {
@@ -42,9 +40,10 @@ final class SpecConformanceTests: XCTestCase {
             XCTAssertEqual(page?["status"] as? Int, 200)
             XCTAssertEqual((page?["contentType"] as? String)?.lowercased(), "text/html")
             let rendered = snap?["rendered"] as? [String: Any]
-            XCTAssertNotNil(rendered?["html"]) 
-            XCTAssertNotNil(rendered?["text"]) 
+            XCTAssertNotNil(rendered?["html"])
+            XCTAssertNotNil(rendered?["text"])
         }
+        try await server.stop()
     }
 
     func testBrowseIncludesSpans() async throws {
@@ -52,7 +51,6 @@ final class SpecConformanceTests: XCTestCase {
         let kernel = makeSemanticKernel(service: svc, requireAPIKey: false)
         let server = NIOHTTPServer(kernel: kernel)
         let port = try await server.start(port: 0)
-        defer { try? await server.stop() }
 
         var req = URLRequest(url: URL(string: "http://127.0.0.1:\(port)/v1/browse")!)
         req.httpMethod = "POST"
@@ -70,6 +68,7 @@ final class SpecConformanceTests: XCTestCase {
         let blocks = analysis?["blocks"] as? [[String: Any]]
         XCTAssertNotNil(blocks)
         XCTAssertTrue(blocks!.contains { ($0["span"] as? [Int]) != nil })
+        try await server.stop()
     }
 
     func testHealthIsSpecOnly() async throws {
@@ -77,16 +76,16 @@ final class SpecConformanceTests: XCTestCase {
         let kernel = makeSemanticKernel(service: svc, requireAPIKey: false)
         let server = NIOHTTPServer(kernel: kernel)
         let port = try await server.start(port: 0)
-        defer { try? await server.stop() }
 
         let (data, resp) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:\(port)/v1/health")!)
         XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 200)
         let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any]
         XCTAssertEqual(obj?["status"] as? String, "ok")
-        XCTAssertNotNil(obj?["version"]) 
-        XCTAssertNotNil((obj?["browserPool"] as? [String: Any])? ["capacity"]) 
-        XCTAssertNil(obj?["capture"]) 
-        XCTAssertNil(obj?["ssrf"]) 
+        XCTAssertNotNil(obj?["version"])
+        XCTAssertNotNil((obj?["browserPool"] as? [String: Any])? ["capacity"])
+        XCTAssertNil(obj?["capture"])
+        XCTAssertNil(obj?["ssrf"])
+        try await server.stop()
     }
 }
 
