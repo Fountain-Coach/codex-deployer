@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 public struct CDPBrowserEngine: BrowserEngine {
     let wsURL: URL
@@ -53,14 +56,17 @@ public struct CDPBrowserEngine: BrowserEngine {
                 "text/html", "text/plain", "text/css",
                 "application/json", "application/javascript", "text/javascript"
             ]
-            let maxBodies = 20
-            let maxBytes = 16 * 1024
+            let env = ProcessInfo.processInfo.environment
+            let maxBodies = max(Int(env["SB_NET_BODY_MAX_COUNT"] ?? "20") ?? 20, 0)
+            let maxBytes = max(Int(env["SB_NET_BODY_MAX_BYTES"] ?? "16384") ?? 16384, 512)
             var captured: [String: String] = [:]
             var count = 0
             for (rid, info) in session.reqs {
                 if count >= maxBodies { break }
-                if let mt = info.mimeType?.lowercased() {
+                if let mt = info.mimeType?.lowercased(), (info.status ?? 0) < 400 {
                     if textual.contains(mt) || mt.hasPrefix("text/") || mt.hasSuffix("+json") {
+                        if let cl = info.contentLength, cl > maxBytes { continue }
+                        if let el = info.encodedLength, el > maxBytes { continue }
                         if let (body, b64) = try? await session.getResponseBody(requestId: rid) {
                             var data: Data? = nil
                             if b64 { data = Data(base64Encoded: body) } else { data = body.data(using: .utf8) }
@@ -92,7 +98,7 @@ actor CDPSession {
     var nextId: Int = 1
     // Network tracking
     var inflight: Set<String> = []
-    struct ReqInfo { var url: String; var type: String?; var status: Int?; var mimeType: String?; var body: String? }
+    struct ReqInfo { var url: String; var type: String?; var status: Int?; var mimeType: String?; var body: String?; var encodedLength: Int?; var contentLength: Int? }
     var reqs: [String: ReqInfo] = [:]
     init(wsURL: URL) { self.wsURL = wsURL }
     func open() async throws {
@@ -117,14 +123,26 @@ actor CDPSession {
             }
         case "Network.responseReceived":
             if let rid = params["requestId"] as? String, let resp = params["response"] as? [String: Any] {
-                var info = reqs[rid] ?? ReqInfo(url: "", type: nil, status: nil)
+                var info = reqs[rid] ?? ReqInfo(url: "", type: nil, status: nil, mimeType: nil, body: nil, encodedLength: nil, contentLength: nil)
                 if let s = resp["status"] as? Int { info.status = s }
                 if let t = params["type"] as? String { info.type = t }
                 if let url = resp["url"] as? String, info.url.isEmpty { info.url = url }
                 if let mt = resp["mimeType"] as? String { info.mimeType = mt }
+                if let hdrs = resp["headers"] as? [String: Any] {
+                    for (k, v) in hdrs { if k.lowercased() == "content-length" { if let s = v as? String, let n = Int(s) { info.contentLength = n } else if let n = v as? Int { info.contentLength = n } else if let n = v as? Double { info.contentLength = Int(n) } } }
+                }
                 reqs[rid] = info
             }
-        case "Network.loadingFinished", "Network.loadingFailed":
+        case "Network.loadingFinished":
+            if let rid = params["requestId"] as? String {
+                inflight.remove(rid)
+                if let len = params["encodedDataLength"] as? Double {
+                    var info = reqs[rid] ?? ReqInfo(url: "", type: nil, status: nil, mimeType: nil, body: nil, encodedLength: nil, contentLength: nil)
+                    info.encodedLength = Int(len)
+                    reqs[rid] = info
+                }
+            }
+        case "Network.loadingFailed":
             if let rid = params["requestId"] as? String { inflight.remove(rid) }
         default:
             break

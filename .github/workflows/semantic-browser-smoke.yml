@@ -26,7 +26,6 @@ jobs:
         run: |
           curl -fsS -X POST http://127.0.0.1:8006/v1/browse \
             -H 'Content-Type: application/json' \
-            -d '{"url":"https://example.com","wait":{"strategy":"domContentLoaded","maxWaitMs":3000},"mode":"standard","index":{"enabled":true}}' | jq .snapshot.snapshotId
+            -d '{"url":"https://example.com","wait":{"strategy":"domContentLoaded","maxWaitMs":3000},"mode":"standard","index":{"enabled":true}}'
       - name: Query pages
         run: curl -fsS 'http://127.0.0.1:8006/v1/pages?q=Example'
-
