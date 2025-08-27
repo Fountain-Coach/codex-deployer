@@ -48,9 +48,35 @@ public struct CDPBrowserEngine: BrowserEngine {
             let html = try await session.getOuterHTML()
             let text = html.removingHTMLTags()
             let final = (try? await session.getCurrentURL()) ?? url
-            // Map captured requests (truncate body capture omitted for now)
-            let requests: [APIModels.Snapshot.Network.Request] = session.reqs.values.map { info in
-                APIModels.Snapshot.Network.Request(url: info.url, type: info.type, status: info.status, body: nil)
+            // Capture selected response bodies (textual types) with truncation
+            let textual: Set<String> = [
+                "text/html", "text/plain", "text/css",
+                "application/json", "application/javascript", "text/javascript"
+            ]
+            let maxBodies = 20
+            let maxBytes = 16 * 1024
+            var captured: [String: String] = [:]
+            var count = 0
+            for (rid, info) in session.reqs {
+                if count >= maxBodies { break }
+                if let mt = info.mimeType?.lowercased() {
+                    if textual.contains(mt) || mt.hasPrefix("text/") || mt.hasSuffix("+json") {
+                        if let (body, b64) = try? await session.getResponseBody(requestId: rid) {
+                            var data: Data? = nil
+                            if b64 { data = Data(base64Encoded: body) } else { data = body.data(using: .utf8) }
+                            if let d = data {
+                                let truncated = d.prefix(maxBytes)
+                                if let s = String(data: truncated, encoding: .utf8) {
+                                    captured[rid] = s
+                                    count += 1
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            let requests: [APIModels.Snapshot.Network.Request] = session.reqs.map { (rid, info) in
+                APIModels.Snapshot.Network.Request(url: info.url, type: info.type, status: info.status, body: captured[rid])
             }
             return SnapshotResult(html: html, text: text, finalURL: final, loadMs: loadMs, network: requests)
         } else {
@@ -66,7 +92,7 @@ actor CDPSession {
     var nextId: Int = 1
     // Network tracking
     var inflight: Set<String> = []
-    struct ReqInfo { var url: String; var type: String?; var status: Int? }
+    struct ReqInfo { var url: String; var type: String?; var status: Int?; var mimeType: String?; var body: String? }
     var reqs: [String: ReqInfo] = [:]
     init(wsURL: URL) { self.wsURL = wsURL }
     func open() async throws {
@@ -95,6 +121,7 @@ actor CDPSession {
                 if let s = resp["status"] as? Int { info.status = s }
                 if let t = params["type"] as? String { info.type = t }
                 if let url = resp["url"] as? String, info.url.isEmpty { info.url = url }
+                if let mt = resp["mimeType"] as? String { info.mimeType = mt }
                 reqs[rid] = info
             }
         case "Network.loadingFinished", "Network.loadingFailed":
@@ -229,6 +256,11 @@ actor CDPSession {
         struct Outer: Decodable { let outerHTML: String }
         let out: Outer = try await sendRecv("DOM.getOuterHTML", params: ["nodeId": doc.root.nodeId], result: Outer.self)
         return out.outerHTML
+    }
+    func getResponseBody(requestId: String) async throws -> (String, Bool) {
+        struct BodyRes: Decodable { let body: String; let base64Encoded: Bool }
+        let r: BodyRes = try await sendRecv("Network.getResponseBody", params: ["requestId": requestId], result: BodyRes.self)
+        return (r.body, r.base64Encoded)
     }
     func getCurrentURL() async throws -> String? {
         struct Hist: Decodable { let currentIndex: Int; let entries: [Entry] }

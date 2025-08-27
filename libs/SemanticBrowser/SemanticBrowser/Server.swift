@@ -31,6 +31,14 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
         }
         return out
     }
+    // SSRF allow/deny configuration and DNS cache
+    let env = ProcessInfo.processInfo.environment
+    func splitList(_ s: String?) -> [String] { (s ?? "").split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }.filter { !$0.isEmpty } }
+    let allowList = splitList(env["SB_URL_ALLOWLIST"]) // e.g., "example.com,.trusted.tld"
+    let denyList = splitList(env["SB_URL_DENYLIST"])   // e.g., "bad.com,.internal"
+    let dnsTTL = max(Int(env["SB_DNS_CACHE_TTL"] ?? "60") ?? 60, 1)
+    var dnsCache: [String: (expires: Date, ips: [String])] = [:]
+
     return HTTPKernel { req in
         if let apiKey, !apiKey.isEmpty {
             if (req.headers["X-API-Key"] ?? "") != apiKey { return HTTPResponse(status: 401) }
@@ -46,6 +54,13 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             guard let comp = URLComponents(string: urlString), let host = comp.host, let scheme = comp.scheme?.lowercased(), ["http","https"].contains(scheme) else { return false }
             let h = host.lowercased()
             if h == "localhost" { return false }
+            // allowlist/denylist host checks
+            func hostMatches(_ rule: String, host: String) -> Bool {
+                if rule.hasPrefix(".") { return host == String(rule.dropFirst()) || host.hasSuffix(rule) }
+                return host == rule
+            }
+            if !allowList.isEmpty && !allowList.contains(where: { hostMatches($0, host: h) }) { return false }
+            if denyList.contains(where: { hostMatches($0, host: h) }) { return false }
             // IPv4 checks
             func isPrivateIPv4(_ parts: [Int]) -> Bool {
                 if parts[0] == 10 { return true }
@@ -70,6 +85,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             }
             // DNS resolve and block private/loopback
             func resolveIPs(_ host: String) -> [String] {
+                if let entry = dnsCache[host], entry.expires > Date() { return entry.ips }
                 var hints = addrinfo(ai_flags: 0, ai_family: AF_UNSPEC, ai_socktype: SOCK_STREAM, ai_protocol: 0, ai_addrlen: 0, ai_canonname: nil, ai_addr: nil, ai_next: nil)
                 var res: UnsafeMutablePointer<addrinfo>? = nil
                 let rc = getaddrinfo(host, nil, &hints, &res)
@@ -86,6 +102,7 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
                     }
                     p = cur.pointee.ai_next
                 }
+                dnsCache[host] = (expires: Date().addingTimeInterval(TimeInterval(dnsTTL)), ips: out)
                 return out
             }
             func isPrivateIPv6(_ ip: String) -> Bool {
