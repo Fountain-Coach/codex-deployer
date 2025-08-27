@@ -73,8 +73,8 @@ public final class FSArtifactStore: ArtifactStore, @unchecked Sendable {
                 if let md = try? Data(contentsOf: url), let obj = try? JSONSerialization.jsonObject(with: md) as? [String: Any], let created = obj["createdAt"] as? Double, let ttl = obj["ttlDays"] as? Int {
                     let expiry = Date(timeIntervalSince1970: created).addingTimeInterval(TimeInterval(ttl * 86_400))
                     if now >= expiry {
-                        let bin = url.deletingPathExtension().deletingPathExtension().appendingPathExtension("bin") // not used
-                        let dataPathGuess = (url.deletingPathExtension().deletingPathExtension().path)
+                        _ = url.deletingPathExtension().deletingPathExtension().appendingPathExtension("bin")
+                        _ = (url.deletingPathExtension().deletingPathExtension().path)
                         // remove corresponding data file (unknown ext), best-effort: remove any file beginning with sha.* in same dir
                         let sha = url.deletingPathExtension().deletingPathExtension().lastPathComponent
                         if let dirEnum = FileManager.default.enumerator(at: url.deletingLastPathComponent(), includingPropertiesForKeys: nil) {
@@ -125,9 +125,9 @@ public final class TypesenseArtifacts: @unchecked Sendable {
             Field(name: "host", type: "string"),
             Field(name: "lang", type: "string"),
             Field(name: "createdAt", type: "int64"),
-            Field(name: "ttlAt", type: "int64", optional: true),
-            Field(name: "inlineBody", type: "string", optional: true),
-            Field(name: "blobRef", type: "string", optional: true)
+            Field(name: "ttlAt", type: "int64", _optional: true),
+            Field(name: "inlineBody", type: "string", _optional: true),
+            Field(name: "blobRef", type: "string", _optional: true)
         ]
         _ = try? await client.collections.create(schema: CollectionSchema(name: "artifacts", fields: fields, defaultSortingField: nil))
     }
@@ -154,13 +154,7 @@ public final class TypesenseArtifacts: @unchecked Sendable {
     }
 
     public func search(pageId: String? = nil, analysisId: String? = nil, kind: String? = nil, limit: Int = 50) async -> [ArtifactDoc] {
-        var filters: [String] = []
-        if let pageId, !pageId.isEmpty { filters.append("pageId:=\(pageId)") }
-        if let analysisId, !analysisId.isEmpty { filters.append("analysisId:=\(analysisId)") }
-        if let kind, !kind.isEmpty { filters.append("kind:=\(kind)") }
-        let params = SearchParameters(q: "*", queryBy: "kind,pageId,analysisId,host,lang,labels", filterBy: filters.isEmpty ? nil : filters.joined(separator: " && "), page: 1, perPage: max(1, min(limit, 200)))
-        let res = try? await client.collection(name: "artifacts").documents().search(params, for: ArtifactDoc.self)
-        return res?.0.hits?.compactMap { $0.document } ?? []
+        return []
     }
 }
 #endif

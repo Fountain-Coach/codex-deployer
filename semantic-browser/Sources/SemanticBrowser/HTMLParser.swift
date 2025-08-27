@@ -1,6 +1,7 @@
 import Foundation
 
-public struct HTMLParser {
+public struct HTMLParser: Sendable {
+
     public init() {}
 
     public struct BlockSpan: Sendable {

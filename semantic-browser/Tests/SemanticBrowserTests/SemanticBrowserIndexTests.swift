@@ -4,7 +4,6 @@ import Foundation
 import FoundationNetworking
 #endif
 @testable import SemanticBrowser
-@testable import FountainCodex
 
 final class SemanticBrowserIndexTests: XCTestCase {
     func testIndexThenQuery() async throws {

@@ -4,7 +4,6 @@ import Foundation
 import FoundationNetworking
 #endif
 @testable import SemanticBrowser
-@testable import FountainCodex
 
 final class SemanticBrowserQueryTests: XCTestCase {
     func testQueryPagesSegmentsEntities() async throws {

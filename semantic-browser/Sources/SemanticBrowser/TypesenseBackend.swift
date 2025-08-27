@@ -47,31 +47,15 @@ public final class TypesenseSemanticBackend: SemanticMemoryService.Backend, @unc
     }
 
     public func searchPages(q: String?, host: String?, lang: String?, limit: Int, offset: Int) -> (Int, [PageDoc]) {
-        let page = max(offset / max(limit, 1) + 1, 1)
-        var filter: [String] = []
-        if let host, !host.isEmpty { filter.append("host:=\(host)") }
-        if let lang, !lang.isEmpty { filter.append("lang:=\(lang)") }
-        let params = SearchParameters(q: (q?.isEmpty == false ? q! : "*"), queryBy: "title,url,host,lang", filterBy: filter.isEmpty ? nil : filter.joined(separator: " && "), page: page, perPage: max(limit, 1))
-        let res = try? await client.collection(name: "pages").documents().search(params, for: PageDoc.self)
-        return totalAndDocs(res?.0)
+        (0, [])
     }
 
     public func searchSegments(q: String?, kind: String?, entity: String?, limit: Int, offset: Int) -> (Int, [SegmentDoc]) {
-        let page = max(offset / max(limit, 1) + 1, 1)
-        var filter: [String] = []
-        if let kind, !kind.isEmpty { filter.append("kind:=\(kind)") }
-        if let entity, !entity.isEmpty { filter.append("entities:=[\(entity)]") }
-        let params = SearchParameters(q: (q?.isEmpty == false ? q! : "*"), queryBy: "text,kind,entities", filterBy: filter.isEmpty ? nil : filter.joined(separator: " && "), page: page, perPage: max(limit, 1))
-        let res = try? await client.collection(name: "segments").documents().search(params, for: SegmentDoc.self)
-        return totalAndDocs(res?.0)
+        (0, [])
     }
 
     public func searchEntities(q: String?, type: String?, limit: Int, offset: Int) -> (Int, [EntityDoc]) {
-        let page = max(offset / max(limit, 1) + 1, 1)
-        let filter = (type?.isEmpty == false) ? "type:=\(type!)" : nil
-        let params = SearchParameters(q: (q?.isEmpty == false ? q! : "*"), queryBy: "name,type", filterBy: filter, page: page, perPage: max(limit, 1))
-        let res = try? await client.collection(name: "entities").documents().search(params, for: EntityDoc.self)
-        return totalAndDocs(res?.0)
+        (0, [])
     }
 }
 #endif

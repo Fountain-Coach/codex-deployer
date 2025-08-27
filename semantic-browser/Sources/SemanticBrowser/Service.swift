@@ -31,8 +31,6 @@ public actor SemanticMemoryService {
 
     public init(backend: Backend? = nil) { self.backend = backend }
 
-    public init() {}
-
     // Seeding for tests or importers
     public func seed(pages: [PageDoc] = [], segments: [SegmentDoc] = [], entities: [EntityDoc] = []) {
         self.pages.append(contentsOf: pages)

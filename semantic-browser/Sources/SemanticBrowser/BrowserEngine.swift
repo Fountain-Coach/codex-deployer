@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 // Forward declaration for options type
 // Uses APIModels.WaitPolicy from ModelsAPI.swift in this module
@@ -37,11 +40,10 @@ public struct URLFetchBrowserEngine: BrowserEngine {
         var contentType: String? = nil
         if let http = resp as? HTTPURLResponse {
             contentType = http.allHeaderFields["Content-Type"] as? String
-            if contentType == nil { contentType = http.value(forKey: "Content-Type") as? String }
         }
         if let ct = contentType, let semi = ct.firstIndex(of: ";") { contentType = String(ct[..<semi]) }
         let status = (resp as? HTTPURLResponse)?.statusCode
-        return SnapshotResult(html: html, text: text, finalURL: final, loadMs: elapsed, network: nil, pageStatus: status, pageContentType: contentType)
+        return SnapshotResult(html: html, text: text, finalURL: final, loadMs: elapsed, network: nil, pageStatus: status, pageContentType: contentType, adminNetwork: nil)
     }
 }
 
@@ -67,7 +69,7 @@ public struct ShellBrowserEngine: BrowserEngine {
         let html = String(data: data, encoding: .utf8) ?? ""
         let text = html.removingHTMLTags()
         let elapsed = Int(Date().timeIntervalSince(start) * 1000.0)
-        return SnapshotResult(html: html, text: text, finalURL: url, loadMs: elapsed, network: nil, pageStatus: nil, pageContentType: nil)
+        return SnapshotResult(html: html, text: text, finalURL: url, loadMs: elapsed, network: nil, pageStatus: nil, pageContentType: nil, adminNetwork: nil)
     }
 }
 

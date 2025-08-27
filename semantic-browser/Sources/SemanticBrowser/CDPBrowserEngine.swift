@@ -67,7 +67,8 @@ public struct CDPBrowserEngine: BrowserEngine {
             var captured: [String: String] = [:]
             var count = 0
             var total = 0
-            for (rid, info) in session.reqs {
+            let reqs = await session.reqs
+            for (rid, info) in reqs {
                 if count >= maxBodies || total >= maxTotal { break }
                 if let mt = info.mimeType?.lowercased(), (info.status ?? 0) < 400 {
                     if allowed.contains(mt) || mt.hasPrefix("text/") || mt.hasSuffix("+json") {
@@ -88,16 +89,16 @@ public struct CDPBrowserEngine: BrowserEngine {
                     }
                 }
             }
-            let requests: [APIModels.Snapshot.Network.Request] = session.reqs.map { (rid, info) in
+            let requests: [APIModels.Snapshot.Network.Request] = reqs.map { (rid, info) in
                 APIModels.Snapshot.Network.Request(url: info.url, type: info.type, status: info.status, body: captured[rid])
             }
-            let adminRequests: [AdminNetworkRequest] = session.reqs.map { (_, info) in
+            let adminRequests: [AdminNetworkRequest] = reqs.map { (_, info) in
                 AdminNetworkRequest(url: info.url, type: info.type, status: info.status, method: info.method, requestHeaders: info.requestHeaders, responseHeaders: info.responseHeaders)
             }
             // Main document info
             var docStatus: Int? = nil
             var docCT: String? = nil
-            if let main = session.reqs.values.first(where: { ($0.type ?? "").lowercased() == "document" && ($0.url == final || $0.url == url) }) ?? session.reqs.values.first(where: { ($0.type ?? "").lowercased() == "document" }) {
+            if let main = reqs.values.first(where: { ($0.type ?? "").lowercased() == "document" && ($0.url == final || $0.url == url) }) ?? reqs.values.first(where: { ($0.type ?? "").lowercased() == "document" }) {
                 docStatus = main.status
                 docCT = main.mimeType
             }
@@ -307,7 +308,7 @@ actor CDPSession {
 }
 
 @available(macOS 14.0, *)
-func withTimeout<T>(seconds: Double, operation: @escaping () async throws -> T) async throws -> T {
+func withTimeout<T: Sendable>(seconds: Double, operation: @escaping @Sendable () async throws -> T) async throws -> T {
     try await withThrowingTaskGroup(of: T.self) { group in
         group.addTask { try await operation() }
         group.addTask { try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000)); throw BrowserError.fetchFailed }
