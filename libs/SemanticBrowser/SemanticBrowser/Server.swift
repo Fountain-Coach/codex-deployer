@@ -184,10 +184,22 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
         case ("POST", ["v1", "snapshot"]):
             if let sreq = try? JSONDecoder().decode(APIModels.SnapshotRequest.self, from: req.body) {
                 // SSRF guard
-                guard urlAllowed(sreq.url) else { return HTTPResponse(status: 400, headers: ["Content-Type": "application/json"], body: Data("{\"code\":\"invalid_url\",\"message\":\"URL not allowed\"}".utf8)) }
+                guard urlAllowed(sreq.url) else {
+                    let reason = ["code": "invalid_url", "message": "URL not allowed"]
+                    let data = try? JSONSerialization.data(withJSONObject: reason)
+                    return HTTPResponse(status: 400, headers: ["Content-Type": "application/json", "X-URL-Block-Reason": "policy"], body: data ?? Data())
+                }
                 let sid = UUID().uuidString
+                // Per-request capture overrides via headers
+                func parseSet(_ s: String?) -> Set<String>? { guard let s, !s.isEmpty else { return nil }; return Set(s.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }) }
+                let cap = CaptureOptions(
+                    allowedMIMEs: parseSet(req.headers["X-Capture-Mimes"]),
+                    maxBodies: Int(req.headers["X-Capture-Body-Max-Count"] ?? ""),
+                    maxBodyBytes: Int(req.headers["X-Capture-Body-Max-Bytes"] ?? ""),
+                    maxTotalBytes: Int(req.headers["X-Capture-Body-Total-Bytes"] ?? "")
+                )
                 let snapRes: SnapshotResult
-                if let engine, let res = try? await engine.snapshot(for: sreq.url, wait: sreq.wait) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(sreq.url)</h1></body></html>", text: sreq.url, finalURL: sreq.url, loadMs: nil) }
+                if let engine, let res = try? await engine.snapshot(for: sreq.url, wait: sreq.wait, capture: cap) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(sreq.url)</h1></body></html>", text: sreq.url, finalURL: sreq.url, loadMs: nil, network: nil) }
                 let now = Date()
                 let page = APIModels.Snapshot.Page(
                     uri: sreq.url,
@@ -246,8 +258,16 @@ public func makeSemanticKernel(service: SemanticMemoryService, engine: BrowserEn
             if let breq = try? JSONDecoder().decode(APIModels.BrowseRequest.self, from: req.body) {
                 guard urlAllowed(breq.url) else { return HTTPResponse(status: 400, headers: ["Content-Type": "application/json"], body: Data("{\"code\":\"invalid_url\",\"message\":\"URL not allowed\"}".utf8)) }
                 let sid = UUID().uuidString
+                // Per-request capture overrides via headers
+                func parseSet(_ s: String?) -> Set<String>? { guard let s, !s.isEmpty else { return nil }; return Set(s.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }) }
+                let cap = CaptureOptions(
+                    allowedMIMEs: parseSet(req.headers["X-Capture-Mimes"]),
+                    maxBodies: Int(req.headers["X-Capture-Body-Max-Count"] ?? ""),
+                    maxBodyBytes: Int(req.headers["X-Capture-Body-Max-Bytes"] ?? ""),
+                    maxTotalBytes: Int(req.headers["X-Capture-Body-Total-Bytes"] ?? "")
+                )
                 let snapRes: SnapshotResult
-                if let engine, let res = try? await engine.snapshot(for: breq.url, wait: breq.wait) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(breq.url)</h1></body></html>", text: breq.url, finalURL: breq.url, loadMs: nil) }
+                if let engine, let res = try? await engine.snapshot(for: breq.url, wait: breq.wait, capture: cap) { snapRes = res } else { snapRes = SnapshotResult(html: "<html><body><h1>\(breq.url)</h1></body></html>", text: breq.url, finalURL: breq.url, loadMs: nil, network: nil) }
                 await service.store(snapshot: .init(id: sid, url: breq.url, renderedHTML: snapRes.html, renderedText: snapRes.text))
                 let now = Date()
                 let snap = APIModels.Snapshot(

@@ -25,7 +25,7 @@ public struct CDPBrowserEngine: BrowserEngine {
         }
     }
 
-    public func snapshot(for url: String, wait: APIModels.WaitPolicy?) async throws -> SnapshotResult {
+    public func snapshot(for url: String, wait: APIModels.WaitPolicy?, capture: CaptureOptions?) async throws -> SnapshotResult {
         if #available(macOS 14.0, *) {
             let session = CDPSession(wsURL: wsURL)
             try await session.open()
@@ -52,19 +52,25 @@ public struct CDPBrowserEngine: BrowserEngine {
             let text = html.removingHTMLTags()
             let final = (try? await session.getCurrentURL()) ?? url
             // Capture selected response bodies (textual types) with truncation
-            let textual: Set<String> = [
+            let env = ProcessInfo.processInfo.environment
+            var allowed: Set<String> = [
                 "text/html", "text/plain", "text/css",
                 "application/json", "application/javascript", "text/javascript"
             ]
-            let env = ProcessInfo.processInfo.environment
-            let maxBodies = max(Int(env["SB_NET_BODY_MAX_COUNT"] ?? "20") ?? 20, 0)
-            let maxBytes = max(Int(env["SB_NET_BODY_MAX_BYTES"] ?? "16384") ?? 16384, 512)
+            if let raw = env["SB_NET_BODY_MIME_ALLOW"], !raw.isEmpty {
+                for m in raw.split(separator: ",") { allowed.insert(String(m).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) }
+            }
+            if let reqAllowed = capture?.allowedMIMEs { allowed.formUnion(reqAllowed.map { $0.lowercased() }) }
+            let maxBodies = max(capture?.maxBodies ?? (Int(env["SB_NET_BODY_MAX_COUNT"] ?? "20") ?? 20), 0)
+            let maxBytes = max(capture?.maxBodyBytes ?? (Int(env["SB_NET_BODY_MAX_BYTES"] ?? "16384") ?? 16384), 512)
+            let maxTotal = max(capture?.maxTotalBytes ?? (Int(env["SB_NET_BODY_TOTAL_MAX_BYTES"] ?? "131072") ?? 131072), maxBytes)
             var captured: [String: String] = [:]
             var count = 0
+            var total = 0
             for (rid, info) in session.reqs {
-                if count >= maxBodies { break }
+                if count >= maxBodies || total >= maxTotal { break }
                 if let mt = info.mimeType?.lowercased(), (info.status ?? 0) < 400 {
-                    if textual.contains(mt) || mt.hasPrefix("text/") || mt.hasSuffix("+json") {
+                    if allowed.contains(mt) || mt.hasPrefix("text/") || mt.hasSuffix("+json") {
                         if let cl = info.contentLength, cl > maxBytes { continue }
                         if let el = info.encodedLength, el > maxBytes { continue }
                         if let (body, b64) = try? await session.getResponseBody(requestId: rid) {
@@ -75,6 +81,7 @@ public struct CDPBrowserEngine: BrowserEngine {
                                 if let s = String(data: truncated, encoding: .utf8) {
                                     captured[rid] = s
                                     count += 1
+                                    total += truncated.count
                                 }
                             }
                         }

@@ -12,7 +12,7 @@ public struct SnapshotResult: Sendable {
 
 public protocol BrowserEngine: Sendable {
     func snapshotHTML(for url: String) async throws -> (html: String, text: String)
-    func snapshot(for url: String, wait: APIModels.WaitPolicy?) async throws -> SnapshotResult
+    func snapshot(for url: String, wait: APIModels.WaitPolicy?, capture: CaptureOptions?) async throws -> SnapshotResult
 }
 
 public enum BrowserError: Error { case invalidURL, fetchFailed }
@@ -20,10 +20,10 @@ public enum BrowserError: Error { case invalidURL, fetchFailed }
 public struct URLFetchBrowserEngine: BrowserEngine {
     public init() {}
     public func snapshotHTML(for url: String) async throws -> (html: String, text: String) {
-        let res = try await snapshot(for: url, wait: nil)
+        let res = try await snapshot(for: url, wait: nil, capture: nil)
         return (res.html, res.text)
     }
-    public func snapshot(for url: String, wait: APIModels.WaitPolicy?) async throws -> SnapshotResult {
+    public func snapshot(for url: String, wait: APIModels.WaitPolicy?, capture: CaptureOptions?) async throws -> SnapshotResult {
         guard let u = URL(string: url) else { throw BrowserError.invalidURL }
         let start = Date()
         let (data, resp) = try await URLSession.shared.data(from: u)
@@ -40,10 +40,10 @@ public struct ShellBrowserEngine: BrowserEngine {
     let args: [String]
     public init(binary: String, args: [String] = []) { self.binary = binary; self.args = args }
     public func snapshotHTML(for url: String) async throws -> (html: String, text: String) {
-        let res = try await snapshot(for: url, wait: nil)
+        let res = try await snapshot(for: url, wait: nil, capture: nil)
         return (res.html, res.text)
     }
-    public func snapshot(for url: String, wait: APIModels.WaitPolicy?) async throws -> SnapshotResult {
+    public func snapshot(for url: String, wait: APIModels.WaitPolicy?, capture: CaptureOptions?) async throws -> SnapshotResult {
         let proc = Process()
         proc.executableURL = URL(fileURLWithPath: binary)
         proc.arguments = args + [url]
@@ -62,9 +62,22 @@ public struct ShellBrowserEngine: BrowserEngine {
 }
 
 public extension BrowserEngine {
-    func snapshot(for url: String, wait: APIModels.WaitPolicy?) async throws -> SnapshotResult {
+    func snapshot(for url: String, wait: APIModels.WaitPolicy?, capture: CaptureOptions?) async throws -> SnapshotResult {
         let r = try await snapshotHTML(for: url)
         return SnapshotResult(html: r.html, text: r.text, finalURL: url, loadMs: nil, network: nil)
+    }
+}
+
+public struct CaptureOptions: Sendable {
+    public let allowedMIMEs: Set<String>?
+    public let maxBodies: Int?
+    public let maxBodyBytes: Int?
+    public let maxTotalBytes: Int?
+    public init(allowedMIMEs: Set<String>? = nil, maxBodies: Int? = nil, maxBodyBytes: Int? = nil, maxTotalBytes: Int? = nil) {
+        self.allowedMIMEs = allowedMIMEs
+        self.maxBodies = maxBodies
+        self.maxBodyBytes = maxBodyBytes
+        self.maxTotalBytes = maxTotalBytes
     }
 }
 
