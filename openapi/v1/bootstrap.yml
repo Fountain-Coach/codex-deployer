@@ -303,4 +303,17 @@ components:
           type: string
           title: Error Type
 
+    StreamDriftData:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+    StreamPatternsData:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
