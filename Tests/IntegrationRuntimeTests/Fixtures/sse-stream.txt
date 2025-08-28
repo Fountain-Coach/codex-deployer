@@ -1,0 +1,6 @@
+event: a
+data: 1
+
+event: b
+data: 2
+
