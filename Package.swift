@@ -47,7 +47,8 @@ let fullTargets: [Target] = [
             .product(name: "NIOHTTP1", package: "swift-nio"),
             "Yams",
             .product(name: "Crypto", package: "swift-crypto"),
-            .product(name: "Logging", package: "swift-log")
+            .product(name: "Logging", package: "swift-log"),
+            .product(name: "Atomics", package: "swift-atomics")
         ],
         path: "libs/FountainCodex",
         exclude: ["FountainCodex/DNS/README.md"]
@@ -60,7 +61,9 @@ let fullTargets: [Target] = [
     .target(
         name: "TypesensePersistence",
         dependencies: [
-            .product(name: "Typesense", package: "typesense-swift")
+            .product(name: "Typesense", package: "typesense-swift"),
+            .product(name: "Numerics", package: "swift-numerics"),
+            .product(name: "Atomics", package: "swift-atomics")
         ],
         path: "libs/TypesensePersistence"
     ),
@@ -149,12 +152,12 @@ let fullTargets: [Target] = [
     ),
     .target(
         name: "AwarenessService",
-        dependencies: ["TypesensePersistence"],
+        dependencies: ["TypesensePersistence", .product(name: "Numerics", package: "swift-numerics"), .product(name: "Atomics", package: "swift-atomics")],
         path: "libs/AwarenessService"
     ),
     .target(
         name: "BootstrapService",
-        dependencies: ["TypesensePersistence"],
+        dependencies: ["TypesensePersistence", .product(name: "Numerics", package: "swift-numerics"), .product(name: "Atomics", package: "swift-atomics")],
         path: "libs/BootstrapService"
     ),
     .executableTarget(
@@ -191,7 +194,9 @@ let fullTargets: [Target] = [
         dependencies: [
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "Toolsmith", package: "toolsmith"),
-            "TypesensePersistence"
+            "TypesensePersistence",
+            .product(name: "Numerics", package: "swift-numerics"),
+            .product(name: "Atomics", package: "swift-atomics")
         ],
         path: "libs/ToolServer",
         exclude: ["Service", "Dockerfile"],
@@ -386,6 +391,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-log.git", from: "1.5.0"),
         .package(url: "https://github.com/Fountain-Coach/midi2.git", from: "0.3.1"),
         .package(url: "https://github.com/apple/swift-numerics.git", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-atomics.git", from: "1.3.0"),
         .package(url: "https://github.com/Fountain-Coach/semantic-browser.git", from: "0.0.2")
     ],
     targets: targets
