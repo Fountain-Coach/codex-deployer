@@ -1,6 +1,7 @@
 import Foundation
 
-final class SSEClient: NSObject, URLSessionDataDelegate {
+@MainActor
+class SSEClient: NSObject, @preconcurrency URLSessionDataDelegate {
     fileprivate let url: URL
     fileprivate var task: URLSessionDataTask?
     fileprivate var received = Data()
@@ -20,7 +21,8 @@ final class SSEClient: NSObject, URLSessionDataDelegate {
 
 // Enhanced client with filters, field selection, formats, timeouts, retries
 enum OutputFormat: String { case text, json, raw }
-final class FilteringSSEClient: SSEClient {
+@MainActor
+class FilteringSSEClient: SSEClient {
     let filters: Set<String>
     let pretty: Bool
     let format: OutputFormat
