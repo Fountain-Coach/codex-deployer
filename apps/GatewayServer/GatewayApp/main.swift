@@ -22,22 +22,6 @@ let cotLogPath = ProcessInfo.processInfo.environment["COT_LOG_PATH"].map { URL(f
 let llmPlugin = LLMGatewayPlugin(cotLogURL: cotLogPath)
 let authPlugin = AuthGatewayPlugin()
 let routesFile = URL(fileURLWithPath: "Configuration/routes.json")
-// Load RoleGuard rules from YAML if available
-func loadRoleGuardRules() -> [String: String] {
-    let env = ProcessInfo.processInfo.environment
-    let path = env["ROLE_GUARD_PATH"].map(URL.init(fileURLWithPath:)) ?? URL(fileURLWithPath: "Configuration/roleguard.yml")
-    guard FileManager.default.fileExists(atPath: path.path),
-          let text = try? String(contentsOf: path, encoding: .utf8) else { return [:] }
-    do {
-        if let yaml = try Yams.load(yaml: text) as? [String: Any], let rules = yaml["rules"] as? [String: String] {
-            return rules
-        }
-    } catch {
-        FileHandle.standardError.write(Data("[gateway] Warning: failed to parse RoleGuard rules at \(path.path)\n".utf8))
-    }
-    return [:]
-}
-
 var plugins: [GatewayPlugin] = []
 let roleRules = loadRoleGuardRules()
 if !roleRules.isEmpty { plugins.append(RoleGuardPlugin(rules: roleRules)) }
