@@ -19,13 +19,19 @@ public struct Handlers: Sendable {
         let expected = HMAC<SHA256>.authenticationCode(for: Data(signingInput.utf8), using: key)
         guard Data(expected) == signatureData,
               let payloadData = Data(base64URLEncoded: String(segments[1])),
-              let payload = try? JSONDecoder().decode(JWTPayload.self, from: payloadData),
-              payload.exp > Int(Date().timeIntervalSince1970) else { return nil }
+              let payload = try? JSONDecoder().decode(JWTPayload.self, from: payloadData) else { return nil }
+        let now = Int(Date().timeIntervalSince1970)
+        let leeway = Int(ProcessInfo.processInfo.environment["GATEWAY_JWT_LEEWAY"] ?? "60") ?? 60
+        if payload.exp + leeway < now { return nil }
+        if let nbf = payload.nbf, nbf - leeway > now { return nil }
+        if let iss = ProcessInfo.processInfo.environment["GATEWAY_JWT_ISS"], let pi = payload.iss, iss != pi { return nil }
+        if let aud = ProcessInfo.processInfo.environment["GATEWAY_JWT_AUD"], let pa = payload.aud, aud != pa { return nil }
+        if ((ProcessInfo.processInfo.environment["GATEWAY_JWT_REQUIRE_JTI"] as NSString?)?.boolValue ?? false) && (payload.jti ?? "").isEmpty { return nil }
         let scopes = payload.role.map { [$0] } ?? []
         return ClaimsResponse(role: payload.role, scopes: scopes)
     }
 
-    private struct JWTPayload: Decodable { let exp: Int; let role: String? }
+    private struct JWTPayload: Decodable { let iss: String?; let aud: String?; let nbf: Int?; let exp: Int; let jti: String?; let role: String? }
 
     /// Validates a provided bearer token.
     public func authValidate(_ request: HTTPRequest, body: ValidateRequest?) async throws -> HTTPResponse {

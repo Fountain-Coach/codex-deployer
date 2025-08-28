@@ -1,4 +1,5 @@
 import Foundation
+import Crypto
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
@@ -23,17 +24,72 @@ public protocol TokenValidator: Sendable {
     func validate(token: String) async -> TokenClaims?
 }
 
+/// Provides a symmetric key for HS256 verification.
+public protocol KeyProvider: Sendable {
+    func symmetricKey() -> SymmetricKey
+}
+
+/// Default key provider using `GATEWAY_JWT_SECRET`.
+public struct EnvKeyProvider: KeyProvider {
+    private let secret: String
+    public init(environment: [String: String] = ProcessInfo.processInfo.environment) {
+        self.secret = environment["GATEWAY_JWT_SECRET"] ?? "secret"
+    }
+    public func symmetricKey() -> SymmetricKey { SymmetricKey(data: Data(secret.utf8)) }
+}
+
+/// Validation options for JWT claims.
+public struct JWTValidationOptions: Sendable {
+    public let issuer: String?
+    public let audience: String?
+    public let leewaySeconds: Int
+    public let requireJTI: Bool
+    public init(issuer: String? = ProcessInfo.processInfo.environment["GATEWAY_JWT_ISS"],
+                audience: String? = ProcessInfo.processInfo.environment["GATEWAY_JWT_AUD"],
+                leewaySeconds: Int = Int(ProcessInfo.processInfo.environment["GATEWAY_JWT_LEEWAY"] ?? "60") ?? 60,
+                requireJTI: Bool = (ProcessInfo.processInfo.environment["GATEWAY_JWT_REQUIRE_JTI"] as NSString?)?.boolValue ?? false) {
+        self.issuer = issuer
+        self.audience = audience
+        self.leewaySeconds = leewaySeconds
+        self.requireJTI = requireJTI
+    }
+}
+
 /// Default validator backed by ``CredentialStore``.
 public struct CredentialStoreValidator: TokenValidator {
-    private let store: CredentialStore
-    public init(store: CredentialStore = CredentialStore()) {
-        self.store = store
+    private let keyProvider: KeyProvider
+    private let options: JWTValidationOptions
+    public init(keyProvider: KeyProvider = EnvKeyProvider(), options: JWTValidationOptions = JWTValidationOptions()) {
+        self.keyProvider = keyProvider
+        self.options = options
     }
     public func validate(token: String) async -> TokenClaims? {
-        guard store.verify(jwt: token) else { return nil }
-        let role = store.role(for: token)
-        let scopes = role.map { [$0] } ?? []
-        return TokenClaims(role: role, scopes: scopes)
+        guard let payload = Self.verifyAndDecode(token: token, key: keyProvider.symmetricKey(), options: options) else { return nil }
+        let scopes = payload.role.map { [$0] } ?? []
+        return TokenClaims(role: payload.role, scopes: scopes)
+    }
+
+    private struct JWTPayload: Decodable { let iss: String?; let aud: String?; let sub: String?; let exp: Int; let nbf: Int?; let iat: Int?; let jti: String?; let role: String? }
+
+    private static func verifyAndDecode(token: String, key: SymmetricKey, options: JWTValidationOptions) -> JWTPayload? {
+        let parts = token.split(separator: ".")
+        guard parts.count == 3 else { return nil }
+        let headerPayload = parts[0] + "." + parts[1]
+        guard let sig = Data(base64URLEncoded: String(parts[2])) else { return nil }
+        let expected = HMAC<SHA256>.authenticationCode(for: Data(headerPayload.utf8), using: key)
+        guard Data(expected) == sig else { return nil }
+        guard let payloadData = Data(base64URLEncoded: String(parts[1])),
+              let payload = try? JSONDecoder().decode(JWTPayload.self, from: payloadData) else { return nil }
+        let now = Int(Date().timeIntervalSince1970)
+        // exp with leeway
+        guard payload.exp + options.leewaySeconds >= now else { return nil }
+        // nbf with leeway
+        if let nbf = payload.nbf, nbf - options.leewaySeconds > now { return nil }
+        // iss/aud checks if provided
+        if let iss = options.issuer, payload.iss != iss { return nil }
+        if let aud = options.audience, payload.aud != aud { return nil }
+        if options.requireJTI && (payload.jti ?? "").isEmpty { return nil }
+        return payload
     }
 }
 

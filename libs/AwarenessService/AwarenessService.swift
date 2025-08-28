@@ -24,6 +24,12 @@ public final class AwarenessRouter: @unchecked Sendable {
         case ("GET", "/health"):
             let data = try JSONSerialization.data(withJSONObject: ["status": "ok"]) 
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        case ("GET", "/live"):
+            let data = try JSONSerialization.data(withJSONObject: ["status": "live"]) 
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        case ("GET", "/ready"):
+            let data = try JSONSerialization.data(withJSONObject: ["status": "ready"]) 
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         case ("GET", "/metrics"):
             let uptime = Int(ProcessInfo.processInfo.systemUptime)
             let body = Data("awareness_uptime_seconds \(uptime)\n".utf8)

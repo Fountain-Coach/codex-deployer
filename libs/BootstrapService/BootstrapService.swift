@@ -28,6 +28,15 @@ public final class BootstrapRouter: @unchecked Sendable {
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
         let pathOnly = request.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? request.path
         switch (request.method, pathOnly) {
+        case ("GET", "/health"):
+            let data = try JSONSerialization.data(withJSONObject: ["status": "ok"]) 
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        case ("GET", "/live"):
+            let data = try JSONSerialization.data(withJSONObject: ["status": "live"]) 
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        case ("GET", "/ready"):
+            let data = try JSONSerialization.data(withJSONObject: ["status": "ready"]) 
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         case ("GET", "/metrics"):
             let uptime = Int(ProcessInfo.processInfo.systemUptime)
             let body = Data("bootstrap_uptime_seconds \(uptime)\n".utf8)

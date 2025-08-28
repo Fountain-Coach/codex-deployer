@@ -118,9 +118,14 @@ public final class GatewayServer {
             }
             let segments = request.path.split(separator: "/", omittingEmptySubsequences: true)
             var response: HTTPResponse
+            let start = Date()
             switch (request.method, segments) {
             case ("GET", ["health"]):
                 response = self.gatewayHealth()
+            case ("GET", ["live"]):
+                response = self.gatewayLiveness()
+            case ("GET", ["ready"]):
+                response = self.gatewayReadiness()
             case ("GET", ["metrics"]):
                 response = await self.gatewayMetrics()
             case ("POST", ["auth", "token"]):
@@ -178,6 +183,20 @@ public final class GatewayServer {
             }
             for plugin in plugins.reversed() {
                 response = try await plugin.respond(response, for: request)
+            }
+            // Record metrics and emit a structured log line
+            await GatewayRequestMetrics.shared.record(method: request.method, status: response.status)
+            let durMs = Int(Date().timeIntervalSince(start) * 1000)
+            let log: [String: Any] = [
+                "ts": ISO8601DateFormatter().string(from: Date()),
+                "evt": "http_access",
+                "method": request.method,
+                "path": request.path,
+                "status": response.status,
+                "duration_ms": durMs
+            ]
+            if let data = try? JSONSerialization.data(withJSONObject: log), let line = String(data: data, encoding: .utf8) {
+                FileHandle.standardError.write(Data((line + "\n").utf8))
             }
             return response
         }
@@ -260,6 +279,17 @@ public final class GatewayServer {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json ?? Data())
     }
 
+    public func gatewayLiveness() -> HTTPResponse {
+        let json = try? JSONEncoder().encode(["status": "live"]) 
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json ?? Data())
+    }
+
+    public func gatewayReadiness() -> HTTPResponse {
+        // In a fuller implementation, check dependencies; for now return ready
+        let json = try? JSONEncoder().encode(["status": "ready"]) 
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json ?? Data())
+    }
+
     public func gatewayMetrics() async -> HTTPResponse {
         let exposition = await DNSMetrics.shared.exposition()
         var metrics: [String: Int] = [:]
@@ -269,6 +299,8 @@ public final class GatewayServer {
                 metrics[String(parts[0])] = value
             }
         }
+        let gw = await GatewayRequestMetrics.shared.snapshot()
+        for (k, v) in gw { metrics[k] = v }
         if let json = try? JSONEncoder().encode(metrics) {
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
         }
