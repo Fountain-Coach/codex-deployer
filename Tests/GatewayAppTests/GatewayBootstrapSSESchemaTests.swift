@@ -77,6 +77,8 @@ final class GatewayBootstrapSSESchemaTests: XCTestCase, URLSessionDataDelegate {
         let schemas = (yaml?["components"] as? [String: Any])?["schemas"] as? [String: Any]
         let driftSchema = (schemas?["StreamDriftData"] as? [String: Any]) ?? [:]
         let patternsSchema = (schemas?["StreamPatternsData"] as? [String: Any]) ?? [:]
+        let unionSchema = (schemas?["StreamEvent"] as? [String: Any]) ?? [:]
+        let completeSchema = (schemas?["StreamCompleteData"] as? [String: Any]) ?? [:]
         if let s = String(data: received, encoding: .utf8) {
             var lastEvent: String?
             for raw in s.split(separator: "\n") {
@@ -85,8 +87,10 @@ final class GatewayBootstrapSSESchemaTests: XCTestCase, URLSessionDataDelegate {
                 else if line.hasPrefix("data:") {
                     let payload = String(line.dropFirst(5)).trimmingCharacters(in: .whitespaces)
                     if let d = payload.data(using: .utf8), let obj = try? JSONSerialization.jsonObject(with: d) {
+                        XCTAssertTrue(LocalSchemaValidator.validate(obj, unionSchema))
                         if lastEvent == "drift" { XCTAssertTrue(LocalSchemaValidator.validate(obj, driftSchema)) }
                         if lastEvent == "patterns" { XCTAssertTrue(LocalSchemaValidator.validate(obj, patternsSchema)) }
+                        if lastEvent == "complete" { XCTAssertTrue(LocalSchemaValidator.validate(obj, completeSchema)) }
                     }
                 }
             }
@@ -122,6 +126,7 @@ final class GatewayBootstrapSSESchemaTests: XCTestCase, URLSessionDataDelegate {
 struct LocalSchemaValidator {
     enum T: String { case object, string }
     static func validate(_ obj: Any, _ schema: [String: Any]) -> Bool {
+        if let one = schema["oneOf"] as? [[String: Any]] { return one.contains { validate(obj, $0) } }
         guard let t = schema["type"] as? String, let ty = T(rawValue: t) else { return true }
         switch ty {
         case .object:

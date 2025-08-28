@@ -316,4 +316,13 @@ components:
         status:
           type: string
 
+    StreamCompleteData:
+      type: object
+      description: Empty payload for stream completion
+    StreamEvent:
+      oneOf:
+        - $ref: '#/components/schemas/StreamDriftData'
+        - $ref: '#/components/schemas/StreamPatternsData'
+        - $ref: '#/components/schemas/StreamCompleteData'
+
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

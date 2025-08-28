@@ -9,6 +9,7 @@ import Yams
 struct LocalSchemaValidator {
     enum T: String { case object, string }
     static func validate(_ obj: Any, _ schema: [String: Any]) -> Bool {
+        if let one = schema["oneOf"] as? [[String: Any]] { return one.contains { validate(obj, $0) } }
         guard let t = schema["type"] as? String, let ty = T(rawValue: t) else { return true }
         switch ty {
         case .object:

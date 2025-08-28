@@ -10,8 +10,13 @@ final class SSEClient: NSObject, URLSessionDataDelegate {
     init(url: URL) { self.url = url }
 
     private func extract(_ obj: Any, path: String) -> Any? {
+        // Normalize simple JSONPath: $.a.b[0] -> a.b.0
+        var norm = path
+        if norm.hasPrefix("$.") { norm.removeFirst(2) }
+        norm = norm.replacingOccurrences(of: "]", with: "")
+        norm = norm.replacingOccurrences(of: "[", with: ".")
         var current: Any? = obj
-        for part in path.split(separator: ".").map(String.init) {
+        for part in norm.split(separator: ".").map(String.init) {
             if let dict = current as? [String: Any] { current = dict[part] }
             else if let arr = current as? [Any], let idx = Int(part), idx >= 0, idx < arr.count { current = arr[idx] }
             else { return nil }
