@@ -33,6 +33,7 @@ public final class GatewayServer {
     private let certificatePath: String?
     private let rateLimiter: RateLimiterGatewayPlugin?
     private let breaker: CircuitBreaker = CircuitBreaker()
+    private var roleGuardReloader: RoleGuardConfigReloader?
 
     private struct ZoneCreateRequest: Codable { let name: String }
     private struct ZonesResponse: Codable { let zones: [ZoneManager.Zone] }
@@ -209,6 +210,15 @@ public final class GatewayServer {
             return response
         }
         self.server = NIOHTTPServer(kernel: kernel, group: group)
+        // Kick off RoleGuard config polling if possible
+        if let store = roleGuardStore {
+            Task { @MainActor in
+                if let reloader = await RoleGuardConfigReloader(store: store) {
+                    self.roleGuardReloader = reloader
+                    reloader.start(interval: 2.0)
+                }
+            }
+        }
     }
 
     /// Attempts to match the incoming request against configured routes and proxy it upstream.
@@ -317,6 +327,9 @@ public final class GatewayServer {
         for (k, v) in gw { metrics[k] = v }
         let cb = await breaker.metrics()
         for (k, v) in cb { metrics[k] = v }
+        // RoleGuard metrics
+        let rg = await RoleGuardMetrics.shared.snapshot()
+        for (k, v) in rg { metrics[k] = v }
         if let json = try? JSONEncoder().encode(metrics) {
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
         }
@@ -335,6 +348,10 @@ public final class GatewayServer {
     private func reloadRoleGuardRules() async -> HTTPResponse {
         guard let store = roleGuardStore else { return HTTPResponse(status: 404) }
         let ok = await store.reload()
+        if ok {
+            let count = (await store.rules).count
+            Task { await RoleGuardMetrics.shared.recordReload(ruleCount: count) }
+        }
         return HTTPResponse(status: ok ? 204 : 304)
     }
 
@@ -572,6 +589,7 @@ public final class GatewayServer {
     public func stop() async throws {
         manager.stop()
         try await server.stop()
+        roleGuardReloader?.stop()
     }
 }
 

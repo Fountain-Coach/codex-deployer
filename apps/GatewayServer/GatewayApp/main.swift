@@ -26,6 +26,7 @@ var plugins: [any GatewayPlugin] = []
 let rgURL = roleGuardConfigURL()
 let roleRules = loadRoleGuardRules(from: rgURL)
 let roleGuardStore = RoleGuardStore(initialRules: roleRules, configURL: rgURL)
+Task { await RoleGuardMetrics.shared.setActiveRules(roleRules.count) }
 // Choose validator based on environment (JWKS for HS256-oct if provided; otherwise env secret)
 if let jwksURL = ProcessInfo.processInfo.environment["GATEWAY_JWKS_URL"], let provider = JWKSKeyProvider(jwksURL: jwksURL) {
     plugins.append(RoleGuardPlugin(store: roleGuardStore, validator: HMACKeyValidator(keyProvider: provider)))

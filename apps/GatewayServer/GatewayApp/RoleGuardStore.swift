@@ -10,6 +10,8 @@ public actor RoleGuardStore {
         self.configURL = configURL
     }
 
+    public var configPath: URL? { configURL }
+
     /// Reload rules from the configured URL if available.
     /// Returns true when reload applied.
     @discardableResult
@@ -28,4 +30,3 @@ public actor RoleGuardStore {
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

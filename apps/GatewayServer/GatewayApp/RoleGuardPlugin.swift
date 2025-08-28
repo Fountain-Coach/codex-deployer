@@ -47,24 +47,42 @@ public struct RoleGuardPlugin: GatewayPlugin, Sendable {
         if let methods = reqs.methods, !methods.isEmpty, !methods.contains(request.method.uppercased()) {
             return request
         }
-        if reqs.deny { throw ForbiddenError() }
+        if reqs.deny {
+            Task { await RoleGuardMetrics.shared.recordForbidden() }
+            throw ForbiddenError()
+        }
         // Extract bearer token
-        guard let auth = request.headers["Authorization"], auth.hasPrefix("Bearer ") else { throw UnauthorizedError() }
+        guard let auth = request.headers["Authorization"], auth.hasPrefix("Bearer ") else {
+            Task { await RoleGuardMetrics.shared.recordUnauthorized() }
+            throw UnauthorizedError()
+        }
         let token = String(auth.dropFirst(7))
-        guard let claims = await validator.validate(token: token) else { throw UnauthorizedError() }
+        guard let claims = await validator.validate(token: token) else {
+            Task { await RoleGuardMetrics.shared.recordUnauthorized() }
+            throw UnauthorizedError()
+        }
         // Check roles (if any)
         if let roles = reqs.roles, !roles.isEmpty {
-            guard let role = claims.role, roles.contains(role) else { throw ForbiddenError() }
+            guard let role = claims.role, roles.contains(role) else {
+                Task { await RoleGuardMetrics.shared.recordForbidden() }
+                throw ForbiddenError()
+            }
         }
         // Check scopes (if any) - require any match
         if let needed = reqs.scopes, !needed.isEmpty {
             let have = Set(claims.scopes)
             if reqs.requireAllScopes {
                 // Require all scopes to be present
-                if !Set(needed).isSubset(of: have) { throw ForbiddenError() }
+                if !Set(needed).isSubset(of: have) {
+                    Task { await RoleGuardMetrics.shared.recordForbidden() }
+                    throw ForbiddenError()
+                }
             } else {
                 // Require any scope match
-                if have.intersection(needed).isEmpty { throw ForbiddenError() }
+                if have.intersection(needed).isEmpty {
+                    Task { await RoleGuardMetrics.shared.recordForbidden() }
+                    throw ForbiddenError()
+                }
             }
         }
         return request
