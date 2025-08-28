@@ -1,5 +1,5 @@
 import XCTest
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class HTTPKernelTests: XCTestCase {
     /// Ensures the ``HTTPKernel`` routes requests to the correct handler.

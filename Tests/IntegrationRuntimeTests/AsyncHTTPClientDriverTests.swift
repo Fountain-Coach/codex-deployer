@@ -1,7 +1,7 @@
 import XCTest
 import NIOCore
 import NIOHTTP1
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class AsyncHTTPClientDriverTests: XCTestCase {
     /// Ensures the driver performs requests and returns responses.

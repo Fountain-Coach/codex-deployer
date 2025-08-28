@@ -3,7 +3,7 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class NIOHTTPServerTests: XCTestCase {
     /// Starts the server and verifies a simple request receives a response.

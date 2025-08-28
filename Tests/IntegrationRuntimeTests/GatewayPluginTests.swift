@@ -1,6 +1,6 @@
 import XCTest
 @testable import gateway_server
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class GatewayPluginTests: XCTestCase {
     /// Simple plugin that relies on default implementations.
