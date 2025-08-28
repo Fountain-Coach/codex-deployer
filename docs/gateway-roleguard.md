@@ -79,3 +79,20 @@ The gateway exposes simple management endpoints to inspect and reload rules at r
   - 204 when reload applied, 304 when no reload performed (e.g., file missing or unchanged).
 
 Authorization: both endpoints require `Authorization: Bearer <JWT>` where the token has role `admin` (or includes an `admin` scope). They are intended for operators and should also be protected via network policy.
+
+### Metrics
+
+Gateway exposes RoleGuard counters in `/metrics` (JSON map today, suitable for scraping or exporting):
+
+- `roleguard_unauthorized_total`: Count of 401 decisions (missing/invalid token).
+- `roleguard_forbidden_total`: Count of 403 decisions (role/scope mismatch or explicit deny).
+- `roleguard_reloads_total`: Number of successful rules reloads (manual or auto).
+- `roleguard_active_rules`: Current number of active prefix rules.
+
+Example consumption:
+
+```
+curl -s http://localhost:8080/metrics | jq '.roleguard_unauthorized_total, .roleguard_forbidden_total'
+```
+
+If you need Prometheus exposition, map these keys into counters/gauges via your scrape sidecar or export adapter.
