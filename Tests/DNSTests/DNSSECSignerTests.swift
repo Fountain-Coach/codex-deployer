@@ -10,6 +10,23 @@ final class DNSSECSignerTests: XCTestCase {
         let sig = try signer.sign(zone: zone)
         XCTAssertTrue(signer.verify(zone: zone, signature: sig))
     }
+
+    func testVerifyFailsForTamperedZone() throws {
+        let key = Curve25519.Signing.PrivateKey()
+        let signer = DNSSECSigner(privateKey: key)
+        let zone = "example.com: 1.2.3.4"
+        let sig = try signer.sign(zone: zone)
+        let tampered = zone + "5"
+        XCTAssertFalse(signer.verify(zone: tampered, signature: sig))
+    }
+
+    func testVerifyFailsWithDifferentKey() throws {
+        let signer1 = DNSSECSigner(privateKey: Curve25519.Signing.PrivateKey())
+        let signer2 = DNSSECSigner(privateKey: Curve25519.Signing.PrivateKey())
+        let zone = "example.com: 1.2.3.4"
+        let sig = try signer1.sign(zone: zone)
+        XCTAssertFalse(signer2.verify(zone: zone, signature: sig))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
