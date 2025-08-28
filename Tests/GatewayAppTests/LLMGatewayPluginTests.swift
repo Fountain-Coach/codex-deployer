@@ -1,7 +1,7 @@
 import XCTest
 import Foundation
 @testable import LLMGatewayPlugin
-import FountainCodex
+import FountainRuntime
 
 final class LLMGatewayPluginTests: XCTestCase {
     func testSentinelConsultDecisions() async throws {

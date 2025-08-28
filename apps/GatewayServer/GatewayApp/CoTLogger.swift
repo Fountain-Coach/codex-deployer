@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Plugin that logs chain-of-thought responses when requested.
 /// When a `/chat` request includes `include_cot: true`, any `cot`
@@ -71,4 +71,3 @@ public struct CoTLogger: GatewayPlugin {
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

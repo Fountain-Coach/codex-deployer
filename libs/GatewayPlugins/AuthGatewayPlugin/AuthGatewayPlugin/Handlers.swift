@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 import Crypto
 
 /// Collection of handlers for auth gateway endpoints.

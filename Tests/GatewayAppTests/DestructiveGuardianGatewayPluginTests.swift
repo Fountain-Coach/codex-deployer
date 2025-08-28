@@ -1,7 +1,7 @@
 import XCTest
 import Foundation
 @testable import DestructiveGuardianGatewayPlugin
-import FountainCodex
+import FountainRuntime
 
 final class DestructiveGuardianGatewayPluginTests: XCTestCase {
     private func makePlugin(logURL: URL, tokens: [String] = []) -> DestructiveGuardianGatewayPlugin {

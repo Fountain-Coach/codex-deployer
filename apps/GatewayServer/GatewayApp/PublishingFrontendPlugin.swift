@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Serves static files from disk when requests are not handled elsewhere.
 public struct PublishingFrontendPlugin: GatewayPlugin {

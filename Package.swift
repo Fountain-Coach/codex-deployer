@@ -7,6 +7,8 @@ let LEAN = (ProcessInfo.processInfo.environment["LEAN_TESTS"] == "1")
 var products: [Product] = LEAN ? [
     // Lean mode: only gateway-related products
     .library(name: "FountainCodex", targets: ["FountainCodex"]),
+    // Preferred product name for the shared runtime
+    .library(name: "FountainRuntime", targets: ["FountainRuntime"]),
     .executable(name: "gateway-server", targets: ["gateway-server"]),
     .library(name: "LLMGatewayPlugin", targets: ["LLMGatewayPlugin"]),
     .library(name: "AuthGatewayPlugin", targets: ["AuthGatewayPlugin"]),
@@ -17,6 +19,8 @@ var products: [Product] = LEAN ? [
     .library(name: "SecuritySentinelGatewayPlugin", targets: ["SecuritySentinelGatewayPlugin"])
 ] : [
     .library(name: "FountainCodex", targets: ["FountainCodex"]),
+    // Preferred product name for the shared runtime
+    .library(name: "FountainRuntime", targets: ["FountainRuntime"]),
     .library(name: "TypesensePersistence", targets: ["TypesensePersistence"]),
     .library(name: "MIDI2Models", targets: ["MIDI2Models"]),
     .library(name: "MIDI2Core", targets: ["MIDI2Core"]),
@@ -46,10 +50,15 @@ var targets: [Target] = LEAN ? [
         path: "libs/FountainCodex",
         exclude: ["FountainCodex/DNS/README.md"]
     ),
+    .target(
+        name: "FountainRuntime",
+        dependencies: ["FountainCodex"],
+        path: "libs/FountainRuntime"
+    ),
     .executableTarget(
         name: "gateway-server",
         dependencies: [
-            "FountainCodex",
+            "FountainRuntime",
             "PublishingFrontend",
             "LLMGatewayPlugin",
             "AuthGatewayPlugin",
@@ -66,48 +75,48 @@ var targets: [Target] = LEAN ? [
     ),
     .target(
         name: "LLMGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/LLMGatewayPlugin"
     ),
     .target(
         name: "AuthGatewayPlugin",
-        dependencies: ["FountainCodex", .product(name: "Crypto", package: "swift-crypto")],
+        dependencies: ["FountainRuntime", .product(name: "Crypto", package: "swift-crypto")],
         path: "libs/GatewayPlugins/AuthGatewayPlugin"
     ),
     .target(
         name: "RateLimiterGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/RateLimiterGatewayPlugin"
     ),
     .target(
         name: "BudgetBreakerGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/BudgetBreakerGatewayPlugin"
     ),
     .target(
         name: "PayloadInspectionGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/PayloadInspectionGatewayPlugin"
     ),
     .target(
         name: "DestructiveGuardianGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/DestructiveGuardianGatewayPlugin"
     ),
     .target(
         name: "SecuritySentinelGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/SecuritySentinelGatewayPlugin"
     ),
     .target(
         name: "PublishingFrontend",
-        dependencies: ["FountainCodex", "Yams"],
+        dependencies: ["FountainRuntime", "Yams"],
         path: "libs/PublishingFrontend"
     ),
     // Tests (gateway-focused)
     .testTarget(
         name: "IntegrationRuntimeTests",
-        dependencies: ["gateway-server", "FountainCodex", "LLMGatewayPlugin", "RateLimiterGatewayPlugin"],
+        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin"],
         path: "Tests/IntegrationRuntimeTests",
         resources: [.process("Fixtures")]
     )
@@ -155,13 +164,13 @@ var targets: [Target] = LEAN ? [
     ),
     .executableTarget(
         name: "clientgen-service",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "apps/ClientgenService"
     ),
     .executableTarget(
         name: "gateway-server",
         dependencies: [
-            "FountainCodex",
+            "FountainRuntime",
             "PublishingFrontend",
             "LLMGatewayPlugin",
             "AuthGatewayPlugin",
@@ -178,42 +187,42 @@ var targets: [Target] = LEAN ? [
     ),
     .target(
         name: "LLMGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/LLMGatewayPlugin"
     ),
     .target(
         name: "AuthGatewayPlugin",
-        dependencies: ["FountainCodex", .product(name: "Crypto", package: "swift-crypto")],
+        dependencies: ["FountainRuntime", .product(name: "Crypto", package: "swift-crypto")],
         path: "libs/GatewayPlugins/AuthGatewayPlugin"
     ),
     .target(
         name: "RateLimiterGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/RateLimiterGatewayPlugin",
     ),
     .target(
         name: "BudgetBreakerGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/BudgetBreakerGatewayPlugin",
     ),
     .target(
         name: "PayloadInspectionGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/PayloadInspectionGatewayPlugin",
     ),
     .target(
         name: "DestructiveGuardianGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/DestructiveGuardianGatewayPlugin",
     ),
     .target(
         name: "SecuritySentinelGatewayPlugin",
-        dependencies: ["FountainCodex"],
+        dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/SecuritySentinelGatewayPlugin",
     ),
     .target(
         name: "PublishingFrontend",
-        dependencies: ["FountainCodex", "Yams"],
+        dependencies: ["FountainRuntime", "Yams"],
         path: "libs/PublishingFrontend"
     ),
     .target(
@@ -273,7 +282,7 @@ var targets: [Target] = LEAN ? [
     ),
     .executableTarget(
         name: "persist-server",
-        dependencies: ["FountainCodex", "TypesensePersistence", "Yams"],
+        dependencies: ["FountainRuntime", "TypesensePersistence", "Yams"],
         path: "apps/PersistServer"
     ),
     .executableTarget(
@@ -286,16 +295,16 @@ var targets: [Target] = LEAN ? [
         dependencies: ["TypesensePersistence", "BootstrapService"],
         path: "apps/BootstrapServer"
     ),
-    .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
+    .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainRuntime"], path: "Tests/ClientGeneratorTests"),
     .testTarget(name: "PublishingFrontendTests", dependencies: ["PublishingFrontend"], path: "Tests/PublishingFrontendTests"),
-    .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainCodex", .product(name: "Crypto", package: "swift-crypto"), .product(name: "NIOEmbedded", package: "swift-nio"), .product(name: "NIO", package: "swift-nio")], path: "Tests/DNSTests"),
+    .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainRuntime", .product(name: "Crypto", package: "swift-crypto"), .product(name: "NIOEmbedded", package: "swift-nio"), .product(name: "NIO", package: "swift-nio")], path: "Tests/DNSTests"),
     .testTarget(
         name: "IntegrationRuntimeTests",
-        dependencies: ["gateway-server", "FountainCodex", "LLMGatewayPlugin", "RateLimiterGatewayPlugin"],
+        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin"],
         path: "Tests/IntegrationRuntimeTests",
         resources: [.process("Fixtures")]
     ),
-    .testTarget(name: "DNSPerfTests", dependencies: ["FountainCodex", .product(name: "NIOCore", package: "swift-nio")], path: "Tests/DNSPerfTests"),
+    .testTarget(name: "DNSPerfTests", dependencies: ["FountainRuntime", .product(name: "NIOCore", package: "swift-nio")], path: "Tests/DNSPerfTests"),
     .testTarget(name: "MIDI2ModelsTests", dependencies: ["MIDI2Models"], path: "Tests/MIDI2ModelsTests"),
     .testTarget(name: "MIDI2CoreTests", dependencies: ["MIDI2Core", "ResourceLoader", "flexctl"], path: "Tests/MIDI2CoreTests"),
     .testTarget(name: "MIDI2TransportsTests", dependencies: ["MIDI2Transports"], path: "Tests/MIDI2TransportsTests"),
@@ -340,7 +349,7 @@ var targets: [Target] = LEAN ? [
     ),
     .testTarget(
         name: "OpenAPIConformanceTests",
-        dependencies: ["Yams", "AwarenessService", "BootstrapService", "TypesensePersistence", "FountainCodex"],
+        dependencies: ["Yams", "AwarenessService", "BootstrapService", "TypesensePersistence", "FountainRuntime"],
         path: "Tests/OpenAPIConformanceTests"
     )
 ]

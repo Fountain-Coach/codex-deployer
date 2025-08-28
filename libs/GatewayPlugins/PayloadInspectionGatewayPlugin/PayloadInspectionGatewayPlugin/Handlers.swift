@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Actor housing payload inspection handlers.
 public actor Handlers {

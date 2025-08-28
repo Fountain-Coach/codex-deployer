@@ -1,7 +1,7 @@
 import XCTest
 import Foundation
 @testable import AuthGatewayPlugin
-import FountainCodex
+import FountainRuntime
 import gateway_server
 
 final class AuthGatewayPluginTests: XCTestCase {

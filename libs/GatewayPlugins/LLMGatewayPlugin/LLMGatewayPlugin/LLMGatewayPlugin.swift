@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Plugin exposing sentinel consult and CoT endpoints.
 public struct LLMGatewayPlugin: Sendable {

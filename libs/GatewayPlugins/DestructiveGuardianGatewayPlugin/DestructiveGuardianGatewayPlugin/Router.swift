@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Router for destructive guardian endpoints.
 public struct Router: Sendable {

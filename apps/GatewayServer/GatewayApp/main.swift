@@ -1,7 +1,7 @@
 import Foundation
 import Dispatch
 import PublishingFrontend
-import FountainCodex
+import FountainRuntime
 import LLMGatewayPlugin
 import AuthGatewayPlugin
 import RateLimiterGatewayPlugin

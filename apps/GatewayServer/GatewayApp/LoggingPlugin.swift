@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Plugin that prints incoming requests and outgoing responses to stdout.
 public struct LoggingPlugin: GatewayPlugin {

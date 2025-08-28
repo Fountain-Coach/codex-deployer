@@ -1,7 +1,7 @@
 import Foundation
 import NIO
 import NIOHTTP1
-import FountainCodex
+import FountainRuntime
 import Yams
 
 /// Configuration for the ``PublishingFrontend`` server.

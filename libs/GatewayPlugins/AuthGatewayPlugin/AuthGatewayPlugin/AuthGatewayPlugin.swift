@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Plugin providing auth validation and claims endpoints.
 public struct AuthGatewayPlugin: Sendable {

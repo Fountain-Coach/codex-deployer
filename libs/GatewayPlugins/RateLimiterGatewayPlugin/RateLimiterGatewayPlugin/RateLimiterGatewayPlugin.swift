@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Plugin implementing a token bucket rate limiter with per-client buckets.
 public struct RateLimiterGatewayPlugin: Sendable {

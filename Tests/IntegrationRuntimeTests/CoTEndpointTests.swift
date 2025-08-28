@@ -1,5 +1,5 @@
 import XCTest
-import FountainCodex
+import FountainRuntime
 @testable import LLMGatewayPlugin
 
 final class CoTEndpointTests: XCTestCase {

@@ -1,7 +1,7 @@
 import Foundation
 import TypesensePersistence
 import AwarenessService
-import FountainCodex
+import FountainRuntime
 
 // Awareness server using the shared NIOHTTPServer for consistent HTTP handling
 do {

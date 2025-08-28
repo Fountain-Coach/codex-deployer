@@ -1,4 +1,4 @@
-import FountainCodex
+import FountainRuntime
 
 /// Command line wrapper executing ``GeneratorCLI``.
 /// Invoke this tool to generate API clients and servers.

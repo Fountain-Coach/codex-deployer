@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Routes Security Sentinel consult requests.
 public struct Router: Sendable {

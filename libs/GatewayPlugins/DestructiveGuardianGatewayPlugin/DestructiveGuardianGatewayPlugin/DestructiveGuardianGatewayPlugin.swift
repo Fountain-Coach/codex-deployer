@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Plugin that evaluates destructive requests via an HTTP endpoint.
 public struct DestructiveGuardianGatewayPlugin: Sendable {

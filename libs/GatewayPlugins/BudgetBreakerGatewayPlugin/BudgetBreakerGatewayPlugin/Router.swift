@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Routes budget breaker requests to handlers.
 public struct Router: Sendable {

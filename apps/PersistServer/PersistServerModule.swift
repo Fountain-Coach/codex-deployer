@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 import TypesensePersistence
 
 public func makePersistKernel(service svc: TypesensePersistenceService) -> HTTPKernel {

@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Protocol describing middleware hooks for the gateway server.
 public protocol GatewayPlugin: Sendable {

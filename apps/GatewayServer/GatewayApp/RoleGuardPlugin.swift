@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 public struct RoleRequirement: Sendable, Codable, Equatable {
     public let roles: [String]?

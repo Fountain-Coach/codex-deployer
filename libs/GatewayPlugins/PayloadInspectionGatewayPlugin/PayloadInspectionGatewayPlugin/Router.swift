@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Routes payload inspection requests.
 public struct Router: Sendable {

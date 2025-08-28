@@ -1,6 +1,6 @@
 import XCTest
 import Foundation
-import FountainCodex
+import FountainRuntime
 @testable import LLMGatewayPlugin
 
 final class SentinelConsultHandlerTests: XCTestCase {

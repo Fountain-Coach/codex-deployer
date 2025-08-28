@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Plugin providing payload inspection capabilities for the gateway.
 public struct PayloadInspectionGatewayPlugin: Sendable {

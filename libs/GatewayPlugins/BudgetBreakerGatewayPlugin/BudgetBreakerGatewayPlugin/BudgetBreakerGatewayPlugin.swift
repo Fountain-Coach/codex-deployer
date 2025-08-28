@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Plugin providing budget checks and health endpoints.
 public struct BudgetBreakerGatewayPlugin: Sendable {

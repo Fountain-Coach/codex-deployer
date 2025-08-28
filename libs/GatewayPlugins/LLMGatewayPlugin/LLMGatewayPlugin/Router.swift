@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Minimal router for LLM gateway endpoints.
 public struct Router: Sendable {

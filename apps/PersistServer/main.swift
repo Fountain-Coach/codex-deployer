@@ -1,6 +1,6 @@
 import Foundation
 import Dispatch
-import FountainCodex
+import FountainRuntime
 import Yams
 import TypesensePersistence
 

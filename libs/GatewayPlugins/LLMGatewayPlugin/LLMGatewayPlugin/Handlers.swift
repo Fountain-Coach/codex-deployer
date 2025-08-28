@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Collection of request handlers used by ``LLMGatewayPlugin``.
 public struct Handlers: Sendable {

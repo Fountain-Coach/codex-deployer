@@ -1,5 +1,5 @@
 import Foundation
-import FountainCodex
+import FountainRuntime
 
 /// Router for rate limiter gateway endpoints.
 public struct Router: Sendable {

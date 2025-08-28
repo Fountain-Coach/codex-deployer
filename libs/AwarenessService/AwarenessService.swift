@@ -1,6 +1,6 @@
 import Foundation
 import TypesensePersistence
-import FountainCodex
+import FountainRuntime
 
 public struct InitIn: Codable { public let corpusId: String }
 public struct InitOut: Codable { public let message: String }
