@@ -2,12 +2,14 @@ import XCTest
 import Foundation
 @testable import DestructiveGuardianGatewayPlugin
 import FountainRuntime
+import gateway_server
 
 final class DestructiveGuardianGatewayPluginTests: XCTestCase {
     private func makePlugin(logURL: URL, tokens: [String] = []) -> DestructiveGuardianGatewayPlugin {
         DestructiveGuardianGatewayPlugin(sensitivePaths: ["/secret"], privilegedTokens: tokens, auditURL: logURL)
     }
 
+    @MainActor
     func testDeniesWithoutApproval() async throws {
         let logURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         let plugin = makePlugin(logURL: logURL, tokens: ["t1"])
@@ -21,8 +23,14 @@ final class DestructiveGuardianGatewayPluginTests: XCTestCase {
         XCTAssertEqual(decision.decision, "deny")
         let log = try String(contentsOf: logURL, encoding: .utf8)
         XCTAssertTrue(log.contains("deny"))
+        let before = await GatewayRequestMetrics.shared.snapshot()
+        await GatewayRequestMetrics.shared.record(method: request.method, status: resp.status)
+        let after = await GatewayRequestMetrics.shared.snapshot()
+        let key = "gateway_responses_status_200_total"
+        XCTAssertEqual((after[key] ?? 0) - (before[key] ?? 0), 1)
     }
 
+    @MainActor
     func testAllowsWithManualApproval() async throws {
         let logURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         let plugin = makePlugin(logURL: logURL)
@@ -36,8 +44,14 @@ final class DestructiveGuardianGatewayPluginTests: XCTestCase {
         XCTAssertEqual(decision.decision, "allow")
         let log = try String(contentsOf: logURL, encoding: .utf8)
         XCTAssertTrue(log.contains("allow"))
+        let before = await GatewayRequestMetrics.shared.snapshot()
+        await GatewayRequestMetrics.shared.record(method: request.method, status: resp.status)
+        let after = await GatewayRequestMetrics.shared.snapshot()
+        let key = "gateway_responses_status_200_total"
+        XCTAssertEqual((after[key] ?? 0) - (before[key] ?? 0), 1)
     }
 
+    @MainActor
     func testAllowsWithServiceToken() async throws {
         let logURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         let plugin = makePlugin(logURL: logURL, tokens: ["abc"])
@@ -51,6 +65,11 @@ final class DestructiveGuardianGatewayPluginTests: XCTestCase {
         XCTAssertEqual(decision.decision, "allow")
         let log = try String(contentsOf: logURL, encoding: .utf8)
         XCTAssertTrue(log.contains("allow"))
+        let before = await GatewayRequestMetrics.shared.snapshot()
+        await GatewayRequestMetrics.shared.record(method: request.method, status: resp.status)
+        let after = await GatewayRequestMetrics.shared.snapshot()
+        let key = "gateway_responses_status_200_total"
+        XCTAssertEqual((after[key] ?? 0) - (before[key] ?? 0), 1)
     }
 }
 
