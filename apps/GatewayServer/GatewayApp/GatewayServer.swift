@@ -31,6 +31,7 @@ public final class GatewayServer {
     private let routesURL: URL?
     private let certificatePath: String?
     private let rateLimiter: RateLimiterGatewayPlugin?
+    private let breaker: CircuitBreaker = CircuitBreaker()
 
     private struct ZoneCreateRequest: Codable { let name: String }
     private struct ZonesResponse: Codable { let zones: [ZoneManager.Zone] }
@@ -247,6 +248,10 @@ public final class GatewayServer {
         }
         if let query, !query.isEmpty { urlString += "?" + query }
         guard let url = URL(string: urlString), url.scheme != nil else { return HTTPResponse(status: 502) }
+        let breakerKey = "\(route.id)::\(url.scheme ?? "")://\(url.host ?? "")"
+        if await !breaker.allow(key: breakerKey) {
+            return HTTPResponse(status: 503, headers: ["Content-Type": "text/plain"], body: Data("service unavailable".utf8))
+        }
         FileHandle.standardError.write(Data("[gateway] proxy -> \(url.absoluteString)\n".utf8))
 
         var upstream = URLRequest(url: url)
@@ -261,6 +266,7 @@ public final class GatewayServer {
 
         do {
             let (data, resp) = try await URLSession.shared.data(for: upstream)
+            await breaker.recordSuccess(key: breakerKey)
             let status = (resp as? HTTPURLResponse)?.statusCode ?? 200
             var headers: [String: String] = [:]
             if let http = resp as? HTTPURLResponse {
@@ -270,6 +276,7 @@ public final class GatewayServer {
             }
             return HTTPResponse(status: status, headers: headers, body: data)
         } catch {
+            await breaker.recordFailure(key: breakerKey)
             return HTTPResponse(status: 502, headers: ["Content-Type": "text/plain"], body: Data("bad gateway".utf8))
         }
     }
@@ -301,6 +308,8 @@ public final class GatewayServer {
         }
         let gw = await GatewayRequestMetrics.shared.snapshot()
         for (k, v) in gw { metrics[k] = v }
+        let cb = await breaker.metrics()
+        for (k, v) in cb { metrics[k] = v }
         if let json = try? JSONEncoder().encode(metrics) {
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
         }

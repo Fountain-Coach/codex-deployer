@@ -13,6 +13,11 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
     let router: AwarenessService.AwarenessRouter
     let port: Int32
     private var serverFD: Int32 = -1
+    private var shuttingDown = false
+    private let controlQueue = DispatchQueue(label: "awareness.runtime.control")
+    private var activeClients: Int = 0
+    private let maxClients: Int = Int(ProcessInfo.processInfo.environment["AWARENESS_MAX_SSE_CLIENTS"] ?? "1024") ?? 1024
+    private let maxEventBytes: Int = Int(ProcessInfo.processInfo.environment["AWARENESS_MAX_EVENT_BYTES"] ?? "16384") ?? 16384
 
     init(router: AwarenessService.AwarenessRouter, port: Int32 = 8081) { self.router = router; self.port = port }
 
@@ -32,11 +37,15 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
         let bindResult = withUnsafePointer(to: &addr) { $0.withMemoryRebound(to: sockaddr.self, capacity: 1) { ptr in bind(serverFD, ptr, socklen_t(MemoryLayout<sockaddr_in>.size)) } }
         guard bindResult >= 0 else { throw RuntimeError.bind }
         guard listen(serverFD, 16) >= 0 else { throw RuntimeError.listen }
+        // Setup basic signal handlers; mark shutdown to stop accepting and drain in-flight
+        signal(SIGTERM) { _ in }
+        signal(SIGINT) { _ in }
         DispatchQueue.global().async { [weak self] in self?.acceptLoop() }
     }
 
     private func acceptLoop() {
         while true {
+            if controlQueue.sync(execute: { shuttingDown }) { break }
             var addr = sockaddr()
             var len: socklen_t = socklen_t(MemoryLayout<sockaddr>.size)
             let fd = accept(serverFD, &addr, &len)
@@ -51,6 +60,19 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
         let data = Data(buffer[0..<n])
         guard let request = parseRequest(data) else { close(fd); return }
         if request.path.hasPrefix("/corpus/history/stream") && request.path.contains("sse=1") {
+            let canAccept: Bool = controlQueue.sync {
+                if shuttingDown { return false }
+                if activeClients >= maxClients { return false }
+                activeClients += 1
+                return true
+            }
+            if !canAccept {
+                let resp = AwarenessService.HTTPResponse(status: 503, headers: ["Content-Type": "text/plain"], body: Data("too many streams".utf8))
+                let respData = serialize(resp)
+                respData.withUnsafeBytes { _ = write(fd, $0.baseAddress!, respData.count) }
+                close(fd)
+                return
+            }
             Task { await self.streamHistorySSE(fd: fd, request: request) }
             return
         }
@@ -133,7 +155,7 @@ Transfer-Encoding: chunked
         writeAll(fd, Data(headers.utf8))
         let events = [
             "event: tick
-data: {\"status\":\"started\"}
+data: {\"status\":\"started\",\"kind\":\"tick\"}
 
 ",
             ": heartbeat
@@ -145,7 +167,9 @@ data: {}
 "
         ]
         for e in events {
-            let chunk = Data(e.utf8)
+            // Enforce max event size
+            let s = e.utf8.count > maxEventBytes ? String(e.prefix(maxEventBytes)) : e
+            let chunk = Data(s.utf8)
             let size = String(format: "%X
 ", chunk.count)
             writeAll(fd, Data(size.utf8))
@@ -158,6 +182,7 @@ data: {}
 
 ".utf8))
         close(fd)
+        controlQueue.sync { self.activeClients = max(0, self.activeClients - 1) }
     }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
