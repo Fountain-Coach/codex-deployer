@@ -17,6 +17,12 @@ final class SSEClient: NSObject, URLSessionDataDelegate {
         norm = norm.replacingOccurrences(of: "[", with: ".")
         var current: Any? = obj
         for part in norm.split(separator: ".").map(String.init) {
+            if part == "*" {
+                if let arr = current as? [Any] { current = arr.compactMap{ $0 } }
+                else if let dict = current as? [String: Any] { current = Array(dict.values) }
+                else { return nil }
+                continue
+            }
             if let dict = current as? [String: Any] { current = dict[part] }
             else if let arr = current as? [Any], let idx = Int(part), idx >= 0, idx < arr.count { current = arr[idx] }
             else { return nil }

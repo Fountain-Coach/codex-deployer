@@ -319,10 +319,20 @@ components:
     StreamCompleteData:
       type: object
       description: Empty payload for stream completion
-    StreamEvent:
-      oneOf:
-        - $ref: '#/components/schemas/StreamDriftData'
-        - $ref: '#/components/schemas/StreamPatternsData'
-        - $ref: '#/components/schemas/StreamCompleteData'
 
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+    StreamStartedData:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [started]
+    StreamEvent:
+      discriminator:
+        propertyName: status
+        mapping:
+          started: '#/components/schemas/StreamStartedData'
+          complete: '#/components/schemas/StreamCompleteData'
+      oneOf:
+        - $ref: '#/components/schemas/StreamStartedData'
+        - $ref: '#/components/schemas/StreamCompleteData'
