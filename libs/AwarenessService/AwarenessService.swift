@@ -93,11 +93,42 @@ public final class AwarenessRouter: @unchecked Sendable {
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         }
         if request.method == "GET" && pathOnly == "/corpus/history" {
-            let data = try JSONSerialization.data(withJSONObject: ["events": []])
+            let qp = Self.queryParams(from: request.path)
+            guard let corpusId = qp["corpus_id"], !corpusId.isEmpty else {
+                return HTTPResponse(status: 422, headers: ["Content-Type": "application/json"], body: Data())
+            }
+            let (bt, baselines) = try await persistence.listBaselines(corpusId: corpusId, limit: 1000, offset: 0)
+            let (rt, reflections) = try await persistence.listReflections(corpusId: corpusId, limit: 1000, offset: 0)
+            let (dt, drifts) = try await persistence.listDrifts(corpusId: corpusId, limit: 1000, offset: 0)
+            let (pt, patterns) = try await persistence.listPatterns(corpusId: corpusId, limit: 1000, offset: 0)
+            var events: [[String: Any]] = []
+            for b in baselines { events.append(["type": "baseline", "id": b.baselineId, "content_len": b.content.count]) }
+            for r in reflections { events.append(["type": "reflection", "id": r.reflectionId, "question": r.question]) }
+            for d in drifts { events.append(["type": "drift", "id": d.driftId, "content_len": d.content.count]) }
+            for p in patterns { events.append(["type": "patterns", "id": p.patternsId, "content_len": p.content.count]) }
+            let obj: [String: Any] = [
+                "total": bt + rt + dt + pt,
+                "events": events
+            ]
+            let data = try JSONSerialization.data(withJSONObject: obj)
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         }
         if request.method == "GET" && pathOnly == "/corpus/semantic-arc" {
-            let data = try JSONSerialization.data(withJSONObject: ["arc": []])
+            let qp = Self.queryParams(from: request.path)
+            guard let corpusId = qp["corpus_id"], !corpusId.isEmpty else {
+                return HTTPResponse(status: 422, headers: ["Content-Type": "application/json"], body: Data())
+            }
+            let (bt, _) = try await persistence.listBaselines(corpusId: corpusId, limit: 1000, offset: 0)
+            let (rt, _) = try await persistence.listReflections(corpusId: corpusId, limit: 1000, offset: 0)
+            let (dt, _) = try await persistence.listDrifts(corpusId: corpusId, limit: 1000, offset: 0)
+            let (pt, _) = try await persistence.listPatterns(corpusId: corpusId, limit: 1000, offset: 0)
+            let arc = [
+                ["phase": "baseline", "weight": bt],
+                ["phase": "reflections", "weight": rt],
+                ["phase": "drift", "weight": dt],
+                ["phase": "patterns", "weight": pt]
+            ]
+            let data = try JSONSerialization.data(withJSONObject: ["arc": arc])
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         }
         if request.method == "GET" && pathOnly == "/corpus/history/stream" {
@@ -105,6 +136,19 @@ public final class AwarenessRouter: @unchecked Sendable {
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         }
         return HTTPResponse(status: 404)
+    }
+}
+
+extension AwarenessRouter {
+    static func queryParams(from path: String) -> [String: String] {
+        guard let qIndex = path.firstIndex(of: "?") else { return [:] }
+        let query = path[path.index(after: qIndex)...]
+        var out: [String: String] = [:]
+        for pair in query.split(separator: "&") {
+            let parts = pair.split(separator: "=", maxSplits: 1).map(String.init)
+            if parts.count == 2 { out[parts[0]] = parts[1] }
+        }
+        return out
     }
 }
 

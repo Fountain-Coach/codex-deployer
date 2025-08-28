@@ -37,7 +37,28 @@ final class AwarenessServiceTests: XCTestCase {
         let sum = try JSONDecoder().decode(HistorySummaryResponse.self, from: sumResp.body)
         XCTAssertTrue(sum.summary.contains("baselines=1"))
     }
+
+    func testAnalyticsHistoryAndSemanticArc() async throws {
+        let svc = TypesensePersistenceService(client: MockTypesenseClient())
+        let router = AwarenessRouter(persistence: svc)
+        _ = try await router.route(.init(method: "POST", path: "/corpus/init", body: try JSONEncoder().encode(InitIn(corpusId: "c9"))))
+        _ = try await router.route(.init(method: "POST", path: "/corpus/baseline", body: try JSONEncoder().encode(BaselineRequest(corpusId: "c9", baselineId: "b1", content: "hello"))))
+        _ = try await router.route(.init(method: "POST", path: "/corpus/reflections", body: try JSONEncoder().encode(ReflectionRequest(corpusId: "c9", reflectionId: "r1", question: "q", content: "a"))))
+        _ = try await router.route(.init(method: "POST", path: "/corpus/drift", body: try JSONEncoder().encode(DriftRequest(corpusId: "c9", driftId: "d1", content: "x"))))
+        _ = try await router.route(.init(method: "POST", path: "/corpus/patterns", body: try JSONEncoder().encode(PatternsRequest(corpusId: "c9", patternsId: "p1", content: "y"))))
+        let (hData, _) = (try await { () async throws -> (Data, Void) in
+            let resp = try await router.route(.init(method: "GET", path: "/corpus/history?corpus_id=c9"))
+            return (resp.body, ())
+        }())
+        let hObj = try JSONSerialization.jsonObject(with: hData) as? [String: Any]
+        XCTAssertTrue((hObj?["total"] as? Int ?? 0) >= 4)
+        let (aData, _) = (try await { () async throws -> (Data, Void) in
+            let resp = try await router.route(.init(method: "GET", path: "/corpus/semantic-arc?corpus_id=c9"))
+            return (resp.body, ())
+        }())
+        let aObj = try JSONSerialization.jsonObject(with: aData) as? [String: Any]
+        XCTAssertNotNil(aObj?["arc"])
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

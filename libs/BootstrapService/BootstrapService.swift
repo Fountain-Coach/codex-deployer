@@ -74,8 +74,24 @@ public final class BootstrapRouter: @unchecked Sendable {
                 _ = try? await persistence.addDrift(.init(corpusId: input.corpusId, driftId: "\(input.baselineId)-drift", content: "auto-generated drift"))
                 _ = try? await persistence.addPatterns(.init(corpusId: input.corpusId, patternsId: "\(input.baselineId)-patterns", content: "auto-generated patterns"))
             }
-            let data = try JSONSerialization.data(withJSONObject: [:])
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            // Basic SSE emulation: if path contains sse=1, return an SSE event stream payload
+            if request.path.contains("sse=1") {
+                let sse = """
+                event: drift
+                data: {"status":"started"}
+
+                event: patterns
+                data: {"status":"started"}
+
+                event: complete
+                data: {}
+                
+                """
+                return HTTPResponse(status: 200, headers: ["Content-Type": "text/event-stream", "Cache-Control": "no-cache"], body: Data(sse.utf8))
+            } else {
+                let data = try JSONSerialization.data(withJSONObject: [:])
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            }
         default:
             return HTTPResponse(status: 404)
         }

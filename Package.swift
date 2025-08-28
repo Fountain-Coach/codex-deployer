@@ -236,6 +236,11 @@ var targets: [Target] = [
         name: "E2ETests",
         dependencies: ["AwarenessService", "BootstrapService", "TypesensePersistence"],
         path: "Tests/E2ETests"
+    ),
+    .testTarget(
+        name: "OpenAPIConformanceTests",
+        dependencies: ["Yams"],
+        path: "Tests/OpenAPIConformanceTests"
     )
 ]
 

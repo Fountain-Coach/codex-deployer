@@ -79,6 +79,30 @@ public actor TypesensePersistenceService {
         return (total, slice)
      }
 
+    // MARK: - Drifts
+    public func listDrifts(corpusId: String, limit: Int = 50, offset: Int = 0) async throws -> (total: Int, drifts: [Drift]) {
+        await ensureCollections()
+        let data = try await client.exportAll(collectionName: "drifts")
+        let items: [[String: Any]] = Self.parseJSONL(data)
+        let filtered = items.filter { ($0["corpusId"] as? String) == corpusId }
+        let decoded: [Drift] = try filtered.map { try Self.decode($0) }
+        let total = decoded.count
+        let slice = Array(decoded.dropFirst(min(offset, total)).prefix(limit))
+        return (total, slice)
+    }
+
+    // MARK: - Patterns
+    public func listPatterns(corpusId: String, limit: Int = 50, offset: Int = 0) async throws -> (total: Int, patterns: [Patterns]) {
+        await ensureCollections()
+        let data = try await client.exportAll(collectionName: "patterns")
+        let items: [[String: Any]] = Self.parseJSONL(data)
+        let filtered = items.filter { ($0["corpusId"] as? String) == corpusId }
+        let decoded: [Patterns] = try filtered.map { try Self.decode($0) }
+        let total = decoded.count
+        let slice = Array(decoded.dropFirst(min(offset, total)).prefix(limit))
+        return (total, slice)
+    }
+
     // MARK: - Drift
     public func addDrift(_ drift: Drift) async throws -> SuccessResponse {
         await ensureCollections()
