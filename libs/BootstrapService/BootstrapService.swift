@@ -86,6 +86,8 @@ public final class BootstrapRouter: @unchecked Sendable {
                 event: complete
                 data: {}
                 
+                : heartbeat
+                
                 """
                 return HTTPResponse(status: 200, headers: ["Content-Type": "text/event-stream", "Cache-Control": "no-cache"], body: Data(sse.utf8))
             } else {
