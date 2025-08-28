@@ -92,4 +92,30 @@ final class RuntimeSchemaValidationTests: XCTestCase {
         XCTAssertTrue(OpenAPISchemaValidator.validate(object: obj ?? [:], against: roleDefaults))
         try await server.stop()
     }
+
+    @MainActor
+    func testBootstrapInitOutMatchesSchema() async throws {
+        let svc = TypesensePersistenceService(client: MockTypesenseClient())
+        await svc.ensureCollections()
+        let kernel = makeBootstrapKernel(service: svc)
+        let server = NIOHTTPServer(kernel: kernel)
+        let port = try await server.start(port: 0)
+        var req = URLRequest(url: URL(string: "http://127.0.0.1:\(port)/bootstrap/corpus/init")!)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = try JSONEncoder().encode(InitIn(corpusId: "cinit"))
+        let (data, resp) = try await URLSession.shared.data(for: req)
+        XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 200)
+        let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+
+        let url = URL(fileURLWithPath: "openapi/v1/bootstrap.yml")
+        let text = try String(contentsOf: url)
+        let yaml = try Yams.load(yaml: text) as? [String: Any]
+        let schemas = (yaml?["components"] as? [String: Any])?["schemas"] as? [String: Any]
+        guard let initOut = schemas?["InitOut"] as? [String: Any] else {
+            return XCTFail("InitOut missing in spec")
+        }
+        XCTAssertTrue(OpenAPISchemaValidator.validate(object: obj ?? [:], against: initOut))
+        try await server.stop()
+    }
 }
