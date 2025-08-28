@@ -98,6 +98,12 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
             // small delay to simulate streaming
             usleep(50_000)
         }
+        // One heartbeat/comment to keep-alive
+        let hb = Data(": heartbeat\n\n".utf8)
+        let hbSize = String(format: "%X\r\n", hb.count)
+        writeAll(fd, Data(hbSize.utf8))
+        writeAll(fd, hb)
+        writeAll(fd, Data("\r\n".utf8))
         // End of chunks
         writeAll(fd, Data("0\r\n\r\n".utf8))
         close(fd)

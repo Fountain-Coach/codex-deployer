@@ -127,13 +127,14 @@ public final class AwarenessRouter: @unchecked Sendable {
             let (rt, _) = try await persistence.listReflections(corpusId: corpusId, limit: 1000, offset: 0)
             let (dt, _) = try await persistence.listDrifts(corpusId: corpusId, limit: 1000, offset: 0)
             let (pt, _) = try await persistence.listPatterns(corpusId: corpusId, limit: 1000, offset: 0)
+            let total = max(bt + rt + dt + pt, 1)
             let arc = [
-                ["phase": "baseline", "weight": bt],
-                ["phase": "reflections", "weight": rt],
-                ["phase": "drift", "weight": dt],
-                ["phase": "patterns", "weight": pt]
+                ["phase": "baseline", "weight": bt, "pct": Double(bt) / Double(total)],
+                ["phase": "reflections", "weight": rt, "pct": Double(rt) / Double(total)],
+                ["phase": "drift", "weight": dt, "pct": Double(dt) / Double(total)],
+                ["phase": "patterns", "weight": pt, "pct": Double(pt) / Double(total)]
             ]
-            let data = try JSONSerialization.data(withJSONObject: ["arc": arc])
+            let data = try JSONSerialization.data(withJSONObject: ["arc": arc, "total": total])
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         }
         if request.method == "GET" && pathOnly == "/corpus/history/stream" {

@@ -29,7 +29,26 @@ final class BootstrapServiceTests: XCTestCase {
         let resp = try await router.route(.init(method: "POST", path: "/bootstrap/baseline", body: body))
         XCTAssertEqual(resp.status, 200)
     }
+
+    func testSSEBaselineResponseShape() async throws {
+        let svc = TypesensePersistenceService(client: MockTypesenseClient())
+        let kernel = makeBootstrapKernel(service: svc)
+        let server = NIOHTTPServer(kernel: kernel)
+        let port = try await server.start(port: 0)
+        var req = URLRequest(url: URL(string: "http://127.0.0.1:\(port)/bootstrap/baseline?sse=1")!)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = try JSONEncoder().encode(BaselineIn(corpusId: "c5", baselineId: "b9", content: "x"))
+        let (data, resp) = try await URLSession.shared.data(for: req)
+        XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 200)
+        let ctype = (resp as? HTTPURLResponse)?.value(forHTTPHeaderField: "Content-Type") ?? ""
+        XCTAssertTrue(ctype.contains("text/event-stream"))
+        let text = String(data: data, encoding: .utf8) ?? ""
+        XCTAssertTrue(text.contains("event: drift"))
+        XCTAssertTrue(text.contains("event: patterns"))
+        XCTAssertTrue(text.contains("event: complete"))
+        try await server.stop()
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

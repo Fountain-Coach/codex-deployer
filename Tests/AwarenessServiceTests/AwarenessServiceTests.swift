@@ -58,6 +58,10 @@ final class AwarenessServiceTests: XCTestCase {
         }())
         let aObj = try JSONSerialization.jsonObject(with: aData) as? [String: Any]
         XCTAssertNotNil(aObj?["arc"])
+        XCTAssertTrue((aObj?["total"] as? Int ?? 0) >= 4)
+        if let arc = aObj?["arc"] as? [[String: Any]], let first = arc.first {
+            XCTAssertNotNil(first["phase"]) ; XCTAssertNotNil(first["weight"]) ; XCTAssertNotNil(first["pct"])
+        }
     }
 }
 
