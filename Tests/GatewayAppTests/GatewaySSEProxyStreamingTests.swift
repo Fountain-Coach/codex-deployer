@@ -8,11 +8,17 @@ import FoundationNetworking
 final class GatewaySSEProxyStreamingTests: XCTestCase, URLSessionDataDelegate {
     private var received = Data()
     private var expectation: XCTestExpectation?
+    private var sawDrift = false
 
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         received.append(data)
-        if let text = String(data: received, encoding: .utf8), text.contains("event: drift") {
-            expectation?.fulfill()
+        if let text = String(data: received, encoding: .utf8) {
+            if !sawDrift, text.contains("event: drift") {
+                sawDrift = true
+                expectation?.fulfill()
+            } else if sawDrift, text.contains("heartbeat") {
+                expectation?.fulfill()
+            }
         }
     }
 
@@ -57,6 +63,9 @@ final class GatewaySSEProxyStreamingTests: XCTestCase, URLSessionDataDelegate {
         let task = session.dataTask(with: req)
         task.resume()
         wait(for: [expectation!], timeout: 2.5)
+        // Now wait for heartbeat
+        expectation = expectation(description: "received heartbeat via gateway")
+        wait(for: [expectation!], timeout: 2.5)
 
         // Cleanup
         task.cancel(); session.invalidateAndCancel()
@@ -88,4 +97,3 @@ final class GatewaySSEProxyStreamingTests: XCTestCase, URLSessionDataDelegate {
         return result == 0
     }
 }
-
