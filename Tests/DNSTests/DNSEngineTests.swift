@@ -98,6 +98,38 @@ final class DNSEngineTests: XCTestCase {
         XCTAssertTrue(text.contains("dns_hits_type_AAAA_total 1"))
         XCTAssertTrue(text.contains("dns_hits_type_CNAME_total 1"))
     }
+
+    func testNXDomainRecordsMiss() async throws {
+        await DNSMetrics.shared.reset()
+        var query = makeQuery(name: "missing.com", type: 1)
+        let engine = DNSEngine(records: [])
+        XCTAssertNil(engine.handleQuery(buffer: &query))
+        await Task.yield()
+        let text = await DNSMetrics.shared.exposition()
+        XCTAssertTrue(text.contains("dns_misses_total 1"))
+        XCTAssertTrue(text.contains("dns_queries_type_A_total 1"))
+    }
+
+    func testMalformedPacketRecordedAsInvalid() async throws {
+        await DNSMetrics.shared.reset()
+        var buf = ByteBufferAllocator().buffer(capacity: 2)
+        buf.writeInteger(UInt16(0x1234), as: UInt16.self)
+        let engine = DNSEngine(records: [])
+        XCTAssertNil(engine.handleQuery(buffer: &buf))
+        await Task.yield()
+        let text = await DNSMetrics.shared.exposition()
+        XCTAssertTrue(text.contains("dns_queries_type_invalid_total 1"))
+        XCTAssertTrue(text.contains("dns_misses_total 1"))
+    }
+
+    func testHandlerDropsNXDomainQuery() throws {
+        let engine = DNSEngine(records: [])
+        let channel = EmbeddedChannel(handler: DNSHandler(engine: engine))
+        let query = makeQuery(name: "unknown.com", type: 1)
+        try channel.writeInbound(query)
+        let response: ByteBuffer? = try channel.readOutbound()
+        XCTAssertNil(response)
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
