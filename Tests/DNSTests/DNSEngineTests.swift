@@ -181,6 +181,48 @@ final class DNSEngineTests: XCTestCase {
         let response: ByteBuffer? = try channel.readOutbound()
         XCTAssertNil(response)
     }
+
+    func testRecordRateLimitMetrics() async throws {
+        await DNSMetrics.shared.reset()
+        await DNSMetrics.shared.recordRateLimit(allowed: true)
+        await DNSMetrics.shared.recordRateLimit(allowed: false)
+        let text = await DNSMetrics.shared.exposition()
+        XCTAssertTrue(text.contains("gateway_rate_limit_allowed_total 1"))
+        XCTAssertTrue(text.contains("gateway_rate_limit_throttled_total 1"))
+    }
+
+    func testWaitForQueriesWithTimeout() async throws {
+        await DNSMetrics.shared.reset()
+        let producer = Task {
+            for _ in 0..<5 {
+                await DNSMetrics.shared.record(query: "example.com", type: "A", hit: true)
+                try? await Task.sleep(nanoseconds: 10_000_000)
+            }
+        }
+        let reached = await DNSMetrics.shared.wait(forQueries: 5, timeout: 1.0)
+        XCTAssertTrue(reached)
+        _ = await producer.value
+
+        await DNSMetrics.shared.reset()
+        let timedOut = await DNSMetrics.shared.wait(forQueries: 1, timeout: 0.1)
+        XCTAssertFalse(timedOut)
+    }
+
+    func testResetZeroesMetrics() async throws {
+        await DNSMetrics.shared.reset()
+        await DNSMetrics.shared.record(query: "example.com", type: "A", hit: true)
+        await DNSMetrics.shared.recordRateLimit(allowed: false)
+        var text = await DNSMetrics.shared.exposition()
+        XCTAssertTrue(text.contains("dns_queries_total 1"))
+        XCTAssertTrue(text.contains("gateway_rate_limit_throttled_total 1"))
+        await DNSMetrics.shared.reset()
+        text = await DNSMetrics.shared.exposition()
+        XCTAssertTrue(text.contains("dns_queries_total 0"))
+        XCTAssertTrue(text.contains("dns_hits_total 0"))
+        XCTAssertTrue(text.contains("dns_misses_total 0"))
+        XCTAssertTrue(text.contains("gateway_rate_limit_allowed_total 0"))
+        XCTAssertTrue(text.contains("gateway_rate_limit_throttled_total 0"))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
