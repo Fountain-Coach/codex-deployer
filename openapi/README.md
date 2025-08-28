@@ -14,6 +14,7 @@ Versioned service definitions live here. Each YAML file describes a FountainAI s
 | Persistence Service | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/persist.yml](v1/persist.yml) |
 | Planner Service | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/planner.yml](v1/planner.yml) |
 | Planner Service (legacy alias) | 1.0.0 | Contexter alias Benedikt Eickhoff | [v0/planner.yml](v0/planner.yml) |
+| Rate Limiter Gateway Plugin | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/rate-limiter-gateway.yml](v1/rate-limiter-gateway.yml) |
 | Role Health Check Gateway Plugin | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/role-health-check-gateway.yml](v1/role-health-check-gateway.yml) |
 | Semantic Browser & Dissector API | 0.2.0 | Contexter alias Benedikt Eickhoff | [v1/semantic-browser.yml](v1/semantic-browser.yml) |
 | Tools Factory Service | 1.0.0 | Contexter alias Benedikt Eickhoff | [v1/tools-factory.yml](v1/tools-factory.yml) |
