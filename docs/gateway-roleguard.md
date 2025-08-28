@@ -55,3 +55,17 @@ rules:
   "/awareness/experimental":
     deny: true           # deny this subtree regardless of token
 ```
+
+
+### Method-level deny
+
+To deny specific methods on a path while allowing others, use `methods` with `deny: true`:
+
+```
+rules:
+  "/awareness":
+    deny: true
+    methods: ["POST"]      # deny POSTs to /awareness and subpaths
+```
+
+GETs to `/awareness` still pass; POSTs return 403 regardless of token.

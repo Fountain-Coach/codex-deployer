@@ -1,7 +1,7 @@
 import Foundation
 
 struct OpenAPISchemaValidator {
-    enum SchemaType: String { case string, integer, boolean, object, array }
+    enum SchemaType: String { case string, integer, number, boolean, object, array }
 
     static func validate(object: Any, against schema: [String: Any]) -> Bool {
         guard let typeStr = schema["type"] as? String, let type = SchemaType(rawValue: typeStr) else { return true }
@@ -10,6 +10,8 @@ struct OpenAPISchemaValidator {
             return object is String
         case .integer:
             return object is Int || object is Int32 || object is Int64
+        case .number:
+            return object is Double || object is Float || object is Int || object is Int32 || object is Int64
         case .boolean:
             return object is Bool
         case .object:
@@ -32,4 +34,3 @@ struct OpenAPISchemaValidator {
         }
     }
 }
-

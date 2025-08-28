@@ -44,6 +44,11 @@ final class ProxySchemaValidationHistoryTests: XCTestCase {
             return XCTFail("HistoryEventsResponse missing in spec")
         }
         XCTAssertTrue(OpenAPISchemaValidator.validate(object: obj ?? [:], against: hs))
+        // Validate each event item too
+        if let events = obj?["events"] as? [[String: Any]] {
+            let he = (schemas?["HistoryEvent"] as? [String: Any]) ?? [:]
+            for item in events { XCTAssertTrue(OpenAPISchemaValidator.validate(object: item, against: he)) }
+        }
 
         try await server.stop(); try await upstream.stop()
     }

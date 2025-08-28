@@ -12,7 +12,8 @@ var products: [Product] = [
     .executable(name: "gateway-server", targets: ["gateway-server"]),
     .executable(name: "publishing-frontend", targets: ["publishing-frontend"]),
     .executable(name: "flexctl", targets: ["flexctl"]),
-    .executable(name: "tools-factory-server", targets: ["tools-factory-server"])
+    .executable(name: "tools-factory-server", targets: ["tools-factory-server"]),
+    .executable(name: "sse-client", targets: ["sse-client"])
 ]
 
 var targets: [Target] = [
@@ -45,7 +46,12 @@ var targets: [Target] = [
         path: "apps/SemanticBrowserServer",
         exclude: ["README.md"]
     ),
-    .testTarget(
+    .executableTarget(
+        name: "sse-client",
+        dependencies: [],
+        path: "apps/SSEClient"
+    ),
+        .testTarget(
         name: "SemanticBrowserTests",
         dependencies: [
             .product(name: "SemanticBrowser", package: "semantic-browser"),
