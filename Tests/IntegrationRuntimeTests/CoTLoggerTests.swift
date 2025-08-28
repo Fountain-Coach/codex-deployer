@@ -1,6 +1,6 @@
 import XCTest
 @testable import gateway_server
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class CoTLoggerTests: XCTestCase {
     /// Ensures reasoning steps are logged when include_cot is true.

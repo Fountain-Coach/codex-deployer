@@ -1,6 +1,6 @@
 import XCTest
 @testable import gateway_server
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class LoggingPluginTests: XCTestCase {
     /// Verifies requests and responses pass through the ``LoggingPlugin``.

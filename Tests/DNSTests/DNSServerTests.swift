@@ -2,7 +2,7 @@ import XCTest
 import Foundation
 import NIOCore
 import NIOPosix
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class DNSServerTests: XCTestCase {
     static func makeQuery(name: String) -> ByteBuffer {

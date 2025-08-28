@@ -1,5 +1,5 @@
 import XCTest
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class OpenAPIParameterTests: XCTestCase {
     /// Ensures hyphens are converted to underscores for Swift identifiers.

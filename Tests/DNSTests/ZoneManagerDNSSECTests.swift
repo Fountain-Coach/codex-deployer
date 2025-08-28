@@ -1,6 +1,6 @@
 import XCTest
 import Crypto
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class ZoneManagerDNSSECTests: XCTestCase {
     func temporaryFile() -> URL {

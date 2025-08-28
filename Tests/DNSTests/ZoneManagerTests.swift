@@ -1,5 +1,5 @@
 import XCTest
-@testable import FountainCodex
+@testable import FountainRuntime
 import Yams
 import Foundation
 

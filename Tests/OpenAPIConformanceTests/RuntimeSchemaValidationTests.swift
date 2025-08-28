@@ -7,7 +7,7 @@ import Yams
 @testable import AwarenessService
 @testable import BootstrapService
 @testable import TypesensePersistence
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class RuntimeSchemaValidationTests: XCTestCase {
     @MainActor

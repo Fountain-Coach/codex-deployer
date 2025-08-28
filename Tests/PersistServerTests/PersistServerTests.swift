@@ -3,7 +3,7 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
-@testable import FountainCodex
+@testable import FountainRuntime
 @testable import persist_server
 @testable import TypesensePersistence
 

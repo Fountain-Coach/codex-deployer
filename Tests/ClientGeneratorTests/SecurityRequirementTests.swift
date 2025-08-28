@@ -1,5 +1,5 @@
 import XCTest
-@testable import FountainCodex
+@testable import FountainRuntime
 
 /// Tests encoding and decoding of ``OpenAPISpec.SecurityRequirement``.
 final class SecurityRequirementTests: XCTestCase {

@@ -1,5 +1,5 @@
 import XCTest
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class HTTPResponseDefaultsTests: XCTestCase {
     /// Verifies default initializer values for ``HTTPResponse``.
