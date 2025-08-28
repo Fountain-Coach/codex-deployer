@@ -141,7 +141,7 @@ public final class AwarenessRouter: @unchecked Sendable {
             if request.path.contains("sse=1") {
                 let sse = """
                 event: tick
-                data: {"status":"started"}
+                data: {"status":"started","kind":"tick"}
 
                 : heartbeat
 

@@ -78,10 +78,10 @@ public final class BootstrapRouter: @unchecked Sendable {
             if request.path.contains("sse=1") {
                 let sse = """
                 event: drift
-                data: {"status":"started"}
+                data: {"status":"started","kind":"drift"}
 
                 event: patterns
-                data: {"status":"started"}
+                data: {"status":"started","kind":"patterns"}
 
                 event: complete
                 data: {}
@@ -117,8 +117,8 @@ public extension BootstrapRouter {
             _ = try? await persistence.addPatterns(.init(corpusId: input.corpusId, patternsId: "\(input.baselineId)-patterns", content: "auto-generated patterns"))
         }
         return [
-            "event: drift\ndata: {\"status\":\"started\"}\n\n",
-            "event: patterns\ndata: {\"status\":\"started\"}\n\n",
+            "event: drift\ndata: {\"status\":\"started\",\"kind\":\"drift\"}\n\n",
+            "event: patterns\ndata: {\"status\":\"started\",\"kind\":\"patterns\"}\n\n",
             "event: complete\ndata: {}\n\n"
         ]
     }

@@ -40,7 +40,7 @@ final class GatewayAwarenessSSEProxyStreamingTests: XCTestCase, URLSessionDataDe
                         let jsonStr = String(line.dropFirst(5)).trimmingCharacters(in: .whitespaces)
                         if let data = jsonStr.data(using: .utf8),
                            let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                           obj["status"] != nil {
+                           obj["status"] != nil && (obj["kind"] as? String) == "tick" {
                             sawTick = true
                             expectation?.fulfill()
                         }

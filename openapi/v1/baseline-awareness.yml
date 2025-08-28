@@ -447,3 +447,21 @@ components:
       properties:
         status:
           type: string
+
+    AwarenessTickData:
+      type: object
+      required: [status, kind]
+      properties:
+        status:
+          type: string
+          enum: [started]
+        kind:
+          type: string
+          const: tick
+    AwarenessCompleteData:
+      type: object
+    AwarenessStreamEvent:
+      discriminator:
+        propertyName: kind
+        mapping:
+          tick: 

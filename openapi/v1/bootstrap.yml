@@ -305,16 +305,22 @@ components:
 
     StreamDriftData:
       type: object
-      required: [status]
+      required: [status, kind]
       properties:
         status:
           type: string
+        kind:
+          type: string
+          const: drift
     StreamPatternsData:
       type: object
-      required: [status]
+      required: [status, kind]
       properties:
         status:
           type: string
+        kind:
+          type: string
+          const: patterns
 
     StreamCompleteData:
       type: object
@@ -336,3 +342,9 @@ components:
       oneOf:
         - $ref: '#/components/schemas/StreamStartedData'
         - $ref: '#/components/schemas/StreamCompleteData'
+
+    StreamPayload:
+      discriminator:
+        propertyName: kind
+        mapping:
+          drift: 

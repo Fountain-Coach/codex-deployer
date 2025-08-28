@@ -77,6 +77,7 @@ final class GatewayBootstrapSSESchemaTests: XCTestCase, URLSessionDataDelegate {
         let schemas = (yaml?["components"] as? [String: Any])?["schemas"] as? [String: Any]
         let driftSchema = (schemas?["StreamDriftData"] as? [String: Any]) ?? [:]
         let patternsSchema = (schemas?["StreamPatternsData"] as? [String: Any]) ?? [:]
+        let payloadUnion = (schemas?["StreamPayload"] as? [String: Any]) ?? [:]
         let unionSchema = (schemas?["StreamEvent"] as? [String: Any]) ?? [:]
         let completeSchema = (schemas?["StreamCompleteData"] as? [String: Any]) ?? [:]
         if let s = String(data: received, encoding: .utf8) {
@@ -88,8 +89,9 @@ final class GatewayBootstrapSSESchemaTests: XCTestCase, URLSessionDataDelegate {
                     let payload = String(line.dropFirst(5)).trimmingCharacters(in: .whitespaces)
                     if let d = payload.data(using: .utf8), let obj = try? JSONSerialization.jsonObject(with: d) {
                         XCTAssertTrue(LocalSchemaValidator.validate(obj, unionSchema))
-                        if lastEvent == "drift" { XCTAssertTrue(LocalSchemaValidator.validate(obj, driftSchema)) }
-                        if lastEvent == "patterns" { XCTAssertTrue(LocalSchemaValidator.validate(obj, patternsSchema)) }
+                        if lastEvent == "drift" || lastEvent == "patterns" { XCTAssertTrue(LocalSchemaValidator.validate(obj, payloadUnion)) }
+                        if lastEvent == "drift" { XCTAssertTrue(LocalSchemaValidator.validate(obj, driftSchema)) ; XCTAssertEqual((obj as? [String:Any])?["kind"] as? String, "drift") }
+                        if lastEvent == "patterns" { XCTAssertTrue(LocalSchemaValidator.validate(obj, patternsSchema)) ; XCTAssertEqual((obj as? [String:Any])?["kind"] as? String, "patterns") }
                         if lastEvent == "complete" { XCTAssertTrue(LocalSchemaValidator.validate(obj, completeSchema)) }
                     }
                 }
