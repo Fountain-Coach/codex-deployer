@@ -7,6 +7,7 @@ on:
 
 env:
   CONTAINER_IMAGE: ghcr.io/${{ github.repository }}:latest
+  MIN_COVERAGE: 90
 
 jobs:
   lint:
@@ -42,7 +43,7 @@ jobs:
       - name: Build
         run: swift build
       - name: Coverage
-        run: Scripts/coverage.sh 50
+        run: Scripts/coverage.sh ${{ env.MIN_COVERAGE }}
       - name: Test SPS
         working-directory: sps
         run: swift test --enable-code-coverage
@@ -63,6 +64,7 @@ jobs:
           path: |
             coverage.lcov
             coverage-badge.svg
+            coverage-targets.txt
       - name: Install supply chain tools
         if: runner.os == 'Linux'
         run: |
