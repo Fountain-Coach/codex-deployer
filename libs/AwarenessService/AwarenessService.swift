@@ -138,8 +138,22 @@ public final class AwarenessRouter: @unchecked Sendable {
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         }
         if request.method == "GET" && pathOnly == "/corpus/history/stream" {
-            let data = try JSONSerialization.data(withJSONObject: [:])
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            if request.path.contains("sse=1") {
+                let sse = """
+                event: tick
+                data: {"status":"started"}
+
+                : heartbeat
+
+                event: complete
+                data: {}
+                
+                """
+                return HTTPResponse(status: 200, headers: ["Content-Type": "text/event-stream", "Cache-Control": "no-cache"], body: Data(sse.utf8))
+            } else {
+                let data = try JSONSerialization.data(withJSONObject: [:])
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            }
         }
         return HTTPResponse(status: 404)
     }

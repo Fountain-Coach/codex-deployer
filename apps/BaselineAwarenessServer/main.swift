@@ -50,6 +50,10 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
         guard n > 0 else { close(fd); return }
         let data = Data(buffer[0..<n])
         guard let request = parseRequest(data) else { close(fd); return }
+        if request.path.hasPrefix("/corpus/history/stream") && request.path.contains("sse=1") {
+            Task { await self.streamHistorySSE(fd: fd, request: request) }
+            return
+        }
         Task {
             let resp = try await router.route(request)
             let respData = serialize(resp)
@@ -105,5 +109,55 @@ do {
 } catch {
     print("Failed to start baseline-awareness: \(error)")
 }
+
+
+    private func writeAll(_ fd: Int32, _ data: Data) {
+        data.withUnsafeBytes { ptr in
+            var written = 0
+            while written < data.count {
+                let n = write(fd, ptr.baseAddress! + written, data.count - written)
+                if n <= 0 { break }
+                written += n
+            }
+        }
+    }
+
+    private func streamHistorySSE(fd: Int32, request: AwarenessService.HTTPRequest) async {
+        let headers = "HTTP/1.1 200 OK
+Content-Type: text/event-stream
+Cache-Control: no-cache
+Connection: keep-alive
+Transfer-Encoding: chunked
+
+"
+        writeAll(fd, Data(headers.utf8))
+        let events = [
+            "event: tick
+data: {\"status\":\"started\"}
+
+",
+            ": heartbeat
+
+",
+            "event: complete
+data: {}
+
+"
+        ]
+        for e in events {
+            let chunk = Data(e.utf8)
+            let size = String(format: "%X
+", chunk.count)
+            writeAll(fd, Data(size.utf8))
+            writeAll(fd, chunk)
+            writeAll(fd, Data("
+".utf8))
+            usleep(50_000)
+        }
+        writeAll(fd, Data("0
+
+".utf8))
+        close(fd)
+    }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

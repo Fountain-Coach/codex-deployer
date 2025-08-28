@@ -366,6 +366,22 @@ components:
           type: string
           title: Message
 
+    HistoryEvent:
+      type: object
+      title: HistoryEvent
+      required: [type]
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        content_len:
+          type: integer
+        question:
+          type: string
+        ts:
+          type: number
+          description: Epoch seconds
     HistoryEventsResponse:
       type: object
       title: HistoryEventsResponse
@@ -380,18 +396,4 @@ components:
           type: array
           title: Events
           items:
-            type: object
-            required: [type]
-            properties:
-              type:
-                type: string
-              id:
-                type: string
-              content_len:
-                type: integer
-              question:
-                type: string
-              ts:
-                type: number
-
-© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+            $ref: '#/components/schemas/HistoryEvent'
