@@ -256,6 +256,11 @@ let fullTargets: [Target] = [
         path: "Tests/E2ETests"
     ),
     .testTarget(
+        name: "ResourceLoaderTests",
+        dependencies: ["ResourceLoader"],
+        path: "Tests/ResourceLoaderTests"
+    ),
+    .testTarget(
         name: "OpenAPIConformanceTests",
         dependencies: ["Yams", "AwarenessService", "BootstrapService", "TypesensePersistence", "FountainRuntime"],
         path: "Tests/OpenAPIConformanceTests"
@@ -343,11 +348,17 @@ let leanTargets: [Target] = [
         dependencies: ["FountainRuntime", "Yams"],
         path: "libs/PublishingFrontend"
     ),
+    .target(name: "ResourceLoader", path: "libs/ResourceLoader"),
     .testTarget(
         name: "IntegrationRuntimeTests",
         dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin", .product(name: "NIO", package: "swift-nio")],
         path: "Tests/IntegrationRuntimeTests",
         resources: [.process("Fixtures")]
+    ),
+    .testTarget(
+        name: "ResourceLoaderTests",
+        dependencies: ["ResourceLoader"],
+        path: "Tests/ResourceLoaderTests"
     )
 ]
 
