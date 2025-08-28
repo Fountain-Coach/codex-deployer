@@ -74,8 +74,8 @@ GETs to `/awareness` still pass; POSTs return 403 regardless of token.
 
 The gateway exposes simple management endpoints to inspect and reload rules at runtime:
 
-- `GET /roleguard` — returns the current rules as JSON.
-- `POST /roleguard/reload` — reloads from `ROLE_GUARD_PATH` (or `Configuration/roleguard.yml`).
+- `GET /roleguard` — returns the current rules as JSON. Requires an admin token.
+- `POST /roleguard/reload` — reloads from `ROLE_GUARD_PATH` (or `Configuration/roleguard.yml`). Requires an admin token.
   - 204 when reload applied, 304 when no reload performed (e.g., file missing or unchanged).
 
-These endpoints are intended for operators and should be protected (e.g., via network policy, admin auth, or disabled in production if not needed).
+Authorization: both endpoints require `Authorization: Bearer <JWT>` where the token has role `admin` (or includes an `admin` scope). They are intended for operators and should also be protected via network policy.

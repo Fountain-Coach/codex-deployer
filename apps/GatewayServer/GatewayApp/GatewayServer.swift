@@ -28,6 +28,7 @@ public final class GatewayServer {
     private let plugins: [GatewayPlugin]
     private let zoneManager: ZoneManager?
     private let roleGuardStore: RoleGuardStore?
+    private let adminValidator: TokenValidator
     private var routes: [String: RouteInfo]
     private let routesURL: URL?
     private let certificatePath: String?
@@ -134,9 +135,9 @@ public final class GatewayServer {
             case ("GET", ["metrics"]):
                 response = await self.gatewayMetrics()
             case ("GET", ["roleguard"]):
-                response = await self.listRoleGuardRules()
+                response = await self.listRoleGuardRules(request)
             case ("POST", ["roleguard", "reload"]):
-                response = await self.reloadRoleGuardRules()
+                response = await self.reloadRoleGuardRules(request)
             case ("POST", ["auth", "token"]):
                 response = await self.issueAuthToken(request)
             case ("GET", ["certificates"]):
@@ -208,6 +209,12 @@ public final class GatewayServer {
                 FileHandle.standardError.write(Data((line + "\n").utf8))
             }
             return response
+        }
+        // Admin validator uses JWKS if provided, otherwise local HMAC
+        if let jwksURL = ProcessInfo.processInfo.environment["GATEWAY_JWKS_URL"], let provider = JWKSKeyProvider(jwksURL: jwksURL) {
+            self.adminValidator = HMACKeyValidator(keyProvider: provider)
+        } else {
+            self.adminValidator = HMACKeyValidator()
         }
         self.server = NIOHTTPServer(kernel: kernel, group: group)
         // Kick off RoleGuard config polling if possible
@@ -336,8 +343,10 @@ public final class GatewayServer {
         return HTTPResponse(status: 500)
     }
 
-    private func listRoleGuardRules() async -> HTTPResponse {
+    private func listRoleGuardRules(_ request: HTTPRequest) async -> HTTPResponse {
         guard let store = roleGuardStore else { return HTTPResponse(status: 404) }
+        // Require admin token
+        if let err = await requireAdminAuthorization(request) { return err }
         let rules = await store.rules
         if let data = try? JSONEncoder().encode(rules) {
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
@@ -345,14 +354,36 @@ public final class GatewayServer {
         return HTTPResponse(status: 500)
     }
 
-    private func reloadRoleGuardRules() async -> HTTPResponse {
+    private func reloadRoleGuardRules(_ request: HTTPRequest) async -> HTTPResponse {
         guard let store = roleGuardStore else { return HTTPResponse(status: 404) }
+        // Require admin token
+        if let err = await requireAdminAuthorization(request) { return err }
         let ok = await store.reload()
         if ok {
             let count = (await store.rules).count
             Task { await RoleGuardMetrics.shared.recordReload(ruleCount: count) }
         }
         return HTTPResponse(status: ok ? 204 : 304)
+    }
+
+    /// Verifies that the request carries an admin-capable token.
+    /// Returns a ready error response when unauthorized/forbidden, or nil if authorized.
+    private func requireAdminAuthorization(_ request: HTTPRequest) async -> HTTPResponse? {
+        guard let auth = request.headers["Authorization"], auth.hasPrefix("Bearer ") else {
+            Task { await RoleGuardMetrics.shared.recordUnauthorized() }
+            return HTTPResponse(status: 401)
+        }
+        let token = String(auth.dropFirst(7))
+        guard let claims = await adminValidator.validate(token: token) else {
+            Task { await RoleGuardMetrics.shared.recordUnauthorized() }
+            return HTTPResponse(status: 401)
+        }
+        let scopes = Set(claims.scopes)
+        if claims.role == "admin" || scopes.contains("admin") {
+            return nil
+        }
+        Task { await RoleGuardMetrics.shared.recordForbidden() }
+        return HTTPResponse(status: 403)
     }
 
     public func issueAuthToken(_ request: HTTPRequest) async -> HTTPResponse {
