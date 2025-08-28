@@ -383,9 +383,10 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-crypto.git", from: "3.0.0"),
         .package(url: "https://github.com/apple/swift-certificates.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.5.0"),
-        .package(url: "https://github.com/Fountain-Coach/midi2.git", from: "0.3.0"),
+        // Use vendored forks for mac compatibility
+        .package(path: "third_party/midi2"),
         .package(url: "https://github.com/apple/swift-numerics.git", from: "1.0.0"),
-        .package(url: "https://github.com/Fountain-Coach/semantic-browser.git", from: "0.0.1")
+        .package(path: "third_party/semantic-browser")
     ],
     targets: targets
 )
