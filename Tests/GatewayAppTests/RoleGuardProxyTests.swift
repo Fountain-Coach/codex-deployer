@@ -26,7 +26,7 @@ final class RoleGuardProxyTests: XCTestCase {
         try JSONEncoder().encode(routes).write(to: file)
 
         // Gateway with RoleGuard requiring admin on /awareness
-        let guardPlugin = RoleGuardPlugin(rules: ["/awareness": "admin"])
+        let guardPlugin = RoleGuardPlugin(rules: ["/awareness": RoleRequirement(roles: ["admin"])])
         let server = GatewayServer(plugins: [guardPlugin], zoneManager: nil, routeStoreURL: file)
         let port = 9133
         Task { try await server.start(port: port) }

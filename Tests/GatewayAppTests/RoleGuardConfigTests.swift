@@ -13,8 +13,8 @@ final class RoleGuardConfigTests: XCTestCase {
         """
         try yaml.write(to: file, atomically: true, encoding: .utf8)
         let rules = loadRoleGuardRules(from: file)
-        XCTAssertEqual(rules["/awareness"], "admin")
-        XCTAssertEqual(rules["/bootstrap"], "admin")
+        XCTAssertEqual(rules["/awareness"]?.roles ?? [], ["admin"])
+        XCTAssertEqual(rules["/bootstrap"]?.roles ?? [], ["admin"])
     }
 }
 

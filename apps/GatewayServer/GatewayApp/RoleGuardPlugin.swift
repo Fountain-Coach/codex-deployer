@@ -1,13 +1,22 @@
 import Foundation
 import FountainCodex
 
-/// Simple role-based access control plugin.
-/// Enforces a required role for requests matching configured path prefixes.
+public struct RoleRequirement: Sendable, Codable, Equatable {
+    public let roles: [String]?
+    public let scopes: [String]?
+    public init(roles: [String]? = nil, scopes: [String]? = nil) {
+        self.roles = roles
+        self.scopes = scopes
+    }
+}
+
+/// Simple role/scope-based access control plugin.
+/// Enforces required roles and/or scopes for requests matching configured path prefixes.
 public struct RoleGuardPlugin: GatewayPlugin, Sendable {
-    public let rules: [String: String] // prefix -> requiredRole
+    public let rules: [String: RoleRequirement] // prefix -> requirements
     private let validator: TokenValidator
 
-    public init(rules: [String: String], validator: TokenValidator = CredentialStoreValidator()) {
+    public init(rules: [String: RoleRequirement], validator: TokenValidator = CredentialStoreValidator()) {
         self.rules = rules
         self.validator = validator
     }
@@ -19,21 +28,22 @@ public struct RoleGuardPlugin: GatewayPlugin, Sendable {
             .filter { path == $0 || path.hasPrefix($0.hasSuffix("/") ? $0 : $0 + "/") }
             .sorted { $0.count > $1.count }
             .first
-        guard let prefix = match, let required = rules[prefix] else { return request }
+        guard let prefix = match, let reqs = rules[prefix] else { return request }
         // Extract bearer token
-        guard let auth = request.headers["Authorization"], auth.hasPrefix("Bearer ") else {
-            throw UnauthorizedError()
-        }
+        guard let auth = request.headers["Authorization"], auth.hasPrefix("Bearer ") else { throw UnauthorizedError() }
         let token = String(auth.dropFirst(7))
-        guard let claims = await validator.validate(token: token) else {
-            throw UnauthorizedError()
+        guard let claims = await validator.validate(token: token) else { throw UnauthorizedError() }
+        // Check roles (if any)
+        if let roles = reqs.roles, !roles.isEmpty {
+            guard let role = claims.role, roles.contains(role) else { throw ForbiddenError() }
         }
-        guard let role = claims.role, role == required else {
-            throw ForbiddenError()
+        // Check scopes (if any) - require any match
+        if let needed = reqs.scopes, !needed.isEmpty {
+            let have = Set(claims.scopes)
+            if have.intersection(needed).isEmpty { throw ForbiddenError() }
         }
         return request
     }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-
