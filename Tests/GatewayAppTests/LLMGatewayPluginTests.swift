@@ -1,7 +1,11 @@
 import XCTest
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 @testable import LLMGatewayPlugin
 import FountainRuntime
+import gateway_server
 
 final class LLMGatewayPluginTests: XCTestCase {
     func testSentinelConsultDecisions() async throws {
@@ -38,6 +42,43 @@ final class LLMGatewayPluginTests: XCTestCase {
         let userObj = try JSONSerialization.jsonObject(with: userResp!.body) as? [String: Any]
         XCTAssertNotNil(userObj?["cot_summary"] as? String)
         XCTAssertNil(userObj?["cot"])
+    }
+
+    @MainActor
+    func testSentinelRoutePriorityAndMetrics() async throws {
+        let upstreamKernel = HTTPKernel { _ in HTTPResponse(status: 200, body: Data("upstream".utf8)) }
+        let upstream = NIOHTTPServer(kernel: upstreamKernel)
+        let upstreamPort = try await upstream.start(port: 0)
+
+        struct Route: Codable { var id: String; var path: String; var target: String; var methods: [String]; var rateLimit: Int?; var proxyEnabled: Bool? }
+        let route = Route(id: "s", path: "/sentinel", target: "http://127.0.0.1:\(upstreamPort)", methods: ["POST"], rateLimit: nil, proxyEnabled: true)
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try JSONEncoder().encode([route]).write(to: file)
+
+        let plugin = LLMGatewayPlugin()
+        let server = GatewayServer(plugins: [plugin], routeStoreURL: file)
+        let port = 9151
+        Task { try await server.start(port: port) }
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        let before = await GatewayRequestMetrics.shared.snapshot()
+
+        var req = URLRequest(url: URL(string: "http://127.0.0.1:\(port)/sentinel/consult")!)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let body = SecurityCheckRequest(summary: "safe", user: "u", resources: [])
+        req.httpBody = try JSONEncoder().encode(body)
+        let (data, resp) = try await URLSession.shared.data(for: req)
+        XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 200)
+        let decision = try JSONDecoder().decode(SecurityDecision.self, from: data)
+        XCTAssertEqual(decision.decision, "allow")
+
+        let after = await GatewayRequestMetrics.shared.snapshot()
+        let key = "gateway_responses_status_200_total"
+        XCTAssertEqual((after[key] ?? 0) - (before[key] ?? 0), 1)
+
+        try await server.stop()
+        try await upstream.stop()
     }
 }
 
