@@ -44,13 +44,27 @@ final class ProxySchemaValidationHistoryTests: XCTestCase {
             return XCTFail("HistoryEventsResponse missing in spec")
         }
         XCTAssertTrue(OpenAPISchemaValidator.validate(object: obj ?? [:], against: hs))
-        // Validate each event item too
+        // Validate each event item too (against base and specific schemas)
         if let events = obj?["events"] as? [[String: Any]] {
             let he = (schemas?["HistoryEvent"] as? [String: Any]) ?? [:]
-            for item in events { XCTAssertTrue(OpenAPISchemaValidator.validate(object: item, against: he)) }
+            let be = (schemas?["BaselineEvent"] as? [String: Any]) ?? [:]
+            let re = (schemas?["ReflectionEvent"] as? [String: Any]) ?? [:]
+            let de = (schemas?["DriftEvent"] as? [String: Any]) ?? [:]
+            let pe = (schemas?["PatternsEvent"] as? [String: Any]) ?? [:]
+            for item in events {
+                XCTAssertTrue(OpenAPISchemaValidator.validate(object: item, against: he))
+                if let t = item["type"] as? String {
+                    switch t {
+                    case "baseline": XCTAssertTrue(OpenAPISchemaValidator.validate(object: item, against: be))
+                    case "reflection": XCTAssertTrue(OpenAPISchemaValidator.validate(object: item, against: re))
+                    case "drift": XCTAssertTrue(OpenAPISchemaValidator.validate(object: item, against: de))
+                    case "patterns": XCTAssertTrue(OpenAPISchemaValidator.validate(object: item, against: pe))
+                    default: XCTFail("unknown event type: \(t)")
+                    }
+                } else { XCTFail("event missing type") }
+            }
         }
 
         try await server.stop(); try await upstream.stop()
     }
 }
-

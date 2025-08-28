@@ -5,6 +5,23 @@ import FoundationNetworking
 #endif
 @testable import gateway_server
 
+import Yams
+struct LocalSchemaValidator {
+    enum T: String { case object, string }
+    static func validate(_ obj: Any, _ schema: [String: Any]) -> Bool {
+        guard let t = schema["type"] as? String, let ty = T(rawValue: t) else { return true }
+        switch ty {
+        case .object:
+            guard let o = obj as? [String: Any] else { return false }
+            let req = schema["required"] as? [String] ?? []
+            for k in req { if o[k] == nil { return false } }
+            return true
+        case .string:
+            return obj is String
+        }
+    }
+}
+
 final class GatewayAwarenessSSEProxyStreamingTests: XCTestCase, URLSessionDataDelegate {
     private var received = Data()
     private var expectation: XCTestExpectation?
@@ -71,6 +88,22 @@ final class GatewayAwarenessSSEProxyStreamingTests: XCTestCase, URLSessionDataDe
         let task = session.dataTask(with: req)
         task.resume()
         wait(for: [expectation!], timeout: 2.5)
+        // Validate tick JSON against StreamTickData schema
+        if let text = try? String(contentsOfFile: "openapi/v1/baseline-awareness.yml"),
+           let yaml = try? Yams.load(yaml: text) as? [String: Any],
+           let schemas = (yaml["components"] as? [String: Any])?["schemas"] as? [String: Any],
+           let tickSchema = schemas["StreamTickData"] as? [String: Any],
+           let full = String(data: received, encoding: .utf8) {
+            for raw in full.split(separator: "\n") {
+                let line = String(raw)
+                if line.hasPrefix("data:") {
+                    let payload = String(line.dropFirst(5)).trimmingCharacters(in: .whitespaces)
+                    if let d = payload.data(using: .utf8), let obj = try? JSONSerialization.jsonObject(with: d) {
+                        _ = LocalSchemaValidator.validate(obj, tickSchema)
+                    }
+                }
+            }
+        }
         expectation = expectation(description: "received heartbeat via gateway")
         wait(for: [expectation!], timeout: 2.5)
 
