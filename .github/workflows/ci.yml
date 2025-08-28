@@ -41,10 +41,8 @@ jobs:
         run: Scripts/check_no_codex.sh
       - name: Build
         run: swift build
-      - name: Test
-        run: |
-          swift test --enable-code-coverage
-          echo "CODECOV_DIR=$(dirname $(swift test --show-codecov-path))" >> $GITHUB_ENV
+      - name: Coverage
+        run: Scripts/coverage.sh 50
       - name: Test SPS
         working-directory: sps
         run: swift test --enable-code-coverage
