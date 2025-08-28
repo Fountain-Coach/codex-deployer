@@ -15,7 +15,7 @@ public func loadRoleGuardRules(from path: URL? = nil, environment: [String: Stri
                 } else if let dict = val as? [String: Any] {
                     let roles = dict["roles"] as? [String]
                     let scopes = dict["scopes"] as? [String]
-                    result[prefix] = RoleRequirement(roles: roles, scopes: scopes, requireAllScopes: ( (dict["scopes_mode"] as? String)?.lowercased() == "all" ) || (dict["require_all_scopes"] as? Bool ?? false))
+                    result[prefix] = RoleRequirement(roles: roles, scopes: scopes, requireAllScopes: ( (dict["scopes_mode"] as? String)?.lowercased() == "all" ) || (dict["require_all_scopes"] as? Bool ?? false), methods: (dict["methods"] as? [String])?.map { $0.uppercased() }, deny: dict["deny"] as? Bool ?? false)
                 }
             }
             return result

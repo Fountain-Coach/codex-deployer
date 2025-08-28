@@ -5,10 +5,18 @@ public struct RoleRequirement: Sendable, Codable, Equatable {
     public let roles: [String]?
     public let scopes: [String]?
     public let requireAllScopes: Bool
-    public init(roles: [String]? = nil, scopes: [String]? = nil, requireAllScopes: Bool = false) {
+    public let methods: [String]? // e.g., ["GET","POST"]. If nil, applies to all methods.
+    public let deny: Bool // If true, deny regardless of token.
+    public init(roles: [String]? = nil,
+                scopes: [String]? = nil,
+                requireAllScopes: Bool = false,
+                methods: [String]? = nil,
+                deny: Bool = false) {
         self.roles = roles
         self.scopes = scopes
         self.requireAllScopes = requireAllScopes
+        self.methods = methods
+        self.deny = deny
     }
 }
 
@@ -31,6 +39,10 @@ public struct RoleGuardPlugin: GatewayPlugin, Sendable {
             .sorted { $0.count > $1.count }
             .first
         guard let prefix = match, let reqs = rules[prefix] else { return request }
+        if let methods = reqs.methods, !methods.isEmpty, !methods.contains(request.method.uppercased()) {
+            return request
+        }
+        if reqs.deny { throw ForbiddenError() }
         // Extract bearer token
         guard let auth = request.headers["Authorization"], auth.hasPrefix("Bearer ") else { throw UnauthorizedError() }
         let token = String(auth.dropFirst(7))
