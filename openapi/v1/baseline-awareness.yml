@@ -367,33 +367,78 @@ components:
           title: Message
 
     HistoryEvent:
+      oneOf:
+        - $ref: '#/components/schemas/BaselineEvent'
+        - $ref: '#/components/schemas/ReflectionEvent'
+        - $ref: '#/components/schemas/DriftEvent'
+        - $ref: '#/components/schemas/PatternsEvent'
+      discriminator:
+        propertyName: type
+    BaselineEvent:
       type: object
-      title: HistoryEvent
-      required: [type]
+      required: [type, id, content_len, ts]
       properties:
         type:
           type: string
+          enum: [baseline]
         id:
           type: string
         content_len:
           type: integer
+        ts:
+          type: number
+    ReflectionEvent:
+      type: object
+      required: [type, id, question, ts]
+      properties:
+        type:
+          type: string
+          enum: [reflection]
+        id:
+          type: string
         question:
           type: string
         ts:
           type: number
-          description: Epoch seconds
+    DriftEvent:
+      type: object
+      required: [type, id, content_len, ts]
+      properties:
+        type:
+          type: string
+          enum: [drift]
+        id:
+          type: string
+        content_len:
+          type: integer
+        ts:
+          type: number
+    PatternsEvent:
+      type: object
+      required: [type, id, content_len, ts]
+      properties:
+        type:
+          type: string
+          enum: [patterns]
+        id:
+          type: string
+        content_len:
+          type: integer
+        ts:
+          type: number
     HistoryEventsResponse:
       type: object
-      title: HistoryEventsResponse
-      required:
-        - total
-        - events
+      required: [total, events]
       properties:
         total:
           type: integer
-          title: Total
         events:
           type: array
-          title: Events
           items:
             $ref: '#/components/schemas/HistoryEvent'
+    StreamTickData:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string

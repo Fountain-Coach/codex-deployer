@@ -12,10 +12,15 @@ struct OpenAPISchemaValidator {
         guard let typeStr = schema["type"] as? String, let type = SchemaType(rawValue: typeStr) else { return true }
         switch type {
         case .string:
+            if let en = schema["enum"] as? [String] { return en.contains(object as? String ?? "") }
+            if let c = schema["const"] as? String { return (object as? String) == c }
             return object is String
         case .integer:
+            if let en = schema["enum"] as? [Int] { return en.contains((object as? Int) ?? Int.min) }
+            if let c = schema["const"] as? Int { return (object as? Int) == c }
             return object is Int || object is Int32 || object is Int64
         case .number:
+            if let c = schema["const"] as? Double { return (object as? Double) == c }
             return object is Double || object is Float || object is Int || object is Int32 || object is Int64
         case .boolean:
             return object is Bool
