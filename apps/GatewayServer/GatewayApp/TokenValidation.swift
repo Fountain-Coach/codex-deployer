@@ -38,6 +38,55 @@ public struct EnvKeyProvider: KeyProvider {
     public func symmetricKey() -> SymmetricKey { SymmetricKey(data: Data(secret.utf8)) }
 }
 
+/// Key provider that fetches a JWKS (JSON Web Key Set) and uses the first symmetric (oct) key.
+/// Note: RS256 keys are not yet supported here; this provider targets HS256 via "kty":"oct".
+public final class JWKSKeyProvider: @unchecked Sendable, KeyProvider {
+    private var key: SymmetricKey
+    private let url: URL
+    public init?(jwksURL: String) {
+        guard let u = URL(string: jwksURL) else { return nil }
+        self.url = u
+        self.key = SymmetricKey(data: Data())
+        // Best-effort fetch at init; failures will keep an empty key which will fail validation.
+        Task.detached { [weak self] in await self?.refresh() }
+    }
+    public func symmetricKey() -> SymmetricKey { key }
+    public func refresh() async {
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+        do {
+            let (data, resp) = try await URLSession.shared.data(for: req)
+            guard (resp as? HTTPURLResponse)?.statusCode == 200 else { return }
+            if let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any], let keys = obj["keys"] as? [[String: Any]] {
+                // Pick first symmetric (oct) key
+                for k in keys {
+                    if let kty = k["kty"] as? String, kty.uppercased() == "OCT", let kval = k["k"] as? String, let raw = Data(base64URLEncoded: kval) {
+                        self.key = SymmetricKey(data: raw)
+                        break
+                    }
+                }
+            }
+        } catch {
+            // ignore
+        }
+    }
+}
+
+/// HMAC (HS256) validator using a pluggable ``KeyProvider`` and claim options.
+public struct HMACKeyValidator: TokenValidator {
+    private let keyProvider: KeyProvider
+    private let options: JWTValidationOptions
+    public init(keyProvider: KeyProvider = EnvKeyProvider(), options: JWTValidationOptions = JWTValidationOptions()) {
+        self.keyProvider = keyProvider
+        self.options = options
+    }
+    public func validate(token: String) async -> TokenClaims? {
+        guard let payload = CredentialStoreValidator.verifyAndDecode(token: token, key: keyProvider.symmetricKey(), options: options) else { return nil }
+        let scopes = payload.role.map { [$0] } ?? []
+        return TokenClaims(role: payload.role, scopes: scopes)
+    }
+}
+
 /// Validation options for JWT claims.
 public struct JWTValidationOptions: Sendable {
     public let issuer: String?
@@ -137,6 +186,18 @@ public struct OAuth2Validator: TokenValidator {
         } catch {
             return nil
         }
+    }
+}
+
+private extension Data {
+    init?(base64URLEncoded input: String) {
+        var base64 = input
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+        let padding = 4 - base64.count % 4
+        if padding < 4 { base64 += String(repeating: "=", count: padding) }
+        guard let data = Data(base64Encoded: base64) else { return nil }
+        self = data
     }
 }
 

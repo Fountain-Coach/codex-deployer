@@ -1,7 +1,21 @@
 // swift-tools-version: 6.1
 import PackageDescription
+import Foundation
  
-var products: [Product] = [
+let LEAN = (ProcessInfo.processInfo.environment["LEAN_TESTS"] == "1")
+
+var products: [Product] = LEAN ? [
+    // Lean mode: only gateway-related products
+    .library(name: "FountainCodex", targets: ["FountainCodex"]),
+    .executable(name: "gateway-server", targets: ["gateway-server"]),
+    .library(name: "LLMGatewayPlugin", targets: ["LLMGatewayPlugin"]),
+    .library(name: "AuthGatewayPlugin", targets: ["AuthGatewayPlugin"]),
+    .library(name: "RateLimiterGatewayPlugin", targets: ["RateLimiterGatewayPlugin"]),
+    .library(name: "BudgetBreakerGatewayPlugin", targets: ["BudgetBreakerGatewayPlugin"]),
+    .library(name: "PayloadInspectionGatewayPlugin", targets: ["PayloadInspectionGatewayPlugin"]),
+    .library(name: "DestructiveGuardianGatewayPlugin", targets: ["DestructiveGuardianGatewayPlugin"]),
+    .library(name: "SecuritySentinelGatewayPlugin", targets: ["SecuritySentinelGatewayPlugin"])
+] : [
     .library(name: "FountainCodex", targets: ["FountainCodex"]),
     .library(name: "TypesensePersistence", targets: ["TypesensePersistence"]),
     .library(name: "MIDI2Models", targets: ["MIDI2Models"]),
@@ -16,7 +30,88 @@ var products: [Product] = [
     .executable(name: "sse-client", targets: ["sse-client"])
 ]
 
-var targets: [Target] = [
+var targets: [Target] = LEAN ? [
+    // Core gateway + plugins only
+    .target(
+        name: "FountainCodex",
+        dependencies: [
+            .product(name: "AsyncHTTPClient", package: "async-http-client"),
+            .product(name: "NIO", package: "swift-nio"),
+            .product(name: "NIOCore", package: "swift-nio"),
+            .product(name: "NIOHTTP1", package: "swift-nio"),
+            "Yams",
+            .product(name: "Crypto", package: "swift-crypto"),
+            .product(name: "Logging", package: "swift-log")
+        ],
+        path: "libs/FountainCodex",
+        exclude: ["FountainCodex/DNS/README.md"]
+    ),
+    .executableTarget(
+        name: "gateway-server",
+        dependencies: [
+            "FountainCodex",
+            "PublishingFrontend",
+            "LLMGatewayPlugin",
+            "AuthGatewayPlugin",
+            "RateLimiterGatewayPlugin",
+            "BudgetBreakerGatewayPlugin",
+            "PayloadInspectionGatewayPlugin",
+            "DestructiveGuardianGatewayPlugin",
+            "SecuritySentinelGatewayPlugin",
+            .product(name: "Crypto", package: "swift-crypto"),
+            .product(name: "X509", package: "swift-certificates"),
+            "Yams"
+        ],
+        path: "apps/GatewayServer"
+    ),
+    .target(
+        name: "LLMGatewayPlugin",
+        dependencies: ["FountainCodex"],
+        path: "libs/GatewayPlugins/LLMGatewayPlugin"
+    ),
+    .target(
+        name: "AuthGatewayPlugin",
+        dependencies: ["FountainCodex", .product(name: "Crypto", package: "swift-crypto")],
+        path: "libs/GatewayPlugins/AuthGatewayPlugin"
+    ),
+    .target(
+        name: "RateLimiterGatewayPlugin",
+        dependencies: ["FountainCodex"],
+        path: "libs/GatewayPlugins/RateLimiterGatewayPlugin"
+    ),
+    .target(
+        name: "BudgetBreakerGatewayPlugin",
+        dependencies: ["FountainCodex"],
+        path: "libs/GatewayPlugins/BudgetBreakerGatewayPlugin"
+    ),
+    .target(
+        name: "PayloadInspectionGatewayPlugin",
+        dependencies: ["FountainCodex"],
+        path: "libs/GatewayPlugins/PayloadInspectionGatewayPlugin"
+    ),
+    .target(
+        name: "DestructiveGuardianGatewayPlugin",
+        dependencies: ["FountainCodex"],
+        path: "libs/GatewayPlugins/DestructiveGuardianGatewayPlugin"
+    ),
+    .target(
+        name: "SecuritySentinelGatewayPlugin",
+        dependencies: ["FountainCodex"],
+        path: "libs/GatewayPlugins/SecuritySentinelGatewayPlugin"
+    ),
+    .target(
+        name: "PublishingFrontend",
+        dependencies: ["FountainCodex", "Yams"],
+        path: "libs/PublishingFrontend"
+    ),
+    // Tests (gateway-focused)
+    .testTarget(
+        name: "IntegrationRuntimeTests",
+        dependencies: ["gateway-server", "FountainCodex", "LLMGatewayPlugin", "RateLimiterGatewayPlugin"],
+        path: "Tests/IntegrationRuntimeTests",
+        resources: [.process("Fixtures")]
+    )
+] : [
     .target(
         name: "FountainCodex",
         dependencies: [

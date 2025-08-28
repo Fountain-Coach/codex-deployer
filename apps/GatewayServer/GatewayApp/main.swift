@@ -22,10 +22,24 @@ let cotLogPath = ProcessInfo.processInfo.environment["COT_LOG_PATH"].map { URL(f
 let llmPlugin = LLMGatewayPlugin(cotLogURL: cotLogPath)
 let authPlugin = AuthGatewayPlugin()
 let routesFile = URL(fileURLWithPath: "Configuration/routes.json")
-var plugins: [GatewayPlugin] = []
+var plugins: [any GatewayPlugin] = []
 let roleRules = loadRoleGuardRules()
-if !roleRules.isEmpty { plugins.append(RoleGuardPlugin(rules: roleRules)) }
-plugins.append(contentsOf: [authPlugin, llmPlugin, CoTLogger(), rateLimiter, LoggingPlugin(), PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public")])
+if !roleRules.isEmpty {
+    // Choose validator based on environment (JWKS for HS256-oct if provided; otherwise env secret)
+    if let jwksURL = ProcessInfo.processInfo.environment["GATEWAY_JWKS_URL"], let provider = JWKSKeyProvider(jwksURL: jwksURL) {
+        plugins.append(RoleGuardPlugin(rules: roleRules, validator: HMACKeyValidator(keyProvider: provider)))
+    } else {
+        plugins.append(RoleGuardPlugin(rules: roleRules, validator: HMACKeyValidator()))
+    }
+}
+plugins.append(contentsOf: [
+    authPlugin as any GatewayPlugin,
+    llmPlugin as any GatewayPlugin,
+    CoTLogger() as any GatewayPlugin,
+    rateLimiter as any GatewayPlugin,
+    LoggingPlugin() as any GatewayPlugin,
+    PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public") as any GatewayPlugin
+])
 
 let server = GatewayServer(plugins: plugins, zoneManager: nil, routeStoreURL: routesFile, certificatePath: nil, rateLimiter: rateLimiter)
 Task { @MainActor in
