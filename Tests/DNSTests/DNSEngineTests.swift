@@ -1,6 +1,7 @@
 import XCTest
 import NIOCore
 import NIOEmbedded
+import Crypto
 @testable import FountainRuntime
 
 final class DNSEngineTests: XCTestCase {
@@ -120,6 +121,20 @@ final class DNSEngineTests: XCTestCase {
         let text = await DNSMetrics.shared.exposition()
         XCTAssertTrue(text.contains("dns_queries_type_invalid_total 1"))
         XCTAssertTrue(text.contains("dns_misses_total 1"))
+    }
+
+    func testSignZoneAndVerify() throws {
+        let signer = DNSSECSigner(privateKey: .init())
+        let engine = DNSEngine(records: [.init(name: "example.com", type: "A", value: "1.2.3.4")], signer: signer)
+        let sig = try engine.signZone()
+        XCTAssertNotNil(sig)
+        XCTAssertEqual(engine.verifyZone(signature: sig!), true)
+    }
+
+    func testSignZoneReturnsNilWithoutSigner() throws {
+        let engine = DNSEngine(records: [.init(name: "example.com", type: "A", value: "1.2.3.4")])
+        XCTAssertNil(try engine.signZone())
+        XCTAssertNil(engine.verifyZone(signature: Data()))
     }
 
     func testHandlerDropsNXDomainQuery() throws {
