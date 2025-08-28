@@ -374,6 +374,11 @@ components:
         - $ref: '#/components/schemas/PatternsEvent'
       discriminator:
         propertyName: type
+        mapping:
+          baseline: '#/components/schemas/BaselineEvent'
+          reflection: '#/components/schemas/ReflectionEvent'
+          drift: '#/components/schemas/DriftEvent'
+          patterns: '#/components/schemas/PatternsEvent'
     BaselineEvent:
       type: object
       required: [type, id, content_len, ts]

@@ -13,11 +13,24 @@ final class GatewaySSEProxyStreamingTests: XCTestCase, URLSessionDataDelegate {
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         received.append(data)
         if let text = String(data: received, encoding: .utf8) {
-            if !sawDrift, text.contains("event: drift") {
-                sawDrift = true
-                expectation?.fulfill()
-            } else if sawDrift, text.contains("heartbeat") {
-                expectation?.fulfill()
+            var lastEvent: String?
+            for raw in text.split(separator: "\n", omittingEmptySubsequences: false) {
+                let line = String(raw)
+                if line.hasPrefix("event:") {
+                    lastEvent = String(line.dropFirst(6)).trimmingCharacters(in: .whitespaces)
+                    if lastEvent == "drift" && !sawDrift { sawDrift = true }
+                } else if line.hasPrefix(":") {
+                    if sawDrift { expectation?.fulfill() }
+                } else if line.hasPrefix("data:") {
+                    if lastEvent == "drift" {
+                        let payload = String(line.dropFirst(5)).trimmingCharacters(in: .whitespaces)
+                        if let d = payload.data(using: .utf8),
+                           let obj = try? JSONSerialization.jsonObject(with: d) as? [String: Any],
+                           (obj["status"] as? String) == "started" {
+                            expectation?.fulfill()
+                        }
+                    }
+                }
             }
         }
     }
