@@ -8,8 +8,8 @@ public struct BaselineIn: Codable { public let corpusId: String; public let base
 public struct RoleInitRequest: Codable { public let corpusId: String }
 public struct RoleDefaults: Codable { public let drift: String; public let semantic_arc: String; public let patterns: String; public let history: String; public let view_creator: String }
 
-public struct HTTPRequest { public let method: String; public let path: String; public let body: Data; public init(method: String, path: String, body: Data = Data()) { self.method = method; self.path = path; self.body = body } }
-public struct HTTPResponse { public let status: Int; public let headers: [String:String]; public let body: Data; public init(status: Int, headers: [String:String] = [:], body: Data = Data()) { self.status = status; self.headers = headers; self.body = body } }
+public struct HTTPRequest: Sendable { public let method: String; public let path: String; public let body: Data; public init(method: String, path: String, body: Data = Data()) { self.method = method; self.path = path; self.body = body } }
+public struct HTTPResponse: Sendable { public let status: Int; public let headers: [String:String]; public let body: Data; public init(status: Int, headers: [String:String] = [:], body: Data = Data()) { self.status = status; self.headers = headers; self.body = body } }
 
 public final class BootstrapRouter: @unchecked Sendable {
     let persistence: TypesensePersistenceService

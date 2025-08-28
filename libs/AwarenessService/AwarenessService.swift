@@ -11,8 +11,8 @@ public struct ReflectionRequest: Codable { public let corpusId: String; public l
 public struct ReflectionSummaryResponse: Codable { public let message: String }
 public struct HistorySummaryResponse: Codable { public let summary: String }
 
-public struct HTTPRequest { public let method: String; public let path: String; public let body: Data; public init(method: String, path: String, body: Data = Data()) { self.method = method; self.path = path; self.body = body } }
-public struct HTTPResponse { public let status: Int; public let headers: [String:String]; public let body: Data; public init(status: Int, headers: [String:String] = [:], body: Data = Data()) { self.status = status; self.headers = headers; self.body = body } }
+public struct HTTPRequest: Sendable { public let method: String; public let path: String; public let body: Data; public init(method: String, path: String, body: Data = Data()) { self.method = method; self.path = path; self.body = body } }
+public struct HTTPResponse: Sendable { public let status: Int; public let headers: [String:String]; public let body: Data; public init(status: Int, headers: [String:String] = [:], body: Data = Data()) { self.status = status; self.headers = headers; self.body = body } }
 
 public final class AwarenessRouter: @unchecked Sendable {
     let persistence: TypesensePersistenceService

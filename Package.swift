@@ -239,7 +239,7 @@ var targets: [Target] = [
     ),
     .testTarget(
         name: "OpenAPIConformanceTests",
-        dependencies: ["Yams"],
+        dependencies: ["Yams", "AwarenessService", "BootstrapService", "TypesensePersistence", "FountainCodex"],
         path: "Tests/OpenAPIConformanceTests"
     )
 ]
