@@ -39,6 +39,22 @@ final class DNSEngineTests: XCTestCase {
         XCTAssertEqual([ip1, ip2, ip3, ip4], [1, 2, 3, 4])
     }
 
+    func testUpdatedRecordServedFromCache() {
+        let engine = DNSEngine(zoneCache: ["example.com": "1.2.3.4"])
+        engine.updateRecord(name: "example.com", type: "A", value: "5.6.7.8")
+        var query = makeQuery(name: "example.com", type: 1)
+        guard var response = engine.handleQuery(buffer: &query) else {
+            XCTFail("Expected response")
+            return
+        }
+        response.moveReaderIndex(forwardBy: response.readableBytes - 4)
+        let ip1 = response.readInteger(as: UInt8.self)!
+        let ip2 = response.readInteger(as: UInt8.self)!
+        let ip3 = response.readInteger(as: UInt8.self)!
+        let ip4 = response.readInteger(as: UInt8.self)!
+        XCTAssertEqual([ip1, ip2, ip3, ip4], [5, 6, 7, 8])
+    }
+
     func testRespondsWithAAAARecordFromCache() {
         var query = makeQuery(name: "ipv6.com", type: 28)
         let engine = DNSEngine(records: [.init(name: "ipv6.com", type: "AAAA", value: "2001:db8::1")])
