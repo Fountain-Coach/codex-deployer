@@ -9,15 +9,25 @@ final class GatewayAwarenessSSEProxyStreamingTests: XCTestCase, URLSessionDataDe
     private var received = Data()
     private var expectation: XCTestExpectation?
     private var sawTick = false
+    private var lastEvent: String?
 
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         received.append(data)
         if let text = String(data: received, encoding: .utf8) {
-            if !sawTick, text.contains("event: tick") {
-                sawTick = true
-                expectation?.fulfill()
-            } else if sawTick, text.contains("heartbeat") {
-                expectation?.fulfill()
+            for line in text.split(separator: "\n", omittingEmptySubsequences: false) {
+                if line.hasPrefix("event:") { lastEvent = String(line.dropFirst(6)).trimmingCharacters(in: .whitespaces) }
+                else if line.hasPrefix(":") { /* comment/heartbeat */ if sawTick { expectation?.fulfill() } }
+                else if line.hasPrefix("data:") {
+                    if lastEvent == "tick" {
+                        let jsonStr = String(line.dropFirst(5)).trimmingCharacters(in: .whitespaces)
+                        if let data = jsonStr.data(using: .utf8),
+                           let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                           obj["status"] != nil {
+                            sawTick = true
+                            expectation?.fulfill()
+                        }
+                    }
+                }
             }
         }
     }

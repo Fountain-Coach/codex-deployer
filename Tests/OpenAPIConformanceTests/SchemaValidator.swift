@@ -4,6 +4,11 @@ struct OpenAPISchemaValidator {
     enum SchemaType: String { case string, integer, number, boolean, object, array }
 
     static func validate(object: Any, against schema: [String: Any]) -> Bool {
+        // oneOf support: true if any subschema validates
+        if let oneOf = schema["oneOf"] as? [[String: Any]] {
+            for sub in oneOf { if validate(object: object, against: sub) { return true } }
+            return false
+        }
         guard let typeStr = schema["type"] as? String, let type = SchemaType(rawValue: typeStr) else { return true }
         switch type {
         case .string:
