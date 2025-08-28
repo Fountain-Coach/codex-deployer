@@ -9,6 +9,17 @@ final class SSEClient: NSObject, URLSessionDataDelegate {
 
     init(url: URL) { self.url = url }
 
+    private func extract(_ obj: Any, path: String) -> Any? {
+        var current: Any? = obj
+        for part in path.split(separator: ".").map(String.init) {
+            if let dict = current as? [String: Any] { current = dict[part] }
+            else if let arr = current as? [Any], let idx = Int(part), idx >= 0, idx < arr.count { current = arr[idx] }
+            else { return nil }
+        }
+        return current
+    }
+}
+
     func start() {
         connect()
         RunLoop.main.run()

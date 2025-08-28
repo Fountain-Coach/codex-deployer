@@ -29,6 +29,13 @@ final class GatewaySSEProxyStreamingTests: XCTestCase, URLSessionDataDelegate {
                            (obj["status"] as? String) == "started" {
                             expectation?.fulfill()
                         }
+                    } else if lastEvent == "patterns" {
+                        let payload = String(line.dropFirst(5)).trimmingCharacters(in: .whitespaces)
+                        if let d = payload.data(using: .utf8),
+                           let obj = try? JSONSerialization.jsonObject(with: d) as? [String: Any],
+                           (obj["status"] as? String) == "started" {
+                            expectation?.fulfill()
+                        }
                     }
                 }
             }
@@ -75,6 +82,9 @@ final class GatewaySSEProxyStreamingTests: XCTestCase, URLSessionDataDelegate {
         req.httpBody = try JSONSerialization.data(withJSONObject: ["corpusId": "pgw", "baselineId": "b1", "content": "x"]) 
         let task = session.dataTask(with: req)
         task.resume()
+        wait(for: [expectation!], timeout: 2.5)
+        // Now wait for patterns event
+        expectation = expectation(description: "received patterns event via gateway")
         wait(for: [expectation!], timeout: 2.5)
         // Now wait for heartbeat
         expectation = expectation(description: "received heartbeat via gateway")
