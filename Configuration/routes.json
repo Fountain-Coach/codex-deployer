@@ -1,21 +1,18 @@
 [
   {
-    "id": "persist",
-    "path": "/persist",
-    "target": "http://127.0.0.1:8005",
-    "methods": [
-      "GET",
-      "POST"
-    ],
+    "id": "awareness",
+    "path": "/awareness",
+    "target": "http://localhost:8081",
+    "methods": ["GET","POST"],
+    "rateLimit": 120,
     "proxyEnabled": true
   },
   {
-    "id": "semantic",
-    "path": "/semantic",
-    "target": "http://127.0.0.1:8006",
-    "methods": [
-      "GET"
-    ],
+    "id": "bootstrap",
+    "path": "/bootstrap",
+    "target": "http://localhost:8082",
+    "methods": ["GET","POST"],
+    "rateLimit": 120,
     "proxyEnabled": true
   }
 ]

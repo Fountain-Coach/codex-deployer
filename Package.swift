@@ -115,6 +115,16 @@ var targets: [Target] = [
         dependencies: ["FountainCodex", "Yams"],
         path: "libs/PublishingFrontend"
     ),
+    .target(
+        name: "AwarenessService",
+        dependencies: ["TypesensePersistence"],
+        path: "libs/AwarenessService"
+    ),
+    .target(
+        name: "BootstrapService",
+        dependencies: ["TypesensePersistence"],
+        path: "libs/BootstrapService"
+    ),
     .executableTarget(
         name: "publishing-frontend",
         dependencies: ["PublishingFrontend"],
@@ -167,12 +177,12 @@ var targets: [Target] = [
     ),
     .executableTarget(
         name: "baseline-awareness-server",
-        dependencies: ["TypesensePersistence"],
+        dependencies: ["TypesensePersistence", "AwarenessService"],
         path: "apps/BaselineAwarenessServer"
     ),
     .executableTarget(
         name: "bootstrap-server",
-        dependencies: ["TypesensePersistence"],
+        dependencies: ["TypesensePersistence", "BootstrapService"],
         path: "apps/BootstrapServer"
     ),
     .testTarget(name: "ClientGeneratorTests", dependencies: ["FountainCodex"], path: "Tests/ClientGeneratorTests"),
@@ -211,6 +221,21 @@ var targets: [Target] = [
         name: "TypesensePersistenceTests",
         dependencies: ["TypesensePersistence"],
         path: "Tests/TypesensePersistenceTests"
+    ),
+    .testTarget(
+        name: "AwarenessServiceTests",
+        dependencies: ["AwarenessService", "TypesensePersistence"],
+        path: "Tests/AwarenessServiceTests"
+    ),
+    .testTarget(
+        name: "BootstrapServiceTests",
+        dependencies: ["BootstrapService", "TypesensePersistence"],
+        path: "Tests/BootstrapServiceTests"
+    ),
+    .testTarget(
+        name: "E2ETests",
+        dependencies: ["AwarenessService", "BootstrapService", "TypesensePersistence"],
+        path: "Tests/E2ETests"
     )
 ]
 

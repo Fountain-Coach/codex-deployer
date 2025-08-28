@@ -1,7 +1,13 @@
 import Foundation
 
-public struct CorpusCreateRequest: Codable, Sendable { public let corpusId: String }
-public struct CorpusResponse: Codable, Sendable { public let corpusId: String; public let message: String }
+public struct CorpusCreateRequest: Codable, Sendable { 
+    public let corpusId: String 
+    public init(corpusId: String) { self.corpusId = corpusId }
+}
+public struct CorpusResponse: Codable, Sendable { 
+    public let corpusId: String; public let message: String 
+    public init(corpusId: String, message: String) { self.corpusId = corpusId; self.message = message }
+}
 
 public struct Baseline: Codable, Sendable {
     public let corpusId: String
