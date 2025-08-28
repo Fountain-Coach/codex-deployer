@@ -12,7 +12,14 @@ class SSEClient: NSObject, @preconcurrency URLSessionDataDelegate {
 
     func start() { connect(); RunLoop.main.run() }
     func connect() { attempt += 1; let config = URLSessionConfiguration.default; let session = URLSession(configuration: config, delegate: self, delegateQueue: nil); var req = URLRequest(url: url); req.setValue("text/event-stream", forHTTPHeaderField: "Accept"); task = session.dataTask(with: req); task?.resume(); log("connecting to \(url.absoluteString) [attempt \(attempt)]") }
-    func scheduleReconnect() { let delay = min(pow(2.0, Double(attempt)), maxBackoff); log("reconnecting in \(Int(delay))s"); DispatchQueue.global().asyncAfter(deadline: .now() + delay) { [weak self] in self?.connect() } }
+    func scheduleReconnect() {
+        let delay = min(pow(2.0, Double(attempt)), maxBackoff)
+        log("reconnecting in \(Int(delay))s")
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+            self.connect()
+        }
+    }
 
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) { received.append(data); guard let text = String(data: data, encoding: .utf8) else { return }; for line in text.split(separator: "\n", omittingEmptySubsequences: false) { if line.hasPrefix(":") { log("comment \(line)"); continue }; if line.hasPrefix("event:") { log(String(line)) }; if line.hasPrefix("data:") { print(String(line.dropFirst(5)).trimmingCharacters(in: .whitespaces)) } } }
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) { if let error { log("connection closed: \(error.localizedDescription)") } else { log("connection closed") }; scheduleReconnect() }
