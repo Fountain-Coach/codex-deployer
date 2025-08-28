@@ -81,6 +81,26 @@ final class DNSEngineTests: XCTestCase {
         XCTAssertTrue(hasTarget)
     }
 
+    func testUnsupportedRecordTypeResponseNil() {
+        var query = makeQuery(name: "example.com", type: 16) // TXT
+        guard let parser = DNSParser(buffer: &query) else {
+            XCTFail("Expected parser")
+            return
+        }
+        let record = DNSEngine.Record(name: "example.com", type: "TXT", value: "hello")
+        XCTAssertNil(parser.makeResponse(record: record))
+    }
+
+    func testInvalidIPv6RecordReturnsNil() {
+        var query = makeQuery(name: "badipv6.com", type: 28) // AAAA
+        guard let parser = DNSParser(buffer: &query) else {
+            XCTFail("Expected parser")
+            return
+        }
+        let record = DNSEngine.Record(name: "badipv6.com", type: "AAAA", value: "not-a-valid-ip")
+        XCTAssertNil(parser.makeResponse(record: record))
+    }
+
     func testUnknownRecordReturnsNil() {
         var query = makeQuery(name: "unknown.com", type: 1)
         let engine = DNSEngine(records: [.init(name: "example.com", type: "A", value: "1.2.3.4")])
