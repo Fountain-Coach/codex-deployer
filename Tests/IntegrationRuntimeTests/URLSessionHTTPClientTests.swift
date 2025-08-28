@@ -5,7 +5,7 @@ import FoundationNetworking
 #endif
 import NIOCore
 import NIOHTTP1
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class URLSessionHTTPClientTests: XCTestCase {
     private class MockURLProtocol: URLProtocol {

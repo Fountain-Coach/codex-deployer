@@ -1,7 +1,7 @@
 import XCTest
 import NIOCore
 import NIOEmbedded
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class DNSEngineTests: XCTestCase {
     func makeQuery(name: String, type: UInt16) -> ByteBuffer {

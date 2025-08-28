@@ -1,6 +1,6 @@
 import XCTest
 import NIOCore
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class DNSIntegrationTests: XCTestCase {
     static func makeQuery(name: String) -> ByteBuffer {

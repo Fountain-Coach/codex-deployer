@@ -4,7 +4,7 @@ import Foundation
 import FoundationNetworking
 #endif
 @testable import gateway_server
-@testable import FountainCodex
+@testable import FountainRuntime
 import RateLimiterGatewayPlugin
 
 final class GatewayServerTests: XCTestCase {

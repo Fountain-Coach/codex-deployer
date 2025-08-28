@@ -1,5 +1,5 @@
 import XCTest
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class OpenAPISwiftTypeTests: XCTestCase {
     /// Verifies the `swiftType` helper produces the correct Swift type name.

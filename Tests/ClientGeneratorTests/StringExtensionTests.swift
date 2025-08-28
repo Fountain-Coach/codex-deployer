@@ -1,5 +1,5 @@
 import XCTest
-@testable import FountainCodex
+@testable import FountainRuntime
 
 final class StringExtensionTests: XCTestCase {
     /// Ensures the `camelCased` computed property transforms snake case names.
