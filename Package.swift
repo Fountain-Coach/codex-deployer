@@ -208,7 +208,7 @@ let fullTargets: [Target] = [
     .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainRuntime", .product(name: "Crypto", package: "swift-crypto"), .product(name: "NIOEmbedded", package: "swift-nio"), .product(name: "NIO", package: "swift-nio")], path: "Tests/DNSTests"),
     .testTarget(
         name: "IntegrationRuntimeTests",
-        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin", .product(name: "NIO", package: "swift-nio")],
+        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin", .product(name: "NIO", package: "swift-nio"), .product(name: "AsyncHTTPClient", package: "async-http-client")],
         path: "Tests/IntegrationRuntimeTests",
         resources: [.process("Fixtures")]
     ),
@@ -351,7 +351,7 @@ let leanTargets: [Target] = [
     .target(name: "ResourceLoader", path: "libs/ResourceLoader"),
     .testTarget(
         name: "IntegrationRuntimeTests",
-        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin", .product(name: "NIO", package: "swift-nio")],
+        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin", .product(name: "NIO", package: "swift-nio"), .product(name: "AsyncHTTPClient", package: "async-http-client")],
         path: "Tests/IntegrationRuntimeTests",
         resources: [.process("Fixtures")]
     ),

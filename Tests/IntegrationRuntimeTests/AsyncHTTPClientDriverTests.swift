@@ -1,6 +1,7 @@
 import XCTest
 import NIOCore
 import NIOHTTP1
+import AsyncHTTPClient
 @testable import FountainRuntime
 
 final class AsyncHTTPClientDriverTests: XCTestCase {
@@ -52,6 +53,21 @@ final class AsyncHTTPClientDriverTests: XCTestCase {
             XCTAssertNotNil(error)
         }
         try await client.shutdown()
+    }
+
+    /// Ensures calling shutdown twice surfaces an already shutdown error.
+    func testShutdownTwiceThrows() async throws {
+        let client = AsyncHTTPClientDriver()
+        try await client.shutdown()
+        do {
+            try await client.shutdown()
+            XCTFail("Expected alreadyShutdown error")
+        } catch {
+            guard let httpError = error as? HTTPClientError else {
+                return XCTFail("Unexpected error: \(error)")
+            }
+            XCTAssertEqual(httpError, .alreadyShutdown)
+        }
     }
 }
 
