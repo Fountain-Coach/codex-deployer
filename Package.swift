@@ -2,7 +2,10 @@
 import PackageDescription
 import Foundation
  
-let LEAN = (ProcessInfo.processInfo.environment["LEAN_TESTS"] == "1")
+// Default to a lean build on local macOS toolchains to avoid external
+// dependencies that require system shims (e.g., Swift Numerics Accelerate).
+// Set FULL_TESTS=1 to build the full stack.
+let LEAN = (ProcessInfo.processInfo.environment["FULL_TESTS"] != "1")
 
 var products: [Product] = LEAN ? [
     // Lean mode: only gateway-related products
@@ -45,7 +48,8 @@ var targets: [Target] = LEAN ? [
             .product(name: "NIOHTTP1", package: "swift-nio"),
             "Yams",
             .product(name: "Crypto", package: "swift-crypto"),
-            .product(name: "Logging", package: "swift-log")
+            .product(name: "Logging", package: "swift-log"),
+            .product(name: "Numerics", package: "swift-numerics")
         ],
         path: "libs/FountainCodex",
         exclude: ["FountainCodex/DNS/README.md"]
@@ -380,6 +384,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-certificates.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.5.0"),
         .package(url: "https://github.com/Fountain-Coach/midi2.git", from: "0.3.0"),
+        .package(url: "https://github.com/apple/swift-numerics.git", from: "1.0.0"),
         .package(url: "https://github.com/Fountain-Coach/semantic-browser.git", from: "0.0.1")
     ],
     targets: targets
