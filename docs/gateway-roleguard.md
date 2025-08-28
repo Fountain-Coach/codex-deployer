@@ -9,8 +9,10 @@ Example `Configuration/roleguard.yml`:
 
 ```
 rules:
-  "/awareness": "admin"
-  "/bootstrap": "admin"
+  "/awareness":
+    roles: ["admin", "ops"]
+    scopes: ["awareness.read"]
+  "/bootstrap": "admin"  # string still supported (shorthand for roles: ["admin"])
 ```
 
 - Keys are path prefixes; the longest matching prefix wins.
