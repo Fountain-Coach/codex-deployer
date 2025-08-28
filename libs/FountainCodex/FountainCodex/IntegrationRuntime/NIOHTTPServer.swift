@@ -82,17 +82,49 @@ public final class NIOHTTPServer: @unchecked Sendable {
                     context.eventLoop.execute {
                         var headers = HTTPHeaders()
                         for (k, v) in resp.headers { headers.add(name: k, value: v) }
+                        let isSSE = headers.contains(name: "Content-Type", value: "text/event-stream", caseInsensitive: true)
+                        let chunkedSSE = isSSE && headers.contains(name: "X-Chunked-SSE", value: "1", caseInsensitive: true)
+
                         var responseHead = HTTPResponseHead(version: head.version, status: .init(statusCode: resp.status))
+                        if chunkedSSE {
+                            // Ensure chunked transfer for streaming writes
+                            headers.remove(name: "Content-Length")
+                            headers.replaceOrAdd(name: "Transfer-Encoding", value: "chunked")
+                        }
                         responseHead.headers = headers
                         context.write(self.wrapOutboundOut(.head(responseHead)), promise: nil)
-                        let buffer = context.channel.allocator.buffer(bytes: resp.body)
-                        context.write(self.wrapOutboundOut(.body(.byteBuffer(buffer))), promise: nil)
-                        context.writeAndFlush(self.wrapOutboundOut(.end(nil)), promise: nil)
+
+                        if chunkedSSE {
+                            // Split body into SSE event chunks on blank line boundaries and flush with small delays
+                            let text = String(data: resp.body, encoding: .utf8) ?? ""
+                            let parts = text.components(separatedBy: "\n\n").map { $0 + "\n\n" }.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+                            self.writeSSEChunks(parts, on: context, index: 0)
+                        } else {
+                            let buffer = context.channel.allocator.buffer(bytes: resp.body)
+                            context.write(self.wrapOutboundOut(.body(.byteBuffer(buffer))), promise: nil)
+                            context.writeAndFlush(self.wrapOutboundOut(.end(nil)), promise: nil)
+                        }
                     }
                 }
                 self.head = nil
                 self.body = nil
             }
+        }
+    }
+
+    private func writeSSEChunks(_ chunks: [String], on context: ChannelHandlerContext, index: Int) {
+        if index >= chunks.count {
+            context.writeAndFlush(self.wrapOutboundOut(.end(nil)), promise: nil)
+            return
+        }
+        let data = Data(chunks[index].utf8)
+        let buf = context.channel.allocator.buffer(bytes: data)
+        context.write(self.wrapOutboundOut(.body(.byteBuffer(buf))), promise: nil)
+        context.flush()
+        // Spread chunks slightly to emulate streaming and avoid coalescing
+        context.eventLoop.scheduleTask(in: .milliseconds(50)) { [weak self] in
+            guard let self else { return }
+            self.writeSSEChunks(chunks, on: context, index: index + 1)
         }
     }
 }

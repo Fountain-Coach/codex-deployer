@@ -98,7 +98,8 @@ public final class BootstrapRouter: @unchecked Sendable {
                 : heartbeat
                 
                 """
-                return HTTPResponse(status: 200, headers: ["Content-Type": "text/event-stream", "Cache-Control": "no-cache"], body: Data(sse.utf8))
+                // Add X-Chunked-SSE to instruct NIOHTTPServer to flush in multiple chunks
+                return HTTPResponse(status: 200, headers: ["Content-Type": "text/event-stream", "Cache-Control": "no-cache", "X-Chunked-SSE": "1"], body: Data(sse.utf8))
             } else {
                 let data = try JSONSerialization.data(withJSONObject: [:])
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
