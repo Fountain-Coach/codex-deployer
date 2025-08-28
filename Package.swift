@@ -1,28 +1,13 @@
 // swift-tools-version: 6.1
 import PackageDescription
 import Foundation
- 
-// Default to a lean build on local macOS toolchains to avoid external
-// dependencies that require system shims (e.g., Swift Numerics Accelerate).
-// Set FULL_TESTS=1 to build the full stack.
+
+// Lean build mode avoids building the entire stack on local macOS toolchains.
+// Set FULL_TESTS=1 to build and test all targets.
 let LEAN = (ProcessInfo.processInfo.environment["FULL_TESTS"] != "1")
 
-var products: [Product] = LEAN ? [
-    // Lean mode: only gateway-related products
+let fullProducts: [Product] = [
     .library(name: "FountainCodex", targets: ["FountainCodex"]),
-    // Preferred product name for the shared runtime
-    .library(name: "FountainRuntime", targets: ["FountainRuntime"]),
-    .executable(name: "gateway-server", targets: ["gateway-server"]),
-    .library(name: "LLMGatewayPlugin", targets: ["LLMGatewayPlugin"]),
-    .library(name: "AuthGatewayPlugin", targets: ["AuthGatewayPlugin"]),
-    .library(name: "RateLimiterGatewayPlugin", targets: ["RateLimiterGatewayPlugin"]),
-    .library(name: "BudgetBreakerGatewayPlugin", targets: ["BudgetBreakerGatewayPlugin"]),
-    .library(name: "PayloadInspectionGatewayPlugin", targets: ["PayloadInspectionGatewayPlugin"]),
-    .library(name: "DestructiveGuardianGatewayPlugin", targets: ["DestructiveGuardianGatewayPlugin"]),
-    .library(name: "SecuritySentinelGatewayPlugin", targets: ["SecuritySentinelGatewayPlugin"])
-] : [
-    .library(name: "FountainCodex", targets: ["FountainCodex"]),
-    // Preferred product name for the shared runtime
     .library(name: "FountainRuntime", targets: ["FountainRuntime"]),
     .library(name: "TypesensePersistence", targets: ["TypesensePersistence"]),
     .library(name: "MIDI2Models", targets: ["MIDI2Models"]),
@@ -37,94 +22,22 @@ var products: [Product] = LEAN ? [
     .executable(name: "sse-client", targets: ["sse-client"])
 ]
 
-var targets: [Target] = LEAN ? [
-    // Core gateway + plugins only
-    .target(
-        name: "FountainCodex",
-        dependencies: [
-            .product(name: "AsyncHTTPClient", package: "async-http-client"),
-            .product(name: "NIO", package: "swift-nio"),
-            .product(name: "NIOCore", package: "swift-nio"),
-            .product(name: "NIOHTTP1", package: "swift-nio"),
-            "Yams",
-            .product(name: "Crypto", package: "swift-crypto"),
-            .product(name: "Logging", package: "swift-log"),
-            .product(name: "Numerics", package: "swift-numerics")
-        ],
-        path: "libs/FountainCodex",
-        exclude: ["FountainCodex/DNS/README.md"]
-    ),
-    .target(
-        name: "FountainRuntime",
-        dependencies: ["FountainCodex"],
-        path: "libs/FountainRuntime"
-    ),
-    .executableTarget(
-        name: "gateway-server",
-        dependencies: [
-            "FountainRuntime",
-            "PublishingFrontend",
-            "LLMGatewayPlugin",
-            "AuthGatewayPlugin",
-            "RateLimiterGatewayPlugin",
-            "BudgetBreakerGatewayPlugin",
-            "PayloadInspectionGatewayPlugin",
-            "DestructiveGuardianGatewayPlugin",
-            "SecuritySentinelGatewayPlugin",
-            .product(name: "Crypto", package: "swift-crypto"),
-            .product(name: "X509", package: "swift-certificates"),
-            "Yams"
-        ],
-        path: "apps/GatewayServer"
-    ),
-    .target(
-        name: "LLMGatewayPlugin",
-        dependencies: ["FountainRuntime"],
-        path: "libs/GatewayPlugins/LLMGatewayPlugin"
-    ),
-    .target(
-        name: "AuthGatewayPlugin",
-        dependencies: ["FountainRuntime", .product(name: "Crypto", package: "swift-crypto")],
-        path: "libs/GatewayPlugins/AuthGatewayPlugin"
-    ),
-    .target(
-        name: "RateLimiterGatewayPlugin",
-        dependencies: ["FountainRuntime"],
-        path: "libs/GatewayPlugins/RateLimiterGatewayPlugin"
-    ),
-    .target(
-        name: "BudgetBreakerGatewayPlugin",
-        dependencies: ["FountainRuntime"],
-        path: "libs/GatewayPlugins/BudgetBreakerGatewayPlugin"
-    ),
-    .target(
-        name: "PayloadInspectionGatewayPlugin",
-        dependencies: ["FountainRuntime"],
-        path: "libs/GatewayPlugins/PayloadInspectionGatewayPlugin"
-    ),
-    .target(
-        name: "DestructiveGuardianGatewayPlugin",
-        dependencies: ["FountainRuntime"],
-        path: "libs/GatewayPlugins/DestructiveGuardianGatewayPlugin"
-    ),
-    .target(
-        name: "SecuritySentinelGatewayPlugin",
-        dependencies: ["FountainRuntime"],
-        path: "libs/GatewayPlugins/SecuritySentinelGatewayPlugin"
-    ),
-    .target(
-        name: "PublishingFrontend",
-        dependencies: ["FountainRuntime", "Yams"],
-        path: "libs/PublishingFrontend"
-    ),
-    // Tests (gateway-focused)
-    .testTarget(
-        name: "IntegrationRuntimeTests",
-        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin"],
-        path: "Tests/IntegrationRuntimeTests",
-        resources: [.process("Fixtures")]
-    )
-] : [
+let leanProducts: [Product] = [
+    .library(name: "FountainCodex", targets: ["FountainCodex"]),
+    .library(name: "FountainRuntime", targets: ["FountainRuntime"]),
+    .executable(name: "gateway-server", targets: ["gateway-server"]),
+    .library(name: "LLMGatewayPlugin", targets: ["LLMGatewayPlugin"]),
+    .library(name: "AuthGatewayPlugin", targets: ["AuthGatewayPlugin"]),
+    .library(name: "RateLimiterGatewayPlugin", targets: ["RateLimiterGatewayPlugin"]),
+    .library(name: "BudgetBreakerGatewayPlugin", targets: ["BudgetBreakerGatewayPlugin"]),
+    .library(name: "PayloadInspectionGatewayPlugin", targets: ["PayloadInspectionGatewayPlugin"]),
+    .library(name: "DestructiveGuardianGatewayPlugin", targets: ["DestructiveGuardianGatewayPlugin"]),
+    .library(name: "SecuritySentinelGatewayPlugin", targets: ["SecuritySentinelGatewayPlugin"])
+]
+
+let products: [Product] = LEAN ? leanProducts : fullProducts
+
+let fullTargets: [Target] = [
     .target(
         name: "FountainCodex",
         dependencies: [
@@ -362,6 +275,94 @@ var targets: [Target] = LEAN ? [
         path: "Tests/OpenAPIConformanceTests"
     )
 ]
+
+let leanTargets: [Target] = [
+    .target(
+        name: "FountainCodex",
+        dependencies: [
+            .product(name: "AsyncHTTPClient", package: "async-http-client"),
+            .product(name: "NIO", package: "swift-nio"),
+            .product(name: "NIOCore", package: "swift-nio"),
+            .product(name: "NIOHTTP1", package: "swift-nio"),
+            "Yams",
+            .product(name: "Crypto", package: "swift-crypto"),
+            .product(name: "Logging", package: "swift-log")
+        ],
+        path: "libs/FountainCodex",
+        exclude: ["FountainCodex/DNS/README.md"]
+    ),
+    .target(
+        name: "FountainRuntime",
+        dependencies: ["FountainCodex"],
+        path: "libs/FountainRuntime"
+    ),
+    .executableTarget(
+        name: "gateway-server",
+        dependencies: [
+            "FountainRuntime",
+            "PublishingFrontend",
+            "LLMGatewayPlugin",
+            "AuthGatewayPlugin",
+            "RateLimiterGatewayPlugin",
+            "BudgetBreakerGatewayPlugin",
+            "PayloadInspectionGatewayPlugin",
+            "DestructiveGuardianGatewayPlugin",
+            "SecuritySentinelGatewayPlugin",
+            .product(name: "Crypto", package: "swift-crypto"),
+            .product(name: "X509", package: "swift-certificates"),
+            "Yams"
+        ],
+        path: "apps/GatewayServer"
+    ),
+    .target(
+        name: "LLMGatewayPlugin",
+        dependencies: ["FountainRuntime"],
+        path: "libs/GatewayPlugins/LLMGatewayPlugin"
+    ),
+    .target(
+        name: "AuthGatewayPlugin",
+        dependencies: ["FountainRuntime", .product(name: "Crypto", package: "swift-crypto")],
+        path: "libs/GatewayPlugins/AuthGatewayPlugin"
+    ),
+    .target(
+        name: "RateLimiterGatewayPlugin",
+        dependencies: ["FountainRuntime"],
+        path: "libs/GatewayPlugins/RateLimiterGatewayPlugin"
+    ),
+    .target(
+        name: "BudgetBreakerGatewayPlugin",
+        dependencies: ["FountainRuntime"],
+        path: "libs/GatewayPlugins/BudgetBreakerGatewayPlugin"
+    ),
+    .target(
+        name: "PayloadInspectionGatewayPlugin",
+        dependencies: ["FountainRuntime"],
+        path: "libs/GatewayPlugins/PayloadInspectionGatewayPlugin"
+    ),
+    .target(
+        name: "DestructiveGuardianGatewayPlugin",
+        dependencies: ["FountainRuntime"],
+        path: "libs/GatewayPlugins/DestructiveGuardianGatewayPlugin"
+    ),
+    .target(
+        name: "SecuritySentinelGatewayPlugin",
+        dependencies: ["FountainRuntime"],
+        path: "libs/GatewayPlugins/SecuritySentinelGatewayPlugin"
+    ),
+    .target(
+        name: "PublishingFrontend",
+        dependencies: ["FountainRuntime", "Yams"],
+        path: "libs/PublishingFrontend"
+    ),
+    .testTarget(
+        name: "IntegrationRuntimeTests",
+        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin"],
+        path: "Tests/IntegrationRuntimeTests",
+        resources: [.process("Fixtures")]
+    )
+]
+
+let targets: [Target] = LEAN ? leanTargets : fullTargets
 
 #if os(Linux)
 products.append(.library(name: "PDFiumExtractor", targets: ["PDFiumExtractor"]))
