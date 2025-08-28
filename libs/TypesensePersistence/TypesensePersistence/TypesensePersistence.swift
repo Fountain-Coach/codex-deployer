@@ -17,6 +17,9 @@ public actor TypesensePersistenceService {
         try? await client.createCollection(name: "corpora", fields: [("corpusId", "string")], defaultSortingField: "corpusId")
         try? await client.createCollection(name: "baselines", fields: [("corpusId", "string"), ("baselineId", "string"), ("content", "string")], defaultSortingField: "baselineId")
         try? await client.createCollection(name: "reflections", fields: [("corpusId", "string"), ("reflectionId", "string"), ("question", "string"), ("content", "string")], defaultSortingField: "reflectionId")
+        try? await client.createCollection(name: "drifts", fields: [("corpusId", "string"), ("driftId", "string"), ("content", "string")], defaultSortingField: "driftId")
+        try? await client.createCollection(name: "patterns", fields: [("corpusId", "string"), ("patternsId", "string"), ("content", "string")], defaultSortingField: "patternsId")
+        try? await client.createCollection(name: "roles", fields: [("corpusId", "string"), ("name", "string"), ("prompt", "string")], defaultSortingField: "name")
         try? await client.createCollection(name: "functions", fields: [("corpusId", "string"), ("functionId", "string"), ("name", "string"), ("description", "string"), ("httpMethod", "string"), ("httpPath", "string")], defaultSortingField: "functionId")
     }
 
@@ -75,6 +78,35 @@ public actor TypesensePersistenceService {
         let slice = Array(decoded.dropFirst(min(offset, total)).prefix(limit))
         return (total, slice)
      }
+
+    // MARK: - Drift
+    public func addDrift(_ drift: Drift) async throws -> SuccessResponse {
+        await ensureCollections()
+        let payload = try JSONEncoder().encode(drift)
+        try await client.upsert(collectionName: "drifts", document: payload)
+        return SuccessResponse(message: "ok")
+    }
+
+    // MARK: - Patterns
+    public func addPatterns(_ patterns: Patterns) async throws -> SuccessResponse {
+        await ensureCollections()
+        let payload = try JSONEncoder().encode(patterns)
+        try await client.upsert(collectionName: "patterns", document: payload)
+        return SuccessResponse(message: "ok")
+    }
+
+    // MARK: - Roles
+    public func addRole(_ role: Role) async throws -> SuccessResponse {
+        await ensureCollections()
+        let payload = try JSONEncoder().encode(role)
+        try await client.upsert(collectionName: "roles", document: payload)
+        return SuccessResponse(message: "ok")
+    }
+
+    public func seedDefaultRoles(corpusId: String, defaults: [Role]) async throws -> SuccessResponse {
+        for role in defaults { _ = try await addRole(role) }
+        return SuccessResponse(message: "seeded")
+    }
 
     // MARK: - Functions
     public func addFunction(_ function: FunctionModel) async throws -> SuccessResponse {

@@ -29,6 +29,42 @@ public struct Reflection: Codable, Sendable {
     }
 }
 
+public struct Drift: Codable, Sendable {
+    public let corpusId: String
+    public let driftId: String
+    public let content: String
+
+    public init(corpusId: String, driftId: String, content: String) {
+        self.corpusId = corpusId
+        self.driftId = driftId
+        self.content = content
+    }
+}
+
+public struct Patterns: Codable, Sendable {
+    public let corpusId: String
+    public let patternsId: String
+    public let content: String
+
+    public init(corpusId: String, patternsId: String, content: String) {
+        self.corpusId = corpusId
+        self.patternsId = patternsId
+        self.content = content
+    }
+}
+
+public struct Role: Codable, Sendable {
+    public let corpusId: String
+    public let name: String
+    public let prompt: String
+
+    public init(corpusId: String, name: String, prompt: String) {
+        self.corpusId = corpusId
+        self.name = name
+        self.prompt = prompt
+    }
+}
+
 public struct FunctionModel: Codable, Sendable {
     public let corpusId: String
     public let functionId: String
