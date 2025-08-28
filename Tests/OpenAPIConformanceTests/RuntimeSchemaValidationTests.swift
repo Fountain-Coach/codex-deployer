@@ -37,6 +37,33 @@ final class RuntimeSchemaValidationTests: XCTestCase {
         try await server.stop()
     }
 
+    @MainActor
+    func testReflectionsSummaryMatchesSchema() async throws {
+        // Start awareness via NIO kernel; seed a reflection
+        let svc = TypesensePersistenceService(client: MockTypesenseClient())
+        await svc.ensureCollections()
+        let router = AwarenessRouter(persistence: svc)
+        _ = try await router.route(.init(method: "POST", path: "/corpus/init", body: try JSONEncoder().encode(InitIn(corpusId: "rfx"))))
+        _ = try await router.route(.init(method: "POST", path: "/corpus/reflections", body: try JSONEncoder().encode(ReflectionRequest(corpusId: "rfx", reflectionId: "r1", question: "q", content: "a"))))
+
+        let kernel = makeAwarenessKernel(service: svc)
+        let server = NIOHTTPServer(kernel: kernel)
+        let port = try await server.start(port: 0)
+        let (data, resp) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:\(port)/corpus/reflections/rfx")!)
+        XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 200)
+        let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+
+        let url = URL(fileURLWithPath: "openapi/v1/baseline-awareness.yml")
+        let text = try String(contentsOf: url)
+        let yaml = try Yams.load(yaml: text) as? [String: Any]
+        let schemas = (yaml?["components"] as? [String: Any])?["schemas"] as? [String: Any]
+        guard let reflSummary = schemas?["ReflectionSummaryResponse"] as? [String: Any] else {
+            return XCTFail("ReflectionSummaryResponse missing in spec")
+        }
+        XCTAssertTrue(OpenAPISchemaValidator.validate(object: obj ?? [:], against: reflSummary))
+        try await server.stop()
+    }
+
 
     @MainActor
     func testBootstrapRoleDefaultsMatchesSchema() async throws {
