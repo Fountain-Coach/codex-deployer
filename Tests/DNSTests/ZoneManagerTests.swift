@@ -86,6 +86,87 @@ final class ZoneManagerTests: XCTestCase {
         let output = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
         XCTAssertTrue(output.contains("Update zone file"))
     }
+
+    func testListAndDeleteZonesAndRecords() async throws {
+        let file = temporaryFile()
+        let manager = try ZoneManager(fileURL: file)
+        let zone1 = try await manager.createZone(name: "example.com")
+        let zone2 = try await manager.createZone(name: "example.org")
+        let record1 = try await manager.createRecord(zoneId: zone1.id, name: "www", type: "A", value: "1.1.1.1")
+        _ = try await manager.createRecord(zoneId: zone2.id, name: "", type: "A", value: "2.2.2.2")
+
+        let zones = await manager.listZones()
+        XCTAssertEqual(zones.count, 2)
+
+        let recordsZone1 = await manager.listRecords(zoneId: zone1.id)
+        XCTAssertEqual(recordsZone1?.count, 1)
+
+        _ = try await manager.deleteRecord(zoneId: zone1.id, recordId: record1!.id)
+        let afterDeleteRecords = await manager.listRecords(zoneId: zone1.id)
+        XCTAssertEqual(afterDeleteRecords?.count, 0)
+
+        _ = try await manager.deleteZone(id: zone2.id)
+        let zonesAfterDelete = await manager.listZones()
+        XCTAssertEqual(zonesAfterDelete.count, 1)
+    }
+
+    func testUpdatesStreamEmitsOnModification() async throws {
+        let file = temporaryFile()
+        let manager = try ZoneManager(fileURL: file)
+        var iterator = manager.updates.makeAsyncIterator()
+        _ = await iterator.next() // initial snapshot
+
+        let zone = try await manager.createZone(name: "example.com")
+        _ = await iterator.next() // snapshot after zone creation
+        let record = try await manager.createRecord(zoneId: zone.id, name: "", type: "A", value: "1.1.1.1")
+        let afterCreate = await iterator.next()
+        let key = ZoneManager.RecordKey(name: "example.com", type: "A")
+        XCTAssertEqual(afterCreate?[key]?.value, "1.1.1.1")
+
+        _ = try await manager.updateRecord(zoneId: zone.id, recordId: record!.id, name: "", type: "A", value: "2.2.2.2")
+        let afterUpdate = await iterator.next()
+        XCTAssertEqual(afterUpdate?[key]?.value, "2.2.2.2")
+    }
+
+    func testDisableGitCommitsSkipsCommit() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let file = dir.appendingPathComponent("zones.yaml")
+        try "".write(to: file, atomically: true, encoding: .utf8)
+        let initTask = Process()
+        initTask.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        initTask.currentDirectoryURL = dir
+        initTask.arguments = ["init"]
+        try initTask.run()
+        initTask.waitUntilExit()
+        let addTask = Process()
+        addTask.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        addTask.currentDirectoryURL = dir
+        addTask.arguments = ["add", "zones.yaml"]
+        try addTask.run()
+        addTask.waitUntilExit()
+        let commitTask = Process()
+        commitTask.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        commitTask.currentDirectoryURL = dir
+        commitTask.arguments = ["commit", "-m", "Initial"]
+        try commitTask.run()
+        commitTask.waitUntilExit()
+
+        let manager = try ZoneManager(fileURL: file, enableGitCommits: false)
+        let zone = try await manager.createZone(name: "example.com")
+        _ = try await manager.createRecord(zoneId: zone.id, name: "", type: "A", value: "4.4.4.4")
+
+        let logTask = Process()
+        logTask.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        logTask.currentDirectoryURL = dir
+        logTask.arguments = ["log", "--oneline"]
+        let pipe = Pipe()
+        logTask.standardOutput = pipe
+        try logTask.run()
+        logTask.waitUntilExit()
+        let output = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+        XCTAssertFalse(output.contains("Update zone file"))
+    }
 }
 
 final class ZoneManagerRecordTypeTests: XCTestCase {
