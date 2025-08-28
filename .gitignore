@@ -32,3 +32,6 @@ dispatcher.env
 *.xcuserstate
 *.plist
 .swiftpm/
+third_party/midi2/
+third_party/semantic-browser/
+third_party/typesense-swift/
