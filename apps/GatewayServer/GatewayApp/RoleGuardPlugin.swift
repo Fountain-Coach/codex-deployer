@@ -23,17 +23,22 @@ public struct RoleRequirement: Sendable, Codable, Equatable {
 /// Simple role/scope-based access control plugin.
 /// Enforces required roles and/or scopes for requests matching configured path prefixes.
 public struct RoleGuardPlugin: GatewayPlugin, Sendable {
-    public let rules: [String: RoleRequirement] // prefix -> requirements
+    private let store: RoleGuardStore
     private let validator: TokenValidator
 
     public init(rules: [String: RoleRequirement], validator: TokenValidator = CredentialStoreValidator()) {
-        self.rules = rules
+        self.store = RoleGuardStore(initialRules: rules, configURL: nil)
+        self.validator = validator
+    }
+    public init(store: RoleGuardStore, validator: TokenValidator = CredentialStoreValidator()) {
+        self.store = store
         self.validator = validator
     }
 
     public func prepare(_ request: HTTPRequest) async throws -> HTTPRequest {
         // Find the longest matching prefix rule
         let path = request.path
+        let rules = await store.rules
         let match = rules.keys
             .filter { path == $0 || path.hasPrefix($0.hasSuffix("/") ? $0 : $0 + "/") }
             .sorted { $0.count > $1.count }

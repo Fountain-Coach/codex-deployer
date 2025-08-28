@@ -23,14 +23,14 @@ let llmPlugin = LLMGatewayPlugin(cotLogURL: cotLogPath)
 let authPlugin = AuthGatewayPlugin()
 let routesFile = URL(fileURLWithPath: "Configuration/routes.json")
 var plugins: [any GatewayPlugin] = []
-let roleRules = loadRoleGuardRules()
-if !roleRules.isEmpty {
-    // Choose validator based on environment (JWKS for HS256-oct if provided; otherwise env secret)
-    if let jwksURL = ProcessInfo.processInfo.environment["GATEWAY_JWKS_URL"], let provider = JWKSKeyProvider(jwksURL: jwksURL) {
-        plugins.append(RoleGuardPlugin(rules: roleRules, validator: HMACKeyValidator(keyProvider: provider)))
-    } else {
-        plugins.append(RoleGuardPlugin(rules: roleRules, validator: HMACKeyValidator()))
-    }
+let rgURL = roleGuardConfigURL()
+let roleRules = loadRoleGuardRules(from: rgURL)
+let roleGuardStore = RoleGuardStore(initialRules: roleRules, configURL: rgURL)
+// Choose validator based on environment (JWKS for HS256-oct if provided; otherwise env secret)
+if let jwksURL = ProcessInfo.processInfo.environment["GATEWAY_JWKS_URL"], let provider = JWKSKeyProvider(jwksURL: jwksURL) {
+    plugins.append(RoleGuardPlugin(store: roleGuardStore, validator: HMACKeyValidator(keyProvider: provider)))
+} else {
+    plugins.append(RoleGuardPlugin(store: roleGuardStore, validator: HMACKeyValidator()))
 }
 plugins.append(contentsOf: [
     authPlugin as any GatewayPlugin,
@@ -41,7 +41,7 @@ plugins.append(contentsOf: [
     PublishingFrontendPlugin(rootPath: publishingConfig?.rootPath ?? "./Public") as any GatewayPlugin
 ])
 
-let server = GatewayServer(plugins: plugins, zoneManager: nil, routeStoreURL: routesFile, certificatePath: nil, rateLimiter: rateLimiter)
+let server = GatewayServer(plugins: plugins, zoneManager: nil, routeStoreURL: routesFile, certificatePath: nil, rateLimiter: rateLimiter, roleGuardStore: roleGuardStore)
 Task { @MainActor in
     try await server.start(port: 8080)
 }

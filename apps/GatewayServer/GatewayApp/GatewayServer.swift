@@ -27,6 +27,7 @@ public final class GatewayServer {
     /// and in reverse order during ``GatewayPlugin.respond(_:for:)``.
     private let plugins: [GatewayPlugin]
     private let zoneManager: ZoneManager?
+    private let roleGuardStore: RoleGuardStore?
     private var routes: [String: RouteInfo]
     private let routesURL: URL?
     private let certificatePath: String?
@@ -78,10 +79,12 @@ public final class GatewayServer {
                 zoneManager: ZoneManager? = nil,
                 routeStoreURL: URL? = nil,
                 certificatePath: String? = nil,
-                rateLimiter: RateLimiterGatewayPlugin? = nil) {
+                rateLimiter: RateLimiterGatewayPlugin? = nil,
+                roleGuardStore: RoleGuardStore? = nil) {
         self.manager = manager
         self.plugins = plugins
         self.zoneManager = zoneManager
+        self.roleGuardStore = roleGuardStore
         self.group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
         self.routes = [:]
         self.routesURL = routeStoreURL
@@ -129,6 +132,10 @@ public final class GatewayServer {
                 response = self.gatewayReadiness()
             case ("GET", ["metrics"]):
                 response = await self.gatewayMetrics()
+            case ("GET", ["roleguard"]):
+                response = await self.listRoleGuardRules()
+            case ("POST", ["roleguard", "reload"]):
+                response = await self.reloadRoleGuardRules()
             case ("POST", ["auth", "token"]):
                 response = await self.issueAuthToken(request)
             case ("GET", ["certificates"]):
@@ -314,6 +321,21 @@ public final class GatewayServer {
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
         }
         return HTTPResponse(status: 500)
+    }
+
+    private func listRoleGuardRules() async -> HTTPResponse {
+        guard let store = roleGuardStore else { return HTTPResponse(status: 404) }
+        let rules = await store.rules
+        if let data = try? JSONEncoder().encode(rules) {
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        }
+        return HTTPResponse(status: 500)
+    }
+
+    private func reloadRoleGuardRules() async -> HTTPResponse {
+        guard let store = roleGuardStore else { return HTTPResponse(status: 404) }
+        let ok = await store.reload()
+        return HTTPResponse(status: ok ? 204 : 304)
     }
 
     public func issueAuthToken(_ request: HTTPRequest) async -> HTTPResponse {

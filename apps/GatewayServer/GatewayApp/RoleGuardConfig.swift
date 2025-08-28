@@ -1,8 +1,12 @@
 import Foundation
 import Yams
 
+public func roleGuardConfigURL(environment: [String: String] = ProcessInfo.processInfo.environment) -> URL {
+    return environment["ROLE_GUARD_PATH"].map(URL.init(fileURLWithPath:)) ?? URL(fileURLWithPath: "Configuration/roleguard.yml")
+}
+
 public func loadRoleGuardRules(from path: URL? = nil, environment: [String: String] = ProcessInfo.processInfo.environment) -> [String: RoleRequirement] {
-    let url = path ?? environment["ROLE_GUARD_PATH"].map(URL.init(fileURLWithPath:)) ?? URL(fileURLWithPath: "Configuration/roleguard.yml")
+    let url = path ?? roleGuardConfigURL(environment: environment)
     guard FileManager.default.fileExists(atPath: url.path), let text = try? String(contentsOf: url, encoding: .utf8) else { return [:] }
     do {
         if let yaml = try Yams.load(yaml: text) as? [String: Any], let rawRules = yaml["rules"] as? [String: Any] {
@@ -27,4 +31,3 @@ public func loadRoleGuardRules(from path: URL? = nil, environment: [String: Stri
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-
