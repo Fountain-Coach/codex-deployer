@@ -15,7 +15,7 @@ final class BootstrapStreamingExecutableTests: XCTestCase, URLSessionDataDelegat
         }
     }
 
-    func testStreamingEmitsDriftEventOrSkips() async throws {
+    func testStreamingEmitsDriftAndHeartbeatOrSkips() async throws {
         // Find bootstrap-server binary
         let root = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
         guard let exec = findExecutable(named: "bootstrap-server", under: root.appendingPathComponent(".build")) else {
@@ -42,6 +42,8 @@ final class BootstrapStreamingExecutableTests: XCTestCase, URLSessionDataDelegat
         req.httpBody = try JSONSerialization.data(withJSONObject: ["corpusId": "sse-x", "baselineId": "b1", "content": "x"]) 
         let task = session.dataTask(with: req)
         task.resume()
+        wait(for: [expectation!], timeout: 2.0)
+        expectation = expectation(description: "received heartbeat event")
         wait(for: [expectation!], timeout: 2.0)
 
         task.cancel()

@@ -4,9 +4,11 @@ import FountainCodex
 public struct RoleRequirement: Sendable, Codable, Equatable {
     public let roles: [String]?
     public let scopes: [String]?
-    public init(roles: [String]? = nil, scopes: [String]? = nil) {
+    public let requireAllScopes: Bool
+    public init(roles: [String]? = nil, scopes: [String]? = nil, requireAllScopes: Bool = false) {
         self.roles = roles
         self.scopes = scopes
+        self.requireAllScopes = requireAllScopes
     }
 }
 
@@ -40,7 +42,13 @@ public struct RoleGuardPlugin: GatewayPlugin, Sendable {
         // Check scopes (if any) - require any match
         if let needed = reqs.scopes, !needed.isEmpty {
             let have = Set(claims.scopes)
-            if have.intersection(needed).isEmpty { throw ForbiddenError() }
+            if reqs.requireAllScopes {
+                // Require all scopes to be present
+                if !Set(needed).isSubset(of: have) { throw ForbiddenError() }
+            } else {
+                // Require any scope match
+                if have.intersection(needed).isEmpty { throw ForbiddenError() }
+            }
         }
         return request
     }

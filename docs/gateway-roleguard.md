@@ -11,7 +11,8 @@ Example `Configuration/roleguard.yml`:
 rules:
   "/awareness":
     roles: ["admin", "ops"]
-    scopes: ["awareness.read"]
+    scopes: ["awareness.read", "awareness.write"]
+    scopes_mode: all   # require all scopes; omit or set to "any" to allow any one
   "/bootstrap": "admin"  # string still supported (shorthand for roles: ["admin"])
 ```
 

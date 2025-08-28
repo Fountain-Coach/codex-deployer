@@ -118,4 +118,23 @@ final class RuntimeSchemaValidationTests: XCTestCase {
         XCTAssertTrue(OpenAPISchemaValidator.validate(object: obj ?? [:], against: initOut))
         try await server.stop()
     }
+
+
+    @MainActor
+    func testHistoryHasTotalAndEvents() async throws {
+        let svc = TypesensePersistenceService(client: MockTypesenseClient())
+        await svc.ensureCollections()
+        let router = AwarenessRouter(persistence: svc)
+        _ = try await router.route(.init(method: "POST", path: "/corpus/init", body: try JSONEncoder().encode(InitIn(corpusId: "histx"))))
+        _ = try await router.route(.init(method: "POST", path: "/corpus/baseline", body: try JSONEncoder().encode(BaselineRequest(corpusId: "histx", baselineId: "b1", content: "x"))))
+        let kernel = makeAwarenessKernel(service: svc)
+        let server = NIOHTTPServer(kernel: kernel)
+        let port = try await server.start(port: 0)
+        let (data, resp) = try await URLSession.shared.data(from: URL(string: "http://127.0.0.1:\(port)/corpus/history?corpus_id=histx")!)
+        XCTAssertEqual((resp as? HTTPURLResponse)?.statusCode, 200)
+        let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertNotNil(obj?["total"]) ; XCTAssertTrue(obj?["total"] is Int)
+        XCTAssertNotNil(obj?["events"]) ; XCTAssertTrue(obj?["events"] is [Any])
+        try await server.stop()
+    }
 }
