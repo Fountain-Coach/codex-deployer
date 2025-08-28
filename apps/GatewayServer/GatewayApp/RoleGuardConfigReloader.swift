@@ -1,14 +1,14 @@
 import Foundation
 
 /// Periodically checks the RoleGuard config file and triggers reloads on change.
-final class RoleGuardConfigReloader {
+final class RoleGuardConfigReloader: @unchecked Sendable {
     private let store: RoleGuardStore
     private let url: URL
     private var timer: DispatchSourceTimer?
     private var lastMTime: Date?
 
-    init?(store: RoleGuardStore) async {
-        guard let url = await store.configPath else { return nil }
+    init?(store: RoleGuardStore, url: URL?) {
+        guard let url else { return nil }
         self.store = store
         self.url = url
     }
@@ -23,15 +23,15 @@ final class RoleGuardConfigReloader {
             let mtime = attrs?[.modificationDate] as? Date
             if self.lastMTime == nil { self.lastMTime = mtime }
             if let mtime, let last = self.lastMTime, mtime > last {
-                Task { [weak self] in
-                    guard let self else { return }
-                    let ok = await self.store.reload()
+                let store = self.store
+                Task.detached {
+                    let ok = await store.reload()
                     if ok {
-                        self.lastMTime = mtime
-                        let count = (await self.store.rules).count
+                        let count = (await store.rules).count
                         await RoleGuardMetrics.shared.recordReload(ruleCount: count)
                     }
                 }
+                self.lastMTime = mtime
             }
         }
         self.timer = t
@@ -45,4 +45,3 @@ final class RoleGuardConfigReloader {
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
-

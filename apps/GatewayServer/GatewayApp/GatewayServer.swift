@@ -93,6 +93,12 @@ public final class GatewayServer {
         self.certificatePath = certificatePath
         self.server = NIOHTTPServer(kernel: HTTPKernel { _ in HTTPResponse(status: 500) }, group: group)
         self.rateLimiter = rateLimiter
+        // Initialize admin token validator early
+        if let jwksURL = ProcessInfo.processInfo.environment["GATEWAY_JWKS_URL"], let provider = JWKSKeyProvider(jwksURL: jwksURL) {
+            self.adminValidator = HMACKeyValidator(keyProvider: provider)
+        } else {
+            self.adminValidator = HMACKeyValidator()
+        }
         // Load persisted routes if configured
         self.reloadRoutes()
         let kernel = HTTPKernel { [plugins, zoneManager, self] req in
@@ -210,17 +216,12 @@ public final class GatewayServer {
             }
             return response
         }
-        // Admin validator uses JWKS if provided, otherwise local HMAC
-        if let jwksURL = ProcessInfo.processInfo.environment["GATEWAY_JWKS_URL"], let provider = JWKSKeyProvider(jwksURL: jwksURL) {
-            self.adminValidator = HMACKeyValidator(keyProvider: provider)
-        } else {
-            self.adminValidator = HMACKeyValidator()
-        }
         self.server = NIOHTTPServer(kernel: kernel, group: group)
         // Kick off RoleGuard config polling if possible
         if let store = roleGuardStore {
             Task { @MainActor in
-                if let reloader = await RoleGuardConfigReloader(store: store) {
+                let url = await store.configPath
+                if let reloader = RoleGuardConfigReloader(store: store, url: url) {
                     self.roleGuardReloader = reloader
                     reloader.start(interval: 2.0)
                 }

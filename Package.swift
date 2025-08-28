@@ -136,6 +136,11 @@ var targets: [Target] = LEAN ? [
         exclude: ["FountainCodex/DNS/README.md"]
     ),
     .target(
+        name: "FountainRuntime",
+        dependencies: ["FountainCodex"],
+        path: "libs/FountainRuntime"
+    ),
+    .target(
         name: "TypesensePersistence",
         dependencies: [
             .product(name: "Typesense", package: "typesense-swift")

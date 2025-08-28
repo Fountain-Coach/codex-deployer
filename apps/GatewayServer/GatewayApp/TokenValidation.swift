@@ -118,9 +118,9 @@ public struct CredentialStoreValidator: TokenValidator {
         return TokenClaims(role: payload.role, scopes: scopes)
     }
 
-    private struct JWTPayload: Decodable { let iss: String?; let aud: String?; let sub: String?; let exp: Int; let nbf: Int?; let iat: Int?; let jti: String?; let role: String? }
+    struct JWTPayload: Decodable { let iss: String?; let aud: String?; let sub: String?; let exp: Int; let nbf: Int?; let iat: Int?; let jti: String?; let role: String? }
 
-    private static func verifyAndDecode(token: String, key: SymmetricKey, options: JWTValidationOptions) -> JWTPayload? {
+    static func verifyAndDecode(token: String, key: SymmetricKey, options: JWTValidationOptions) -> JWTPayload? {
         let parts = token.split(separator: ".")
         guard parts.count == 3 else { return nil }
         let headerPayload = parts[0] + "." + parts[1]
