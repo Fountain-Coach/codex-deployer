@@ -24,6 +24,32 @@ final class GatewayPluginTests: XCTestCase {
         XCTAssertEqual(result.status, response.status)
         XCTAssertEqual(result.body, response.body)
     }
+
+    /// Plugins should receive responses in the reverse order of registration.
+    func testPipelineRespondsInReverseOrder() async throws {
+        actor OrderTracker { var names: [String] = []; func record(_ n: String) { names.append(n) }; func snapshot() -> [String] { names } }
+        struct RecordingPlugin: GatewayPlugin {
+            let name: String
+            let tracker: OrderTracker
+            func respond(_ response: HTTPResponse, for request: HTTPRequest) async throws -> HTTPResponse {
+                await tracker.record(name)
+                return response
+            }
+        }
+        let tracker = OrderTracker()
+        let plugins: [GatewayPlugin] = [
+            RecordingPlugin(name: "A", tracker: tracker),
+            RecordingPlugin(name: "B", tracker: tracker),
+            RecordingPlugin(name: "C", tracker: tracker)
+        ]
+        var resp = HTTPResponse(status: 200)
+        let req = HTTPRequest(method: "GET", path: "/")
+        for plugin in plugins.reversed() {
+            resp = try await plugin.respond(resp, for: req)
+        }
+        let order = await tracker.snapshot()
+        XCTAssertEqual(order, ["C", "B", "A"])
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

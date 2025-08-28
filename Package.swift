@@ -208,7 +208,7 @@ let fullTargets: [Target] = [
     .testTarget(name: "DNSTests", dependencies: ["PublishingFrontend", "FountainRuntime", .product(name: "Crypto", package: "swift-crypto"), .product(name: "NIOEmbedded", package: "swift-nio"), .product(name: "NIO", package: "swift-nio")], path: "Tests/DNSTests"),
     .testTarget(
         name: "IntegrationRuntimeTests",
-        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin"],
+        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin", .product(name: "NIO", package: "swift-nio")],
         path: "Tests/IntegrationRuntimeTests",
         resources: [.process("Fixtures")]
     ),
@@ -345,7 +345,7 @@ let leanTargets: [Target] = [
     ),
     .testTarget(
         name: "IntegrationRuntimeTests",
-        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin"],
+        dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin", .product(name: "NIO", package: "swift-nio")],
         path: "Tests/IntegrationRuntimeTests",
         resources: [.process("Fixtures")]
     )
