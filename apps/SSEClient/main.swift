@@ -1,4 +1,5 @@
 import Foundation
+import FoundationNetworking
 
 @MainActor
 class SSEClient: NSObject, @preconcurrency URLSessionDataDelegate {
@@ -23,7 +24,11 @@ class SSEClient: NSObject, @preconcurrency URLSessionDataDelegate {
 
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) { received.append(data); guard let text = String(data: data, encoding: .utf8) else { return }; for line in text.split(separator: "\n", omittingEmptySubsequences: false) { if line.hasPrefix(":") { log("comment \(line)"); continue }; if line.hasPrefix("event:") { log(String(line)) }; if line.hasPrefix("data:") { print(String(line.dropFirst(5)).trimmingCharacters(in: .whitespaces)) } } }
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) { if let error { log("connection closed: \(error.localizedDescription)") } else { log("connection closed") }; scheduleReconnect() }
-    fileprivate func log(_ msg: String) { fputs("[sse] \(msg)\n", stderr) }
+    fileprivate func log(_ msg: String) {
+        if let data = "[sse] \(msg)\n".data(using: .utf8) {
+            FileHandle.standardError.write(data)
+        }
+    }
 }
 
 // Enhanced client with filters, field selection, formats, timeouts, retries
@@ -141,7 +146,9 @@ while i < args.count {
     urlString = a; i += 1
 }
 guard let raw = urlString, let url = URL(string: raw) else {
-    fputs("Usage: sse-client [--event name]* [--pretty] [--field path] [--format text|json|raw] [--timeout secs] [--max-retries n] <url>\n", stderr)
+    if let data = "Usage: sse-client [--event name]* [--pretty] [--field path] [--format text|json|raw] [--timeout secs] [--max-retries n] <url>\n".data(using: .utf8) {
+        FileHandle.standardError.write(data)
+    }
     exit(2)
 }
 FilteringSSEClient(url: url, filters: filters, pretty: pretty, format: format, timeout: timeout, maxRetries: maxRetries, fieldPath: fieldPath).start()

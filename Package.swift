@@ -14,7 +14,6 @@ let fullProducts: [Product] = [
     .library(name: "MIDI2Core", targets: ["MIDI2Core"]),
     .library(name: "FlexBridge", targets: ["FlexBridge"]),
     .library(name: "SSEOverMIDI", targets: ["SSEOverMIDI"]),
-    .executable(name: "clientgen-service", targets: ["clientgen-service"]),
     .executable(name: "gateway-server", targets: ["gateway-server"]),
     .executable(name: "publishing-frontend", targets: ["publishing-frontend"]),
     .executable(name: "flexctl", targets: ["flexctl"]),
@@ -35,11 +34,18 @@ let leanProducts: [Product] = [
     .library(name: "SecuritySentinelGatewayPlugin", targets: ["SecuritySentinelGatewayPlugin"])
 ]
 
-let products: [Product] = LEAN ? leanProducts : fullProducts
+var products: [Product] = LEAN ? leanProducts : fullProducts
 
 let fullTargets: [Target] = [
     .target(
         name: "FountainCodex",
+        dependencies: ["FountainRuntime"],
+        path: "libs/FountainCodex",
+        exclude: ["FountainCodex", "README.md"],
+        sources: ["Reexport.swift"]
+    ),
+    .target(
+        name: "FountainRuntime",
         dependencies: [
             .product(name: "AsyncHTTPClient", package: "async-http-client"),
             .product(name: "NIO", package: "swift-nio"),
@@ -50,13 +56,8 @@ let fullTargets: [Target] = [
             .product(name: "Logging", package: "swift-log"),
             .product(name: "Atomics", package: "swift-atomics")
         ],
-        path: "libs/FountainCodex",
-        exclude: ["FountainCodex/DNS/README.md"]
-    ),
-    .target(
-        name: "FountainRuntime",
-        dependencies: ["FountainCodex"],
-        path: "libs/FountainRuntime"
+        path: "libs/FountainRuntime",
+        exclude: ["DNS/README.md"]
     ),
     .target(
         name: "TypesensePersistence",
@@ -68,29 +69,9 @@ let fullTargets: [Target] = [
         path: "libs/TypesensePersistence"
     ),
     .executableTarget(
-        name: "semantic-browser-server",
-        dependencies: [
-            .product(name: "SemanticBrowser", package: "semantic-browser"),
-        ],
-        path: "apps/SemanticBrowserServer",
-        exclude: ["README.md"]
-    ),
-    .executableTarget(
         name: "sse-client",
         dependencies: [],
         path: "apps/SSEClient"
-    ),
-        .testTarget(
-        name: "SemanticBrowserTests",
-        dependencies: [
-            .product(name: "SemanticBrowser", package: "semantic-browser"),
-        ],
-        path: "Tests/SemanticBrowserTests"
-    ),
-    .executableTarget(
-        name: "clientgen-service",
-        dependencies: ["FountainRuntime"],
-        path: "apps/ClientgenService"
     ),
     .executableTarget(
         name: "gateway-server",
@@ -284,6 +265,13 @@ let fullTargets: [Target] = [
 let leanTargets: [Target] = [
     .target(
         name: "FountainCodex",
+        dependencies: ["FountainRuntime"],
+        path: "libs/FountainCodex",
+        exclude: ["FountainCodex", "README.md"],
+        sources: ["Reexport.swift"]
+    ),
+    .target(
+        name: "FountainRuntime",
         dependencies: [
             .product(name: "AsyncHTTPClient", package: "async-http-client"),
             .product(name: "NIO", package: "swift-nio"),
@@ -291,15 +279,11 @@ let leanTargets: [Target] = [
             .product(name: "NIOHTTP1", package: "swift-nio"),
             "Yams",
             .product(name: "Crypto", package: "swift-crypto"),
-            .product(name: "Logging", package: "swift-log")
+            .product(name: "Logging", package: "swift-log"),
+            .product(name: "Atomics", package: "swift-atomics")
         ],
-        path: "libs/FountainCodex",
-        exclude: ["FountainCodex/DNS/README.md"]
-    ),
-    .target(
-        name: "FountainRuntime",
-        dependencies: ["FountainCodex"],
-        path: "libs/FountainRuntime"
+        path: "libs/FountainRuntime",
+        exclude: ["DNS/README.md"]
     ),
     .executableTarget(
         name: "gateway-server",
@@ -367,7 +351,7 @@ let leanTargets: [Target] = [
     )
 ]
 
-let targets: [Target] = LEAN ? leanTargets : fullTargets
+var targets: [Target] = LEAN ? leanTargets : fullTargets
 
 #if os(Linux)
 products.append(.library(name: "PDFiumExtractor", targets: ["PDFiumExtractor"]))
@@ -392,7 +376,6 @@ let package = Package(
         .package(url: "https://github.com/Fountain-Coach/midi2.git", from: "0.3.1"),
         .package(url: "https://github.com/apple/swift-numerics.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-atomics.git", from: "1.3.0"),
-        .package(url: "https://github.com/Fountain-Coach/semantic-browser.git", from: "0.0.2")
     ],
     targets: targets
 )
