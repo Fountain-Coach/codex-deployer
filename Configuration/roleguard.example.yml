@@ -1,0 +1,13 @@
+rules:
+  "/awareness":
+    roles: ["admin", "ops"]
+    scopes: ["awareness.read"]
+    scopes_mode: any
+  "/awareness/write":
+    roles: ["admin"]
+    scopes: ["awareness.write"]
+    scopes_mode: all
+  "/awareness/experimental":
+    deny: true
+  "/bootstrap": "admin"
+

@@ -366,4 +366,32 @@ components:
           type: string
           title: Message
 
+    HistoryEventsResponse:
+      type: object
+      title: HistoryEventsResponse
+      required:
+        - total
+        - events
+      properties:
+        total:
+          type: integer
+          title: Total
+        events:
+          type: array
+          title: Events
+          items:
+            type: object
+            required: [type]
+            properties:
+              type:
+                type: string
+              id:
+                type: string
+              content_len:
+                type: integer
+              question:
+                type: string
+              ts:
+                type: number
+
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

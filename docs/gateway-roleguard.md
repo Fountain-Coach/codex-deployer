@@ -41,3 +41,17 @@ curl -H "Authorization: Bearer $admin" http://localhost:8080/awareness/health
 ```
 
 © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
+
+
+Advanced examples
+
+```
+rules:
+  "/awareness":
+    roles: ["admin", "ops"]
+    scopes: ["awareness.read", "awareness.write"]
+    scopes_mode: all     # require both scopes
+    methods: ["POST"]   # only apply to POSTs
+  "/awareness/experimental":
+    deny: true           # deny this subtree regardless of token
+```
