@@ -50,12 +50,57 @@ final class SimpleHTTPRuntime: @unchecked Sendable {
         guard n > 0 else { close(fd); return }
         let data = Data(buffer[0..<n])
         guard let request = parseRequest(data) else { close(fd); return }
+        // True SSE streaming path
+        if request.path.hasPrefix("/bootstrap/baseline") && request.path.contains("sse=1") {
+            Task {
+                await self.streamBaselineSSE(fd: fd, request: request)
+            }
+            return
+        }
         Task {
             let resp = try await router.route(request)
             let respData = serialize(resp)
             respData.withUnsafeBytes { _ = write(fd, $0.baseAddress!, respData.count) }
             close(fd)
         }
+    }
+
+    private func writeAll(_ fd: Int32, _ data: Data) {
+        data.withUnsafeBytes { ptr in
+            var written = 0
+            while written < data.count {
+                let n = write(fd, ptr.baseAddress! + written, data.count - written)
+                if n <= 0 { break }
+                written += n
+            }
+        }
+    }
+
+    private func streamBaselineSSE(fd: Int32, request: BootstrapService.HTTPRequest) async {
+        // Write HTTP headers for chunked SSE
+        let headers = "HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\nCache-Control: no-cache\r\nConnection: keep-alive\r\nTransfer-Encoding: chunked\r\n\r\n"
+        writeAll(fd, Data(headers.utf8))
+        // Decode body
+        guard let input = try? JSONDecoder().decode(BootstrapService.BaselineIn.self, from: request.body) else {
+            _ = write(fd, "0\r\n\r\n".data(using: .utf8)!)
+            close(fd)
+            return
+        }
+        // Prepare events and persist
+        let events = (try? await router.prepareBaselineEvents(input: input)) ?? ["event: error\ndata: {}\n\n"]
+        // Stream each event as chunk
+        for e in events {
+            let chunk = Data(e.utf8)
+            let size = String(format: "%X\r\n", chunk.count)
+            writeAll(fd, Data(size.utf8))
+            writeAll(fd, chunk)
+            writeAll(fd, Data("\r\n".utf8))
+            // small delay to simulate streaming
+            usleep(50_000)
+        }
+        // End of chunks
+        writeAll(fd, Data("0\r\n\r\n".utf8))
+        close(fd)
     }
 
     private func parseRequest(_ data: Data) -> BootstrapService.HTTPRequest? {

@@ -13,11 +13,13 @@ public struct Baseline: Codable, Sendable {
     public let corpusId: String
     public let baselineId: String
     public let content: String
+    public let ts: Double
 
-    public init(corpusId: String, baselineId: String, content: String) {
+    public init(corpusId: String, baselineId: String, content: String, ts: Double = Date().timeIntervalSince1970) {
         self.corpusId = corpusId
         self.baselineId = baselineId
         self.content = content
+        self.ts = ts
     }
 }
 
@@ -26,12 +28,14 @@ public struct Reflection: Codable, Sendable {
     public let reflectionId: String
     public let question: String
     public let content: String
+    public let ts: Double
 
-    public init(corpusId: String, reflectionId: String, question: String, content: String) {
+    public init(corpusId: String, reflectionId: String, question: String, content: String, ts: Double = Date().timeIntervalSince1970) {
         self.corpusId = corpusId
         self.reflectionId = reflectionId
         self.question = question
         self.content = content
+        self.ts = ts
     }
 }
 
@@ -39,11 +43,13 @@ public struct Drift: Codable, Sendable {
     public let corpusId: String
     public let driftId: String
     public let content: String
+    public let ts: Double
 
-    public init(corpusId: String, driftId: String, content: String) {
+    public init(corpusId: String, driftId: String, content: String, ts: Double = Date().timeIntervalSince1970) {
         self.corpusId = corpusId
         self.driftId = driftId
         self.content = content
+        self.ts = ts
     }
 }
 
@@ -51,11 +57,13 @@ public struct Patterns: Codable, Sendable {
     public let corpusId: String
     public let patternsId: String
     public let content: String
+    public let ts: Double
 
-    public init(corpusId: String, patternsId: String, content: String) {
+    public init(corpusId: String, patternsId: String, content: String, ts: Double = Date().timeIntervalSince1970) {
         self.corpusId = corpusId
         self.patternsId = patternsId
         self.content = content
+        self.ts = ts
     }
 }
 

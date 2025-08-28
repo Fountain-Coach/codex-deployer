@@ -102,10 +102,15 @@ public final class AwarenessRouter: @unchecked Sendable {
             let (dt, drifts) = try await persistence.listDrifts(corpusId: corpusId, limit: 1000, offset: 0)
             let (pt, patterns) = try await persistence.listPatterns(corpusId: corpusId, limit: 1000, offset: 0)
             var events: [[String: Any]] = []
-            for b in baselines { events.append(["type": "baseline", "id": b.baselineId, "content_len": b.content.count]) }
-            for r in reflections { events.append(["type": "reflection", "id": r.reflectionId, "question": r.question]) }
-            for d in drifts { events.append(["type": "drift", "id": d.driftId, "content_len": d.content.count]) }
-            for p in patterns { events.append(["type": "patterns", "id": p.patternsId, "content_len": p.content.count]) }
+            for b in baselines { events.append(["type": "baseline", "id": b.baselineId, "content_len": b.content.count, "ts": b.ts]) }
+            for r in reflections { events.append(["type": "reflection", "id": r.reflectionId, "question": r.question, "ts": r.ts]) }
+            for d in drifts { events.append(["type": "drift", "id": d.driftId, "content_len": d.content.count, "ts": d.ts]) }
+            for p in patterns { events.append(["type": "patterns", "id": p.patternsId, "content_len": p.content.count, "ts": p.ts]) }
+            events.sort { (a, b) -> Bool in
+                let ta = (a["ts"] as? Double) ?? 0
+                let tb = (b["ts"] as? Double) ?? 0
+                return ta < tb
+            }
             let obj: [String: Any] = [
                 "total": bt + rt + dt + pt,
                 "events": events

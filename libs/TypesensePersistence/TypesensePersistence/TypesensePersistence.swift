@@ -15,10 +15,10 @@ public actor TypesensePersistenceService {
     public func ensureCollections() async {
         // Idempotent best-effort creation
         try? await client.createCollection(name: "corpora", fields: [("corpusId", "string")], defaultSortingField: "corpusId")
-        try? await client.createCollection(name: "baselines", fields: [("corpusId", "string"), ("baselineId", "string"), ("content", "string")], defaultSortingField: "baselineId")
-        try? await client.createCollection(name: "reflections", fields: [("corpusId", "string"), ("reflectionId", "string"), ("question", "string"), ("content", "string")], defaultSortingField: "reflectionId")
-        try? await client.createCollection(name: "drifts", fields: [("corpusId", "string"), ("driftId", "string"), ("content", "string")], defaultSortingField: "driftId")
-        try? await client.createCollection(name: "patterns", fields: [("corpusId", "string"), ("patternsId", "string"), ("content", "string")], defaultSortingField: "patternsId")
+        try? await client.createCollection(name: "baselines", fields: [("corpusId", "string"), ("baselineId", "string"), ("content", "string"), ("ts", "float")], defaultSortingField: "baselineId")
+        try? await client.createCollection(name: "reflections", fields: [("corpusId", "string"), ("reflectionId", "string"), ("question", "string"), ("content", "string"), ("ts", "float")], defaultSortingField: "reflectionId")
+        try? await client.createCollection(name: "drifts", fields: [("corpusId", "string"), ("driftId", "string"), ("content", "string"), ("ts", "float")], defaultSortingField: "driftId")
+        try? await client.createCollection(name: "patterns", fields: [("corpusId", "string"), ("patternsId", "string"), ("content", "string"), ("ts", "float")], defaultSortingField: "patternsId")
         try? await client.createCollection(name: "roles", fields: [("corpusId", "string"), ("name", "string"), ("prompt", "string")], defaultSortingField: "name")
         try? await client.createCollection(name: "functions", fields: [("corpusId", "string"), ("functionId", "string"), ("name", "string"), ("description", "string"), ("httpMethod", "string"), ("httpPath", "string")], defaultSortingField: "functionId")
     }

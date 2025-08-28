@@ -107,4 +107,19 @@ public func makeBootstrapKernel(service svc: TypesensePersistenceService) -> HTT
     }
 }
 
+public extension BootstrapRouter {
+    func prepareBaselineEvents(input: BaselineIn) async throws -> [String] {
+        _ = try await self.persistence.addBaseline(.init(corpusId: input.corpusId, baselineId: input.baselineId, content: input.content))
+        Task.detached { [persistence] in
+            _ = try? await persistence.addDrift(.init(corpusId: input.corpusId, driftId: "\(input.baselineId)-drift", content: "auto-generated drift"))
+            _ = try? await persistence.addPatterns(.init(corpusId: input.corpusId, patternsId: "\(input.baselineId)-patterns", content: "auto-generated patterns"))
+        }
+        return [
+            "event: drift\ndata: {\"status\":\"started\"}\n\n",
+            "event: patterns\ndata: {\"status\":\"started\"}\n\n",
+            "event: complete\ndata: {}\n\n"
+        ]
+    }
+}
+
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
