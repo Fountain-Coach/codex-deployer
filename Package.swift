@@ -324,7 +324,12 @@ let fullTargets: [Target] = [
         name: "ToolServerTests",
         dependencies: ["ToolServerService", "Yams"],
         path: "Tests/ToolServerTests"
-    )
+    ),
+    .testTarget(
+        name: "OpenAPICuratorTests",
+        dependencies: [.product(name: "OpenAPICurator", package: "OpenAPICurator")],
+        path: "Tests/OpenAPICuratorTests"
+    ),
 ]
 
 let leanTargets: [Target] = [
@@ -458,7 +463,12 @@ let leanTargets: [Target] = [
         name: "ToolServerTests",
         dependencies: ["ToolServerService", "Yams"],
         path: "Tests/ToolServerTests"
-    )
+    ),
+    .testTarget(
+        name: "OpenAPICuratorTests",
+        dependencies: [.product(name: "OpenAPICurator", package: "OpenAPICurator")],
+        path: "Tests/OpenAPICuratorTests"
+    ),
 ]
 
 var targets: [Target] = LEAN ? leanTargets : fullTargets
@@ -486,6 +496,7 @@ let package = Package(
         .package(url: "https://github.com/Fountain-Coach/midi2.git", from: "0.3.1"),
         .package(url: "https://github.com/apple/swift-numerics.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-atomics.git", from: "1.3.0"),
+        .package(path: "libs/OpenAPICurator"),
     ],
     targets: targets
 )
