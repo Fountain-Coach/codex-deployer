@@ -79,50 +79,87 @@ public final class PlannerRouter: @unchecked Sendable {
     let persistence: TypesensePersistenceService
     public init(persistence: TypesensePersistenceService) { self.persistence = persistence }
 
+    // MARK: - Operation Handlers
+
+    /// `POST /planner/reason`
+    public func planner_reason(_ input: UserObjectiveRequest) async throws -> HTTPResponse {
+        let plan = PlanResponse(objective: input.objective, steps: [])
+        let data = try JSONEncoder().encode(plan)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    /// `POST /planner/execute`
+    public func planner_execute(_ input: PlanExecutionRequest) async throws -> HTTPResponse {
+        let results = input.steps.map { FunctionCallResult(step: $0.name, arguments: $0.arguments, output: "ok") }
+        let data = try JSONEncoder().encode(ExecutionResult(results: results))
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    /// `GET /planner/corpora`
+    public func planner_list_corpora() async throws -> HTTPResponse {
+        let (_, corpora) = try await persistence.listCorpora()
+        let data = try JSONEncoder().encode(corpora)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    /// `GET /planner/reflections/{corpus_id}`
+    public func get_reflection_history(corpusId: String) async throws -> HTTPResponse {
+        let (_, refs) = try await persistence.listReflections(corpusId: corpusId)
+        let items = refs.map { ReflectionItem(timestamp: String($0.ts), content: $0.content) }
+        let data = try JSONEncoder().encode(HistoryListResponse(reflections: items))
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    /// `GET /planner/reflections/{corpus_id}/semantic-arc`
+    public func get_semantic_arc(corpusId: String) async throws -> HTTPResponse {
+        let (_, refs) = try await persistence.listReflections(corpusId: corpusId)
+        let obj: [String: Any] = ["corpus_id": corpusId, "total": refs.count]
+        let data = try JSONSerialization.data(withJSONObject: obj)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    /// `POST /planner/reflections`
+    public func post_reflection(_ input: ChatReflectionRequest) async throws -> HTTPResponse {
+        let reflection = Reflection(corpusId: input.corpusId, reflectionId: UUID().uuidString, question: input.message, content: input.message)
+        _ = try await persistence.addReflection(reflection)
+        let item = ReflectionItem(timestamp: String(reflection.ts), content: reflection.content)
+        let data = try JSONEncoder().encode(item)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    /// `GET /metrics`
+    public func metrics_metrics_get() async throws -> HTTPResponse {
+        let body = Data("planner_requests_total 0\n".utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+    }
+
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
         let pathOnly = request.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? request.path
         let segments = pathOnly.split(separator: "/", omittingEmptySubsequences: true)
         switch (request.method, segments) {
         case ("POST", ["planner", "reason"]):
-            if let obj = try? JSONDecoder().decode(UserObjectiveRequest.self, from: request.body) {
-                let plan = PlanResponse(objective: obj.objective, steps: [])
-                let data = try JSONEncoder().encode(plan)
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            guard let obj = try? JSONDecoder().decode(UserObjectiveRequest.self, from: request.body) else {
+                return HTTPResponse(status: 422)
             }
-            return HTTPResponse(status: 422)
+            return try await planner_reason(obj)
         case ("POST", ["planner", "execute"]):
-            if let obj = try? JSONDecoder().decode(PlanExecutionRequest.self, from: request.body) {
-                let results = obj.steps.map { FunctionCallResult(step: $0.name, arguments: $0.arguments, output: "ok") }
-                let data = try JSONEncoder().encode(ExecutionResult(results: results))
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            guard let obj = try? JSONDecoder().decode(PlanExecutionRequest.self, from: request.body) else {
+                return HTTPResponse(status: 422)
             }
-            return HTTPResponse(status: 422)
+            return try await planner_execute(obj)
         case ("GET", ["planner", "corpora"]):
-            let (_, corpora) = try await persistence.listCorpora()
-            let data = try JSONEncoder().encode(corpora)
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            return try await planner_list_corpora()
         case ("GET", ["planner", "reflections", let corpusId]):
-            let (_, refs) = try await persistence.listReflections(corpusId: String(corpusId))
-            let items = refs.map { ReflectionItem(timestamp: String($0.ts), content: $0.content) }
-            let data = try JSONEncoder().encode(HistoryListResponse(reflections: items))
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            return try await get_reflection_history(corpusId: String(corpusId))
         case ("GET", ["planner", "reflections", let corpusId, "semantic-arc"]):
-            let (_, refs) = try await persistence.listReflections(corpusId: String(corpusId))
-            let obj: [String: Any] = ["corpus_id": String(corpusId), "total": refs.count]
-            let data = try JSONSerialization.data(withJSONObject: obj)
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            return try await get_semantic_arc(corpusId: String(corpusId))
         case ("POST", ["planner", "reflections"]):
-            if let incoming = try? JSONDecoder().decode(ChatReflectionRequest.self, from: request.body) {
-                let reflection = Reflection(corpusId: incoming.corpusId, reflectionId: UUID().uuidString, question: incoming.message, content: incoming.message)
-                _ = try await persistence.addReflection(reflection)
-                let item = ReflectionItem(timestamp: String(reflection.ts), content: reflection.content)
-                let data = try JSONEncoder().encode(item)
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            guard let incoming = try? JSONDecoder().decode(ChatReflectionRequest.self, from: request.body) else {
+                return HTTPResponse(status: 422)
             }
-            return HTTPResponse(status: 422)
+            return try await post_reflection(incoming)
         case ("GET", ["metrics"]):
-            let body = Data("planner_requests_total 0\n".utf8)
-            return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+            return try await metrics_metrics_get()
         default:
             return HTTPResponse(status: 404)
         }
