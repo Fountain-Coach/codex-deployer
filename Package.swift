@@ -23,7 +23,8 @@ let fullProducts: [Product] = [
     .executable(name: "planner-server", targets: ["planner-server"]),
     .library(name: "FunctionCallerService", targets: ["FunctionCallerService"]),
     .executable(name: "function-caller-server", targets: ["function-caller-server"]),
-    .library(name: "ToolsFactoryService", targets: ["ToolsFactoryService"])
+    .library(name: "ToolsFactoryService", targets: ["ToolsFactoryService"]),
+    .executable(name: "openapi-curator-cli", targets: ["openapi-curator-cli"])
 ]
 
 let leanProducts: [Product] = [
@@ -78,6 +79,11 @@ let fullTargets: [Target] = [
         name: "sse-client",
         dependencies: [],
         path: "apps/SSEClient"
+    ),
+    .executableTarget(
+        name: "openapi-curator-cli",
+        dependencies: ["OpenAPICurator"],
+        path: "apps/OpenAPICuratorCLI"
     ),
     .executableTarget(
         name: "gateway-server",
