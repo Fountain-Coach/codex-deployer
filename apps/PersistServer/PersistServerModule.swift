@@ -2,6 +2,22 @@ import Foundation
 import FountainRuntime
 import TypesensePersistence
 
+public func metrics_metrics_get() async -> HTTPResponse {
+    let uptime = Int(ProcessInfo.processInfo.systemUptime)
+    let body = Data("persist_uptime_seconds \(uptime)\n".utf8)
+    return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+}
+
+public func listFunctionsInCorpus(service svc: TypesensePersistenceService, corpusId: String, limit: Int, offset: Int, q: String?) async throws -> HTTPResponse {
+    let (total, functions) = try await svc.listFunctions(corpusId: corpusId, limit: limit, offset: offset, q: q)
+    let obj: [String: Any] = [
+        "total": total,
+        "functions": try functions.map { try JSONSerialization.jsonObject(with: JSONEncoder().encode($0)) }
+    ]
+    let json = try JSONSerialization.data(withJSONObject: obj)
+    return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+}
+
 public func makePersistKernel(service svc: TypesensePersistenceService) -> HTTPKernel {
     HTTPKernel { req in
         let pathOnly = req.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? req.path
@@ -9,8 +25,7 @@ public func makePersistKernel(service svc: TypesensePersistenceService) -> HTTPK
         do {
             switch (req.method, segments) {
             case ("GET", ["metrics"]):
-                let body = Data("persist_requests_total 0\n".utf8)
-                return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+                return await metrics_metrics_get()
 
             case ("GET", ["corpora"]):
                 let qp = queryParams(from: req.path)
@@ -112,13 +127,7 @@ public func makePersistKernel(service svc: TypesensePersistenceService) -> HTTPK
                 let limit = min(max(Int(qp["limit"] ?? "50") ?? 50, 1), 200)
                 let offset = max(Int(qp["offset"] ?? "0") ?? 0, 0)
                 let q = qp["q"]
-                let (total, functions) = try await svc.listFunctions(corpusId: corpusId, limit: limit, offset: offset, q: q)
-                let obj: [String: Any] = [
-                    "total": total,
-                    "functions": try functions.map { try JSONSerialization.jsonObject(with: JSONEncoder().encode($0)) }
-                ]
-                let json = try JSONSerialization.data(withJSONObject: obj)
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
+                return try await listFunctionsInCorpus(service: svc, corpusId: corpusId, limit: limit, offset: offset, q: q)
 
             case ("GET", let seg) where seg.count == 2 && seg[0] == "functions":
                 let functionId = String(seg[1])
