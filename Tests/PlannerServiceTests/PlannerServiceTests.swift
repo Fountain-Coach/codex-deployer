@@ -69,6 +69,15 @@ final class PlannerServiceTests: XCTestCase {
         let obj = try JSONSerialization.jsonObject(with: resp.body) as? [String: Any]
         XCTAssertEqual(obj?["total"] as? Int, 1)
     }
+
+    func testMetricsEndpoint() async throws {
+        let svc = TypesensePersistenceService(client: MockTypesenseClient())
+        let router = PlannerRouter(persistence: svc)
+        let resp = try await router.route(.init(method: "GET", path: "/metrics"))
+        XCTAssertEqual(resp.status, 200)
+        let text = String(data: resp.body, encoding: .utf8) ?? ""
+        XCTAssertTrue(text.contains("planner_requests_total"))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
