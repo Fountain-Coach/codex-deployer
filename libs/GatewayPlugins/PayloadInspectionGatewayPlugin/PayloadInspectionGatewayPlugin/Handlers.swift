@@ -5,8 +5,8 @@ import FountainRuntime
 public actor Handlers {
     public init() {}
 
-    /// Inspects the provided payload and returns a sanitized response.
-    public func inspect(_ request: HTTPRequest, body: PayloadInspectionRequest?) async throws -> HTTPResponse {
+    /// Inspects the provided payload and returns sanitized content with any violations.
+    public func inspectPayload(_ request: HTTPRequest, body: PayloadInspectionRequest?) async throws -> HTTPResponse {
         guard let body else { return HTTPResponse(status: 400) }
         let response = PayloadInspectionResponse(sanitized: body.payload, violations: [])
         let data = try JSONEncoder().encode(response)
