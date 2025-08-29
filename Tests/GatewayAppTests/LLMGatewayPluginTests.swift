@@ -25,7 +25,18 @@ final class LLMGatewayPluginTests: XCTestCase {
         XCTAssertEqual(allowDecision.decision, "allow")
     }
 
-    func testChatCoTRoleRedaction() async throws {
+    func testChatWithObjective() async throws {
+        let plugin = LLMGatewayPlugin()
+        let chat = ChatRequest(model: "gpt", messages: [MessageObject(role: "user", content: "hi")], include_cot: true)
+        let data = try JSONEncoder().encode(chat)
+        let req = HTTPRequest(method: "POST", path: "/chat", body: data)
+        let resp = try await plugin.router.route(req)
+        let obj = try JSONSerialization.jsonObject(with: resp!.body) as? [String: Any]
+        XCTAssertNotNil(obj?["id"])
+        XCTAssertNotNil(obj?["cot"])
+    }
+
+    func testGetChatCoTRoleRedaction() async throws {
         let logURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         let entry = ["id": "chat-1", "cot": "my secret plan"]
         let data = try JSONSerialization.data(withJSONObject: entry)
@@ -42,6 +53,15 @@ final class LLMGatewayPluginTests: XCTestCase {
         let userObj = try JSONSerialization.jsonObject(with: userResp!.body) as? [String: Any]
         XCTAssertNotNil(userObj?["cot_summary"] as? String)
         XCTAssertNil(userObj?["cot"])
+    }
+
+    func testMetricsEndpoint() async throws {
+        let plugin = LLMGatewayPlugin()
+        let req = HTTPRequest(method: "GET", path: "/metrics")
+        let resp = try await plugin.router.route(req)
+        XCTAssertEqual(resp?.status, 200)
+        let body = String(data: resp!.body, encoding: .utf8)!
+        XCTAssertTrue(body.contains("llm_gateway_uptime_seconds"))
     }
 
     @MainActor
