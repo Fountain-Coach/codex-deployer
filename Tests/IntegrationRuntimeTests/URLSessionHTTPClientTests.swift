@@ -9,7 +9,7 @@ import NIOHTTP1
 
 final class URLSessionHTTPClientTests: XCTestCase {
     private class MockURLProtocol: URLProtocol {
-        nonisolated(unsafe) static var handler: (@Sendable (URLRequest) -> (HTTPURLResponse, Data))?
+        nonisolated(unsafe) static var handler: (@Sendable (URLRequest) throws -> (URLResponse, Data))?
         static func bodyData(from request: URLRequest) -> Data {
             if let body = request.httpBody { return body }
             guard let stream = request.httpBodyStream else { return Data() }
@@ -32,10 +32,14 @@ final class URLSessionHTTPClientTests: XCTestCase {
         override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
         override func startLoading() {
             guard let handler = MockURLProtocol.handler else { return }
-            let (resp, data) = handler(request)
-            client?.urlProtocol(self, didReceive: resp, cacheStoragePolicy: .notAllowed)
-            client?.urlProtocol(self, didLoad: data)
-            client?.urlProtocolDidFinishLoading(self)
+            do {
+                let (resp, data) = try handler(request)
+                client?.urlProtocol(self, didReceive: resp, cacheStoragePolicy: .notAllowed)
+                client?.urlProtocol(self, didLoad: data)
+                client?.urlProtocolDidFinishLoading(self)
+            } catch {
+                client?.urlProtocol(self, didFailWithError: error)
+            }
         }
         override func stopLoading() {}
     }
@@ -89,6 +93,23 @@ final class URLSessionHTTPClientTests: XCTestCase {
         let (_, headers) = try await client.execute(method: .GET, url: "http://localhost", body: nil)
         XCTAssertEqual(headers.first(name: "X-A"), "a")
         XCTAssertEqual(headers.first(name: "X-B"), "b")
+    }
+
+    func testExecutePropagatesSessionError() async {
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [MockURLProtocol.self]
+        let session = URLSession(configuration: config)
+        struct TestError: Error {}
+        MockURLProtocol.handler = { _ in throw TestError() }
+        let client = URLSessionHTTPClient(session: session)
+        do {
+            _ = try await client.execute(method: .GET, url: "http://localhost", body: nil)
+            XCTFail("Expected to throw")
+        } catch is TestError {
+            // expected
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
     }
 
     func testExecuteThrowsOnInvalidURL() async {
