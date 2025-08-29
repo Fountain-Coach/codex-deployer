@@ -18,7 +18,9 @@ let fullProducts: [Product] = [
     .executable(name: "publishing-frontend", targets: ["publishing-frontend"]),
     .executable(name: "flexctl", targets: ["flexctl"]),
     .executable(name: "tools-factory-server", targets: ["tools-factory-server"]),
-    .executable(name: "sse-client", targets: ["sse-client"])
+    .executable(name: "sse-client", targets: ["sse-client"]),
+    .library(name: "PlannerService", targets: ["PlannerService"]),
+    .executable(name: "planner-server", targets: ["planner-server"])
 ]
 
 let leanProducts: [Product] = [
@@ -141,6 +143,11 @@ let fullTargets: [Target] = [
         dependencies: ["TypesensePersistence", .product(name: "Numerics", package: "swift-numerics"), .product(name: "Atomics", package: "swift-atomics")],
         path: "libs/BootstrapService"
     ),
+    .target(
+        name: "PlannerService",
+        dependencies: ["FountainRuntime", "TypesensePersistence"],
+        path: "libs/PlannerService"
+    ),
     .executableTarget(
         name: "publishing-frontend",
         dependencies: ["PublishingFrontend"],
@@ -187,6 +194,11 @@ let fullTargets: [Target] = [
         name: "tools-factory-server",
         dependencies: ["ToolServer", "TypesensePersistence"],
         path: "apps/ToolsFactoryServer"
+    ),
+    .executableTarget(
+        name: "planner-server",
+        dependencies: ["FountainRuntime", "TypesensePersistence", "PlannerService", "Yams"],
+        path: "apps/PlannerServer"
     ),
     .executableTarget(
         name: "persist-server",
@@ -249,6 +261,11 @@ let fullTargets: [Target] = [
         name: "BootstrapServiceTests",
         dependencies: ["BootstrapService", "TypesensePersistence"],
         path: "Tests/BootstrapServiceTests"
+    ),
+    .testTarget(
+        name: "PlannerServiceTests",
+        dependencies: ["PlannerService", "TypesensePersistence", "Yams"],
+        path: "Tests/PlannerServiceTests"
     ),
     .testTarget(
         name: "E2ETests",
