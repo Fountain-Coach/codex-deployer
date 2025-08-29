@@ -18,29 +18,110 @@ public final class AwarenessRouter: @unchecked Sendable {
     let persistence: TypesensePersistenceService
     public init(persistence: TypesensePersistenceService) { self.persistence = persistence }
 
+    // MARK: - Operation Handlers
+
+    public func health_health_get() async throws -> HTTPResponse {
+        let data = try JSONSerialization.data(withJSONObject: ["status": "ok"])
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    public func initializeCorpus(_ input: InitIn) async throws -> HTTPResponse {
+        let req = TypesensePersistence.CorpusCreateRequest(corpusId: input.corpusId)
+        let resp = try await persistence.createCorpus(req)
+        let out = InitOut(message: "corpus \(resp.corpusId) created")
+        let data = try JSONEncoder().encode(out)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    public func listHistory(corpusId: String) async throws -> HTTPResponse {
+        let (bCount, _) = try await persistence.listBaselines(corpusId: corpusId)
+        let (rCount, _) = try await persistence.listReflections(corpusId: corpusId)
+        let summary = "baselines=\(bCount), reflections=\(rCount)"
+        let data = try JSONEncoder().encode(HistorySummaryResponse(summary: summary))
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    public func summarizeHistory(corpusId: String) async throws -> HTTPResponse {
+        let (bCount, _) = try await persistence.listBaselines(corpusId: corpusId)
+        let (rCount, _) = try await persistence.listReflections(corpusId: corpusId)
+        let summary = "summary for \(corpusId): baselines=\(bCount), reflections=\(rCount)"
+        let data = try JSONEncoder().encode(HistorySummaryResponse(summary: summary))
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    public func listHistoryAnalytics(corpusId: String) async throws -> HTTPResponse {
+        let (bt, baselines) = try await persistence.listBaselines(corpusId: corpusId, limit: 1000, offset: 0)
+        let (rt, reflections) = try await persistence.listReflections(corpusId: corpusId, limit: 1000, offset: 0)
+        let (dt, drifts) = try await persistence.listDrifts(corpusId: corpusId, limit: 1000, offset: 0)
+        let (pt, patterns) = try await persistence.listPatterns(corpusId: corpusId, limit: 1000, offset: 0)
+        var events: [[String: Any]] = []
+        for b in baselines { events.append(["type": "baseline", "id": b.baselineId, "content_len": b.content.count, "ts": b.ts]) }
+        for r in reflections { events.append(["type": "reflection", "id": r.reflectionId, "question": r.question, "ts": r.ts]) }
+        for d in drifts { events.append(["type": "drift", "id": d.driftId, "content_len": d.content.count, "ts": d.ts]) }
+        for p in patterns { events.append(["type": "patterns", "id": p.patternsId, "content_len": p.content.count, "ts": p.ts]) }
+        events.sort { ((($0["ts"] as? Double) ?? 0) < (($1["ts"] as? Double) ?? 0)) }
+        let obj: [String: Any] = ["total": bt + rt + dt + pt, "events": events]
+        let data = try JSONSerialization.data(withJSONObject: obj)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    public func readSemanticArc(corpusId: String) async throws -> HTTPResponse {
+        let (bt, _) = try await persistence.listBaselines(corpusId: corpusId, limit: 1000, offset: 0)
+        let (rt, _) = try await persistence.listReflections(corpusId: corpusId, limit: 1000, offset: 0)
+        let (dt, _) = try await persistence.listDrifts(corpusId: corpusId, limit: 1000, offset: 0)
+        let (pt, _) = try await persistence.listPatterns(corpusId: corpusId, limit: 1000, offset: 0)
+        let total = max(bt + rt + dt + pt, 1)
+        let arc: [[String: Any]] = [
+            ["phase": "baseline", "weight": bt, "pct": Double(bt) / Double(total)],
+            ["phase": "reflections", "weight": rt, "pct": Double(rt) / Double(total)],
+            ["phase": "drift", "weight": dt, "pct": Double(dt) / Double(total)],
+            ["phase": "patterns", "weight": pt, "pct": Double(pt) / Double(total)]
+        ]
+        let data = try JSONSerialization.data(withJSONObject: ["arc": arc, "total": total])
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    public func streamHistoryAnalytics(isSSE: Bool) async throws -> HTTPResponse {
+        if isSSE {
+            let sse = """
+            event: tick
+            data: {"status":"started","kind":"tick"}
+
+            : heartbeat
+
+            event: complete
+            data: {}
+
+            """
+            return HTTPResponse(status: 200, headers: ["Content-Type": "text/event-stream", "Cache-Control": "no-cache"], body: Data(sse.utf8))
+        } else {
+            let data = try JSONSerialization.data(withJSONObject: [:])
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        }
+    }
+
+    public func metrics_metrics_get() async throws -> HTTPResponse {
+        let uptime = Int(ProcessInfo.processInfo.systemUptime)
+        let body = Data("awareness_uptime_seconds \(uptime)\n".utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+    }
+
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
         let pathOnly = request.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? request.path
         switch (request.method, pathOnly) {
         case ("GET", "/health"):
-            let data = try JSONSerialization.data(withJSONObject: ["status": "ok"]) 
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            return try await health_health_get()
         case ("GET", "/live"):
-            let data = try JSONSerialization.data(withJSONObject: ["status": "live"]) 
+            let data = try JSONSerialization.data(withJSONObject: ["status": "live"])
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         case ("GET", "/ready"):
-            let data = try JSONSerialization.data(withJSONObject: ["status": "ready"]) 
+            let data = try JSONSerialization.data(withJSONObject: ["status": "ready"])
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         case ("GET", "/metrics"):
-            let uptime = Int(ProcessInfo.processInfo.systemUptime)
-            let body = Data("awareness_uptime_seconds \(uptime)\n".utf8)
-            return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+            return try await metrics_metrics_get()
         case ("POST", "/corpus/init"):
             if let input = try? JSONDecoder().decode(InitIn.self, from: request.body) {
-                let req = TypesensePersistence.CorpusCreateRequest(corpusId: input.corpusId)
-                let resp = try await persistence.createCorpus(req)
-                let out = InitOut(message: "corpus \(resp.corpusId) created")
-                let data = try JSONEncoder().encode(out)
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+                return try await initializeCorpus(input)
             }
             return HTTPResponse(status: 422, headers: ["Content-Type": "application/json"], body: Data())
         case ("POST", "/corpus/baseline"):
@@ -83,83 +164,28 @@ public final class AwarenessRouter: @unchecked Sendable {
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         }
         if request.method == "GET" && segments.count == 3 && segments[0] == "corpus" && segments[1] == "history" {
-            let corpusId = segments[2]
-            let (bCount, _) = try await persistence.listBaselines(corpusId: corpusId)
-            let (rCount, _) = try await persistence.listReflections(corpusId: corpusId)
-            let summary = "baselines=\(bCount), reflections=\(rCount)"
-            let data = try JSONEncoder().encode(HistorySummaryResponse(summary: summary))
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            return try await listHistory(corpusId: segments[2])
         }
         if request.method == "GET" && segments.count == 3 && segments[0] == "corpus" && segments[1] == "summary" {
-            let corpusId = segments[2]
-            let (bCount, _) = try await persistence.listBaselines(corpusId: corpusId)
-            let (rCount, _) = try await persistence.listReflections(corpusId: corpusId)
-            let summary = "summary for \(corpusId): baselines=\(bCount), reflections=\(rCount)"
-            let data = try JSONEncoder().encode(HistorySummaryResponse(summary: summary))
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            return try await summarizeHistory(corpusId: segments[2])
         }
         if request.method == "GET" && pathOnly == "/corpus/history" {
             let qp = Self.queryParams(from: request.path)
             guard let corpusId = qp["corpus_id"], !corpusId.isEmpty else {
                 return HTTPResponse(status: 422, headers: ["Content-Type": "application/json"], body: Data())
             }
-            let (bt, baselines) = try await persistence.listBaselines(corpusId: corpusId, limit: 1000, offset: 0)
-            let (rt, reflections) = try await persistence.listReflections(corpusId: corpusId, limit: 1000, offset: 0)
-            let (dt, drifts) = try await persistence.listDrifts(corpusId: corpusId, limit: 1000, offset: 0)
-            let (pt, patterns) = try await persistence.listPatterns(corpusId: corpusId, limit: 1000, offset: 0)
-            var events: [[String: Any]] = []
-            for b in baselines { events.append(["type": "baseline", "id": b.baselineId, "content_len": b.content.count, "ts": b.ts]) }
-            for r in reflections { events.append(["type": "reflection", "id": r.reflectionId, "question": r.question, "ts": r.ts]) }
-            for d in drifts { events.append(["type": "drift", "id": d.driftId, "content_len": d.content.count, "ts": d.ts]) }
-            for p in patterns { events.append(["type": "patterns", "id": p.patternsId, "content_len": p.content.count, "ts": p.ts]) }
-            events.sort { (a, b) -> Bool in
-                let ta = (a["ts"] as? Double) ?? 0
-                let tb = (b["ts"] as? Double) ?? 0
-                return ta < tb
-            }
-            let obj: [String: Any] = [
-                "total": bt + rt + dt + pt,
-                "events": events
-            ]
-            let data = try JSONSerialization.data(withJSONObject: obj)
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            return try await listHistoryAnalytics(corpusId: corpusId)
         }
         if request.method == "GET" && pathOnly == "/corpus/semantic-arc" {
             let qp = Self.queryParams(from: request.path)
             guard let corpusId = qp["corpus_id"], !corpusId.isEmpty else {
                 return HTTPResponse(status: 422, headers: ["Content-Type": "application/json"], body: Data())
             }
-            let (bt, _) = try await persistence.listBaselines(corpusId: corpusId, limit: 1000, offset: 0)
-            let (rt, _) = try await persistence.listReflections(corpusId: corpusId, limit: 1000, offset: 0)
-            let (dt, _) = try await persistence.listDrifts(corpusId: corpusId, limit: 1000, offset: 0)
-            let (pt, _) = try await persistence.listPatterns(corpusId: corpusId, limit: 1000, offset: 0)
-            let total = max(bt + rt + dt + pt, 1)
-            let arc = [
-                ["phase": "baseline", "weight": bt, "pct": Double(bt) / Double(total)],
-                ["phase": "reflections", "weight": rt, "pct": Double(rt) / Double(total)],
-                ["phase": "drift", "weight": dt, "pct": Double(dt) / Double(total)],
-                ["phase": "patterns", "weight": pt, "pct": Double(pt) / Double(total)]
-            ]
-            let data = try JSONSerialization.data(withJSONObject: ["arc": arc, "total": total])
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            return try await readSemanticArc(corpusId: corpusId)
         }
         if request.method == "GET" && pathOnly == "/corpus/history/stream" {
-            if request.path.contains("sse=1") {
-                let sse = """
-                event: tick
-                data: {"status":"started","kind":"tick"}
-
-                : heartbeat
-
-                event: complete
-                data: {}
-                
-                """
-                return HTTPResponse(status: 200, headers: ["Content-Type": "text/event-stream", "Cache-Control": "no-cache"], body: Data(sse.utf8))
-            } else {
-                let data = try JSONSerialization.data(withJSONObject: [:])
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
-            }
+            let sse = request.path.contains("sse=1")
+            return try await streamHistoryAnalytics(isSSE: sse)
         }
         return HTTPResponse(status: 404)
     }
