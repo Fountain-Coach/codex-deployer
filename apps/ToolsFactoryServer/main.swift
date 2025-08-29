@@ -1,12 +1,7 @@
-import ToolServer
-import TypesensePersistence
 import Foundation
-import Dispatch
-#if os(Linux)
-import Glibc
-#else
-import Darwin
-#endif
+import TypesensePersistence
+import ToolsFactoryService
+import FountainRuntime
 
 let adapters: [String: ToolAdapter] = [
     "imagemagick": ImageMagickAdapter(),
@@ -22,132 +17,30 @@ let adapters: [String: ToolAdapter] = [
 let manifestURL = URL(fileURLWithPath: "tools.json")
 let manifest = (try? ToolManifest.load(from: manifestURL)) ?? ToolManifest(image: .init(name: "", tarball: "", sha256: "", qcow2: "", qcow2_sha256: ""), tools: [:], operations: [])
 let defaultCorpus = ProcessInfo.processInfo.environment["TOOLS_FACTORY_CORPUS_ID"] ?? "tools-factory"
-let router: Router
+
 do {
+    let svc: TypesensePersistenceService
     if let url = ProcessInfo.processInfo.environment["TYPESENSE_URL"] ?? ProcessInfo.processInfo.environment["TYPESENSE_URLS"],
        let apiKey = ProcessInfo.processInfo.environment["TYPESENSE_API_KEY"], !apiKey.isEmpty {
         let urls = url.contains(",") ? url.split(separator: ",").map(String.init) : [url]
         #if canImport(Typesense)
         let client = RealTypesenseClient(nodes: urls, apiKey: apiKey, debug: false)
-        let svc = TypesensePersistenceService(client: client)
-        Task { await svc.ensureCollections(); try? await publishFunctions(manifest: manifest, corpusId: defaultCorpus, service: svc) }
-        router = Router(adapters: adapters, manifest: manifest, persistence: svc, defaultCorpusId: defaultCorpus)
+        svc = TypesensePersistenceService(client: client)
         #else
-        let svc = TypesensePersistenceService(client: MockTypesenseClient())
-        Task { await svc.ensureCollections(); try? await publishFunctions(manifest: manifest, corpusId: defaultCorpus, service: svc) }
-        router = Router(adapters: adapters, manifest: manifest, persistence: svc, defaultCorpusId: defaultCorpus)
+        svc = TypesensePersistenceService(client: MockTypesenseClient())
         #endif
     } else {
-        let svc = TypesensePersistenceService(client: MockTypesenseClient())
-        Task { await svc.ensureCollections(); try? await publishFunctions(manifest: manifest, corpusId: defaultCorpus, service: svc) }
-        router = Router(adapters: adapters, manifest: manifest, persistence: svc, defaultCorpusId: defaultCorpus)
+        svc = TypesensePersistenceService(client: MockTypesenseClient())
     }
-} 
-
-final class SimpleHTTPRuntime: @unchecked Sendable {
-    enum RuntimeError: Error { case socket, bind, listen }
-    let router: Router
-    let port: Int32
-    private var serverFD: Int32 = -1
-
-    init(router: Router, port: Int32 = 8080) {
-        self.router = router
-        self.port = port
-    }
-
-    func start() throws {
-        #if os(Linux)
-        serverFD = socket(AF_INET, Int32(SOCK_STREAM.rawValue), 0)
-        #else
-        serverFD = socket(AF_INET, SOCK_STREAM, 0)
-        #endif
-        guard serverFD >= 0 else { throw RuntimeError.socket }
-        var opt: Int32 = 1
-        setsockopt(serverFD, SOL_SOCKET, SO_REUSEADDR, &opt, socklen_t(MemoryLayout.size(ofValue: opt)))
-        var addr = sockaddr_in()
-        addr.sin_family = sa_family_t(AF_INET)
-        addr.sin_port = in_port_t(UInt16(port).bigEndian)
-        addr.sin_addr = in_addr(s_addr: in_addr_t(0))
-        let bindResult = withUnsafePointer(to: &addr) {
-            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) { ptr in
-                bind(serverFD, ptr, socklen_t(MemoryLayout<sockaddr_in>.size))
-            }
-        }
-        guard bindResult >= 0 else { throw RuntimeError.bind }
-        guard listen(serverFD, 16) >= 0 else { throw RuntimeError.listen }
-        DispatchQueue.global().async { [weak self] in self?.acceptLoop() }
-    }
-
-    private func acceptLoop() {
-        while true {
-            var addr = sockaddr()
-            var len: socklen_t = socklen_t(MemoryLayout<sockaddr>.size)
-            let fd = accept(serverFD, &addr, &len)
-            if fd >= 0 {
-                DispatchQueue.global().async {
-                    self.handle(fd: fd)
-                }
-            }
-        }
-    }
-
-    private func handle(fd: Int32) {
-        var buffer = [UInt8](repeating: 0, count: 4096)
-        let n = read(fd, &buffer, buffer.count)
-        guard n > 0 else { close(fd); return }
-        let data = Data(buffer[0..<n])
-        guard let request = parseRequest(data) else { close(fd); return }
-        Task {
-            let resp = try await router.route(request)
-            let respData = serialize(resp)
-            respData.withUnsafeBytes { _ = write(fd, $0.baseAddress!, respData.count) }
-            close(fd)
-        }
-    }
-
-    private func parseRequest(_ data: Data) -> HTTPRequest? {
-        guard let string = String(data: data, encoding: .utf8) else { return nil }
-        let parts = string.components(separatedBy: "\r\n\r\n")
-        let headerLines = parts[0].split(separator: "\r\n")
-        guard let requestLine = headerLines.first else { return nil }
-        let tokens = requestLine.split(separator: " ")
-        guard tokens.count >= 2 else { return nil }
-        let method = String(tokens[0])
-        let path = String(tokens[1])
-        return HTTPRequest(method: method, path: path, body: parts.count>1 ? Data(parts[1].utf8) : Data())
-    }
-
-    private func serialize(_ resp: HTTPResponse) -> Data {
-        var text = "HTTP/1.1 \(resp.status)\r\n"
-        text += "Content-Length: \(resp.body.count)\r\n"
-        for (k,v) in resp.headers { text += "\(k): \(v)\r\n" }
-        text += "\r\n"
-        var data = Data(text.utf8)
-        data.append(resp.body)
-        return data
-    }
-}
-
-do {
-    let runtime = SimpleHTTPRuntime(router: router, port: 8080)
-    // Optional publish to Typesense functions collection
-    if let url = ProcessInfo.processInfo.environment["TYPESENSE_URL"] ?? ProcessInfo.processInfo.environment["TYPESENSE_URLS"],
-       let apiKey = ProcessInfo.processInfo.environment["TYPESENSE_API_KEY"], !apiKey.isEmpty {
-        let urls = url.contains(",") ? url.split(separator: ",").map(String.init) : [url]
-        #if canImport(Typesense)
-        let client = RealTypesenseClient(nodes: urls, apiKey: apiKey, debug: false)
-        let svc = TypesensePersistenceService(client: client)
-        Task { await svc.ensureCollections(); try? await publishFunctions(manifest: manifest, corpusId: ProcessInfo.processInfo.environment["TOOLS_FACTORY_CORPUS_ID"] ?? "tools-factory", service: svc) }
-        #else
-        let svc = TypesensePersistenceService(client: MockTypesenseClient())
-        Task { await svc.ensureCollections(); try? await publishFunctions(manifest: manifest, corpusId: ProcessInfo.processInfo.environment["TOOLS_FACTORY_CORPUS_ID"] ?? "tools-factory", service: svc) }
-        #endif
-    }
-    try runtime.start()
-    print("tool server listening on port 8080")
+    Task { await svc.ensureCollections(); try? await publishFunctions(manifest: manifest, corpusId: defaultCorpus, service: svc) }
+    let kernel = makeToolsFactoryKernel(service: svc, adapters: adapters, manifest: manifest)
+    let server = NIOHTTPServer(kernel: kernel)
+    let port: Int = 8080
+    _ = try await server.start(port: port)
+    print("tools-factory (NIO) listening on :\(port)")
     dispatchMain()
 } catch {
-    print("Failed to start server: \(error)")
+    print("Failed to start tools-factory: \(error)")
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.

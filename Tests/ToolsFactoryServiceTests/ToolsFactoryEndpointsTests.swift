@@ -1,5 +1,5 @@
 import XCTest
-@testable import ToolServer
+@testable import ToolsFactoryService
 @testable import TypesensePersistence
 
 final class ToolsFactoryEndpointsTests: XCTestCase {
@@ -11,7 +11,7 @@ final class ToolsFactoryEndpointsTests: XCTestCase {
         )
         let svc = TypesensePersistenceService(client: MockTypesenseClient())
         await svc.ensureCollections()
-        let router = Router(adapters: [:], manifest: manifest, persistence: svc, defaultCorpusId: "tf")
+        let router = ToolsFactoryRouter(service: svc, adapters: [:], manifest: manifest, defaultCorpusId: "tf")
 
         // Register from an OpenAPI doc
         let openapi: [String: Any] = [

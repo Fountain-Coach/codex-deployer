@@ -1,5 +1,5 @@
 import XCTest
-@testable import ToolServer
+@testable import ToolsFactoryService
 @testable import TypesensePersistence
 
 final class PublishFunctionsTests: XCTestCase {

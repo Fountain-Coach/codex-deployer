@@ -1,5 +1,5 @@
 import XCTest
-@testable import ToolServer
+@testable import ToolsFactoryService
 @testable import TypesensePersistence
 
 final class ToolsFactoryOpenAPIConformanceTests: XCTestCase {
@@ -11,7 +11,7 @@ final class ToolsFactoryOpenAPIConformanceTests: XCTestCase {
         )
         let svc = TypesensePersistenceService(client: MockTypesenseClient())
         await svc.ensureCollections()
-        let router = Router(adapters: [:], manifest: manifest, persistence: svc, defaultCorpusId: "tf")
+        let router = ToolsFactoryRouter(service: svc, adapters: [:], manifest: manifest, defaultCorpusId: "tf")
         // Seed a couple of functions
         _ = try await svc.addFunction(.init(corpusId: "tf", functionId: "op.a", name: "A", description: "da", httpMethod: "GET", httpPath: "/a"))
         _ = try await svc.addFunction(.init(corpusId: "tf", functionId: "op.b", name: "B", description: "db", httpMethod: "POST", httpPath: "/b"))
@@ -34,6 +34,14 @@ final class ToolsFactoryOpenAPIConformanceTests: XCTestCase {
         XCTAssertTrue(first["description"] is String)
         XCTAssertTrue(first["http_method"] is String)
         XCTAssertTrue(first["http_path"] is String)
+    }
+
+    func testServesOpenAPISpec() async throws {
+        let router = ToolsFactoryRouter(service: nil, adapters: [:], manifest: ToolManifest(image: .init(name: "", tarball: "", sha256: "", qcow2: "", qcow2_sha256: ""), tools: [:], operations: []))
+        let resp = try await router.route(.init(method: "GET", path: "/openapi.yaml"))
+        XCTAssertEqual(resp.status, 200)
+        let text = String(data: resp.body, encoding: .utf8) ?? ""
+        XCTAssertTrue(text.contains("FountainAI Tools Factory Service"))
     }
 }
 
