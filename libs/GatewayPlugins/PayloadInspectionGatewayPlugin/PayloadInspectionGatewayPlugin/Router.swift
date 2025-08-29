@@ -10,7 +10,7 @@ public struct Router: Sendable {
         switch (request.method, request.path) {
         case ("POST", "/inspect"):
             let body = try? JSONDecoder().decode(PayloadInspectionRequest.self, from: request.body)
-            return try await handlers.inspect(request, body: body)
+            return try await handlers.inspectPayload(request, body: body)
         default:
             return nil
         }
