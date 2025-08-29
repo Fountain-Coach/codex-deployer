@@ -4,6 +4,8 @@ import Yams
 @testable import AwarenessService
 @testable import BootstrapService
 @testable import TypesensePersistence
+@testable import RoleHealthCheckGatewayPlugin
+import FountainRuntime
 
 final class OperationIdRouteTests: XCTestCase {
     // Build minimal valid bodies per operation for Awareness
@@ -77,6 +79,34 @@ final class OperationIdRouteTests: XCTestCase {
                 let req = BootstrapService.HTTPRequest(method: method, path: path, body: body ?? Data())
                 let resp = try await router.route(req)
                 XCTAssertNotEqual(resp.status, 404, "\(method) \(path) not routed for bootstrap")
+            }
+        }
+    }
+
+    private func roleHealthCheckBody(for path: String) throws -> Data? {
+        switch path {
+        case "/role-health-check/reflect", "/role-health-check/promote":
+            return try JSONEncoder().encode(RoleHealthCheckRequest(corpusId: "c1", roleName: "r"))
+        default:
+            return nil
+        }
+    }
+
+    func testRoleHealthCheckOperationIdsReachable() async throws {
+        let text = try String(contentsOfFile: "openapi/v1/role-health-check-gateway.yml")
+        let yaml = try Yams.load(yaml: text) as? [String: Any]
+        let paths = yaml?["paths"] as? [String: Any] ?? [:]
+        let plugin = RoleHealthCheckGatewayPlugin()
+        for (path, mapAny) in paths {
+            guard let methods = mapAny as? [String: Any] else { continue }
+            for (m, opAny) in methods {
+                guard let op = opAny as? [String: Any], op["operationId"] is String else { continue }
+                let method = m.uppercased()
+                let body = try roleHealthCheckBody(for: path)
+                let req = HTTPRequest(method: method, path: path, body: body ?? Data())
+                let resp = try await plugin.router.route(req)
+                XCTAssertNotNil(resp, "\(method) \(path) not routed for role health check")
+                XCTAssertNotEqual(resp?.status, 404, "\(method) \(path) not routed for role health check")
             }
         }
     }

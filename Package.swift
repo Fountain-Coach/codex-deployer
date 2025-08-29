@@ -36,7 +36,8 @@ let leanProducts: [Product] = [
     .library(name: "BudgetBreakerGatewayPlugin", targets: ["BudgetBreakerGatewayPlugin"]),
     .library(name: "PayloadInspectionGatewayPlugin", targets: ["PayloadInspectionGatewayPlugin"]),
     .library(name: "DestructiveGuardianGatewayPlugin", targets: ["DestructiveGuardianGatewayPlugin"]),
-    .library(name: "SecuritySentinelGatewayPlugin", targets: ["SecuritySentinelGatewayPlugin"])
+    .library(name: "SecuritySentinelGatewayPlugin", targets: ["SecuritySentinelGatewayPlugin"]),
+    .library(name: "RoleHealthCheckGatewayPlugin", targets: ["RoleHealthCheckGatewayPlugin"])
 ]
 
 var products: [Product] = LEAN ? leanProducts : fullProducts
@@ -90,6 +91,9 @@ let fullTargets: [Target] = [
             "PayloadInspectionGatewayPlugin",
             "DestructiveGuardianGatewayPlugin",
             "SecuritySentinelGatewayPlugin",
+            "RoleHealthCheckGatewayPlugin",
+                        "RoleHealthCheckGatewayPlugin",
+            "RoleHealthCheckGatewayPlugin",
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "X509", package: "swift-certificates"),
             "Yams"
@@ -132,18 +136,23 @@ let fullTargets: [Target] = [
         path: "libs/GatewayPlugins/SecuritySentinelGatewayPlugin",
     ),
     .target(
+        name: "RoleHealthCheckGatewayPlugin",
+        dependencies: ["FountainRuntime"],
+        path: "libs/GatewayPlugins/RoleHealthCheckGatewayPlugin",
+    ),
+    .target(
         name: "PublishingFrontend",
         dependencies: ["FountainRuntime", "Yams"],
         path: "libs/PublishingFrontend"
     ),
     .target(
         name: "AwarenessService",
-        dependencies: ["TypesensePersistence", .product(name: "Numerics", package: "swift-numerics"), .product(name: "Atomics", package: "swift-atomics")],
+        dependencies: ["TypesensePersistence", .product(name: "Numerics", package: "swift-numerics"), .product(name: "Atomics", package: "swift-atomics"), "FountainRuntime"],
         path: "libs/AwarenessService"
     ),
     .target(
         name: "BootstrapService",
-        dependencies: ["TypesensePersistence", .product(name: "Numerics", package: "swift-numerics"), .product(name: "Atomics", package: "swift-atomics")],
+        dependencies: ["TypesensePersistence", .product(name: "Numerics", package: "swift-numerics"), .product(name: "Atomics", package: "swift-atomics"), "FountainRuntime"],
         path: "libs/BootstrapService"
     ),
     .target(
@@ -247,7 +256,7 @@ let fullTargets: [Target] = [
     .testTarget(name: "MIDI2CoreTests", dependencies: ["MIDI2Core", "ResourceLoader", "flexctl"], path: "Tests/MIDI2CoreTests"),
     .testTarget(name: "MIDI2TransportsTests", dependencies: ["MIDI2Transports"], path: "Tests/MIDI2TransportsTests"),
     .testTarget(name: "FlexctlTests", dependencies: ["flexctl", "ResourceLoader"], path: "Tests/FlexctlTests"),
-    .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayPlugin", "AuthGatewayPlugin", "DestructiveGuardianGatewayPlugin", "SecuritySentinelGatewayPlugin", "PayloadInspectionGatewayPlugin", "BudgetBreakerGatewayPlugin", "RateLimiterGatewayPlugin", "persist-server"], path: "Tests/GatewayAppTests"),
+    .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayPlugin", "AuthGatewayPlugin", "DestructiveGuardianGatewayPlugin", "SecuritySentinelGatewayPlugin", "PayloadInspectionGatewayPlugin", "BudgetBreakerGatewayPlugin", "RateLimiterGatewayPlugin", "RoleHealthCheckGatewayPlugin", "persist-server"], path: "Tests/GatewayAppTests"),
     .testTarget(name: "FountainOpsTests", dependencies: ["LLMGatewayPlugin"], path: "Tests/FountainOpsTests"),
     .testTarget(name: "ToolsFactoryServiceTests", dependencies: ["ToolsFactoryService", "TypesensePersistence"], path: "Tests/ToolsFactoryServiceTests"),
     .testTarget(
@@ -302,7 +311,7 @@ let fullTargets: [Target] = [
     ),
     .testTarget(
         name: "OpenAPIConformanceTests",
-        dependencies: ["Yams", "AwarenessService", "BootstrapService", "TypesensePersistence", "FountainRuntime"],
+        dependencies: ["Yams", "AwarenessService", "BootstrapService", "TypesensePersistence", "FountainRuntime", "RoleHealthCheckGatewayPlugin"],
         path: "Tests/OpenAPIConformanceTests"
     )
 ]
@@ -342,6 +351,7 @@ let leanTargets: [Target] = [
             "PayloadInspectionGatewayPlugin",
             "DestructiveGuardianGatewayPlugin",
             "SecuritySentinelGatewayPlugin",
+            "RoleHealthCheckGatewayPlugin",
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "X509", package: "swift-certificates"),
             "Yams"
@@ -382,6 +392,11 @@ let leanTargets: [Target] = [
         name: "SecuritySentinelGatewayPlugin",
         dependencies: ["FountainRuntime"],
         path: "libs/GatewayPlugins/SecuritySentinelGatewayPlugin"
+    ),
+    .target(
+        name: "RoleHealthCheckGatewayPlugin",
+        dependencies: ["FountainRuntime"],
+        path: "libs/GatewayPlugins/RoleHealthCheckGatewayPlugin"
     ),
     .target(
         name: "PublishingFrontend",
