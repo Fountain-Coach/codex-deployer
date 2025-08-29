@@ -79,6 +79,58 @@ public final class FunctionCallerRouter: @unchecked Sendable {
         try? client.syncShutdown()
     }
 
+    // MARK: - OpenAPI Handlers
+
+    public func list_functions(page: Int, page_size: Int) async throws -> HTTPResponse {
+        let limit = max(min(page_size, 100), 1)
+        let p = max(page, 1)
+        let offset = (p - 1) * limit
+        let (total, funcs) = try await persistence.listFunctions(limit: limit, offset: offset)
+        let infos = funcs.map { FunctionInfo(function_id: $0.functionId, name: $0.name, description: $0.description, http_method: $0.httpMethod, http_path: $0.httpPath) }
+        let list = FunctionsListResponse(functions: infos, page: p, page_size: limit, total: total)
+        let data = try JSONEncoder().encode(list)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    public func get_function_details(function_id: String) async throws -> HTTPResponse {
+        if let fn = try await persistence.getFunctionDetails(functionId: function_id) {
+            let info = FunctionInfo(function_id: fn.functionId, name: fn.name, description: fn.description, http_method: fn.httpMethod, http_path: fn.httpPath)
+            let data = try JSONEncoder().encode(info)
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        }
+        let err = ErrorResponse(error_code: "not_found", message: "function not found")
+        let data = try JSONEncoder().encode(err)
+        return HTTPResponse(status: 404, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    public func invoke_function(function_id: String, body: Data) async throws -> HTTPResponse {
+        guard let fn = try await persistence.getFunctionDetails(functionId: function_id) else {
+            let err = ErrorResponse(error_code: "not_found", message: "function not found")
+            let data = try JSONEncoder().encode(err)
+            return HTTPResponse(status: 404, headers: ["Content-Type": "application/json"], body: data)
+        }
+        var req = HTTPClientRequest(url: fn.httpPath)
+        req.method = .RAW(value: fn.httpMethod)
+        if !body.isEmpty { req.body = .bytes(body) }
+        do {
+            let resp = try await client.execute(req, timeout: .seconds(30))
+            var headers: [String: String] = [:]
+            for (name, value) in resp.headers { headers[name] = value }
+            var respBody = Data()
+            if var buf = resp.body { respBody = Data(buffer: buf) }
+            return HTTPResponse(status: Int(resp.status.code), headers: headers, body: respBody)
+        } catch {
+            let err = ErrorResponse(error_code: "invoke_error", message: error.localizedDescription)
+            let data = try JSONEncoder().encode(err)
+            return HTTPResponse(status: 500, headers: ["Content-Type": "application/json"], body: data)
+        }
+    }
+
+    public func metrics_metrics_get() async -> HTTPResponse {
+        let body = Data("function_caller_requests_total 0\n".utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+    }
+
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
         let parts = request.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false)
         let pathOnly = parts.first.map(String.init) ?? request.path
@@ -87,51 +139,15 @@ public final class FunctionCallerRouter: @unchecked Sendable {
         switch (request.method, segments) {
         case ("GET", ["functions"]):
             let params = Self.parseQuery(query)
-            let page = max(Int(params["page"] ?? "1") ?? 1, 1)
-            let pageSize = max(min(Int(params["page_size"] ?? "20") ?? 20, 100), 1)
-            let offset = (page - 1) * pageSize
-            let (total, funcs) = try await persistence.listFunctions(limit: pageSize, offset: offset)
-            let infos = funcs.map { FunctionInfo(function_id: $0.functionId, name: $0.name, description: $0.description, http_method: $0.httpMethod, http_path: $0.httpPath) }
-            let list = FunctionsListResponse(functions: infos, page: page, page_size: pageSize, total: total)
-            let data = try JSONEncoder().encode(list)
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            let page = Int(params["page"] ?? "1") ?? 1
+            let pageSize = Int(params["page_size"] ?? "20") ?? 20
+            return try await list_functions(page: page, page_size: pageSize)
         case ("GET", ["functions", let fid]):
-            if let fn = try await persistence.getFunctionDetails(functionId: String(fid)) {
-                let info = FunctionInfo(function_id: fn.functionId, name: fn.name, description: fn.description, http_method: fn.httpMethod, http_path: fn.httpPath)
-                let data = try JSONEncoder().encode(info)
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
-            }
-            let err = ErrorResponse(error_code: "not_found", message: "function not found")
-            let data = try JSONEncoder().encode(err)
-            return HTTPResponse(status: 404, headers: ["Content-Type": "application/json"], body: data)
+            return try await get_function_details(function_id: String(fid))
         case ("POST", ["functions", let fid, "invoke"]):
-            guard let fn = try await persistence.getFunctionDetails(functionId: String(fid)) else {
-                let err = ErrorResponse(error_code: "not_found", message: "function not found")
-                let data = try JSONEncoder().encode(err)
-                return HTTPResponse(status: 404, headers: ["Content-Type": "application/json"], body: data)
-            }
-            var req = HTTPClientRequest(url: fn.httpPath)
-            req.method = .RAW(value: fn.httpMethod)
-            if !request.body.isEmpty {
-                req.body = .bytes(request.body)
-            }
-            do {
-                let resp = try await client.execute(req, timeout: .seconds(30))
-                var headers: [String: String] = [:]
-                for (name, value) in resp.headers { headers[name] = value }
-                var body = Data()
-                if var buf = resp.body {
-                    body = Data(buffer: buf)
-                }
-                return HTTPResponse(status: Int(resp.status.code), headers: headers, body: body)
-            } catch {
-                let err = ErrorResponse(error_code: "invoke_error", message: error.localizedDescription)
-                let data = try JSONEncoder().encode(err)
-                return HTTPResponse(status: 500, headers: ["Content-Type": "application/json"], body: data)
-            }
+            return try await invoke_function(function_id: String(fid), body: request.body)
         case ("GET", ["metrics"]):
-            let body = Data("function_caller_requests_total 0\n".utf8)
-            return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+            return await metrics_metrics_get()
         default:
             return HTTPResponse(status: 404)
         }
