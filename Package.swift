@@ -24,7 +24,8 @@ let fullProducts: [Product] = [
     .library(name: "FunctionCallerService", targets: ["FunctionCallerService"]),
     .executable(name: "function-caller-server", targets: ["function-caller-server"]),
     .library(name: "ToolsFactoryService", targets: ["ToolsFactoryService"]),
-    .executable(name: "openapi-curator-cli", targets: ["openapi-curator-cli"])
+    .executable(name: "openapi-curator-cli", targets: ["openapi-curator-cli"]),
+    .executable(name: "openapi-curator-service", targets: ["openapi-curator-service"])
 ]
 
 let leanProducts: [Product] = [
@@ -84,6 +85,11 @@ let fullTargets: [Target] = [
         name: "openapi-curator-cli",
         dependencies: ["OpenAPICurator"],
         path: "apps/OpenAPICuratorCLI"
+    ),
+    .executableTarget(
+        name: "openapi-curator-service",
+        dependencies: ["FountainRuntime", "OpenAPICurator", "Yams"],
+        path: "apps/OpenAPICuratorService"
     ),
     .executableTarget(
         name: "gateway-server",
