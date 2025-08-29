@@ -208,6 +208,12 @@ let fullTargets: [Target] = [
         resources: [.process("openapi.yaml")]
     ),
     .target(
+        name: "ToolServerService",
+        dependencies: ["ToolServer"],
+        path: "libs/ToolServer/Service",
+        exclude: ["HTTPServer.swift"]
+    ),
+    .target(
         name: "ToolsFactoryService",
         dependencies: ["FountainRuntime", "ToolServer", "TypesensePersistence"],
         path: "libs/ToolsFactoryService"
@@ -313,6 +319,11 @@ let fullTargets: [Target] = [
         name: "OpenAPIConformanceTests",
         dependencies: ["Yams", "AwarenessService", "BootstrapService", "TypesensePersistence", "FountainRuntime", "RoleHealthCheckGatewayPlugin"],
         path: "Tests/OpenAPIConformanceTests"
+    ),
+    .testTarget(
+        name: "ToolServerTests",
+        dependencies: ["ToolServerService", "Yams"],
+        path: "Tests/ToolServerTests"
     )
 ]
 
@@ -338,6 +349,15 @@ let leanTargets: [Target] = [
         ],
         path: "libs/FountainRuntime",
         exclude: ["DNS/README.md"]
+    ),
+    .target(
+        name: "TypesensePersistence",
+        dependencies: [
+            .product(name: "Typesense", package: "typesense-swift"),
+            .product(name: "Numerics", package: "swift-numerics"),
+            .product(name: "Atomics", package: "swift-atomics")
+        ],
+        path: "libs/TypesensePersistence"
     ),
     .executableTarget(
         name: "gateway-server",
@@ -404,6 +424,25 @@ let leanTargets: [Target] = [
         path: "libs/PublishingFrontend"
     ),
     .target(name: "ResourceLoader", path: "libs/ResourceLoader"),
+    .target(
+        name: "ToolServer",
+        dependencies: [
+            .product(name: "Crypto", package: "swift-crypto"),
+            .product(name: "Toolsmith", package: "toolsmith"),
+            "TypesensePersistence",
+            .product(name: "Numerics", package: "swift-numerics"),
+            .product(name: "Atomics", package: "swift-atomics")
+        ],
+        path: "libs/ToolServer",
+        exclude: ["Service", "Dockerfile"],
+        resources: [.process("openapi.yaml")]
+    ),
+    .target(
+        name: "ToolServerService",
+        dependencies: ["ToolServer"],
+        path: "libs/ToolServer/Service",
+        exclude: ["HTTPServer.swift"]
+    ),
     .testTarget(
         name: "IntegrationRuntimeTests",
         dependencies: ["gateway-server", "FountainRuntime", "LLMGatewayPlugin", "RateLimiterGatewayPlugin", .product(name: "NIO", package: "swift-nio"), .product(name: "AsyncHTTPClient", package: "async-http-client")],
@@ -414,6 +453,11 @@ let leanTargets: [Target] = [
         name: "ResourceLoaderTests",
         dependencies: ["ResourceLoader"],
         path: "Tests/ResourceLoaderTests"
+    ),
+    .testTarget(
+        name: "ToolServerTests",
+        dependencies: ["ToolServerService", "Yams"],
+        path: "Tests/ToolServerTests"
     )
 ]
 
