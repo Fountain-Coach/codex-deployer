@@ -32,11 +32,23 @@ public final class ToolsFactoryRouter: @unchecked Sendable {
     public init(service: TypesensePersistenceService?, adapters: [String: ToolAdapter], manifest: ToolManifest, defaultCorpusId: String = ProcessInfo.processInfo.environment["TOOLS_FACTORY_CORPUS_ID"] ?? "tools-factory") {
         self.router = ToolServer.Router(adapters: adapters, manifest: manifest, persistence: service, defaultCorpusId: defaultCorpusId)
     }
+    /// `GET /metrics`
+    public func metrics_metrics_get() async throws -> HTTPResponse {
+        let uptime = Int(ProcessInfo.processInfo.systemUptime)
+        let body = Data("tools_factory_uptime_seconds \(uptime)\n".utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+    }
+
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
-        if request.method == "GET" && request.path == "/openapi.yaml" {
-            let url = URL(fileURLWithPath: "openapi/v1/tools-factory.yml")
-            let data = try Data(contentsOf: url)
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/yaml"], body: data)
+        if request.method == "GET" {
+            if request.path == "/openapi.yaml" {
+                let url = URL(fileURLWithPath: "openapi/v1/tools-factory.yml")
+                let data = try Data(contentsOf: url)
+                return HTTPResponse(status: 200, headers: ["Content-Type": "application/yaml"], body: data)
+            }
+            if request.path == "/metrics" {
+                return try await metrics_metrics_get()
+            }
         }
         let ar = ToolServer.HTTPRequest(method: request.method, path: request.path, headers: request.headers, body: request.body)
         let resp = try await router.route(ar)

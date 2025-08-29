@@ -48,6 +48,19 @@ final class ToolsFactoryEndpointsTests: XCTestCase {
         let arr2 = obj2?["functions"] as? [Any]
         XCTAssertEqual(arr2?.count, 1)
     }
+
+    func testMetricsEndpoint() async throws {
+        let manifest = ToolManifest(
+            image: .init(name: "img", tarball: "t", sha256: "s", qcow2: "q", qcow2_sha256: "qs"),
+            tools: [:],
+            operations: []
+        )
+        let router = ToolsFactoryRouter(service: nil, adapters: [:], manifest: manifest)
+        let resp = try await router.route(.init(method: "GET", path: "/metrics", body: Data()))
+        XCTAssertEqual(resp.status, 200)
+        let text = String(data: resp.body, encoding: .utf8) ?? ""
+        XCTAssertTrue(text.contains("tools_factory_uptime_seconds"))
+    }
 }
 
 // © 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
