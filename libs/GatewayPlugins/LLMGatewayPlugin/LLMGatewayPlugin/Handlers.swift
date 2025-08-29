@@ -26,9 +26,20 @@ public struct Handlers: Sendable {
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: respBody)
     }
 
+    /// Placeholder handler for ``POST /chat``.
+    public func chatWithObjective(_ request: HTTPRequest, body: ChatRequest) async throws -> HTTPResponse {
+        let id = UUID().uuidString
+        var obj: [String: Any] = ["id": id]
+        if body.include_cot == true {
+            obj["cot"] = ["step 1", "step 2"]
+        }
+        let data = try JSONSerialization.data(withJSONObject: obj)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
     /// Handler that retrieves CoT logs for a chat and applies
     /// basic role based redaction.
-    public func chatCoT(_ request: HTTPRequest, chatID: String) async throws -> HTTPResponse {
+    public func getChatCoT(_ request: HTTPRequest, chatID: String) async throws -> HTTPResponse {
         guard let cotLogURL else { return HTTPResponse(status: 404) }
         let role = request.headers["X-User-Role"] ?? "user"
         let content = (try? String(contentsOf: cotLogURL, encoding: .utf8)) ?? ""
@@ -47,15 +58,22 @@ public struct Handlers: Sendable {
             let words = (cot ?? "").split(separator: " ")
             if words.count >= 2 {
                 let redacted = [words.first!, "[REDACTED]", words.last!].joined(separator: " ")
-                responseData = try JSONSerialization.data(withJSONObject: ["cot": redacted])
+                responseData = try JSONSerialization.data(withJSONObject: ["id": chatID, "cot": redacted])
             } else {
-                responseData = try JSONSerialization.data(withJSONObject: ["cot": cot ?? ""])
+                responseData = try JSONSerialization.data(withJSONObject: ["id": chatID, "cot": cot ?? ""])
             }
         } else {
             let summary = String((cot ?? "").prefix(8)) + "..."
-            responseData = try JSONSerialization.data(withJSONObject: ["cot_summary": summary])
+            responseData = try JSONSerialization.data(withJSONObject: ["id": chatID, "cot_summary": summary])
         }
         return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: responseData)
+    }
+
+    /// Prometheus style metrics endpoint.
+    public func metrics_metrics_get() async -> HTTPResponse {
+        let uptime = Int(ProcessInfo.processInfo.systemUptime)
+        let body = Data("llm_gateway_uptime_seconds \(uptime)\n".utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
     }
 }
 

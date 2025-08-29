@@ -13,13 +13,20 @@ public struct Router: Sendable {
     /// - Returns: A response if a matching route is found, otherwise `nil`.
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse? {
         switch (request.method, request.path.split(separator: "/", omittingEmptySubsequences: true)) {
+        case ("GET", ["metrics"]):
+            return await handlers.metrics_metrics_get()
+        case ("POST", ["chat"]):
+            if let body = try? JSONDecoder().decode(ChatRequest.self, from: request.body) {
+                return try await handlers.chatWithObjective(request, body: body)
+            }
+            return HTTPResponse(status: 400)
         case ("POST", ["sentinel", "consult"]):
             if let body = try? JSONDecoder().decode(SecurityCheckRequest.self, from: request.body) {
                 return try await handlers.sentinelConsult(request, body: body)
             }
             return HTTPResponse(status: 400)
         case ("GET", let parts) where parts.count == 3 && parts[0] == "chat" && parts[2] == "cot":
-            return try await handlers.chatCoT(request, chatID: String(parts[1]))
+            return try await handlers.getChatCoT(request, chatID: String(parts[1]))
         default:
             return nil
         }
