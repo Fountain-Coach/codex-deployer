@@ -21,6 +21,16 @@ final class BootstrapServiceTests: XCTestCase {
         XCTAssertFalse(roles.drift.isEmpty)
     }
 
+    func testSeedRolesShortcutEndpoint() async throws {
+        let svc = TypesensePersistenceService(client: MockTypesenseClient())
+        let router = BootstrapRouter(persistence: svc)
+        let body = try JSONEncoder().encode(RoleInitRequest(corpusId: "c8"))
+        let resp = try await router.route(.init(method: "POST", path: "/bootstrap/roles", body: body))
+        XCTAssertEqual(resp.status, 200)
+        let roles = try JSONDecoder().decode(RoleDefaults.self, from: resp.body)
+        XCTAssertFalse(roles.view_creator.isEmpty)
+    }
+
     func testBootstrapBaselinePersistsSlices() async throws {
         let svc = TypesensePersistenceService(client: MockTypesenseClient())
         let router = BootstrapRouter(persistence: svc)
@@ -48,6 +58,15 @@ final class BootstrapServiceTests: XCTestCase {
         XCTAssertTrue(text.contains("event: patterns"))
         XCTAssertTrue(text.contains("event: complete"))
         try await server.stop()
+    }
+
+    func testMetricsEndpoint() async throws {
+        let svc = TypesensePersistenceService(client: MockTypesenseClient())
+        let router = BootstrapRouter(persistence: svc)
+        let resp = try await router.route(.init(method: "GET", path: "/metrics"))
+        XCTAssertEqual(resp.status, 200)
+        let text = String(data: resp.body, encoding: .utf8) ?? ""
+        XCTAssertTrue(text.contains("bootstrap_uptime_seconds"))
     }
 }
 

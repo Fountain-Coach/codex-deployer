@@ -25,6 +25,95 @@ public final class BootstrapRouter: @unchecked Sendable {
         )
     }
 
+    // MARK: - Operation Handlers
+
+    /// `GET /metrics`
+    ///
+    /// Serves a minimal Prometheus text exposition payload. The
+    /// implementation mirrors the other services in this repository and
+    /// simply exposes the current process uptime.
+    public func metrics_metrics_get() async throws -> HTTPResponse {
+        let uptime = Int(ProcessInfo.processInfo.systemUptime)
+        let body = Data("bootstrap_uptime_seconds \(uptime)\n".utf8)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+    }
+
+    /// `POST /bootstrap/corpus/init`
+    ///
+    /// Creates a new empty corpus and seeds the default GPT role prompts.
+    public func bootstrapInitializeCorpus(_ input: InitIn) async throws -> HTTPResponse {
+        let req = TypesensePersistence.CorpusCreateRequest(corpusId: input.corpusId)
+        let resp = try await persistence.createCorpus(req)
+        let roles = defaultRoles()
+        let roleDocs: [Role] = [
+            .init(corpusId: input.corpusId, name: "drift", prompt: roles.drift),
+            .init(corpusId: input.corpusId, name: "semantic_arc", prompt: roles.semantic_arc),
+            .init(corpusId: input.corpusId, name: "patterns", prompt: roles.patterns),
+            .init(corpusId: input.corpusId, name: "history", prompt: roles.history),
+            .init(corpusId: input.corpusId, name: "view_creator", prompt: roles.view_creator)
+        ]
+        _ = try await persistence.seedDefaultRoles(corpusId: input.corpusId, defaults: roleDocs)
+        let out = InitOut(message: "corpus \(resp.corpusId) initialized and roles seeded")
+        let data = try JSONEncoder().encode(out)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    /// Shared helper used by both role seeding endpoints.
+    private func seed(_ input: RoleInitRequest) async throws -> HTTPResponse {
+        let roles = defaultRoles()
+        let roleDocs: [Role] = [
+            .init(corpusId: input.corpusId, name: "drift", prompt: roles.drift),
+            .init(corpusId: input.corpusId, name: "semantic_arc", prompt: roles.semantic_arc),
+            .init(corpusId: input.corpusId, name: "patterns", prompt: roles.patterns),
+            .init(corpusId: input.corpusId, name: "history", prompt: roles.history),
+            .init(corpusId: input.corpusId, name: "view_creator", prompt: roles.view_creator)
+        ]
+        _ = try await persistence.seedDefaultRoles(corpusId: input.corpusId, defaults: roleDocs)
+        let data = try JSONEncoder().encode(roles)
+        return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+    }
+
+    /// `POST /bootstrap/roles/seed`
+    public func bootstrapSeedRoles(_ input: RoleInitRequest) async throws -> HTTPResponse {
+        try await seed(input)
+    }
+
+    /// `POST /bootstrap/roles`
+    public func seedRoles(_ input: RoleInitRequest) async throws -> HTTPResponse {
+        try await seed(input)
+    }
+
+    /// `POST /bootstrap/baseline`
+    ///
+    /// Adds a new baseline and optionally streams back synthetic drift and
+    /// pattern events when `sse=1` is present in the query string.
+    public func bootstrapAddBaseline(_ input: BaselineIn, isSSE: Bool) async throws -> HTTPResponse {
+        _ = try await persistence.addBaseline(.init(corpusId: input.corpusId, baselineId: input.baselineId, content: input.content))
+        Task.detached { [persistence] in
+            _ = try? await persistence.addDrift(.init(corpusId: input.corpusId, driftId: "\(input.baselineId)-drift", content: "auto-generated drift"))
+            _ = try? await persistence.addPatterns(.init(corpusId: input.corpusId, patternsId: "\(input.baselineId)-patterns", content: "auto-generated patterns"))
+        }
+        if isSSE {
+            let sse = """
+            event: drift
+            data: {"status":"started","kind":"drift"}
+
+            event: patterns
+            data: {"status":"started","kind":"patterns"}
+
+            event: complete
+            data: {}
+
+            : heartbeat
+
+            """
+            return HTTPResponse(status: 200, headers: ["Content-Type": "text/event-stream", "Cache-Control": "no-cache", "X-Chunked-SSE": "1"], body: Data(sse.utf8))
+        } else {
+            let data = try JSONSerialization.data(withJSONObject: [:])
+            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+        }
+    }
+
     public func route(_ request: HTTPRequest) async throws -> HTTPResponse {
         let pathOnly = request.path.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? request.path
         switch (request.method, pathOnly) {
@@ -38,72 +127,28 @@ public final class BootstrapRouter: @unchecked Sendable {
             let data = try JSONSerialization.data(withJSONObject: ["status": "ready"]) 
             return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
         case ("GET", "/metrics"):
-            let uptime = Int(ProcessInfo.processInfo.systemUptime)
-            let body = Data("bootstrap_uptime_seconds \(uptime)\n".utf8)
-            return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
+            return try await metrics_metrics_get()
         case ("POST", "/bootstrap/corpus/init"):
             guard let input = try? JSONDecoder().decode(InitIn.self, from: request.body) else {
                 return HTTPResponse(status: 422, headers: ["Content-Type": "application/json"], body: Data())
             }
-            let req = TypesensePersistence.CorpusCreateRequest(corpusId: input.corpusId)
-            let resp = try await persistence.createCorpus(req)
-            let roles = defaultRoles()
-            let roleDocs: [Role] = [
-                .init(corpusId: input.corpusId, name: "drift", prompt: roles.drift),
-                .init(corpusId: input.corpusId, name: "semantic_arc", prompt: roles.semantic_arc),
-                .init(corpusId: input.corpusId, name: "patterns", prompt: roles.patterns),
-                .init(corpusId: input.corpusId, name: "history", prompt: roles.history),
-                .init(corpusId: input.corpusId, name: "view_creator", prompt: roles.view_creator)
-            ]
-            _ = try await persistence.seedDefaultRoles(corpusId: input.corpusId, defaults: roleDocs)
-            let out = InitOut(message: "corpus \(resp.corpusId) initialized and roles seeded")
-            let data = try JSONEncoder().encode(out)
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
-        case ("POST", "/bootstrap/roles/seed"), ("POST", "/bootstrap/roles"):
+            return try await bootstrapInitializeCorpus(input)
+        case ("POST", "/bootstrap/roles/seed"):
             guard let input = try? JSONDecoder().decode(RoleInitRequest.self, from: request.body) else {
                 return HTTPResponse(status: 422, headers: ["Content-Type": "application/json"], body: Data())
             }
-            let roles = defaultRoles()
-            let roleDocs: [Role] = [
-                .init(corpusId: input.corpusId, name: "drift", prompt: roles.drift),
-                .init(corpusId: input.corpusId, name: "semantic_arc", prompt: roles.semantic_arc),
-                .init(corpusId: input.corpusId, name: "patterns", prompt: roles.patterns),
-                .init(corpusId: input.corpusId, name: "history", prompt: roles.history),
-                .init(corpusId: input.corpusId, name: "view_creator", prompt: roles.view_creator)
-            ]
-            _ = try await persistence.seedDefaultRoles(corpusId: input.corpusId, defaults: roleDocs)
-            let data = try JSONEncoder().encode(roles)
-            return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
+            return try await bootstrapSeedRoles(input)
+        case ("POST", "/bootstrap/roles"):
+            guard let input = try? JSONDecoder().decode(RoleInitRequest.self, from: request.body) else {
+                return HTTPResponse(status: 422, headers: ["Content-Type": "application/json"], body: Data())
+            }
+            return try await seedRoles(input)
         case ("POST", "/bootstrap/baseline"):
             guard let input = try? JSONDecoder().decode(BaselineIn.self, from: request.body) else {
                 return HTTPResponse(status: 422, headers: ["Content-Type": "application/json"], body: Data())
             }
-            _ = try await persistence.addBaseline(.init(corpusId: input.corpusId, baselineId: input.baselineId, content: input.content))
-            Task.detached { [persistence] in
-                _ = try? await persistence.addDrift(.init(corpusId: input.corpusId, driftId: "\(input.baselineId)-drift", content: "auto-generated drift"))
-                _ = try? await persistence.addPatterns(.init(corpusId: input.corpusId, patternsId: "\(input.baselineId)-patterns", content: "auto-generated patterns"))
-            }
-            // Basic SSE emulation: if path contains sse=1, return an SSE event stream payload
-            if request.path.contains("sse=1") {
-                let sse = """
-                event: drift
-                data: {"status":"started","kind":"drift"}
-
-                event: patterns
-                data: {"status":"started","kind":"patterns"}
-
-                event: complete
-                data: {}
-                
-                : heartbeat
-                
-                """
-                // Add X-Chunked-SSE to instruct NIOHTTPServer to flush in multiple chunks
-                return HTTPResponse(status: 200, headers: ["Content-Type": "text/event-stream", "Cache-Control": "no-cache", "X-Chunked-SSE": "1"], body: Data(sse.utf8))
-            } else {
-                let data = try JSONSerialization.data(withJSONObject: [:])
-                return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: data)
-            }
+            let isSSE = request.path.contains("sse=1")
+            return try await bootstrapAddBaseline(input, isSSE: isSSE)
         default:
             return HTTPResponse(status: 404)
         }
