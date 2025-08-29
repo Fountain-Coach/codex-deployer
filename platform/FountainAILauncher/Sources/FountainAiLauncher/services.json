@@ -1,72 +1,72 @@
 [
   {
-    "port" : 8001,
-    "shouldRestart" : true,
     "healthPath" : "\/metrics",
     "name" : "Baseline Awareness",
-    "binaryPath" : "\/usr\/local\/bin\/baseline-awareness"
+    "binaryPath" : "\/usr\/local\/bin\/baseline-awareness",
+    "port" : 8001,
+    "shouldRestart" : true
   },
   {
-    "port" : 8002,
-    "shouldRestart" : true,
     "healthPath" : "\/metrics",
     "name" : "Bootstrap",
-    "binaryPath" : "\/usr\/local\/bin\/bootstrap"
+    "binaryPath" : "\/usr\/local\/bin\/bootstrap",
+    "port" : 8002,
+    "shouldRestart" : true
   },
   {
-    "port" : 8003,
-    "shouldRestart" : true,
     "healthPath" : "\/metrics",
     "name" : "Planner",
-    "binaryPath" : "\/usr\/local\/bin\/planner"
+    "binaryPath" : "\/usr\/local\/bin\/planner",
+    "port" : 8003,
+    "shouldRestart" : true
   },
   {
-    "port" : 8004,
-    "shouldRestart" : true,
     "healthPath" : "\/metrics",
     "name" : "Function Caller",
-    "binaryPath" : "\/usr\/local\/bin\/function-caller"
+    "binaryPath" : "\/usr\/local\/bin\/function-caller",
+    "port" : 8004,
+    "shouldRestart" : true
   },
   {
-    "port" : 8005,
-    "shouldRestart" : true,
     "healthPath" : "\/metrics",
     "name" : "Persist",
-    "binaryPath" : "\/usr\/local\/bin\/persist"
+    "binaryPath" : "\/usr\/local\/bin\/persist",
+    "port" : 8005,
+    "shouldRestart" : true
   },
   {
-    "port" : 8006,
-    "shouldRestart" : true,
     "healthPath" : "\/metrics",
     "name" : "LLM Gateway",
-    "binaryPath" : "\/usr\/local\/bin\/llm-gateway"
+    "binaryPath" : "\/usr\/local\/bin\/llm-gateway",
+    "port" : 8006,
+    "shouldRestart" : true
   },
   {
-    "port" : 8007,
-    "shouldRestart" : true,
     "healthPath" : "\/metrics",
     "name" : "Semantic Browser",
-    "binaryPath" : "\/usr\/local\/bin\/semantic-browser"
+    "binaryPath" : "\/usr\/local\/bin\/semantic-browser",
+    "port" : 8007,
+    "shouldRestart" : true
   },
   {
+    "healthPath" : "\/metrics",
+    "name" : "Gateway",
     "binaryPath" : "\/usr\/local\/bin\/fountain-gateway",
     "port" : 8010,
-    "name" : "Gateway",
-    "healthPath" : "\/metrics",
     "shouldRestart" : true
   },
   {
+    "healthPath" : "\/metrics",
+    "name" : "Tools Factory",
     "binaryPath" : "\/usr\/local\/bin\/tools-factory",
     "port" : 8011,
-    "name" : "Tools Factory",
-    "healthPath" : "\/metrics",
     "shouldRestart" : true
   },
   {
+    "healthPath" : "\/metrics",
+    "name" : "Typesense",
     "binaryPath" : "\/usr\/local\/bin\/typesense",
     "port" : 8100,
-    "name" : "Typesense",
-    "healthPath" : "\/metrics",
     "shouldRestart" : true
   }
 ]
