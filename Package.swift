@@ -20,7 +20,9 @@ let fullProducts: [Product] = [
     .executable(name: "tools-factory-server", targets: ["tools-factory-server"]),
     .executable(name: "sse-client", targets: ["sse-client"]),
     .library(name: "PlannerService", targets: ["PlannerService"]),
-    .executable(name: "planner-server", targets: ["planner-server"])
+    .executable(name: "planner-server", targets: ["planner-server"]),
+    .library(name: "FunctionCallerService", targets: ["FunctionCallerService"]),
+    .executable(name: "function-caller-server", targets: ["function-caller-server"])
 ]
 
 let leanProducts: [Product] = [
@@ -148,6 +150,11 @@ let fullTargets: [Target] = [
         dependencies: ["FountainRuntime", "TypesensePersistence"],
         path: "libs/PlannerService"
     ),
+    .target(
+        name: "FunctionCallerService",
+        dependencies: ["FountainRuntime", "TypesensePersistence", .product(name: "AsyncHTTPClient", package: "async-http-client")],
+        path: "libs/FunctionCallerService"
+    ),
     .executableTarget(
         name: "publishing-frontend",
         dependencies: ["PublishingFrontend"],
@@ -199,6 +206,11 @@ let fullTargets: [Target] = [
         name: "planner-server",
         dependencies: ["FountainRuntime", "TypesensePersistence", "PlannerService", "Yams"],
         path: "apps/PlannerServer"
+    ),
+    .executableTarget(
+        name: "function-caller-server",
+        dependencies: ["FountainRuntime", "TypesensePersistence", "FunctionCallerService", "Yams"],
+        path: "apps/FunctionCallerServer"
     ),
     .executableTarget(
         name: "persist-server",
@@ -266,6 +278,11 @@ let fullTargets: [Target] = [
         name: "PlannerServiceTests",
         dependencies: ["PlannerService", "TypesensePersistence", "Yams"],
         path: "Tests/PlannerServiceTests"
+    ),
+    .testTarget(
+        name: "FunctionCallerServiceTests",
+        dependencies: ["FunctionCallerService", "TypesensePersistence", "FountainRuntime", "Yams"],
+        path: "Tests/FunctionCallerServiceTests"
     ),
     .testTarget(
         name: "E2ETests",
