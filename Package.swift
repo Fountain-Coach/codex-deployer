@@ -22,7 +22,8 @@ let fullProducts: [Product] = [
     .library(name: "PlannerService", targets: ["PlannerService"]),
     .executable(name: "planner-server", targets: ["planner-server"]),
     .library(name: "FunctionCallerService", targets: ["FunctionCallerService"]),
-    .executable(name: "function-caller-server", targets: ["function-caller-server"])
+    .executable(name: "function-caller-server", targets: ["function-caller-server"]),
+    .library(name: "ToolsFactoryService", targets: ["ToolsFactoryService"])
 ]
 
 let leanProducts: [Product] = [
@@ -197,9 +198,14 @@ let fullTargets: [Target] = [
         exclude: ["Service", "Dockerfile"],
         resources: [.process("openapi.yaml")]
     ),
+    .target(
+        name: "ToolsFactoryService",
+        dependencies: ["FountainRuntime", "ToolServer", "TypesensePersistence"],
+        path: "libs/ToolsFactoryService"
+    ),
     .executableTarget(
         name: "tools-factory-server",
-        dependencies: ["ToolServer", "TypesensePersistence"],
+        dependencies: ["FountainRuntime", "ToolsFactoryService", "TypesensePersistence"],
         path: "apps/ToolsFactoryServer"
     ),
     .executableTarget(
@@ -243,7 +249,7 @@ let fullTargets: [Target] = [
     .testTarget(name: "FlexctlTests", dependencies: ["flexctl", "ResourceLoader"], path: "Tests/FlexctlTests"),
     .testTarget(name: "GatewayAppTests", dependencies: ["gateway-server", "LLMGatewayPlugin", "AuthGatewayPlugin", "DestructiveGuardianGatewayPlugin", "SecuritySentinelGatewayPlugin", "PayloadInspectionGatewayPlugin", "BudgetBreakerGatewayPlugin", "RateLimiterGatewayPlugin", "persist-server"], path: "Tests/GatewayAppTests"),
     .testTarget(name: "FountainOpsTests", dependencies: ["LLMGatewayPlugin"], path: "Tests/FountainOpsTests"),
-    .testTarget(name: "ToolServerTests", dependencies: ["ToolServer"], path: "Tests/ToolServerTests"),
+    .testTarget(name: "ToolsFactoryServiceTests", dependencies: ["ToolsFactoryService", "TypesensePersistence"], path: "Tests/ToolsFactoryServiceTests"),
     .testTarget(
         name: "ToolsmithPackageTests",
         dependencies: [
