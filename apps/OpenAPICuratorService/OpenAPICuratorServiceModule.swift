@@ -2,6 +2,7 @@ import Foundation
 import FountainRuntime
 import OpenAPICurator
 import Yams
+import CryptoKit
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
@@ -18,7 +19,20 @@ curatorRulesReloader?.start(interval: 2.0)
 
 public func metrics_metrics_get() async -> HTTPResponse {
     let uptime = Int(ProcessInfo.processInfo.systemUptime)
-    let body = Data("openapi_curator_uptime_seconds \(uptime)\n".utf8)
+    let counts = await curatorMetrics.snapshot()
+    let rulesContents = (try? String(contentsOfFile: rulesPath)) ?? ""
+    let digest = SHA256.hash(data: Data(rulesContents.utf8))
+    let rulesHash = digest.prefix(8).reduce(UInt64(0)) { ($0 << 8) | UInt64($1) }
+    var lines: [String] = []
+    lines.append("openapi_curator_uptime_seconds \(uptime)")
+    lines.append("curator_ops_total{action=\"kept\"} \(counts.kept)")
+    lines.append("curator_ops_total{action=\"removed\"} \(counts.removed)")
+    lines.append("curator_ops_total{action=\"renamed\"} \(counts.renamed)")
+    lines.append("curator_collisions_total \(counts.collisions)")
+    lines.append("curator_submit_total{status=\"success\"} \(counts.submitSuccess)")
+    lines.append("curator_submit_total{status=\"error\"} \(counts.submitError)")
+    lines.append("curator_rules_version \(rulesHash)")
+    let body = Data(lines.joined(separator: "\n").utf8)
     return HTTPResponse(status: 200, headers: ["Content-Type": "text/plain"], body: body)
 }
 
@@ -73,6 +87,10 @@ public func makeOpenAPICuratorKernel() -> HTTPKernel {
                 let result = OpenAPICuratorKit.run(specs: specs, rules: rules)
                 let banned: Set<String> = ["metrics_metrics_get", "register_openapi", "list_tools"]
                 let filteredOps = result.spec.operations.filter { !banned.contains($0) }
+                let totalInputOps = specs.reduce(0) { $0 + $1.operations.count }
+                let removedOps = max(0, totalInputOps - filteredOps.count)
+                let renameCount = result.report.appliedRules.count + result.report.collisions.count
+                await curatorMetrics.recordCurate(kept: filteredOps.count, removed: removedOps, renamed: renameCount, collisions: result.report.collisions.count)
 
                 let storageRoot = env["CURATOR_STORAGE_PATH"] ?? "/data/corpora"
                 let ts = ISO8601DateFormatter().string(from: Date())
@@ -112,7 +130,16 @@ public func makeOpenAPICuratorKernel() -> HTTPKernel {
                         req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
                         req.setValue("application/x-yaml", forHTTPHeaderField: "Content-Type")
                         req.httpBody = yaml.data(using: .utf8)
-                        _ = try? await URLSession.shared.data(for: req)
+                        do {
+                            let (_, resp) = try await URLSession.shared.data(for: req)
+                            if let http = resp as? HTTPURLResponse, (200..<300).contains(http.statusCode) {
+                                await curatorMetrics.recordSubmit(success: true)
+                            } else {
+                                await curatorMetrics.recordSubmit(success: false)
+                            }
+                        } catch {
+                            await curatorMetrics.recordSubmit(success: false)
+                        }
                     }
                 }
 

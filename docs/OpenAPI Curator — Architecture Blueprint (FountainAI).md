@@ -251,7 +251,9 @@ return { curatedOpenAPI: curated, report: R }
 
 * Curator runs in the internal network.
 * If submission is enabled, use a service token (JWT) for posting to Tools Factory.
-* Role-guard via Gateway (optional) to restrict who can call `/curate` and `/rules`.
+* When fronted by the Gateway, use the **RoleGuard** plugin to restrict access:
+  * `/curate` requires the `curator:write` role.
+  * `/rules` (GET/PUT) requires the elevated `curator:admin` role.
 * **No** exposure of curated admin endpoints as tools by default.
 
 ---
@@ -287,7 +289,7 @@ return { curatedOpenAPI: curated, report: R }
 - `/metrics` for counters (`curator_ops_total{kept|removed|renamed}`, `curator_collisions_total`, `curator_rules_version`, `curator_submit_total{status}`).
 
 **Security posture:**
-- If run behind the Gateway, protect `/curate` and `/rules` via your standard RBAC; if run standalone, keep it on internal networks and require a service token for promotion mode.
+- If run behind the Gateway, wire `/curate` and `/rules` through the RoleGuard plugin so only callers with `curator:write` and `curator:admin` roles (respectively) pass; if run standalone, keep it on internal networks and require a service token for promotion mode.
 - The Curator must always **strip** `/metrics` and self-referential TF ops (`register_openapi`, `list_tools`) before submission.
 
 **Pipeline guidance (non-binding):**
