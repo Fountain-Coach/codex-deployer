@@ -1,13 +1,16 @@
 import XCTest
 @testable import OpenAPICurator
 
-private struct SpecFile: Codable { let operations: [String] }
+private struct SpecFile: Codable {
+    let operations: [String]
+    let extensions: [String: [String: String]]?
+}
 
 private func loadSpec(_ name: String) -> Spec {
     let url = Bundle.module.url(forResource: name, withExtension: "json", subdirectory: "Fixtures")!
     let data = try! Data(contentsOf: url)
     let file = try! JSONDecoder().decode(SpecFile.self, from: data)
-    return Spec(operations: file.operations)
+    return Spec(operations: file.operations, extensions: file.extensions ?? [:])
 }
 
 final class OpenAPICuratorTests: XCTestCase {
@@ -53,10 +56,23 @@ final class OpenAPICuratorTests: XCTestCase {
     func testSubmissionCallsToolsFactory() {
         let spec = Spec(operations: ["op"])
         var submitted: OpenAPI?
-        _ = OpenAPICuratorKit.run(specs: [spec], submit: true) { api in
+        _ = OpenAPICuratorKit.run(specs: [spec], submit: true, submitter: { api in
             submitted = api
-        }
+        })
         XCTAssertEqual(submitted?.operations, ["op"])
+    }
+
+    func testFountainExtensionsRecognized() {
+        let spec = Spec(operations: ["op"], extensions: ["op": ["x-fountain.visibility": "public"]])
+        let result = curate(specs: [spec], rules: Rules())
+        XCTAssertTrue(result.report.appliedRules.contains("x-fountain.visibility=public"))
+    }
+
+    func testReviewerHookInvoked() {
+        let spec = Spec(operations: ["op"])
+        var reviewed = false
+        _ = OpenAPICuratorKit.run(specs: [spec], reviewer: { _, _ in reviewed = true })
+        XCTAssertTrue(reviewed)
     }
 
     func testPerformanceLargeMerge() {

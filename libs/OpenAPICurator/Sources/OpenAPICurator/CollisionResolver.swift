@@ -5,6 +5,7 @@ enum CollisionResolver {
         var seen: Set<String> = []
         var collisions: [String] = []
         var result: [String] = []
+        var exts = api.extensions
         for name in api.operations {
             var candidate = name
             var counter = 1
@@ -15,7 +16,10 @@ enum CollisionResolver {
             }
             seen.insert(candidate)
             result.append(candidate)
+            if candidate != name, let ext = exts.removeValue(forKey: name) {
+                exts[candidate] = ext
+            }
         }
-        return (OpenAPI(operations: result), collisions)
+        return (OpenAPI(operations: result, extensions: exts), collisions)
     }
 }

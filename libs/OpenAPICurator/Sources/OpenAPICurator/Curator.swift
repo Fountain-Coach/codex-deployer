@@ -2,15 +2,19 @@ import Foundation
 
 public struct Spec {
     public let operations: [String]
-    public init(operations: [String]) {
+    public let extensions: [String: [String: String]]
+    public init(operations: [String], extensions: [String: [String: String]] = [:]) {
         self.operations = operations
+        self.extensions = extensions
     }
 }
 
 public struct OpenAPI {
     public var operations: [String]
-    public init(operations: [String]) {
+    public var extensions: [String: [String: String]]
+    public init(operations: [String], extensions: [String: [String: String]] = [:]) {
         self.operations = operations
+        self.extensions = extensions
     }
 }
 
