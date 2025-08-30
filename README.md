@@ -30,6 +30,8 @@ cp .env.example .env
 
 `scripts/boot.sh` and other utilities will automatically load variables from `.env`.
 
+The build pipeline relies on the [OpenAPI Curator](docs/openapi-curator.md) to produce curated service specs before registering tools with the Tools Factory.
+
 ### Required environment variables
 
 The OpenAPI Curator service uses the following variables:
@@ -60,19 +62,21 @@ Each endpoint replies to MIDI-CI **Process Inquiry** with `manufacturerId`, `fam
 ## 📁 Repository Structure
 
 - apps: Executable targets (CLIs and servers)
-  - GatewayServer: HTTP gateway runtime (target `gateway-server`).
-  - PublishingFrontendCLI: Publishing frontend CLI (target `publishing-frontend`).
-  - Flexctl: MIDI2 tooling CLI (target `flexctl`).
-  - ClientgenService: Client generator service (target `clientgen-service`).
-  - ToolsFactoryServer: Tool server runtime (target `tools-factory-server`).
+   - GatewayServer: HTTP gateway runtime (target `gateway-server`).
+   - PublishingFrontendCLI: Publishing frontend CLI (target `publishing-frontend`).
+   - Flexctl: MIDI2 tooling CLI (target `flexctl`).
+   - ClientgenService: Client generator service (target `clientgen-service`).
+   - ToolsFactoryServer: Tool server runtime (target `tools-factory-server`).
+   - OpenAPICuratorCLI: OpenAPI spec curation and promotion CLI.
+   - OpenAPICuratorService: Ephemeral service exposing the curation API.
 - libs: Reusable Swift libraries
-  - FountainCodex: Core code generation and utilities.
-  - PublishingFrontend: Publishing frontend library APIs.
-  - ResourceLoader: Shared resource loading utilities.
-  - MIDI2: MIDI2 components (MIDI2Models, MIDI2Core, MIDI2Transports, SSEOverMIDI, FlexBridge).
-  - ToolServer: Tool server library (adapters, router, resources).
+   - FountainCodex: Core code generation and utilities.
+   - PublishingFrontend: Publishing frontend library APIs.
+   - ResourceLoader: Shared resource loading utilities.
+- MIDI2: MIDI2 components (MIDI2Models, MIDI2Core, MIDI2Transports, SSEOverMIDI, FlexBridge).
+- ToolServer: Tool server library (adapters, router, resources).
 - internal: Generated code and internal modules (not user-edited)
-  - openapi: Service specs and API codegen.
+   - openapi: Service specs and API codegen.
 - docs: Documentation and design notes (gateway, SSE, security, proposals).
 - tests: SwiftPM test targets mirroring apps/libs components.
 
