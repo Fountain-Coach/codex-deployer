@@ -340,7 +340,8 @@ let fullTargets: [Target] = [
     .testTarget(
         name: "OpenAPICuratorTests",
         dependencies: [.product(name: "OpenAPICurator", package: "OpenAPICurator")],
-        path: "Tests/OpenAPICuratorTests"
+        path: "Tests/OpenAPICuratorTests",
+        resources: [.copy("Fixtures")]
     ),
 ]
 
@@ -479,7 +480,8 @@ let leanTargets: [Target] = [
     .testTarget(
         name: "OpenAPICuratorTests",
         dependencies: [.product(name: "OpenAPICurator", package: "OpenAPICurator")],
-        path: "Tests/OpenAPICuratorTests"
+        path: "Tests/OpenAPICuratorTests",
+        resources: [.copy("Fixtures")]
     ),
 ]
 
