@@ -1,15 +1,31 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Pre-deployment verification for container images.
+# Pre-deployment verification for container images and OpenAPI specs.
 # Usage: scripts/predeploy.sh <image-ref>
 # Requires COSIGN_PUBLIC_KEY to point to the verifying key.
-# Tools: cosign, grype, syft.
+# Tools: openapi-curator-cli, cosign, grype, syft.
 
 IMAGE="${1:-}"
 if [[ -z "$IMAGE" ]]; then
   echo "Usage: $0 <image-ref>" >&2
   exit 64
+fi
+
+# Run OpenAPI curation in review mode and archive results.
+CURATOR_SPEC="${CURATOR_SPEC:-openapi}"
+ARTIFACT_DIR="${ARTIFACT_DIR:-artifacts}"
+CURATION_DIR="$ARTIFACT_DIR/openapi-curation"
+mkdir -p "$CURATION_DIR"
+
+echo "[predeploy] Running OpenAPI curator review on $CURATOR_SPEC"
+openapi-curator-cli review "$CURATOR_SPEC" \
+  --output "$CURATION_DIR/curated.yaml" \
+  --report "$CURATION_DIR/report.json"
+
+if [[ ! -s "$CURATION_DIR/curated.yaml" || ! -s "$CURATION_DIR/report.json" ]]; then
+  echo "[predeploy] Missing curation artifacts" >&2
+  exit 1
 fi
 
 COSIGN_KEY="${COSIGN_PUBLIC_KEY:-docs/security/cosign.pub}"
