@@ -11,7 +11,7 @@ final class CoTEndpointTests: XCTestCase {
         try line.write(to: logURL, atomically: true, encoding: .utf8)
         let request = HTTPRequest(method: "GET", path: "/chat/chat-1/cot", headers: ["X-User-Role": "developer"])
         let handlers = Handlers(cotLogURL: logURL)
-        let response = try await handlers.chatCoT(request, chatID: "chat-1")
+        let response = try await handlers.getChatCoT(request, chatID: "chat-1")
         let obj = try JSONSerialization.jsonObject(with: Data(response.body)) as? [String: Any]
         XCTAssertEqual(obj?["cot"] as? String, "my [REDACTED] plan")
     }
@@ -24,7 +24,7 @@ final class CoTEndpointTests: XCTestCase {
         try line.write(to: logURL, atomically: true, encoding: .utf8)
         let request = HTTPRequest(method: "GET", path: "/chat/chat-2/cot", headers: ["X-User-Role": "user"])
         let handlers = Handlers(cotLogURL: logURL)
-        let response = try await handlers.chatCoT(request, chatID: "chat-2")
+        let response = try await handlers.getChatCoT(request, chatID: "chat-2")
         let obj = try JSONSerialization.jsonObject(with: Data(response.body)) as? [String: Any]
         XCTAssertNotNil(obj?["cot_summary"] as? String)
         XCTAssertNil(obj?["cot"])
