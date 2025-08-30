@@ -70,25 +70,65 @@ public func makeOpenAPICuratorKernel() -> HTTPKernel {
                     }
                 }
                 let rules = await curatorRulesStore.rules
-                let result = OpenAPICuratorKit.run(specs: specs, rules: rules, submit: submit && toolsFactoryURL != nil)
-                let storageBase = env["CURATOR_STORAGE_PATH"] ?? "/data/corpora/\(corpusId)/curator"
+                let result = OpenAPICuratorKit.run(specs: specs, rules: rules)
+                let banned: Set<String> = ["metrics_metrics_get", "register_openapi", "list_tools"]
+                let filteredOps = result.spec.operations.filter { !banned.contains($0) }
+
+                let storageRoot = env["CURATOR_STORAGE_PATH"] ?? "/data/corpora"
                 let ts = ISO8601DateFormatter().string(from: Date())
-                let outDir = URL(fileURLWithPath: storageBase).appendingPathComponent(ts)
+                let corpusDir = URL(fileURLWithPath: storageRoot).appendingPathComponent(corpusId)
+                let outDir = corpusDir.appendingPathComponent(ts)
                 try? FileManager.default.createDirectory(at: outDir, withIntermediateDirectories: true)
-                let specOut = outDir.appendingPathComponent("curated.json")
+                let specOut = outDir.appendingPathComponent("curated.yaml")
                 let reportOut = outDir.appendingPathComponent("report.json")
-                if let specData = try? JSONSerialization.data(withJSONObject: ["operations": result.spec.operations], options: [.prettyPrinted]) {
-                    try? specData.write(to: specOut)
+
+                var diff: [String: [String]] = [:]
+                let existing = (try? FileManager.default.contentsOfDirectory(atPath: corpusDir.path)) ?? []
+                let previous = existing.filter { $0 < ts }.sorted().last
+                if let prev = previous {
+                    let prevFile = corpusDir.appendingPathComponent(prev).appendingPathComponent("curated.yaml")
+                    if let prevText = try? String(contentsOf: prevFile),
+                       let prevObj = try? Yams.load(yaml: prevText) as? [String: Any],
+                       let prevOps = prevObj["operations"] as? [String] {
+                        let prevSet = Set(prevOps)
+                        let currSet = Set(filteredOps)
+                        let added = Array(currSet.subtracting(prevSet)).sorted()
+                        let removed = Array(prevSet.subtracting(currSet)).sorted()
+                        if !added.isEmpty || !removed.isEmpty {
+                            diff["added"] = added
+                            diff["removed"] = removed
+                        }
+                    }
                 }
-                if let reportData = try? JSONSerialization.data(withJSONObject: ["appliedRules": result.report.appliedRules, "collisions": result.report.collisions], options: [.prettyPrinted]) {
+
+                if let yaml = try? Yams.dump(object: ["operations": filteredOps]) {
+                    try? yaml.write(to: specOut, atomically: true, encoding: .utf8)
+                    if submit,
+                       let tfURL = toolsFactoryURL,
+                       let token = env["TOOLS_FACTORY_TOKEN"],
+                       let url = URL(string: "\(tfURL)/tools/register?corpusId=\(corpusId)") {
+                        var req = URLRequest(url: url)
+                        req.httpMethod = "POST"
+                        req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+                        req.setValue("application/x-yaml", forHTTPHeaderField: "Content-Type")
+                        req.httpBody = yaml.data(using: .utf8)
+                        _ = try? await URLSession.shared.data(for: req)
+                    }
+                }
+
+                var reportObj: [String: Any] = [
+                    "appliedRules": result.report.appliedRules,
+                    "collisions": result.report.collisions
+                ]
+                if !diff.isEmpty {
+                    reportObj["diff"] = diff
+                }
+                if let reportData = try? JSONSerialization.data(withJSONObject: reportObj, options: [.prettyPrinted]) {
                     try? reportData.write(to: reportOut)
                 }
                 let respObj: [String: Any] = [
-                    "curatedOpenAPI": ["operations": result.spec.operations],
-                    "report": [
-                        "appliedRules": result.report.appliedRules,
-                        "collisions": result.report.collisions
-                    ]
+                    "curatedOpenAPI": ["operations": filteredOps],
+                    "report": reportObj
                 ]
                 let json = try JSONSerialization.data(withJSONObject: respObj)
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
@@ -137,8 +177,9 @@ public func makeOpenAPICuratorKernel() -> HTTPKernel {
             case ("GET", ["history"]):
                 let qp = queryParams(from: req.path)
                 let corpusId = qp["corpusId"] ?? env["DEFAULT_CORPUS_ID"] ?? "tools-factory"
-                let storageBase = env["CURATOR_STORAGE_PATH"] ?? "/data/corpora/\(corpusId)/curator"
-                let entries = (try? FileManager.default.contentsOfDirectory(atPath: storageBase)) ?? []
+                let storageRoot = env["CURATOR_STORAGE_PATH"] ?? "/data/corpora"
+                let corpusDir = URL(fileURLWithPath: storageRoot).appendingPathComponent(corpusId)
+                let entries = (try? FileManager.default.contentsOfDirectory(atPath: corpusDir.path)) ?? []
                 let json = try JSONSerialization.data(withJSONObject: ["snapshots": entries])
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
 

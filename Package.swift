@@ -83,7 +83,7 @@ let fullTargets: [Target] = [
     ),
     .executableTarget(
         name: "openapi-curator-cli",
-        dependencies: ["OpenAPICurator"],
+        dependencies: ["OpenAPICurator", "Yams"],
         path: "apps/OpenAPICuratorCLI"
     ),
     .executableTarget(
