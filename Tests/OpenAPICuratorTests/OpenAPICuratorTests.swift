@@ -1,6 +1,15 @@
 import XCTest
 @testable import OpenAPICurator
 
+private struct SpecFile: Codable { let operations: [String] }
+
+private func loadSpec(_ name: String) -> Spec {
+    let url = Bundle.module.url(forResource: name, withExtension: "json", subdirectory: "Fixtures")!
+    let data = try! Data(contentsOf: url)
+    let file = try! JSONDecoder().decode(SpecFile.self, from: data)
+    return Spec(operations: file.operations)
+}
+
 final class OpenAPICuratorTests: XCTestCase {
     func testRuleApplicationRenamesOperations() {
         let spec = Spec(operations: ["getUser"])
@@ -11,10 +20,50 @@ final class OpenAPICuratorTests: XCTestCase {
     }
 
     func testCollisionResolverAddsSuffix() {
-        let spec1 = Spec(operations: ["op"])
-        let spec2 = Spec(operations: ["op"])
+        let spec1 = loadSpec("collidingA")
+        let spec2 = loadSpec("collidingB")
+        let expected = loadSpec("expectedCurated")
         let result = curate(specs: [spec1, spec2], rules: Rules())
         XCTAssertEqual(result.report.collisions, ["op"])
-        XCTAssertEqual(result.spec.operations, ["op", "op_1"])
+        XCTAssertEqual(result.spec.operations, expected.operations)
+    }
+
+    func testDenylistRemoval() {
+        let spec = Spec(operations: ["keep", "drop"])
+        let rules = Rules(denylist: ["drop"])
+        let result = curate(specs: [spec], rules: rules)
+        XCTAssertEqual(result.spec.operations, ["keep"])
+        XCTAssertTrue(result.report.diff.contains("drop"))
+    }
+
+    func testAllowlistEnforcement() {
+        let spec = Spec(operations: ["keep", "drop"])
+        let rules = Rules(allowlist: ["keep"])
+        let result = curate(specs: [spec], rules: rules)
+        XCTAssertEqual(result.spec.operations, ["keep"])
+    }
+
+    func testDiffGeneration() {
+        let spec = Spec(operations: ["keep", "remove"])
+        let rules = Rules(denylist: ["remove"])
+        let result = curate(specs: [spec], rules: rules)
+        XCTAssertEqual(result.report.diff, ["remove"])
+    }
+
+    func testSubmissionCallsToolsFactory() {
+        let spec = Spec(operations: ["op"])
+        var submitted: OpenAPI?
+        _ = OpenAPICuratorKit.run(specs: [spec], submit: true) { api in
+            submitted = api
+        }
+        XCTAssertEqual(submitted?.operations, ["op"])
+    }
+
+    func testPerformanceLargeMerge() {
+        let specs = (0..<1000).map { Spec(operations: ["op\($0)"]) }
+        let start = Date()
+        _ = curate(specs: specs, rules: Rules())
+        let duration = Date().timeIntervalSince(start)
+        XCTAssertLessThan(duration, 1.0)
     }
 }
