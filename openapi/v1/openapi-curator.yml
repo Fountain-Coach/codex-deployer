@@ -1,0 +1,142 @@
+---
+openapi: 3.1.0
+info:
+  title: OpenAPI Curator Service
+  version: 1.0.0
+paths:
+  /curate:
+    post:
+      summary: Curate one or more OpenAPI documents
+      operationId: curate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                corpusId:
+                  type: string
+                specs:
+                  type: array
+                  items:
+                    oneOf:
+                      - type: object
+                        additionalProperties: true
+                      - type: string
+                submitToToolsFactory:
+                  type: boolean
+                  default: false
+              required:
+                - specs
+      responses:
+        "200":
+          description: Curated spec and report
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  curatedOpenAPI:
+                    type: object
+                    additionalProperties: true
+                  report:
+                    type: object
+                    properties:
+                      removed:
+                        type: array
+                        items:
+                          type: string
+                      renamed:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            from:
+                              type: string
+                            to:
+                              type: string
+                      collisions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            operationId:
+                              type: string
+                            services:
+                              type: array
+                              items:
+                                type: string
+                      warnings:
+                        type: array
+                        items:
+                          type: string
+  /validate:
+    post:
+      summary: Validate specs without curating
+      operationId: validate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                specs:
+                  type: array
+                  items:
+                    oneOf:
+                      - type: object
+                        additionalProperties: true
+                      - type: string
+              required:
+                - specs
+      responses:
+        "200":
+          description: Validation report
+  /rules:
+    get:
+      summary: Get active curation rules
+      operationId: get_rules
+      responses:
+        "200":
+          description: Rules YAML as JSON
+    put:
+      summary: Replace curation rules
+      operationId: put_rules
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rules:
+                  type: object
+                  additionalProperties: true
+              required:
+                - rules
+      responses:
+        "204":
+          description: Rules replaced
+  /history:
+    get:
+      summary: List curated snapshots for a corpus
+      operationId: history
+      parameters:
+        - in: query
+          name: corpusId
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of snapshots
+  /metrics:
+    get:
+      summary: Metrics
+      description: Endpoint that serves Prometheus metrics.
+      operationId: metrics_metrics_get
+      responses:
+        "200":
+          description: Metrics response
+© 2025 Contexter alias Benedikt Eickhoff 🛡️ All rights reserved.
