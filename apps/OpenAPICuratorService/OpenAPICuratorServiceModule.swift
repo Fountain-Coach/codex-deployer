@@ -6,6 +6,16 @@ import Yams
 import FoundationNetworking
 #endif
 
+private let rulesPath = ProcessInfo.processInfo.environment["CURATOR_RULES_PATH"] ?? "Configuration/curator.yml"
+private let rulesURL = URL(fileURLWithPath: rulesPath)
+private let initialRules: Rules = {
+    let contents = (try? String(contentsOfFile: rulesPath)) ?? ""
+    return parseRules(from: contents)
+}()
+let curatorRulesStore = CuratorRulesStore(initialRules: initialRules, configURL: rulesURL)
+var curatorRulesReloader: CuratorRulesReloader? = CuratorRulesReloader(store: curatorRulesStore, url: rulesURL)
+curatorRulesReloader?.start(interval: 2.0)
+
 public func metrics_metrics_get() async -> HTTPResponse {
     let uptime = Int(ProcessInfo.processInfo.systemUptime)
     let body = Data("openapi_curator_uptime_seconds \(uptime)\n".utf8)
@@ -21,16 +31,6 @@ func extractOperationIds(from text: String) -> [String] {
         }
     }
     return ops
-}
-
-func loadRules() -> Rules {
-    let path = ProcessInfo.processInfo.environment["CURATOR_RULES_PATH"] ?? "Configuration/curator.yml"
-    if let contents = try? String(contentsOfFile: path),
-       let yaml = try? Yams.load(yaml: contents) as? [String: Any] {
-        let renames = yaml["renames"] as? [String: String] ?? [:]
-        return Rules(renames: renames)
-    }
-    return Rules()
 }
 
 func queryParams(from path: String) -> [String: String] {
@@ -69,7 +69,7 @@ public func makeOpenAPICuratorKernel() -> HTTPKernel {
                         specs.append(Spec(operations: ops))
                     }
                 }
-                let rules = loadRules()
+                let rules = await curatorRulesStore.rules
                 let result = OpenAPICuratorKit.run(specs: specs, rules: rules, submit: submit && toolsFactoryURL != nil)
                 let storageBase = env["CURATOR_STORAGE_PATH"] ?? "/data/corpora/\(corpusId)/curator"
                 let ts = ISO8601DateFormatter().string(from: Date())
@@ -108,7 +108,7 @@ public func makeOpenAPICuratorKernel() -> HTTPKernel {
                         specs.append(Spec(operations: ops))
                     }
                 }
-                let rules = loadRules()
+                let rules = await curatorRulesStore.rules
                 let result = OpenAPICuratorKit.run(specs: specs, rules: rules)
                 let respObj: [String: Any] = [
                     "report": [
@@ -120,8 +120,7 @@ public func makeOpenAPICuratorKernel() -> HTTPKernel {
                 return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
 
             case ("GET", ["rules"]):
-                let path = env["CURATOR_RULES_PATH"] ?? "Configuration/curator.yml"
-                if let contents = try? String(contentsOfFile: path),
+                if let contents = try? String(contentsOfFile: rulesPath),
                    let yamlObj = try? Yams.load(yaml: contents) {
                     let json = try JSONSerialization.data(withJSONObject: yamlObj)
                     return HTTPResponse(status: 200, headers: ["Content-Type": "application/json"], body: json)
@@ -129,10 +128,9 @@ public func makeOpenAPICuratorKernel() -> HTTPKernel {
                 return HTTPResponse(status: 404)
 
             case ("PUT", ["rules"]):
-                let path = env["CURATOR_RULES_PATH"] ?? "Configuration/curator.yml"
                 if let str = String(data: req.body, encoding: .utf8) {
-                    try? str.write(toFile: path, atomically: true, encoding: .utf8)
-                    return HTTPResponse(status: 204)
+                    let ok = await curatorRulesStore.replace(with: str)
+                    return HTTPResponse(status: ok ? 204 : 400)
                 }
                 return HTTPResponse(status: 400)
 

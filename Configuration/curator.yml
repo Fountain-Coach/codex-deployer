@@ -1,0 +1,37 @@
+# Sample rules for the OpenAPI Curator service
+# Adjust paths and IDs for your deployment.
+
+sources:
+  - id: baseline-awareness
+    allow_urls:
+      - file://openapi/v1/baseline-awareness.yml
+  - id: tools-factory
+    allow_urls:
+      - file://openapi/v1/tools-factory.yml
+
+global:
+  allow:
+    tags: [public, client]
+  deny:
+    tags: [admin, internal, experimental]
+    paths:
+      - ^/metrics$
+      - ^/debug
+    operationIds: [metrics_metrics_get]
+
+per_source:
+  baseline-awareness:
+    allow:
+      tags: [public]
+    deny:
+      paths: [^/awareness/internal]
+  tools-factory:
+    deny:
+      operationIds: [register_openapi]
+
+operationId:
+  strategy: namespace_if_conflict
+  namespace_format: "{sourceId}_{operationId}"
+
+renames:
+  getPetById: fetchPet

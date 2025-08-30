@@ -30,6 +30,13 @@ cp .env.example .env
 
 `scripts/boot.sh` and other utilities will automatically load variables from `.env`.
 
+### Required environment variables
+
+The OpenAPI Curator service uses the following variables:
+
+- `CURATOR_RULES_PATH` – path to the YAML rule file (default `Configuration/curator.yml`).
+- `CURATOR_STORAGE_PATH` – directory where curated outputs are stored.
+
 ---
 
 ## 🎹 Identity
